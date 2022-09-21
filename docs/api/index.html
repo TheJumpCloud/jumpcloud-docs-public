@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JumpCloud API Docs</title>
+  <meta http-equiv="strict-transport-security" content="max-age=31536000">
+  <meta http-equiv="x-content-type-options" content="nosniff">
+  <meta http-equiv="referrer-policy" content="strict-origin-when-cross-origin">
+  <link rel="shortcut icon" type="image/png" href="https://docs.jumpcloud.com/images/API Docs Favicon.ico" />
+  <meta property="description"
+    content="Learn how JumpCloud's APIs extend and bring customization to your experience with JumpCloud" />
+  <!-- SEO OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="JumpCloud API Docs">
+  <meta property="og:title" content="JumpCloud API Docs">
+  <meta property="og:image" content="https://docs.jumpcloud.com/images/JC API Docs Site Preview Card.png">
+  <meta property="og:image:secure_url" content="https://docs.jumpcloud.com/images/JC API Docs Site Preview Card.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="900">
+  <meta property="og:image:alt" content="JumpCloud API Docs">
+  <meta property="og:description"
+    content="Learn how JumpCloud's APIs extend and bring customization to your experience with JumpCloud">
+  <meta property="og:url" content="https://docs.jumpcloud.com/api/index.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@jumpcloud">
+  <meta name="twitter:creator" content="@jumpcloud">
+  <meta name="twitter:title" content="JumpCloud API Docs">
+  <meta name="twitter:description"
+    content="Learn how JumpCloud's APIs extend and bring customization to your experience with JumpCloud">
+  <meta name="twitter:image:src" content="https://docs.jumpcloud.com/images/JC API Docs Site Preview Card.png">
+  <meta name="twitter:image:width" content="1600">
+  <meta name="twitter:image:height" content="900">
+  <!-- We are using an older version of bootstrap because the latest version's CSS conflicts with
+    redoc making the side bar links not work -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+  <style>
+    #nav-main {
+      background-color: #202D38;
+    }
+
+    /* fixes css conflict between bootstrap and
+    redoc so x-code-samples is readable */
+    pre {
+      color: #e3e8e9
+    }
+
+    .card-body {
+      -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+      min-height: 1px;
+      padding: 0.6rem;
+    }
+
+    .container {
+      padding: 24px
+    }
+
+    /* makes the footer stick to bottom of page */
+    footer {
+      bottom: 0;
+      width: 100%;
+      background-color: #f5f5f5;
+    }
+
+    a {
+      color: #4373C7;
+      text-decoration: none;
+      background-color: transparent;
+    }
+
+    .btn-outline-primary {
+      color: #4373C7;
+      border-color: #4373C7;
+    }
+
+    .btn-outline-primary:hover {
+      color: #fff;
+      background-color: #4373C7;
+      border-color: #4373C7;
+    }
+
+    .list-group-item {
+      position: relative;
+      display: block;
+      padding: 1.75rem 1.25rem;
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, .125);
+    }
+
+    p {
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 200;
+      line-height: 24px;
+      letter-spacing: 0px;
+      text-align: auto;
+    }
+
+    ul p {
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 19px;
+      letter-spacing: 0px;
+      text-align: auto;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 29px;
+      letter-spacing: 0px;
+      text-align: left;
+    }
+
+    .bi-arrow-right-short {
+      font-size: 1.5rem;
+    }
+
+    .spacer-large {
+      padding: 32px;
+    }
+
+    /* adds space between jumbotron and nav*/
+    body {
+      min-height: 75rem;
+      padding-top: 2rem;
+    }
+
+    .list-group-item {
+      position: relative;
+      display: block;
+      padding: 0rem;
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, .125);
+    }
+
+    .card {
+      position: relative;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #fff;
+      background-clip: border-box;
+      border: 1px solid rgba(0, 0, 0, .125);
+      border-radius: 0.25rem;
+    }
+
+    .navbar-text {
+      padding: 0 0.8em;
+    }
+
+    .navbar-text:not(:last-child) {
+      border-right: 2px solid #000000;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header class="fixed-top">
+
+    <nav id="nav-main" class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand">
+          <img src="https://docs.jumpcloud.com/images/JC API Docs Logo Primary_White.png" alt="JumpCloud API Docs" height="30">
+        </a>
+
+      </div>
+    </nav>
+  </header>
+  <main role="main">
+    <div class="jumbotron text-center">
+      <img src="https://docs.jumpcloud.com/images/JC API Docs Secondary.png" style="padding-bottom: 15px;">
+      <p class="lead">Welcome to JumpCloud documentation</p>
+    </div>
+    <div class="container">
+      <div class="container">
+        <div class="container">
+          <h2>About JumpCloud's APIs</h2>
+          <p>Learn how JumpCloud's APIs extend and bring customization to your experience with JumpCloud. Our
+            APIs
+            offer the ability to interact with some of our core features such as: Commands, Systems, and Users.</p>
+        </div>
+        <div class="container">
+          <h2>Directory Insights API</h2>
+          <p>Directory Insights API allows you to query directory events at your organization. It provides event logs of activity within your directory and monitors user authentications to the console, SSO, RADIUS, and LDAP. Shine a light on your audit trails leading up to critical events.</p>
+          <div class="row">
+            <div class="col-lg-3 col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <a href="insights/directory/1.0/index.html" class="btn btn-link" role="button" aria-pressed="true">Version 1.0</a>
+                  <div class="float-right"><i class="bi bi-arrow-right-short"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+        </div>
+        <div class="container">
+          <h2>JumpCloud API</h2>
+          <p>JumpCloud currently utilizes two versions of APIs. Depending on the type of integration, it may be required to use both V1 and V2 APIs. Please refer to each API doc to understand the functionality available in that API set.</p>
+          <div class="row">
+            <div class="col-lg-3 col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <a href="1.0/index.html" class="btn btn-link" role="button" aria-pressed="true">Version 1.0</a>
+                  <div class="float-right"><i class="bi bi-arrow-right-short"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-3 col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <a href="2.0/index.html" class="btn btn-link" role="button" aria-pressed="true">Version 2.0</a>
+                  <div class="float-right"><i class="bi bi-arrow-right-short"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+  </main>
+  <footer class="fixed-bottom text-muted">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <a href="https://jumpcloud.com">Go to JumpCloud.com</a>
+          <p>Copyright © 2022 JumpCloud.</p>
+        </div>
+        <div class="col-sm">
+          <div class="d-flex align-items-center justify-content-center">
+            <a href="https://github.com/TheJumpCloud/jumpcloud-docs-public"><img src="https://docs.jumpcloud.com/images/GitHub-Mark-32px.png" alt="github repo"></a>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="float-right">
+            <a href="#">Back to top</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

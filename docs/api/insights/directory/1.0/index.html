@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Directory Insights API - 1.0</title>
+  <meta http-equiv="strict-transport-security" content="max-age=31536000">
+  <meta http-equiv="x-content-type-options" content="nosniff">
+  <meta http-equiv="referrer-policy" content="strict-origin-when-cross-origin">
+  <link rel="shortcut icon" type="image/png" href="https://docs.jumpcloud.com/images/API Docs Favicon.ico" />
+  <meta property="description"
+    content="Learn how JumpCloud's APIs extend and bring customization to your experience with JumpCloud" />
+  <!-- SEO OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="JumpCloud API Docs">
+  <meta property="og:title" content="JumpCloud API Docs">
+  <meta property="og:image" content="https://docs.jumpcloud.com/images/JC API Docs Site Preview Card.png">
+  <meta property="og:image:secure_url" content="https://docs.jumpcloud.com/images/JC API Docs Site Preview Card.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="900">
+  <meta property="og:image:alt" content="JumpCloud API Docs">
+  <meta property="og:description"
+    content="Learn how JumpCloud's APIs extend and bring customization to your experience with JumpCloud">
+  <meta property="og:url" content="https://docs.jumpcloud.com/api/insights/directory/1.0/index.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@jumpcloud">
+  <meta name="twitter:creator" content="@jumpcloud">
+  <meta name="twitter:title" content="JumpCloud API Docs">
+  <meta name="twitter:description"
+    content="Learn how JumpCloud's APIs extend and bring customization to your experience with JumpCloud">
+  <meta name="twitter:image:src" content="https://docs.jumpcloud.com/images/JC API Docs Site Preview Card.png">
+  <meta name="twitter:image:width" content="1600">
+  <meta name="twitter:image:height" content="900">
+  <!-- We are using an older version of bootstrap because the latest version's CSS conflicts with
+    redoc making the side bar links not work -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+  <style>
+    #nav-main {
+      background-color: #202D38;
+      border-bottom: 2px solid #454C52;
+    }
+
+    .dropdown-menu {
+      left: auto !important;
+      right: 0px;
+    }
+
+    .navbar .navbar-nav .nav-item .nav-link {
+      padding: 0 0.5em;
+    }
+
+    .navbar .navbar-nav .nav-item:not(:last-child) .nav-link {
+      border-right: 2px solid #000000;
+    }
+
+    .navbar-text {
+      padding: 0 0.8em;
+    }
+
+    .navbar-text:not(:last-child) {
+      border-right: 2px solid #000000;
+    }
+
+    /* fixes css conflict between bootstrap and
+    redoc so x-code-samples is readable */
+    pre {
+      color: #e3e8e9
+    }
+
+    /* fixes redoc css to display h3 smaller than h2 */
+    h3,
+    h4,
+    h5,
+    h6 {
+      display: block;
+      font-size: 1.2em;
+      margin-block-start: .99em;
+      margin-block-end: .99em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="sticky-top">
+    <div id="nav-main" class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../../../index.html"><img src="https://docs.jumpcloud.com/images/JC API Docs Logo Primary_White.png"
+            alt="JumpCloud API Docs" height="30"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto"></ul>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-expanded="false">Directory Insights API - 1.0</a>
+              <ul id="jc-api-dropdown" class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="../../../1.0/index.html">JumpCloud API - 1.0</a></li>
+              <li><a class="dropdown-item" href="../../../2.0/index.html">JumpCloud API - 2.0</a></li>
+              <li><a class="dropdown-item" href="../../../insights/directory/1.0/index.html">Directory Insights API - 1.0</a></li>
+            </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <redoc></redoc>
+  <script src="https://cdn.jsdelivr.net/npm/redoc@2.0.0-rc.57/bundles/redoc.standalone.js"> </script>
+  <script>
+    // Options: https://github.com/Redocly/redoc#redoc-options-object
+    // Theme settings: https://github.com/Redocly/redoc/blob/master/src/theme.ts
+    Redoc.init("index.yaml", {
+      scrollYOffset: "nav",
+      theme: {
+        spacing: {
+          sectionVertical: 10
+        },
+        typography: {
+          headings: {
+            lineHeight: "1.2em"
+          }
+        },
+        logo: {
+          maxHeight: "60px"
+        },
+        sidebar: {
+          backgroundColor: "#202D38",
+          textColor: "#e3e8e9"
+        },
+        rightPanel: {
+          backgroundColor: "#202D38",
+          textColor: "#e3e8e9"
+        }
+      },
+      showExtensions: [
+        "x-scopes"
+      ],
+      pathInMiddlePanel: true
+    }
+    );
+  </script>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
