@@ -4396,10 +4396,6 @@ definitions:
         type: string
     title: System Insights Azure Instance Metadata
     type: object
-    x-stoplight:
-      id: system-insights-azure-instance-metadata
-      name: System Insights Azure Instance Metadata
-      public: true
   system-insights-azure-instance-tags:
     properties:
       collection_time:
@@ -4414,10 +4410,6 @@ definitions:
         type: string
     title: System Insights Azure Instance Tags
     type: object
-    x-stoplight:
-      id: system-insights-azure-instance-tags
-      name: System Insights Azure Instance Tags
-      public: true
   system-insights-battery:
     example:
       amperage: 93836453
@@ -4633,10 +4625,6 @@ definitions:
         type: string
     title: System Insights Chassis Info
     type: object
-    x-stoplight:
-      id: system-insights-chassis-info
-      name: System Insights Chassis Info
-      public: true
   system-insights-chrome-extensions:
     example:
       author: ''
@@ -5500,10 +5488,6 @@ definitions:
         type: string
     title: System Insights Secure Boot
     type: object
-    x-stoplight:
-      id: system-insights-secureboot
-      name: System Insights Secure Boot
-      public: true
   system-insights-services:
     properties:
       description:
@@ -5761,10 +5745,6 @@ definitions:
         type: string
     title: System Insights TPM Info
     type: object
-    x-stoplight:
-      id: system-insights-tpm-info
-      name: System Insights TPM Info
-      public: true
   system-insights-uptime:
     properties:
       collection_time:
@@ -5857,10 +5837,6 @@ definitions:
         type: string
     title: System Insights User Assist
     type: object
-    x-stoplight:
-      id: system-insights-userassist
-      name: System Insights User Assist
-      public: true
   system-insights-users:
     example:
       collection_time: '2019-06-03T19:41:29.710Z'
@@ -6008,10 +5984,6 @@ definitions:
         type: string
     title: System Insights Windows Security Center
     type: object
-    x-stoplight:
-      id: system-insights-windows-security-center
-      name: System Insights Windows Security Center
-      public: true
   system-insights-windows-security-products:
     properties:
       collection_time:
@@ -30278,7 +30250,6 @@ tags:
   - name: AddOn
   - name: Active Directory
   - name: Administrators
-  - name: SubscriptionComponent
   - name: Apple MDM
   - name: Apple VPP
   - name: Applications
@@ -30328,6 +30299,8 @@ tags:
   - name: Software Catalog
   - name: Software Apps
   - name: Subscriptions
+  - name: SubscriptionComponent
+  - name: SubscriptionData
   - name: System Groups
   - name: System Group Associations
   - name: System Group Members & Membership
