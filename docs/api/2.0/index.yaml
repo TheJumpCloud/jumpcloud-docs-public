@@ -2412,6 +2412,36 @@ definitions:
         type: string
     title: Organization
     type: object
+  OrganizationCase:
+    description: Details of an organization's case (support/feature request)
+    properties:
+      caseNumber:
+        type: string
+      date:
+        type: string
+      description:
+        type: string
+      label:
+        type: string
+      reporter:
+        type: string
+      reporterEmail:
+        type: string
+      status:
+        type: string
+      subject:
+        type: string
+    title: OrganizationCase
+    type: object
+  OrganizationCasesResponse:
+    description: Response for retrieving an organization's cases (support/feature requests)
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/OrganizationCase'
+        type: array
+    title: OrganizationCasesResponse
+    type: object
   OrganizationCommandTemplate:
     properties:
       command:
@@ -3021,6 +3051,64 @@ definitions:
     required:
       - results
       - totalCount
+    type: object
+  PwmOverviewAppVersions:
+    properties:
+      results:
+        items:
+          properties:
+            usersCount:
+              example: 10
+              format: int32
+              type: integer
+            version:
+              example: 1.0.0
+              type: string
+          type: object
+        type: array
+      totalCount:
+        example: 50
+        format: int32
+        type: integer
+    required:
+      - results
+      - totalCount
+    type: object
+  PwmOverviewMain:
+    properties:
+      devices:
+        items:
+          properties:
+            count:
+              example: 10
+              format: int32
+              type: integer
+            id:
+              example: 1
+              format: int32
+              type: integer
+            name:
+              example: ios
+              type: string
+          type: object
+        type: array
+      pendingInvites:
+        example: 50
+        format: int32
+        type: integer
+      sharedFolders:
+        example: 50
+        format: int32
+        type: integer
+      totalUsers:
+        example: 50
+        format: int32
+        type: integer
+    required:
+      - sharedFolders
+      - pendingInvites
+      - totalUsers
+      - devices
     type: object
   Query:
     description: Basic query.
@@ -16760,6 +16848,44 @@ paths:
         name: office365_id
         required: true
         type: string
+  /organizations/cases:
+    get:
+      description: This endpoint returns the cases (Support/Feature requests) for the organization
+      operationId: organizations_listCases
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OrganizationCasesResponse'
+      security:
+        - x-api-key: []
+      summary: Get all cases (Support/Feature requests) for organization
+      tags:
+        - Organizations
+      x-scopes:
+        - organizations
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/organizations/cases \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/organizations/cases"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/organizations/cases' -Method GET -Headers $headers
   /organizations/{id}/administratorlinks:
     get:
       description: This endpoint returns the association links between an Organization and Administrators.
@@ -30197,6 +30323,14 @@ responses:
     description: Success
     schema:
       $ref: '#/definitions/PwmAllUsers'
+  PwmOverviewAppVersions:
+    description: Success
+    schema:
+      $ref: '#/definitions/PwmOverviewAppVersions'
+  PwmOverviewMain:
+    description: Success
+    schema:
+      $ref: '#/definitions/PwmOverviewMain'
   SharedFolderAccessLevels:
     description: Success
     schema:
