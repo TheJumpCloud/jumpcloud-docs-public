@@ -878,40 +878,41 @@ info:
 
     MTP provides the following types of events:
 
-     Event                              | Description                                                                                                  |
-     ---------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-     admin_activated                    | Created when admin unsuspends an admin.                                                                      |
-     admin_create                       | Created when admin creates an admin.                                                                         |
-     admin_delete                       | Created when admin deletes a user or bulk deletes users.                                                     |
-     admin_lockout                      | Created when an admin has multiple login failures into MTP portal.                                           |
-     admin_login_attempt                | Created when an admin logs into the MTP portal or admin launches an child org.                               |
-     admin_password_reset_request       | Created when an admin resets their password.                                                                 |
-     admin_suspended                    | Created when admin suspends an admin.                                                                        |
-     admin_update                       | Created when admin enables/disables TOTP, changes contact info, role for an admin or admin updates an admin. |
-     organization_create                | Created when an admin creates an organization.                                                               |
-     organization_update                | Created when admin updates org name.                                                                         |
-     provider_update                    | Created when admin changes billing info.                                                                     |
-     mtp_download_invoice               | Created when an admin downloads an invoice.                                                                  |
-     connectwise_integration_create     | Created when an admin creates a ConnectWise integration.                                                     |
-     connectwise_integration_update     | Created when an admin updates a ConnectWise integration.                                                     |
-     connectwise_integration_delete     | Created when an admin deletes a ConnectWise integartion.                                                     |
-     connectwise_billing_mapping_create | Created when an admin creates a ConnectWise billing mapping.                                                 |
-     connectwise_billing_mapping_update | Created when an admin updates a ConnectWise billing mapping.                                                 |
-     connectwise_billing_mapping_delete | Created when an admin deletes a ConnectWise billing mapping.                                                 |
-     connectwise_company_mapping_create | Created when an admin creates a ConnectWise company mapping.                                                 |
-     connectwise_company_mapping_update | Created when an admin updates a ConnectWise company mapping.                                                 |
-     connectwise_company_mapping_delete | Created when an admin deletes a ConnectWise company mapping.                                                 |
-     connectwise_settings_update        | Created when an admin updates ConnectWise settings.                                                          |
-     autotask_integration_create        | Created when an admin creates an Autotask integration.                                                       |
-     autotask_integration_update        | Created when an admin updates an Autotask integration.                                                       |
-     autotask_integration_delete        | Created when an admin deletes an Autotask integration.                                                       |
-     autotask_billing_mapping_create    | Created when an admin creates an Autotask billing mapping.                                                   |
-     autotask_billing_mapping_update    | Created when an admin updates an Autotask billing mapping.                                                   |
-     autotask_billing_mapping_delete    | Created when an admin deletes an Autotask billing mapping.                                                   |
-     autotask_company_mapping_create    | Created when an admin creates an Autotask company mapping.                                                   |
-     autotask_company_mapping_update    | Created when an admin updates an Autotask company mapping.                                                   |
-     autotask_company_mapping_delete    | Created when an admin deletes an Autotask company mapping.                                                   |
-     autotask_settings_update           | Created when an admin updates Autotask settings.                                                             |
+     Event                              | Description                                                                                                             |
+     ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------|
+     admin_activated                    | Created when admin unsuspends an admin.                                                                                 |
+     admin_create                       | Created when admin creates an admin.                                                                                    |
+     admin_delete                       | Created when admin deletes a user or bulk deletes users.                                                                |
+     admin_lockout                      | Created when an admin has multiple login failures into MTP portal.                                                      |
+     admin_login_attempt                | Created when an admin logs into the MTP portal or admin launches an child org.                                          |
+     admin_password_reset_request       | Created when an admin resets their password.                                                                            |
+     admin_suspended                    | Created when admin suspends an admin.                                                                                   |
+     admin_update                       | Created when admin enables/disables TOTP, changes contact info, role for an admin or admin updates an admin.            |
+     organization_create                | Created when an admin creates an organization.                                                                          |
+     organization_update                | Created when an organization is updated.                                                                                |
+     provider_update                    | Created when admin changes billing info.                                                                                |
+     mtp_download_invoice               | Created when an admin downloads an invoice.                                                                             |
+     msp_ticket_create                  | Created when a ticket is created for a partner integration (e.g. Autotask, ConnectWise) successfully or unsuccessfully. |
+     connectwise_integration_create     | Created when an admin creates a ConnectWise integration.                                                                |
+     connectwise_integration_update     | Created when an admin updates a ConnectWise integration.                                                                |
+     connectwise_integration_delete     | Created when an admin deletes a ConnectWise integartion.                                                                |
+     connectwise_billing_mapping_create | Created when an admin creates a ConnectWise billing mapping.                                                            |
+     connectwise_billing_mapping_update | Created when an admin updates a ConnectWise billing mapping.                                                            |
+     connectwise_billing_mapping_delete | Created when an admin deletes a ConnectWise billing mapping.                                                            |
+     connectwise_company_mapping_create | Created when an admin creates a ConnectWise company mapping.                                                            |
+     connectwise_company_mapping_update | Created when an admin updates a ConnectWise company mapping.                                                            |
+     connectwise_company_mapping_delete | Created when an admin deletes a ConnectWise company mapping.                                                            |
+     connectwise_settings_update        | Created when an admin updates ConnectWise settings.                                                                     |
+     autotask_integration_create        | Created when an admin creates an Autotask integration.                                                                  |
+     autotask_integration_update        | Created when an admin updates an Autotask integration.                                                                  |
+     autotask_integration_delete        | Created when an admin deletes an Autotask integration.                                                                  |
+     autotask_billing_mapping_create    | Created when an admin creates an Autotask billing mapping.                                                              |
+     autotask_billing_mapping_update    | Created when an admin updates an Autotask billing mapping.                                                              |
+     autotask_billing_mapping_delete    | Created when an admin deletes an Autotask billing mapping.                                                              |
+     autotask_company_mapping_create    | Created when an admin creates an Autotask company mapping.                                                              |
+     autotask_company_mapping_update    | Created when an admin updates an Autotask company mapping.                                                              |
+     autotask_company_mapping_delete    | Created when an admin deletes an Autotask company mapping.                                                              |
+     autotask_settings_update           | Created when an admin updates Autotask settings.                                                                        |
 
     ## RADIUS Events
 
