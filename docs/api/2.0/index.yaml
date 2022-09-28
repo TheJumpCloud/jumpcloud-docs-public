@@ -17096,6 +17096,52 @@ paths:
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/organizations/{organization_id}/commandTemplates' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandType":"string","files":["string"],"launchType":"string","name":"string","schedule":"string","scheduleRepeatType":"string","shell":"string","sudo":true,"timeToLiveSeconds":0,"timeout":"string"}'
   /organizations/{organization_id}/commandTemplates/{id}:
+    delete:
+      description: This endpoint deletes an organization's command template
+      operationId: commandTemplates_deleteCommandTemplateOrg
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Delete an Organization Command Template
+      tags:
+        - Organizations
+        - Command Templates
+      x-scopes:
+        - commandtemplates
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/organizations/{organization_id}/commandTemplates/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/organizations/{organization_id}/commandTemplates/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/organizations/{organization_id}/commandTemplates/{id}' -Method DELETE -Headers $headers
     get:
       description: This endpoint returns a command template for an organziation
       operationId: commandTemplates_getCommandTemplateOrg
@@ -17156,6 +17202,78 @@ paths:
         name: id
         required: true
         type: string
+    put:
+      description: This endpoint updates an organization's command template
+      operationId: commandTemplates_updateCommandTemplateOrg
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CreateCommandTemplate'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OrganizationCommandTemplate'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Update an Organization Command Template
+      tags:
+        - Organizations
+        - Command Templates
+      x-scopes:
+        - commandtemplates
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/organizations/{organization_id}/commandTemplates/{id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"command":"string","commandType":"string","files":["string"],"launchType":"string","name":"string","schedule":"string","scheduleRepeatType":"string","shell":"string","sudo":true,"timeToLiveSeconds":0,"timeout":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/organizations/{organization_id}/commandTemplates/{id}"
+
+            payload = {
+                "command": "string",
+                "commandType": "string",
+                "files": ["string"],
+                "launchType": "string",
+                "name": "string",
+                "schedule": "string",
+                "scheduleRepeatType": "string",
+                "shell": "string",
+                "sudo": True,
+                "timeToLiveSeconds": 0,
+                "timeout": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/organizations/{organization_id}/commandTemplates/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandType":"string","files":["string"],"launchType":"string","name":"string","schedule":"string","scheduleRepeatType":"string","shell":"string","sudo":true,"timeToLiveSeconds":0,"timeout":"string"}'
   /policies:
     get:
       description: |-
@@ -19510,6 +19628,53 @@ paths:
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/commandtemplates' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandType":"string","files":["string"],"launchType":"string","name":"string","schedule":"string","scheduleRepeatType":"string","shell":"string","sudo":true,"timeToLiveSeconds":0,"timeout":"string"}'
   /providers/{provider_id}/commandtemplates/{id}:
+    delete:
+      description: This endpoint deletes a provider's command template
+      operationId: commandTemplates_deleteCommandTemplate
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Delete a Provider Command Template
+      tags:
+        - Providers
+        - Command Templates
+        - Managed Service Provider
+      x-scopes:
+        - commandtemplates
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/commandtemplates/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/commandtemplates/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/commandtemplates/{id}' -Method DELETE -Headers $headers
     get:
       description: This endpoint returns a command template for a provider
       operationId: commandTemplates_getCommandTemplate
@@ -19571,6 +19736,79 @@ paths:
         name: id
         required: true
         type: string
+    put:
+      description: This endpoint updates a provider's command template
+      operationId: commandTemplates_updateCommandTemplate
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CreateCommandTemplate'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ProviderCommandTemplate'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Update a Provider Command Template
+      tags:
+        - Providers
+        - Command Templates
+        - Managed Service Provider
+      x-scopes:
+        - commandtemplates
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/commandtemplates/{id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"command":"string","commandType":"string","files":["string"],"launchType":"string","name":"string","schedule":"string","scheduleRepeatType":"string","shell":"string","sudo":true,"timeToLiveSeconds":0,"timeout":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/commandtemplates/{id}"
+
+            payload = {
+                "command": "string",
+                "commandType": "string",
+                "files": ["string"],
+                "launchType": "string",
+                "name": "string",
+                "schedule": "string",
+                "scheduleRepeatType": "string",
+                "shell": "string",
+                "sudo": True,
+                "timeToLiveSeconds": 0,
+                "timeout": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/commandtemplates/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandType":"string","files":["string"],"launchType":"string","name":"string","schedule":"string","scheduleRepeatType":"string","shell":"string","sudo":true,"timeToLiveSeconds":0,"timeout":"string"}'
   /providers/{provider_id}/integrations:
     get:
       description: Retrieves a list of integrations this provider has configured. You must be associated to the provider to use this endpoint.
