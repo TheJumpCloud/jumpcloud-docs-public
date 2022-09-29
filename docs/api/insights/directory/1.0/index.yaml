@@ -64,8 +64,8 @@ info:
 
     ```bash
     curl -X POST \
-      -H x-api-key:[YOUR_API_KEY_HERE]" \
-      -H "Content-Type: application/json" \
+      -H 'x-api-key: REPLACE_KEY_VALUE' \
+      -H 'Content-Type: application/json' \
       --data '{"service": ["all"], "start_time": "2020-03-03T14:00:00Z"}' \
       --url https://api.jumpcloud.com/insights/directory/v1/events
     ```
@@ -77,7 +77,7 @@ info:
     ### Example Request with One Organization
 
     ```bash
-    curl -X POST -H "x-api-key:[YOUR_API_KEY_HERE]" -H "x-org-id:[ADMINISTERED_ORG_ID]" -H "Content-Type: application/json" --data '{"service": ["all"], "start_time": "2020-03-03T14:00:00Z"}' https://api.jumpcloud.com/insights/directory/v1/events
+    curl -X POST -H 'x-api-key: REPLACE_KEY_VALUE' -H 'x-org-id: ADMINISTERED_ORG_ID' -H 'Content-Type: application/json' --data '{"service": ["all"], "start_time": "2020-03-03T14:00:00Z"}' https://api.jumpcloud.com/insights/directory/v1/events
     ```
 
     ### Example Request with Multiple Organizations
@@ -85,13 +85,13 @@ info:
     __Note__: There is no limit to the number of org ID's that can be passed in the request.
 
     ```bash
-    curl -X POST -H "x-api-key:[YOUR_API_KEY_HERE]" -H "x-org-id:[ADMINISTERED_ORG_ID_A]" -H "x-org-id:[ADMINISTERED_ORG_ID_B]" -H "x-org-id:[ADMINISTERED_ORG_ID_C]" -H "Content-Type: application/json" --data '{"service": ["all"], "start_time": "2020-03-03T14:00:00Z"}' https://api.jumpcloud.com/insights/directory/v1/events
+    curl -X POST -H 'x-api-key: REPLACE_KEY_VALUE' -H 'x-org-id: ADMINISTERED_ORG_ID_A' -H 'x-org-id: ADMINISTERED_ORG_ID_B' -H 'x-org-id: ADMINISTERED_ORG_ID_C' -H 'Content-Type: application/json' --data '{"service": ["all"], "start_time": "2020-03-03T14:00:00Z"}' https://api.jumpcloud.com/insights/directory/v1/events
     ```
 
     ### Example to Request Multi-Tenant Portal Events Only
 
     ```bash
-    curl -X POST -H "x-api-key:[YOUR_API_KEY_HERE]" -H "x-provider-id:[YOUR_PROVIDER_KEY_HERE]" -H "Content-Type: application/json" --data '{"service": ["all"], "start_time": "2020-03-03T14:00:00Z"}' https://api.jumpcloud.com/insights/directory/v1/events
+    curl -X POST -H 'x-api-key: REPLACE_KEY_VALUE' -H 'x-provider-id: YOUR_PROVIDER_KEY_HERE' -H 'Content-Type: application/json' --data '{"service": ["all"], "start_time": "2020-03-03T14:00:00Z"}' https://api.jumpcloud.com/insights/directory/v1/events
     ```
 
     # Using the Directory Insights API
@@ -143,7 +143,7 @@ info:
     To put the POST body into a local file for editing, save the JSON structure into a file called __simple-query.txt__, and execute the following query:
 
     ```bash
-    curl -X POST -H "x-api-key:[YOUR_API_KEY_HERE]" -d @./simple-query.txt https://api.jumpcloud.com/insights/directory/v1/events
+    curl -X POST -H 'x-api-key: REPLACE_KEY_VALUE' -d @./simple-query.txt https://api.jumpcloud.com/insights/directory/v1/events
     ```
 
     The Directory Insights API returns a JSON array, such as the following:
@@ -980,7 +980,7 @@ paths:
         Query the API for Directory Insights events
         #### Sample Request
         ```
-        curl -X POST 'https://api.jumpcloud.com/insights/directory/v1/events' -H 'Content-Type: application/json' -H 'x-api-key: {API_KEY}' --data '{"service": ["all"], "start_time": "2021-07-14T23:00:00Z", "end_time": "2021-07-28T14:00:00Z", "sort": "DESC", "fields": ["timestamp", "event_type", "initiated_by", "success", "client_ip", "provider", "organization"]}'
+        curl -X POST 'https://api.jumpcloud.com/insights/directory/v1/events' -H 'Content-Type: application/json' -H 'x-api-key: REPLACE_KEY_VALUE' --data '{"service": ["all"], "start_time": "2021-07-14T23:00:00Z", "end_time": "2021-07-28T14:00:00Z", "sort": "DESC", "fields": ["timestamp", "event_type", "initiated_by", "success", "client_ip", "provider", "organization"]}'
         ```
       consumes:
         - application/json
@@ -1076,7 +1076,7 @@ paths:
         Query the API for a count of matching events
         #### Sample Request
         ```
-        curl -X POST 'https://api.jumpcloud.com/insights/directory/v1/events/count' -H 'Content-Type: application/json' -H 'x-api-key: {API_KEY}' --data '{"service": ["all"], "start_time": "2021-07-14T23:00:00Z", "end_time": "2021-07-28T14:00:00Z", "sort": "DESC", "fields": ["timestamp", "event_type", "initiated_by", "success", "client_ip", "provider", "organization"]}'
+        curl -X POST 'https://api.jumpcloud.com/insights/directory/v1/events/count' -H 'Content-Type: application/json' -H 'x-api-key: REPLACE_KEY_VALUE' --data '{"service": ["all"], "start_time": "2021-07-14T23:00:00Z", "end_time": "2021-07-28T14:00:00Z", "sort": "DESC", "fields": ["timestamp", "event_type", "initiated_by", "success", "client_ip", "provider", "organization"]}'
         ```
       consumes:
         - application/json
@@ -1169,7 +1169,7 @@ paths:
         Query the API for a list of distinct values for a field
         #### Sample Request
         ```
-        curl -X POST 'https://api.jumpcloud.com/insights/directory/v1/events/distinct' -H 'Content-Type: application/json' -H 'x-api-key: {API_KEY}' --data '{"service": ["all"], "start_time": "2021-07-14T23:00:00Z", "end_time": "2021-07-28T14:00:00Z", "sort": "DESC", "field": "event_type"}'
+        curl -X POST 'https://api.jumpcloud.com/insights/directory/v1/events/distinct' -H 'Content-Type: application/json' -H 'x-api-key: REPLACE_KEY_VALUE' --data '{"service": ["all"], "start_time": "2021-07-14T23:00:00Z", "end_time": "2021-07-28T14:00:00Z", "sort": "DESC", "field": "event_type"}'
         ```
       consumes:
         - application/json
@@ -1259,7 +1259,7 @@ paths:
         Query the API for a list of counts by time interval
         #### Sample Request
         ```
-        curl -X POST 'https://api.jumpcloud.com/insights/directory/v1/events/interval' -H 'Content-Type: application/json' -H 'x-api-key: {API_KEY}' --data '{"service": ["all"], "start_time": "2021-07-14T23:00:00Z", "end_time": "2021-07-28T14:00:00Z", "timezone": "-0500", "interval_unit": "h", "interval_value": "2"}'
+        curl -X POST 'https://api.jumpcloud.com/insights/directory/v1/events/interval' -H 'Content-Type: application/json' -H 'x-api-key: REPLACE_KEY_VALUE' --data '{"service": ["all"], "start_time": "2021-07-14T23:00:00Z", "end_time": "2021-07-28T14:00:00Z", "timezone": "-0500", "interval_unit": "h", "interval_value": "2"}'
         ```
       consumes:
         - application/json
