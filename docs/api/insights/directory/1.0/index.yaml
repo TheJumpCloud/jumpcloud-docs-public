@@ -1435,6 +1435,8 @@ paths:
                     - users-to-directories
                     - users-to-ldap-servers
                     - users-to-radius-servers
+                    - users-to-sso-applications
+                    - os-patch-policy
                 updated_at:
                   type: string
               additionalProperties: false
@@ -1569,6 +1571,8 @@ paths:
             - users-to-directories
             - users-to-ldap-servers
             - users-to-radius-servers
+            - users-to-sso-applications
+            - os-patch-policy
           type: string
           description: Report Type
           name: report_type
@@ -1623,6 +1627,8 @@ paths:
                   - users-to-directories
                   - users-to-ldap-servers
                   - users-to-radius-servers
+                  - users-to-sso-applications
+                  - os-patch-policy
               updated_at:
                 type: string
             additionalProperties: false
