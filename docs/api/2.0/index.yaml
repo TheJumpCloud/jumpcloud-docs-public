@@ -10713,7 +10713,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/api/commandresult/workflows \
+        curl -X GET https://console.jumpcloud.com/api/v2/commandresult/workflows \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
