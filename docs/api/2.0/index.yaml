@@ -3290,6 +3290,9 @@ definitions:
       memberSuggestionsNotify:
         description: True if notification emails are to be sent for membership suggestions.
         type: boolean
+      membershipAutomated:
+        description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
+        type: boolean
       name:
         description: Display name of a User Group.
         type: string
@@ -3322,6 +3325,9 @@ definitions:
       memberSuggestionsNotify:
         description: True if notification emails are to be sent for membership suggestions.
         type: boolean
+      membershipAutomated:
+        description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
+        type: boolean
       name:
         description: Display name of a User Group.
         type: string
@@ -3348,6 +3354,9 @@ definitions:
         type: array
       memberSuggestionsNotify:
         description: True if notification emails are to be sent for membership suggestions.
+        type: boolean
+      membershipAutomated:
+        description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
         type: boolean
       name:
         description: Display name of a User Group.
@@ -26462,7 +26471,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"name":"string"}'
+              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -26510,6 +26519,7 @@ paths:
                     }
                 ],
                 "memberSuggestionsNotify": True,
+                "membershipAutomated": True,
                 "name": "string"
             }
             headers = {
@@ -26527,7 +26537,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
   /usergroups/{group_id}/activedirectories:
     get:
       description: |-
@@ -27896,7 +27906,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"name":"string"}'
+              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -27944,6 +27954,7 @@ paths:
                     }
                 ],
                 "memberSuggestionsNotify": True,
+                "membershipAutomated": True,
                 "name": "string"
             }
             headers = {
@@ -27961,7 +27972,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
   /users/{user_id}/activedirectories:
     get:
       description: |-
