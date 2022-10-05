@@ -5549,6 +5549,7 @@ paths:
       x-scopes:
         - systems
         - systems.readonly
+        - commandrunner.legacy
       x-codeSamples:
         - lang: Shell
           source: |-
