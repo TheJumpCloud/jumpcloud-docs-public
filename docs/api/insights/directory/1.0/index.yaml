@@ -928,17 +928,21 @@ info:
 
     ## System Events
 
-     Event                  | Description                                                                                                                          |
-     ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------|
-     login_attempt          | User authenticates to a system.                                                                                                      |
-     system_fde_key_update  | A system's file disk encryption key updates.                                                                                         |
-     user_password_change   | User password changes on a system.                                                                                                   |
-     user_lockout           | User is locked out of a system.                                                                                                      |
-     system_fde_key_decrypt | A device's file disk encryption key was decrypted.                                                                                   |
-     os_minor_upgrade       | An upgrade event with an increase in the minor patch, or revision attributes and no change to the major and release name attributes. |
-     os_major_upgrade       | An upgrade event where the major attribute increases and the release name changes.                                                   |
-     os_minor_rollback      | A rollback event with a decrease in the minor, patch, or revision attributes and no change to the major and release name attributes. |
-     os_major_rollback      | A rollback event where the major attribute decreases and the release name changes.                                                   |
+     Event                   | Description                                                                                                                                                     |
+     ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+     login_attempt           | User authenticates to a system.                                                                                                                                 |
+     system_fde_key_update   | A system's file disk encryption key updates.                                                                                                                    |
+     user_password_change    | User password changes on a system.                                                                                                                              |
+     user_lockout            | User is locked out of a system.                                                                                                                                 |
+     system_fde_key_decrypt  | A device's file disk encryption key was decrypted.                                                                                                              |
+     os_minor_upgrade        | An upgrade event with an increase in the minor patch, or revision attributes and no change to the major and release name attributes.                            |
+     os_major_upgrade        | An upgrade event where the major attribute increases and the release name changes.                                                                              |
+     os_minor_rollback       | A rollback event with a decrease in the minor, patch, or revision attributes and no change to the major and release name attributes.                            |
+     os_major_rollback       | A rollback event where the major attribute decreases and the release name changes.                                                                              |
+     remote_session_start    | Admin starts a remote-assist session.                                                                                                                           |
+     remote_session_join     | End user joins a remote assist session, or the admin or end user rejoins an ongoing session when they get disconnected due to network failure or page refresh.  |
+     remote_session_end      | The remote-assist session is terminated by the administrator or the end user.                                                                                   |
+     remote_session_feedback | An administrator or end user provides feedback on a remote-assist session.                                                                                      |
 
     ## Software Events
 
