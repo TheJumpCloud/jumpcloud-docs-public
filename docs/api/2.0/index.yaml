@@ -3694,6 +3694,9 @@ definitions:
           - zeroTrust
           - jumpcloudProtect
           - osPatchManagement
+          - remoteAssist
+          - cloudInsights
+          - passwordManagement
         type: string
     type: object
   gsuite-output:
