@@ -3747,6 +3747,8 @@ definitions:
         items:
           $ref: '#/definitions/importUserAddress'
         type: array
+      alternateEmail:
+        type: string
       company:
         type: string
       costCenter:
