@@ -3476,8 +3476,6 @@ definitions:
         type: string
       imei:
         type: string
-      isActivationLockEnabled:
-        type: boolean
       isSupervised:
         type: boolean
       modelName:
