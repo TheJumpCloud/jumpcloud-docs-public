@@ -1581,6 +1581,8 @@ definitions:
           - JUMPCLOUD
           - AZURE
         type: string
+      caCert:
+        type: string
       deviceCertEnabled:
         type: boolean
       mfa:
@@ -1622,6 +1624,8 @@ definitions:
         enum:
           - JUMPCLOUD
           - AZURE
+        type: string
+      caCert:
         type: string
       deviceCertEnabled:
         type: boolean
@@ -1665,6 +1669,8 @@ definitions:
         enum:
           - JUMPCLOUD
           - AZURE
+        type: string
+      caCert:
         type: string
       deviceCertEnabled:
         type: boolean
@@ -4872,7 +4878,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: ' \
-              --data '{"authIdp":"JUMPCLOUD","deviceCertEnabled":true,"mfa":"DISABLED","name":"string","networkSourceIp":"string","sharedSecret":"string","tagNames":["string"],"userCertEnabled":true,"userLockoutAction":"string","userPasswordEnabled":true,"userPasswordExpirationAction":"string"}'
+              --data '{"authIdp":"JUMPCLOUD","caCert":"string","deviceCertEnabled":true,"mfa":"DISABLED","name":"string","networkSourceIp":"string","sharedSecret":"string","tagNames":["string"],"userCertEnabled":true,"userLockoutAction":"string","userPasswordEnabled":true,"userPasswordExpirationAction":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -4881,6 +4887,7 @@ paths:
 
             payload = {
                 "authIdp": "JUMPCLOUD",
+                "caCert": "string",
                 "deviceCertEnabled": True,
                 "mfa": "DISABLED",
                 "name": "string",
@@ -4907,7 +4914,7 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/radiusservers' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authIdp":"JUMPCLOUD","deviceCertEnabled":true,"mfa":"DISABLED","name":"string","networkSourceIp":"string","sharedSecret":"string","tagNames":["string"],"userCertEnabled":true,"userLockoutAction":"string","userPasswordEnabled":true,"userPasswordExpirationAction":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/radiusservers' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authIdp":"JUMPCLOUD","caCert":"string","deviceCertEnabled":true,"mfa":"DISABLED","name":"string","networkSourceIp":"string","sharedSecret":"string","tagNames":["string"],"userCertEnabled":true,"userLockoutAction":"string","userPasswordEnabled":true,"userPasswordExpirationAction":"string"}'
   /radiusservers/{id}:
     delete:
       description: |-
@@ -5049,6 +5056,8 @@ paths:
               tagsNames:
                 - tag1
             properties:
+              caCert:
+                type: string
               deviceCertEnabled:
                 type: boolean
               mfa:
