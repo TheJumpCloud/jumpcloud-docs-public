@@ -1221,7 +1221,7 @@ paths:
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","field":"string","search_term":{"and":{},"or":{}}}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","field":"string","fields":["string"],"from":0,"limit":0,"search_term":{"and":{},"or":{}},"sort":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -1233,10 +1233,14 @@ paths:
                 "service": ["all"],
                 "start_time": "2019-08-24T14:15:22Z",
                 "field": "string",
+                "fields": ["string"],
+                "from": 0,
+                "limit": 0,
                 "search_term": {
                     "and": {},
                     "or": {}
-                }
+                },
+                "sort": "string"
             }
             headers = {
                 "accept": "application/json",
@@ -1253,7 +1257,7 @@ paths:
             $headers.Add("accept", "application/json")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/distinct' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","field":"string","search_term":{"and":{},"or":{}}}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/distinct' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","field":"string","fields":["string"],"from":0,"limit":0,"search_term":{"and":{},"or":{}},"sort":"string"}'
   /events/interval:
     post:
       security:
@@ -1712,8 +1716,24 @@ definitions:
             description: field is what they wish to query on
             type: string
             x-go-name: Field
+          fields:
+            type: array
+            items:
+              type: string
+            x-go-name: Fields
+          from:
+            type: integer
+            format: int64
+            x-go-name: From
+          limit:
+            type: integer
+            format: int64
+            x-go-name: Limit
           search_term:
             $ref: '#/definitions/SearchTerm'
+          sort:
+            type: string
+            x-go-name: Sort
     x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/model
   EventIntervalQuery:
     description: EventIntervalQuery is the users' command to search our auth logs for bucketed counts of values of the specified field
