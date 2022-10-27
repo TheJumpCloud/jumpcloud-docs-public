@@ -698,7 +698,6 @@ info:
      id               | string            | 60ca54965f723c17b5ee75f5                                                                                                                                            | Unique ID for the event.                                                                                     |
      event_type       | string            | software_add, software_change, software_remove                                                                                                                      | Type of software event.                                                                                      |
      service          | string            | software                                                                                                                                                            | Name of the feature that emits events.                                                                       |
-     initiated_by     | object            | `{"id": "5ce434e77128503e528e747c", "type": "system"}`                                                                                                              | Object that describes who initiated the request.                                                             |
      timestamp        | RFC3339 Timestamp | 2019-03-04T18:08:26Z                                                                                                                                                | Timestamp of when the event occurred (UTC).                                                                  |
      provider         | string            | 5c8fcfe0e7eb500001c71062                                                                                                                                            | Unique ID for the provider.                                                                                  |
      organization     | string            | 606b42c6c627474cf6ee1c6f                                                                                                                                            | Unique ID for the organization.                                                                              |
@@ -1221,7 +1220,7 @@ paths:
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","field":"string","fields":["string"],"from":0,"limit":0,"search_term":{"and":{},"or":{}},"sort":"string"}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","field":"string","search_term":{"and":{},"or":{}}}'
         - lang: Python
           source: |-
             import requests
@@ -1233,14 +1232,10 @@ paths:
                 "service": ["all"],
                 "start_time": "2019-08-24T14:15:22Z",
                 "field": "string",
-                "fields": ["string"],
-                "from": 0,
-                "limit": 0,
                 "search_term": {
                     "and": {},
                     "or": {}
-                },
-                "sort": "string"
+                }
             }
             headers = {
                 "accept": "application/json",
@@ -1257,7 +1252,7 @@ paths:
             $headers.Add("accept", "application/json")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/distinct' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","field":"string","fields":["string"],"from":0,"limit":0,"search_term":{"and":{},"or":{}},"sort":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/distinct' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","field":"string","search_term":{"and":{},"or":{}}}'
   /events/interval:
     post:
       security:
@@ -1716,24 +1711,8 @@ definitions:
             description: field is what they wish to query on
             type: string
             x-go-name: Field
-          fields:
-            type: array
-            items:
-              type: string
-            x-go-name: Fields
-          from:
-            type: integer
-            format: int64
-            x-go-name: From
-          limit:
-            type: integer
-            format: int64
-            x-go-name: Limit
           search_term:
             $ref: '#/definitions/SearchTerm'
-          sort:
-            type: string
-            x-go-name: Sort
     x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/model
   EventIntervalQuery:
     description: EventIntervalQuery is the users' command to search our auth logs for bucketed counts of values of the specified field
