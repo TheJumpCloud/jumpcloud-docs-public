@@ -16627,6 +16627,7 @@ paths:
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:sort:sort'
         - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:filter:filter'
       responses:
         '200':
           description: OK
