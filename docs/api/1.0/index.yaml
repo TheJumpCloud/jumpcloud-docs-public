@@ -718,7 +718,7 @@ definitions:
         description: ''
         type: boolean
       systems:
-        description: An array of system IDs to run the command on. Not available if you are using Groups.
+        description: Not used. Use /api/v2/commands/{id}/associations to bind commands to systems.
         items:
           type: string
         type: array
@@ -4101,7 +4101,19 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands?fields=&filter=SOME_STRING_VALUE&limit=10&skip=0&sort=' -Method GET -Headers $headers
     post:
-      description: "This endpoint allows you to create a new command.\n\n#### Sample Request\n\n```\ncurl -X POST https://console.jumpcloud.com/api/commands/ \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key: {API_KEY}' \\\n  -d '{\n\t\"name\":\"Test API Command\",\n\t\"command\":\"String\",\n\t\"user\":\"{UserID}\",\n\t\"schedule\":\"\",\n\t\"timeout\":\"100\"\n}'\n\n```"
+      description: |-
+        This endpoint allows you to create a new command.
+
+        NOTE: the system property in the command is not used. Use a POST to /api/v2/commands/{id}/associations to bind a command to a system.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/commands/ \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json'
+          -H 'x-api-key: {API_KEY}'
+          -d '{"name":"Test API Command", "command":"String", "user":"{UserID}", "schedule":"", "timeout":"100"}'
+        ```
       operationId: commands_post
       parameters:
         - in: body
