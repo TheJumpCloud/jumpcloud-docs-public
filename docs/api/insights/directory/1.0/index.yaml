@@ -1687,9 +1687,6 @@ definitions:
       message:
         description: Text detailed error message returned by the service
         type: string
-        x-go-name: Message
-    x-go-name: errorMessage
-    x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/util
   EventCount:
     description: EventCount JSON struct with count of matching events
     type: object
@@ -1697,8 +1694,6 @@ definitions:
       count:
         type: integer
         format: int64
-        x-go-name: Count
-    x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/model
   EventDistinctQuery:
     description: EventDistinctQuery is the users' command to search our auth logs for distinct values of the specified field
     allOf:
@@ -1713,7 +1708,6 @@ definitions:
             x-go-name: Field
           search_term:
             $ref: '#/definitions/SearchTerm'
-    x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/model
   EventIntervalQuery:
     description: EventIntervalQuery is the users' command to search our auth logs for bucketed counts of values of the specified field
     allOf:
@@ -1743,7 +1737,6 @@ definitions:
               optional
             type: string
             x-go-name: TimeZone
-    x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/model
   EventQuery:
     description: EventQuery is the users' command to search our auth logs
     allOf:
@@ -1773,7 +1766,6 @@ definitions:
             description: ASC or DESC order for timestamp
             type: string
             x-go-name: Sort
-    x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/model
   EventServiceTimeQuery:
     description: |-
       EventServiceTimeQuery is the base struct for most event queries
@@ -1787,7 +1779,6 @@ definitions:
         description: 'optional query end time, UTC in RFC3339 format'
         type: string
         format: date-time
-        x-go-name: EndTime
       service:
         description: service name to query.
         type: array
@@ -1801,13 +1792,10 @@ definitions:
             - directory
             - ldap
             - mdm
-        x-go-name: Service
       start_time:
         description: 'query start time, UTC in RFC3339 format'
         type: string
         format: date-time
-        x-go-name: StartTime
-    x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/model
   SearchTerm:
     description: |-
       SearchTerm is the filter portion of the query
@@ -1818,7 +1806,6 @@ definitions:
         $ref: '#/definitions/TermConjunction'
       or:
         $ref: '#/definitions/TermConjunction'
-    x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/model
   TermConjunction:
     description: |-
       TermConjunction represents a conjunction (and/or)
@@ -1826,7 +1813,6 @@ definitions:
       for future-proof-ness
       and a list of sub-values
     type: object
-    x-go-package: github.com/TheJumpCloud/jumpcloud-insights-api/model
 securityDefinitions:
   x-api-key:
     type: apiKey
