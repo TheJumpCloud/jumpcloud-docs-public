@@ -8374,6 +8374,84 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/lock' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"pin":"123456"}'
+  /applemdms/{apple_mdm_id}/devices/{device_id}/osUpdateStatus:
+    parameters:
+      - in: path
+        name: apple_mdm_id
+        required: true
+        type: string
+      - in: path
+        name: device_id
+        required: true
+        type: string
+    post:
+      description: |-
+        Pass through to request the status of an OS update
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/osUpdateStatus \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{}'
+        ```
+      operationId: applemdms_devicesOSUpdateStatus
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '204':
+          description: ''
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          description: ''
+          schema:
+            properties:
+              message:
+                type: string
+            type: object
+      security:
+        - x-api-key: []
+      summary: Request the status of an OS update for a device
+      tags:
+        - Apple MDM
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/osUpdateStatus \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/osUpdateStatus"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("POST", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/osUpdateStatus' -Method POST -Headers $headers
   /applemdms/{apple_mdm_id}/devices/{device_id}/refreshActivationLockInformation:
     parameters:
       - in: path
