@@ -153,6 +153,9 @@ definitions:
         description: A friendly name to identify this enrollment.  Not required to be unique.
         maxLength: 255
         type: string
+      organization:
+        description: The identifier for an organization
+        type: string
     required:
       - id
     title: AppleMDM
@@ -6552,6 +6555,13 @@ parameters:
     in: query
     name: limit
     type: integer
+  trait:limitDefault1:limit:
+    default: 1
+    in: query
+    maximum: 100
+    minimum: 0
+    name: limit
+    type: integer
   trait:limitMax100:limit:
     default: 10
     in: query
@@ -7694,6 +7704,8 @@ paths:
       operationId: applemdms_list
       parameters:
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - $ref: '#/parameters/trait:limitDefault1:limit'
+        - $ref: '#/parameters/trait:skip:skip'
       responses:
         '200':
           description: ''
@@ -7713,7 +7725,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url https://console.jumpcloud.com/api/v2/applemdms \
+              --url 'https://console.jumpcloud.com/api/v2/applemdms?limit=1&skip=0' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE'
         - lang: Python
@@ -7722,12 +7734,14 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/applemdms"
 
+            querystring = {"limit":"1","skip":"0"}
+
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE"
             }
 
-            response = requests.request("GET", url, headers=headers)
+            response = requests.request("GET", url, headers=headers, params=querystring)
 
             print(response.text)
         - lang: Powershell
@@ -7735,7 +7749,7 @@ paths:
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms?limit=1&skip=0' -Method GET -Headers $headers
   /applemdms/{apple_mdm_id}/csr:
     get:
       description: |-
