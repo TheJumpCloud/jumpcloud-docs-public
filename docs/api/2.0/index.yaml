@@ -3969,12 +3969,16 @@ definitions:
   scheduled-userstate-result:
     properties:
       scheduledDate:
+        description: The UTC date and time when the scheduled job will execute.
         type: string
       scheduledJobId:
+        description: The id of the scheduled job that scheduled the state change.
         type: string
       state:
+        description: The state that the user will be in once the scheduled job executes.
         type: string
       systemUserId:
+        description: The id of the user that the scheduled job will update.
         type: string
     title: Scheduled Userstate Result
     type: object
@@ -10710,17 +10714,14 @@ paths:
     get:
       description: |-
         This endpoint is used to lookup the next upcoming scheduled state change for each user in the
-        given list. The users parameter is limited to 100 items per request.
-        #### Sample Request
-        ```
-        curl -X GET "https://console.jumpcloud.com/api/v2/bulk/userstates/eventlist/next?users={UserID1},{UserID2},{UserID3}" \
-          -H 'x-api-key: {API_KEY}' \
-          -H 'Content-Type: application/json' \
-          -H 'Accept: application/json'
-        ```
+        given list. The users parameter is limited to 100 items per request. The results are also limited
+        to 100 items. This endpoint returns a max of 1 event per state per user. For example, if a user
+        has 3 ACTIVATED events scheduled it will return the next upcoming activation event. However, if a
+        user also has a SUSPENDED event scheduled along with the ACTIVATED events it will return the next
+        upcoming activation event _and_ the next upcoming suspension event.
       operationId: bulk_userStatesGetNextScheduled
       parameters:
-        - description: A list of system user IDs
+        - description: A list of system user IDs, limited to 100 items.
           in: query
           items:
             type: string
@@ -10737,6 +10738,11 @@ paths:
           schema:
             properties:
               events_count:
+                description: |-
+                  The total number of ACTIVATED and SUSPENDED events to a max depth of 1 for
+                  all of the users in the query. A value larger than the limit specified on
+                  the query indicates that additional calls are needed, using a skip greater
+                  than 0, to retrieve the full set of results.
                 type: integer
               results:
                 items:
@@ -10755,7 +10761,7 @@ paths:
           $ref: '#/responses/trait:standardErrors:500'
       security:
         - x-api-key: []
-      summary: Gets the next scheduled state change for each user in a list of system users
+      summary: Get the next scheduled state change for a list of users
       tags:
         - Bulk Job Requests
       x-scopes:
