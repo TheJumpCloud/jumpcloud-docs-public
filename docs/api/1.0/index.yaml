@@ -1389,6 +1389,12 @@ definitions:
             minimum: 1
             type: integer
         type: object
+      windowsMDM:
+        properties:
+          enabled:
+            description: Indicates if the Windows MDM is active.
+            type: boolean
+        type: object
     title: OrganizationSettings
     type: object
     x-examples: {}
@@ -3032,6 +3038,14 @@ parameters:
     in: query
     name: sort
     type: string
+  trait:sortIgnoreCase:sortIgnoreCase:
+    default: ''
+    description: |
+      Use space separated sort parameters to sort the collection, ignoring case.
+      Default sort is ascending. Prefix with `-` to sort descending.
+    in: query
+    name: sortIgnoreCase
+    type: string
   trait:systemContextAuth:Authorization:
     description: Authorization header for the System Context API
     in: header
@@ -4532,6 +4546,7 @@ paths:
         - $ref: '#/parameters/trait:search:search'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:sort:sort'
+        - $ref: '#/parameters/trait:sortIgnoreCase:sortIgnoreCase'
       responses:
         '200':
           description: ''
@@ -4551,7 +4566,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/organizations?fields=&filter=SOME_STRING_VALUE&limit=10&search=SOME_STRING_VALUE&skip=0&sort=' \
+              --url 'https://console.jumpcloud.com/api/organizations?fields=&filter=SOME_STRING_VALUE&limit=10&search=SOME_STRING_VALUE&skip=0&sort=&sortIgnoreCase=' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -4559,7 +4574,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/organizations"
 
-            querystring = {"fields":"","filter":"SOME_STRING_VALUE","limit":"10","search":"SOME_STRING_VALUE","skip":"0","sort":""}
+            querystring = {"fields":"","filter":"SOME_STRING_VALUE","limit":"10","search":"SOME_STRING_VALUE","skip":"0","sort":"","sortIgnoreCase":""}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -4570,7 +4585,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/organizations?fields=&filter=SOME_STRING_VALUE&limit=10&search=SOME_STRING_VALUE&skip=0&sort=' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/organizations?fields=&filter=SOME_STRING_VALUE&limit=10&search=SOME_STRING_VALUE&skip=0&sort=&sortIgnoreCase=' -Method GET -Headers $headers
   /organizations/{id}:
     get:
       description: |-

@@ -6624,6 +6624,16 @@ parameters:
       type: string
     name: sort
     type: array
+  trait:sortIgnoreCase:sortIgnoreCase:
+    default: []
+    description: |
+      The comma separated fields used to sort the collection, ignoring case.
+      Default sort is ascending, prefix with `-` to sort descending.
+    in: query
+    items:
+      type: string
+    name: sortIgnoreCase
+    type: array
   trait:systemContextAuth:Authorization:
     description: Authorization header for the System Context API
     in: header
@@ -18950,6 +18960,7 @@ paths:
         - $ref: '#/parameters/trait:limit:limit'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:sort:sort'
+        - $ref: '#/parameters/trait:sortIgnoreCase:sortIgnoreCase'
       responses:
         '200':
           description: ''
@@ -19953,6 +19964,7 @@ paths:
         - $ref: '#/parameters/trait:limit:limit'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:sort:sort'
+        - $ref: '#/parameters/trait:sortIgnoreCase:sortIgnoreCase'
       responses:
         '200':
           description: ''
