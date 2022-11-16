@@ -3697,6 +3697,609 @@ definitions:
         type: string
     title: Bulk User Update
     type: object
+  cloud-insights-account-get:
+    properties:
+      awsAccountId:
+        type: string
+      awsAccountIsActivated:
+        type: string
+      awsAccountIsValidated:
+        type: string
+      awsAccountRegion:
+        type: string
+      awsAccountRoleArn:
+        type: string
+      awsAccountRoleExternalId:
+        type: string
+      createdAt:
+        type: string
+      objectId:
+        type: string
+      organizationObjectId:
+        type: string
+      sqsQueueName:
+        type: string
+      updatedAt:
+        type: string
+    title: cloud-insights-account-get
+    type: object
+  cloud-insights-account-list-response:
+    description: Properties of a Cloud Insights account GET list response object
+    properties:
+      accounts:
+        items:
+          $ref: '#/definitions/cloud-insights-account-get'
+        type: array
+      totalCount:
+        type: number
+    title: cloud-insights-account-list-response
+    type: object
+  cloud-insights-account-post:
+    description: Properties of a Cloud Insights account POST object
+    properties:
+      awsAccountId:
+        type: string
+      awsRegion:
+        type: string
+    required:
+      - awsAccountId
+      - awsRegion
+    title: cloud-insights-account-post
+    type: object
+  cloud-insights-account-post-response:
+    description: Properties of a Cloud Insights account POST response object
+    properties:
+      account:
+        $ref: '#/definitions/cloud-insights-account-get'
+      cftUrl:
+        type: string
+    title: cloud-insights-account-post-response
+    type: object
+  cloud-insights-account-put:
+    properties:
+      isActivated:
+        type: string
+      isValidated:
+        type: string
+    required:
+      - isActivated
+      - isValidated
+    title: cloud-insights-account-put
+    type: object
+  cloud-insights-events-distinct-post:
+    description: Properties of a Cloud Insights events distinct POST request object
+    properties:
+      awsAccounts:
+        items:
+          type: string
+        type: array
+      endTime:
+        properties:
+          nano:
+            type: number
+          seconds:
+            type: number
+        type: object
+      field:
+        type: string
+      npeFilter:
+        type: boolean
+      searchTerm:
+        $ref: '#/definitions/cloud-insights-events-search-term'
+      startTime:
+        properties:
+          nano:
+            type: number
+          seconds:
+            type: number
+        type: object
+    required:
+      - startTime
+      - awsAccounts
+    title: cloud-insights-events-distinct-post
+    type: object
+  cloud-insights-events-distinct-response:
+    description: Properties of a Cloud Insights events distinct POST response
+    properties:
+      results:
+        items:
+          type: string
+        type: array
+    title: cloud-insights-events-distinct-response
+    type: object
+  cloud-insights-events-list-event-details:
+    description: Properties of a Cloud Insights trail GET list response event detail object
+    properties:
+      addendum:
+        properties:
+          originalEventId:
+            type: string
+          originalRequestId:
+            type: string
+          reason:
+            type: string
+          updatedFields:
+            items:
+              type: string
+            type: array
+        type: object
+      additionalEventData:
+        properties:
+          AuthenticationMethod:
+            type: string
+          CipherSuite:
+            type: string
+          LoginTo:
+            type: string
+          MFAUsed:
+            type: string
+          MobileVersion:
+            type: string
+          SignatureVersion:
+            type: string
+          bytesTransferedIn:
+            type: number
+          bytesTransferredOut:
+            type: number
+          x-amz-id-2:
+            type: string
+        type: object
+      annotation:
+        type: string
+      apiVersion:
+        type: string
+      awsRegion:
+        type: string
+      edgeDeviceDetails:
+        properties:
+          devices:
+            items:
+              type: string
+            type: array
+        type: object
+      errorCode:
+        type: string
+      errorMessage:
+        type: string
+      eventCategory:
+        type: string
+      eventId:
+        type: string
+      eventName:
+        type: string
+      eventSource:
+        type: string
+      eventTime:
+        properties:
+          nano:
+            type: string
+          seconds:
+            type: string
+        type: object
+      eventType:
+        type: string
+      eventVersion:
+        type: string
+      managementEvent:
+        type: boolean
+      readOnly:
+        type: boolean
+      recipientAccountId:
+        type: string
+      requestId:
+        type: string
+      requestParameters:
+        properties:
+          Host:
+            type: string
+          bucketName:
+            type: string
+          certificateArn:
+            type: string
+          cluster:
+            type: string
+          complianceTypes:
+            items:
+              type: string
+            type: array
+          configRuleName:
+            type: string
+          durationSeconds:
+            type: number
+          encryptionAlgorithm:
+            type: string
+          encryptionContext:
+            properties:
+              aws:cloudtrail:arn:
+                type: string
+              aws:s3:arn:
+                type: string
+            type:
+              - object
+              - 'null'
+          externalId:
+            type: string
+          include:
+            items:
+              type: string
+            type: array
+          includeDeletedResponses:
+            type: boolean
+          includePublic:
+            type: boolean
+          includeShared:
+            type: boolean
+          includes:
+            properties:
+              hasDnsFqdn:
+                type: boolean
+              keyTypes:
+                items:
+                  type: string
+                type: array
+            type:
+              - object
+              - 'null'
+          keyId:
+            type: string
+          keySpec:
+            type: string
+          limit:
+            type: number
+          location:
+            type: string
+          logGroupName:
+            type: string
+          logStreamName:
+            type: string
+          principalArn:
+            type: string
+          resourceType:
+            type: string
+          resultToken:
+            type: string
+          roleArn:
+            type: string
+          roleSessionName:
+            type: string
+          sAMLAssertionID:
+            type: string
+          services:
+            items:
+              type: string
+            type: array
+          status:
+            type: string
+          testMode:
+            type: boolean
+          userName:
+            type: string
+        type: object
+      resources:
+        items:
+          properties:
+            ARN:
+              type: string
+            accountId:
+              type: string
+            type:
+              type: string
+          type: object
+        type: array
+      responseElements:
+        properties:
+          ConsoleLogin:
+            type: string
+          assumedRoleUser:
+            properties:
+              arn:
+                type: string
+              assumedRoleId:
+                type: string
+            type:
+              - object
+              - 'null'
+          audience:
+            type: string
+          credentials:
+            properties:
+              accessKeyId:
+                type: string
+              expiration:
+                type: string
+              sessionToken:
+                type: string
+            type:
+              - object
+              - 'null'
+          issuer:
+            type: string
+          nameQualifier:
+            type: string
+          subject:
+            type: string
+          subjectType:
+            type: string
+        type: object
+      serviceEventDetails:
+        properties:
+          keyId:
+            type: string
+        type: object
+      sessionCredentialFromConsole:
+        type: string
+      sharedEventID:
+        type: string
+      sourceIPAddress:
+        type: string
+      tlsDetails:
+        properties:
+          cipherSuite:
+            type: string
+          clientProvidedHostHeader:
+            type: string
+          tlsVersion:
+            type: string
+        type: object
+      userAgent:
+        type: string
+      userIdentity:
+        properties:
+          accessKeyId:
+            type: string
+          accountId:
+            type: string
+          arn:
+            type: string
+          identityProvider:
+            type: string
+          invokedBy:
+            type: string
+          principalId:
+            type: string
+          sessionContext:
+            properties:
+              attributes:
+                properties:
+                  creationDate:
+                    properties:
+                      nano:
+                        type: string
+                      seconds:
+                        type: string
+                    type: object
+                  mfaAuthenticated:
+                    type: string
+                type:
+                  - object
+                  - 'null'
+              sessionIssuer:
+                properties:
+                  accountId:
+                    type: string
+                  arn:
+                    type: string
+                  principleId:
+                    type: string
+                  type:
+                    type: string
+                  userName:
+                    type: string
+                type:
+                  - object
+                  - 'null'
+              webIdFederationData:
+                properties:
+                  attributes:
+                    properties:
+                      applicationId:
+                        type: string
+                      userId:
+                        type: string
+                    type:
+                      - object
+                      - 'null'
+                  federatedProvider:
+                    type: string
+                type:
+                  - object
+                  - 'null'
+            type: object
+          type:
+            type: string
+          userName:
+            type: string
+        type: object
+      vpcEndpointId:
+        type: string
+    title: cloud-insights-events-list-event-details
+    type: object
+  cloud-insights-events-list-events:
+    description: Properties of a Cloud Insights trail GET list response event object
+    properties:
+      event:
+        $ref: '#/definitions/cloud-insights-events-list-event-details'
+      eventName:
+        type: string
+      eventTime:
+        properties:
+          nano:
+            type: string
+          seconds:
+            type: string
+        type: object
+      indexedTime:
+        properties:
+          nano:
+            type: string
+          seconds:
+            type: string
+        type: object
+      jumpcloudUser:
+        type: boolean
+      nonPersonEntity:
+        type: boolean
+      ssoUser:
+        type: boolean
+    title: cloud-insights-events-list-events
+    type: object
+  cloud-insights-events-list-post:
+    properties:
+      awsAccounts:
+        items:
+          type: string
+        type: array
+      endTime:
+        properties:
+          nano:
+            type: number
+          seconds:
+            type: number
+        type: object
+      fields:
+        items:
+          type: string
+        type: array
+      limit:
+        type: number
+      npeFilter:
+        type: boolean
+      searchAfter:
+        type: object
+      searchTerm:
+        $ref: '#/definitions/cloud-insights-events-search-term'
+      service:
+        type: string
+      skip:
+        type: number
+      sort:
+        type: object
+      startTime:
+        properties:
+          nano:
+            type: number
+          seconds:
+            type: number
+        type: object
+    title: cloud-insights-events-list-post
+    type: object
+  cloud-insights-events-list-response:
+    description: Properties of a Cloud Insights trail GET list response object
+    properties:
+      events:
+        items:
+          $ref: '#/definitions/cloud-insights-events-list-events'
+        type: array
+      searchAfter:
+        type: object
+      totalCount:
+        type: number
+    title: cloud-insights-events-list-response
+    type: object
+  cloud-insights-events-search-term:
+    properties:
+      andConjunction:
+        $ref: '#/definitions/cloud-insights-term-conjunction'
+      orConjunction:
+        $ref: '#/definitions/cloud-insights-term-conjunction'
+      singleTerm:
+        type: string
+    title: cloud-insights-events-search-term
+    type: object
+  cloud-insights-saved-view-base:
+    description: Base properties of a Cloud Insights saved view
+    properties:
+      columns:
+        items:
+          type: string
+        type: array
+      excludeNonPersonEntities:
+        type: boolean
+      filters:
+        items:
+          properties:
+            field:
+              type: string
+            values:
+              items:
+                type: string
+              type: array
+          type: object
+        type: array
+      timeRange:
+        type: string
+    title: cloud-insights-saved-view-base
+    type: object
+  cloud-insights-saved-view-id:
+    properties:
+      viewId:
+        type: string
+    type: object
+  cloud-insights-saved-view-post:
+    allOf:
+      - $ref: '#/definitions/cloud-insights-saved-view-base'
+      - properties:
+          name:
+            type: string
+          userId:
+            type: string
+        required:
+          - name
+    description: Properties of a Cloud Insights saved view object
+    title: cloud-insights-saved-view-post
+    type: object
+  cloud-insights-saved-view-put:
+    allOf:
+      - $ref: '#/definitions/cloud-insights-saved-view-base'
+      - properties:
+          name:
+            type: string
+          userId:
+            type: string
+    type: object
+  cloud-insights-saved-view-response:
+    allOf:
+      - $ref: '#/definitions/cloud-insights-saved-view-base'
+      - properties:
+          name:
+            type: string
+          organizationObjectId:
+            type: string
+          viewId:
+            type: string
+    description: Properties of a Cloud Insights saved view object
+    title: cloud-insights-saved-view-response
+    type: object
+  cloud-insights-term-conjunction:
+    properties:
+      operator:
+        type: string
+      termItems:
+        items:
+          $ref: '#/definitions/cloud-insights-term-item'
+        type: array
+    type: object
+  cloud-insights-term-item:
+    properties:
+      termArray:
+        properties:
+          key:
+            type: string
+          values:
+            items:
+              type: string
+            type: array
+        type: object
+      termConjunction:
+        type: object
+      termValue:
+        properties:
+          key:
+            type: string
+          value:
+            type: string
+        type: object
+    type: object
   feature:
     description: A feature represents JumpCloud functionality.
     properties:
@@ -10871,6 +11474,825 @@ paths:
         name: id
         required: true
         type: string
+  /cloudinsights/accounts:
+    get:
+      description: Get list of AWS accounts registered with Cloud Insights
+      operationId: cloudInsights_listAccounts
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/cloud-insights-account-list-response'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/accounts \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/accounts"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/accounts' -Method GET -Headers $headers
+    post:
+      description: Allows you to create a single AWS account record
+      operationId: cloudInsights_createAccount
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/cloud-insights-account-post'
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      produces:
+        - text/plain
+        - text/json
+        - text/html
+      responses:
+        '201':
+          description: CREATED
+          schema:
+            $ref: '#/definitions/cloud-insights-account-post-response'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: ''
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/accounts \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"awsAccountId":"string","awsRegion":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/accounts"
+
+            payload = {
+                "awsAccountId": "string",
+                "awsRegion": "string"
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/accounts' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"awsAccountId":"string","awsRegion":"string"}'
+  /cloudinsights/accounts/{cloud_insights_id}:
+    get:
+      description: Get Cloud Insights Account by ID
+      operationId: cloudInsights_getAccountByID
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/cloud-insights-account-get'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/accounts/{cloud_insights_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/accounts/{cloud_insights_id}"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/accounts/{cloud_insights_id}' -Method GET -Headers $headers
+    parameters:
+      - description: objectId of the Cloud Insights instance.
+        in: path
+        name: cloud_insights_id
+        required: true
+        type: string
+    put:
+      description: Update record an existing Cloud Insights AWS account.
+      operationId: cloudInsights_updateAccountByID
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/cloud-insights-account-put'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/cloud-insights-account-get'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Update Cloud Insights Account record by ID
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/accounts/{cloud_insights_id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"isActivated":"string","isValidated":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/accounts/{cloud_insights_id}"
+
+            payload = {
+                "isActivated": "string",
+                "isValidated": "string"
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/accounts/{cloud_insights_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"isActivated":"string","isValidated":"string"}'
+  /cloudinsights/events:
+    post:
+      description: Get list of events based on query
+      operationId: cloudInsights_listEvents
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/cloud-insights-events-list-post'
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/cloud-insights-events-list-response'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/events \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"awsAccounts":["string"],"endTime":{"nano":0,"seconds":0},"fields":["string"],"limit":0,"npeFilter":true,"searchAfter":{},"searchTerm":{"andConjunction":{"operator":"string","termItems":[{"termArray":{"key":"string","values":["string"]},"termConjunction":{},"termValue":{"key":"string","value":"string"}}]},"orConjunction":{"operator":"string","termItems":[{"termArray":{"key":"string","values":["string"]},"termConjunction":{},"termValue":{"key":"string","value":"string"}}]},"singleTerm":"string"},"service":"string","skip":0,"sort":{},"startTime":{"nano":0,"seconds":0}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/events"
+
+            payload = {
+                "awsAccounts": ["string"],
+                "endTime": {
+                    "nano": 0,
+                    "seconds": 0
+                },
+                "fields": ["string"],
+                "limit": 0,
+                "npeFilter": True,
+                "searchAfter": {},
+                "searchTerm": {
+                    "andConjunction": {
+                        "operator": "string",
+                        "termItems": [
+                            {
+                                "termArray": {
+                                    "key": "string",
+                                    "values": ["string"]
+                                },
+                                "termConjunction": {},
+                                "termValue": {
+                                    "key": "string",
+                                    "value": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "orConjunction": {
+                        "operator": "string",
+                        "termItems": [
+                            {
+                                "termArray": {
+                                    "key": "string",
+                                    "values": ["string"]
+                                },
+                                "termConjunction": {},
+                                "termValue": {
+                                    "key": "string",
+                                    "value": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "singleTerm": "string"
+                },
+                "service": "string",
+                "skip": 0,
+                "sort": {},
+                "startTime": {
+                    "nano": 0,
+                    "seconds": 0
+                }
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/events' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"awsAccounts":["string"],"endTime":{"nano":0,"seconds":0},"fields":["string"],"limit":0,"npeFilter":true,"searchAfter":{},"searchTerm":{"andConjunction":{"operator":"string","termItems":[{"termArray":{"key":"string","values":["string"]},"termConjunction":{},"termValue":{"key":"string","value":"string"}}]},"orConjunction":{"operator":"string","termItems":[{"termArray":{"key":"string","values":["string"]},"termConjunction":{},"termValue":{"key":"string","value":"string"}}]},"singleTerm":"string"},"service":"string","skip":0,"sort":{},"startTime":{"nano":0,"seconds":0}}'
+  /cloudinsights/events/distinct:
+    post:
+      description: Cloud Insights query to retrieve list of distinct field values
+      operationId: cloudInsights_fetchDistinctFieldValues
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/cloud-insights-events-distinct-post'
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/cloud-insights-events-distinct-response'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/events/distinct \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"awsAccounts":["string"],"endTime":{"nano":0,"seconds":0},"field":"string","npeFilter":true,"searchTerm":{"andConjunction":{"operator":"string","termItems":[{"termArray":{"key":"string","values":["string"]},"termConjunction":{},"termValue":{"key":"string","value":"string"}}]},"orConjunction":{"operator":"string","termItems":[{"termArray":{"key":"string","values":["string"]},"termConjunction":{},"termValue":{"key":"string","value":"string"}}]},"singleTerm":"string"},"startTime":{"nano":0,"seconds":0}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/events/distinct"
+
+            payload = {
+                "awsAccounts": ["string"],
+                "endTime": {
+                    "nano": 0,
+                    "seconds": 0
+                },
+                "field": "string",
+                "npeFilter": True,
+                "searchTerm": {
+                    "andConjunction": {
+                        "operator": "string",
+                        "termItems": [
+                            {
+                                "termArray": {
+                                    "key": "string",
+                                    "values": ["string"]
+                                },
+                                "termConjunction": {},
+                                "termValue": {
+                                    "key": "string",
+                                    "value": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "orConjunction": {
+                        "operator": "string",
+                        "termItems": [
+                            {
+                                "termArray": {
+                                    "key": "string",
+                                    "values": ["string"]
+                                },
+                                "termConjunction": {},
+                                "termValue": {
+                                    "key": "string",
+                                    "value": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "singleTerm": "string"
+                },
+                "startTime": {
+                    "nano": 0,
+                    "seconds": 0
+                }
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/events/distinct' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"awsAccounts":["string"],"endTime":{"nano":0,"seconds":0},"field":"string","npeFilter":true,"searchTerm":{"andConjunction":{"operator":"string","termItems":[{"termArray":{"key":"string","values":["string"]},"termConjunction":{},"termValue":{"key":"string","value":"string"}}]},"orConjunction":{"operator":"string","termItems":[{"termArray":{"key":"string","values":["string"]},"termConjunction":{},"termValue":{"key":"string","value":"string"}}]},"singleTerm":"string"},"startTime":{"nano":0,"seconds":0}}'
+  /cloudinsights/views:
+    get:
+      description: Get Cloud Insights Saved Views List
+      operationId: cloudInsights_fetchSavedViewsList
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/cloud-insights-saved-view-response'
+            type: array
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/views \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/views"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/views' -Method GET -Headers $headers
+    post:
+      description: Create new saved view for organization
+      operationId: cloudInsights_createSavedView
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/cloud-insights-saved-view-post'
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/cloud-insights-saved-view-response'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/views \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"columns":["string"],"excludeNonPersonEntities":true,"filters":[{"field":"string","values":["string"]}],"timeRange":"string","name":"string","userId":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/views"
+
+            payload = {
+                "columns": ["string"],
+                "excludeNonPersonEntities": True,
+                "filters": [
+                    {
+                        "field": "string",
+                        "values": ["string"]
+                    }
+                ],
+                "timeRange": "string",
+                "name": "string",
+                "userId": "string"
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/views' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"columns":["string"],"excludeNonPersonEntities":true,"filters":[{"field":"string","values":["string"]}],"timeRange":"string","name":"string","userId":"string"}'
+  /cloudinsights/views/{view_id}:
+    delete:
+      description: Delete Cloud Insights Saved View record by ID
+      operationId: cloudInsights_deleteSavedView
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/cloud-insights-saved-view-id'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/views/{view_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/views/{view_id}"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/views/{view_id}' -Method DELETE -Headers $headers
+    get:
+      description: Get Cloud Insights Saved View By ID
+      operationId: cloudInsights_fetchSavedView
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/cloud-insights-saved-view-response'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/views/{view_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/views/{view_id}"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/views/{view_id}' -Method GET -Headers $headers
+    parameters:
+      - description: objectId of the Cloud Insights Saved View record.
+        in: path
+        name: view_id
+        required: true
+        type: string
+    put:
+      description: Update Cloud Insights Saved View record by ID
+      operationId: cloudInsights_updateSavedView
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/cloud-insights-saved-view-put'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/cloud-insights-saved-view-response'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      tags:
+        - Cloud Insights
+      x-scopes:
+        - cloudinsights
+        - cloudinsights.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/cloudinsights/views/{view_id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"columns":["string"],"excludeNonPersonEntities":true,"filters":[{"field":"string","values":["string"]}],"timeRange":"string","name":"string","userId":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cloudinsights/views/{view_id}"
+
+            payload = {
+                "columns": ["string"],
+                "excludeNonPersonEntities": True,
+                "filters": [
+                    {
+                        "field": "string",
+                        "values": ["string"]
+                    }
+                ],
+                "timeRange": "string",
+                "name": "string",
+                "userId": "string"
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/views/{view_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"columns":["string"],"excludeNonPersonEntities":true,"filters":[{"field":"string","values":["string"]}],"timeRange":"string","name":"string","userId":"string"}'
   /commandqueue/{workflow_instance_id}:
     delete:
       description: |-
@@ -30145,6 +31567,8 @@ x-scopes:
   - applications.readonly
   - authn
   - authn.readonly
+  - cloudinsights
+  - cloudinsights.readonly
   - commandrunner.legacy
   - commands
   - commands.readonly
@@ -30181,6 +31605,7 @@ x-tagGroups:
       - Applications
       - Authentication Policies
       - Bulk Job Requests
+      - Cloud Insights
       - Commands
       - Command Results
       - Custom Emails
