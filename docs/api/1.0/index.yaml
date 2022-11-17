@@ -631,8 +631,9 @@ definitions:
           tokenEndpointAuthMethod:
             description: Method that the client uses to authenticate when requesting a token. If 'none', then the client must use PKCE. If 'client_secret_post', then the secret is passed in the post body when requesting the token.
             enum:
-              - none
+              - client_secret_basic
               - client_secret_post
+              - none
             type: string
         type: object
       provision:
