@@ -18283,7 +18283,7 @@ paths:
       tags:
         - Organizations
       x-scopes:
-        - organizations
+        - support
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -31589,6 +31589,7 @@ x-scopes:
   - radius
   - radius.readonly
   - subscriptions.readonly
+  - support
   - systeminsights.readonly
   - systems
   - systems.readonly
