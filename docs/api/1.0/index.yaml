@@ -3134,6 +3134,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/application-templates?fields=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_STRING_VALUE' -Method GET -Headers $headers
     parameters: []
+    x-functionalities-tags:
+      - application-templates
   /application-templates/{id}:
     get:
       description: |-
@@ -3214,6 +3216,8 @@ paths:
         name: id
         required: true
         type: string
+    x-functionalities-tags:
+      - application-templates
   /applications:
     get:
       description: |-
@@ -3490,6 +3494,11 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/applications' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"type":"string"},"ssoUrl":"string"}'
+    x-functionalities-tags:
+      - applications
+  /applications/selection:
+    x-functionalities-tags:
+      - applications
   /applications/{id}:
     delete:
       description: The endpoint deletes an SSO / SAML Application.
@@ -3785,6 +3794,31 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/applications/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"type":"string"},"ssoUrl":"string"}'
+    x-functionalities-tags:
+      - applications
+  /cancelQueuedCommands:
+    x-functionalities-tags:
+      - queued-commands
+  /cases:
+    x-functionalities-tags:
+      - cases
+  /checkQueuedCommands:
+    x-functionalities-tags:
+      - queued-commands
+  /command/trigger/{name}/{workflowId}:
+    parameters:
+      - in: path
+        name: name
+        required: true
+        type: string
+      - in: path
+        name: workflowId
+        required: true
+        type: string
+    x-functionalities-tags:
+      - devices-windows-commands-execution
+      - devices-darwin-commands-execution
+      - devices-linux-commands-execution
   /command/trigger/{triggername}:
     parameters:
       - in: path
@@ -3869,6 +3903,10 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/command/trigger/{triggername}' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+    x-functionalities-tags:
+      - devices-windows-commands-execution
+      - devices-darwin-commands-execution
+      - devices-linux-commands-execution
   /commandresults:
     get:
       description: |-
@@ -4054,6 +4092,8 @@ paths:
         name: id
         required: true
         type: string
+    x-functionalities-tags:
+      - command-results
   /commands:
     get:
       description: |-
@@ -4348,6 +4388,11 @@ paths:
       summary: Update a Command
       tags:
         - Commands
+      x-functionalities-tags:
+        - commands
+        - devices-windows-commands-crud
+        - devices-darwin-commands-crud
+        - devices-linux-commands-crud
       x-scopes:
         - commands
       x-codeSamples:
@@ -4457,6 +4502,11 @@ paths:
         name: id
         required: true
         type: string
+    x-functionalities-tags:
+      - command-results
+  /files:
+    x-functionalities-tags:
+      - command-files
   /files/command/{id}:
     get:
       description: |-
@@ -4525,6 +4575,44 @@ paths:
         name: id
         required: true
         type: string
+    x-functionalities-tags:
+      - command-files
+  /files/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - command-files
+  /idsources:
+    x-functionalities-tags:
+      - id-sources
+  /idsources/selection:
+    x-functionalities-tags:
+      - id-sources
+  /idsources/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - id-sources
+  /notifications:
+    x-functionalities-tags:
+      - org-notifications
+  /notifications/grouped:
+    x-functionalities-tags:
+      - org-notifications
+  /notifications/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - org-notifications
   /organizations:
     get:
       description: |-
@@ -4587,6 +4675,8 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/organizations?fields=&filter=SOME_STRING_VALUE&limit=10&search=SOME_STRING_VALUE&skip=0&sort=&sortIgnoreCase=' -Method GET -Headers $headers
+    x-functionalities-tags:
+      - organizations
   /organizations/{id}:
     get:
       description: |-
@@ -4803,6 +4893,53 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/organizations/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"settings":{"contactEmail":"string","contactName":"string","deviceIdentificationEnabled":true,"disableGoogleLogin":true,"disableLdap":true,"disableUM":true,"duplicateLDAPGroups":true,"emailDisclaimer":"string","enableManagedUID":true,"features":{"directoryInsights":{"enabled":true},"directoryInsightsPremium":{"createdAt":"string","enabled":true,"updatedAt":"string"},"systemInsights":{"createdAt":"string","enableNewDarwin":true,"enableNewLinux":true,"enableNewWindows":true,"enabled":true,"updatedAt":"string"}},"growthData":{},"logo":"string","name":"string","newSystemUserStateDefaults":{"applicationImport":"ACTIVATED","csvImport":"ACTIVATED","manualEntry":"ACTIVATED"},"passwordCompliance":"custom","passwordPolicy":{"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":1,"effectiveDate":"string","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"gracePeriodDate":"string","lockoutTimeInSeconds":0,"maxHistory":1,"maxLoginAttempts":1,"minChangePeriodInDays":0,"minLength":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":1},"showIntro":true,"systemUserPasswordExpirationInDays":0,"systemUsersCanEdit":true,"systemUsersCap":0,"trustedAppConfig":{"trustedApps":[{"name":"Application 1","path":"/someuser/Applications/application1.app","teamid":"FakeTeamID"}]},"userPortal":{"idleSessionDurationMinutes":1}}}'
+    x-functionalities-tags:
+      - organizations
+  /organizations/{id}/paymentdetails:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - accounts-page-payment-info
+  /organizations/{id}/paymentdetails/card:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - accounts-page-payment-info
+  /organizations/{id}/paymentparams:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - accounts-page-payment-info
+  /organizations/{id}/subscription:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - accounts-page-payment-info
+  /organizations/{organizationId}/applications/{applicationId}/metadata.xml:
+    parameters:
+      - in: path
+        name: organizationId
+        required: true
+        type: string
+      - in: path
+        name: applicationId
+        required: true
+        type: string
+    x-functionalities-tags:
+      - organizations
+      - applications
   /radiusservers:
     get:
       description: |-
@@ -4833,6 +4970,8 @@ paths:
       summary: List Radius Servers
       tags:
         - Radius Servers
+      x-functionalities-tags:
+        - radius-read
       x-scopes:
         - radius
         - radius.readonly
@@ -4900,6 +5039,8 @@ paths:
       summary: Create a Radius Server
       tags:
         - Radius Servers
+      x-functionalities-tags:
+        - radius-create
       x-scopes:
         - radius
       x-codeSamples:
@@ -4970,6 +5111,8 @@ paths:
       summary: Delete Radius Server
       tags:
         - Radius Servers
+      x-functionalities-tags:
+        - radius-delete
       x-scopes:
         - radius
       x-codeSamples:
@@ -5133,6 +5276,8 @@ paths:
       summary: Update Radius Servers
       tags:
         - Radius Servers
+      x-functionalities-tags:
+        - radius-update
       x-scopes:
         - radius
       x-codeSamples:
@@ -5172,6 +5317,14 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/radiusservers/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"test radius","networkSourceIp":"0.0.0.0","sharedSecret":"secretradiuspassword","tagsNames":["tag1"]}'
+    x-functionalities-tags:
+      - radius-create
+  /roles:
+    x-functionalities-tags:
+      - roles
+  /runCommand:
+    x-functionalities-tags:
+      - run-command
   /search/commandresults:
     post:
       description: |-
@@ -5261,6 +5414,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/search/commandresults?fields=&filter=SOME_STRING_VALUE&limit=10&skip=0' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"fields":"string","filter":{},"searchFilter":{}}'
+    x-functionalities-tags:
+      - search
   /search/commands:
     post:
       description: |-
@@ -5394,6 +5549,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/search/commands?fields=&filter=SOME_STRING_VALUE&limit=10&skip=0' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"fields":"string","filter":{},"searchFilter":{}}'
+    x-functionalities-tags:
+      - search
   /search/organizations:
     post:
       description: |-
@@ -5481,6 +5638,9 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/search/organizations?fields=&filter=SOME_STRING_VALUE&limit=10&skip=0' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"fields":"string","filter":{},"searchFilter":{}}'
+    x-functionalities-tags:
+      - search
+      - organizations
   /search/systems:
     post:
       description: |-
@@ -5629,6 +5789,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/search/systems?fields=&limit=10&skip=0&filter=SOME_STRING_VALUE' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"fields":"string","filter":{},"searchFilter":{}}'
+    x-functionalities-tags:
+      - search
   /search/systemusers:
     post:
       description: |-
@@ -5771,6 +5933,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/search/systemusers?fields=&filter=SOME_STRING_VALUE&limit=10&skip=0' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"fields":"string","filter":{},"searchFilter":{}}'
+    x-functionalities-tags:
+      - search
   /systems:
     get:
       description: |-
@@ -5835,6 +5999,16 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systems?fields=&limit=10&search=SOME_STRING_VALUE&skip=0&sort=&filter=SOME_STRING_VALUE' -Method GET -Headers $headers
+    x-functionalities-tags:
+      - systems
+  /systems-lite:
+    x-functionalities-tags:
+      - systems
+  /systems/updateAuthConf:
+    x-functionalities-tags:
+      - users-device-windows-authconf-updates
+      - users-device-darwin-authconf-updates
+      - users-device-linux-authconf-updates
   /systems/{id}:
     delete:
       description: |-
@@ -6040,6 +6214,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systems/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"agentBoundMessages":[{"cmd":"string"}],"allowMultiFactorAuthentication":true,"allowPublicKeyAuthentication":true,"allowSshPasswordAuthentication":true,"allowSshRootLogin":true,"displayName":"string","tags":["string"]}'
+    x-functionalities-tags:
+      - systems
   /systems/{system_id}/command/builtin/erase:
     parameters:
       - in: path
@@ -6111,6 +6287,11 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systems/{system_id}/command/builtin/erase' -Method POST -Headers $headers
+    x-functionalities-tags:
+      - devices-windows-security-command
+      - devices-darwin-security-command
+      - devices-linux-security-command
+      - devices-ios-security-command
   /systems/{system_id}/command/builtin/lock:
     parameters:
       - in: path
@@ -6182,6 +6363,11 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systems/{system_id}/command/builtin/lock' -Method POST -Headers $headers
+    x-functionalities-tags:
+      - devices-windows-security-command
+      - devices-darwin-security-command
+      - devices-linux-security-command
+      - devices-ios-security-command
   /systems/{system_id}/command/builtin/restart:
     parameters:
       - in: path
@@ -6253,6 +6439,10 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systems/{system_id}/command/builtin/restart' -Method POST -Headers $headers
+    x-functionalities-tags:
+      - devices-windows-security-command
+      - devices-darwin-security-command
+      - devices-linux-security-command
   /systems/{system_id}/command/builtin/shutdown:
     parameters:
       - in: path
@@ -6324,6 +6514,8 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systems/{system_id}/command/builtin/shutdown' -Method POST -Headers $headers
+    x-functionalities-tags:
+      - devices-darwin-security-command
   /systemusers:
     get:
       description: |-
@@ -6378,6 +6570,8 @@ paths:
       summary: List all system users
       tags:
         - Systemusers
+      x-functionalities-tags:
+        - users-read
       x-scopes:
         - commandrunner.legacy
         - users
@@ -6501,6 +6695,9 @@ paths:
       summary: Create a system user
       tags:
         - Systemusers
+      x-functionalities-tags:
+        - users-create-staged
+        - user-create-active
       x-scopes:
         - users
       x-codeSamples:
@@ -6614,6 +6811,14 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers?fullValidationDetails=SOME_STRING_VALUE' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"account_locked":true,"activated":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"2019-08-24T14:15:22Z","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"passwordless_sudo":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","recoveryEmail":{"address":"string"},"relationships":[{"type":"string","value":"string"}],"samba_service_user":true,"state":"STAGED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
+    x-functionalities-tags:
+      - users
+  /systemusers-lite:
+    x-functionalities-tags:
+      - users
+  /systemusers/reactivate:
+    x-functionalities-tags:
+      - users
   /systemusers/{id}:
     delete:
       description: |-
@@ -6647,6 +6852,8 @@ paths:
       summary: Delete a system user
       tags:
         - Systemusers
+      x-functionalities-tags:
+        - users-delete
       x-scopes:
         - users
       x-codeSamples:
@@ -6707,6 +6914,8 @@ paths:
       summary: List a system user
       tags:
         - Systemusers
+      x-functionalities-tags:
+        - users-get
       x-scopes:
         - users
         - users.readonly
@@ -6779,6 +6988,8 @@ paths:
           in: query
           name: fullValidationDetails
           type: string
+          x-functionalities-tags:
+            - user-updates
       responses:
         '200':
           description: OK
@@ -6911,6 +7122,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}?fullValidationDetails=SOME_STRING_VALUE' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"account_locked":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"string","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","relationships":[{"type":"string","value":"string"}],"samba_service_user":true,"ssh_keys":[{"name":"string","public_key":"string"}],"state":"ACTIVATED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
+    x-functionalities-tags:
+      - users
   /systemusers/{id}/expire:
     parameters:
       - in: path
@@ -6976,6 +7189,11 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/expire' -Method POST -Headers $headers
+    x-functionalities-tags:
+      - users
+      - users-device-windows-password-expiring
+      - users-device-darwin-password-expiring
+      - users-device-linux-password-expiring
   /systemusers/{id}/mfasync:
     parameters:
       - in: path
@@ -7040,6 +7258,8 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/mfasync' -Method POST -Headers $headers
+    x-functionalities-tags:
+      - users
   /systemusers/{id}/resetmfa:
     parameters:
       - in: path
@@ -7141,6 +7361,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/resetmfa' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"}'
+    x-functionalities-tags:
+      - users
   /systemusers/{id}/sshkeys:
     get:
       description: This endpoint will return a specific System User's public SSH key.
@@ -7254,6 +7476,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/sshkeys' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","public_key":"string"}'
+    x-functionalities-tags:
+      - users
   /systemusers/{id}/state/activate:
     post:
       description: |-
@@ -7362,6 +7586,9 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/state/activate' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"email":{}}'
+    x-functionalities-tags:
+      - users-state-change
+      - users
   /systemusers/{id}/unlock:
     parameters:
       - in: path
@@ -7427,6 +7654,8 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/unlock' -Method POST -Headers $headers
+    x-functionalities-tags:
+      - users
   /systemusers/{systemuser_id}/sshkeys/{id}:
     delete:
       description: This endpoint will delete a specific System User's SSH Key.
@@ -7486,6 +7715,41 @@ paths:
         name: id
         required: true
         type: string
+    x-functionalities-tags:
+      - users
+      - user-portal-ssh-keys
+  /userportal/mfa:
+    x-functionalities-tags:
+      - user-portal-totp
+  /userportal/mfa/duo:
+    x-functionalities-tags:
+      - user-portal-totp
+  /userportal/mfa/push:
+    x-functionalities-tags:
+      - user-portal-totp
+  /userportal/mfa/totp:
+    x-functionalities-tags:
+      - user-portal-totp
+  /userportal/mfa/webauthn:
+    x-functionalities-tags:
+      - user-portal-totp
+  /users:
+    x-functionalities-tags:
+      - admin
+  /users/generateApiKey:
+    parameters: []
+    x-functionalities-tags:
+      - admin
+  /users/getSelf:
+    x-functionalities-tags:
+      - admin
+  /users/putSelf:
+    x-functionalities-tags:
+      - admin
+  /users/reactivate:
+    parameters: []
+    x-functionalities-tags:
+      - admin
   /users/reactivate/{id}:
     get:
       description: This endpoint triggers the sending of a reactivation e-mail to an administrator.
@@ -7536,6 +7800,16 @@ paths:
         name: id
         required: true
         type: string
+    x-functionalities-tags:
+      - admin
+  /users/resetPassword:
+    x-functionalities-tags:
+      - admin
+      - admin-password-reset
+  /users/resettotp/self:
+    parameters: []
+    x-functionalities-tags:
+      - admin-login-totp-reset
   /users/resettotp/{id}:
     parameters:
       - in: path
@@ -7593,6 +7867,11 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/users/resettotp/{id}' -Method POST -Headers $headers
+    x-functionalities-tags:
+      - admin-login-totp-reset
+  /users/selection:
+    x-functionalities-tags:
+      - admin
   /users/{id}:
     parameters:
       - in: path
@@ -7629,6 +7908,8 @@ paths:
       tags:
         - Users
         - Managed Service Provider
+      x-functionalities-tags:
+        - user-updates
       x-scopes:
         - administrators
       x-codeSamples:
