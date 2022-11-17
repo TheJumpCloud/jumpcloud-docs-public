@@ -2188,6 +2188,7 @@ definitions:
     enum:
       - autotask
       - connectwise
+      - syncro
     title: IntegrationType
     type: string
   IntegrationsResponse:
@@ -3194,6 +3195,48 @@ definitions:
       total:
         type: integer
     readOnly: true
+    type: object
+  SyncroIntegration:
+    description: Syncro integration configuration details
+    properties:
+      id:
+        description: The identifier for this Syncro integration.
+        type: string
+      isMspAuthConfigured:
+        description: Has the msp-api been configured with auth data yet
+        type: boolean
+      subdomain:
+        description: The subdomain for the URL to connect to Syncro.
+        type: string
+    required:
+      - id
+      - subdomain
+    title: Get Syncro integration GET object
+    type: object
+  SyncroIntegrationPatchReq:
+    description: Request for updating a Syncro integration
+    properties:
+      apiToken:
+        description: The Syncro API token for authentication
+        type: string
+      subdomain:
+        description: The subdomain for the URL to connect to Syncro.
+        type: string
+    title: Create Syncro Integration PATCH object
+    type: object
+  SyncroIntegrationReq:
+    description: Request for creating a Syncro integration
+    properties:
+      apiToken:
+        description: The Syncro API token for authentication
+        type: string
+      subdomain:
+        description: The subdomain for the URL to connect to Syncro.
+        type: string
+    required:
+      - subdomain
+      - apiToken
+    title: Create Syncro Integration POST object
     type: object
   SystemGroup:
     properties:
@@ -16075,6 +16118,176 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/connectwise/{UUID}/settings' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"automaticTicketing":true,"companyTypeIds":[0]}'
+  /integrations/syncro/{UUID}:
+    delete:
+      description: Removes a Syncro integration.
+      operationId: syncro_deleteConfiguration
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Delete Syncro Integration
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}' -Method DELETE -Headers $headers
+    get:
+      description: Retrieves configuration for given Syncro integration id. You must be associated to the provider the integration is tied to in order to use this api.
+      operationId: syncro_getConfiguration
+      responses:
+        '200':
+          description: OK
+          examples: {}
+          schema:
+            $ref: '#/definitions/SyncroIntegration'
+          x-examples:
+            example-1:
+              apiToken: c18d01e8-b531-45cb-bf33-cd3962ae0b94
+              subdomain: mysyncrodomain
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Retrieve Syncro Integration Configuration
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: UUID
+        required: true
+        type: string
+    patch:
+      description: Update the Syncro integration configuration. A 422 Unprocessable Entity response means the server failed to validate with Syncro.
+      operationId: syncro_updateConfiguration
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/SyncroIntegrationPatchReq'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SyncroIntegration'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '422':
+          description: Unprocessable Entity. The server failed to validate credentials with Syncro.
+          schema:
+            properties: {}
+            type: object
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Update Syncro Integration configuration
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"apiToken":"string","subdomain":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}"
+
+            payload = {
+                "apiToken": "string",
+                "subdomain": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"apiToken":"string","subdomain":"string"}'
   /integrations/{integration_type}/{UUID}/errors:
     get:
       description: Retrieves recent sync errors for given integration type and integration id. You must be associated to the provider the integration is tied to in order to use this api.
@@ -21203,6 +21416,87 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/connectwise/alerts/{alert_UUID}/configuration' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"dueDays":0,"priority":{"id":0,"name":"string"},"shouldCreateTickets":true,"source":{"id":0,"name":"string"}}'
+  /providers/{provider_id}/integrations/syncro:
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        type: string
+    post:
+      description: Creates a new Syncro integration for the provider. You must be associated with the provider to use this route. A 422 Unprocessable Entity response means the server failed to validate with Syncro.
+      operationId: syncro_createConfiguration
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/SyncroIntegrationReq'
+      responses:
+        '201':
+          description: Created
+          schema:
+            properties:
+              integrationId:
+                description: The identifier of the created integration
+                type: string
+            required:
+              - integrationId
+            type: object
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '422':
+          description: Unprocessable Entity. The server failed to validate credentials with Syncro.
+          schema:
+            properties: {}
+            type: object
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Creates a new Syncro integration for the provider
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"apiToken":"string","subdomain":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro"
+
+            payload = {
+                "apiToken": "string",
+                "subdomain": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"apiToken":"string","subdomain":"string"}'
   /providers/{provider_id}/integrations/ticketing/alerts:
     get:
       description: Get all ticketing alerts available for a provider's ticketing integration.
