@@ -13415,6 +13415,9 @@ paths:
   /directoryinsights/events/interval:
     x-functionalities-tags:
       - di-events
+  /directoryinsights/events/multi-distinct:
+    x-functionalities-tags:
+      - di-events
   /directoryinsights/graph_view:
     x-functionalities-tags:
       - di-views
