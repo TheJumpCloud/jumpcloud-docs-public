@@ -608,6 +608,25 @@ info:
      message_chain | object            | `{ "response_code": "200", "response_message": "Application successfully activated", "message_details": "OK"}`                                                                                                                                                                                                                                                                                                                  | Results detail for each event                                                                                                     |
      @version      | integer           | 1                                                                                                                                                                                                                                                                                                                                                                                                                               | The schema version for the document object.                                                                                       |
 
+    ## Password Manager Attributes
+
+     Field         | Type              | Example                                                                                                                                                                                 | Description                                                                                                                                  |
+     ------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+     id            | uuid              | 30b03bc3-be76-4919-b341-f9b271a5777a                                                                                                                                                    | Unique id for the event.                                                                                                                     |
+     timestamp     | RFC3339 Timestamp | 2019-03-04T18:08:26Z                                                                                                                                                                    | Timestamp of when the event occurred (UTC).                                                                                                  |
+     service       | string            | password_manager                                                                                                                                                                        | Service that the event originated from.                                                                                                      |
+     organization  | keyword           | 5a2af2a82cf2b0010053ea41                                                                                                                                                                | Organization that the user belongs to.                                                                                                       |
+     changes       | Nested objects    | `[{"field": "folder name", "from": "", "to": "NB folder"  }]`                                                                                                                           | List of changes made in the request. You cannot search on the contents of this field.                                                        |
+     initiated_by  | object            | `{"id": "60d4d8f72c6b9226e875781a", "type": "admin", "email": "sarah.connor+14thdemo@jumpcloud.com", "source": "system"}`                                                               | Object that describes who initiated the request.                                                                                             |
+     association   | object            | `{"type": "admin","id": "5c86b6cf9fdce00001d3800c","email": "user1@domain.com"}`                                                                                                        | Object that describes a change in association, such as adding a user to a folder.                                                            |
+     client_ip     | string            | 10.1.2.3                                                                                                                                                                                | IP address the request came from.                                                                                                            |
+     user_agent    | object            | `{"patch": "4638", "os": "Mac OS X", "major": "95", "minor": "0", "build": "", "os_minor": "15", "os_major": "10", "name": "Chrome", "os_name": "Mac OS X", "device": "Other"}`         | User agent information for the browser that submitted the request.                                                                           |
+     success       | boolean           | TRUE                                                                                                                                                                                    | Denotes whether the event was successful or failed.                                                                                         |
+     geoip         | object            | `{"country_code": "US", "timezone": "America/New_York", "latitude": 33.6992, "continent_code": "NA", "region_name": "Georgia", "region_code": "GA", "longitude": -84.7478}`             | Geo IP information for the IP address that made the request.                                                                                 |
+     provider      | uuid              | 5c86b6cf9fdce00001d3800c                                                                                                                                                                | The org ID of the provider, if the org is a provider org.                                                                                    |
+     error_message | string            | This user can't be updated because it's the last folder admin                                                                                                                           | Error details.                                                                                                                               |
+     @version      | string            | 1                                                                                                                                                                                       | The schema version for the document object.                                                                                                  |
+
     ## MTP/MSP Events
 
      Field        | Type              | Example                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                                |
@@ -942,6 +961,23 @@ info:
      remote_session_join     | End user joins a remote assist session, or the admin or end user rejoins an ongoing session when they get disconnected due to network failure or page refresh.  |
      remote_session_end      | The remote-assist session is terminated by the administrator or the end user.                                                                                   |
      remote_session_feedback | An administrator or end user provides feedback on a remote-assist session.                                                                                      |
+
+    ## Password Manager Events
+
+     Event                                | Description                                 |
+     ------------------------------------ | ------------------------------------------- |
+     passwordmanager_enable               | Enable password manager for organization.   |
+     passwordmanager_disable              | Disable password manager for organization.  |
+     passwordmanager_user_enable          | Enable password manager for user.           |
+     passwordmanager_user_disable         | Disable password manager for user.          |
+     passwordmanager_user_activate        | User activates password manager.            |
+     passwordmanager_user_deactivate      | User deactivates password manager.          |
+     passwordmanager_user_reactivate      | User reactivates password manager.          |
+     passwordmanager_folder_create        | Folder created.                             |
+     passwordmanager_folder_delete        | Folder deleted.                             |
+     passwordmanager_folder_member_add    | Member added to folder.                     |
+     passwordmanager_folder_member_update | Member updated in folder.                   |
+     passwordmanager_folder_member_remove | Member removed from folder.                 |
 
     ## Software Events
 
