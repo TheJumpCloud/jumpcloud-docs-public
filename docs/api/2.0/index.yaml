@@ -22508,6 +22508,14 @@ paths:
         type: string
     x-functionalities-tags:
       - mtp-auth
+  /provision/{type}/config:
+    parameters:
+      - in: path
+        name: type
+        required: true
+        type: string
+    x-functionalities-tags:
+      - mtp-auth
   /push/configs/{id}:
     parameters:
       - in: path
