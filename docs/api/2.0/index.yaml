@@ -3244,6 +3244,90 @@ definitions:
       - apiToken
     title: Create Syncro Integration POST object
     type: object
+  SyncroTicketingAlertConfiguration:
+    description: A SyncroTicketingAlertConfiguration object
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      displayName:
+        type: string
+      dueDays:
+        type: integer
+      id:
+        type: integer
+      priority:
+        type: string
+      problemType:
+        type: string
+      shouldCreateTickets:
+        type: boolean
+      status:
+        type: string
+      userId:
+        type: integer
+      username:
+        type: string
+    type: object
+  SyncroTicketingAlertConfigurationList:
+    properties:
+      records:
+        items:
+          allOf:
+            - properties:
+                alertId:
+                  type: string
+              type: object
+            - $ref: '#/definitions/SyncroTicketingAlertConfiguration'
+        type: array
+    required:
+      - records
+    type: object
+  SyncroTicketingAlertConfigurationOption:
+    properties:
+      name:
+        type: string
+      values:
+        items:
+          properties:
+            label:
+              type: string
+            value:
+              type: integer
+          type: object
+        type: array
+    type: object
+  SyncroTicketingAlertConfigurationOptions:
+    properties:
+      records:
+        items:
+          $ref: '#/definitions/SyncroTicketingAlertConfigurationOption'
+        type: array
+    required:
+      - records
+    type: object
+  SyncrotaskTicketingAlertConfigurationRequest:
+    description: A SyncrotaskTicketingAlertConfigurationRequest to update Syncro ticketing configuration.
+    properties:
+      dueDays:
+        type: integer
+      priority:
+        type: string
+      problemType:
+        type: string
+      shouldCreateTickets:
+        type: boolean
+      status:
+        type: string
+      userId:
+        type: number
+      username:
+        type: string
+    required:
+      - shouldCreateTickets
+      - problemType
+    type: object
   SystemGroup:
     properties:
       attributes:
@@ -22172,6 +22256,196 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"apiToken":"string","subdomain":"string"}'
+    x-functionalities-tags:
+      - mtp-create-syncro-ticketing
+  /providers/{provider_id}/integrations/syncro/alerts/configuration:
+    get:
+      description: Get all Syncro ticketing alert configurations for a provider.
+      operationId: syncro_retrieveAllAlertConfigurations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SyncroTicketingAlertConfigurationList'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Get all Syncro ticketing alert configurations for a provider
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro/alerts/configuration \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro/alerts/configuration"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro/alerts/configuration' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - 2022-10-27-syncro-ticketing
+  /providers/{provider_id}/integrations/syncro/alerts/configuration/options:
+    get:
+      description: Get all Syncro ticketing alert configuration options for a provider.
+      operationId: syncro_retrieveAllAlertConfigurationOptions
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SyncroTicketingAlertConfigurationOptions'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Get all Syncro ticketing alert configuration options for a provider
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro/alerts/configuration/options \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro/alerts/configuration/options"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro/alerts/configuration/options' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - mtp-create-syncro-ticketing
+  /providers/{provider_id}/integrations/syncro/alerts/{alert_UUID}/configuration:
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        type: string
+      - in: path
+        name: alert_UUID
+        required: true
+        type: string
+    put:
+      description: Update a Syncro ticketing alert's configuration
+      operationId: syncro_updateAlertConfiguration
+      parameters:
+        - description: ''
+          in: body
+          name: body
+          schema:
+            $ref: '#/definitions/SyncrotaskTicketingAlertConfigurationRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SyncroTicketingAlertConfiguration'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Update a Syncro ticketing alert's configuration
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro/alerts/{alert_UUID}/configuration \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"dueDays":0,"priority":"string","problemType":"string","shouldCreateTickets":true,"status":"string","userId":0,"username":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro/alerts/{alert_UUID}/configuration"
+
+            payload = {
+                "dueDays": 0,
+                "priority": "string",
+                "problemType": "string",
+                "shouldCreateTickets": True,
+                "status": "string",
+                "userId": 0,
+                "username": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/integrations/syncro/alerts/{alert_UUID}/configuration' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"dueDays":0,"priority":"string","problemType":"string","shouldCreateTickets":true,"status":"string","userId":0,"username":"string"}'
     x-functionalities-tags:
       - mtp-create-syncro-ticketing
   /providers/{provider_id}/integrations/ticketing/alerts:
