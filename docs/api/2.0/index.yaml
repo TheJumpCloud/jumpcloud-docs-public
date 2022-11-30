@@ -126,6 +126,12 @@ definitions:
       apnsPushTopic:
         description: The push topic assigned to this enrollment by Apple after uploading the Signed CSR plist.
         type: string
+      appleCertCreatorAppleID:
+        description: The Apple ID of the admin who created the Apple signed certificate associated to the Device Manager.
+        type: string
+      appleCertSerialNumber:
+        description: The serial number of the Apple signed certificate associated to the Device Manager.
+        type: string
       defaultIosUserEnrollmentDeviceGroupID:
         description: ObjectId uniquely identifying the MDM default iOS user enrollment device group.
         type: string
@@ -3584,6 +3590,9 @@ definitions:
       allowMobileUserEnrollment:
         description: A toggle to allow mobile device enrollment for an organization.
         type: boolean
+      appleCertCreatorAppleID:
+        description: The Apple ID of the admin who created the Apple signed certificate.
+        type: string
       appleSignedCert:
         description: A signed certificate obtained from Apple after providing Apple with the plist file provided on POST.
         type: string
@@ -9939,7 +9948,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"ades":{"ios":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"macos":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}}},"allowMobileUserEnrollment":true,"appleSignedCert":"string","defaultIosUserEnrollmentDeviceGroupID":"string","defaultSystemGroupID":"string","dep":{"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"encryptedDepServerToken":"string","name":"string"}'
+              --data '{"ades":{"ios":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"macos":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}}},"allowMobileUserEnrollment":true,"appleCertCreatorAppleID":"string","appleSignedCert":"string","defaultIosUserEnrollmentDeviceGroupID":"string","defaultSystemGroupID":"string","dep":{"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"encryptedDepServerToken":"string","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -9970,6 +9979,7 @@ paths:
                     }
                 },
                 "allowMobileUserEnrollment": True,
+                "appleCertCreatorAppleID": "string",
                 "appleSignedCert": "string",
                 "defaultIosUserEnrollmentDeviceGroupID": "string",
                 "defaultSystemGroupID": "string",
@@ -10000,7 +10010,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"ades":{"ios":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"macos":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}}},"allowMobileUserEnrollment":true,"appleSignedCert":"string","defaultIosUserEnrollmentDeviceGroupID":"string","defaultSystemGroupID":"string","dep":{"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"encryptedDepServerToken":"string","name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"ades":{"ios":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"macos":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}}},"allowMobileUserEnrollment":true,"appleCertCreatorAppleID":"string","appleSignedCert":"string","defaultIosUserEnrollmentDeviceGroupID":"string","defaultSystemGroupID":"string","dep":{"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"encryptedDepServerToken":"string","name":"string"}'
     x-functionalities-tags:
       - mdm
   /applevpp/locations:
@@ -33065,6 +33075,7 @@ tags:
   - name: Directories
   - name: Directory Insights
   - name: Duo
+  - name: Edge
   - name: fde
   - name: G Suite
   - name: G Suite Import
@@ -33106,6 +33117,7 @@ tags:
   - name: System Insights
   - name: Systems
   - name: SCIM Import
+  - name: SSO
   - name: User Group Associations
   - name: User Groups
   - name: User Group Members & Membership
