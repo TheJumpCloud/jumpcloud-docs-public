@@ -19219,17 +19219,23 @@ paths:
     x-functionalities-tags:
       - partners-disconnect
   /passwordmanager/appversions:
-    x-functionalities-tags: pwm-user-app-versions
+    x-functionalities-tags:
+      - pwm-user-app-versions
   /passwordmanager/overview:
-    x-functionalities-tags: pwm-user-overiew
+    x-functionalities-tags:
+      - pwm-user-overiew
   /passwordmanager/sharedfolders:
-    x-functionalities-tags: pwm-user-folder-read
+    x-functionalities-tags:
+      - pwm-user-folder-read
   /passwordmanager/sharedfolders/accessLevels:
-    x-functionalities-tags: pwm-user-folder-read
+    x-functionalities-tags:
+      - pwm-user-folder-read
   /passwordmanager/sharedfolders/{folderId}:
-    x-functionalities-tags: pwm-user-folder-read
+    x-functionalities-tags:
+      - pwm-user-folder-read
   /passwordmanager/sharedfolders/{folderId}/users:
-    x-functionalities-tags: pwm-user-folder-read
+    x-functionalities-tags:
+      - pwm-user-folder-read
   /plan:
     x-functionalities-tags:
       - accounts-page-upgrade
