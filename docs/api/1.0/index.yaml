@@ -4479,7 +4479,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url https://console.jumpcloud.com/api/commands/{id}/results \
+              --url 'https://console.jumpcloud.com/api/commands/{id}/results?limit=10&skip=0' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -4487,21 +4487,25 @@ paths:
 
             url = "https://console.jumpcloud.com/api/commands/{id}/results"
 
+            querystring = {"limit":"10","skip":"0"}
+
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
-            response = requests.request("GET", url, headers=headers)
+            response = requests.request("GET", url, headers=headers, params=querystring)
 
             print(response.text)
         - lang: Powershell
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands/{id}/results' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands/{id}/results?limit=10&skip=0' -Method GET -Headers $headers
     parameters:
       - in: path
         name: id
         required: true
         type: string
+      - $ref: '#/parameters/trait:limit:limit'
+      - $ref: '#/parameters/trait:skip:skip'
     x-functionalities-tags:
       - command-results
   /files:
