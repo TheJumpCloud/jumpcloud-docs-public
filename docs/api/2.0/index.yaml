@@ -33322,6 +33322,10 @@ responses:
     description: ''
     schema:
       $ref: '#/definitions/Error'
+  trait:standardErrors:410:
+    description: ''
+    schema:
+      $ref: '#/definitions/Error'
   trait:standardErrors:500:
     description: ''
     schema:
