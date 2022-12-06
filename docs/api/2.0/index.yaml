@@ -3202,6 +3202,32 @@ definitions:
         type: integer
     readOnly: true
     type: object
+  SyncroCompany:
+    description: Syncro company details
+    properties:
+      id:
+        description: The company identifier.
+        type: string
+      name:
+        description: The company name.
+        type: string
+    required:
+      - id
+      - name
+    type: object
+  SyncroCompanyResp:
+    description: Response for retrieving Syncro companies
+    properties:
+      records:
+        items:
+          $ref: '#/definitions/SyncroCompany'
+        type: array
+      totalCount:
+        type: integer
+    required:
+      - totalCount
+      - records
+    type: object
   SyncroIntegration:
     description: Syncro integration configuration details
     properties:
@@ -3243,6 +3269,89 @@ definitions:
       - subdomain
       - apiToken
     title: Create Syncro Integration POST object
+    type: object
+  SyncroMappingRequest:
+    description: Request object for creating Syncro mappings
+    minItems: 1
+    properties:
+      data:
+        items:
+          properties:
+            company:
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+              required:
+                - id
+                - name
+              type: object
+            delete:
+              type: boolean
+            organization:
+              properties:
+                id:
+                  minLength: 1
+                  type: string
+                name:
+                  type: string
+              required:
+                - id
+                - name
+              type: object
+          required:
+            - organization
+            - company
+          type: object
+        type: array
+    type: object
+    x-examples:
+      Create\Edit Existing Mapping example:
+        - company:
+            id: string
+            name: string
+          organization:
+            id: newOrganizationId
+            name: string
+        - company:
+            id: string
+            name: string
+          organization:
+            id: existingOrganizationId
+            name: string
+      Delete Mapping:
+        data:
+          - delete: true
+            organization:
+              id: orgId-1
+              name: string
+          - delete: true
+            organization:
+              id: orgId-2
+              name: string
+          - delete: true
+            organization:
+              id: orgId-3
+              name: string
+  SyncroMappingResponse:
+    description: Syncro mapping GET response
+    properties:
+      company:
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+        type: object
+      organization:
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+        type: object
+    title: SyncroMappingResponse
     type: object
   SyncroTicketingAlertConfiguration:
     description: A SyncroTicketingAlertConfiguration object
@@ -16750,6 +16859,210 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"apiToken":"string","subdomain":"string"}'
     x-functionalities-tags:
       - mtp-create-syncro-ticketing
+  /integrations/syncro/{UUID}/companies:
+    get:
+      description: Retrieves a list of Syncro companies for the given Syncro id. You must be associated to the same provider as the Syncro integration to use this endpoint.
+      operationId: syncro_retrieveCompanies
+      parameters:
+        - $ref: '#/parameters/trait:fields:fields'
+        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:skip:skip'
+        - $ref: '#/parameters/trait:sort:sort'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SyncroCompanyResp'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Retrieve Syncro Companies
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/companies?limit=10&skip=0' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/companies"
+
+            querystring = {"limit":"10","skip":"0"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/companies?limit=10&skip=0' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: UUID
+        required: true
+        type: string
+    x-functionalities-tags:
+      - mtp-create-syncro-integration
+  /integrations/syncro/{UUID}/mappings:
+    get:
+      description: Retrieves the list of mappings for this Syncro integration. You must be associated to the same provider as the Syncro integration to use this api.
+      operationId: syncro_retrieveMappings
+      parameters:
+        - $ref: '#/parameters/trait:fields:fields'
+        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:skip:skip'
+        - $ref: '#/parameters/trait:sort:sort'
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              records:
+                items:
+                  $ref: '#/definitions/SyncroMappingResponse'
+                type: array
+              totalCount:
+                type: number
+            type: object
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Retrieve Syncro mappings
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings?limit=10&skip=0' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings"
+
+            querystring = {"limit":"10","skip":"0"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings?limit=10&skip=0' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: UUID
+        required: true
+        type: string
+    patch:
+      description: Create, edit, and/or delete mappings between Jumpcloud organizations and Syncro companies. You must be associated to the same provider as the Syncro integration to use this api.
+      operationId: syncro_patchMappings
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/SyncroMappingRequest'
+      responses:
+        '204':
+          description: No Content
+          schema:
+            $ref: '#/definitions/SyncroMappingRequest'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Create, edit, and/or delete Syncro Mappings
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"data":[{"company":{"id":"string","name":"string"},"delete":true,"organization":{"id":"string","name":"string"}}]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings"
+
+            payload = {"data": [
+                    {
+                        "company": {
+                            "id": "string",
+                            "name": "string"
+                        },
+                        "delete": True,
+                        "organization": {
+                            "id": "string",
+                            "name": "string"
+                        }
+                    }
+                ]}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"data":[{"company":{"id":"string","name":"string"},"delete":true,"organization":{"id":"string","name":"string"}}]}'
+    x-functionalities-tags:
+      - mtp-create-syncro-integration
   /integrations/{integration_type}/{UUID}/errors:
     get:
       description: Retrieves recent sync errors for given integration type and integration id. You must be associated to the provider the integration is tied to in order to use this api.
