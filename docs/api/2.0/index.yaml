@@ -3353,6 +3353,25 @@ definitions:
         type: object
     title: SyncroMappingResponse
     type: object
+  SyncroSettings:
+    description: Syncro integration settings
+    properties:
+      automaticTicketing:
+        description: Determine whether Syncro uses automatic ticketing
+        type: boolean
+    title: Get Syncro integration settings GET object
+    type: object
+  SyncroSettingsPatchReq:
+    description: Request for updating a Syncro integration's settings
+    properties:
+      automaticTicketing:
+        description: Determine whether Syncro uses automatic ticketing
+        type: boolean
+    title: Update Syncro Integration's Settings PATCH object
+    type: object
+    x-examples:
+      example-1:
+        automaticTicketing: true
   SyncroTicketingAlertConfiguration:
     description: A SyncroTicketingAlertConfiguration object
     properties:
@@ -3416,8 +3435,8 @@ definitions:
     required:
       - records
     type: object
-  SyncrotaskTicketingAlertConfigurationRequest:
-    description: A SyncrotaskTicketingAlertConfigurationRequest to update Syncro ticketing configuration.
+  SyncroTicketingAlertConfigurationRequest:
+    description: A SyncroTicketingAlertConfigurationRequest to update Syncro ticketing configuration.
     properties:
       dueDays:
         type: integer
@@ -17063,6 +17082,126 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"data":[{"company":{"id":"string","name":"string"},"delete":true,"organization":{"id":"string","name":"string"}}]}'
     x-functionalities-tags:
       - mtp-create-syncro-integration
+  /integrations/syncro/{UUID}/settings:
+    get:
+      description: Retrieve the Syncro integration settings. You must be associated to the same provider as the Syncro integration to use this endpoint.
+      operationId: syncro_retrieveSettings
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SyncroSettings'
+          x-examples:
+            example-1:
+              automaticTicketing: true
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Retrieve Syncro Integration settings
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/settings \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/settings"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/settings' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: UUID
+        required: true
+        type: string
+    patch:
+      description: Create, edit, and/or delete SyncroIntegration settings. You must be associated to the same provider as the Syncro integration to use this endpoint.
+      operationId: syncro_patchSettings
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/SyncroSettingsPatchReq'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SyncroSettings'
+          x-examples:
+            example-1:
+              automaticTicketing: true
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Create, edit, and/or delete Syncro Integration settings
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/settings \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"automaticTicketing":true}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/settings"
+
+            payload = {"automaticTicketing": True}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/settings' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"automaticTicketing":true}'
+    x-functionalities-tags:
+      - mtp-create-syncro-ticketing
   /integrations/{integration_type}/{UUID}/errors:
     get:
       description: Retrieves recent sync errors for given integration type and integration id. You must be associated to the provider the integration is tied to in order to use this api.
@@ -22705,7 +22844,7 @@ paths:
           in: body
           name: body
           schema:
-            $ref: '#/definitions/SyncrotaskTicketingAlertConfigurationRequest'
+            $ref: '#/definitions/SyncroTicketingAlertConfigurationRequest'
       responses:
         '200':
           description: OK
