@@ -3963,6 +3963,8 @@ definitions:
     type: object
   cloud-insights-account-get:
     properties:
+      awsAccountAlias:
+        type: string
       awsAccountId:
         type: string
       awsAccountIsActivated:
@@ -4001,6 +4003,8 @@ definitions:
   cloud-insights-account-post:
     description: Properties of a Cloud Insights account POST object
     properties:
+      awsAccountAlias:
+        type: string
       awsAccountId:
         type: string
       awsRegion:
@@ -4021,13 +4025,12 @@ definitions:
     type: object
   cloud-insights-account-put:
     properties:
+      awsAccountAlias:
+        type: string
       isActivated:
         type: string
       isValidated:
         type: string
-    required:
-      - isActivated
-      - isValidated
     title: cloud-insights-account-put
     type: object
   cloud-insights-events-distinct-post:
@@ -12060,7 +12063,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"awsAccountId":"string","awsRegion":"string"}'
+              --data '{"awsAccountAlias":"string","awsAccountId":"string","awsRegion":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -12068,6 +12071,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/cloudinsights/accounts"
 
             payload = {
+                "awsAccountAlias": "string",
                 "awsAccountId": "string",
                 "awsRegion": "string"
             }
@@ -12086,7 +12090,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/accounts' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"awsAccountId":"string","awsRegion":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/accounts' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"awsAccountAlias":"string","awsAccountId":"string","awsRegion":"string"}'
     x-functionalities-tags:
       - cloud-insights
   /cloudinsights/accounts/{cloud_insights_id}:
@@ -12193,7 +12197,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"isActivated":"string","isValidated":"string"}'
+              --data '{"awsAccountAlias":"string","isActivated":"string","isValidated":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -12201,6 +12205,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/cloudinsights/accounts/{cloud_insights_id}"
 
             payload = {
+                "awsAccountAlias": "string",
                 "isActivated": "string",
                 "isValidated": "string"
             }
@@ -12219,7 +12224,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/accounts/{cloud_insights_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"isActivated":"string","isValidated":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cloudinsights/accounts/{cloud_insights_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"awsAccountAlias":"string","isActivated":"string","isValidated":"string"}'
     x-functionalities-tags:
       - cloud-insights
   /cloudinsights/events:
