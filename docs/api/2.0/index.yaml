@@ -23240,6 +23240,14 @@ paths:
         type: string
     x-functionalities-tags:
       - mtp-billing-information
+  /providers/{provider_id}/policygrouptemplates:
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - policy-group-templates
   /provision/client/verify:
     x-functionalities-tags:
       - mtp-validate-config
@@ -33837,6 +33845,7 @@ tags:
   - name: Policy Groups
   - name: Policy Group Associations
   - name: Policy Group Members & Membership
+  - name: Policy Group Templates
   - name: Policytemplates
   - name: Providers
   - name: RADIUS Servers
