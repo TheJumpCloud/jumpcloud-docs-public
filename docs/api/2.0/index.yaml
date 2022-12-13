@@ -167,53 +167,66 @@ definitions:
     title: AppleMDM
     type: object
   AuthnPolicy:
-    description: |-
-      This represents an authentication policy.  See the details of each field for valid values and restrictions.
-
-      Conditions may be added to an authentication policy using the following conditional language:
-
-      ```
-      <conditions> ::= <expression>
-      <expression> ::= <ipAddressIn> | <deviceManaged> | <locationIn> | <notExpression> | <allExpression> | <anyExpression>
-      <ipAddressIn> ::= { "ipAddressIn": [ <objectId>, ... ] }
-      <deviceManaged> ::= { "deviceManaged": <boolean> }
-      <locationIn> ::= { "locationIn": { "countries": [ <iso_3166_country_code>, ... ] } }
-      <notExpression> ::= { "not": <expression> }
-      <allExpression> ::= { "all": [ <expression>, ... ] }
-      <anyExpression> ::= { "any": [ <expression>, ... ] }
-      ```
-
-      For example, to add a condition that applies to IP address in a given list the following condition can be added:
-
-      `{"ipAddressIn": [ <ip_list_object_id> ]}`
-
-      If you would rather exclude IP addresses in the given lists, the following condition could be added:
-
-      `{
-        "not": {
-          "ipAddressIn": [ <ip_list_object_id_1>, <ip_list_object_id_2> ]
-        }
-      }`
-
-      You may also include more than one condition and choose whether "all" or "any" of them must be met for the policy to apply.
-
-      `{
-        "all": [
-          {
-            "ipAddressIn": [ <ip_list_object_id>, ... ]
-          },
-          {
-            "deviceManaged": true
-          },
-          {
-            "locationIn": {
-              countries: [ <iso_3166_country_code>, ... ]
-            }
-          }
-        ]
-      }`
+    description: This represents an authentication policy.  See the details of each field for valid values and restrictions.
     properties:
       conditions:
+        description: |-
+          Conditions may be added to an authentication policy using the following conditional language:
+
+          ```
+          <conditions> ::= <expression>
+          <expression> ::= <deviceEncrypted> | <deviceManaged> | <ipAddressIn> |
+                           <locationIn> | <notExpression> | <allExpression> |
+                           <anyExpression>
+          <deviceEncrypted> ::= { "deviceEncrypted": <boolean> }
+          <deviceManaged> ::= { "deviceManaged": <boolean> }
+          <ipAddressIn> ::= { "ipAddressIn": [ <objectId>, ... ] }
+          <locationIn> ::= { "locationIn": {
+                               "countries": [
+                                 <iso_3166_country_code>, ...
+                               ]
+                             }
+                           }
+          <notExpression> ::= { "not": <expression> }
+          <allExpression> ::= { "all": [ <expression>, ... ] }
+          <anyExpression> ::= { "any": [ <expression>, ... ] }
+          ```
+
+          For example, to add a condition that applies to IP addresses in a given list, the following condition can be added:
+
+          ```
+          {"ipAddressIn": [ <ip_list_object_id> ]}
+          ```
+
+          If you would rather exclude IP addresses in the given lists, the following condition could be added:
+
+          ```
+          {
+            "not": {
+              "ipAddressIn": [ <ip_list_object_id_1>, <ip_list_object_id_2> ]
+            }
+          }
+          ```
+
+          You may also include more than one condition and choose whether "all" or "any" of them must be met for the policy to apply:
+
+          ```
+          {
+            "all": [
+              {
+                "ipAddressIn": [ <ip_list_object_id>, ... ]
+              },
+              {
+                "deviceManaged": true
+              },
+              {
+                "locationIn": {
+                  countries: [ <iso_3166_country_code>, ... ]
+                }
+              }
+            ]
+          }
+          ```
         type: object
       description:
         type: string
@@ -222,6 +235,7 @@ definitions:
       effect:
         $ref: '#/definitions/AuthnPolicyEffect'
       id:
+        readOnly: true
         type: string
       name:
         type: string
@@ -255,24 +269,6 @@ definitions:
             required: true
       example-deny:
         action: deny
-  AuthnPolicyInput:
-    properties:
-      conditions:
-        type: object
-      description:
-        type: string
-      disabled:
-        type: boolean
-      effect:
-        $ref: '#/definitions/AuthnPolicyEffect'
-      name:
-        type: string
-      targets:
-        $ref: '#/definitions/AuthnPolicyTargets'
-      type:
-        $ref: '#/definitions/AuthnPolicyType'
-    title: AuthnPolicyInput
-    type: object
   AuthnPolicyObligations:
     properties:
       mfa:
@@ -11005,7 +11001,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/AuthnPolicyInput'
+            $ref: '#/definitions/AuthnPolicy'
       responses:
         '201':
           description: Created
@@ -11264,7 +11260,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/AuthnPolicyInput'
+            $ref: '#/definitions/AuthnPolicy'
       responses:
         '200':
           description: OK
