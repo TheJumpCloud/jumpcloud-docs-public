@@ -3647,7 +3647,21 @@ definitions:
       - name
     title: UserGroupPut
     type: object
-  active-directory-agent-get-output:
+  active-directory:
+    properties:
+      domain:
+        description: Domain name for this Active Directory instance.
+        type: string
+      id:
+        description: ObjectID of this Active Directory instance.
+        readOnly: true
+        type: string
+    title: Active Directory
+    type: object
+  active-directory-agent:
+    title: Active Directory Agent
+    type: object
+  active-directory-agent-get:
     properties:
       connectKey:
         description: The connect key to use when installing the Agent on a Domain Controller.
@@ -3671,12 +3685,9 @@ definitions:
         type: string
     required:
       - id
-    title: Active Directory Agent Get Output
+    title: Active Directory Agent Get
     type: object
-  active-directory-agent-input:
-    title: Active Directory Agent Input
-    type: object
-  active-directory-agent-list-output:
+  active-directory-agent-list:
     properties:
       contactAt:
         type: string
@@ -3695,26 +3706,8 @@ definitions:
         type: string
       version:
         type: string
-    title: Active Directory Agent List Output
+    title: Active Directory Agent List
     type: object
-  active-directory-input:
-    properties:
-      domain:
-        description: Domain name for this Active Directory instance.
-        type: string
-    title: Active Directory Input
-    type: object
-  active-directory-output:
-    allOf:
-      - properties:
-          id:
-            description: ObjectID of this Active Directory instance.
-            type: string
-        required:
-          - id
-        type: object
-      - $ref: '#/definitions/active-directory-input'
-    title: Active Directory Output
   apple-mdm-device:
     properties:
       createdAt:
@@ -3791,7 +3784,7 @@ definitions:
     type: object
     x-tags:
       - Apple MDM
-  apple-mdm-patch-input:
+  apple-mdm-patch:
     properties:
       ades:
         $ref: '#/definitions/ADES'
@@ -3819,7 +3812,7 @@ definitions:
         description: A new name for the Apple MDM configuration.
         maxLength: 255
         type: string
-    title: Apple MDM Patch Input
+    title: Apple MDM Patch
     type: object
   apple-mdm-public-key-cert:
     title: Apple MDM Public Key Certificate
@@ -4588,11 +4581,12 @@ definitions:
           - passwordManagement
         type: string
     type: object
-  gsuite-output:
+  gsuite:
     properties:
       groupsEnabled:
         type: boolean
       id:
+        readOnly: true
         type: string
       name:
         type: string
@@ -4607,26 +4601,7 @@ definitions:
           - maintain
           - remove_access
         type: string
-    title: GSuite Output
-    type: object
-  gsuite-patch-input:
-    properties:
-      groupsEnabled:
-        type: boolean
-      name:
-        type: string
-      userLockoutAction:
-        enum:
-          - suspend
-          - maintain
-        type: string
-      userPasswordExpirationAction:
-        enum:
-          - suspend
-          - maintain
-          - remove_access
-        type: string
-    title: GSuite Patch Input
+    title: GSuite
     type: object
   importUser:
     properties:
@@ -4733,8 +4708,12 @@ definitions:
         type: string
     title: Job WorkResult
     type: object
-  ldap-server-input:
+  ldap-server:
     properties:
+      id:
+        description: Unique identifier of this LDAP server
+        readOnly: true
+        type: string
       name:
         description: The name of this LDAP server
         type: string
@@ -4750,27 +4729,17 @@ definitions:
           - disable
           - remove
         type: string
-    title: LDAP Server Input
+    title: LDAP Server
     type: object
-  ldap-server-output:
-    allOf:
-      - properties:
-          id:
-            description: Unique identifier of this LDAP server
-            type: string
-        required:
-          - id
-        type: object
-      - $ref: '#/definitions/ldap-server-input'
-    title: LDAP Server Output
   mobileconfig:
     title: mobileconfig
     type: string
-  office365-output:
+  office365:
     properties:
       groupsEnabled:
         type: boolean
       id:
+        readOnly: true
         type: string
       name:
         type: string
@@ -4778,38 +4747,22 @@ definitions:
         enum:
           - suspend
           - maintain
+        readOnly: true
         type: string
       userPasswordExpirationAction:
         enum:
           - suspend
           - maintain
+        readOnly: true
         type: string
-    required:
-      - id
-      - userLockoutAction
-      - userPasswordExpirationAction
-    title: Office 365 Output
+    title: Office 365
     type: object
-  office365-patch-input:
+  samba-domain:
     properties:
-      groupsEnabled:
-        type: boolean
-      name:
+      id:
+        description: Unique identifier of this domain
+        readOnly: true
         type: string
-      userLockoutAction:
-        enum:
-          - suspend
-          - maintain
-        type: string
-      userPasswordExpirationAction:
-        enum:
-          - suspend
-          - maintain
-        type: string
-    title: Office 365 Patch Input
-    type: object
-  samba-domain-input:
-    properties:
       name:
         description: Name of this domain's WorkGroup
         type: string
@@ -4819,19 +4772,8 @@ definitions:
     required:
       - name
       - sid
-    title: Samba Domain Input
+    title: Samba Domain
     type: object
-  samba-domain-output:
-    allOf:
-      - properties:
-          id:
-            description: Unique identifier of this domain
-            type: string
-        required:
-          - id
-        type: object
-      - $ref: '#/definitions/samba-domain-input'
-    title: Samba Domain Output
   scheduled-userstate-result:
     properties:
       scheduledDate:
@@ -7629,7 +7571,7 @@ paths:
           description: ''
           schema:
             items:
-              $ref: '#/definitions/active-directory-output'
+              $ref: '#/definitions/active-directory'
             type: array
       security:
         - x-api-key: []
@@ -7689,13 +7631,13 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/active-directory-input'
+            $ref: '#/definitions/active-directory'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '201':
           description: ''
           schema:
-            $ref: '#/definitions/active-directory-output'
+            $ref: '#/definitions/active-directory'
       security:
         - x-api-key: []
       summary: Create a new Active Directory
@@ -7760,7 +7702,7 @@ paths:
           description: ''
           schema:
             items:
-              $ref: '#/definitions/active-directory-agent-list-output'
+              $ref: '#/definitions/active-directory-agent-list'
             type: array
       security:
         - x-api-key: []
@@ -7822,13 +7764,13 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/active-directory-agent-input'
+            $ref: '#/definitions/active-directory-agent'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '201':
           description: ''
           schema:
-            $ref: '#/definitions/active-directory-agent-get-output'
+            $ref: '#/definitions/active-directory-agent-get'
       security:
         - x-api-key: []
       summary: Create a new Active Directory Agent
@@ -7940,7 +7882,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/active-directory-agent-list-output'
+            $ref: '#/definitions/active-directory-agent-list'
       security:
         - x-api-key: []
       summary: Get Active Directory Agent
@@ -8310,7 +8252,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/active-directory-output'
+            $ref: '#/definitions/active-directory'
       security:
         - x-api-key: []
       summary: Delete an Active Directory
@@ -8364,7 +8306,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/active-directory-output'
+            $ref: '#/definitions/active-directory'
       security:
         - x-api-key: []
       summary: Get an Active Directory
@@ -10125,7 +10067,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/apple-mdm-patch-input'
+            $ref: '#/definitions/apple-mdm-patch'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '200':
@@ -14690,7 +14632,7 @@ paths:
         ##### Sample Request
 
         ```
-         curl -X GET  https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/translationrules \
+        curl -X GET  https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/translationrules \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key: {API_KEY}'
@@ -15100,7 +15042,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/gsuite-output'
+            $ref: '#/definitions/gsuite'
       security:
         - x-api-key: []
       summary: Get G Suite
@@ -15163,13 +15105,13 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/gsuite-patch-input'
+            $ref: '#/definitions/gsuite'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/gsuite-output'
+            $ref: '#/definitions/gsuite'
       summary: Update existing G Suite
       tags:
         - G Suite
@@ -17776,7 +17718,7 @@ paths:
           description: ''
           schema:
             items:
-              $ref: '#/definitions/ldap-server-output'
+              $ref: '#/definitions/ldap-server'
             type: array
       security:
         - x-api-key: []
@@ -17837,7 +17779,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/ldap-server-output'
+            $ref: '#/definitions/ldap-server'
       security:
         - x-api-key: []
       summary: Get LDAP Server
@@ -18149,7 +18091,7 @@ paths:
           description: ''
           schema:
             items:
-              $ref: '#/definitions/samba-domain-output'
+              $ref: '#/definitions/samba-domain'
             type: array
         default:
           description: ''
@@ -18218,13 +18160,13 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/samba-domain-input'
+            $ref: '#/definitions/samba-domain'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '201':
           description: ''
           schema:
-            $ref: '#/definitions/samba-domain-output'
+            $ref: '#/definitions/samba-domain'
       security:
         - x-api-key: []
       summary: Create Samba Domain
@@ -18344,7 +18286,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/samba-domain-output'
+            $ref: '#/definitions/samba-domain'
       security:
         - x-api-key: []
       summary: Get Samba Domain
@@ -18411,12 +18353,12 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/samba-domain-input'
+            $ref: '#/definitions/samba-domain'
       responses:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/samba-domain-output'
+            $ref: '#/definitions/samba-domain'
       security:
         - x-api-key: []
       summary: Update Samba Domain
@@ -18715,7 +18657,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/office365-output'
+            $ref: '#/definitions/office365'
       security:
         - x-api-key: []
       summary: Get Office 365 instance
@@ -18782,13 +18724,13 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/office365-patch-input'
+            $ref: '#/definitions/office365'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/office365-output'
+            $ref: '#/definitions/office365'
       security:
         - x-api-key: []
       summary: Update existing Office 365 instance.
@@ -18806,7 +18748,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"groupsEnabled":true,"name":"string","userLockoutAction":"suspend","userPasswordExpirationAction":"suspend"}'
+              --data '{"groupsEnabled":true,"name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -18815,9 +18757,7 @@ paths:
 
             payload = {
                 "groupsEnabled": True,
-                "name": "string",
-                "userLockoutAction": "suspend",
-                "userPasswordExpirationAction": "suspend"
+                "name": "string"
             }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -18834,7 +18774,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s/{office365_id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"groupsEnabled":true,"name":"string","userLockoutAction":"suspend","userPasswordExpirationAction":"suspend"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s/{office365_id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"groupsEnabled":true,"name":"string"}'
   /office365s/{office365_id}/associations:
     get:
       description: |-
