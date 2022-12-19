@@ -3980,6 +3980,8 @@ definitions:
         type: string
       createdAt:
         type: string
+      lastEventReceivedAt:
+        type: string
       objectId:
         type: string
       organizationObjectId:
