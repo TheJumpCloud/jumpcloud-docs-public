@@ -3477,6 +3477,13 @@ definitions:
       id:
         description: ObjectId uniquely identifying a System Group.
         type: string
+      memberQuery:
+        $ref: '#/definitions/FilterQuery'
+      memberQueryExemptions:
+        description: Array of GraphObjects exempted from the query
+        items:
+          $ref: '#/definitions/GraphObject'
+        type: array
       name:
         description: Display name of a System Group.
         type: string
@@ -3487,14 +3494,53 @@ definitions:
         type: string
     title: SystemGroup
     type: object
-  SystemGroupData:
+  SystemGroupPost:
     properties:
+      attributes:
+        $ref: '#/definitions/GraphAttributes'
+      description:
+        description: Description of a System Group
+        type: string
+      email:
+        description: Email address of a System Group
+        type: string
+      memberQuery:
+        $ref: '#/definitions/FilterQuery'
+      memberQueryExemptions:
+        description: Array of GraphObjects exempted from the query
+        items:
+          $ref: '#/definitions/GraphObject'
+        type: array
       name:
         description: Display name of a System Group.
         type: string
     required:
       - name
-    title: SystemGroupData
+    title: SystemGroupPost
+    type: object
+  SystemGroupPut:
+    properties:
+      attributes:
+        $ref: '#/definitions/GraphAttributes'
+      description:
+        description: Description of a System Group
+        type: string
+      email:
+        description: Email address of a System Group
+        type: string
+      memberQuery:
+        $ref: '#/definitions/FilterQuery'
+      memberQueryExemptions:
+        description: Array of GraphObjects exempted from the query
+        items:
+          $ref: '#/definitions/GraphObject'
+        type: array
+      name:
+        description: Display name of a System Group.
+        type: string
+    required:
+      - name
+    title: SystemGroupPut
     type: object
   TicketingIntegrationAlert:
     properties:
@@ -24791,7 +24837,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/SystemGroupData'
+            $ref: '#/definitions/SystemGroupPost'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '201':
@@ -24813,14 +24859,36 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"name":"string"}'
+              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"name":"string"}'
         - lang: Python
           source: |-
             import requests
 
             url = "https://console.jumpcloud.com/api/v2/systemgroups"
 
-            payload = {"name": "string"}
+            payload = {
+                "attributes": {},
+                "description": "string",
+                "email": "string",
+                "memberQuery": {
+                    "queryType": "FilterQuery",
+                    "filters": [
+                        {
+                            "field": "string",
+                            "operator": "eq",
+                            "value": "string"
+                        }
+                    ]
+                },
+                "memberQueryExemptions": [
+                    {
+                        "attributes": {},
+                        "id": "string",
+                        "type": "string"
+                    }
+                ],
+                "name": "string"
+            }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -24836,7 +24904,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"name":"string"}'
     x-functionalities-tags:
       - systemgroups
   /systemgroups/{group_id}/associations:
@@ -25771,7 +25839,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/SystemGroupData'
+            $ref: '#/definitions/SystemGroupPut'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '200':
@@ -25798,14 +25866,36 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"name":"string"}'
+              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"name":"string"}'
         - lang: Python
           source: |-
             import requests
 
             url = "https://console.jumpcloud.com/api/v2/systemgroups/{id}"
 
-            payload = {"name": "string"}
+            payload = {
+                "attributes": {},
+                "description": "string",
+                "email": "string",
+                "memberQuery": {
+                    "queryType": "FilterQuery",
+                    "filters": [
+                        {
+                            "field": "string",
+                            "operator": "eq",
+                            "value": "string"
+                        }
+                    ]
+                },
+                "memberQueryExemptions": [
+                    {
+                        "attributes": {},
+                        "id": "string",
+                        "type": "string"
+                    }
+                ],
+                "name": "string"
+            }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -25821,7 +25911,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"name":"string"}'
     x-functionalities-tags:
       - systemgroups
   /systeminsights/alf:
