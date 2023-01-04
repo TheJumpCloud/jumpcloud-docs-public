@@ -166,6 +166,18 @@ definitions:
       - id
     title: AppleMDM
     type: object
+  Apps:
+    items:
+      properties:
+        appVersion:
+          example: 1.1.1
+          type: string
+        osId:
+          example: 1
+          format: int32
+          type: integer
+      type: object
+    type: array
   AuthnPolicy:
     description: This represents an authentication policy.  See the details of each field for valid values and restrictions.
     properties:
@@ -2124,6 +2136,20 @@ definitions:
       - user_group
     title: GroupType
     type: string
+  Groups:
+    items:
+      properties:
+        id:
+          format: uuid
+          type: string
+        name:
+          example: group name
+          type: string
+      required:
+        - id
+        - name
+      type: object
+    type: array
   IPList:
     properties:
       description:
@@ -2846,39 +2872,7 @@ definitions:
     properties:
       results:
         items:
-          properties:
-            email:
-              format: email
-              type: string
-            groups:
-              items:
-                properties:
-                  id:
-                    format: uuid
-                    type: string
-                  name:
-                    example: group name
-                    type: string
-                required:
-                  - id
-                  - name
-                type: object
-              type: array
-            id:
-              format: uuid
-              type: string
-            name:
-              example: folder admin
-              type: string
-            status:
-              example: active
-              type: string
-          required:
-            - id
-            - name
-            - email
-            - status
-          type: object
+          $ref: '#/definitions/PwmUser'
         type: array
       totalCount:
         example: 50
@@ -2912,6 +2906,10 @@ definitions:
     type: object
   PwmOverviewMain:
     properties:
+      compromisedPasswords:
+        example: 10
+        format: int32
+        type: integer
       devices:
         items:
           properties:
@@ -2928,6 +2926,20 @@ definitions:
               type: string
           type: object
         type: array
+      enrolledGroups:
+        format: int32
+        type: integer
+      oldPasswords:
+        example: 10
+        format: int32
+        type: integer
+      passwordsCount:
+        example: 10
+        format: int32
+        type: integer
+      passwordsScore:
+        example: 80.5
+        type: number
       pendingInvites:
         example: 50
         format: int32
@@ -2940,11 +2952,163 @@ definitions:
         example: 50
         format: int32
         type: integer
+      weakPasswords:
+        example: 10
+        format: int32
+        type: integer
     required:
       - sharedFolders
       - pendingInvites
       - totalUsers
       - devices
+    type: object
+  PwmUser:
+    properties:
+      apps:
+        $ref: '#/definitions/Apps'
+      email:
+        format: email
+        type: string
+      externalId:
+        type: string
+      groups:
+        $ref: '#/definitions/Groups'
+      id:
+        format: uuid
+        type: string
+      name:
+        example: folder admin
+        type: string
+      passwordsCount:
+        example: 10
+        format: int32
+        type: integer
+      passwordsScore:
+        example: 80.5
+        type: number
+      status:
+        example: active
+        type: string
+    required:
+      - id
+      - name
+      - email
+      - status
+    type: object
+  PwmUserById:
+    allOf:
+      - $ref: '#/definitions/PwmUser'
+      - properties:
+          apps:
+            $ref: '#/definitions/Apps'
+          compromisedPasswords:
+            example: 10
+            format: int32
+            type: integer
+          groups:
+            $ref: '#/definitions/Groups'
+          oldPasswords:
+            example: 10
+            format: int32
+            type: integer
+          reusedPasswords:
+            example: 10
+            format: int32
+            type: integer
+          weakPasswords:
+            example: 10
+            format: int32
+            type: integer
+        type: object
+  PwmUserItem:
+    properties:
+      field1:
+        type: string
+      field2:
+        type: string
+      folderName:
+        example: folder 1
+        type: string
+      folderUuid:
+        format: uuid
+        type: string
+      id:
+        type: string
+      itemUuid:
+        format: uuid
+        type: string
+      nickname:
+        type: string
+      type:
+        format: int32
+        type: integer
+    required:
+      - id
+      - itemUuid
+      - type
+      - nickname
+      - field1
+      - field2
+    type: object
+  PwmUserItems:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/PwmUserItem'
+        type: array
+      totalCount:
+        example: 50
+        format: int32
+        type: integer
+    required:
+      - results
+      - totalCount
+    type: object
+  PwmUserSharedFolders:
+    properties:
+      results:
+        items:
+          properties:
+            accessLevelId:
+              format: uuid
+              type: string
+            accessLevelName:
+              example: folder admin
+              type: string
+            createdAt:
+              type: string
+            id:
+              format: uuid
+              type: string
+            itemsInFolder:
+              example: 15
+              format: int32
+              type: integer
+            name:
+              example: folder 1
+              type: string
+            passwordsScore:
+              example: 80
+              type: number
+            usersWithAccess:
+              example: 5
+              format: int32
+              type: integer
+          required:
+            - id
+            - name
+            - usersWithAccess
+            - itemsInFolder
+            - createdAt
+          type: object
+        type: array
+      totalCount:
+        example: 50
+        format: int32
+        type: integer
+    required:
+      - results
+      - totalCount
     type: object
   Query:
     description: Basic query.
@@ -33846,6 +34010,18 @@ responses:
     description: Success
     schema:
       $ref: '#/definitions/PwmOverviewMain'
+  PwmUserById:
+    description: Success
+    schema:
+      $ref: '#/definitions/PwmUserById'
+  PwmUserItems:
+    description: Success
+    schema:
+      $ref: '#/definitions/PwmUserItems'
+  PwmUserSharedFolders:
+    description: Success
+    schema:
+      $ref: '#/definitions/PwmUserSharedFolders'
   SharedFolderAccessLevels:
     description: Success
     schema:
