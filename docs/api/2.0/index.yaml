@@ -34259,6 +34259,7 @@ tags:
   - name: Users
   - name: WebAuthn
   - name: Workday Import
+  - name: Google EMM
 x-scopes:
   - administrators
   - administrators.readonly
@@ -34307,18 +34308,17 @@ x-tagGroups:
       - Authentication Policies
       - Bulk Job Requests
       - Cloud Insights
-      - Commands
       - Command Results
+      - Commands
       - Custom Emails
       - Directories
       - Duo
-      - fde
       - G Suite
       - G Suite Import
       - Graph
       - Groups
-      - Image
       - IP Lists
+      - Image
       - LDAP Servers
       - Logos
       - Managed Service Provider
@@ -34332,6 +34332,7 @@ x-tagGroups:
       - Policytemplates
       - Providers
       - RADIUS Servers
+      - SCIM Import
       - Samba Domains
       - Software Apps
       - Subscriptions
@@ -34340,9 +34341,9 @@ x-tagGroups:
       - System Groups
       - System Insights
       - Systems
-      - SCIM Import
       - User Group Associations
       - User Group Members & Membership
       - User Groups
       - Users
       - Workday Import
+      - fde
