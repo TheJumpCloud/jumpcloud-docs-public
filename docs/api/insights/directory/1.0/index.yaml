@@ -1481,6 +1481,7 @@ paths:
                     - users-to-ldap-servers
                     - users-to-radius-servers
                     - users-to-sso-applications
+                    - users-to-user-groups
                 updated_at:
                   type: string
               additionalProperties: false
@@ -1618,6 +1619,7 @@ paths:
             - users-to-ldap-servers
             - users-to-radius-servers
             - users-to-sso-applications
+            - users-to-user-groups
           type: string
           description: Report Type
           name: report_type
@@ -1675,6 +1677,7 @@ paths:
                   - users-to-ldap-servers
                   - users-to-radius-servers
                   - users-to-sso-applications
+                  - users-to-user-groups
               updated_at:
                 type: string
             additionalProperties: false
