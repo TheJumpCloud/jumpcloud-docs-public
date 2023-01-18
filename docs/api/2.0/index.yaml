@@ -2463,6 +2463,25 @@ definitions:
         type: integer
     title: OrganizationCasesResponse
     type: object
+  PasswordsSecurity:
+    properties:
+      compromisedPasswords:
+        example: 10
+        format: int32
+        type: integer
+      oldPasswords:
+        example: 10
+        format: int32
+        type: integer
+      reusedPasswords:
+        example: 10
+        format: int32
+        type: integer
+      weakPasswords:
+        example: 10
+        format: int32
+        type: integer
+    type: object
   PhoneNumber:
     properties:
       id:
@@ -2931,6 +2950,35 @@ definitions:
       - results
       - totalCount
     type: object
+  PwmItemHistory:
+    properties:
+      createdBy:
+        format: uuid
+        type: string
+      dateCreated:
+        type: string
+      dateUpdated:
+        type: string
+      updatedBy:
+        format: uuid
+        type: string
+    type: object
+  PwmItemsMetadata:
+    properties:
+      results:
+        items:
+          allOf:
+            - $ref: '#/definitions/PwmUserItem'
+            - $ref: '#/definitions/PwmItemHistory'
+        type: array
+      totalCount:
+        example: 50
+        format: int32
+        type: integer
+    required:
+      - results
+      - totalCount
+    type: object
   PwmOverviewAppVersions:
     properties:
       results:
@@ -3035,6 +3083,8 @@ definitions:
       passwordsScore:
         example: 80.5
         type: number
+      scoreUpdatedAt:
+        type: string
       status:
         example: active
         type: string
@@ -3047,27 +3097,12 @@ definitions:
   PwmUserById:
     allOf:
       - $ref: '#/definitions/PwmUser'
+      - $ref: '#/definitions/PasswordsSecurity'
       - properties:
           apps:
             $ref: '#/definitions/Apps'
-          compromisedPasswords:
-            example: 10
-            format: int32
-            type: integer
           groups:
             $ref: '#/definitions/Groups'
-          oldPasswords:
-            example: 10
-            format: int32
-            type: integer
-          reusedPasswords:
-            example: 10
-            format: int32
-            type: integer
-          weakPasswords:
-            example: 10
-            format: int32
-            type: integer
         type: object
   PwmUserItem:
     properties:
@@ -3139,6 +3174,8 @@ definitions:
             passwordsScore:
               example: 80
               type: number
+            scoreUpdatedAt:
+              type: string
             usersWithAccess:
               example: 5
               format: int32
@@ -3280,6 +3317,40 @@ definitions:
       - welcome
     title: Setup Assistant Option
     type: string
+  SharedFolder:
+    properties:
+      createdAt:
+        type: string
+      itemsInFolder:
+        example: 15
+        format: int32
+        type: integer
+      name:
+        example: folder admin
+        type: string
+      passwordsCount:
+        example: 25
+        format: int32
+        type: integer
+      passwordsScore:
+        example: 70.5
+        type: number
+      scoreUpdatedAt:
+        type: string
+      usersWithAccess:
+        example: 5
+        format: int32
+        type: integer
+      uuid:
+        format: uuid
+        type: string
+    required:
+      - uuid
+      - name
+      - usersWithAccess
+      - itemsInFolder
+      - createdAt
+    type: object
   SharedFolderAccessLevels:
     properties:
       results:
@@ -3303,30 +3374,9 @@ definitions:
       - results
     type: object
   SharedFolderDetails:
-    properties:
-      createdAt:
-        type: string
-      itemsInFolder:
-        example: 15
-        format: int32
-        type: integer
-      name:
-        example: folder admin
-        type: string
-      usersWithAccess:
-        example: 5
-        format: int32
-        type: integer
-      uuid:
-        format: uuid
-        type: string
-    required:
-      - uuid
-      - name
-      - usersWithAccess
-      - itemsInFolder
-      - createdAt
-    type: object
+    allOf:
+      - $ref: '#/definitions/SharedFolder'
+      - $ref: '#/definitions/PasswordsSecurity'
   SharedFolderUsers:
     properties:
       results:
@@ -3338,8 +3388,12 @@ definitions:
             accessLevelName:
               example: folder admin
               type: string
+            apps:
+              $ref: '#/definitions/Apps'
             email:
               format: email
+              type: string
+            externalId:
               type: string
             id:
               format: uuid
@@ -3371,30 +3425,7 @@ definitions:
     properties:
       results:
         items:
-          properties:
-            createdAt:
-              type: string
-            itemsInFolder:
-              example: 15
-              format: int32
-              type: integer
-            name:
-              example: folder admin
-              type: string
-            usersWithAccess:
-              example: 5
-              format: int32
-              type: integer
-            uuid:
-              format: uuid
-              type: string
-          required:
-            - uuid
-            - name
-            - usersWithAccess
-            - itemsInFolder
-            - createdAt
-          type: object
+          $ref: '#/definitions/SharedFolder'
         type: array
       totalCount:
         example: 50
@@ -19972,6 +20003,8 @@ paths:
   /passwordmanager/appversions:
     x-functionalities-tags:
       - pwm-user-app-versions
+  /passwordmanager/items:
+    x-functionalities-tags: pwm-items-metadata
   /passwordmanager/overview:
     x-functionalities-tags:
       - pwm-user-overiew
@@ -34255,6 +34288,10 @@ responses:
     description: Success
     schema:
       $ref: '#/definitions/PwmAllUsers'
+  PwmItemsMetadata:
+    description: Success
+    schema:
+      $ref: '#/definitions/PwmItemsMetadata'
   PwmOverviewAppVersions:
     description: Success
     schema:
