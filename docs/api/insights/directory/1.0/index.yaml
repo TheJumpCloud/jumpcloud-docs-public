@@ -19,6 +19,7 @@ info:
     + __MDM Events__: Logs MDM command results.
     + __Managed Service Provider Events__: Logs activities on the Managed Service Providers (MSP) portal.
     + __Software Events__: Logs software or plugins detected on the local device.
+    + __Password Manager Events__: Logs activity related to JumpCloud password manager.
 
     ## Retrieving the MSP Admin API Key
 
@@ -114,12 +115,14 @@ info:
     Valid values for `service` are:
 
     + __all__: Logs from all services.
-    + __directory__: Logs activity in the Admin Portal, including admin changes in the directory and admin/user authentications to the Admin Portal.
-    + __radius__: Logs user authentications to RADIUS, used for Wi-Fi and VPNs.
-    + __sso__: Logs user authentications to SAML applications.
-    + __systems__: Logs user authentications to MacOS, Windows, and Linux systems, including agent-related events on lockout, password changes, and File Disk Encryption key updates.
+    + __directory__: Logs activity in the Admin Portal and User Portal, including admin changes in the directory and admin/user authentications to the Admin Portal and User Portal.
     + __ldap__: Logs user authentications to LDAP, including LDAP Bind and Search event types.
     + __mdm__: Logs MDM command results.
+    + __password_manager__: Logs activity related to JumpCloud password manager.
+    + __radius__: Logs user authentications to RADIUS, used for Wi-Fi and VPNs.
+    + __software__: Logs application activity when software is added, removed, or changed on a macOS, Windows, or Linux device. Events are logged based on changes to an application version during each device check-in.
+    + __sso__: Logs user authentications to SAML applications.
+    + __systems__: Logs user authentications to MacOS, Windows, and Linux systems, including agent-related events on lockout, password changes, and File Disk Encryption key updates.
 
     If you specify an invalid or unknown value for "service", the system responds with the list of supported values.
 
@@ -1832,12 +1835,14 @@ definitions:
           type: string
           enum:
             - all
-            - systems
-            - radius
-            - sso
             - directory
             - ldap
             - mdm
+            - password_manager
+            - radius
+            - software
+            - sso
+            - systems
       start_time:
         description: 'query start time, UTC in RFC3339 format'
         type: string
