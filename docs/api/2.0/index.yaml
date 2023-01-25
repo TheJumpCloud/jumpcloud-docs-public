@@ -3454,6 +3454,48 @@ definitions:
         type: integer
     readOnly: true
     type: object
+  SyncroBillingMappingConfigurationOption:
+    description: The representation of a Syncro billing mapping dependency with its name (e.g. schedule) and actual values (e.g. individual schedules)
+    properties:
+      name:
+        description: The option name
+        type: string
+      values:
+        description: The actual option's values
+        items:
+          $ref: '#/definitions/SyncroBillingMappingConfigurationOptionValue'
+        type: array
+    type: object
+  SyncroBillingMappingConfigurationOptionValue:
+    description: The shape of a Syncro billing mapping dependency with its human readable description (label) and value stored in the backend (value) and children (lines)
+    properties:
+      label:
+        type: string
+      lines:
+        items:
+          $ref: '#/definitions/SyncroBillingMappingConfigurationOptionValueLine'
+        type: array
+      value:
+        type: integer
+    type: object
+  SyncroBillingMappingConfigurationOptionValueLine:
+    description: The shape of a Syncro billing mapping schedule's line
+    properties:
+      label:
+        type: string
+      value:
+        type: integer
+    type: object
+  SyncroBillingMappingConfigurationOptionsResp:
+    description: Response for retrieving Syncro billing mapping configuration options
+    properties:
+      options:
+        items:
+          $ref: '#/definitions/SyncroBillingMappingConfigurationOption'
+        type: array
+    required:
+      - options
+    type: object
   SyncroCompany:
     description: Syncro company details
     properties:
@@ -17210,6 +17252,69 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"apiToken":"string","subdomain":"string"}'
     x-functionalities-tags:
       - mtp-create-syncro-ticketing
+  /integrations/syncro/{UUID}/billing_mapping_configuration_options:
+    get:
+      description: Retrieves a list of dependencies for Syncro billing mappings.
+      operationId: syncro_retrieveBillingMappingConfigurationOptions
+      parameters:
+        - $ref: '#/parameters/trait:fields:fields'
+        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:skip:skip'
+        - $ref: '#/parameters/trait:sort:sort'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SyncroBillingMappingConfigurationOptionsResp'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Retrieve Syncro billing mappings dependencies
+      tags:
+        - Providers
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/billing_mapping_configuration_options?limit=10&skip=0' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/billing_mapping_configuration_options"
+
+            querystring = {"limit":"10","skip":"0"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/billing_mapping_configuration_options?limit=10&skip=0' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: UUID
+        required: true
+        type: string
+    x-functionalities-tags:
+      - mtp-create-syncro-integration
   /integrations/syncro/{UUID}/companies:
     get:
       description: Retrieves a list of Syncro companies for the given Syncro id. You must be associated to the same provider as the Syncro integration to use this endpoint.
