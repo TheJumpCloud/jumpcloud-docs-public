@@ -1643,6 +1643,8 @@ definitions:
         type: string
       description:
         type: string
+      desktopCapable:
+        type: boolean
       displayManager:
         type: string
       displayName:
