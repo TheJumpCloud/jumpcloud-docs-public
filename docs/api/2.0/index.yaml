@@ -3007,8 +3007,21 @@ definitions:
         format: uuid
         type: string
     type: object
+  PwmItemsCountByType:
+    properties:
+      count:
+        format: int32
+        type: integer
+      type:
+        format: int32
+        type: integer
+    type: object
   PwmItemsMetadata:
     properties:
+      items:
+        items:
+          $ref: '#/definitions/PwmItemsCountByType'
+        type: array
       results:
         items:
           allOf:
@@ -3117,6 +3130,9 @@ definitions:
       id:
         format: uuid
         type: string
+      itemsCount:
+        format: int32
+        type: integer
       name:
         example: folder admin
         type: string
@@ -3131,6 +3147,9 @@ definitions:
         type: string
       status:
         example: active
+        type: string
+      username:
+        example: username1
         type: string
     required:
       - id
@@ -3180,6 +3199,10 @@ definitions:
     type: object
   PwmUserItems:
     properties:
+      items:
+        items:
+          $ref: '#/definitions/PwmItemsCountByType'
+        type: array
       results:
         items:
           $ref: '#/definitions/PwmUserItem'
