@@ -2601,6 +2601,23 @@ definitions:
         type: string
     title: PolicyGroupTemplate
     type: object
+  PolicyGroupTemplateMembers:
+    properties:
+      results:
+        items:
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            policyTemplateId:
+              type: string
+          type: object
+        type: array
+      totalCount:
+        type: integer
+    title: PolicyGroupTemplateMembers
+    type: object
   PolicyGroupTemplates:
     properties:
       results:
@@ -24565,6 +24582,75 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/policygrouptemplates/{id}' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        type: string
+      - in: path
+        name: id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - policy-group-templates
+  /providers/{provider_id}/policygrouptemplates/{id}/members:
+    get:
+      description: Retrieves a Policy Group Template's Members.
+      operationId: policyGroupTemplates_listMembers
+      parameters:
+        - $ref: '#/parameters/trait:skip:skip'
+        - $ref: '#/parameters/trait:sort:sort'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:filter:filter'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PolicyGroupTemplateMembers'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Gets the list of members from a policy group template.
+      tags:
+        - Providers
+        - Managed Service Provider
+        - Policy Group Templates
+      x-scopes:
+        - groups
+        - groups.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/policygrouptemplates/{id}/members?skip=0&limit=10' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/policygrouptemplates/{id}/members"
+
+            querystring = {"skip":"0","limit":"10"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/policygrouptemplates/{id}/members?skip=0&limit=10' -Method GET -Headers $headers
     parameters:
       - in: path
         name: provider_id
