@@ -1522,6 +1522,15 @@ definitions:
               type: object
             type: array
         type: object
+  FeatureTrialData:
+    description: Feature usage data for a feature
+    properties:
+      endDate:
+        type: string
+      startDate:
+        type: string
+    title: FeatureTrials
+    type: object
   Filter:
     description: Filter for a field.
     properties:
@@ -2987,7 +2996,9 @@ definitions:
     properties:
       results:
         items:
-          $ref: '#/definitions/PwmUser'
+          allOf:
+            - $ref: '#/definitions/PwmUser'
+            - $ref: '#/definitions/PasswordsSecurity'
         type: array
       totalCount:
         example: 50
@@ -3164,12 +3175,6 @@ definitions:
     allOf:
       - $ref: '#/definitions/PwmUser'
       - $ref: '#/definitions/PasswordsSecurity'
-      - properties:
-          apps:
-            $ref: '#/definitions/Apps'
-          groups:
-            $ref: '#/definitions/Groups'
-        type: object
   PwmUserItem:
     properties:
       field1:
@@ -3473,6 +3478,9 @@ definitions:
               type: string
             status:
               example: active
+              type: string
+            username:
+              example: username1
               type: string
           required:
             - id
@@ -14842,6 +14850,66 @@ paths:
         type: string
     x-functionalities-tags:
       - duo
+  /featureTrials/{feature_code}:
+    get:
+      description: |-
+        This endpoint get's the current state of a feature trial for an org.
+
+        #### Sample Request
+
+        ```
+          curl -X GET \
+          https://console.jumpcloud.local/api/v2/featureTrials/zeroTrust \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}'
+        ```
+      operationId: featureTrials_getFeatureTrials
+      parameters:
+        - in: path
+          name: feature_code
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/FeatureTrialData'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Check current feature trial usage for a specific feature
+      tags:
+        - FeatureTrials
+      x-scopes:
+        - organizations
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/featureTrials/{feature_code} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/featureTrials/{feature_code}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/featureTrials/{feature_code}' -Method GET -Headers $headers
   /geolocation/countries:
     x-functionalities-tags:
       - geolocation
@@ -35188,6 +35256,7 @@ tags:
   - name: Duo
   - name: Edge
   - name: fde
+  - name: FeatureTrials
   - name: G Suite
   - name: G Suite Import
   - name: Graph
@@ -35291,6 +35360,7 @@ x-tagGroups:
       - Custom Emails
       - Directories
       - Duo
+      - FeatureTrials
       - G Suite
       - G Suite Import
       - Graph
