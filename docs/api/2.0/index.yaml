@@ -5332,6 +5332,10 @@ definitions:
       name:
         description: The name of the app in the form enterprises/{enterprise}/applications/{packageName}.
         type: string
+      permissionGrants:
+        items:
+          $ref: '#/definitions/software-app-permission-grants'
+        type: array
       runtimePermission:
         description: The policy for granting permission requests to apps.
         enum:
@@ -5357,6 +5361,19 @@ definitions:
         description: The current version of the web app.
         type: integer
     title: software-app-google-android
+    type: object
+  software-app-permission-grants:
+    properties:
+      id:
+        description: An opaque string uniquely identifying the Android permission, e.g. android.permission.READ_CALENDAR.
+        type: string
+      policy:
+        description: The policy for granting the permission.
+        enum:
+          - PROMPT
+          - GRANT
+          - DENY
+        type: string
     type: object
   software-app-reclaim-licenses:
     properties:
@@ -25163,7 +25180,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string"}]}'
+              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string"}]}'
         - lang: Python
           source: |-
             import requests
@@ -25208,6 +25225,12 @@ paths:
                             "managedProperties": True,
                             "minSdkVersion": 0,
                             "name": "string",
+                            "permissionGrants": [
+                                {
+                                    "id": "string",
+                                    "policy": "PROMPT"
+                                }
+                            ],
                             "runtimePermission": "PROMPT",
                             "startUrl": "string",
                             "type": "APP_TYPE_UNSPECIFIED",
@@ -25239,7 +25262,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string"}]}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
@@ -25519,7 +25542,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string"}]}'
+              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string"}]}'
         - lang: Python
           source: |-
             import requests
@@ -25564,6 +25587,12 @@ paths:
                             "managedProperties": True,
                             "minSdkVersion": 0,
                             "name": "string",
+                            "permissionGrants": [
+                                {
+                                    "id": "string",
+                                    "policy": "PROMPT"
+                                }
+                            ],
                             "runtimePermission": "PROMPT",
                             "startUrl": "string",
                             "type": "APP_TYPE_UNSPECIFIED",
@@ -25595,7 +25624,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string"}]}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
