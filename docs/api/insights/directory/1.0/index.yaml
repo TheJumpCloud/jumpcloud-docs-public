@@ -990,6 +990,15 @@ info:
      passwordmanager_folder_member_add    | Member added to folder.                     |
      passwordmanager_folder_member_update | Member updated in folder.                   |
      passwordmanager_folder_member_remove | Member removed from folder.                 |
+     passwordmanager_item_add             | Item added to a folder.                     |
+     passwordmanager_item_update          | Item updated in folder.                     |
+     passwordmanager_item_remove          | Item removed from folder.                   |
+     passwordmanager_item_move            | Item moved from a folder to another.        |
+     passwordmanager_user_device_pair     | User paired a new device.                   |
+     passwordmanager_user_device_unpair   | User unpaired an existing device.           |
+     passwordmanager_user_signup          | User signup to PWM using an enrolled email. |
+     passwordmanager_user_re-enable       | User re-enabled for activation.             |
+     passwordmanager_user_update          | User details updated from the Admin Portal. |
 
     ## Software Events
 
