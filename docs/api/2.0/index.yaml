@@ -523,8 +523,6 @@ definitions:
           required:
             - organization
             - company
-            - contract
-            - service
           type: object
         type: array
     title: AutotaskMappingRequest
@@ -949,8 +947,6 @@ definitions:
           required:
             - organization
             - company
-            - agreement
-            - addition
           type: object
         type: array
     type: object
@@ -3666,6 +3662,41 @@ definitions:
       data:
         items:
           properties:
+            billingConfigurations:
+              description: Syncro billing mapping details
+              properties:
+                fields:
+                  properties:
+                    line_item_id:
+                      properties:
+                        kind:
+                          type: string
+                        numberValue:
+                          type: number
+                      type: object
+                    line_item_name:
+                      properties:
+                        kind:
+                          type: string
+                        stringValue:
+                          type: string
+                      type: object
+                    schedule_id:
+                      properties:
+                        kind:
+                          type: string
+                        numberValue:
+                          type: number
+                      type: object
+                    schedule_name:
+                      properties:
+                        kind:
+                          type: string
+                        stringValue:
+                          type: string
+                      type: object
+                  type: object
+              type: object
             company:
               properties:
                 id:
@@ -3696,33 +3727,48 @@ definitions:
         type: array
     type: object
     x-examples:
-      Create\Edit Existing Mapping example:
-        - company:
-            id: string
-            name: string
+      Create\Edit Billing Mapping:
+        - billingConfigurations:
+            fields:
+              line_item_id:
+                kind: numberValue
+                numberValue: 12
+              line_item_name:
+                kind: stringValue
+                stringValue: SyncroLineItemName
+              schedule_id:
+                kind: numberValue
+                numberValue: 99
+              schedule_name:
+                kind: stringValue
+                stringValue: SyncroScheduleName
+          company:
+            id: syncro-company-id
+            name: SyncroCompanyName
           organization:
             id: newOrganizationId
-            name: string
+            name: OrganizationName
+      Create\Edit Existing Company Mapping:
         - company:
-            id: string
-            name: string
+            id: syncro-company-id
+            name: SyncroCompanyName
           organization:
-            id: existingOrganizationId
-            name: string
-      Delete Mapping:
+            id: newOrganizationId
+            name: OrganizationName
+      Delete Company Mapping:
         data:
           - delete: true
             organization:
               id: orgId-1
-              name: string
+              name: OrgId1Name
           - delete: true
             organization:
               id: orgId-2
-              name: string
+              name: OrgId2Name
           - delete: true
             organization:
               id: orgId-3
-              name: string
+              name: OrgId3Name
   SyncroMappingResponse:
     description: Syncro mapping GET response
     properties:
@@ -17742,7 +17788,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"data":[{"company":{"id":"string","name":"string"},"delete":true,"organization":{"id":"string","name":"string"}}]}'
+              --data '{"data":[{"billingConfigurations":{"fields":{"line_item_id":{"kind":"string","numberValue":0},"line_item_name":{"kind":"string","stringValue":"string"},"schedule_id":{"kind":"string","numberValue":0},"schedule_name":{"kind":"string","stringValue":"string"}}},"company":{"id":"string","name":"string"},"delete":true,"organization":{"id":"string","name":"string"}}]}'
         - lang: Python
           source: |-
             import requests
@@ -17751,6 +17797,24 @@ paths:
 
             payload = {"data": [
                     {
+                        "billingConfigurations": {"fields": {
+                                "line_item_id": {
+                                    "kind": "string",
+                                    "numberValue": 0
+                                },
+                                "line_item_name": {
+                                    "kind": "string",
+                                    "stringValue": "string"
+                                },
+                                "schedule_id": {
+                                    "kind": "string",
+                                    "numberValue": 0
+                                },
+                                "schedule_name": {
+                                    "kind": "string",
+                                    "stringValue": "string"
+                                }
+                            }},
                         "company": {
                             "id": "string",
                             "name": "string"
@@ -17775,7 +17839,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"data":[{"company":{"id":"string","name":"string"},"delete":true,"organization":{"id":"string","name":"string"}}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/integrations/syncro/{UUID}/mappings' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"data":[{"billingConfigurations":{"fields":{"line_item_id":{"kind":"string","numberValue":0},"line_item_name":{"kind":"string","stringValue":"string"},"schedule_id":{"kind":"string","numberValue":0},"schedule_name":{"kind":"string","stringValue":"string"}}},"company":{"id":"string","name":"string"},"delete":true,"organization":{"id":"string","name":"string"}}]}'
     x-functionalities-tags:
       - mtp-create-syncro-integration
   /integrations/syncro/{UUID}/settings:
