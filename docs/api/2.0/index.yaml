@@ -2782,6 +2782,7 @@ definitions:
           - doublelistbox
           - table
           - segmentedbutton
+          - radio
         type: string
       id:
         description: ObjectId uniquely identifying a Policy Template Configuration Field
