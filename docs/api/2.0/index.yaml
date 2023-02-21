@@ -892,6 +892,31 @@ definitions:
         type: integer
     title: CommandResultList
     type: object
+  ConfiguredPolicyTemplate:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      policyTemplateId:
+        type: string
+      values:
+        items:
+          $ref: '#/definitions/ConfiguredPolicyTemplateValue'
+        type: array
+  ConfiguredPolicyTemplateValue:
+    example:
+      id: 63e6722746d3949ea9c073cc
+      name: setallowDeviceNameModification
+      value: true
+    properties:
+      configFieldId:
+        description: The ObjectId of the corresponding Policy Template configuration field.
+        type: string
+      name:
+        type: string
+      value:
+        description: The value of this Configured Policy Template Value
   ConnectWiseMappingRequest:
     description: Request object for creating ConnectWise mappings
     minItems: 1
@@ -23254,6 +23279,138 @@ paths:
         type: string
     x-functionalities-tags:
       - command-templates
+  /providers/{provider_id}/configuredpolicytemplates:
+    get:
+      description: Retrieves a list of Configured Policy Templates for this provider.
+      operationId: policyGroupTemplates_listConfiguredPolicyTemplates
+      parameters:
+        - $ref: '#/parameters/trait:skip:skip'
+        - $ref: '#/parameters/trait:sort:sort'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:filter:filter'
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              records:
+                $ref: '#/definitions/ConfiguredPolicyTemplate'
+              totalCount:
+                type: integer
+            type: object
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: List a provider's configured policy templates.
+      tags:
+        - Providers
+        - Managed Service Provider
+        - Policy Group Templates
+      x-scopes:
+        - groups
+        - groups.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/configuredpolicytemplates?skip=0&limit=10' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/configuredpolicytemplates"
+
+            querystring = {"skip":"0","limit":"10"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/configuredpolicytemplates?skip=0&limit=10' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - policy-group-templates
+  /providers/{provider_id}/configuredpolicytemplates/{id}:
+    get:
+      description: Retrieves a Configured Policy Templates for this provider and Id.
+      operationId: policyGroupTemplates_getConfiguredPolicyTemplate
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ConfiguredPolicyTemplate'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Retrieve a configured policy template by id.
+      tags:
+        - Providers
+        - Managed Service Provider
+        - Policy Group Templates
+      x-scopes:
+        - groups
+        - groups.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/configuredpolicytemplates/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/configuredpolicytemplates/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/configuredpolicytemplates/{id}' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        type: string
+      - in: path
+        name: id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - policy-group-templates
   /providers/{provider_id}/integrations:
     get:
       description: Retrieves a list of integrations this provider has configured. You must be associated to the provider to use this endpoint.
