@@ -7452,6 +7452,21 @@ info:
 
     JumpCloud's V2 API. This set of endpoints allows JumpCloud customers to manage objects, groupings and mappings and interact with the JumpCloud Graph.
 
+    ## API Best Practices
+
+    Read the linked Help Article below for guidance on retrying failed requests to JumpCloud's REST API, as well as best practices for structuring subsequent retry requests. Customizing retry mechanisms based on these recommendations will increase the reliability and dependability of your API calls.
+
+    Covered topics include:
+    1. Important Considerations
+    2. Supported HTTP Request Methods
+    3. Response codes
+    4. API Key rotation
+    5. Paginating
+    6. Error handling
+    7. Retry rates
+
+    [JumpCloud Help Center - API Best Practices](https://support.jumpcloud.com/support/s/article/JumpCloud-API-Best-Practices)
+
     # Directory Objects
 
     This API offers the ability to interact with some of our core features; otherwise known as Directory Objects. The Directory Objects are:
