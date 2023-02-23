@@ -2808,6 +2808,7 @@ definitions:
           - table
           - segmentedbutton
           - radio
+          - copywell
         type: string
       id:
         description: ObjectId uniquely identifying a Policy Template Configuration Field
