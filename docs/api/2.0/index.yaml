@@ -2158,6 +2158,34 @@ definitions:
     type:
       - object
       - 'null'
+  GroupPwm:
+    properties:
+      accessLevelId:
+        format: uuid
+        type: string
+      accessLevelName:
+        example: folder manager
+        type: string
+      description:
+        example: finance group
+        type: string
+      externalId:
+        type: string
+      id:
+        format: uuid
+        type: string
+      name:
+        example: group name
+        type: string
+      usersCount:
+        format: int32
+        type: integer
+    required:
+      - id
+      - name
+      - accessLevelId
+      - accessLevelName
+    type: object
   GroupType:
     description: The group type.
     enum:
@@ -3492,6 +3520,20 @@ definitions:
     allOf:
       - $ref: '#/definitions/SharedFolder'
       - $ref: '#/definitions/PasswordsSecurity'
+  SharedFolderGroups:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/GroupPwm'
+        type: array
+      totalCount:
+        example: 50
+        format: int32
+        type: integer
+    required:
+      - results
+      - totalCount
+    type: object
   SharedFolderUsers:
     properties:
       results:
@@ -7969,6 +8011,14 @@ parameters:
     name: targets
     required: true
     type: array
+  trait:groupId:groupId:
+    description: |
+      Group Id in uuid format
+    format: uuid
+    in: path
+    name: groupId
+    required: true
+    type: string
   trait:gsuite:maxResults:
     description: Google Directory API maximum number of results per page. See https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list.
     in: query
@@ -20980,9 +21030,27 @@ paths:
   /passwordmanager/sharedfolders/{folderId}:
     x-functionalities-tags:
       - pwm-user-folder-read
+  /passwordmanager/sharedfolders/{folderId}/groups:
+    x-functionalities-tags:
+      - pwm-group-folder-read
   /passwordmanager/sharedfolders/{folderId}/users:
     x-functionalities-tags:
       - pwm-user-folder-read
+  /passwordmanager/users:
+    x-functionalities-tags:
+      - pwm-user-read
+  /passwordmanager/users/reinvite:
+    x-functionalities-tags:
+      - pwm-user-read
+  /passwordmanager/users/{userId}:
+    x-functionalities-tags:
+      - pwm-user-read
+  /passwordmanager/users/{userId}/items:
+    x-functionalities-tags:
+      - pwm-user-items-read
+  /passwordmanager/users/{userId}/sharedFolders:
+    x-functionalities-tags:
+      - pwm-user-read
   /plan:
     x-functionalities-tags:
       - accounts-page-upgrade
@@ -35542,6 +35610,14 @@ responses:
     description: Success
     schema:
       $ref: '#/definitions/SharedFolderDetails'
+  SharedFolderGroupUpdated:
+    description: Success
+    schema:
+      $ref: '#/definitions/GroupPwm'
+  SharedFolderGroups:
+    description: Success
+    schema:
+      $ref: '#/definitions/SharedFolderGroups'
   SharedFolderUsers:
     description: Success
     schema:
