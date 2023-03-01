@@ -1252,7 +1252,21 @@ paths:
         '200':
           description: List of distinct field values
           schema:
-            $ref: '#/definitions/EventCount'
+            type: object
+            properties:
+              buckets:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    doc_count:
+                      type: integer
+                    key:
+                      type: string
+              doc_count_error_upper_bound:
+                type: integer
+              sum_other_doc_count:
+                type: integer
         '400':
           description: Invalid/unknown query JSON body
           schema:
