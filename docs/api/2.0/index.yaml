@@ -13999,10 +13999,7 @@ paths:
       - logos
   /customemails:
     post:
-      description: |-
-        Create the custom email configuration for the specified custom email type.
-
-        This action is only available to paying customers.
+      description: Create the custom email configuration for the specified custom email type
       operationId: customEmails_create
       parameters:
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
@@ -14193,10 +14190,7 @@ paths:
         required: true
         type: string
     put:
-      description: |-
-        Update the custom email configuration for the specified custom email type.
-
-        This action is only available to paying customers.
+      description: Update the custom email configuration for the specified custom email type
       operationId: customEmails_update
       parameters:
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
