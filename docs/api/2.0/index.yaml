@@ -2646,22 +2646,29 @@ definitions:
         type: string
       id:
         type: string
+      members:
+        items:
+          $ref: '#/definitions/PolicyGroupTemplateMember'
+        type: array
       name:
         type: string
     title: PolicyGroupTemplate
+    type: object
+  PolicyGroupTemplateMember:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      policyTemplateId:
+        type: string
+    title: PolicyGroupTemplateMember
     type: object
   PolicyGroupTemplateMembers:
     properties:
       results:
         items:
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            policyTemplateId:
-              type: string
-          type: object
+          $ref: '#/definitions/PolicyGroupTemplateMember'
         type: array
       totalCount:
         type: integer
@@ -24800,6 +24807,7 @@ paths:
       description: Retrieves a list of Policy Group Templates for this provider.
       operationId: policyGroupTemplates_list
       parameters:
+        - $ref: '#/parameters/trait:fields:fields'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:sort:sort'
         - $ref: '#/parameters/trait:limit:limit'
