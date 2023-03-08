@@ -1755,6 +1755,8 @@ definitions:
         type: object
       remoteIP:
         type: string
+      secureLoginEnabled:
+        type: boolean
       serialNumber:
         type: string
       serviceAccountState:
