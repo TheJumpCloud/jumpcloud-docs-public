@@ -1091,7 +1091,7 @@ paths:
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -1104,6 +1104,7 @@ paths:
                 "start_time": "2019-08-24T14:15:22Z",
                 "fields": ["string"],
                 "limit": 0,
+                "q": "string",
                 "search_after": [{}],
                 "search_term": {
                     "and": {},
@@ -1127,7 +1128,7 @@ paths:
             $headers.Add("accept", "application/json")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
   /events/count:
     post:
       security:
@@ -1185,7 +1186,7 @@ paths:
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -1198,6 +1199,7 @@ paths:
                 "start_time": "2019-08-24T14:15:22Z",
                 "fields": ["string"],
                 "limit": 0,
+                "q": "string",
                 "search_after": [{}],
                 "search_term": {
                     "and": {},
@@ -1221,7 +1223,7 @@ paths:
             $headers.Add("accept", "application/json")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/count' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/count' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
   /events/distinct:
     post:
       security:
@@ -1396,7 +1398,7 @@ paths:
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","interval_unit":"s","interval_value":"string","search_term":{"and":{},"not":{},"or":{}},"timezone":"string"}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","interval_unit":"s","interval_value":"string","q":"string","search_term":{"and":{},"not":{},"or":{}},"timezone":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -1409,6 +1411,7 @@ paths:
                 "start_time": "2019-08-24T14:15:22Z",
                 "interval_unit": "s",
                 "interval_value": "string",
+                "q": "string",
                 "search_term": {
                     "and": {},
                     "not": {},
@@ -1431,7 +1434,7 @@ paths:
             $headers.Add("accept", "application/json")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/interval' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","interval_unit":"s","interval_value":"string","search_term":{"and":{},"not":{},"or":{}},"timezone":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/interval' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["all"],"start_time":"2019-08-24T14:15:22Z","interval_unit":"s","interval_value":"string","q":"string","search_term":{"and":{},"not":{},"or":{}},"timezone":"string"}'
   /reports:
     get:
       security:
@@ -1810,6 +1813,10 @@ definitions:
             description: Interval Value. This specifies how many units you want to bucket the event counts by
             type: string
             x-go-name: IntervalValue
+          q:
+            description: optional string for specifying a full text query
+            type: string
+            x-go-name: Q
           search_term:
             $ref: '#/definitions/SearchTerm'
           timezone:
@@ -1835,6 +1842,10 @@ definitions:
             type: integer
             format: int64
             x-go-name: Limit
+          q:
+            description: optional string for specifying a full text query
+            type: string
+            x-go-name: Q
           search_after:
             description: 'Specific query to search after, see x-* response headers for next values'
             type: array
