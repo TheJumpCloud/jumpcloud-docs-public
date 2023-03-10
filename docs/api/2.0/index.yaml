@@ -13562,8 +13562,18 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/CommandResultList'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
         '401':
-          description: Unauthorized
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
       security:
         - x-api-key: []
       summary: List all Command Results by Workflow
@@ -24509,14 +24519,26 @@ paths:
         - $ref: '#/parameters/trait:limitMax100:limit'
         - $ref: '#/parameters/trait:filter:filter'
         - $ref: '#/parameters/trait:skip:skip'
+        - $ref: '#/parameters/trait:sort:sort'
+        - $ref: '#/parameters/trait:search:search'
       responses:
         '200':
           description: OK
           examples: {}
           schema:
             $ref: '#/definitions/QueuedCommandList'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
         '401':
-          description: Unauthorized
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
       security:
         - x-api-key: []
       summary: Fetch the queued Commands for an Organization
@@ -24529,7 +24551,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/queuedcommand/workflows?limit=10&skip=0' \
+              --url 'https://console.jumpcloud.com/api/v2/queuedcommand/workflows?limit=10&skip=0&search=' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE'
         - lang: Python
@@ -24538,7 +24560,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/queuedcommand/workflows"
 
-            querystring = {"limit":"10","skip":"0"}
+            querystring = {"limit":"10","skip":"0","search":""}
 
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -24553,7 +24575,7 @@ paths:
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/queuedcommand/workflows?limit=10&skip=0' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/queuedcommand/workflows?limit=10&skip=0&search=' -Method GET -Headers $headers
     parameters: []
     x-functionalities-tags:
       - queued-commands
