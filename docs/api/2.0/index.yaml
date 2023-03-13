@@ -24342,6 +24342,53 @@ paths:
     x-functionalities-tags:
       - policy-group-templates
   /providers/{provider_id}/policygrouptemplates/{id}:
+    delete:
+      description: Deletes a Policy Group Template.
+      operationId: policyGroupTemplates_delete
+      responses:
+        '201':
+          description: NO_CONTENT
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Deletes policy group template.
+      tags:
+        - Providers
+        - Managed Service Provider
+        - Policy Group Templates
+      x-scopes:
+        - groups
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/policygrouptemplates/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/policygrouptemplates/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/policygrouptemplates/{id}' -Method DELETE -Headers $headers
     get:
       description: Retrieves a Policy Group Template for this provider.
       operationId: policyGroupTemplates_get
