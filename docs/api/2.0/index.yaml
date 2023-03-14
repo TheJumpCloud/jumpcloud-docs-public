@@ -11699,7 +11699,6 @@ paths:
         - Authentication Policies
       x-scopes:
         - authn
-        - authn.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -11815,7 +11814,6 @@ paths:
         - Authentication Policies
       x-scopes:
         - authn
-        - authn.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
