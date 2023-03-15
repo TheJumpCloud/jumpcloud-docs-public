@@ -15037,6 +15037,7 @@ paths:
         - FeatureTrials
       x-scopes:
         - organizations
+        - organizations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
