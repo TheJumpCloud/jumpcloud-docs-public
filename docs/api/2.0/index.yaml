@@ -3943,6 +3943,12 @@ definitions:
         items:
           $ref: '#/definitions/GraphObject'
         type: array
+      memberSuggestionsNotify:
+        description: True if notification emails are to be sent for membership suggestions.
+        type: boolean
+      membershipAutomated:
+        description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
+        type: boolean
       name:
         description: Display name of a System Group.
         type: string
@@ -3970,6 +3976,12 @@ definitions:
         items:
           $ref: '#/definitions/GraphObject'
         type: array
+      memberSuggestionsNotify:
+        description: True if notification emails are to be sent for membership suggestions.
+        type: boolean
+      membershipAutomated:
+        description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
+        type: boolean
       name:
         description: Display name of a System Group.
         type: string
@@ -3994,6 +4006,12 @@ definitions:
         items:
           $ref: '#/definitions/GraphObject'
         type: array
+      memberSuggestionsNotify:
+        description: True if notification emails are to be sent for membership suggestions.
+        type: boolean
+      membershipAutomated:
+        description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
+        type: boolean
       name:
         description: Display name of a System Group.
         type: string
@@ -26144,7 +26162,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"name":"string"}'
+              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -26172,6 +26190,8 @@ paths:
                         "type": "string"
                     }
                 ],
+                "memberSuggestionsNotify": True,
+                "membershipAutomated": True,
                 "name": "string"
             }
             headers = {
@@ -26189,7 +26209,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
     x-functionalities-tags:
       - systemgroups
   /systemgroups/{group_id}/associations:
@@ -27151,7 +27171,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"name":"string"}'
+              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -27179,6 +27199,8 @@ paths:
                         "type": "string"
                     }
                 ],
+                "memberSuggestionsNotify": True,
+                "membershipAutomated": True,
                 "name": "string"
             }
             headers = {
@@ -27196,7 +27218,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
     x-functionalities-tags:
       - systemgroups
   /systeminsights/alf:
