@@ -35380,8 +35380,8 @@ securityDefinitions:
 swagger: '2.0'
 tags:
   - name: AccountManagerCalendar
-  - name: AddOn
   - name: Active Directory
+  - name: AddOn
   - name: Administrators
   - name: Apple MDM
   - name: Apple VPP
@@ -35389,9 +35389,9 @@ tags:
   - name: Authentication Policies
   - name: Bulk Job Requests
   - name: Cloud Insights
-  - name: Commands
-  - name: Command Templates
   - name: Command Results
+  - name: Command Templates
+  - name: Commands
   - name: Configuration
   - name: Countries
   - name: Custom Emails
@@ -35400,19 +35400,18 @@ tags:
   - name: Directory Insights
   - name: Duo
   - name: Edge
-  - name: fde
   - name: FeatureTrials
   - name: G Suite
   - name: G Suite Import
+  - name: Google EMM
   - name: Graph
   - name: Groups
-  - name: Image
   - name: IP Lists
+  - name: Image
   - name: Knowledge
   - name: LDAP Servers
   - name: Logos
   - name: Managed Service Provider
-  - name: Push
   - name: Office 365
   - name: Office 365 Import
   - name: Organizations
@@ -35420,37 +35419,38 @@ tags:
   - name: Password Manager
   - name: Plan
   - name: Plan Feature
-  - name: Trial Feature Insights
   - name: Policies
-  - name: Policy Groups
   - name: Policy Group Associations
   - name: Policy Group Members & Membership
   - name: Policy Group Templates
+  - name: Policy Groups
   - name: Policytemplates
   - name: Providers
+  - name: Push
   - name: RADIUS Servers
-  - name: Remote Assist
   - name: Recommendations
-  - name: Samba Domains
-  - name: Software Catalog
-  - name: Software Apps
-  - name: Subscriptions
-  - name: SubscriptionComponent
-  - name: SubscriptionData
-  - name: System Groups
-  - name: System Group Associations
-  - name: System Group Members & Membership
-  - name: System Insights
-  - name: Systems
+  - name: Remote Assist
   - name: SCIM Import
   - name: SSO
+  - name: Samba Domains
+  - name: Software Apps
+  - name: Software Catalog
+  - name: SubscriptionComponent
+  - name: SubscriptionData
+  - name: Subscriptions
+  - name: System Group Associations
+  - name: System Group Members & Membership
+  - name: System Groups
+  - name: System Insights
+  - name: Systems
+  - name: Trial Feature Insights
   - name: User Group Associations
-  - name: User Groups
   - name: User Group Members & Membership
+  - name: User Groups
   - name: Users
   - name: WebAuthn
   - name: Workday Import
-  - name: Google EMM
+  - name: fde
 x-scopes:
   - administrators
   - administrators.readonly
