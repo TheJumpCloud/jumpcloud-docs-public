@@ -11342,7 +11342,7 @@ paths:
           $ref: '#/responses/trait:standardErrors:500'
       security:
         - x-api-key: []
-      summary: ''
+      summary: Save application logo
       tags:
         - Applications
       x-scopes:
@@ -12734,7 +12734,7 @@ paths:
           $ref: '#/responses/trait:standardErrors:500'
       security:
         - x-api-key: []
-      summary: ''
+      summary: Create AWS account record
       tags:
         - Cloud Insights
       x-scopes:
