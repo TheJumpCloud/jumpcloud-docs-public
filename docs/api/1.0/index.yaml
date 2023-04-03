@@ -1615,6 +1615,8 @@ definitions:
         type: string
       arch:
         type: string
+      archFamily:
+        type: string
       azureAdJoined:
         type: boolean
       builtInCommands:
