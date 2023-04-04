@@ -24168,6 +24168,21 @@ paths:
           description: CREATED
           schema:
             $ref: '#/definitions/Organization'
+        '400':
+          description: |-
+            A 'Bad Request' error will be returned in one of the following scenarios: 
+
+            * The request payload contains fields that are not allowed (only 'name' and 'maxSystemUsers' are allowed).
+            * The user creating the org specifies 'maxSystemUsers' in the request payload but does not have the organizations.billing scope.
+            * The required field 'name' is missing from the request payload or is an empty string or a string that only contains whitespaces.
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: A 'Forbidden' error will be returned if organization creation is disabled for the provider.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
       security:
         - x-api-key: []
       summary: Create Provider Organization
