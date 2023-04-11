@@ -2646,6 +2646,9 @@ definitions:
       name:
         description: The description for this specific Policy.
         type: string
+      notes:
+        description: The notes for this specific Policy.
+        type: string
       template:
         properties:
           id:
@@ -2906,6 +2909,9 @@ definitions:
         type: string
       name:
         description: The description for this specific Policy.
+        type: string
+      notes:
+        description: The notes for this specific Policy.
         type: string
       template:
         $ref: '#/definitions/PolicyTemplate'
@@ -20670,7 +20676,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"name":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
+              --data '{"name":"string","notes":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
         - lang: Python
           source: |-
             import requests
@@ -20679,6 +20685,7 @@ paths:
 
             payload = {
                 "name": "string",
+                "notes": "string",
                 "template": {"id": "string"},
                 "values": [
                     {
@@ -20703,7 +20710,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","notes":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
     x-functionalities-tags:
       - devices-windows-policy-crud
       - devices-darwin-policy-crud
@@ -20865,7 +20872,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"name":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
+              --data '{"name":"string","notes":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
         - lang: Python
           source: |-
             import requests
@@ -20874,6 +20881,7 @@ paths:
 
             payload = {
                 "name": "string",
+                "notes": "string",
                 "template": {"id": "string"},
                 "values": [
                     {
@@ -20898,7 +20906,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/policies/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/policies/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","notes":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
     x-functionalities-tags:
       - devices-windows-policy-crud
       - devices-darwin-policy-crud
