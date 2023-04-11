@@ -2158,6 +2158,15 @@ definitions:
     type:
       - object
       - 'null'
+  GroupMembershipMethodType:
+    description: The type of membership method for this group. Valid values include NOTSET, STATIC, DYNAMIC_REVIEW_REQUIRED, and DYNAMIC_AUTOMATED.
+    enum:
+      - NOTSET
+      - STATIC
+      - DYNAMIC_REVIEW_REQUIRED
+      - DYNAMIC_AUTOMATED
+    title: GroupMembershipMethodType
+    type: string
   GroupPwm:
     properties:
       accessLevelId:
@@ -3955,6 +3964,8 @@ definitions:
       membershipAutomated:
         description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
         type: boolean
+      membershipMethod:
+        $ref: '#/definitions/GroupMembershipMethodType'
       name:
         description: Display name of a System Group.
         type: string
@@ -3988,6 +3999,8 @@ definitions:
       membershipAutomated:
         description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
         type: boolean
+      membershipMethod:
+        $ref: '#/definitions/GroupMembershipMethodType'
       name:
         description: Display name of a System Group.
         type: string
@@ -4018,6 +4031,8 @@ definitions:
       membershipAutomated:
         description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
         type: boolean
+      membershipMethod:
+        $ref: '#/definitions/GroupMembershipMethodType'
       name:
         description: Display name of a System Group.
         type: string
@@ -4116,6 +4131,8 @@ definitions:
       membershipAutomated:
         description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
         type: boolean
+      membershipMethod:
+        $ref: '#/definitions/GroupMembershipMethodType'
       name:
         description: Display name of a User Group.
         type: string
@@ -4151,6 +4168,8 @@ definitions:
       membershipAutomated:
         description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
         type: boolean
+      membershipMethod:
+        $ref: '#/definitions/GroupMembershipMethodType'
       name:
         description: Display name of a User Group.
         type: string
@@ -4181,6 +4200,8 @@ definitions:
       membershipAutomated:
         description: True if membership of this group is automatically updated based on the Member Query and Member Query Exemptions, if configured
         type: boolean
+      membershipMethod:
+        $ref: '#/definitions/GroupMembershipMethodType'
       name:
         description: Display name of a User Group.
         type: string
@@ -26185,7 +26206,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
+              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -26215,6 +26236,7 @@ paths:
                 ],
                 "memberSuggestionsNotify": True,
                 "membershipAutomated": True,
+                "membershipMethod": "NOTSET",
                 "name": "string"
             }
             headers = {
@@ -26232,7 +26254,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - systemgroups
   /systemgroups/{group_id}/associations:
@@ -27343,7 +27365,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
+              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -27373,6 +27395,7 @@ paths:
                 ],
                 "memberSuggestionsNotify": True,
                 "membershipAutomated": True,
+                "membershipMethod": "NOTSET",
                 "name": "string"
             }
             headers = {
@@ -27390,7 +27413,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - systemgroups
   /systeminsights/alf:
@@ -31885,7 +31908,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
+              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -31934,6 +31957,7 @@ paths:
                 ],
                 "memberSuggestionsNotify": True,
                 "membershipAutomated": True,
+                "membershipMethod": "NOTSET",
                 "name": "string"
             }
             headers = {
@@ -31951,7 +31975,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - systems
   /usergroups/{group_id}/activedirectories:
@@ -33364,7 +33388,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
+              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -33413,6 +33437,7 @@ paths:
                 ],
                 "memberSuggestionsNotify": True,
                 "membershipAutomated": True,
+                "membershipMethod": "NOTSET",
                 "name": "string"
             }
             headers = {
@@ -33430,7 +33455,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipAutomated":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - groups
   /users/{user_id}/activedirectories:
