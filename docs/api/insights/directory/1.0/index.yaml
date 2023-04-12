@@ -943,6 +943,16 @@ info:
      autotask_company_mapping_update    | Created when an admin updates an Autotask company mapping.                                                              |
      autotask_company_mapping_delete    | Created when an admin deletes an Autotask company mapping.                                                              |
      autotask_settings_update           | Created when an admin updates Autotask settings.                                                                        |
+     syncro_integration_create          | Created when an admin creates a Syncro integration.                                                                     |
+     syncro_integration_update          | Created when an admin updates a Syncro integration.                                                                     |
+     syncro_integration_delete          | Created when an admin deletes a Syncro integration.                                                                     |
+     syncro_billing_mapping_create      | Created when an admin creates a Syncro billing mapping.                                                                 |
+     syncro_billing_mapping_update      | Created when an admin updates a Syncro billing mapping.                                                                 |
+     syncro_billing_mapping_delete      | Created when an admin deletes a Syncro billing mapping.                                                                 |
+     syncro_company_mapping_create      | Created when an admin creates a Syncro company mapping.                                                                 |
+     syncro_company_mapping_update      | Created when an admin updates a Syncro company mapping.                                                                 |
+     syncro_company_mapping_delete      | Created when an admin deletes a Syncro company mapping.                                                                 |
+     syncro_settings_update             | Created when an admin updates Syncro settings.                                                                          |
 
     ## RADIUS Events
 
