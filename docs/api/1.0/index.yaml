@@ -4761,14 +4761,6 @@ paths:
         type: string
     x-functionalities-tags:
       - accounts-page-payment-info
-  /organizations/{id}/paymentdetails/card:
-    parameters:
-      - in: path
-        name: id
-        required: true
-        type: string
-    x-functionalities-tags:
-      - accounts-page-payment-info
   /organizations/{id}/paymentparams:
     parameters:
       - in: path
