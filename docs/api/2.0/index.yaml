@@ -24199,7 +24199,7 @@ paths:
             $ref: '#/definitions/Organization'
         '400':
           description: |-
-            A 'Bad Request' error will be returned in one of the following scenarios: 
+            A 'Bad Request' error will be returned in one of the following scenarios:
 
             * The request payload contains fields that are not allowed (only 'name' and 'maxSystemUsers' are allowed).
             * The user creating the org specifies 'maxSystemUsers' in the request payload but does not have the organizations.billing scope.
