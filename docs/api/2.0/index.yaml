@@ -18690,7 +18690,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/ldapservers?limit=10&skip=0' -Method GET -Headers $headers
     x-functionalities-tags:
-      - ldap-read
+      - ldap-management
   /ldapservers/{id}:
     get:
       description: |-
@@ -18718,7 +18718,7 @@ paths:
       tags:
         - LDAP Servers
       x-functionalities-tags:
-        - ldap-read
+        - ldap-management
       x-scopes:
         - directories
         - directories.readonly
@@ -18812,7 +18812,7 @@ paths:
       tags:
         - LDAP Servers
       x-functionalities-tags:
-        - ldap-update
+        - ldap-management
       x-scopes:
         - directories
       x-codeSamples:
@@ -18885,6 +18885,8 @@ paths:
       tags:
         - Graph
         - LDAP Servers
+      x-functionalities-tags:
+        - ldap-management
       x-scopes:
         - directories
         - directories.readonly
@@ -18957,6 +18959,8 @@ paths:
       tags:
         - Graph
         - LDAP Servers
+      x-functionalities-tags:
+        - ldap-management
       x-scopes:
         - directories
       x-codeSamples:
@@ -19034,6 +19038,8 @@ paths:
       summary: List Samba Domains
       tags:
         - Samba Domains
+      x-functionalities-tags:
+        - ldap-samba
       x-scopes:
         - directories
         - directories.readonly
@@ -19170,6 +19176,8 @@ paths:
       summary: Delete Samba Domain
       tags:
         - Samba Domains
+      x-functionalities-tags:
+        - ldap-samba
       x-scopes:
         - directories
       x-codeSamples:
@@ -19224,6 +19232,8 @@ paths:
       summary: Get Samba Domain
       tags:
         - Samba Domains
+      x-functionalities-tags:
+        - ldap-samba
       x-scopes:
         - directories
         - directories.readonly
@@ -19391,6 +19401,8 @@ paths:
       tags:
         - Graph
         - LDAP Servers
+      x-functionalities-tags:
+        - ldap-associations
       x-scopes:
         - groups
         - groups.readonly
@@ -19430,7 +19442,7 @@ paths:
         required: true
         type: string
     x-functionalities-tags:
-      - ldap-read
+      - ldap-management
   /ldapservers/{ldapserver_id}/users:
     get:
       description: |-
@@ -19470,6 +19482,8 @@ paths:
       tags:
         - Graph
         - LDAP Servers
+      x-functionalities-tags:
+        - ldap-associations
       x-scopes:
         - users
         - users.readonly
@@ -19509,7 +19523,7 @@ paths:
         required: true
         type: string
     x-functionalities-tags:
-      - ldap-read
+      - ldap-management
   /logos/{id}:
     get:
       description: Return the logo image associated with the specified id
@@ -32530,7 +32544,7 @@ paths:
         type: string
     x-functionalities-tags:
       - groups
-      - ldap-read
+      - ldap-management
   /usergroups/{group_id}/memberof:
     parameters:
       - description: ObjectID of the User Group.
@@ -34017,7 +34031,7 @@ paths:
         required: true
         type: string
     x-functionalities-tags:
-      - ldap-read
+      - ldap-management
   /users/{user_id}/memberof:
     get:
       description: |-
