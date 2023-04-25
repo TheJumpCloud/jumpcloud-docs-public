@@ -3723,6 +3723,7 @@ paths:
         - Command Triggers
       x-scopes:
         - commands
+        - commands.schedule
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -7864,6 +7865,7 @@ x-scopes:
   - commandrunner.legacy
   - commands
   - commands.readonly
+  - commands.schedule
   - organizations
   - organizations.readonly
   - radius
