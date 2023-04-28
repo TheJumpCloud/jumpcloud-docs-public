@@ -5272,6 +5272,262 @@ definitions:
         type: string
     title: Job WorkResult
     type: object
+  jumpcloud.google_emm.CommandResponse:
+    type: object
+  jumpcloud.google_emm.CommonCriteriaModeInfo:
+    properties:
+      commonCriteriaModeStatus:
+        type: string
+    type: object
+  jumpcloud.google_emm.ConnectionStatus:
+    properties:
+      enterpriseId:
+        format: byte
+        type: string
+      isConnected:
+        type: boolean
+      organizationObjectId:
+        format: byte
+        type: string
+    type: object
+  jumpcloud.google_emm.CreateEnterpriseRequest:
+    properties:
+      enrollmentToken:
+        title: not logging because it contains sensitive information
+        type: string
+      signupUrlName:
+        title: not logging because it contains sensitive information
+        type: string
+    type: object
+  jumpcloud.google_emm.CreateWebTokenRequest:
+    properties:
+      enterpriseObjectId:
+        format: byte
+        type: string
+      parentFrameUrl:
+        type: string
+    type: object
+  jumpcloud.google_emm.Device:
+    properties:
+      deviceId:
+        format: byte
+        type: string
+      deviceInformation:
+        $ref: '#/definitions/jumpcloud.google_emm.DeviceInformation'
+      name:
+        type: string
+    type: object
+  jumpcloud.google_emm.DeviceAndroidPolicy:
+    properties:
+      policy:
+        type: string
+    type: object
+  jumpcloud.google_emm.DeviceInformation:
+    properties:
+      deviceStateInfo:
+        $ref: '#/definitions/jumpcloud.google_emm.DeviceStateInfo'
+      emmEnrollmentInfo:
+        $ref: '#/definitions/jumpcloud.google_emm.EMMEnrollmentInfo'
+      hardwareInfo:
+        $ref: '#/definitions/jumpcloud.google_emm.HardwareInfo'
+      memoryInfo:
+        $ref: '#/definitions/jumpcloud.google_emm.MemoryInfo'
+      networkInfo:
+        $ref: '#/definitions/jumpcloud.google_emm.NetworkInfo'
+      softwareInfo:
+        $ref: '#/definitions/jumpcloud.google_emm.SoftwareInfo'
+    type: object
+  jumpcloud.google_emm.DeviceSettings:
+    properties:
+      adbEnabled:
+        type: boolean
+      developmentSettingsEnabled:
+        type: boolean
+      encryptionStatus:
+        type: string
+      isDeviceSecure:
+        type: boolean
+      isEncrypted:
+        type: boolean
+      unknownSourcesEnabled:
+        type: boolean
+      verifyAppsEnabled:
+        type: boolean
+    type: object
+  jumpcloud.google_emm.DeviceStateInfo:
+    properties:
+      appliedDeviceState:
+        type: string
+      commonCriteriaModeInfo:
+        $ref: '#/definitions/jumpcloud.google_emm.CommonCriteriaModeInfo'
+      deviceSettings:
+        $ref: '#/definitions/jumpcloud.google_emm.DeviceSettings'
+      deviceState:
+        type: string
+      disabledReason:
+        type: string
+      lastPolicySyncTime:
+        type: string
+      lastStatusReportTime:
+        type: string
+      policyCompliant:
+        type: boolean
+      securityPosture:
+        $ref: '#/definitions/jumpcloud.google_emm.SecurityPosture'
+    type: object
+  jumpcloud.google_emm.EMMEnrollmentInfo:
+    properties:
+      appliedPolicyName:
+        type: string
+      appliedPolicyVersion:
+        format: int64
+        type: integer
+      enrollmentTime:
+        type: string
+      managementMode:
+        type: string
+      ownership:
+        type: string
+      policyName:
+        type: string
+    type: object
+  jumpcloud.google_emm.Enterprise:
+    properties:
+      allowDeviceEnrollment:
+        type: boolean
+      contactEmail:
+        description: not logging because it contains PII non-sensitive information.
+        type: string
+      createdAt:
+        format: date-time
+        type: string
+      deviceGroupId:
+        format: byte
+        type: string
+      displayName:
+        type: string
+      name:
+        type: string
+      objectId:
+        format: byte
+        type: string
+      organizationObjectId:
+        format: byte
+        type: string
+    type: object
+  jumpcloud.google_emm.HardwareInfo:
+    properties:
+      brand:
+        type: string
+      deviceBaseBandVersion:
+        type: string
+      hardware:
+        type: string
+      manufacturer:
+        type: string
+      model:
+        type: string
+      serialNumber:
+        type: string
+    type: object
+  jumpcloud.google_emm.ListEnterprisesResponse:
+    properties:
+      count:
+        format: int64
+        type: integer
+      enterprises:
+        items:
+          $ref: '#/definitions/jumpcloud.google_emm.Enterprise'
+        type: array
+    type: object
+  jumpcloud.google_emm.MemoryInfo:
+    properties:
+      totalInternalStorage:
+        format: int64
+        type: integer
+      totalRam:
+        format: int64
+        type: integer
+    type: object
+  jumpcloud.google_emm.NetworkInfo:
+    properties:
+      imei:
+        description: Not logging as it contains sensitive information.
+        type: string
+      meid:
+        description: Not logging as it contains sensitive information.
+        type: string
+      telephonyInfo:
+        items:
+          $ref: '#/definitions/jumpcloud.google_emm.TelephonyInfo'
+        type: array
+      wifiMacAddress:
+        description: Not logging as it contains sensitive information.
+        type: string
+    type: object
+  jumpcloud.google_emm.SecurityPosture:
+    properties:
+      devicePosture:
+        type: string
+    type: object
+  jumpcloud.google_emm.SignupURL:
+    properties:
+      name:
+        title: not logging because it contains sensitive information
+        type: string
+      url:
+        title: not logging because it contains sensitive information
+        type: string
+    type: object
+  jumpcloud.google_emm.SoftwareInfo:
+    properties:
+      androidBuildNumber:
+        type: string
+      androidBuildTime:
+        type: string
+      androidDevicePolicyVersionCode:
+        format: int64
+        type: integer
+      androidVersion:
+        type: string
+      bootloaderVersion:
+        type: string
+      deviceBuildSignature:
+        type: string
+      deviceKernelVersion:
+        type: string
+      primaryLanguageCode:
+        type: string
+      securityPatchLevel:
+        type: string
+      systemUpdateInfo:
+        $ref: '#/definitions/jumpcloud.google_emm.SystemUpdateInfo'
+    type: object
+  jumpcloud.google_emm.SystemUpdateInfo:
+    properties:
+      updateReceivedTime:
+        type: string
+      updateStatus:
+        type: string
+    type: object
+  jumpcloud.google_emm.TelephonyInfo:
+    properties:
+      carrierName:
+        description: Not logging as it contains sensitive information.
+        type: string
+      phoneNumber:
+        description: Not logging as it contains sensitive information.
+        type: string
+    type: object
+  jumpcloud.google_emm.WebToken:
+    properties:
+      name:
+        title: not logging because it contains sensitive information
+        type: string
+      value:
+        title: not logging because it contains sensitive information
+        type: string
+    type: object
   ldap-server:
     properties:
       id:
@@ -15108,6 +15364,760 @@ paths:
   /geolocation/countries:
     x-functionalities-tags:
       - geolocation
+  /google-emm/devices/{deviceId}:
+    get:
+      description: |-
+        Gets a Google EMM enrolled device details.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Devices_GetDevice
+      parameters:
+        - format: byte
+          in: path
+          name: deviceId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.Device'
+      security:
+        - x-api-key: []
+      summary: Get device
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+        - mdm.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}' -Method GET -Headers $headers
+  /google-emm/devices/{deviceId}/lock:
+    post:
+      description: |-
+        Locks a Google EMM enrolled device, as if the lock screen timeout had expired.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lock \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Devices_LockDevice
+      parameters:
+        - format: byte
+          in: path
+          name: deviceId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.CommandResponse'
+      security:
+        - x-api-key: []
+      summary: Lock device
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lock \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lock"
+
+            payload = {}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lock' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+  /google-emm/devices/{deviceId}/policy_results:
+    get:
+      description: |-
+        Gets an android JSON policy for a Google EMM enrolled device.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/policy_results \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Devices_GetDeviceAndroidPolicy
+      parameters:
+        - format: byte
+          in: path
+          name: deviceId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.DeviceAndroidPolicy'
+      security:
+        - x-api-key: []
+      summary: Get the policy JSON of a device
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+        - mdm.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/policy_results \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/policy_results"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/policy_results' -Method GET -Headers $headers
+  /google-emm/devices/{deviceId}/relinquishownership:
+    post:
+      description: |-
+        Removes the work profile and all policies from a company-owned Android 8.0+ device, relinquishing the device for personal use. Apps and data associated with the personal profile(s) are preserved.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/reliquinshownership \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Devices_RelinquishOwnership
+      parameters:
+        - format: byte
+          in: path
+          name: deviceId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.CommandResponse'
+      security:
+        - x-api-key: []
+      summary: Relinquish Ownership of COPE device
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/relinquishownership \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/relinquishownership"
+
+            payload = {}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/relinquishownership' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+  /google-emm/devices/{deviceId}/resetpassword:
+    post:
+      description: |-
+        Reset the user's password of a Google EMM enrolled device.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/resetpassword \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{ 'new_password' : 'string' }' \
+        ```
+      operationId: Devices_ResetPassword
+      parameters:
+        - format: byte
+          in: path
+          name: deviceId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              flags:
+                items:
+                  type: string
+                type: array
+              newPassword:
+                description: Not logging as it contains sensitive information.
+                type: string
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.CommandResponse'
+      security:
+        - x-api-key: []
+      summary: Reset Password of a device
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/resetpassword \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"flags":["string"],"newPassword":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/resetpassword"
+
+            payload = {
+                "flags": ["string"],
+                "newPassword": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/resetpassword' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"flags":["string"],"newPassword":"string"}'
+  /google-emm/enterprises:
+    get:
+      description: |-
+        Lists all Google EMM enterprises. An empty list indicates that the Organization is not configured with a Google EMM enterprise yet. 
+
+         Note: Currently only one Google Enterprise per Organization is supported.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/google-emm/enterprises \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Enterprises_ListEnterprises
+      parameters:
+        - format: int64
+          in: query
+          name: queryParameters.limit
+          required: false
+          type: string
+        - format: int64
+          in: query
+          name: queryParameters.skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: queryParameters.fields
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.ListEnterprisesResponse'
+      security:
+        - x-api-key: []
+      summary: List Google Enterprises
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+        - mdm.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/google-emm/enterprises?queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises"
+
+            querystring = {"queryParameters.limit":"SOME_STRING_VALUE","queryParameters.skip":"SOME_STRING_VALUE","queryParameters.fields":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises?queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+    post:
+      description: |-
+        Creates a Google EMM enterprise.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/enterprises \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{ 'signupUrlName': 'string', 'enrollmentToken': 'string' }' \
+        ```
+      operationId: Enterprises_CreateEnterprise
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.CreateEnterpriseRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.Enterprise'
+      security:
+        - x-api-key: []
+      summary: Create a Google Enterprise
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/enterprises \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"enrollmentToken":"string","signupUrlName":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises"
+
+            payload = {
+                "enrollmentToken": "string",
+                "signupUrlName": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"enrollmentToken":"string","signupUrlName":"string"}'
+  /google-emm/enterprises/{enterpriseId}:
+    delete:
+      description: |-
+        Removes a Google EMM enterprise.
+
+         Warning: This is a destructive operation and will remove all data associated with Google EMM enterprise from JumpCloud including devices and applications associated with the given enterprise.
+
+        #### Sample Request
+        ```
+        curl -X DELETE https://console.jumpcloud.com/api/v2/google-emm/devices/{enterpriseId} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Enterprises_DeleteEnterprise
+      parameters:
+        - format: byte
+          in: path
+          name: enterpriseId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      summary: Delete a Google Enterprise
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}' -Method DELETE -Headers $headers
+    patch:
+      description: |-
+        Updates a Google EMM enterprise details.
+
+        #### Sample Request
+        ```
+        curl -X PATCH https://console.jumpcloud.com/api/v2/google-emm/enterprises \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{ 'allowDeviceEnrollment': true, 'deviceGroupId': 'string' }' \
+        ```
+      operationId: Enterprises_PatchEnterprise
+      parameters:
+        - format: byte
+          in: path
+          name: enterpriseId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              allowDeviceEnrollment:
+                type: boolean
+              deviceGroupId:
+                format: byte
+                type: string
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.Enterprise'
+      security:
+        - x-api-key: []
+      summary: Update a Google Enterprise
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"allowDeviceEnrollment":true,"deviceGroupId":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}"
+
+            payload = {
+                "allowDeviceEnrollment": True,
+                "deviceGroupId": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"allowDeviceEnrollment":true,"deviceGroupId":"string"}'
+  /google-emm/enterprises/{enterpriseId}/connection-status:
+    get:
+      description: |-
+        Gives a connection status between JumpCloud and Google.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/google-emm/devices/{enterpriseId}/connection-status \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Enterprises_GetConnectionStatus
+      parameters:
+        - format: byte
+          in: path
+          name: enterpriseId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.ConnectionStatus'
+      security:
+        - x-api-key: []
+      summary: Test connection with Google
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+        - mdm.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/connection-status \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/connection-status"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/connection-status' -Method GET -Headers $headers
+  /google-emm/signup-urls:
+    post:
+      description: |-
+        Creates a Google EMM enterprise signup URL.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/signup-urls \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: SignupURLs_Create
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.SignupURL'
+      security:
+        - x-api-key: []
+      summary: Get a Signup URL to enroll Google enterprise
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/signup-urls \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/signup-urls"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("POST", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/signup-urls' -Method POST -Headers $headers
+  /google-emm/web-tokens:
+    post:
+      description: |-
+        Creates a web token to access an embeddable managed Google Play web UI for a given Google EMM enterprise.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/web-tokens \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: WebTokens_CreateWebToken
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.CreateWebTokenRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.WebToken'
+      security:
+        - x-api-key: []
+      summary: Get a web token to render Google Play iFrame
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/web-tokens \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"enterpriseObjectId":"string","parentFrameUrl":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/web-tokens"
+
+            payload = {
+                "enterpriseObjectId": "string",
+                "parentFrameUrl": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/web-tokens' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"enterpriseObjectId":"string","parentFrameUrl":"string"}'
   /groups:
     get:
       description: |-
@@ -35569,6 +36579,7 @@ x-tagGroups:
       - FeatureTrials
       - G Suite
       - G Suite Import
+      - Google EMM
       - Graph
       - Groups
       - IP Lists
