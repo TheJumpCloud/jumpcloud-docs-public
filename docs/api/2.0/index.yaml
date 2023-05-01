@@ -14,8 +14,15 @@ definitions:
         description: A toggle to determine if ADE registered devices should go through JumpCloud Zero Touch Enrollment.
         type: boolean
       setupAssistantOptions:
+        description: A Setup Option wrapped as an object
         items:
           $ref: '#/definitions/DEPSetupAssistantOption'
+        type: array
+        x-deprecated: true
+      setupOptions:
+        description: A list of configured setup options for this enrollment.
+        items:
+          $ref: '#/definitions/SetupAssistantOption'
         type: array
       welcomeScreen:
         $ref: '#/definitions/DEPWelcomeScreen'
@@ -11048,7 +11055,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"ades":{"ios":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"macos":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}}},"allowMobileUserEnrollment":true,"appleCertCreatorAppleID":"string","appleSignedCert":"string","defaultIosUserEnrollmentDeviceGroupID":"string","defaultSystemGroupID":"string","dep":{"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"encryptedDepServerToken":"string","name":"string"}'
+              --data '{"ades":{"ios":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"setupOptions":["accessibility"],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"macos":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"setupOptions":["accessibility"],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}}},"allowMobileUserEnrollment":true,"appleCertCreatorAppleID":"string","appleSignedCert":"string","defaultIosUserEnrollmentDeviceGroupID":"string","defaultSystemGroupID":"string","dep":{"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"encryptedDepServerToken":"string","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -11061,6 +11068,7 @@ paths:
                         "defaultDeviceGroupObjectIds": ["string"],
                         "enableZeroTouchEnrollment": True,
                         "setupAssistantOptions": [{"option": "accessibility"}],
+                        "setupOptions": ["accessibility"],
                         "welcomeScreen": {
                             "button": "string",
                             "paragraph": "string",
@@ -11071,6 +11079,7 @@ paths:
                         "defaultDeviceGroupObjectIds": ["string"],
                         "enableZeroTouchEnrollment": True,
                         "setupAssistantOptions": [{"option": "accessibility"}],
+                        "setupOptions": ["accessibility"],
                         "welcomeScreen": {
                             "button": "string",
                             "paragraph": "string",
@@ -11110,7 +11119,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"ades":{"ios":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"macos":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}}},"allowMobileUserEnrollment":true,"appleCertCreatorAppleID":"string","appleSignedCert":"string","defaultIosUserEnrollmentDeviceGroupID":"string","defaultSystemGroupID":"string","dep":{"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"encryptedDepServerToken":"string","name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"ades":{"ios":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"setupOptions":["accessibility"],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"macos":{"defaultDeviceGroupObjectIds":["string"],"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"setupOptions":["accessibility"],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}}},"allowMobileUserEnrollment":true,"appleCertCreatorAppleID":"string","appleSignedCert":"string","defaultIosUserEnrollmentDeviceGroupID":"string","defaultSystemGroupID":"string","dep":{"enableZeroTouchEnrollment":true,"setupAssistantOptions":[{"option":"accessibility"}],"welcomeScreen":{"button":"string","paragraph":"string","title":"string"}},"encryptedDepServerToken":"string","name":"string"}'
     x-functionalities-tags:
       - mdm
   /applevpp/locations:
@@ -21491,14 +21500,6 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/organizations/{id}/administratorlinks?limit=10&skip=0' -Method GET -Headers $headers
-    parameters:
-      - in: path
-        name: id
-        required: true
-        type: string
-    x-functionalities-tags:
-      - organizations
-  /organizations/{id}/crypto:
     parameters:
       - in: path
         name: id
