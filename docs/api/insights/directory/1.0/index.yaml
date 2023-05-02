@@ -983,6 +983,10 @@ info:
      remote_session_join     | End user joins a remote assist session, or the admin or end user rejoins an ongoing session when they get disconnected due to network failure or page refresh.  |
      remote_session_end      | The remote-assist session is terminated by the administrator or the end user.                                                                                   |
      remote_session_feedback | An administrator or end user provides feedback on a remote-assist session.                                                                                      |
+     google_emm_create       | An administrator has registered for Android EMM.                                                                                                                |
+     google_emm_delete       | An administrator has deleted Android EMM registration.                                                                                                          |
+     google_emm_patch        | An administrator has modified Android EMM registration.                                                                                                         |
+     device_command          | An administrator has issued a command to an Android device.                                                                                                     |
 
     ## Password Manager Events
 
