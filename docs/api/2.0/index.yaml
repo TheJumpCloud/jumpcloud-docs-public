@@ -4498,6 +4498,21 @@ definitions:
         type: string
     title: Bulk User Create
     type: object
+  bulk-user-expire:
+    properties:
+      attributes:
+        description: Map of additional attributes.
+        items:
+          type: object
+        type: array
+      id:
+        description: Object ID of the systemuser to expire
+        type: string
+      organization:
+        description: The identifier for an organization to link this systemuser to
+        type: string
+    title: Bulk User Expire
+    type: object
   bulk-user-update:
     description: See [V1 system user update](https://docs.jumpcloud.com/api/1.0/index.html#operation/systemusers_put) for full list of attributes.
     properties:
@@ -12347,6 +12362,68 @@ paths:
       - $ref: '#/parameters/trait:authnfallbackpolicy:resourceType'
     x-functionalities-tags:
       - policies
+  /bulk/user/expires:
+    post:
+      description: The endpoint allows you to start a bulk job to asynchronously expire users.
+      operationId: bulk_userExpires
+      parameters:
+        - in: body
+          name: body
+          schema:
+            items:
+              $ref: '#/definitions/bulk-user-expire'
+            type: array
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/job-id'
+      security:
+        - x-api-key: []
+      summary: Bulk Expire Users
+      tags:
+        - Bulk Job Requests
+      x-scopes:
+        - users
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/bulk/user/expires \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '[{"attributes":[{}],"id":"string","organization":"string"}]'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/bulk/user/expires"
+
+            payload = [
+                {
+                    "attributes": [{}],
+                    "id": "string",
+                    "organization": "string"
+                }
+            ]
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/bulk/user/expires' -Method POST -Headers $headers -ContentType 'application/json' -Body '[{"attributes":[{}],"id":"string","organization":"string"}]'
   /bulk/users:
     patch:
       description: "The endpoint allows you to create a bulk job to asynchronously update users. See [Update a System User](https://docs.jumpcloud.com/api/1.0/index.html#operation/systemusers_put) for full list of attributes.\n\n#### Sample Request \n```\ncurl -X PATCH https://console.jumpcloud.com/api/v2/bulk/users \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key: {API_KEY}' \\\n  -d '[\n\t{\n\t  \"id\":\"5be9fb4ddb01290001e85109\",\n\t\t\"firstname\":\"{UPDATED_FIRSTNAME}\",\n\t\t\"department\":\"{UPDATED_DEPARTMENT}\",\n\t\t\"attributes\":[\n\t\t\t{\"name\":\"Custom\",\"value\":\"{ATTRIBUTE_VALUE}\"}\n\t\t]\n\t},\n\t{\n\t  \"id\":\"5be9fb4ddb01290001e85109\",\n\t\t\"firstname\":\"{UPDATED_FIRSTNAME}\",\n\t\t\"costCenter\":\"{UPDATED_COST_CENTER}\",\n\t\t\"phoneNumbers\":[\n\t\t\t{\"type\":\"home\",\"number\":\"{HOME_PHONE_NUMBER}\"},\n\t\t\t{\"type\":\"work\",\"number\":\"{WORK_PHONE_NUMBER}\"}\n\t\t]\n\t}\n]\n```"
