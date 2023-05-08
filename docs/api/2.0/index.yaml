@@ -5142,6 +5142,46 @@ definitions:
             type: string
         type: object
     type: object
+  commandsGraphObjectWithPaths:
+    properties:
+      command:
+        type: string
+      commandType:
+        type: string
+      compiledAttributes:
+        $ref: '#/definitions/GraphAttributes'
+      id:
+        description: Object ID of this graph object.
+        type: string
+      launchType:
+        type: string
+      name:
+        type: string
+      organization:
+        type: string
+      paths:
+        description: A path through the graph between two graph objects.
+        items:
+          items:
+            $ref: '#/definitions/GraphConnection'
+          type: array
+        type: array
+      schedule:
+        type: string
+      scheduleRepeatType:
+        type: string
+      timeToLiveSeconds:
+        type: integer
+      timeout:
+        type: string
+      type:
+        $ref: '#/definitions/GraphType'
+    required:
+      - type
+      - id
+      - paths
+    title: commandsGraphObjectWithPaths
+    type: object
   feature:
     description: A feature represents JumpCloud functionality.
     properties:
@@ -8076,6 +8116,13 @@ info:
   title: JumpCloud API
   version: '2.0'
 parameters:
+  trait:GraphObjectWithPaths:details:
+    description: This will provide detail descriptive response for the request.
+    enum:
+      - v1
+    in: query
+    name: details
+    type: string
   trait:authnfallbackpolicy:resourceType:
     in: path
     items:
@@ -27537,12 +27584,13 @@ paths:
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:GraphObjectWithPaths:details'
       responses:
         '200':
           description: OK
           schema:
             items:
-              $ref: '#/definitions/GraphObjectWithPaths'
+              $ref: '#/definitions/commandsGraphObjectWithPaths'
             type: array
       security:
         - x-api-key: []
@@ -27556,7 +27604,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/systemgroups/{group_id}/commands?limit=10&skip=0' \
+              --url 'https://console.jumpcloud.com/api/v2/systemgroups/{group_id}/commands?limit=10&skip=0&details=SOME_STRING_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE'
         - lang: Python
@@ -27565,7 +27613,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/systemgroups/{group_id}/commands"
 
-            querystring = {"limit":"10","skip":"0"}
+            querystring = {"limit":"10","skip":"0","details":"SOME_STRING_VALUE"}
 
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -27580,7 +27628,7 @@ paths:
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{group_id}/commands?limit=10&skip=0' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{group_id}/commands?limit=10&skip=0&details=SOME_STRING_VALUE' -Method GET -Headers $headers
     parameters:
       - description: ObjectID of the System Group.
         in: path
@@ -32189,12 +32237,13 @@ paths:
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:GraphObjectWithPaths:details'
       responses:
         '200':
           description: OK
           schema:
             items:
-              $ref: '#/definitions/GraphObjectWithPaths'
+              $ref: '#/definitions/commandsGraphObjectWithPaths'
             type: array
       security:
         - x-api-key: []
@@ -32208,7 +32257,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/systems/{system_id}/commands?limit=10&skip=0' \
+              --url 'https://console.jumpcloud.com/api/v2/systems/{system_id}/commands?limit=10&skip=0&details=SOME_STRING_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE'
         - lang: Python
@@ -32217,7 +32266,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/systems/{system_id}/commands"
 
-            querystring = {"limit":"10","skip":"0"}
+            querystring = {"limit":"10","skip":"0","details":"SOME_STRING_VALUE"}
 
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -32232,7 +32281,7 @@ paths:
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/{system_id}/commands?limit=10&skip=0' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/{system_id}/commands?limit=10&skip=0&details=SOME_STRING_VALUE' -Method GET -Headers $headers
     parameters:
       - description: ObjectID of the System.
         in: path
