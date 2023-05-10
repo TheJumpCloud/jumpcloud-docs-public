@@ -15633,6 +15633,72 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}' -Method GET -Headers $headers
+  /google-emm/devices/{deviceId}/erase-device:
+    post:
+      description: |-
+        Removes the work profile and all policies from a personal/company-owned Android 8.0+ device. Company owned devices will be relinquished for personal use. Apps and data associated with the personal profile(s) are preserved.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/erase-device \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Devices_EraseDevice
+      parameters:
+        - format: byte
+          in: path
+          name: deviceId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.CommandResponse'
+      security:
+        - x-api-key: []
+      summary: Erase the Android Device
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/erase-device \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/erase-device"
+
+            payload = {}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/erase-device' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /google-emm/devices/{deviceId}/lock:
     post:
       description: |-
@@ -15754,72 +15820,6 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/policy_results' -Method GET -Headers $headers
-  /google-emm/devices/{deviceId}/relinquishownership:
-    post:
-      description: |-
-        Removes the work profile and all policies from a company-owned Android 8.0+ device, relinquishing the device for personal use. Apps and data associated with the personal profile(s) are preserved.
-
-        #### Sample Request
-        ```
-        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/reliquinshownership \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-        ```
-      operationId: Devices_RelinquishOwnership
-      parameters:
-        - format: byte
-          in: path
-          name: deviceId
-          required: true
-          type: string
-        - in: body
-          name: body
-          required: true
-          schema:
-            type: object
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/jumpcloud.google_emm.CommandResponse'
-      security:
-        - x-api-key: []
-      summary: Relinquish Ownership of COPE device
-      tags:
-        - Google EMM
-      x-dynamic-gateway: true
-      x-scopes:
-        - mdm
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request POST \
-              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/relinquishownership \
-              --header 'content-type: application/json' \
-              --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{}'
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/relinquishownership"
-
-            payload = {}
-            headers = {
-                "x-api-key": "REPLACE_KEY_VALUE",
-                "content-type": "application/json"
-            }
-
-            response = requests.request("POST", url, json=payload, headers=headers)
-
-            print(response.text)
-        - lang: Powershell
-          source: |-
-            $headers=@{}
-            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/relinquishownership' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /google-emm/devices/{deviceId}/resetpassword:
     post:
       description: |-
