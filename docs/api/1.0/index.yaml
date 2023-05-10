@@ -1760,6 +1760,13 @@ definitions:
         type: object
       remoteIP:
         type: string
+      secureLogin:
+        properties:
+          enabled:
+            type: boolean
+          supported:
+            type: boolean
+        type: object
       secureLoginEnabled:
         type: boolean
       serialNumber:
