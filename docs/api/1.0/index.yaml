@@ -5184,6 +5184,85 @@ paths:
     x-functionalities-tags:
       - roles
   /runCommand:
+    post:
+      description: |-
+        This endpoint allows you to run a command.
+        #### Sample Request
+
+        ```
+        curl -X POST https://console.jumpcloud.com/api/runCommand \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}'
+          -d '{"_id":"{commandID}", "systemIds":["systemId"]}'
+        ```   
+      operationId: commands_run
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              _id:
+                description: The ID of the command.
+                type: string
+              systemIds:
+                description: An optional list of device IDs to run the command on. If omitted, the command will run on devices bound to the command.
+                items:
+                  type: string
+                type: array
+            type: object
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              queueIds:
+                items:
+                  type: string
+                type: array
+              workflowInstanceId:
+                type: string
+            type: object
+      security:
+        - x-api-key: []
+      summary: Run a command
+      tags:
+        - Commands
+      x-scopes:
+        - commands
+        - commands.schedule
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/runCommand \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"_id":"string","systemIds":["string"]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/runCommand"
+
+            payload = {
+                "_id": "string",
+                "systemIds": ["string"]
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/runCommand' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"_id":"string","systemIds":["string"]}'
     x-functionalities-tags:
       - run-command
   /search/commandresults:
