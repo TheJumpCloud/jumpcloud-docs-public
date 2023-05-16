@@ -5704,6 +5704,34 @@ definitions:
   mobileconfig:
     title: mobileconfig
     type: string
+  o365.Domain:
+    properties:
+      default:
+        type: boolean
+      domain:
+        type: string
+      objectId:
+        format: byte
+        type: string
+      resourceObjectId:
+        format: byte
+        type: string
+    type: object
+  o365.DomainResponse:
+    properties:
+      domain:
+        $ref: '#/definitions/o365.Domain'
+    type: object
+  o365.DomainsListResponse:
+    properties:
+      domains:
+        items:
+          $ref: '#/definitions/o365.Domain'
+        type: array
+      totalCount:
+        format: int64
+        type: integer
+    type: object
   office365:
     properties:
       groupsEnabled:
@@ -21661,6 +21689,219 @@ paths:
         type: string
     x-functionalities-tags:
       - m365-read
+  /office365s/{resourceObjectId}/domains:
+    get:
+      description: list the domains configured for an o365 integration
+      operationId: Domains_List
+      parameters:
+        - format: byte
+          in: path
+          name: resourceObjectId
+          required: true
+          type: string
+        - default: '30'
+          description: The number of records to return at once. Limited to 30.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+        - default: '0'
+          description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/o365.DomainsListResponse'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: List domains
+      tags:
+        - Office 365
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/office365s/{resourceObjectId}/domains?limit=30&skip=0' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/office365s/{resourceObjectId}/domains"
+
+            querystring = {"limit":"30","skip":"0"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s/{resourceObjectId}/domains?limit=30&skip=0' -Method GET -Headers $headers
+    post:
+      description: Insert the domain for the specified o365 integration
+      operationId: Domains_Insert
+      parameters:
+        - format: byte
+          in: path
+          name: resourceObjectId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              domain:
+                type: string
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/o365.DomainResponse'
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/o365.DomainResponse'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Insert domain
+      tags:
+        - Office 365
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/office365s/{resourceObjectId}/domains \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"domain":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/office365s/{resourceObjectId}/domains"
+
+            payload = {"domain": "string"}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s/{resourceObjectId}/domains' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"domain":"string"}'
+  /office365s/{resourceObjectId}/domains/{objectId}:
+    delete:
+      description: Delete the domain for the specified o365 integration
+      operationId: Domains_Delete
+      parameters:
+        - format: byte
+          in: path
+          name: resourceObjectId
+          required: true
+          type: string
+        - format: byte
+          in: path
+          name: objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/o365.DomainResponse'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Delete domain
+      tags:
+        - Office 365
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/office365s/{resourceObjectId}/domains/{objectId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/office365s/{resourceObjectId}/domains/{objectId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s/{resourceObjectId}/domains/{objectId}' -Method DELETE -Headers $headers
   /organizations/cases:
     get:
       description: This endpoint returns the cases (Support/Feature requests) for the organization
