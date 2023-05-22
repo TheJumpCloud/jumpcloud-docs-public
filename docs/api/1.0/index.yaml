@@ -1767,8 +1767,6 @@ definitions:
           supported:
             type: boolean
         type: object
-      secureLoginEnabled:
-        type: boolean
       serialNumber:
         type: string
       serviceAccountState:

@@ -16012,23 +16012,20 @@ paths:
         ```
       operationId: Enterprises_ListEnterprises
       parameters:
-        - format: int64
+        - default: '100'
+          description: The number of records to return at once. Limited to 100.
+          format: int64
           in: query
-          name: queryParameters.limit
+          name: limit
           required: false
           type: string
-        - format: int64
+        - default: '0'
+          description: The offset into the records to return.
+          format: int64
           in: query
-          name: queryParameters.skip
+          name: skip
           required: false
           type: string
-        - collectionFormat: multi
-          in: query
-          items:
-            type: string
-          name: queryParameters.fields
-          required: false
-          type: array
       responses:
         '200':
           description: A successful response.
@@ -16047,7 +16044,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/google-emm/enterprises?queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/google-emm/enterprises?limit=100&skip=0' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -16055,7 +16052,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises"
 
-            querystring = {"queryParameters.limit":"SOME_STRING_VALUE","queryParameters.skip":"SOME_STRING_VALUE","queryParameters.fields":"SOME_ARRAY_VALUE"}
+            querystring = {"limit":"100","skip":"0"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -16066,7 +16063,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises?queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises?limit=100&skip=0' -Method GET -Headers $headers
     post:
       description: |-
         Creates a Google EMM enterprise.
