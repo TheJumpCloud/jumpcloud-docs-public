@@ -25679,6 +25679,7 @@ paths:
         - Managed Service Provider
       x-scopes:
         - providers
+        - billing
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -25739,6 +25740,7 @@ paths:
         - Managed Service Provider
       x-scopes:
         - providers
+        - billing
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -37169,6 +37171,7 @@ x-scopes:
   - applications.readonly
   - authn
   - authn.readonly
+  - billing
   - cloudinsights
   - cloudinsights.readonly
   - commandrunner.legacy
