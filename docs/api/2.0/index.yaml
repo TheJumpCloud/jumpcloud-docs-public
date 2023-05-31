@@ -14505,6 +14505,72 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/policy_results' -Method GET -Headers $headers
+  /google-emm/devices/{deviceId}/reboot:
+    post:
+      description: |-
+        Reboots a Google EMM enrolled device. Only supported on fully managed devices running Android 7.0 or higher.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/reboot \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Devices_RebootDevice
+      parameters:
+        - format: byte
+          in: path
+          name: deviceId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.CommandResponse'
+      security:
+        - x-api-key: []
+      summary: Reboot device
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/reboot \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/reboot"
+
+            payload = {}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/reboot' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /google-emm/devices/{deviceId}/resetpassword:
     post:
       description: |-
