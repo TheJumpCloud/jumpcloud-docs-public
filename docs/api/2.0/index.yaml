@@ -4652,6 +4652,46 @@ definitions:
         format: int32
         type: integer
     type: object
+  devices.GetSignInWithJumpCloudSettingsResponse:
+    properties:
+      organizationObjectId:
+        type: string
+      settings:
+        items:
+          $ref: '#/definitions/devices.SignInWithJumpCloudSetting'
+        type: array
+    type: object
+  devices.SetSignInWithJumpCloudSettingsRequest:
+    properties:
+      organizationObjectId:
+        type: string
+      settings:
+        items:
+          $ref: '#/definitions/devices.SignInWithJumpCloudSetting'
+        type: array
+    type: object
+  devices.SignInWithJumpCloudSetting:
+    properties:
+      defaultPermission:
+        $ref: '#/definitions/devices.SignInWithJumpCloudSetting.Permission'
+      enabled:
+        type: boolean
+      osFamily:
+        $ref: '#/definitions/devices.SignInWithJumpCloudSetting.OSFamily'
+    type: object
+  devices.SignInWithJumpCloudSetting.OSFamily:
+    default: UNKNOWN
+    enum:
+      - UNKNOWN
+      - WINDOWS
+      - MACOS
+    type: string
+  devices.SignInWithJumpCloudSetting.Permission:
+    default: STANDARD
+    enum:
+      - STANDARD
+      - ADMIN
+    type: string
   feature:
     description: A feature represents JumpCloud functionality.
     properties:
@@ -13544,6 +13584,142 @@ paths:
   /devices/os_aggregation:
     x-functionalities-tags:
       - reports-devices
+  /devices/settings/signinwithjumpcloud:
+    get:
+      description: |-
+        Gets the Sign In with JumpCloud Settings for an Organization.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: SystemsOrgSettings_GetSignInWithJumpCloudSettings
+      parameters:
+        - format: byte
+          in: query
+          name: organizationObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/devices.GetSignInWithJumpCloudSettingsResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Get the Sign In with JumpCloud Settings
+      tags:
+        - Systems Organization Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud?organizationObjectId=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud"
+
+            querystring = {"organizationObjectId":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+    put:
+      description: |-
+        Sets the Sign In with JumpCloud Settings for an Organization.
+
+        #### Sample Request
+        ```
+        curl -X PUT https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}' \
+          -d '{"settings":[{"osFamily":"WINDOWS","enabled":true,"defaultPermission":"STANDARD"}]}'
+        ```
+      operationId: SystemsOrgSettings_SetSignInWithJumpCloudSettings
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/devices.SetSignInWithJumpCloudSettingsRequest'
+      responses:
+        '204':
+          description: Settings successfully changed.
+          schema: {}
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Set the Sign In with JumpCloud Settings
+      tags:
+        - Systems Organization Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"organizationObjectId":"string","settings":[{"defaultPermission":"STANDARD","enabled":true,"osFamily":"UNKNOWN"}]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud"
+
+            payload = {
+                "organizationObjectId": "string",
+                "settings": [
+                    {
+                        "defaultPermission": "STANDARD",
+                        "enabled": True,
+                        "osFamily": "UNKNOWN"
+                    }
+                ]
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"organizationObjectId":"string","settings":[{"defaultPermission":"STANDARD","enabled":true,"osFamily":"UNKNOWN"}]}'
   /directories:
     get:
       description: |-
@@ -35977,6 +36153,7 @@ tags:
   - name: System Groups
   - name: System Insights
   - name: Systems
+  - name: Systems Organization Settings
   - name: Trial Feature Insights
   - name: User Group Associations
   - name: User Group Members & Membership
@@ -36070,6 +36247,7 @@ x-tagGroups:
       - System Groups
       - System Insights
       - Systems
+      - Systems Organization Settings
       - User Group Associations
       - User Group Members & Membership
       - User Groups
