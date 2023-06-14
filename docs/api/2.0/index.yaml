@@ -13757,6 +13757,12 @@ paths:
                 id: string
                 name: string
                 type: office_365
+              - defaultDomain:
+                  domain: string
+                  id: string
+                id: string
+                name: string
+                type: g_suite
           schema:
             items:
               $ref: '#/definitions/Directory'
@@ -16212,6 +16218,31 @@ paths:
           -d '{
             "userLockoutAction": "suspend",
             "userPasswordExpirationAction": "maintain"
+          }'
+        ```
+        Sample Request, set a default domain
+
+        ```
+        curl -X PATCH https://console.jumpcloud.com/api/v2/gsuites/{GSUITE_ID} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "defaultDomain": {
+                "id": "{domainObjectID}"
+              }
+          }'
+        ```
+
+        Sample Request, unset the default domain
+
+        ```
+        curl -X PATCH https://console.jumpcloud.com/api/v2/gsuites/{GSUITE_ID} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "defaultDomain": {}
           }'
         ```
       operationId: gsuites_patch
