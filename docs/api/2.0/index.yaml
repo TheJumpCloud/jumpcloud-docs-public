@@ -5033,6 +5033,14 @@ definitions:
       policy:
         type: string
     type: object
+  jumpcloud.google_emm.DeviceData:
+    properties:
+      deviceId:
+        format: byte
+        type: string
+      name:
+        type: string
+    type: object
   jumpcloud.google_emm.DeviceInformation:
     properties:
       deviceStateInfo:
@@ -5095,6 +5103,8 @@ definitions:
         type: integer
       enrollmentTime:
         type: string
+      enrollmentType:
+        type: string
       managementMode:
         type: string
       ownership:
@@ -5140,6 +5150,16 @@ definitions:
         type: string
       serialNumber:
         type: string
+    type: object
+  jumpcloud.google_emm.ListDevicesResponse:
+    properties:
+      count:
+        format: int64
+        type: integer
+      devices:
+        items:
+          $ref: '#/definitions/jumpcloud.google_emm.DeviceData'
+        type: array
     type: object
   jumpcloud.google_emm.ListEnterprisesResponse:
     properties:
@@ -15265,6 +15285,84 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/connection-status' -Method GET -Headers $headers
+  /google-emm/enterprises/{enterpriseObjectId}/devices:
+    get:
+      description: |-
+        Lists google EMM enrolled devices.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterprise_object_id}/devices \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Devices_ListDevices
+      parameters:
+        - format: byte
+          in: path
+          name: enterpriseObjectId
+          required: true
+          type: string
+        - default: '100'
+          description: The number of records to return at once. Limited to 100.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+        - default: '0'
+          description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.ListDevicesResponse'
+      security:
+        - x-api-key: []
+      summary: List devices
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+        - mdm.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/devices?limit=100&skip=0&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/devices"
+
+            querystring = {"limit":"100","skip":"0","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/devices?limit=100&skip=0&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /google-emm/signup-urls:
     post:
       description: |-
