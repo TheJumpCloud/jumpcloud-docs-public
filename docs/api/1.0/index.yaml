@@ -1732,12 +1732,18 @@ definitions:
         properties:
           major:
             type: string
+          majorNumber:
+            type: integer
           minor:
             type: string
+          minorNumber:
+            type: integer
           osName:
             type: string
           patch:
             type: string
+          patchNumber:
+            type: integer
           releaseName:
             type: string
           revision:
@@ -5193,7 +5199,7 @@ paths:
           -H 'Content-Type: application/json' \
           -H 'x-api-key: {API_KEY}'
           -d '{"_id":"{commandID}", "systemIds":["systemId"]}'
-        ```   
+        ```
       operationId: commands_run
       parameters:
         - in: body
