@@ -5101,8 +5101,6 @@ definitions:
       enterpriseObjectId:
         format: byte
         type: string
-      iframeFeature:
-        $ref: '#/definitions/jumpcloud.google_emm.Feature'
       parentFrameUrl:
         type: string
     type: object
@@ -5224,12 +5222,6 @@ definitions:
         format: byte
         type: string
     type: object
-  jumpcloud.google_emm.Feature:
-    default: SOFTWARE_MANAGEMENT
-    enum:
-      - SOFTWARE_MANAGEMENT
-      - ZERO_TOUCH_CUSTOMER_MANAGEMENT
-    type: string
   jumpcloud.google_emm.HardwareInfo:
     properties:
       brand:
@@ -5347,8 +5339,10 @@ definitions:
   jumpcloud.google_emm.WebToken:
     properties:
       name:
+        title: not logging because it contains sensitive information
         type: string
       value:
+        title: not logging because it contains sensitive information
         type: string
     type: object
   jumpcloud.msp.GetDetailsResponse:
@@ -15443,7 +15437,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/google-emm/web-tokens \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"enterpriseObjectId":"string","iframeFeature":"SOFTWARE_MANAGEMENT","parentFrameUrl":"string"}'
+              --data '{"enterpriseObjectId":"string","parentFrameUrl":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -15452,7 +15446,6 @@ paths:
 
             payload = {
                 "enterpriseObjectId": "string",
-                "iframeFeature": "SOFTWARE_MANAGEMENT",
                 "parentFrameUrl": "string"
             }
             headers = {
@@ -15468,7 +15461,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/web-tokens' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"enterpriseObjectId":"string","iframeFeature":"SOFTWARE_MANAGEMENT","parentFrameUrl":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/web-tokens' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"enterpriseObjectId":"string","parentFrameUrl":"string"}'
   /groups:
     get:
       description: |-
