@@ -8070,14 +8070,6 @@ parameters:
       type: string
     name: filter
     type: array
-  'trait:folderId:folderId':
-    description: |
-      Folder Id in uuid format
-    format: uuid
-    in: path
-    name: folderId
-    required: true
-    type: string
   'trait:graphTargetsActiveDirectory:targets':
     description: Targets which a "active_directory" can be associated to.
     in: query
@@ -8250,14 +8242,6 @@ parameters:
     name: targets
     required: true
     type: array
-  'trait:groupId:groupId':
-    description: |
-      Group Id in uuid format
-    format: uuid
-    in: path
-    name: groupId
-    required: true
-    type: string
   'trait:gsuite:maxResults':
     description: 'Google Directory API maximum number of results per page. See https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list.'
     in: query
@@ -8327,14 +8311,6 @@ parameters:
     description: The search string to query records
     in: query
     name: search
-    type: string
-  'trait:singleSort:singleSort':
-    default: ''
-    description: |
-      Field to sort by
-      Default sort is ascending, prefix with `-` to sort descending.
-    in: query
-    name: sort
     type: string
   'trait:skip:skip':
     default: 0
@@ -8451,14 +8427,6 @@ parameters:
       type: string
     name: sort
     type: array
-  'trait:userId:userId':
-    description: |
-      User Id in uuid format
-    format: uuid
-    in: path
-    name: userId
-    required: true
-    type: string
 paths:
   '/accountManagerCalendar/{id}':
     parameters:
@@ -9537,7 +9505,17 @@ paths:
       - mdm
   '/applemdms/{apple_mdm_id}/depkey':
     get:
-      description: Retrieves an Apple MDM DEP Public Key.
+      description: |-
+        Retrieves an Apple MDM DEP Public Key.
+
+        #### Sample Request
+
+        ```
+        curl https://console.jumpcloud.com/api/v2/applemdms/{APPLE_MDM_ID}/depkey \
+          -H 'accept: application/x-pem-file' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}'
+        ```
       operationId: applemdms_depkeyget
       parameters:
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
