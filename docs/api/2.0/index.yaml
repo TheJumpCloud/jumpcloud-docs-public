@@ -877,6 +877,40 @@ definitions:
       - id
       - name
     type: object
+  Case:
+    description: Details of the case (support/feature request)
+    properties:
+      caseNumber:
+        type: string
+      date:
+        type: string
+      description:
+        type: string
+      label:
+        type: string
+      organization:
+        type: string
+      reporter:
+        type: string
+      reporterEmail:
+        type: string
+      status:
+        type: string
+      subject:
+        type: string
+    title: Case
+    type: object
+  CasesResponse:
+    description: Response for retrieving the cases (support/feature requests)
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/Case'
+        type: array
+      totalCount:
+        type: integer
+    title: CasesResponse
+    type: object
   CommandResultList:
     description: List of command results
     properties:
@@ -2523,38 +2557,6 @@ definitions:
       name:
         type: string
     title: Organization
-    type: object
-  OrganizationCase:
-    description: Details of an organization's case (support/feature request)
-    properties:
-      caseNumber:
-        type: string
-      date:
-        type: string
-      description:
-        type: string
-      label:
-        type: string
-      reporter:
-        type: string
-      reporterEmail:
-        type: string
-      status:
-        type: string
-      subject:
-        type: string
-    title: OrganizationCase
-    type: object
-  OrganizationCasesResponse:
-    description: Response for retrieving an organization's cases (support/feature requests)
-    properties:
-      results:
-        items:
-          $ref: '#/definitions/OrganizationCase'
-        type: array
-      totalCount:
-        type: integer
-    title: OrganizationCasesResponse
     type: object
   PasswordsSecurity:
     properties:
@@ -21139,7 +21141,7 @@ paths:
   /organizations/cases:
     get:
       description: This endpoint returns the cases (Support/Feature requests) for the organization
-      operationId: organizations_listCases
+      operationId: organizations_orgListCases
       parameters:
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:sort:sort'
@@ -21149,14 +21151,15 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/OrganizationCasesResponse'
+            $ref: '#/definitions/CasesResponse'
       security:
         - x-api-key: []
       summary: Get all cases (Support/Feature requests) for organization
       tags:
         - Organizations
       x-scopes:
-        - settings.readonly
+        - support
+        - support.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -23768,6 +23771,60 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/billing/details' -Method GET -Headers $headers
+  '/providers/{provider_id}/cases':
+    get:
+      description: This endpoint returns the cases (Support/Feature requests) for the provider
+      operationId: providers_providerListCase
+      parameters:
+        - $ref: '#/parameters/trait:skip:skip'
+        - $ref: '#/parameters/trait:sort:sort'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:filter:filter'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CasesResponse'
+      security:
+        - x-api-key: []
+      summary: Get all cases (Support/Feature requests) for provider
+      tags:
+        - Providers
+        - Managed Service Provider
+      x-scopes:
+        - support
+        - support.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/cases?skip=0&sort=&limit=10&filter=' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/cases"
+
+            querystring = {"skip":"0","sort":"","limit":"10","filter":""}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/cases?skip=0&sort=&limit=10&filter=' -Method GET -Headers $headers
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - cases
   '/providers/{provider_id}/commandtemplates':
     parameters:
       - in: path
@@ -35800,8 +35857,9 @@ x-scopes:
   - providers.readonly
   - radius
   - radius.readonly
-  - settings.readonly
   - subscriptions.readonly
+  - support
+  - support.readonly
   - systeminsights.readonly
   - systems
   - systems.readonly
