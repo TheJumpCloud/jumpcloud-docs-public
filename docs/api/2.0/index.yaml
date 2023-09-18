@@ -26202,11 +26202,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/validate' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"url":"string"}'
-  /softwareapps/validate_custom_app_url:
-    parameters: []
-    x-functionalities-tags:
-      - devices-windows-software-app-crud
-      - devices-darwin-software-app-crud
   '/softwareapps/{id}':
     delete:
       description: |-
