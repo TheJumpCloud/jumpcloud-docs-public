@@ -2842,6 +2842,7 @@ definitions:
           - copywell
           - timeinput
           - datepickerrange
+          - multilist
         type: string
       id:
         description: ObjectId uniquely identifying a Policy Template Configuration Field
