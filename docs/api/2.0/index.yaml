@@ -4730,6 +4730,7 @@ definitions:
           - cloudDirectory
           - deviceManagement
           - directoryInsightsPremium
+          - implementationQuickstart
           - ldap
           - mdm
           - mfa
