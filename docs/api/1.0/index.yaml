@@ -337,6 +337,37 @@ definitions:
               visible:
                 type: boolean
             type: object
+          spErrorFlow:
+            properties:
+              label:
+                type: string
+              position:
+                type: integer
+              readOnly:
+                type: boolean
+              required:
+                type: boolean
+              tooltip:
+                properties:
+                  template:
+                    type: string
+                  variables:
+                    properties:
+                      icon:
+                        type: string
+                      message:
+                        type: string
+                    type: object
+                type:
+                  - object
+                  - 'null'
+              type:
+                type: string
+              value:
+                type: boolean
+              visible:
+                type: boolean
+            type: object
         type: object
       created:
         type: string
@@ -705,6 +736,37 @@ definitions:
                 type: string
               value:
                 type: string
+              visible:
+                type: boolean
+            type: object
+          spErrorFlow:
+            properties:
+              label:
+                type: string
+              position:
+                type: integer
+              readOnly:
+                type: boolean
+              required:
+                type: boolean
+              tooltip:
+                properties:
+                  template:
+                    type: string
+                  variables:
+                    properties:
+                      icon:
+                        type: string
+                      message:
+                        type: string
+                    type: object
+                type:
+                  - object
+                  - 'null'
+              type:
+                type: string
+              value:
+                type: boolean
               visible:
                 type: boolean
             type: object
@@ -1732,8 +1794,6 @@ definitions:
         format: date-time
         readOnly: true
         type: string
-      spErrorFlow:
-        type: boolean
       type:
         type: string
     type: object
@@ -3338,7 +3398,7 @@ paths:
               --url https://console.jumpcloud.com/api/applications \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"signAssertion":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"signResponse":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"spErrorFlow":true,"type":"string"},"ssoUrl":"string"}'
+              --data '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"signAssertion":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"signResponse":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"spErrorFlow":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"type":"string"},"ssoUrl":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -3500,6 +3560,22 @@ paths:
                         "type": "string",
                         "value": "string",
                         "visible": True
+                    },
+                    "spErrorFlow": {
+                        "label": "string",
+                        "position": 0,
+                        "readOnly": True,
+                        "required": True,
+                        "tooltip": {
+                            "template": "string",
+                            "variables": {
+                                "icon": "string",
+                                "message": "string"
+                            }
+                        },
+                        "type": "string",
+                        "value": True,
+                        "visible": True
                     }
                 },
                 "created": "string",
@@ -3519,7 +3595,6 @@ paths:
                     "hidden": True,
                     "idpCertExpirationAt": "2019-08-24T14:15:22Z",
                     "jit": True,
-                    "spErrorFlow": True,
                     "type": "string"
                 },
                 "ssoUrl": "string"
@@ -3537,7 +3612,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/applications' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"signAssertion":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"signResponse":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"spErrorFlow":true,"type":"string"},"ssoUrl":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/applications' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"signAssertion":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"signResponse":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"spErrorFlow":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"type":"string"},"ssoUrl":"string"}'
     x-functionalities-tags:
       - applications
   /applications/selection:
@@ -3658,7 +3733,7 @@ paths:
               --url https://console.jumpcloud.com/api/applications/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"signAssertion":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"signResponse":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"spErrorFlow":true,"type":"string"},"ssoUrl":"string"}'
+              --data '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"signAssertion":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"signResponse":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"spErrorFlow":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"type":"string"},"ssoUrl":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -3820,6 +3895,22 @@ paths:
                         "type": "string",
                         "value": "string",
                         "visible": True
+                    },
+                    "spErrorFlow": {
+                        "label": "string",
+                        "position": 0,
+                        "readOnly": True,
+                        "required": True,
+                        "tooltip": {
+                            "template": "string",
+                            "variables": {
+                                "icon": "string",
+                                "message": "string"
+                            }
+                        },
+                        "type": "string",
+                        "value": True,
+                        "visible": True
                     }
                 },
                 "created": "string",
@@ -3839,7 +3930,6 @@ paths:
                     "hidden": True,
                     "idpCertExpirationAt": "2019-08-24T14:15:22Z",
                     "jit": True,
-                    "spErrorFlow": True,
                     "type": "string"
                 },
                 "ssoUrl": "string"
@@ -3857,7 +3947,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/applications/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"signAssertion":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"signResponse":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"spErrorFlow":true,"type":"string"},"ssoUrl":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/applications/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"_id":"string","active":true,"beta":true,"color":"","config":{"acsUrl":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"constantAttributes":{"label":"string","mutable":true,"options":null,"position":0,"readOnly":true,"required":true,"toggle":null,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":[{"name":"string","readOnly":true,"required":true,"value":"string","visible":true}],"visible":true},"databaseAttributes":{"position":0},"idpCertificate":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"idpPrivateKey":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"signAssertion":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"signResponse":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true},"spEntityId":{"label":"string","options":"string","position":0,"readOnly":true,"required":true,"toggle":"string","tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":"string","visible":true},"spErrorFlow":{"label":"string","position":0,"readOnly":true,"required":true,"tooltip":{"template":"string","variables":{"icon":"string","message":"string"}},"type":"string","value":true,"visible":true}},"created":"string","databaseAttributes":[{}],"description":"string","displayLabel":"string","displayName":"string","learnMore":"string","logo":{"color":"","url":"string"},"name":"string","organization":"string","sso":{"beta":true,"hidden":true,"idpCertExpirationAt":"2019-08-24T14:15:22Z","jit":true,"type":"string"},"ssoUrl":"string"}'
     x-functionalities-tags:
       - applications
   /cancelQueuedCommands:
