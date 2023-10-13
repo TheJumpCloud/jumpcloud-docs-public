@@ -876,6 +876,8 @@ definitions:
     properties:
       caseNumber:
         type: string
+      caseSubmissionProductType:
+        type: string
       date:
         type: string
       description:
@@ -883,6 +885,8 @@ definitions:
       label:
         type: string
       organization:
+        type: string
+      os:
         type: string
       reporter:
         type: string
