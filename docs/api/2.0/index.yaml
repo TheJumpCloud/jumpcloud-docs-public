@@ -74,6 +74,10 @@ definitions:
       lastname: Blough
       registered: false
     properties:
+      apiKeyAllowed:
+        type: boolean
+      apiKeySet:
+        type: boolean
       email:
         type: string
       enableMultiFactor:
@@ -2981,6 +2985,8 @@ definitions:
       role: 5c3536e9e0a6840001872799
       roleName: Administrator
     properties:
+      apiKeyAllowed:
+        type: boolean
       bindNoOrgs:
         default: false
         type: boolean

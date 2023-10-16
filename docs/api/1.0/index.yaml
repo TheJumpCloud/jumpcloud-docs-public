@@ -2701,6 +2701,8 @@ definitions:
     type: object
   userput:
     properties:
+      apiKeyAllowed:
+        type: boolean
       email:
         format: email
         maxLength: 1024
@@ -2724,6 +2726,10 @@ definitions:
     properties:
       _id:
         type: string
+      apiKeyAllowed:
+        type: boolean
+      apiKeySet:
+        type: boolean
       apiKeyUpdatedAt:
         format: date-time
         type: string
@@ -8021,7 +8027,7 @@ paths:
               --url https://console.jumpcloud.com/api/users/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string"}'
+              --data '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -8029,6 +8035,7 @@ paths:
             url = "https://console.jumpcloud.com/api/users/{id}"
 
             payload = {
+                "apiKeyAllowed": True,
                 "email": "user@example.com",
                 "enableMultiFactor": True,
                 "firstname": "string",
@@ -8050,7 +8057,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/users/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/users/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string"}'
 produces:
   - application/json
 responses:
