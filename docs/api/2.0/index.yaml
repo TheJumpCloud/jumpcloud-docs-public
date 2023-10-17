@@ -902,6 +902,46 @@ definitions:
         type: string
     title: Case
     type: object
+  CasesMetadataResponse:
+    description: Response for retrieving the cases's metdata
+    properties:
+      results:
+        properties:
+          caseSubmissionProductTypes:
+            items:
+              type: string
+            type: array
+          caseTypes:
+            items:
+              type: string
+            type: array
+          os:
+            items:
+              type: string
+            type: array
+          preferredResponseTimes:
+            items:
+              type: string
+            type: array
+          productServiceGroups:
+            items:
+              type: string
+            type: array
+          products:
+            items:
+              type: string
+            type: array
+          severities:
+            items:
+              type: string
+            type: array
+          statuses:
+            items:
+              type: string
+            type: array
+        type: object
+    title: CasesMetadataResponse
+    type: object
   CasesResponse:
     description: Response for retrieving the cases (support/feature requests)
     properties:
@@ -12771,6 +12811,48 @@ paths:
     x-functionalities-tags:
       - users-bulk-activate
       - users-bulk-suspend
+  /cases/metadata:
+    get:
+      description: This endpoint returns the metadata for cases
+      operationId: organizations_casesMetadata
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CasesMetadataResponse'
+      security:
+        - x-api-key: []
+      summary: Get the metadata for cases
+      tags:
+        - Providers
+        - Managed Service Provider
+      x-scopes:
+        - support
+        - support.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/cases/metadata \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/cases/metadata"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cases/metadata' -Method GET -Headers $headers
+    x-functionalities-tags:
+      - cases
   /commandTemplates:
     x-functionalities-tags:
       - command-templates
