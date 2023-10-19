@@ -5089,6 +5089,16 @@ definitions:
     properties:
       allowPersonalUsage:
         $ref: '#/definitions/jumpcloud.google_emm.AllowPersonalUsage'
+      createdWhere:
+        $ref: '#/definitions/jumpcloud.google_emm.CreatedWhere'
+      displayName:
+        title: Name as set by admin
+        type: string
+      duration:
+        title: 'duration format as mentioned in https://developers.google.com/android/management/reference/rest/v1/enterprises.enrollmentTokens'
+        type: string
+      enrollmentType:
+        $ref: '#/definitions/jumpcloud.google_emm.EnrollmentType'
       enterpriseObjectId:
         format: byte
         type: string
@@ -5097,6 +5107,8 @@ definitions:
           If the flag is set to true, only one device can use generated token for
           enrollment
         type: boolean
+      provisioningExtras:
+        $ref: '#/definitions/jumpcloud.google_emm.ProvisioningExtras'
       userObjectId:
         format: byte
         type: string
@@ -5137,6 +5149,19 @@ definitions:
       iframeFeature:
         $ref: '#/definitions/jumpcloud.google_emm.Feature'
       parentFrameUrl:
+        type: string
+    type: object
+  jumpcloud.google_emm.CreatedWhere:
+    default: API
+    enum:
+      - API
+      - ADMIN_PORTAL
+      - USER_PORTAL
+    title: Identifies where create enrollment token request originated
+    type: string
+  jumpcloud.google_emm.DeleteEnrollmentTokenResponse:
+    properties:
+      name:
         type: string
     type: object
   jumpcloud.google_emm.Device:
@@ -5233,6 +5258,44 @@ definitions:
       policyName:
         type: string
     type: object
+  jumpcloud.google_emm.EnrollmentToken:
+    properties:
+      createdBy:
+        type: string
+      createdWhere:
+        type: string
+      displayName:
+        type: string
+      enrollmentLink:
+        type: string
+      enrollmentType:
+        type: string
+      expirationTime:
+        type: string
+      id:
+        type: string
+      metadata:
+        type: string
+      name:
+        type: string
+      oneTimeOnly:
+        type: boolean
+      qrCodeImage:
+        format: byte
+        type: string
+      value:
+        type: string
+    type: object
+  jumpcloud.google_emm.EnrollmentType:
+    default: WORK_PROFILE
+    enum:
+      - WORK_PROFILE
+      - FULLY_MANAGED
+      - DEDICATED
+      - BYOD
+      - COPE
+    title: Identifies how device enrolled
+    type: string
   jumpcloud.google_emm.Enterprise:
     properties:
       allowDeviceEnrollment:
@@ -5288,6 +5351,16 @@ definitions:
           $ref: '#/definitions/jumpcloud.google_emm.DeviceData'
         type: array
     type: object
+  jumpcloud.google_emm.ListEnrollmentTokensResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.google_emm.EnrollmentToken'
+        type: array
+      totalCount:
+        format: int64
+        type: integer
+    type: object
   jumpcloud.google_emm.ListEnterprisesResponse:
     properties:
       count:
@@ -5321,6 +5394,17 @@ definitions:
         type: array
       wifiMacAddress:
         description: Not logging as it contains sensitive information.
+        type: string
+    type: object
+  jumpcloud.google_emm.ProvisioningExtras:
+    properties:
+      wifiHiddenNetwork:
+        type: boolean
+      wifiPassword:
+        type: string
+      wifiSecurityType:
+        $ref: '#/definitions/jumpcloud.google_emm.WifiSecurityType'
+      wifiSsid:
         type: string
     type: object
   jumpcloud.google_emm.SecurityPosture:
@@ -5384,6 +5468,13 @@ definitions:
       value:
         type: string
     type: object
+  jumpcloud.google_emm.WifiSecurityType:
+    default: NONE
+    enum:
+      - NONE
+      - WPA
+      - WEP
+    type: string
   jumpcloud.msp.GetDetailsResponse:
     properties:
       assignedLicenses:
@@ -14986,7 +15077,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/google-emm/enrollment-tokens \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","enterpriseObjectId":"string","oneTimeOnly":true,"userObjectId":"string","zeroTouch":true}'
+              --data '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","createdWhere":"API","displayName":"string","duration":"string","enrollmentType":"WORK_PROFILE","enterpriseObjectId":"string","oneTimeOnly":true,"provisioningExtras":{"wifiHiddenNetwork":true,"wifiPassword":"string","wifiSecurityType":"NONE","wifiSsid":"string"},"userObjectId":"string","zeroTouch":true}'
         - lang: Python
           source: |-
             import requests
@@ -14995,8 +15086,18 @@ paths:
 
             payload = {
                 "allowPersonalUsage": "PERSONAL_USAGE_ALLOWED",
+                "createdWhere": "API",
+                "displayName": "string",
+                "duration": "string",
+                "enrollmentType": "WORK_PROFILE",
                 "enterpriseObjectId": "string",
                 "oneTimeOnly": True,
+                "provisioningExtras": {
+                    "wifiHiddenNetwork": True,
+                    "wifiPassword": "string",
+                    "wifiSecurityType": "NONE",
+                    "wifiSsid": "string"
+                },
                 "userObjectId": "string",
                 "zeroTouch": True
             }
@@ -15013,7 +15114,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enrollment-tokens' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","enterpriseObjectId":"string","oneTimeOnly":true,"userObjectId":"string","zeroTouch":true}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enrollment-tokens' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","createdWhere":"API","displayName":"string","duration":"string","enrollmentType":"WORK_PROFILE","enterpriseObjectId":"string","oneTimeOnly":true,"provisioningExtras":{"wifiHiddenNetwork":true,"wifiPassword":"string","wifiSecurityType":"NONE","wifiSsid":"string"},"userObjectId":"string","zeroTouch":true}'
   /google-emm/enterprises:
     get:
       description: |-
@@ -15333,6 +15434,64 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/connection-status' -Method GET -Headers $headers
+  '/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId}':
+    delete:
+      description: |-
+        Removes an Enrollment token for a given enterprise and token id.
+
+        #### Sample Request
+        ```
+        curl -X DELETE https://console.jumpcloud.com/api/v2/enterprises/{enterprise_id}/enrollment-tokens/{token_id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: EnrollmentTokens_DeleteEnrollmentToken
+      parameters:
+        - format: byte
+          in: path
+          name: enterpriseId
+          required: true
+          type: string
+        - in: path
+          name: tokenId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.DeleteEnrollmentTokenResponse'
+      security:
+        - x-api-key: []
+      summary: Deletes an enrollment token for a given enterprise and token id
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId}' -Method DELETE -Headers $headers
   '/google-emm/enterprises/{enterpriseObjectId}/devices':
     get:
       description: |-
@@ -15411,6 +15570,194 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/devices?limit=100&skip=0&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  '/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens':
+    get:
+      description: |-
+        Lists active, unexpired enrollement tokens for a given enterprise.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterprise_object_id}/enrollment-tokens \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: EnrollmentTokens_ListEnrollmentTokens
+      parameters:
+        - format: byte
+          in: path
+          name: enterpriseObjectId
+          required: true
+          type: string
+        - default: '100'
+          description: The number of records to return at once. Limited to 100.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+        - default: '0'
+          description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          name: sort
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.ListEnrollmentTokensResponse'
+      security:
+        - x-api-key: []
+      summary: List enrollment tokens
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+        - mdm.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens?limit=100&skip=0&filter=SOME_ARRAY_VALUE&sort=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens"
+
+            querystring = {"limit":"100","skip":"0","filter":"SOME_ARRAY_VALUE","sort":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens?limit=100&skip=0&filter=SOME_ARRAY_VALUE&sort=SOME_STRING_VALUE' -Method GET -Headers $headers
+    post:
+      description: |-
+        Gets an enrollment token to enroll a device into Google EMM.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/enterpries/{enterprise_object_id}/enrollment-tokens \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: EnrollmentTokens_CreateEnterprisesEnrollmentToken
+      parameters:
+        - format: byte
+          in: path
+          name: enterpriseObjectId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              allowPersonalUsage:
+                $ref: '#/definitions/jumpcloud.google_emm.AllowPersonalUsage'
+              createdWhere:
+                $ref: '#/definitions/jumpcloud.google_emm.CreatedWhere'
+              displayName:
+                title: Name as set by admin
+                type: string
+              duration:
+                title: 'duration format as mentioned in https://developers.google.com/android/management/reference/rest/v1/enterprises.enrollmentTokens'
+                type: string
+              enrollmentType:
+                $ref: '#/definitions/jumpcloud.google_emm.EnrollmentType'
+              oneTimeOnly:
+                title: |-
+                  If the flag is set to true, only one device can use generated token for
+                  enrollment
+                type: boolean
+              provisioningExtras:
+                $ref: '#/definitions/jumpcloud.google_emm.ProvisioningExtras'
+              userObjectId:
+                format: byte
+                type: string
+              zeroTouch:
+                type: boolean
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.EnrollmentToken'
+      security:
+        - x-api-key: []
+      summary: Create an enrollment token for a given enterprise
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","createdWhere":"API","displayName":"string","duration":"string","enrollmentType":"WORK_PROFILE","oneTimeOnly":true,"provisioningExtras":{"wifiHiddenNetwork":true,"wifiPassword":"string","wifiSecurityType":"NONE","wifiSsid":"string"},"userObjectId":"string","zeroTouch":true}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens"
+
+            payload = {
+                "allowPersonalUsage": "PERSONAL_USAGE_ALLOWED",
+                "createdWhere": "API",
+                "displayName": "string",
+                "duration": "string",
+                "enrollmentType": "WORK_PROFILE",
+                "oneTimeOnly": True,
+                "provisioningExtras": {
+                    "wifiHiddenNetwork": True,
+                    "wifiPassword": "string",
+                    "wifiSecurityType": "NONE",
+                    "wifiSsid": "string"
+                },
+                "userObjectId": "string",
+                "zeroTouch": True
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","createdWhere":"API","displayName":"string","duration":"string","enrollmentType":"WORK_PROFILE","oneTimeOnly":true,"provisioningExtras":{"wifiHiddenNetwork":true,"wifiPassword":"string","wifiSecurityType":"NONE","wifiSsid":"string"},"userObjectId":"string","zeroTouch":true}'
   /google-emm/signup-urls:
     post:
       description: |-
