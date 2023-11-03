@@ -1869,6 +1869,8 @@ definitions:
         type: boolean
       hostname:
         type: string
+      hwVendor:
+        type: string
       lastContact:
         format: date-time
         type: string
