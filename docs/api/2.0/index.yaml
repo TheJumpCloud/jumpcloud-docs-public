@@ -4762,7 +4762,7 @@ definitions:
           - zeroTrust
           - jumpcloudProtect
           - osPatchManagement
-          - remoteAssist
+          - remoteAccess
           - cloudInsights
           - passwordManagement
         type: string
