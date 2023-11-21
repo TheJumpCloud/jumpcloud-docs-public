@@ -4295,6 +4295,13 @@ definitions:
         description: ObjectID of this Active Directory instance.
         readOnly: true
         type: string
+      useCase:
+        enum:
+          - UNSET
+          - TWOWAYSYNC
+          - JCASAUTHORITY
+          - ADASAUTHORITY
+        type: string
     title: Active Directory
     type: object
   active-directory-agent:
@@ -8664,14 +8671,17 @@ paths:
               --url https://console.jumpcloud.com/api/v2/activedirectories \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"domain":"string"}'
+              --data '{"domain":"string","useCase":"UNSET"}'
         - lang: Python
           source: |-
             import requests
 
             url = "https://console.jumpcloud.com/api/v2/activedirectories"
 
-            payload = {"domain": "string"}
+            payload = {
+                "domain": "string",
+                "useCase": "UNSET"
+            }
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
                 "content-type": "application/json"
@@ -8685,7 +8695,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"domain":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"domain":"string","useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
   '/activedirectories/{activedirectory_id}/agents':
@@ -9311,6 +9321,78 @@ paths:
         name: id
         required: true
         type: string
+    patch:
+      description: |-
+        This endpoint allows you to update Active Directory. 
+
+        - AD as Authority - password in AD - 2-way sync use case is selected.
+        - JC as Authority - one-way sync from AD.
+        - Two way sync -  2-way sync use case is selected
+
+
+        #### Sample Request
+        ```
+        curl -X PATCH https://console.jumpcloud.com/api/v2/activedirectories/{Domain_ID} \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{ 
+                "domain": "{DC=DOMAIN;DC=COM}",
+                "use_case": "{ADASAUTHORITY}"
+            }' \
+        ```
+      operationId: activedirectories_patch
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/active-directory'
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/active-directory'
+      security:
+        - x-api-key: []
+      summary: Update Active Directory
+      tags:
+        - Active Directory
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/activedirectories/{id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"domain":"string","useCase":"UNSET"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/activedirectories/{id}"
+
+            payload = {
+                "domain": "string",
+                "useCase": "UNSET"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"domain":"string","useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
   '/administrators/{administrator_id}/organizationlinks/{id}':
