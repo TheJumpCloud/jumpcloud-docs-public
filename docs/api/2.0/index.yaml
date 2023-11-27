@@ -27578,6 +27578,7 @@ paths:
           - `name`
           - `disabled`
           - `type`
+          - `membershipMethod`
 
         #### Sample Request
 
@@ -32811,6 +32812,7 @@ paths:
           - `name`
           - `disabled`
           - `type`
+          - `membershipMethod`
           - `suggestionCounts.add`
           - `suggestionCounts.remove`
           - `suggestionCounts.total`
