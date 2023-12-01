@@ -1152,6 +1152,8 @@ definitions:
     properties:
       _id:
         type: string
+      accessRestriction:
+        type: string
       accountsReceivable:
         type: string
       created:
