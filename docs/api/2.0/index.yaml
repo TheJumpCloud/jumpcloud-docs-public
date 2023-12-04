@@ -4295,6 +4295,10 @@ definitions:
         description: ObjectID of this Active Directory instance.
         readOnly: true
         type: string
+      primaryAgent:
+        description: ObjectID of the primary agent of domain.
+        readOnly: true
+        type: string
       useCase:
         enum:
           - UNSET
@@ -9328,7 +9332,7 @@ paths:
         type: string
     patch:
       description: |-
-        This endpoint allows you to update Active Directory. 
+        This endpoint allows you to update Active Directory.
 
         - AD as Authority - password in AD - 2-way sync use case is selected.
         - JC as Authority - one-way sync from AD.
@@ -9341,7 +9345,7 @@ paths:
           -H 'accept: application/json' \
           -H 'content-type: application/json' \
           -H 'x-api-key: {API_KEY}' \
-          -d '{ 
+          -d '{
                 "domain": "{DC=DOMAIN;DC=COM}",
                 "use_case": "{ADASAUTHORITY}"
             }' \
