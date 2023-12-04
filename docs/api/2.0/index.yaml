@@ -25246,8 +25246,6 @@ paths:
         name: provider_id
         required: true
         type: string
-    x-functionalities-tags:
-      - 2022-10-27-syncro-ticketing
   '/providers/{provider_id}/integrations/syncro/alerts/configuration/options':
     get:
       description: Get all Syncro ticketing alert configuration options for a provider.
