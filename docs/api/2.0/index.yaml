@@ -4710,6 +4710,39 @@ definitions:
         format: int32
         type: integer
     type: object
+  devices.AggregatedPolicyCount:
+    properties:
+      failed:
+        description: the count of failing policies.
+        format: int64
+        type: integer
+      pending:
+        description: the count of pending policies.
+        format: int64
+        type: integer
+      success:
+        description: the count of successful policies.
+        format: int64
+        type: integer
+      total:
+        description: the count of all the policies attached to the system.
+        format: int64
+        type: integer
+    title: Responses
+    type: object
+  devices.AggregatedPolicyResultResponse:
+    properties:
+      failedPolicies:
+        items:
+          type: string
+        type: array
+      pendingPolicies:
+        items:
+          type: string
+        type: array
+      policyCountData:
+        $ref: '#/definitions/devices.AggregatedPolicyCount'
+    type: object
   devices.GetSignInWithJumpCloudSettingsResponse:
     properties:
       organizationObjectId:
@@ -31994,6 +32027,72 @@ paths:
         type: string
     x-functionalities-tags:
       - system-insights
+  '/systems/{systemObjectId}/aggregated-policy-stats':
+    get:
+      description: |-
+        Gets the aggregated policy stats for a system.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/systems/{system_object_id}/aggregated-policy-stats \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: AggregatedPolicyResults_Get
+      parameters:
+        - format: byte
+          in: path
+          name: systemObjectId
+          required: true
+          type: string
+        - format: byte
+          in: query
+          name: organizationObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/devices.AggregatedPolicyResultResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Get the Aggregated Policy Stats for a System
+      tags:
+        - Aggregated Policy Stats
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/systems/{systemObjectId}/aggregated-policy-stats?organizationObjectId=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/systems/{systemObjectId}/aggregated-policy-stats"
+
+            querystring = {"organizationObjectId":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/{systemObjectId}/aggregated-policy-stats?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
   '/systems/{system_id}/associations':
     get:
       description: |-
@@ -36249,6 +36348,7 @@ tags:
   - name: Active Directory
   - name: AddOn
   - name: Administrators
+  - name: Aggregated Policy Stats
   - name: Apple MDM
   - name: Apple VPP
   - name: Applications
@@ -36366,6 +36466,7 @@ x-tagGroups:
     tags:
       - Active Directory
       - Administrators
+      - Aggregated Policy Stats
       - Apple MDM
       - Applications
       - Authentication Policies
