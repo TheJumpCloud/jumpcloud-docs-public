@@ -24087,7 +24087,6 @@ paths:
         - Providers
         - Managed Service Provider
       x-scopes:
-        - commandrunner.legacy
         - providers
       x-codeSamples:
         - lang: Shell
