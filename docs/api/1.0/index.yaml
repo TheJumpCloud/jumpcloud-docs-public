@@ -1961,6 +1961,17 @@ definitions:
           revision:
             type: string
         type: object
+      policyStats:
+        properties:
+          failed:
+            type: integer
+          pending:
+            type: integer
+          success:
+            type: integer
+          total:
+            type: integer
+        type: object
       provisionMetadata:
         properties:
           provisioner:
