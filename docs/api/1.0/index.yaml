@@ -4129,10 +4129,12 @@ paths:
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
           ```
+
+        To filter command results use the [**Search API**](#tag/Search/operation/search_commandresults_post)
+              
       operationId: command_results_list
       parameters:
         - $ref: '#/parameters/trait:fields:fields'
-        - $ref: '#/parameters/trait:filter:filter'
         - $ref: '#/parameters/trait:limit:limit'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
         - $ref: '#/parameters/trait:skip:skip'
@@ -4156,7 +4158,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/commandresults?fields=&filter=SOME_STRING_VALUE&limit=10&skip=0&sort=' \
+              --url 'https://console.jumpcloud.com/api/commandresults?fields=&limit=10&skip=0&sort=' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -4164,7 +4166,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/commandresults"
 
-            querystring = {"fields":"","filter":"SOME_STRING_VALUE","limit":"10","skip":"0","sort":""}
+            querystring = {"fields":"","limit":"10","skip":"0","sort":""}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -4175,7 +4177,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commandresults?fields=&filter=SOME_STRING_VALUE&limit=10&skip=0&sort=' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commandresults?fields=&limit=10&skip=0&sort=' -Method GET -Headers $headers
   '/commandresults/{id}':
     delete:
       description: |-
