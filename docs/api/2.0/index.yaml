@@ -4309,6 +4309,12 @@ definitions:
     title: Active Directory
     type: object
   active-directory-agent:
+    properties:
+      agentType:
+        enum:
+          - SYNC
+          - IMPORT
+        type: string
     title: Active Directory Agent
     type: object
   active-directory-agent-get:
@@ -8813,7 +8819,7 @@ paths:
           -H 'accept: application/json' \
           -H 'content-type: application/json' \
           -H 'x-api-key: {API_KEY}' \
-          -d '{}'
+          -d '{ "agent_type":"{SYNC}" }'
         ```
       operationId: activedirectories_agentsPost
       parameters:
@@ -8841,14 +8847,14 @@ paths:
               --url https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/agents \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{}'
+              --data '{"agentType":"SYNC"}'
         - lang: Python
           source: |-
             import requests
 
             url = "https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/agents"
 
-            payload = {}
+            payload = {"agentType": "SYNC"}
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
                 "content-type": "application/json"
@@ -8862,7 +8868,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/agents' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/agents' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"agentType":"SYNC"}'
     x-functionalities-tags:
       - active-directory
   '/activedirectories/{activedirectory_id}/agents/{agent_id}':
