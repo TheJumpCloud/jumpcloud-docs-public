@@ -1664,9 +1664,8 @@ definitions:
           - ge
           - lt
           - le
-          - between
-          - search
           - in
+          - nin
         type: string
       value:
         description: Filter comparison value.
