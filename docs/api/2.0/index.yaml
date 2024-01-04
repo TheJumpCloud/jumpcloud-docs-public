@@ -7393,7 +7393,7 @@ definitions:
       install_date:
         type: string
       maximum_allowed:
-        type: integer
+        type: string
       name:
         type: string
       path:
@@ -7403,7 +7403,7 @@ definitions:
       system_id:
         type: string
       type:
-        type: integer
+        type: string
     title: System Insights Shared Resources
     type: object
   system-insights-sharing-preferences:
