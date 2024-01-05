@@ -4797,23 +4797,26 @@ definitions:
         description: The unique identifier for this feature.
         enum:
           - cloudDirectory
+          - cloudInsights
           - deviceManagement
           - directoryInsightsPremium
+          - federatedDeviceIdentity
           - implementationQuickstart
+          - jcManagedDeviceIdentity
+          - jumpcloudGo
+          - jumpcloudProtect
           - ldap
           - mdm
           - mfa
+          - osPatchManagement
+          - passwordManagement
           - premiumSupport
           - radius
+          - remoteAccess
           - sso
           - systemInsights
           - userLifecycle
           - zeroTrust
-          - jumpcloudProtect
-          - osPatchManagement
-          - remoteAccess
-          - cloudInsights
-          - passwordManagement
         type: string
     type: object
   google.protobuf.Any:
