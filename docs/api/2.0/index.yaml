@@ -2642,6 +2642,32 @@ definitions:
         $ref: '#/definitions/PolicyTemplate'
     title: Policy
     type: object
+  PolicyCreateRequest:
+    description: A request to create an instance of a policy template.
+    properties:
+      name:
+        description: The description for this specific Policy.
+        type: string
+      notes:
+        description: The notes for this specific Policy.
+        type: string
+      template:
+        properties:
+          id:
+            description: ObjectId uniquely identifying a Policy instance.
+            type: string
+        required:
+          - id
+        type: object
+      values:
+        items:
+          $ref: '#/definitions/PolicyValue'
+        type: array
+    required:
+      - name
+      - template
+    title: PolicyCreateRequest
+    type: object
   PolicyGroup:
     properties:
       attributes:
@@ -2717,29 +2743,6 @@ definitions:
       totalCount:
         type: integer
     title: PolicyGroupTemplates
-    type: object
-  PolicyRequest:
-    description: An instance of a policy template.
-    properties:
-      name:
-        description: The description for this specific Policy.
-        type: string
-      notes:
-        description: The notes for this specific Policy.
-        type: string
-      template:
-        properties:
-          id:
-            description: ObjectId uniquely identifying a Policy instance; only allowed on POST requests.
-            type: string
-        type: object
-      values:
-        items:
-          $ref: '#/definitions/PolicyValue'
-        type: array
-    required:
-      - name
-    title: PolicyRequest
     type: object
   PolicyResult:
     properties:
@@ -2966,6 +2969,23 @@ definitions:
           $ref: '#/definitions/OSRestriction'
         type: array
     title: PolicyTemplateWithDetails
+    type: object
+  PolicyUpdateRequest:
+    description: A request to update an instance of a policy template.
+    properties:
+      name:
+        description: The description for this specific Policy.
+        type: string
+      notes:
+        description: The notes for this specific Policy.
+        type: string
+      values:
+        items:
+          $ref: '#/definitions/PolicyValue'
+        type: array
+    required:
+      - name
+    title: PolicyRequest
     type: object
   PolicyValue:
     properties:
@@ -22135,7 +22155,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/PolicyRequest'
+            $ref: '#/definitions/PolicyCreateRequest'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '201':
@@ -22318,7 +22338,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/PolicyRequest'
+            $ref: '#/definitions/PolicyUpdateRequest'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
       responses:
         '200':
@@ -22339,7 +22359,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/policies/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"name":"string","notes":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
+              --data '{"name":"string","notes":"string","values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
         - lang: Python
           source: |-
             import requests
@@ -22349,7 +22369,6 @@ paths:
             payload = {
                 "name": "string",
                 "notes": "string",
-                "template": {"id": "string"},
                 "values": [
                     {
                         "configFieldID": "string",
@@ -22371,7 +22390,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/policies/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","notes":"string","template":{"id":"string"},"values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/policies/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","notes":"string","values":[{"configFieldID":"string","sensitive":true,"value":"string"}]}'
     x-functionalities-tags:
       - devices-windows-policy-crud
       - devices-darwin-policy-crud
