@@ -1666,6 +1666,7 @@ definitions:
           - le
           - in
           - nin
+          - sw
         type: string
       value:
         description: Filter comparison value.
