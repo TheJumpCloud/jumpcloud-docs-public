@@ -35776,6 +35776,15 @@ paths:
         type: string
     x-functionalities-tags:
       - user-login
+  /validatedomain:
+    parameters:
+      - description: send a domain as query parameter . It accepts only one domain per API request.
+        in: query
+        name: domain
+        required: true
+        type: string
+    x-functionalities-tags:
+      - user-login
   /webauthn/configs:
     parameters: []
     x-functionalities-tags:
