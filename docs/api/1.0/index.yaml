@@ -1103,6 +1103,9 @@ definitions:
         type: integer
     title: CommandsList
     type: object
+  externallymanagedpropertyinfo:
+    description: 'The externally_managed property has been deprecated. Whenever a user has their externally_managed field modified their restrictedFields property gets populated with the appropriate value, even if it is already set to a value an administrator manually set.'
+    type: boolean
   fde:
     description: Indicates if the Full Disk Encryption is active in the system
     properties:
@@ -2177,7 +2180,7 @@ definitions:
       external_source_type:
         type: string
       externally_managed:
-        type: boolean
+        $ref: '#/definitions/externallymanagedpropertyinfo'
       firstname:
         maxLength: 1024
         type: string
@@ -2334,7 +2337,7 @@ definitions:
       external_source_type:
         type: string
       externally_managed:
-        type: boolean
+        $ref: '#/definitions/externallymanagedpropertyinfo'
       firstname:
         type: string
       jobTitle:
@@ -2517,7 +2520,7 @@ definitions:
       external_source_type:
         type: string
       externally_managed:
-        type: boolean
+        $ref: '#/definitions/externallymanagedpropertyinfo'
       firstname:
         maxLength: 1024
         type: string
@@ -4131,7 +4134,6 @@ paths:
           ```
 
         To filter command results use the [**Search API**](#tag/Search/operation/search_commandresults_post)
-              
       operationId: command_results_list
       parameters:
         - $ref: '#/parameters/trait:fields:fields'
