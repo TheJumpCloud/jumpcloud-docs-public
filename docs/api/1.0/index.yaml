@@ -917,7 +917,7 @@ definitions:
         description: Time in seconds a command can wait in the queue to be run before timing out
         type: integer
       timeout:
-        description: The time in seconds to allow the command to run for.
+        description: The time in seconds to allow the command to run for. The maximum value is 86400 seconds (1 day).
         type: string
       trigger:
         description: The name of the command trigger.
@@ -6405,7 +6405,7 @@ paths:
         type: string
     post:
       description: |-
-        This endpoint allows you to run the erase command on the specified device. If a device is offline, the command will be run when the device becomes available.
+        This endpoint allows you to run the erase command on the specified device. If a device is offline, the command will be run when the device becomes available. Only supported on Linux and Windows devices. Use Apple MDM security commands for macOS devices.
 
         #### Sample Request
         ```
@@ -6476,7 +6476,7 @@ paths:
         type: string
     post:
       description: |-
-        This endpoint allows you to run the lock command on the specified device. If a device is offline, the command will be run when the device becomes available.
+        This endpoint allows you to run the lock command on the specified device. If a device is offline, the command will be run when the device becomes available. Only supported on Linux and Windows devices. Use Apple MDM security commands for macOS devices.
 
         #### Sample Request
         ```
@@ -6547,7 +6547,7 @@ paths:
         type: string
     post:
       description: |-
-        This endpoint allows you to run the restart command on the specified device. If a device is offline, the command will be run when the device becomes available.
+        This endpoint allows you to run the restart command on the specified device. If a device is offline, the command will be run when the device becomes available. Only supported on Linux and Windows devices. Use Apple MDM security commands for macOS devices.
 
         #### Sample Request
         ```
@@ -6617,7 +6617,7 @@ paths:
         type: string
     post:
       description: |-
-        This endpoint allows you to run the shutdown command on the specified device. If a device is offline, the command will be run when the device becomes available.
+        This endpoint allows you to run the shutdown command on the specified device. If a device is offline, the command will be run when the device becomes available. Only supported on Linux and Windows devices. Use Apple MDM security commands for macOS devices.
 
         #### Sample Request
         ```
