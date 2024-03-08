@@ -953,34 +953,6 @@ definitions:
         type: integer
     title: CasesResponse
     type: object
-  CommandResultList:
-    description: List of command results
-    properties:
-      results:
-        items:
-          properties:
-            command:
-              description: 'The ID of the command, from savedAgentCommands.'
-              type: string
-            completedCount:
-              description: The number of devices that we do have results from.
-              type: integer
-            id:
-              description: The workflowInstanceId.
-              type: string
-            pendingCount:
-              description: The number of devices that we haven't received results from.
-              type: integer
-            system:
-              description: The ID of the device the command is bound to.
-              type: string
-          type: object
-        type: array
-      totalCount:
-        description: The total number of command results
-        type: integer
-    title: CommandResultList
-    type: object
   ConfiguredPolicyTemplate:
     properties:
       id:
@@ -4738,6 +4710,10 @@ definitions:
     type: object
   devices.AggregatedPolicyCount:
     properties:
+      duplicate:
+        description: the count of duplicate policies.
+        format: int64
+        type: integer
       failed:
         description: the count of failing policies.
         format: int64
@@ -4752,6 +4728,10 @@ definitions:
         type: integer
       total:
         description: the count of all the policies attached to the system.
+        format: int64
+        type: integer
+      unsupportedOs:
+        description: the count of policies for which os is unsupported.
         format: int64
         type: integer
     title: Responses
@@ -13246,75 +13226,6 @@ paths:
         name: workflow_instance_id
         required: true
         type: string
-    x-functionalities-tags:
-      - queued-commands
-  /commandresult/workflows:
-    get:
-      description: |-
-        This endpoint returns all command results, grouped by workflowInstanceId.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/commandresult/workflows \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key:{API_KEY}'
-          ```
-      operationId: commands_listResultsByWorkflow
-      parameters:
-        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
-        - $ref: '#/parameters/trait:limitMax100:limit'
-        - $ref: '#/parameters/trait:filter:filter'
-        - $ref: '#/parameters/trait:skip:skip'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/CommandResultList'
-        '400':
-          $ref: '#/responses/trait:standardErrors:400'
-        '401':
-          $ref: '#/responses/trait:standardErrors:401'
-        '403':
-          $ref: '#/responses/trait:standardErrors:403'
-        '404':
-          $ref: '#/responses/trait:standardErrors:404'
-        '409':
-          $ref: '#/responses/trait:standardErrors:409'
-        '500':
-          $ref: '#/responses/trait:standardErrors:500'
-      security:
-        - x-api-key: []
-      summary: List all Command Results by Workflow
-      tags:
-        - Command Results
-      x-scopes:
-        - commands
-        - commands.readonly
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/commandresult/workflows?limit=10&filter=&skip=0' \
-              --header 'x-api-key: REPLACE_KEY_VALUE'
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/commandresult/workflows"
-
-            querystring = {"limit":"10","filter":"","skip":"0"}
-
-            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            print(response.text)
-        - lang: Powershell
-          source: |-
-            $headers=@{}
-            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/commandresult/workflows?limit=10&filter=&skip=0' -Method GET -Headers $headers
     x-functionalities-tags:
       - queued-commands
   '/commands/{command_id}/associations':
@@ -36847,7 +36758,6 @@ tags:
   - name: Applications
   - name: Authentication Policies
   - name: Bulk Job Requests
-  - name: Command Results
   - name: Command Templates
   - name: Commands
   - name: Countries
@@ -36966,7 +36876,6 @@ x-tagGroups:
       - Applications
       - Authentication Policies
       - Bulk Job Requests
-      - Command Results
       - Commands
       - Custom Emails
       - Directories
