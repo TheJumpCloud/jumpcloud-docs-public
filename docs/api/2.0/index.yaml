@@ -1688,6 +1688,7 @@ definitions:
       * `user_primary_organization_title` - Translate JumpCloud user  `jobTitle` to G Suite Directory user `title` for `primary` organization
       * `user_alternate_email` - Translate JumpCloud user  `alternateEmail` to G Suite Directory user `emails`
       * `user_status` - Translate JumpCloud user `status` to G Suite Directory user `status`
+      * `user_password` - Translate JumpCloud user `password` to G Suite Directory user `password`
     enum:
       - user_home_addresses
       - user_work_addresses
@@ -1706,6 +1707,7 @@ definitions:
       - user_primary_organization_employee_id
       - user_primary_organization_title
       - user_status
+      - user_password
     title: G Suite BuiltIn Translation
     type: string
   GSuiteDirectionTranslation:
