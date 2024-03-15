@@ -2015,6 +2015,8 @@ definitions:
         type: object
       policyStats:
         properties:
+          duplicate:
+            type: integer
           failed:
             type: integer
           pending:
@@ -2022,6 +2024,8 @@ definitions:
           success:
             type: integer
           total:
+            type: integer
+          unsupportedOs:
             type: integer
         type: object
       provisionMetadata:
