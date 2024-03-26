@@ -1621,6 +1621,53 @@ definitions:
         type: string
     title: FeatureTrials
     type: object
+  Filter:
+    description: Filter for a field.
+    properties:
+      field:
+        description: Name of field in filter target object.
+        type: string
+      operator:
+        description: Filter comparison operator.
+        enum:
+          - eq
+          - ne
+          - gt
+          - ge
+          - lt
+          - le
+          - in
+          - nin
+          - sw
+        type: string
+      value:
+        description: Filter comparison value.
+        type: string
+    required:
+      - field
+      - operator
+      - value
+    title: Filter
+    type: object
+  FilterQuery:
+    allOf:
+      - $ref: '#/definitions/Query'
+      - properties:
+          filters:
+            items:
+              $ref: '#/definitions/Filter'
+            type: array
+        title: FilterQuery
+        type: object
+        x-internal: false
+    description: Query using a sequence of field filters.
+    x-examples:
+      example-1:
+        filters:
+          - field: string
+            operator: eq
+            value: string
+        queryType: FilterQuery
   GSuiteBuiltinTranslation:
     description: |
       Built-in translations for G Suite export:
@@ -2398,24 +2445,6 @@ definitions:
       - remove
     title: LDAP Server Action
     type: string
-  MemberQuery:
-    allOf:
-      - $ref: '#/definitions/Query'
-      - properties:
-          filters:
-            items: {}
-            type: array
-        title: MemberQuery
-        type: object
-        x-internal: false
-    description: Query using a sequence of field filters.
-    x-examples:
-      example-1:
-        filters:
-          - field: string
-            operator: eq
-            value: string
-        queryType: MemberQuery
   MemberSuggestion:
     properties:
       object:
@@ -3398,7 +3427,6 @@ definitions:
     properties:
       queryType:
         enum:
-          - Filter
           - FilterQuery
         type: string
     required:
@@ -4031,7 +4059,7 @@ definitions:
         description: ObjectId uniquely identifying a System Group.
         type: string
       memberQuery:
-        $ref: '#/definitions/MemberQuery'
+        $ref: '#/definitions/FilterQuery'
       memberQueryExemptions:
         description: Array of GraphObjects exempted from the query
         items:
@@ -4063,7 +4091,7 @@ definitions:
         description: Email address of a System Group
         type: string
       memberQuery:
-        $ref: '#/definitions/MemberQuery'
+        $ref: '#/definitions/FilterQuery'
       memberQueryExemptions:
         description: Array of GraphObjects exempted from the query
         items:
@@ -4092,7 +4120,7 @@ definitions:
         description: Email address of a System Group
         type: string
       memberQuery:
-        $ref: '#/definitions/MemberQuery'
+        $ref: '#/definitions/FilterQuery'
       memberQueryExemptions:
         description: Array of GraphObjects exempted from the query
         items:
@@ -4189,7 +4217,7 @@ definitions:
         description: ObjectId uniquely identifying a User Group.
         type: string
       memberQuery:
-        $ref: '#/definitions/MemberQuery'
+        $ref: '#/definitions/FilterQuery'
       memberQueryExemptions:
         description: Array of GraphObjects exempted from the query
         items:
@@ -4223,7 +4251,7 @@ definitions:
         description: Email address of a User Group
         type: string
       memberQuery:
-        $ref: '#/definitions/MemberQuery'
+        $ref: '#/definitions/FilterQuery'
       memberQueryExemptions:
         description: Array of GraphObjects exempted from the query
         items:
@@ -4252,7 +4280,7 @@ definitions:
         description: Email address of a User Group
         type: string
       memberQuery:
-        $ref: '#/definitions/MemberQuery'
+        $ref: '#/definitions/FilterQuery'
       memberQueryExemptions:
         description: Array of GraphObjects exempted from the query
         items:
@@ -28514,7 +28542,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/systemgroups \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -28526,8 +28554,14 @@ paths:
                 "description": "string",
                 "email": "string",
                 "memberQuery": {
-                    "queryType": "Filter",
-                    "filters": [None]
+                    "queryType": "FilterQuery",
+                    "filters": [
+                        {
+                            "field": "string",
+                            "operator": "eq",
+                            "value": "string"
+                        }
+                    ]
                 },
                 "memberQueryExemptions": [
                     {
@@ -28553,7 +28587,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - systemgroups
   '/systemgroups/{group_id}/associations':
@@ -29597,7 +29631,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/systemgroups/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+              --data '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -29609,8 +29643,14 @@ paths:
                 "description": "string",
                 "email": "string",
                 "memberQuery": {
-                    "queryType": "Filter",
-                    "filters": [None]
+                    "queryType": "FilterQuery",
+                    "filters": [
+                        {
+                            "field": "string",
+                            "operator": "eq",
+                            "value": "string"
+                        }
+                    ]
                 },
                 "memberQueryExemptions": [
                     {
@@ -29636,7 +29676,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - systemgroups
   /systeminsights/alf:
@@ -33799,7 +33839,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/usergroups \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -33830,8 +33870,14 @@ paths:
                 "description": "string",
                 "email": "string",
                 "memberQuery": {
-                    "queryType": "Filter",
-                    "filters": [None]
+                    "queryType": "FilterQuery",
+                    "filters": [
+                        {
+                            "field": "string",
+                            "operator": "eq",
+                            "value": "string"
+                        }
+                    ]
                 },
                 "memberQueryExemptions": [
                     {
@@ -33857,7 +33903,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - systems
   '/usergroups/{group_id}/activedirectories':
@@ -35187,7 +35233,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/usergroups/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -35218,8 +35264,14 @@ paths:
                 "description": "string",
                 "email": "string",
                 "memberQuery": {
-                    "queryType": "Filter",
-                    "filters": [None]
+                    "queryType": "FilterQuery",
+                    "filters": [
+                        {
+                            "field": "string",
+                            "operator": "eq",
+                            "value": "string"
+                        }
+                    ]
                 },
                 "memberQueryExemptions": [
                     {
@@ -35245,7 +35297,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"description":"string","email":"string","memberQuery":{"queryType":"FilterQuery","filters":[{"field":"string","operator":"eq","value":"string"}]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - groups
   '/users/{userId}/pushendpoints/{pushEndpointId}/verify':
