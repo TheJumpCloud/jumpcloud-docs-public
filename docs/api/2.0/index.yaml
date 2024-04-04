@@ -2102,6 +2102,7 @@ definitions:
               - active_directory
               - application
               - g_suite
+              - idp_routing_policy
               - ldap_server
               - office_365
               - radius_server
@@ -2124,6 +2125,7 @@ definitions:
               - active_directory
               - application
               - g_suite
+              - idp_routing_policy
               - ldap_server
               - office_365
               - radius_server
@@ -2156,6 +2158,7 @@ definitions:
       - application
       - command
       - g_suite
+      - idp_routing_policy
       - ldap_server
       - office_365
       - policy
@@ -8439,6 +8442,7 @@ parameters:
         - active_directory
         - application
         - g_suite
+        - idp_routing_policy
         - ldap_server
         - office_365
         - radius_server
@@ -8456,6 +8460,7 @@ parameters:
         - active_directory
         - application
         - g_suite
+        - idp_routing_policy
         - ldap_server
         - office_365
         - radius_server
