@@ -3194,6 +3194,12 @@ parameters:
     in: query
     name: search
     type: string
+  'trait:search:x-eventually-consistent':
+    default: false
+    description: EXPERIMENTAL! Use to acknowledge eventually consistent data in response.
+    in: header
+    name: x-eventually-consistent
+    type: boolean
   'trait:skip:skip':
     default: 0
     description: The offset into the records to return.
@@ -5985,6 +5991,7 @@ paths:
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:search:x-eventually-consistent'
       responses:
         '200':
           description: OK
@@ -6127,6 +6134,7 @@ paths:
         - $ref: '#/parameters/trait:limit:limit'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - $ref: '#/parameters/trait:search:x-eventually-consistent'
       responses:
         '200':
           description: OK
