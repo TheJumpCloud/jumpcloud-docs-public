@@ -1399,7 +1399,7 @@ definitions:
         properties:
           restrictedFields:
             items:
-              $ref: '#/definitions/restrictedFields'
+              $ref: '#/definitions/restrictedField'
             type: array
         type: object
       systemUserPasswordExpirationInDays:
@@ -1574,7 +1574,7 @@ definitions:
         properties:
           restrictedFields:
             items:
-              $ref: '#/definitions/restrictedFields'
+              $ref: '#/definitions/restrictedField'
             type: array
         type: object
       systemUserPasswordExpirationInDays:
@@ -1751,7 +1751,7 @@ definitions:
         type: integer
     title: RadiusServersList
     type: object
-  restrictedFields:
+  restrictedField:
     properties:
       field:
         enum:
@@ -2285,6 +2285,10 @@ definitions:
               type: string
           type: object
         type: array
+      restrictedFields:
+        items:
+          $ref: '#/definitions/restrictedField'
+        type: array
       samba_service_user:
         type: boolean
       ssh_keys:
@@ -2441,6 +2445,10 @@ definitions:
             value:
               type: string
           type: object
+        type: array
+      restrictedFields:
+        items:
+          $ref: '#/definitions/restrictedField'
         type: array
       samba_service_user:
         type: boolean
@@ -2650,7 +2658,7 @@ definitions:
         type: array
       restrictedFields:
         items:
-          $ref: '#/definitions/restrictedFields'
+          $ref: '#/definitions/restrictedField'
         type: array
       samba_service_user:
         type: boolean
@@ -6898,7 +6906,7 @@ paths:
               --url 'https://console.jumpcloud.com/api/systemusers?fullValidationDetails=SOME_STRING_VALUE' \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"account_locked":true,"activated":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"2019-08-24T14:15:22Z","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"passwordless_sudo":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","recoveryEmail":{"address":"string"},"relationships":[{"type":"string","value":"string"}],"samba_service_user":true,"state":"STAGED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
+              --data '{"account_locked":true,"activated":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"2019-08-24T14:15:22Z","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"passwordless_sudo":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","recoveryEmail":{"address":"string"},"relationships":[{"type":"string","value":"string"}],"restrictedFields":[{"field":"addresses","id":"string","type":"active_directory"}],"samba_service_user":true,"state":"STAGED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -6976,6 +6984,13 @@ paths:
                         "value": "string"
                     }
                 ],
+                "restrictedFields": [
+                    {
+                        "field": "addresses",
+                        "id": "string",
+                        "type": "active_directory"
+                    }
+                ],
                 "samba_service_user": True,
                 "state": "STAGED",
                 "sudo": True,
@@ -6998,7 +7013,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers?fullValidationDetails=SOME_STRING_VALUE' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"account_locked":true,"activated":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"2019-08-24T14:15:22Z","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"passwordless_sudo":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","recoveryEmail":{"address":"string"},"relationships":[{"type":"string","value":"string"}],"samba_service_user":true,"state":"STAGED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers?fullValidationDetails=SOME_STRING_VALUE' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"account_locked":true,"activated":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"2019-08-24T14:15:22Z","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"passwordless_sudo":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","recoveryEmail":{"address":"string"},"relationships":[{"type":"string","value":"string"}],"restrictedFields":[{"field":"addresses","id":"string","type":"active_directory"}],"samba_service_user":true,"state":"STAGED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
     x-functionalities-tags:
       - users
   /systemusers-lite:
@@ -7193,7 +7208,7 @@ paths:
               --url 'https://console.jumpcloud.com/api/systemusers/{id}?fullValidationDetails=SOME_STRING_VALUE' \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"account_locked":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"string","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","relationships":[{"type":"string","value":"string"}],"samba_service_user":true,"ssh_keys":[{"name":"string","public_key":"string"}],"state":"ACTIVATED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
+              --data '{"account_locked":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"string","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","relationships":[{"type":"string","value":"string"}],"restrictedFields":[{"field":"addresses","id":"string","type":"active_directory"}],"samba_service_user":true,"ssh_keys":[{"name":"string","public_key":"string"}],"state":"ACTIVATED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -7268,6 +7283,13 @@ paths:
                         "value": "string"
                     }
                 ],
+                "restrictedFields": [
+                    {
+                        "field": "addresses",
+                        "id": "string",
+                        "type": "active_directory"
+                    }
+                ],
                 "samba_service_user": True,
                 "ssh_keys": [
                     {
@@ -7296,7 +7318,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}?fullValidationDetails=SOME_STRING_VALUE' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"account_locked":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"string","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","relationships":[{"type":"string","value":"string"}],"samba_service_user":true,"ssh_keys":[{"name":"string","public_key":"string"}],"state":"ACTIVATED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}?fullValidationDetails=SOME_STRING_VALUE' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"account_locked":true,"addresses":[{"country":"string","extendedAddress":"string","locality":"string","poBox":"string","postalCode":"string","region":"string","streetAddress":"string","type":"string"}],"allow_public_key":true,"alternateEmail":"string","attributes":[{"name":"string","value":"string"}],"company":"string","costCenter":"string","department":"string","description":"string","disableDeviceMaxLoginAttempts":true,"displayname":"string","email":"string","employeeIdentifier":"string","employeeType":"string","enable_managed_uid":true,"enable_user_portal_multifactor":true,"external_dn":"string","external_password_expiration_date":"string","external_source_type":"string","externally_managed":true,"firstname":"string","jobTitle":"string","lastname":"string","ldap_binding_user":true,"location":"string","managedAppleId":"string","manager":"string","mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"},"middlename":"string","password":"string","password_never_expires":true,"phoneNumbers":[{"number":"string","type":"string"}],"public_key":"string","relationships":[{"type":"string","value":"string"}],"restrictedFields":[{"field":"addresses","id":"string","type":"active_directory"}],"samba_service_user":true,"ssh_keys":[{"name":"string","public_key":"string"}],"state":"ACTIVATED","sudo":true,"suspended":true,"tags":["string"],"unix_guid":1,"unix_uid":1,"username":"string"}'
     x-functionalities-tags:
       - users
   '/systemusers/{id}/expire':
