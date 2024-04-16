@@ -5119,6 +5119,13 @@ definitions:
       - DENIED
       - ERRORED
     type: string
+  jumpcloud.gapps.CreateScheduledResponse:
+    properties:
+      scheduledJobId:
+        description: ObjectID of the created Scheduled Job
+        format: hex
+        type: string
+    type: object
   jumpcloud.gapps.Domain:
     properties:
       accountObjectId:
@@ -5150,6 +5157,20 @@ definitions:
     properties:
       domain:
         $ref: '#/definitions/jumpcloud.gapps.Domain'
+    type: object
+  jumpcloud.gapps.ListScheduledResponse:
+    properties:
+      schedules:
+        items:
+          $ref: '#/definitions/jumpcloud.gapps.ScheduledImport'
+        type: array
+    type: object
+  jumpcloud.gapps.ScheduledImport:
+    properties:
+      scheduledJobId:
+        description: ObjectID of the Scheduled Job
+        format: hex
+        type: string
     type: object
   jumpcloud.google_emm.AllowPersonalUsage:
     default: PERSONAL_USAGE_ALLOWED
@@ -17029,6 +17050,220 @@ paths:
         type: string
     x-functionalities-tags:
       - users-import-google
+  '/gsuites/{gsuite_id}/import/schedules':
+    get:
+      description: Endpoint to list scheduled jobs for specified Google Workspace integration.
+      operationId: Gapps_Scheduled_Import_List
+      parameters:
+        - description: ObjectID of the Google Workspace integration
+          format: byte
+          in: path
+          name: gsuite_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/jumpcloud.gapps.ListScheduledResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: List Scheduled Jobs
+      tags:
+        - G Suite
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules' -Method GET -Headers $headers
+    post:
+      description: Endpoint to create a scheduled job for specified Google Workspace integration.
+      operationId: Gapps_Scheduled_Import_Create
+      parameters:
+        - description: ObjectID of the Google Workspace integration
+          format: byte
+          in: path
+          name: gsuite_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.gapps.CreateScheduledResponse'
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/jumpcloud.gapps.CreateScheduledResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Create a Scheduled Job
+      tags:
+        - G Suite
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("POST", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules' -Method POST -Headers $headers
+  '/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}':
+    delete:
+      description: Endpoint to delete the specified scheduled job from gapps and kala.
+      operationId: Gapps_Scheduled_Import_Delete
+      parameters:
+        - description: ObjectID of the Google Workspace integration
+          format: byte
+          in: path
+          name: gsuite_id
+          required: true
+          type: string
+        - description: ObjectID of the Scheduled Job
+          format: byte
+          in: path
+          name: scheduledJobId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+        '204':
+          description: No Content
+          schema: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Delete a Scheduled Job
+      tags:
+        - G Suite
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}' -Method DELETE -Headers $headers
   '/gsuites/{gsuite_id}/import/users':
     get:
       description: Lists G Suite users available for import.
