@@ -1393,6 +1393,8 @@ definitions:
         type: object
       pendingDelete:
         type: boolean
+      requireAdminMFA:
+        type: boolean
       showIntro:
         type: boolean
       systemUserDefaults:
