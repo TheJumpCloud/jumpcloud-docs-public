@@ -10563,6 +10563,88 @@ paths:
     x-functionalities-tags:
       - mdm
       - devices-darwin-security-command
+  '/applemdms/{apple_mdm_id}/devices/{device_id}/clearRestrictionsPassword':
+    parameters:
+      - in: path
+        name: apple_mdm_id
+        required: true
+        type: string
+      - in: path
+        name: device_id
+        required: true
+        type: string
+    post:
+      description: |-
+        Clear the restrictions password of a DEP-enrolled device.
+
+        #### Sample Request
+        ```
+          curl -X POST https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/clearRestrictionsPassword \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{}'
+        ```
+      operationId: applemdms_devicesClearRestrictionsPassword
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          schema:
+            properties:
+              message:
+                type: string
+            type: object
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          description: ''
+          schema:
+            properties:
+              message:
+                type: string
+            type: object
+      security:
+        - x-api-key: []
+      summary: Clear Restrictions Password
+      tags:
+        - Apple MDM
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/clearRestrictionsPassword \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/clearRestrictionsPassword"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("POST", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/clearRestrictionsPassword' -Method POST -Headers $headers
+    x-functionalities-tags:
+      - mdm
+      - devices-darwin-security-command
   '/applemdms/{apple_mdm_id}/devices/{device_id}/erase':
     parameters:
       - in: path
