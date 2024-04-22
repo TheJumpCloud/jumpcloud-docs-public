@@ -5122,7 +5122,7 @@ definitions:
   jumpcloud.gapps.CreateScheduledResponse:
     properties:
       scheduledJobId:
-        description: ObjectID of the created Scheduled Job
+        description: ScheduledJobId is the schedules unique ID.
         format: hex
         type: string
     type: object
