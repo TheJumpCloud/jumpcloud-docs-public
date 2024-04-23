@@ -3403,6 +3403,7 @@ definitions:
         enum:
           - Filter
           - FilterQuery
+          - Search
         type: string
     required:
       - queryType
