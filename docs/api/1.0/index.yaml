@@ -1927,6 +1927,8 @@ definitions:
         type: string
       hwVendor:
         type: string
+      isPolicyBound:
+        type: boolean
       lastContact:
         format: date-time
         type: string
