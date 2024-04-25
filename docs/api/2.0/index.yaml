@@ -4858,7 +4858,7 @@ definitions:
             foo = any.unpack(Foo.class);
           }
 
-      Example 3: Pack and unpack a message in Python.
+       Example 3: Pack and unpack a message in Python.
 
           foo = Foo(...)
           any = Any()
@@ -4868,7 +4868,7 @@ definitions:
             any.Unpack(foo)
             ...
 
-      Example 4: Pack and unpack a message in Go
+       Example 4: Pack and unpack a message in Go
 
            foo := &pb.Foo{...}
            any, err := anypb.New(foo)
@@ -4889,7 +4889,7 @@ definitions:
 
 
       JSON
-
+      ====
       The JSON representation of an `Any` value uses the regular
       representation of the deserialized, embedded message, with an
       additional field `@type` which contains the type URL. Example:
@@ -4948,15 +4948,31 @@ definitions:
         type: string
     type: object
   google.rpc.Status:
+    description: |-
+      The `Status` type defines a logical error model that is suitable for
+      different programming environments, including REST APIs and RPC APIs. It is
+      used by [gRPC](https://github.com/grpc). Each `Status` message contains
+      three pieces of data: error code, error message, and error details.
+
+      You can find out more about this error model and how to work with it in the
+      [API Design Guide](https://cloud.google.com/apis/design/errors).
     properties:
       code:
+        description: 'The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].'
         format: int32
         type: integer
       details:
+        description: |-
+          A list of messages that carry the error details.  There is a common set of
+          message types for APIs to use.
         items:
           $ref: '#/definitions/google.protobuf.Any'
         type: array
       message:
+        description: |-
+          A developer-facing error message, which should be in English. Any
+          user-facing error message should be localized and sent in the
+          [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
         type: string
     type: object
   gsuite:
@@ -27283,7 +27299,7 @@ paths:
         - Push Verification
       x-dynamic-gateway: true
       x-scopes:
-        - mfa
+        - protect
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -35749,7 +35765,7 @@ paths:
         - Push Verification
       x-dynamic-gateway: true
       x-scopes:
-        - mfa
+        - protect
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -37750,6 +37766,7 @@ x-scopes:
   - passwordmanager.readonly
   - providers
   - providers.readonly
+  - protect
   - radius
   - radius.readonly
   - subscriptions.readonly
