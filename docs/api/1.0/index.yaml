@@ -2016,6 +2016,8 @@ definitions:
             type: string
           revision:
             type: string
+          version:
+            type: string
         type: object
       policyStats:
         properties:
