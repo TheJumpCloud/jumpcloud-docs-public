@@ -4760,6 +4760,103 @@ definitions:
           $ref: '#/definitions/devices.SignInWithJumpCloudSetting'
         type: array
     type: object
+  devices.MetadataMSIPublic:
+    properties:
+      manufacturer:
+        type: string
+      productCode:
+        type: string
+      productName:
+        type: string
+      productVersion:
+        type: string
+      sha256sum:
+        type: string
+      upgradeCode:
+        type: string
+    type: object
+  devices.MetadataPKG:
+    properties:
+      assetKind:
+        type: string
+      bundleIdentifier:
+        type: string
+      bundleVersion:
+        type: string
+      packageKind:
+        type: string
+      sha256sum:
+        type: string
+      subtitle:
+        type: string
+      title:
+        type: string
+    type: object
+  devices.ObjectStorageItemPublic:
+    properties:
+      objectId:
+        format: hex
+        type: string
+      versions:
+        items:
+          $ref: '#/definitions/devices.ObjectStorageVersionPublic'
+        type: array
+    type: object
+  devices.ObjectStorageMetadataPublic:
+    properties:
+      metadataMsi:
+        $ref: '#/definitions/devices.MetadataMSIPublic'
+      metadataPkg:
+        $ref: '#/definitions/devices.MetadataPKG'
+    type: object
+  devices.ObjectStorageStatusResponse:
+    properties:
+      spaceTotal:
+        format: int64
+        type: integer
+      spaceUsed:
+        format: int64
+        type: integer
+    type: object
+  devices.ObjectStorageVersionPublic:
+    properties:
+      createdAt:
+        format: date-time
+        type: string
+      metadata:
+        $ref: '#/definitions/devices.ObjectStorageMetadataPublic'
+      name:
+        type: string
+      objectId:
+        format: hex
+        type: string
+      rejectedReason:
+        type: string
+      sha256sum:
+        type: string
+      size:
+        format: int64
+        type: integer
+      status:
+        $ref: '#/definitions/devices.ObjectStorageVersionPublic.Status'
+      storagePath:
+        type: string
+      updatedAt:
+        format: date-time
+        type: string
+      version:
+        format: int64
+        type: integer
+    type: object
+  devices.ObjectStorageVersionPublic.Status:
+    default: UNKNOWN
+    enum:
+      - UNKNOWN
+      - PENDING
+      - VALIDATING
+      - AVAILABLE
+      - REJECTED
+    type: string
   devices.SetDefaultPasswordSyncSettingsRequest:
     properties:
       enabled:
@@ -21884,6 +21981,180 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/microsoft-mdm/configuration-files' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+  /object-storage/items:
+    get:
+      description: "List the current Object Storage Items for an Organization.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/object-storage/items \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 ObjectStorageItems in a single response.\n\n\tMSP Note: Currently ObjectStorage can only operate in the context of a single organization."
+      operationId: ObjectStorage_ListObjectStorageItemsPublic
+      parameters:
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - description: |-
+            The number of resources to return at once.
+            If the number of resources returned is less than `limit` there are no more resources to fetch.
+            If the number of resources returned is equal to limit there may be more resources to fetch. Increment `skip` by `limit` to get the next set of resources.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Success listing Object Storage Items.
+          schema:
+            items:
+              $ref: '#/definitions/devices.ObjectStorageItemPublic'
+            type: array
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: List the Items stored in Object Storage
+      tags:
+        - Object Storage
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/object-storage/items?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/object-storage/items"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/object-storage/items?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /object-storage/status:
+    get:
+      description: Get the current status of Object Storage.
+      operationId: ObjectStorage_GetStatus
+      responses:
+        '200':
+          description: Success retrieving status of Object Storage.
+          schema:
+            $ref: '#/definitions/devices.ObjectStorageStatusResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Get the current Object Storage status
+      tags:
+        - Object Storage
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/object-storage/status \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/object-storage/status"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/object-storage/status' -Method GET -Headers $headers
   /office365/activate:
     x-functionalities-tags:
       - m365-activate-deactivate
@@ -37782,6 +38053,7 @@ tags:
   - name: Logos
   - name: Managed Service Provider
   - name: Microsoft MDM
+  - name: Object Storage
   - name: Office 365
   - name: Office 365 Import
   - name: Organizations
@@ -37895,6 +38167,7 @@ x-tagGroups:
       - Logos
       - Managed Service Provider
       - Microsoft MDM
+      - Object Storage
       - Office 365
       - Office 365 Import
       - Organizations
