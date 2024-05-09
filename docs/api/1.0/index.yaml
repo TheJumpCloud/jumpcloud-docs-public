@@ -1337,6 +1337,10 @@ definitions:
           daysBeforeExpirationToForceReset:
             minimum: 1
             type: integer
+          disallowCommonlyUsedPasswords:
+            type: boolean
+          disallowSequentialOrRepetitiveChars:
+            type: boolean
           effectiveDate:
             type: string
           enableDaysAfterExpirationToSelfRecover:
@@ -1525,6 +1529,10 @@ definitions:
           daysBeforeExpirationToForceReset:
             minimum: 1
             type: integer
+          disallowCommonlyUsedPasswords:
+            type: boolean
+          disallowSequentialOrRepetitiveChars:
+            type: boolean
           effectiveDate:
             type: string
           enableDaysAfterExpirationToSelfRecover:
@@ -5018,7 +5026,7 @@ paths:
               --url https://console.jumpcloud.com/api/organizations/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"settings":{"contactEmail":"string","contactName":"string","deviceIdentificationEnabled":true,"disableGoogleLogin":true,"disableLdap":true,"disableUM":true,"duplicateLDAPGroups":true,"emailDisclaimer":"string","enableManagedUID":true,"features":{"directoryInsights":{"enabled":true},"directoryInsightsPremium":{"createdAt":"string","enabled":true,"updatedAt":"string"},"systemInsights":{"createdAt":"string","enableNewDarwin":true,"enableNewLinux":true,"enableNewWindows":true,"enabled":true,"updatedAt":"string"}},"growthData":{},"logo":"string","maxSystemUsers":0,"name":"string","newSystemUserStateDefaults":{"applicationImport":"ACTIVATED","csvImport":"ACTIVATED","manualEntry":"ACTIVATED"},"passwordCompliance":"custom","passwordPolicy":{"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":1,"effectiveDate":"string","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"gracePeriodDate":"string","lockoutTimeInSeconds":0,"maxHistory":1,"maxLoginAttempts":1,"minChangePeriodInDays":0,"minLength":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":1},"showIntro":true,"systemUserDefaults":{"restrictedFields":[{"field":"addresses","id":"string","type":"active_directory"}]},"systemUserPasswordExpirationInDays":0,"systemUsersCanEdit":true,"trustedAppConfig":{"trustedApps":[{"name":"Application 1","path":"/someuser/Applications/application1.app","teamid":"FakeTeamID"}]},"userPortal":{"idleSessionDurationMinutes":1}}}'
+              --data '{"settings":{"contactEmail":"string","contactName":"string","deviceIdentificationEnabled":true,"disableGoogleLogin":true,"disableLdap":true,"disableUM":true,"duplicateLDAPGroups":true,"emailDisclaimer":"string","enableManagedUID":true,"features":{"directoryInsights":{"enabled":true},"directoryInsightsPremium":{"createdAt":"string","enabled":true,"updatedAt":"string"},"systemInsights":{"createdAt":"string","enableNewDarwin":true,"enableNewLinux":true,"enableNewWindows":true,"enabled":true,"updatedAt":"string"}},"growthData":{},"logo":"string","maxSystemUsers":0,"name":"string","newSystemUserStateDefaults":{"applicationImport":"ACTIVATED","csvImport":"ACTIVATED","manualEntry":"ACTIVATED"},"passwordCompliance":"custom","passwordPolicy":{"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":1,"disallowCommonlyUsedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"effectiveDate":"string","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"gracePeriodDate":"string","lockoutTimeInSeconds":0,"maxHistory":1,"maxLoginAttempts":1,"minChangePeriodInDays":0,"minLength":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":1},"showIntro":true,"systemUserDefaults":{"restrictedFields":[{"field":"addresses","id":"string","type":"active_directory"}]},"systemUserPasswordExpirationInDays":0,"systemUsersCanEdit":true,"trustedAppConfig":{"trustedApps":[{"name":"Application 1","path":"/someuser/Applications/application1.app","teamid":"FakeTeamID"}]},"userPortal":{"idleSessionDurationMinutes":1}}}'
         - lang: Python
           source: |-
             import requests
@@ -5065,6 +5073,8 @@ paths:
                         "allowUsernameSubstring": True,
                         "daysAfterExpirationToSelfRecover": 0,
                         "daysBeforeExpirationToForceReset": 1,
+                        "disallowCommonlyUsedPasswords": True,
+                        "disallowSequentialOrRepetitiveChars": True,
                         "effectiveDate": "string",
                         "enableDaysAfterExpirationToSelfRecover": True,
                         "enableDaysBeforeExpirationToForceReset": True,
@@ -5118,7 +5128,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/organizations/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"settings":{"contactEmail":"string","contactName":"string","deviceIdentificationEnabled":true,"disableGoogleLogin":true,"disableLdap":true,"disableUM":true,"duplicateLDAPGroups":true,"emailDisclaimer":"string","enableManagedUID":true,"features":{"directoryInsights":{"enabled":true},"directoryInsightsPremium":{"createdAt":"string","enabled":true,"updatedAt":"string"},"systemInsights":{"createdAt":"string","enableNewDarwin":true,"enableNewLinux":true,"enableNewWindows":true,"enabled":true,"updatedAt":"string"}},"growthData":{},"logo":"string","maxSystemUsers":0,"name":"string","newSystemUserStateDefaults":{"applicationImport":"ACTIVATED","csvImport":"ACTIVATED","manualEntry":"ACTIVATED"},"passwordCompliance":"custom","passwordPolicy":{"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":1,"effectiveDate":"string","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"gracePeriodDate":"string","lockoutTimeInSeconds":0,"maxHistory":1,"maxLoginAttempts":1,"minChangePeriodInDays":0,"minLength":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":1},"showIntro":true,"systemUserDefaults":{"restrictedFields":[{"field":"addresses","id":"string","type":"active_directory"}]},"systemUserPasswordExpirationInDays":0,"systemUsersCanEdit":true,"trustedAppConfig":{"trustedApps":[{"name":"Application 1","path":"/someuser/Applications/application1.app","teamid":"FakeTeamID"}]},"userPortal":{"idleSessionDurationMinutes":1}}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/organizations/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"settings":{"contactEmail":"string","contactName":"string","deviceIdentificationEnabled":true,"disableGoogleLogin":true,"disableLdap":true,"disableUM":true,"duplicateLDAPGroups":true,"emailDisclaimer":"string","enableManagedUID":true,"features":{"directoryInsights":{"enabled":true},"directoryInsightsPremium":{"createdAt":"string","enabled":true,"updatedAt":"string"},"systemInsights":{"createdAt":"string","enableNewDarwin":true,"enableNewLinux":true,"enableNewWindows":true,"enabled":true,"updatedAt":"string"}},"growthData":{},"logo":"string","maxSystemUsers":0,"name":"string","newSystemUserStateDefaults":{"applicationImport":"ACTIVATED","csvImport":"ACTIVATED","manualEntry":"ACTIVATED"},"passwordCompliance":"custom","passwordPolicy":{"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":1,"disallowCommonlyUsedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"effectiveDate":"string","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"gracePeriodDate":"string","lockoutTimeInSeconds":0,"maxHistory":1,"maxLoginAttempts":1,"minChangePeriodInDays":0,"minLength":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":1},"showIntro":true,"systemUserDefaults":{"restrictedFields":[{"field":"addresses","id":"string","type":"active_directory"}]},"systemUserPasswordExpirationInDays":0,"systemUsersCanEdit":true,"trustedAppConfig":{"trustedApps":[{"name":"Application 1","path":"/someuser/Applications/application1.app","teamid":"FakeTeamID"}]},"userPortal":{"idleSessionDurationMinutes":1}}}'
     x-functionalities-tags:
       - organizations
   '/organizations/{id}/paymentdetails':
