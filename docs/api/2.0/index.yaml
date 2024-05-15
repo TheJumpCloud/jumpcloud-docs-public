@@ -5201,6 +5201,229 @@ definitions:
         type: string
     title: Job WorkResult
     type: object
+  jumpcloud.alerts.Alert:
+    description: Alert holds the details of an alert.
+    properties:
+      acknowledgedAt:
+        description: acknowledged_at is the time when alert was acknowledged.
+        format: date-time
+        readOnly: true
+        type: string
+      category:
+        $ref: '#/definitions/jumpcloud.alerts.AlertCategory'
+      createdAt:
+        description: created_at is the creation time of the first occurrence (as specified by the alert occurrence generator).
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        type: string
+      firstOccurredAt:
+        description: first_occurred_at is the time of the first occurrence of the alert.
+        format: date-time
+        readOnly: true
+        type: string
+      lastOccurredAt:
+        description: last_occurred_at is the time of the last occurrence of the alert.
+        format: date-time
+        readOnly: true
+        type: string
+      objectId:
+        description: id holds the unique identifier of an alert.
+        format: byte
+        readOnly: true
+        type: string
+      occurrencesCount:
+        description: occurrences_count is the number of occurrences of the alert.
+        format: uint64
+        readOnly: true
+        type: string
+      referenceId:
+        readOnly: true
+        type: string
+      remark:
+        description: A remark added to the alert while updating.
+        type: string
+      resolvedAt:
+        description: resolved_at is the time when alert was resolved.
+        format: date-time
+        readOnly: true
+        type: string
+      severity:
+        $ref: '#/definitions/jumpcloud.alerts.AlertSeverity'
+      sourceId:
+        readOnly: true
+        type: string
+      sourceType:
+        $ref: '#/definitions/jumpcloud.alerts.AlertSourceType'
+      status:
+        $ref: '#/definitions/jumpcloud.alerts.AlertStatus'
+      title:
+        type: string
+      updatedAt:
+        description: updated_at is the time when alert was updated.
+        format: date-time
+        readOnly: true
+        type: string
+    type: object
+  jumpcloud.alerts.AlertCategory:
+    default: ALERT_CATEGORY_UNSPECIFIED
+    description: AlertCategory specifies the category of an alert.
+    enum:
+      - ALERT_CATEGORY_UNSPECIFIED
+      - ALERT_CATEGORY_DIRECTORY
+      - ALERT_CATEGORY_SYSTEM
+      - ALERT_CATEGORY_ADMIN
+      - ALERT_CATEGORY_ACCESS
+      - ALERT_CATEGORY_GENERAL
+    type: string
+  jumpcloud.alerts.AlertOccurrence:
+    description: AlertOccurrence holds the occurrence details of an alert.
+    properties:
+      alertObjectId:
+        description: The Alert under which this occurrence is held.
+        format: byte
+        readOnly: true
+        type: string
+      context:
+        description: |-
+          TODO: another option is to use string. This is probably opaque to Alerts service and string might be fine here.
+          context holds the context data as specified by the generator of the alert.
+        readOnly: true
+        type: object
+      createdAt:
+        description: created_at is the timestamp from the initiator of the occurrence.
+        format: date-time
+        readOnly: true
+        type: string
+      occurredAt:
+        description: occurred_at is the timestamp from the initiator of the occurrence.
+        format: date-time
+        readOnly: true
+        type: string
+    type: object
+  jumpcloud.alerts.AlertSeverity:
+    default: ALERT_SEVERITY_UNSPECIFIED
+    description: AlertSeverity specifies the severity of an alert.
+    enum:
+      - ALERT_SEVERITY_UNSPECIFIED
+      - ALERT_SEVERITY_LOW
+      - ALERT_SEVERITY_MEDIUM
+      - ALERT_SEVERITY_HIGH
+    type: string
+  jumpcloud.alerts.AlertSeverityCount:
+    description: AlertSeverityCount holds the alert severity count per source.
+    properties:
+      count:
+        format: uint64
+        type: string
+      severity:
+        $ref: '#/definitions/jumpcloud.alerts.AlertSeverity'
+      sourceId:
+        type: string
+      sourceType:
+        $ref: '#/definitions/jumpcloud.alerts.AlertSourceType'
+    type: object
+  jumpcloud.alerts.AlertSeverityStats:
+    description: AlertSeverityStats holds the alerts by severity count.
+    properties:
+      count:
+        format: uint64
+        type: string
+      severity:
+        $ref: '#/definitions/jumpcloud.alerts.AlertSeverity'
+    type: object
+  jumpcloud.alerts.AlertSourceType:
+    default: ALERT_SOURCE_TYPE_UNSPECIFIED
+    description: AlertSourceType specifies the type of the source that generated the alert.
+    enum:
+      - ALERT_SOURCE_TYPE_UNSPECIFIED
+      - ALERT_SOURCE_TYPE_USER
+      - ALERT_SOURCE_TYPE_ADMIN
+      - ALERT_SOURCE_TYPE_DEVICE
+    type: string
+  jumpcloud.alerts.AlertStatus:
+    default: ALERT_STATUS_UNSPECIFIED
+    description: AlertStatus specifies status of an alert.
+    enum:
+      - ALERT_STATUS_UNSPECIFIED
+      - ALERT_STATUS_OPEN
+      - ALERT_STATUS_ACKNOWLEDGED
+      - ALERT_STATUS_RESOLVED
+      - ALERT_STATUS_AUTO_RESOLVED
+      - ALERT_STATUS_DELETED
+    type: string
+  jumpcloud.alerts.AlertStatusStats:
+    description: AlertStatusStats holds the alerts by status count.
+    properties:
+      count:
+        format: uint64
+        type: string
+      status:
+        $ref: '#/definitions/jumpcloud.alerts.AlertStatus'
+    type: object
+  jumpcloud.alerts.DeleteAlertResponse:
+    description: DeleteAlertResponse is the response message to DeleteAlertRequest.
+    type: object
+  jumpcloud.alerts.GetAlertResponse:
+    description: GetAlertResponse is the response message to GetAlertRequest.
+    properties:
+      alert:
+        $ref: '#/definitions/jumpcloud.alerts.Alert'
+    type: object
+  jumpcloud.alerts.GetAlertStatsResponse:
+    properties:
+      severityStat:
+        items:
+          $ref: '#/definitions/jumpcloud.alerts.AlertSeverityStats'
+        type: array
+      statusStat:
+        items:
+          $ref: '#/definitions/jumpcloud.alerts.AlertStatusStats'
+        type: array
+      totalCount:
+        format: uint64
+        type: string
+    type: object
+  jumpcloud.alerts.ListAlertOccurrencesResponse:
+    description: ListAlertOccurrencesResponse is the response message for ListAlertOccurrencesRequest.
+    properties:
+      alertOccurrences:
+        items:
+          $ref: '#/definitions/jumpcloud.alerts.AlertOccurrence'
+        type: array
+      count:
+        format: uint64
+        type: string
+    type: object
+  jumpcloud.alerts.ListAlertSeverityCountsResponse:
+    description: ListAlertSeverityCountsResponse is the response to ListAlertSeverityCountsRequest.
+    properties:
+      alertSeverityCounts:
+        items:
+          $ref: '#/definitions/jumpcloud.alerts.AlertSeverityCount'
+        type: array
+      count:
+        format: uint64
+        type: string
+    type: object
+  jumpcloud.alerts.ListAlertsResponse:
+    description: ListAlertsResponse is the response to ListAlertsRequest.
+    properties:
+      alerts:
+        items:
+          $ref: '#/definitions/jumpcloud.alerts.Alert'
+        type: array
+      count:
+        format: uint64
+        type: string
+    type: object
+  jumpcloud.alerts.UpdateAlertStatusResponse:
+    description: UpdateAlertStatusResponse is the response message to UpdateAlertStatusRequest.
+    properties:
+      alert:
+        $ref: '#/definitions/jumpcloud.alerts.Alert'
+    type: object
   jumpcloud.auth.PushVerification:
     properties:
       confirmationCode:
@@ -5704,6 +5927,282 @@ definitions:
       - WPA
       - WEP
     type: string
+  jumpcloud.healthmonitoring.BindRuleToResourceRequest:
+    properties:
+      resources:
+        items:
+          $ref: '#/definitions/jumpcloud.healthmonitoring.Resource'
+        type: array
+      ruleObjectId:
+        format: byte
+        type: string
+    title: 'BindRuleToResourceRequest is the request message to Bind Rule to System, User etc'
+    type: object
+  jumpcloud.healthmonitoring.BindRuleToResourceResponse:
+    title: BindRuleToResourceResponse is the response message to associate Rule to System
+    type: object
+  jumpcloud.healthmonitoring.CreateRuleRequest:
+    description: CreateRuleRequest is the request message used to create a single rule.
+    properties:
+      rule:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
+    type: object
+  jumpcloud.healthmonitoring.CreateRuleResponse:
+    description: CreateRuleResponse is the response message to CreateRuleRequest.
+    properties:
+      rule:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
+    type: object
+  jumpcloud.healthmonitoring.DeleteRuleResponse:
+    description: DeleteRulesResponse is the response message to DeleteRulesRequest.
+    type: object
+  jumpcloud.healthmonitoring.DisplayType:
+    default: DISPLAY_TYPE_UNSPECIFIED
+    enum:
+      - DISPLAY_TYPE_UNSPECIFIED
+      - DISPLAY_TYPE_TEXT
+      - DISPLAY_TYPE_SELECT
+      - DISPLAY_TYPE_TEXTAREA
+      - DISPLAY_TYPE_CHECKBOX
+      - DISPLAY_TYPE_DATE
+      - DISPLAY_TYPE_EMAIL
+      - DISPLAY_TYPE_NUMBER
+      - DISPLAY_TYPE_RADIO
+      - DISPLAY_TYPE_SINGLELISTBOX
+      - DISPLAY_TYPE_DOUBLELISTBOX
+      - DISPLAY_TYPE_TABLE
+      - DISPLAY_TYPE_FILE
+      - DISPLAY_TYPE_SEGMENTEDBUTTON
+      - DISPLAY_TYPE_COPYWELL
+      - DISPLAY_TYPE_TIMEINPUT
+      - DISPLAY_TYPE_DATEPICKERRANGE
+      - DISPLAY_TYPE_MULTILIST
+    type: string
+  jumpcloud.healthmonitoring.GetRuleResponse:
+    description: GetRuleResponse is the response to the GetRuleRequest.
+    properties:
+      associatedResources:
+        items:
+          $ref: '#/definitions/jumpcloud.healthmonitoring.Resource'
+        type: array
+      rule:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
+    type: object
+  jumpcloud.healthmonitoring.GetRuleTemplateResponse:
+    description: GetRuleTemplateResponse is the response to the GetRuleTemplateRequest.
+    properties:
+      template:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.RuleTemplate'
+    type: object
+  jumpcloud.healthmonitoring.ListRuleTemplatesResponse:
+    description: ListRuleTemplatesResponse holds the list of rules requested via a ListRulesRequest.
+    properties:
+      count:
+        format: uint64
+        type: string
+      templates:
+        items:
+          $ref: '#/definitions/jumpcloud.healthmonitoring.RuleTemplate'
+        type: array
+    type: object
+  jumpcloud.healthmonitoring.ListRulesResponse:
+    description: ListRulesResponse holds the list of rules requested via a ListRulesRequest.
+    properties:
+      count:
+        format: uint64
+        type: string
+      rules:
+        items:
+          $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
+        type: array
+    type: object
+  jumpcloud.healthmonitoring.LogicalOperator:
+    default: LOGICAL_OPERATOR_UNSPECIFIED
+    description: |-
+      LogicalOperator specifies logical operations.
+      Used to combine rule conditions and filters in a logical manner.
+    enum:
+      - LOGICAL_OPERATOR_UNSPECIFIED
+      - LOGICAL_OPERATOR_AND
+      - LOGICAL_OPERATOR_OR
+    type: string
+  jumpcloud.healthmonitoring.Resource:
+    description: Resource holds a single resource which can be bind to a rule.
+    properties:
+      objectId:
+        format: byte
+        type: string
+      resourceType:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.ResourceType'
+    type: object
+  jumpcloud.healthmonitoring.ResourceType:
+    default: RESOURCE_TYPE_SYSTEM_GROUP
+    enum:
+      - RESOURCE_TYPE_SYSTEM_GROUP
+      - RESOURCE_TYPE_USER_GROUP
+    title: 'ResourceType specifies different resource types like system_group, user_groups etc'
+    type: string
+  jumpcloud.healthmonitoring.Rule:
+    description: Rule represents a rule resource.
+    properties:
+      category:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.RuleCategory'
+      conditions:
+        items:
+          $ref: '#/definitions/jumpcloud.healthmonitoring.RuleCondition'
+        type: array
+      conditionsRelation:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.LogicalOperator'
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      createdBy:
+        readOnly: true
+        type: string
+      description:
+        type: string
+      eventType:
+        type: string
+      lastUpdatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      lastUpdatedBy:
+        readOnly: true
+        type: string
+      name:
+        type: string
+      objectId:
+        format: byte
+        readOnly: true
+        type: string
+      osFamily:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.RuleOsFamily'
+      severity:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.RuleSeverity'
+      status:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.RuleStatus'
+      templateObjectId:
+        format: byte
+        type: string
+    type: object
+  jumpcloud.healthmonitoring.RuleCategory:
+    default: RULE_CATEGORY_UNSPECIFIED
+    description: RuleCategory specifies different categories for a rule.
+    enum:
+      - RULE_CATEGORY_UNSPECIFIED
+      - RULE_CATEGORY_DIRECTORY
+      - RULE_CATEGORY_SYSTEM
+      - RULE_CATEGORY_ADMIN
+      - RULE_CATEGORY_ACCESS
+      - RULE_CATEGORY_GENERAL
+    type: string
+  jumpcloud.healthmonitoring.RuleCondition:
+    description: RuleCondition holds a single condition bind to a rule.
+    properties:
+      eventType:
+        type: string
+      filters:
+        description: JSON configuration.
+        type: object
+      objectId:
+        format: byte
+        type: string
+    type: object
+  jumpcloud.healthmonitoring.RuleOsFamily:
+    default: RULE_OS_FAMILY_UNSPECIFIED
+    description: RuleOsFamily specifies the different OS families supported for a rule.
+    enum:
+      - RULE_OS_FAMILY_UNSPECIFIED
+      - RULE_OS_FAMILY_ALL
+      - RULE_OS_FAMILY_WINDOWS
+      - RULE_OS_FAMILY_DARWIN
+      - RULE_OS_FAMILY_LINUX
+    type: string
+  jumpcloud.healthmonitoring.RuleSeverity:
+    default: RULE_SEVERITY_UNSPECIFIED
+    description: RuleSeverity specifies different rule severities.
+    enum:
+      - RULE_SEVERITY_UNSPECIFIED
+      - RULE_SEVERITY_LOW
+      - RULE_SEVERITY_MEDIUM
+      - RULE_SEVERITY_HIGH
+    type: string
+  jumpcloud.healthmonitoring.RuleStatus:
+    default: RULE_STATUS_UNSPECIFIED
+    description: RuleStatus specifies the different status.
+    enum:
+      - RULE_STATUS_UNSPECIFIED
+      - RULE_STATUS_ENABLED
+      - RULE_STATUS_DISABLED
+    type: string
+  jumpcloud.healthmonitoring.RuleTemplate:
+    description: RuleTemplate represents a rule template object.
+    properties:
+      configurations:
+        items:
+          $ref: '#/definitions/jumpcloud.healthmonitoring.RuleTemplateConfiguration'
+        type: array
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        readOnly: true
+        type: string
+      displayName:
+        readOnly: true
+        type: string
+      name:
+        readOnly: true
+        type: string
+      objectId:
+        format: byte
+        readOnly: true
+        type: string
+      osFamily:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.RuleOsFamily'
+      unrestricted:
+        type: boolean
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      version:
+        type: string
+    type: object
+  jumpcloud.healthmonitoring.RuleTemplateConfiguration:
+    description: RuleTemplateConfiguration holds configuration information associated with rule template.
+    properties:
+      defaultValue:
+        type: object
+      displayOptions:
+        type: object
+      displayType:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.DisplayType'
+      label:
+        type: string
+      name:
+        type: string
+      position:
+        format: int64
+        type: string
+      readOnly:
+        type: boolean
+      required:
+        type: boolean
+      tooltip:
+        type: object
+      validators:
+        type: object
+    type: object
+  jumpcloud.healthmonitoring.UpdateRuleResponse:
+    description: UpdateRuleResponse is the response message to UpdateRuleRequest.
+    properties:
+      rule:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
+    type: object
   jumpcloud.ingresso.CreateAccessRequestsRequest:
     properties:
       additionalAttributes:
@@ -10175,6 +10674,456 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/administrators/{id}/organizationlinks' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"organization":"6230a0d26a4e4bc86c6b36f1"}'
     x-functionalities-tags:
       - admin
+  /alerts:
+    get:
+      description: This endpoint allows you to get all Alerts.
+      operationId: AlertsService_ListAlerts
+      parameters:
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - description: |-
+            The number of alerts to return at once.
+            If the number of alerts returned is less than `limit` there are no more alerts to fetch.
+            If the number of alerts returned is equal to limit there may be more alerts to fetch. Increment `skip` by `limit` to get the next set of alerts.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.ListAlertsResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint provides details of all Alerts.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/alerts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /alerts/severitycounts:
+    get:
+      description: This endpoint allows you to get all alert severity counts
+      operationId: AlertsService_ListAlertSeverityCounts
+      parameters:
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - description: |-
+            The number of alert counts to return at once.
+            If the number of alert counts returned is less than `limit` there are no more alerts to fetch.
+            If the number of alert counts returned is equal to limit there may be more alert counts to fetch. Increment `skip` by `limit` to get the next set of alerts.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.ListAlertSeverityCountsResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint provides details of all Alert Severity Counts.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/alerts/severitycounts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/severitycounts"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/severitycounts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /alerts/stats:
+    get:
+      description: This endpoint allows you to get alert statistics based on status and severity.
+      operationId: AlertsService_GetAlertStats
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.GetAlertStatsResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint provides details of all Alert Severity Counts.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/alerts/stats \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/stats"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/stats' -Method GET -Headers $headers
+  '/alerts/{id}':
+    delete:
+      description: This endpoint allows you to delete a specific Alert.
+      operationId: AlertsService_DeleteAlert
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.DeleteAlertResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used to delete an Alert.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/alerts/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{id}' -Method DELETE -Headers $headers
+    get:
+      description: This endpoint allows you to get a specific Alert.
+      operationId: AlertsService_GetAlert
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.GetAlertResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint provides details of an Alert.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/alerts/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{id}' -Method GET -Headers $headers
+  '/alerts/{id}/occurrences':
+    get:
+      description: This endpoint allows you to list one or more occurrences for an Alert.
+      operationId: AlertOccurrencesService_ListAlertOccurrences
+      parameters:
+        - description: alert_object_id specifies the parent alert for which occurrences are to be listed.
+          format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - description: |-
+            The number of alert occurrences to return at once.
+            If the number of alert occurrences returned is less than `limit` there are no more alert occurrences to fetch.
+            If the number of alert occurrences returned is equal to limit there may be more alert occurrences to fetch. Increment `skip` by `limit` to get the next set of alert occurrences.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.ListAlertOccurrencesResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used to list one or more occurrences for an Alert.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/alerts/{id}/occurrences?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/{id}/occurrences"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{id}/occurrences?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+  '/alerts/{id}/status':
+    post:
+      description: This endpoint allows you to update the status of an Alert.
+      operationId: AlertsService_UpdateAlertStatus
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            description: UpdateAlertStatusRequest is used to update the status of an alert.
+            properties:
+              remark:
+                description: A remark associated with status update.
+                type: string
+              status:
+                $ref: '#/definitions/jumpcloud.alerts.AlertStatus'
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.UpdateAlertStatusResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for updating an Alert.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/alerts/{id}/status \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"remark":"string","status":"ALERT_STATUS_UNSPECIFIED"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/{id}/status"
+
+            payload = {
+                "remark": "string",
+                "status": "ALERT_STATUS_UNSPECIFIED"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{id}/status' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"remark":"string","status":"ALERT_STATUS_UNSPECIFIED"}'
   /applemdms:
     get:
       description: |-
@@ -18176,6 +19125,512 @@ paths:
         type: string
     x-functionalities-tags:
       - gsuites
+  /healthmonitoring/bind-rule-to-resource:
+    post:
+      description: This endpoint allows you to bind a health monitoring rule to other resources
+      operationId: RulesService_BindRuleToResource
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.BindRuleToResourceRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.BindRuleToResourceResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for bind rule to resources
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/healthmonitoring/bind-rule-to-resource \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"resources":[{"objectId":"string","resourceType":"RESOURCE_TYPE_SYSTEM_GROUP"}],"ruleObjectId":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/bind-rule-to-resource"
+
+            payload = {
+                "resources": [
+                    {
+                        "objectId": "string",
+                        "resourceType": "RESOURCE_TYPE_SYSTEM_GROUP"
+                    }
+                ],
+                "ruleObjectId": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/bind-rule-to-resource' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"resources":[{"objectId":"string","resourceType":"RESOURCE_TYPE_SYSTEM_GROUP"}],"ruleObjectId":"string"}'
+  /healthmonitoring/rules:
+    get:
+      description: This endpoint allows you list health monitoring rules.
+      operationId: RulesService_ListRules
+      parameters:
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - description: |-
+            The number of rules to return at once.
+            If the number of rules returned is less than `limit` there are no more rules to fetch.
+            If the number of rules returned is equal to limit there may be more rules to fetch. Increment `skip` by `limit` to get the next set of rules.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.ListRulesResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for listing the rules of health monitoring.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+    post:
+      description: This endpoint allows you to create a health monitoring rule.
+      operationId: RulesService_CreateRule
+      parameters:
+        - description: CreateRuleRequest is the request message used to create a single rule.
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.CreateRuleRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.CreateRuleResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for creating the rules.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules"
+
+            payload = {"rule": {
+                    "category": "RULE_CATEGORY_UNSPECIFIED",
+                    "conditions": [
+                        {
+                            "eventType": "string",
+                            "filters": {},
+                            "objectId": "string"
+                        }
+                    ],
+                    "conditionsRelation": "LOGICAL_OPERATOR_UNSPECIFIED",
+                    "description": "string",
+                    "eventType": "string",
+                    "name": "string",
+                    "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
+                    "severity": "RULE_SEVERITY_UNSPECIFIED",
+                    "status": "RULE_STATUS_UNSPECIFIED",
+                    "templateObjectId": "string"
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+  '/healthmonitoring/rules/{id}':
+    delete:
+      description: This endpoint allows you to delete a health monitoring rule.
+      operationId: RulesService_DeleteRule
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.DeleteRuleResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used to delete health monitoring rules.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method DELETE -Headers $headers
+    get:
+      description: This endpoint allows you get a health monitoring rule.
+      operationId: RulesService_GetRule
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.GetRuleResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for getting a health monitoring rule.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method GET -Headers $headers
+    patch:
+      description: This endpoint allows you to update a health monitoring rule.
+      operationId: RulesService_UpdateRule
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            description: UpdateRuleRequest is the request message used to modify a single rule.
+            properties:
+              rule:
+                $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.UpdateRuleResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for updating the rules.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}"
+
+            payload = {"rule": {
+                    "category": "RULE_CATEGORY_UNSPECIFIED",
+                    "conditions": [
+                        {
+                            "eventType": "string",
+                            "filters": {},
+                            "objectId": "string"
+                        }
+                    ],
+                    "conditionsRelation": "LOGICAL_OPERATOR_UNSPECIFIED",
+                    "description": "string",
+                    "eventType": "string",
+                    "name": "string",
+                    "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
+                    "severity": "RULE_SEVERITY_UNSPECIFIED",
+                    "status": "RULE_STATUS_UNSPECIFIED",
+                    "templateObjectId": "string"
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+  /healthmonitoring/ruletemplates:
+    get:
+      description: This endpoint allows you list health monitoring rule templates.
+      operationId: RuleTemplatesService_ListRuleTemplates
+      parameters:
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - description: |-
+            The number of rule templates to return at once.
+            If the number of rule templates returned is less than `limit` there are no more rule templates to fetch.
+            If the number of rule templates returned is equal to limit there may be more rule templates to fetch. Increment `skip` by `limit` to get the next set of rule templates.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.ListRuleTemplatesResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for listing the rules of health monitoring.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+  '/healthmonitoring/ruletemplates/{id}':
+    get:
+      description: This endpoint allows you get a health monitoring rule template.
+      operationId: RuleTemplatesService_GetRuleTemplate
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.GetRuleTemplateResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for getting a health monitoring rule template.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - anonymous
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates/{id}' -Method GET -Headers $headers
   '/identity-provider/policies/{idp_routing_policy_id}/associations':
     get:
       description: |-
@@ -38067,6 +39522,7 @@ tags:
   - name: Logos
   - name: Managed Service Provider
   - name: Microsoft MDM
+  - name: Monitoring and Alerting
   - name: Object Storage
   - name: Office 365
   - name: Office 365 Import
@@ -38181,6 +39637,7 @@ x-tagGroups:
       - Logos
       - Managed Service Provider
       - Microsoft MDM
+      - Monitoring and Alerting
       - Object Storage
       - Office 365
       - Office 365 Import
