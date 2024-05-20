@@ -8888,7 +8888,6 @@ info:
       "agentServer": "lappy386",
       "agentVersion": "0.9.42",
       "arch": "x86_64",
-      "connectionKey": "127.0.0.1_51812",
       "displayName": "ubuntu-1204",
       "firstContact": "2013-10-16T19:30:55.611Z",
       "hostname": "ubuntu-1204"
