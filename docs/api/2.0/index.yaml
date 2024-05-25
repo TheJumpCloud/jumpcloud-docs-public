@@ -177,18 +177,6 @@ definitions:
       - id
     title: AppleMDM
     type: object
-  Apps:
-    items:
-      properties:
-        appVersion:
-          example: 1.1.1
-          type: string
-        osId:
-          example: 1
-          format: int32
-          type: integer
-      type: object
-    type: array
   AuthnPolicy:
     description: This represents an authentication policy.  See the details of each field for valid values and restrictions.
     properties:
@@ -2217,34 +2205,6 @@ definitions:
       - DYNAMIC_AUTOMATED
     title: GroupMembershipMethodType
     type: string
-  GroupPwm:
-    properties:
-      accessLevelId:
-        format: uuid
-        type: string
-      accessLevelName:
-        example: folder manager
-        type: string
-      description:
-        example: finance group
-        type: string
-      externalId:
-        type: string
-      id:
-        format: uuid
-        type: string
-      name:
-        example: group name
-        type: string
-      usersCount:
-        format: int32
-        type: integer
-    required:
-      - id
-      - name
-      - accessLevelId
-      - accessLevelName
-    type: object
   GroupType:
     description: The group type.
     enum:
@@ -2253,20 +2213,6 @@ definitions:
       - user_group
     title: GroupType
     type: string
-  Groups:
-    items:
-      properties:
-        id:
-          format: uuid
-          type: string
-        name:
-          example: group name
-          type: string
-      required:
-        - id
-        - name
-      type: object
-    type: array
   IPList:
     properties:
       description:
@@ -2565,25 +2511,6 @@ definitions:
       name:
         type: string
     title: Organization
-    type: object
-  PasswordsSecurity:
-    properties:
-      compromisedPasswords:
-        example: 10
-        format: int32
-        type: integer
-      oldPasswords:
-        example: 10
-        format: int32
-        type: integer
-      reusedPasswords:
-        example: 10
-        format: int32
-        type: integer
-      weakPasswords:
-        example: 10
-        format: int32
-        type: integer
     type: object
   PhoneNumber:
     properties:
@@ -3102,299 +3029,6 @@ definitions:
         type: string
     title: PushEndpointResponse
     type: object
-  PwmAllUsers:
-    properties:
-      results:
-        items:
-          allOf:
-            - $ref: '#/definitions/PwmUser'
-            - $ref: '#/definitions/PasswordsSecurity'
-        type: array
-      totalCount:
-        example: 50
-        format: int32
-        type: integer
-    required:
-      - results
-      - totalCount
-    type: object
-  PwmCloudBackupRestores:
-    properties:
-      approved:
-        format: int32
-        type: integer
-      requested:
-        format: int32
-        type: integer
-    type: object
-  PwmItemHistory:
-    properties:
-      createdBy:
-        format: uuid
-        type: string
-      dateCreated:
-        type: string
-      dateUpdated:
-        type: string
-      updatedBy:
-        format: uuid
-        type: string
-    type: object
-  PwmItemsCountByType:
-    properties:
-      count:
-        format: int32
-        type: integer
-      type:
-        format: int32
-        type: integer
-    type: object
-  PwmItemsMetadata:
-    properties:
-      items:
-        items:
-          $ref: '#/definitions/PwmItemsCountByType'
-        type: array
-      results:
-        items:
-          allOf:
-            - $ref: '#/definitions/PwmUserItem'
-            - $ref: '#/definitions/PwmItemHistory'
-        type: array
-      totalCount:
-        example: 50
-        format: int32
-        type: integer
-    required:
-      - results
-      - totalCount
-    type: object
-  PwmOverviewAppVersions:
-    properties:
-      results:
-        items:
-          properties:
-            usersCount:
-              example: 10
-              format: int32
-              type: integer
-            version:
-              example: 1.0.0
-              type: string
-          type: object
-        type: array
-      totalCount:
-        example: 50
-        format: int32
-        type: integer
-    required:
-      - results
-      - totalCount
-    type: object
-  PwmOverviewMain:
-    properties:
-      compromisedPasswords:
-        example: 10
-        format: int32
-        type: integer
-      devices:
-        items:
-          properties:
-            count:
-              example: 10
-              format: int32
-              type: integer
-            id:
-              example: 1
-              format: int32
-              type: integer
-            name:
-              example: ios
-              type: string
-          type: object
-        type: array
-      enrolledGroups:
-        format: int32
-        type: integer
-      oldPasswords:
-        example: 10
-        format: int32
-        type: integer
-      passwordsCount:
-        example: 10
-        format: int32
-        type: integer
-      passwordsScore:
-        example: 80.5
-        type: number
-      pendingInvites:
-        example: 50
-        format: int32
-        type: integer
-      sharedFolders:
-        example: 50
-        format: int32
-        type: integer
-      totalUsers:
-        example: 50
-        format: int32
-        type: integer
-      weakPasswords:
-        example: 10
-        format: int32
-        type: integer
-    required:
-      - sharedFolders
-      - pendingInvites
-      - totalUsers
-      - devices
-    type: object
-  PwmUser:
-    properties:
-      apps:
-        $ref: '#/definitions/Apps'
-      cloudBackupRestores:
-        $ref: '#/definitions/PwmCloudBackupRestores'
-      email:
-        format: email
-        type: string
-      employeeUuid:
-        format: uuid
-        type: string
-      externalId:
-        type: string
-      groups:
-        $ref: '#/definitions/Groups'
-      id:
-        format: uuid
-        type: string
-      itemsCount:
-        format: int32
-        type: integer
-      name:
-        example: folder admin
-        type: string
-      passwordsCount:
-        example: 10
-        format: int32
-        type: integer
-      passwordsScore:
-        example: 80.5
-        type: number
-      scoreUpdatedAt:
-        type: string
-      status:
-        example: active
-        type: string
-      username:
-        example: username1
-        type: string
-    required:
-      - id
-      - name
-      - email
-      - status
-    type: object
-  PwmUserById:
-    allOf:
-      - $ref: '#/definitions/PwmUser'
-      - $ref: '#/definitions/PasswordsSecurity'
-  PwmUserItem:
-    properties:
-      field1:
-        type: string
-      field2:
-        type: string
-      folderName:
-        example: folder 1
-        type: string
-      folderUuid:
-        format: uuid
-        type: string
-      id:
-        type: string
-      itemUuid:
-        format: uuid
-        type: string
-      nickname:
-        type: string
-      type:
-        format: int32
-        type: integer
-    required:
-      - id
-      - itemUuid
-      - type
-      - nickname
-      - field1
-      - field2
-    type: object
-  PwmUserItems:
-    properties:
-      items:
-        items:
-          $ref: '#/definitions/PwmItemsCountByType'
-        type: array
-      results:
-        items:
-          $ref: '#/definitions/PwmUserItem'
-        type: array
-      totalCount:
-        example: 50
-        format: int32
-        type: integer
-    required:
-      - results
-      - totalCount
-    type: object
-  PwmUserSharedFolders:
-    properties:
-      results:
-        items:
-          properties:
-            accessLevelId:
-              format: uuid
-              type: string
-            accessLevelName:
-              example: folder admin
-              type: string
-            createdAt:
-              type: string
-            id:
-              format: uuid
-              type: string
-            itemsInFolder:
-              example: 15
-              format: int32
-              type: integer
-            name:
-              example: folder 1
-              type: string
-            passwordsScore:
-              example: 80
-              type: number
-            scoreUpdatedAt:
-              type: string
-            usersWithAccess:
-              example: 5
-              format: int32
-              type: integer
-          required:
-            - id
-            - name
-            - usersWithAccess
-            - itemsInFolder
-            - createdAt
-          type: object
-        type: array
-      totalCount:
-        example: 50
-        format: int32
-        type: integer
-    required:
-      - results
-      - totalCount
-    type: object
   Query:
     description: Basic query.
     discriminator: queryType
@@ -3518,144 +3152,6 @@ definitions:
       - welcome
     title: Setup Assistant Option
     type: string
-  SharedFolder:
-    properties:
-      createdAt:
-        type: string
-      itemsInFolder:
-        example: 15
-        format: int32
-        type: integer
-      name:
-        example: folder admin
-        type: string
-      passwordsCount:
-        example: 25
-        format: int32
-        type: integer
-      passwordsScore:
-        example: 70.5
-        type: number
-      scoreUpdatedAt:
-        type: string
-      usersWithAccess:
-        example: 5
-        format: int32
-        type: integer
-      uuid:
-        format: uuid
-        type: string
-    required:
-      - uuid
-      - name
-      - usersWithAccess
-      - itemsInFolder
-      - createdAt
-    type: object
-  SharedFolderAccessLevels:
-    properties:
-      results:
-        items:
-          properties:
-            description:
-              example: folder admin description
-              type: string
-            id:
-              format: uuid
-              type: string
-            name:
-              example: folder admin
-              type: string
-          required:
-            - id
-            - name
-          type: object
-        type: array
-    required:
-      - results
-    type: object
-  SharedFolderDetails:
-    allOf:
-      - $ref: '#/definitions/SharedFolder'
-      - $ref: '#/definitions/PasswordsSecurity'
-  SharedFolderGroups:
-    properties:
-      results:
-        items:
-          $ref: '#/definitions/GroupPwm'
-        type: array
-      totalCount:
-        example: 50
-        format: int32
-        type: integer
-    required:
-      - results
-      - totalCount
-    type: object
-  SharedFolderUsers:
-    properties:
-      results:
-        items:
-          properties:
-            accessLevelId:
-              format: uuid
-              type: string
-            accessLevelName:
-              example: folder admin
-              type: string
-            apps:
-              $ref: '#/definitions/Apps'
-            email:
-              format: email
-              type: string
-            employeeUuid:
-              format: uuid
-              type: string
-            externalId:
-              type: string
-            id:
-              format: uuid
-              type: string
-            name:
-              example: folder admin
-              type: string
-            status:
-              example: active
-              type: string
-            username:
-              example: username1
-              type: string
-          required:
-            - id
-            - name
-            - email
-            - accessLevelId
-            - accessLevelName
-            - status
-          type: object
-        type: array
-      totalCount:
-        example: 50
-        format: int32
-        type: integer
-    required:
-      - results
-      - totalCount
-    type: object
-  SharedFoldersList:
-    properties:
-      results:
-        items:
-          $ref: '#/definitions/SharedFolder'
-        type: array
-      totalCount:
-        example: 50
-        format: int32
-        type: integer
-    required:
-      - results
-      - totalCount
-    type: object
   SoftwareAppsRetryInstallationRequest:
     properties:
       system_ids:
@@ -4674,35 +4170,6 @@ definitions:
         type: string
       id:
         type: string
-    type: object
-  device_package.v1.Device:
-    properties:
-      appVersion:
-        type: string
-      createdAt:
-        type: string
-      id:
-        type: string
-      name:
-        type: string
-      osName:
-        type: string
-      publicKey:
-        type: string
-      updatedAt:
-        type: string
-      userUuid:
-        type: string
-    type: object
-  device_package.v1.ListDevicesResponse:
-    properties:
-      results:
-        items:
-          $ref: '#/definitions/device_package.v1.Device'
-        type: array
-      totalCount:
-        format: int32
-        type: integer
     type: object
   devices.AggregatedPolicyCount:
     properties:
@@ -6349,6 +5816,647 @@ definitions:
     properties:
       applePackageDetails:
         $ref: '#/definitions/jumpcloud.package_validator.ApplePackageDetails'
+    type: object
+  jumpcloud.pwm.App:
+    properties:
+      appVersion:
+        type: string
+      osId:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.AppFolder:
+    properties:
+      appVersion:
+        type: string
+      osId:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.AppVersion:
+    properties:
+      usersCount:
+        format: int32
+        type: integer
+      version:
+        type: string
+    type: object
+  jumpcloud.pwm.Backup:
+    properties:
+      backupKeyUuid:
+        type: string
+      createdAt:
+        type: string
+      encryptionKey:
+        title: Base64 encoded
+        type: string
+      formatVersion:
+        type: string
+      id:
+        type: string
+      keyHash:
+        type: string
+      totalCount:
+        format: int32
+        type: integer
+      updatedAt:
+        type: string
+      userUuid:
+        type: string
+    type: object
+  jumpcloud.pwm.BackupKey:
+    properties:
+      active:
+        type: boolean
+      companyId:
+        title: 'TODO(gateway): what do we want to call this in the API?'
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      publicKey:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  jumpcloud.pwm.BackupRestore:
+    properties:
+      backupUuid:
+        type: string
+      createdAt:
+        type: string
+      deviceUuid:
+        type: string
+      id:
+        type: string
+      status:
+        $ref: '#/definitions/jumpcloud.pwm.Status'
+      updatedAt:
+        type: string
+    type: object
+  jumpcloud.pwm.CloudBackupRestore:
+    properties:
+      approved:
+        format: int32
+        type: integer
+      requested:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.Device:
+    properties:
+      appVersion:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      osName:
+        type: string
+      publicKey:
+        type: string
+      updatedAt:
+        type: string
+      userUuid:
+        type: string
+    type: object
+  jumpcloud.pwm.Folder:
+    properties:
+      compromisedPasswords:
+        format: int32
+        type: integer
+      createdAt:
+        type: string
+      itemsInFolder:
+        format: int32
+        type: integer
+      name:
+        type: string
+      oldPasswords:
+        format: int32
+        type: integer
+      passwordsCount:
+        format: int32
+        type: integer
+      passwordsScore:
+        format: double
+        type: number
+      reusedPasswords:
+        format: int32
+        type: integer
+      scoreUpdatedAt:
+        type: string
+      usersWithAccess:
+        format: int32
+        type: integer
+      uuid:
+        type: string
+      weakPasswords:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.FolderGroup:
+    properties:
+      accessLevelId:
+        type: string
+      accessLevelName:
+        type: string
+      description:
+        type: string
+      externalId:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      usersCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.FolderInList:
+    properties:
+      createdAt:
+        type: string
+      itemsInFolder:
+        format: int32
+        type: integer
+      name:
+        type: string
+      passwordsCount:
+        format: int32
+        type: integer
+      passwordsScore:
+        format: double
+        type: number
+      scoreUpdatedAt:
+        type: string
+      usersWithAccess:
+        format: int32
+        type: integer
+      uuid:
+        type: string
+    type: object
+  jumpcloud.pwm.FolderUser:
+    properties:
+      accessLevelId:
+        type: string
+      accessLevelName:
+        type: string
+      apps:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.AppFolder'
+        type: array
+      email:
+        type: string
+      employeeUuid:
+        type: string
+      externalId:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      source:
+        $ref: '#/definitions/jumpcloud.pwm.Source'
+      status:
+        type: string
+      username:
+        type: string
+    type: object
+  jumpcloud.pwm.FoldersPolicyResponse:
+    properties:
+      id:
+        type: string
+      shareFolders:
+        $ref: '#/definitions/jumpcloud.pwm.ShareFolders'
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+  jumpcloud.pwm.GetAllUsersResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.UserInfo'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.GetAppVersionsListResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.AppVersion'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.GetMetadataResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.Items'
+        type: array
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.ItemMetadata'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.GetRolesResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.Role'
+        type: array
+    type: object
+  jumpcloud.pwm.GetSharedFolderGroupsResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.FolderGroup'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.GetSharedFolderUsersResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.FolderUser'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.GetSharedFoldersPerUserResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.UsersFolder'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.GetSharedFoldersResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.FolderInList'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.GetUserDetailsByIdResponse:
+    properties:
+      apps:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.App'
+        type: array
+      cloudBackupRestores:
+        $ref: '#/definitions/jumpcloud.pwm.CloudBackupRestore'
+      compromisedPasswords:
+        format: int32
+        type: integer
+      createdAt:
+        type: string
+      email:
+        type: string
+      employeeUuid:
+        type: string
+      externalId:
+        type: string
+      groups:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.Group'
+        type: array
+      id:
+        type: string
+      itemsCount:
+        format: int32
+        type: integer
+      name:
+        type: string
+      oldPasswords:
+        format: int32
+        type: integer
+      passwordsCount:
+        format: int32
+        type: integer
+      passwordsScore:
+        format: double
+        type: number
+      reusedPasswords:
+        format: int32
+        type: integer
+      scoreUpdatedAt:
+        type: string
+      status:
+        type: string
+      username:
+        type: string
+      weakPasswords:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.Group:
+    properties:
+      createdAt:
+        type: string
+      displayName:
+        type: string
+      externalId:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updatedAt:
+        type: string
+      uuid:
+        type: string
+    type: object
+  jumpcloud.pwm.GroupSource:
+    properties:
+      externalId:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  jumpcloud.pwm.ItemMetadata:
+    properties:
+      dateCreated:
+        type: string
+      dateUpdated:
+        type: string
+      field1:
+        type: string
+      field2:
+        type: string
+      folderUuid:
+        type: string
+      id:
+        type: string
+      itemUuid:
+        type: string
+      nickname:
+        type: string
+      type:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.Items:
+    properties:
+      count:
+        format: int32
+        type: integer
+      type:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.ListBackupKeysResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.BackupKey'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.ListBackupRestoresResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.BackupRestore'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.ListBackupsResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.Backup'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.ListDevicesResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.Device'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.ListSelectedGroupsResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.SelectedGroup'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.ListSelectedUsersResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.SelectedUser'
+        type: array
+      totalCount:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.MainOverviewResponse:
+    properties:
+      compromisedPasswords:
+        format: int32
+        type: integer
+      devices:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.OverviewDevice'
+        type: array
+      enrolledGroups:
+        format: int32
+        type: integer
+      oldPasswords:
+        format: int32
+        type: integer
+      passwordsCount:
+        format: int32
+        type: integer
+      passwordsScore:
+        format: double
+        type: number
+      pendingInvites:
+        format: int32
+        type: integer
+      sharedFolders:
+        format: int32
+        type: integer
+      totalUsers:
+        format: int32
+        type: integer
+      weakPasswords:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.OverviewDevice:
+    properties:
+      count:
+        format: int32
+        type: integer
+      id:
+        format: int32
+        type: integer
+      name:
+        type: string
+    type: object
+  jumpcloud.pwm.Role:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  jumpcloud.pwm.SelectedGroup:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  jumpcloud.pwm.SelectedUser:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      username:
+        type: string
+    type: object
+  jumpcloud.pwm.ShareFolders:
+    default: UNSPECIFIED
+    enum:
+      - UNSPECIFIED
+      - AllUsers
+      - Specific
+      - AllExcept
+    type: string
+  jumpcloud.pwm.Source:
+    properties:
+      direct:
+        type: boolean
+      groups:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.GroupSource'
+        type: array
+    type: object
+  jumpcloud.pwm.Status:
+    default: STATUS_UNSPECIFIED
+    enum:
+      - STATUS_UNSPECIFIED
+      - REQUESTED
+      - APPROVED
+      - REJECTED
+      - CANCELLED
+      - RESTORED
+    type: string
+  jumpcloud.pwm.UserInfo:
+    properties:
+      apps:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.App'
+        type: array
+      cloudBackupRestores:
+        $ref: '#/definitions/jumpcloud.pwm.CloudBackupRestore'
+      email:
+        type: string
+      employeeUuid:
+        type: string
+      externalId:
+        type: string
+      groups:
+        items:
+          $ref: '#/definitions/jumpcloud.pwm.Group'
+        type: array
+      id:
+        type: string
+      itemsCount:
+        format: int32
+        type: integer
+      name:
+        type: string
+      oldPasswords:
+        format: int32
+        type: integer
+      passwordsCount:
+        format: int32
+        type: integer
+      passwordsScore:
+        format: double
+        type: number
+      scoreUpdatedAt:
+        type: string
+      status:
+        type: string
+      username:
+        type: string
+      weakPasswords:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.pwm.UsersFolder:
+    properties:
+      accessLevelId:
+        type: string
+      accessLevelName:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      itemsInFolder:
+        format: int32
+        type: integer
+      name:
+        type: string
+      passwordsScore:
+        format: double
+        type: number
+      scoreUpdatedAt:
+        type: string
+      source:
+        $ref: '#/definitions/jumpcloud.pwm.Source'
+      usersWithAccess:
+        format: int32
+        type: integer
     type: object
   ldap-server:
     properties:
@@ -24845,9 +24953,614 @@ paths:
         type: string
     x-functionalities-tags:
       - partners-disconnect
+  /passwordmanager:
+    delete:
+      description: This will delete the tenant in the Pwm infra
+      operationId: CompanyService_DeleteCompany
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager' -Method DELETE -Headers $headers
   /passwordmanager/appversions:
-    x-functionalities-tags:
-      - pwm-user-app-versions
+    get:
+      description: Returns pwm app versions list with the users count of each version.
+      operationId: OverviewService_GetAppVersionsList
+      parameters:
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetAppVersionsListResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/appversions?skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/appversions"
+
+            querystring = {"skip":"SOME_INTEGER_VALUE","limit":"SOME_INTEGER_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/appversions?skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  /passwordmanager/backup/keys:
+    get:
+      description: List Cloud Backup Keys
+      operationId: BackupKeyService_ListBackupKeys
+      parameters:
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.ListBackupKeysResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys"
+
+            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","fields":"SOME_ARRAY_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+    post:
+      description: Create Cloud Backup Keys
+      operationId: BackupKeyService_CreateBackupKey
+      parameters:
+        - in: body
+          name: backupKey
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.BackupKey'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.BackupKey'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"active":true,"companyId":"string","createdAt":"string","createdBy":"string","id":"string","name":"string","publicKey":"string","updatedAt":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys"
+
+            payload = {
+                "active": True,
+                "companyId": "string",
+                "createdAt": "string",
+                "createdBy": "string",
+                "id": "string",
+                "name": "string",
+                "publicKey": "string",
+                "updatedAt": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"active":true,"companyId":"string","createdAt":"string","createdBy":"string","id":"string","name":"string","publicKey":"string","updatedAt":"string"}'
+  '/passwordmanager/backup/keys/{UUID}':
+    delete:
+      description: Delete a Cloud Backup Key
+      operationId: BackupKeyService_DeleteBackupKey
+      parameters:
+        - in: path
+          name: UUID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys/{UUID} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys/{UUID}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys/{UUID}' -Method DELETE -Headers $headers
+    get:
+      description: Get a Cloud Backup Key
+      operationId: BackupKeyService_GetBackupKey
+      parameters:
+        - in: path
+          name: UUID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.BackupKey'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys/{UUID} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys/{UUID}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys/{UUID}' -Method GET -Headers $headers
+    put:
+      description: Update a Cloud Backup Key
+      operationId: BackupKeyService_UpdateBackupKey
+      parameters:
+        - in: path
+          name: UUID
+          required: true
+          type: string
+        - in: query
+          name: active
+          required: false
+          type: boolean
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.BackupKey'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys/{UUID}?active=SOME_BOOLEAN_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys/{UUID}"
+
+            querystring = {"active":"SOME_BOOLEAN_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("PUT", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/keys/{UUID}?active=SOME_BOOLEAN_VALUE' -Method PUT -Headers $headers
+  /passwordmanager/backup/restores:
+    get:
+      description: List Cloud Backup Restores
+      operationId: BackupRestoreService_ListBackupRestores
+      parameters:
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.ListBackupRestoresResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/restores?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/backup/restores"
+
+            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","fields":"SOME_ARRAY_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/restores?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  '/passwordmanager/backup/restores/{UUID}':
+    put:
+      description: Update a Cloud Backup Restore
+      operationId: BackupRestoreService_UpdateBackupRestore
+      parameters:
+        - in: path
+          name: UUID
+          required: true
+          type: string
+        - default: STATUS_UNSPECIFIED
+          enum:
+            - STATUS_UNSPECIFIED
+            - REQUESTED
+            - APPROVED
+            - REJECTED
+            - CANCELLED
+            - RESTORED
+          in: query
+          name: status
+          required: false
+          type: string
+        - description: Backup's encryption key encrypted using the Device's publicKey
+          in: query
+          name: encryptionKey
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.BackupRestore'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/restores/{UUID}?status=STATUS_UNSPECIFIED&encryptionKey=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/backup/restores/{UUID}"
+
+            querystring = {"status":"STATUS_UNSPECIFIED","encryptionKey":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("PUT", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backup/restores/{UUID}?status=STATUS_UNSPECIFIED&encryptionKey=SOME_STRING_VALUE' -Method PUT -Headers $headers
+  /passwordmanager/backups:
+    get:
+      description: List Cloud Backups
+      operationId: BackupService_ListBackups
+      parameters:
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.ListBackupsResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/backups?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/backups"
+
+            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","fields":"SOME_ARRAY_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backups?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  '/passwordmanager/backups/{UUID}':
+    get:
+      description: Get a Cloud Backup
+      operationId: BackupService_GetBackup
+      parameters:
+        - in: path
+          name: UUID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.Backup'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/backups/{UUID} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/backups/{UUID}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backups/{UUID}' -Method GET -Headers $headers
   /passwordmanager/devices:
     get:
       description: List Devices
@@ -24885,11 +25598,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/device_package.v1.ListDevicesResponse'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
+            $ref: '#/definitions/jumpcloud.pwm.ListDevicesResponse'
       security:
         - x-api-key: []
       tags:
@@ -24935,11 +25644,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/device_package.v1.Device'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
+            $ref: '#/definitions/jumpcloud.pwm.Device'
       security:
         - x-api-key: []
       tags:
@@ -24971,40 +25676,1113 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/devices/{UUID}' -Method GET -Headers $headers
   /passwordmanager/items:
-    x-functionalities-tags: pwm-items-metadata
+    get:
+      description: Returns all items metadata
+      operationId: ItemMetadataService_GetMetadata
+      parameters:
+        - in: query
+          name: search
+          required: false
+          type: string
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetMetadataResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/items?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/items"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","limit":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/items?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /passwordmanager/overview:
-    x-functionalities-tags:
-      - pwm-user-overiew
+    get:
+      description: Returns pwm overview stats
+      operationId: OverviewService_MainOverview
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.MainOverviewResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/overview \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/overview"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/overview' -Method GET -Headers $headers
+  /passwordmanager/policy/sharedfolders:
+    get:
+      description: Get shared folders policy
+      operationId: FoldersPolicyService_GetFoldersPolicy
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.FoldersPolicyResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders' -Method GET -Headers $headers
+  /passwordmanager/policy/sharedfolders/groups:
+    get:
+      description: List groups with permission to share folders
+      operationId: FoldersPolicyService_ListSelectedGroups
+      parameters:
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.ListSelectedGroupsResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders/groups?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders/groups"
+
+            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","fields":"SOME_ARRAY_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders/groups?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  /passwordmanager/policy/sharedfolders/users:
+    get:
+      description: List users with permission to share folders
+      operationId: FoldersPolicyService_ListSelectedUsers
+      parameters:
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.ListSelectedUsersResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders/users?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders/users"
+
+            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","fields":"SOME_ARRAY_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders/users?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  '/passwordmanager/policy/sharedfolders/{UUID}':
+    put:
+      description: Update shared folders policy
+      operationId: FoldersPolicyService_UpdateFoldersPolicy
+      parameters:
+        - in: path
+          name: UUID
+          required: true
+          type: string
+        - default: UNSPECIFIED
+          enum:
+            - UNSPECIFIED
+            - AllUsers
+            - Specific
+            - AllExcept
+          in: query
+          name: shareFolders
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.FoldersPolicyResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders/{UUID}?shareFolders=UNSPECIFIED' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders/{UUID}"
+
+            querystring = {"shareFolders":"UNSPECIFIED"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("PUT", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/policy/sharedfolders/{UUID}?shareFolders=UNSPECIFIED' -Method PUT -Headers $headers
   /passwordmanager/sharedfolders:
-    x-functionalities-tags:
-      - pwm-user-folder-read
+    get:
+      description: Get All Shared Folders
+      operationId: SharedFolderService_GetSharedFolders
+      parameters:
+        - in: query
+          name: search
+          required: false
+          type: string
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetSharedFoldersResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","limit":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' -Method GET -Headers $headers
   /passwordmanager/sharedfolders/accessLevels:
-    x-functionalities-tags:
-      - pwm-user-folder-read
+    get:
+      description: Returns shared folder access levels
+      operationId: SharedFolderService_GetRoles
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetRolesResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/accessLevels \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/accessLevels"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/accessLevels' -Method GET -Headers $headers
   '/passwordmanager/sharedfolders/{folderId}':
-    x-functionalities-tags:
-      - pwm-user-folder-read
+    get:
+      description: Get Shared Folder details
+      operationId: SharedFolderService_GetSharedFolder
+      parameters:
+        - in: path
+          name: folderId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.Folder'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}' -Method GET -Headers $headers
   '/passwordmanager/sharedfolders/{folderId}/groups':
-    x-functionalities-tags:
-      - pwm-group-folder-read
+    get:
+      description: Returns shared folder groups
+      operationId: SharedFolderService_GetSharedFolderGroups
+      parameters:
+        - in: path
+          name: folderId
+          required: true
+          type: string
+        - in: query
+          name: search
+          required: false
+          type: string
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetSharedFolderGroupsResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","limit":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' -Method GET -Headers $headers
+  '/passwordmanager/sharedfolders/{folderId}/groups/{groupId}':
+    delete:
+      description: Deletes shared folder group.
+      operationId: SharedFolderService_RevokeGroupAccess
+      parameters:
+        - in: path
+          name: folderId
+          required: true
+          type: string
+        - in: path
+          name: groupId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}' -Method DELETE -Headers $headers
+    put:
+      description: Update Shared Folder group access level
+      operationId: SharedFolderService_UpdateGroupPermission
+      parameters:
+        - in: path
+          name: folderId
+          required: true
+          type: string
+        - in: path
+          name: groupId
+          required: true
+          type: string
+        - in: query
+          name: accessLevel
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.FolderGroup'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}?accessLevel=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}"
+
+            querystring = {"accessLevel":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("PUT", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}?accessLevel=SOME_STRING_VALUE' -Method PUT -Headers $headers
   '/passwordmanager/sharedfolders/{folderId}/users':
-    x-functionalities-tags:
-      - pwm-user-folder-read
+    get:
+      description: Get Shared Folder users
+      operationId: SharedFolderService_GetSharedFolderUsers
+      parameters:
+        - in: path
+          name: folderId
+          required: true
+          type: string
+        - in: query
+          name: search
+          required: false
+          type: string
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetSharedFolderUsersResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","limit":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' -Method GET -Headers $headers
+  '/passwordmanager/sharedfolders/{folderId}/users/{userId}':
+    delete:
+      description: Deletes shared folder user.
+      operationId: SharedFolderService_RevokeUserAccess
+      parameters:
+        - in: path
+          name: folderId
+          required: true
+          type: string
+        - in: path
+          name: userId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}' -Method DELETE -Headers $headers
+    put:
+      description: Update Shared Folder user access level
+      operationId: SharedFolderService_UpdateUserPermission
+      parameters:
+        - in: path
+          name: folderId
+          required: true
+          type: string
+        - in: path
+          name: userId
+          required: true
+          type: string
+        - in: query
+          name: accessLevel
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}?accessLevel=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}"
+
+            querystring = {"accessLevel":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("PUT", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}?accessLevel=SOME_STRING_VALUE' -Method PUT -Headers $headers
   /passwordmanager/users:
-    x-functionalities-tags:
-      - pwm-user-read
+    get:
+      description: Returns all pwm users
+      operationId: UserService_GetAllUsers
+      parameters:
+        - in: query
+          name: search
+          required: false
+          type: string
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetAllUsersResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/users?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/users"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","limit":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/users?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /passwordmanager/users/reinvite:
-    x-functionalities-tags:
-      - pwm-user-read
+    post:
+      description: 'This endpoint will send an email to the specified users that are still pending activation. If a user is not pending activation, an email will not be sent.'
+      operationId: UserService_ResendUserInvite
+      parameters:
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: userIds
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/users/reinvite?userIds=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/users/reinvite"
+
+            querystring = {"userIds":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("POST", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/users/reinvite?userIds=SOME_ARRAY_VALUE' -Method POST -Headers $headers
   '/passwordmanager/users/{userId}':
-    x-functionalities-tags:
-      - pwm-user-read
+    get:
+      description: Get User details
+      operationId: UserService_GetUserDetailsById
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetUserDetailsByIdResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}' -Method GET -Headers $headers
   '/passwordmanager/users/{userId}/items':
-    x-functionalities-tags:
-      - pwm-user-items-read
+    get:
+      description: Returns user items
+      operationId: ItemMetadataService_GetMetadataPerUser
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: string
+        - in: query
+          name: search
+          required: false
+          type: string
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetMetadataResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}/items?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}/items"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","limit":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}/items?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   '/passwordmanager/users/{userId}/sharedFolders':
-    x-functionalities-tags:
-      - pwm-user-read
+    get:
+      description: Get User shared folders
+      operationId: SharedFolderService_GetSharedFoldersPerUser
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: string
+        - in: query
+          name: search
+          required: false
+          type: string
+        - format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - in: query
+          name: sort
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.GetSharedFoldersPerUserResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}/sharedFolders?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}/sharedFolders"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","limit":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}/sharedFolders?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' -Method GET -Headers $headers
   '/payNow/{id}':
     parameters:
       - in: path
@@ -39397,58 +41175,6 @@ paths:
 produces:
   - application/json
 responses:
-  PwmAllUsers:
-    description: Success
-    schema:
-      $ref: '#/definitions/PwmAllUsers'
-  PwmItemsMetadata:
-    description: Success
-    schema:
-      $ref: '#/definitions/PwmItemsMetadata'
-  PwmOverviewAppVersions:
-    description: Success
-    schema:
-      $ref: '#/definitions/PwmOverviewAppVersions'
-  PwmOverviewMain:
-    description: Success
-    schema:
-      $ref: '#/definitions/PwmOverviewMain'
-  PwmUserById:
-    description: Success
-    schema:
-      $ref: '#/definitions/PwmUserById'
-  PwmUserItems:
-    description: Success
-    schema:
-      $ref: '#/definitions/PwmUserItems'
-  PwmUserSharedFolders:
-    description: Success
-    schema:
-      $ref: '#/definitions/PwmUserSharedFolders'
-  SharedFolderAccessLevels:
-    description: Success
-    schema:
-      $ref: '#/definitions/SharedFolderAccessLevels'
-  SharedFolderDetails:
-    description: Success
-    schema:
-      $ref: '#/definitions/SharedFolderDetails'
-  SharedFolderGroupUpdated:
-    description: Success
-    schema:
-      $ref: '#/definitions/GroupPwm'
-  SharedFolderGroups:
-    description: Success
-    schema:
-      $ref: '#/definitions/SharedFolderGroups'
-  SharedFolderUsers:
-    description: Success
-    schema:
-      $ref: '#/definitions/SharedFolderUsers'
-  SharedFoldersList:
-    description: Success
-    schema:
-      $ref: '#/definitions/SharedFoldersList'
   'trait:standardErrors:400':
     description: ''
     schema:
