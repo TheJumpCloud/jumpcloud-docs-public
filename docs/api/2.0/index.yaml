@@ -4674,39 +4674,32 @@ definitions:
       acknowledgedAt:
         description: acknowledged_at is the time when alert was acknowledged.
         format: date-time
-        readOnly: true
         type: string
       category:
         $ref: '#/definitions/jumpcloud.alerts.AlertCategory'
       createdAt:
         description: created_at is the creation time of the first occurrence (as specified by the alert occurrence generator).
         format: date-time
-        readOnly: true
         type: string
       description:
         type: string
       firstOccurredAt:
         description: first_occurred_at is the time of the first occurrence of the alert.
         format: date-time
-        readOnly: true
         type: string
       lastOccurredAt:
         description: last_occurred_at is the time of the last occurrence of the alert.
         format: date-time
-        readOnly: true
         type: string
       objectId:
         description: id holds the unique identifier of an alert.
         format: byte
-        readOnly: true
         type: string
       occurrencesCount:
         description: occurrences_count is the number of occurrences of the alert.
         format: uint64
-        readOnly: true
-        type: string
+        type: integer
       referenceId:
-        readOnly: true
         type: string
       remark:
         description: A remark added to the alert while updating.
@@ -4714,12 +4707,10 @@ definitions:
       resolvedAt:
         description: resolved_at is the time when alert was resolved.
         format: date-time
-        readOnly: true
         type: string
       severity:
         $ref: '#/definitions/jumpcloud.alerts.AlertSeverity'
       sourceId:
-        readOnly: true
         type: string
       sourceType:
         $ref: '#/definitions/jumpcloud.alerts.AlertSourceType'
@@ -4730,7 +4721,6 @@ definitions:
       updatedAt:
         description: updated_at is the time when alert was updated.
         format: date-time
-        readOnly: true
         type: string
     type: object
   jumpcloud.alerts.AlertCategory:
@@ -4750,23 +4740,17 @@ definitions:
       alertObjectId:
         description: The Alert under which this occurrence is held.
         format: byte
-        readOnly: true
         type: string
       context:
-        description: |-
-          TODO: another option is to use string. This is probably opaque to Alerts service and string might be fine here.
-          context holds the context data as specified by the generator of the alert.
-        readOnly: true
+        description: context holds the context data as specified by the generator of the alert.
         type: object
       createdAt:
         description: created_at is the timestamp from the initiator of the occurrence.
         format: date-time
-        readOnly: true
         type: string
       occurredAt:
         description: occurred_at is the timestamp from the initiator of the occurrence.
         format: date-time
-        readOnly: true
         type: string
     type: object
   jumpcloud.alerts.AlertSeverity:
@@ -4783,22 +4767,13 @@ definitions:
     properties:
       count:
         format: uint64
-        type: string
+        type: integer
       severity:
         $ref: '#/definitions/jumpcloud.alerts.AlertSeverity'
       sourceId:
         type: string
       sourceType:
         $ref: '#/definitions/jumpcloud.alerts.AlertSourceType'
-    type: object
-  jumpcloud.alerts.AlertSeverityStats:
-    description: AlertSeverityStats holds the alerts by severity count.
-    properties:
-      count:
-        format: uint64
-        type: string
-      severity:
-        $ref: '#/definitions/jumpcloud.alerts.AlertSeverity'
     type: object
   jumpcloud.alerts.AlertSourceType:
     default: ALERT_SOURCE_TYPE_UNSPECIFIED
@@ -4820,15 +4795,6 @@ definitions:
       - ALERT_STATUS_AUTO_RESOLVED
       - ALERT_STATUS_DELETED
     type: string
-  jumpcloud.alerts.AlertStatusStats:
-    description: AlertStatusStats holds the alerts by status count.
-    properties:
-      count:
-        format: uint64
-        type: string
-      status:
-        $ref: '#/definitions/jumpcloud.alerts.AlertStatus'
-    type: object
   jumpcloud.alerts.DeleteAlertResponse:
     description: DeleteAlertResponse is the response message to DeleteAlertRequest.
     type: object
@@ -4840,17 +4806,11 @@ definitions:
     type: object
   jumpcloud.alerts.GetAlertStatsResponse:
     properties:
-      severityStat:
-        items:
-          $ref: '#/definitions/jumpcloud.alerts.AlertSeverityStats'
-        type: array
-      statusStat:
-        items:
-          $ref: '#/definitions/jumpcloud.alerts.AlertStatusStats'
-        type: array
+      context:
+        type: object
       totalCount:
         format: uint64
-        type: string
+        type: integer
     type: object
   jumpcloud.alerts.ListAlertOccurrencesResponse:
     description: ListAlertOccurrencesResponse is the response message for ListAlertOccurrencesRequest.
@@ -4861,7 +4821,7 @@ definitions:
         type: array
       count:
         format: uint64
-        type: string
+        type: integer
     type: object
   jumpcloud.alerts.ListAlertSeverityCountsResponse:
     description: ListAlertSeverityCountsResponse is the response to ListAlertSeverityCountsRequest.
@@ -4872,7 +4832,7 @@ definitions:
         type: array
       count:
         format: uint64
-        type: string
+        type: integer
     type: object
   jumpcloud.alerts.ListAlertsResponse:
     description: ListAlertsResponse is the response to ListAlertsRequest.
@@ -4883,7 +4843,7 @@ definitions:
         type: array
       count:
         format: uint64
-        type: string
+        type: integer
     type: object
   jumpcloud.alerts.UpdateAlertStatusResponse:
     description: UpdateAlertStatusResponse is the response message to UpdateAlertStatusRequest.
@@ -5394,20 +5354,6 @@ definitions:
       - WPA
       - WEP
     type: string
-  jumpcloud.healthmonitoring.BindRuleToResourceRequest:
-    properties:
-      resources:
-        items:
-          $ref: '#/definitions/jumpcloud.healthmonitoring.Resource'
-        type: array
-      ruleObjectId:
-        format: byte
-        type: string
-    title: 'BindRuleToResourceRequest is the request message to Bind Rule to System, User etc'
-    type: object
-  jumpcloud.healthmonitoring.BindRuleToResourceResponse:
-    title: BindRuleToResourceResponse is the response message to associate Rule to System
-    type: object
   jumpcloud.healthmonitoring.CreateRuleRequest:
     description: CreateRuleRequest is the request message used to create a single rule.
     properties:
@@ -5448,10 +5394,6 @@ definitions:
   jumpcloud.healthmonitoring.GetRuleResponse:
     description: GetRuleResponse is the response to the GetRuleRequest.
     properties:
-      associatedResources:
-        items:
-          $ref: '#/definitions/jumpcloud.healthmonitoring.Resource'
-        type: array
       rule:
         $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
     type: object
@@ -5466,7 +5408,7 @@ definitions:
     properties:
       count:
         format: uint64
-        type: string
+        type: integer
       templates:
         items:
           $ref: '#/definitions/jumpcloud.healthmonitoring.RuleTemplate'
@@ -5477,7 +5419,7 @@ definitions:
     properties:
       count:
         format: uint64
-        type: string
+        type: integer
       rules:
         items:
           $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
@@ -5492,22 +5434,6 @@ definitions:
       - LOGICAL_OPERATOR_UNSPECIFIED
       - LOGICAL_OPERATOR_AND
       - LOGICAL_OPERATOR_OR
-    type: string
-  jumpcloud.healthmonitoring.Resource:
-    description: Resource holds a single resource which can be bind to a rule.
-    properties:
-      objectId:
-        format: byte
-        type: string
-      resourceType:
-        $ref: '#/definitions/jumpcloud.healthmonitoring.ResourceType'
-    type: object
-  jumpcloud.healthmonitoring.ResourceType:
-    default: RESOURCE_TYPE_SYSTEM_GROUP
-    enum:
-      - RESOURCE_TYPE_SYSTEM_GROUP
-      - RESOURCE_TYPE_USER_GROUP
-    title: 'ResourceType specifies different resource types like system_group, user_groups etc'
     type: string
   jumpcloud.healthmonitoring.Rule:
     description: Rule represents a rule resource.
@@ -5541,6 +5467,10 @@ definitions:
       name:
         type: string
       objectId:
+        format: byte
+        readOnly: true
+        type: string
+      organizationObjectId:
         format: byte
         readOnly: true
         type: string
@@ -5607,34 +5537,33 @@ definitions:
   jumpcloud.healthmonitoring.RuleTemplate:
     description: RuleTemplate represents a rule template object.
     properties:
+      category:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.RuleCategory'
       configurations:
         items:
           $ref: '#/definitions/jumpcloud.healthmonitoring.RuleTemplateConfiguration'
         type: array
       createdAt:
         format: date-time
-        readOnly: true
         type: string
       description:
-        readOnly: true
         type: string
-      displayName:
-        readOnly: true
-        type: string
+      frequency:
+        format: int64
+        type: integer
       name:
-        readOnly: true
         type: string
       objectId:
         format: byte
-        readOnly: true
         type: string
       osFamily:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleOsFamily'
+      type:
+        type: string
       unrestricted:
         type: boolean
       updatedAt:
         format: date-time
-        readOnly: true
         type: string
       version:
         type: string
@@ -5652,9 +5581,12 @@ definitions:
         type: string
       name:
         type: string
+      objectId:
+        format: byte
+        type: string
       position:
         format: int64
-        type: string
+        type: integer
       readOnly:
         type: boolean
       required:
@@ -10783,7 +10715,7 @@ paths:
       - admin
   /alerts:
     get:
-      description: This endpoint allows you to get all Alerts.
+      description: This endpoint allows you to get all alerts.
       operationId: AlertsService_ListAlerts
       parameters:
         - collectionFormat: multi
@@ -10834,12 +10766,13 @@ paths:
             $ref: '#/definitions/jumpcloud.alerts.ListAlertsResponse'
       security:
         - x-api-key: []
-      summary: This endpoint provides details of all Alerts.
+      summary: This endpoint provides details of all alerts.
       tags:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.alerts
+        - healthmonitoring.alerts.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -10864,9 +10797,9 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
-  /alerts/severitycounts:
+  /alerts-severitycounts:
     get:
-      description: This endpoint allows you to get all alert severity counts
+      description: This endpoint allows you to get total number of alerts per alert severity
       operationId: AlertsService_ListAlertSeverityCounts
       parameters:
         - collectionFormat: multi
@@ -10917,23 +10850,24 @@ paths:
             $ref: '#/definitions/jumpcloud.alerts.ListAlertSeverityCountsResponse'
       security:
         - x-api-key: []
-      summary: This endpoint provides details of all Alert Severity Counts.
+      summary: This endpoint provides total count of alerts per alert severity
       tags:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.alerts
+        - healthmonitoring.alerts.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/alerts/severitycounts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/alerts-severitycounts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/alerts/severitycounts"
+            url = "https://console.jumpcloud.com/api/v2/alerts-severitycounts"
 
             querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
 
@@ -10946,8 +10880,8 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/severitycounts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
-  /alerts/stats:
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts-severitycounts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /alerts-stats:
     get:
       description: This endpoint allows you to get alert statistics based on status and severity.
       operationId: AlertsService_GetAlertStats
@@ -10958,23 +10892,24 @@ paths:
             $ref: '#/definitions/jumpcloud.alerts.GetAlertStatsResponse'
       security:
         - x-api-key: []
-      summary: This endpoint provides details of all Alert Severity Counts.
+      summary: This endpoint provides alert statistics based on status and severity
       tags:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.alerts
+        - healthmonitoring.alerts.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url https://console.jumpcloud.com/api/v2/alerts/stats \
+              --url https://console.jumpcloud.com/api/v2/alerts-stats \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/alerts/stats"
+            url = "https://console.jumpcloud.com/api/v2/alerts-stats"
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -10985,10 +10920,10 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/stats' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts-stats' -Method GET -Headers $headers
   '/alerts/{id}':
     delete:
-      description: This endpoint allows you to delete a specific Alert.
+      description: This endpoint allows you to delete a specific alert.
       operationId: AlertsService_DeleteAlert
       parameters:
         - format: byte
@@ -11003,12 +10938,12 @@ paths:
             $ref: '#/definitions/jumpcloud.alerts.DeleteAlertResponse'
       security:
         - x-api-key: []
-      summary: This endpoint is used to delete an Alert.
+      summary: This endpoint is used to delete an alert.
       tags:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.alerts
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -11032,7 +10967,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{id}' -Method DELETE -Headers $headers
     get:
-      description: This endpoint allows you to get a specific Alert.
+      description: This endpoint allows you to get a specific alert.
       operationId: AlertsService_GetAlert
       parameters:
         - format: byte
@@ -11047,12 +10982,13 @@ paths:
             $ref: '#/definitions/jumpcloud.alerts.GetAlertResponse'
       security:
         - x-api-key: []
-      summary: This endpoint provides details of an Alert.
+      summary: This endpoint provides details of an alert.
       tags:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.alerts
+        - healthmonitoring.alerts.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -11139,7 +11075,8 @@ paths:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.alerts
+        - healthmonitoring.alerts.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -11166,7 +11103,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{id}/occurrences?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
   '/alerts/{id}/status':
     post:
-      description: This endpoint allows you to update the status of an Alert.
+      description: This endpoint allows you to update the status of an alert.
       operationId: AlertsService_UpdateAlertStatus
       parameters:
         - format: byte
@@ -11193,12 +11130,12 @@ paths:
             $ref: '#/definitions/jumpcloud.alerts.UpdateAlertStatusResponse'
       security:
         - x-api-key: []
-      summary: This endpoint is used for updating an Alert.
+      summary: This endpoint is used for updating the status of an alert.
       tags:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.alerts
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -19232,66 +19169,6 @@ paths:
         type: string
     x-functionalities-tags:
       - gsuites
-  /healthmonitoring/bind-rule-to-resource:
-    post:
-      description: This endpoint allows you to bind a health monitoring rule to other resources
-      operationId: RulesService_BindRuleToResource
-      parameters:
-        - in: body
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/jumpcloud.healthmonitoring.BindRuleToResourceRequest'
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/jumpcloud.healthmonitoring.BindRuleToResourceResponse'
-      security:
-        - x-api-key: []
-      summary: This endpoint is used for bind rule to resources
-      tags:
-        - Monitoring and Alerting
-      x-dynamic-gateway: true
-      x-scopes:
-        - anonymous
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request POST \
-              --url https://console.jumpcloud.com/api/v2/healthmonitoring/bind-rule-to-resource \
-              --header 'content-type: application/json' \
-              --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"resources":[{"objectId":"string","resourceType":"RESOURCE_TYPE_SYSTEM_GROUP"}],"ruleObjectId":"string"}'
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/bind-rule-to-resource"
-
-            payload = {
-                "resources": [
-                    {
-                        "objectId": "string",
-                        "resourceType": "RESOURCE_TYPE_SYSTEM_GROUP"
-                    }
-                ],
-                "ruleObjectId": "string"
-            }
-            headers = {
-                "x-api-key": "REPLACE_KEY_VALUE",
-                "content-type": "application/json"
-            }
-
-            response = requests.request("POST", url, json=payload, headers=headers)
-
-            print(response.text)
-        - lang: Powershell
-          source: |-
-            $headers=@{}
-            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/bind-rule-to-resource' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"resources":[{"objectId":"string","resourceType":"RESOURCE_TYPE_SYSTEM_GROUP"}],"ruleObjectId":"string"}'
   /healthmonitoring/rules:
     get:
       description: This endpoint allows you list health monitoring rules.
@@ -19350,7 +19227,8 @@ paths:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.rules
+        - healthmonitoring.rules.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -19397,7 +19275,7 @@ paths:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.rules
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -19466,7 +19344,7 @@ paths:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.rules
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -19510,7 +19388,8 @@ paths:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.rules
+        - healthmonitoring.rules.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -19563,7 +19442,7 @@ paths:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.rules
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -19668,7 +19547,8 @@ paths:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.rules
+        - healthmonitoring.rules.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -19715,7 +19595,8 @@ paths:
         - Monitoring and Alerting
       x-dynamic-gateway: true
       x-scopes:
-        - anonymous
+        - healthmonitoring.rules
+        - healthmonitoring.rules.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -41309,6 +41190,10 @@ x-scopes:
   - groups
   - groups.readonly
   - groups.self
+  - healthmonitoring.alerts
+  - healthmonitoring.alerts.readonly
+  - healthmonitoring.rules
+  - healthmonitoring.rules.readonly
   - mdm
   - mdm.readonly
   - mfa
