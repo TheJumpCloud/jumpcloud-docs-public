@@ -4886,7 +4886,7 @@ definitions:
   jumpcloud.gapps.CreateScheduledResponse:
     properties:
       scheduledJobId:
-        description: ScheduledJobId is the schedules unique ID.
+        description: ObjectID of the created Scheduled Job
         format: hex
         type: string
     type: object
@@ -4935,6 +4935,14 @@ definitions:
         description: ObjectID of the Scheduled Job
         format: hex
         type: string
+      sendEmail:
+        title: SendEmail is a flag to opt-in for an email with results of a scheduled import job
+        type: boolean
+    type: object
+  jumpcloud.gapps.UpdateScheduledResponse:
+    properties:
+      scheduledJob:
+        $ref: '#/definitions/jumpcloud.gapps.ScheduledImport'
     type: object
   jumpcloud.google_emm.AllowPersonalUsage:
     default: PERSONAL_USAGE_ALLOWED
@@ -18417,6 +18425,11 @@ paths:
           name: gsuite_id
           required: true
           type: string
+        - description: SendEmail is a flag to opt-in for an email with results of a scheduled import job
+          in: query
+          name: sendEmail
+          required: false
+          type: boolean
       responses:
         '200':
           description: A successful response.
@@ -18459,7 +18472,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request POST \
-              --url https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules \
+              --url 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules?sendEmail=SOME_BOOLEAN_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -18467,16 +18480,18 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules"
 
+            querystring = {"sendEmail":"SOME_BOOLEAN_VALUE"}
+
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
-            response = requests.request("POST", url, headers=headers)
+            response = requests.request("POST", url, headers=headers, params=querystring)
 
             print(response.text)
         - lang: Powershell
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules' -Method POST -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules?sendEmail=SOME_BOOLEAN_VALUE' -Method POST -Headers $headers
   '/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}':
     delete:
       description: Endpoint to delete the specified scheduled job from gapps and kala.
@@ -18554,6 +18569,84 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}' -Method DELETE -Headers $headers
+    patch:
+      description: Endpoint to update the specified scheduled job
+      operationId: Gapps_Scheduled_Import_Update
+      parameters:
+        - description: ObjectID of the Google Workspace integration
+          format: byte
+          in: path
+          name: gsuite_id
+          required: true
+          type: string
+        - description: ObjectID of the Scheduled Job
+          format: byte
+          in: path
+          name: scheduledJobId
+          required: true
+          type: string
+        - description: SendEmail is a flag to opt-in for an email with results of a scheduled import job
+          in: query
+          name: sendEmail
+          required: false
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/jumpcloud.gapps.UpdateScheduledResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Update a Scheduled Job
+      tags:
+        - G Suite
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}?sendEmail=SOME_BOOLEAN_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}"
+
+            querystring = {"sendEmail":"SOME_BOOLEAN_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("PATCH", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}?sendEmail=SOME_BOOLEAN_VALUE' -Method PATCH -Headers $headers
   '/gsuites/{gsuite_id}/import/users':
     get:
       description: Lists G Suite users available for import.
