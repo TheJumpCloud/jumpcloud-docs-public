@@ -1213,6 +1213,8 @@ definitions:
         type: boolean
       pricePerUserSum:
         type: integer
+      purchaseChannel:
+        type: string
     title: OrganizationEntitlement
     type: object
     x-examples: {}
