@@ -4421,6 +4421,10 @@ definitions:
           if (any.is(Foo.class)) {
             foo = any.unpack(Foo.class);
           }
+          // or ...
+          if (any.isSameTypeAs(Foo.getDefaultInstance())) {
+            foo = any.unpack(Foo.getDefaultInstance());
+          }
 
        Example 3: Pack and unpack a message in Python.
 
@@ -4450,7 +4454,6 @@ definitions:
       methods only use the fully qualified type name after the last '/'
       in the type URL, for example "foo.bar.com/x/y.z" will yield type
       name "y.z".
-
 
       JSON
       ====
@@ -4505,38 +4508,23 @@ definitions:
 
           Note: this functionality is not currently available in the official
           protobuf release, and it is not used for type URLs beginning with
-          type.googleapis.com.
+          type.googleapis.com. As of May 2023, there are no widely used type server
+          implementations and no plans to implement one.
 
           Schemes other than `http`, `https` (or the empty scheme) might be
           used with implementation specific semantics.
         type: string
     type: object
   google.rpc.Status:
-    description: |-
-      The `Status` type defines a logical error model that is suitable for
-      different programming environments, including REST APIs and RPC APIs. It is
-      used by [gRPC](https://github.com/grpc). Each `Status` message contains
-      three pieces of data: error code, error message, and error details.
-
-      You can find out more about this error model and how to work with it in the
-      [API Design Guide](https://cloud.google.com/apis/design/errors).
     properties:
       code:
-        description: 'The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].'
         format: int32
         type: integer
       details:
-        description: |-
-          A list of messages that carry the error details.  There is a common set of
-          message types for APIs to use.
         items:
           $ref: '#/definitions/google.protobuf.Any'
         type: array
       message:
-        description: |-
-          A developer-facing error message, which should be in English. Any
-          user-facing error message should be localized and sent in the
-          [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
         type: string
     type: object
   gsuite:
@@ -6274,6 +6262,13 @@ definitions:
         format: int32
         type: integer
       name:
+        type: string
+    type: object
+  jumpcloud.pwm.PoliciesResponse:
+    properties:
+      disableExport:
+        type: boolean
+      id:
         type: string
     type: object
   jumpcloud.pwm.Role:
@@ -25535,6 +25530,95 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/backups/{UUID}' -Method GET -Headers $headers
+  /passwordmanager/company/policies:
+    get:
+      description: Get organization policies
+      operationId: CompanyService_GetPolicies
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.PoliciesResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/passwordmanager/company/policies \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/company/policies"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/company/policies' -Method GET -Headers $headers
+  '/passwordmanager/company/policies/{UUID}':
+    put:
+      description: Update organization policies
+      operationId: CompanyService_UpdatePolicies
+      parameters:
+        - in: path
+          name: UUID
+          required: true
+          type: string
+        - in: query
+          name: disableExport
+          required: false
+          type: boolean
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.pwm.PoliciesResponse'
+      security:
+        - x-api-key: []
+      tags:
+        - Password Manager
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url 'https://console.jumpcloud.com/api/v2/passwordmanager/company/policies/{UUID}?disableExport=SOME_BOOLEAN_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordmanager/company/policies/{UUID}"
+
+            querystring = {"disableExport":"SOME_BOOLEAN_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("PUT", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/company/policies/{UUID}?disableExport=SOME_BOOLEAN_VALUE' -Method PUT -Headers $headers
   /passwordmanager/devices:
     get:
       description: List Devices
