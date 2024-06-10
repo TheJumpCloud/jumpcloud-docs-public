@@ -3772,6 +3772,13 @@ definitions:
     type: object
   active-directory:
     properties:
+      delegationState:
+        description: Delegation state of the Active Directory instance
+        enum:
+          - ENABLED
+          - PENDING
+          - DISABLED
+        type: string
       domain:
         description: Domain name for this Active Directory instance.
         type: string
@@ -9807,7 +9814,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/activedirectories \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"domain":"string","useCase":"UNSET"}'
+              --data '{"delegationState":"ENABLED","domain":"string","useCase":"UNSET"}'
         - lang: Python
           source: |-
             import requests
@@ -9815,6 +9822,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/activedirectories"
 
             payload = {
+                "delegationState": "ENABLED",
                 "domain": "string",
                 "useCase": "UNSET"
             }
@@ -9831,7 +9839,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"domain":"string","useCase":"UNSET"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
   '/activedirectories/{activedirectory_id}/agents':
@@ -10460,7 +10468,7 @@ paths:
     patch:
       description: |-
         This endpoint allows you to update Active Directory.
-
+        Here use case can be one of:
         - AD as Authority - password in AD - 2-way sync use case is selected.
         - JC as Authority - one-way sync from AD.
         - Two way sync -  2-way sync use case is selected
@@ -10474,7 +10482,8 @@ paths:
           -H 'x-api-key: {API_KEY}' \
           -d '{
                 "domain": "{DC=DOMAIN;DC=COM}",
-                "use_case": "{ADASAUTHORITY}"
+                "use_case": "{ADASAUTHORITY}",
+                "delegation_state": "{ENABLED}"
             }' \
         ```
       operationId: activedirectories_patch
@@ -10504,7 +10513,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/activedirectories/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"domain":"string","useCase":"UNSET"}'
+              --data '{"delegationState":"ENABLED","domain":"string","useCase":"UNSET"}'
         - lang: Python
           source: |-
             import requests
@@ -10512,6 +10521,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/activedirectories/{id}"
 
             payload = {
+                "delegationState": "ENABLED",
                 "domain": "string",
                 "useCase": "UNSET"
             }
@@ -10528,7 +10538,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"domain":"string","useCase":"UNSET"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
   '/administrators/{administrator_id}/organizationlinks/{id}':
