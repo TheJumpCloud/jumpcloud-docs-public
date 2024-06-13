@@ -76,6 +76,18 @@ definitions:
     properties:
       apiKeyAllowed:
         type: boolean
+      apiKeyHash:
+        additionalProperties: false
+        properties:
+          createdAt:
+            format: date-time
+            type: string
+          expireAt:
+            format: date-time
+            type: string
+          prefix:
+            type: string
+        type: object
       apiKeySet:
         type: boolean
       email:
@@ -2956,6 +2968,18 @@ definitions:
     properties:
       apiKeyAllowed:
         type: boolean
+      apiKeyHash:
+        additionalProperties: false
+        properties:
+          createdAt:
+            format: date-time
+            type: string
+          expireAt:
+            format: date-time
+            type: string
+          prefix:
+            type: string
+        type: object
       bindNoOrgs:
         default: false
         type: boolean
