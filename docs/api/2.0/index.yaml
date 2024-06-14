@@ -3822,12 +3822,18 @@ definitions:
       domain:
         description: Domain name for this Active Directory instance.
         type: string
+      groupsEnabled:
+        type: boolean
       id:
         description: ObjectID of this Active Directory instance.
         readOnly: true
         type: string
       primaryAgent:
-        description: ObjectID of the primary agent of domain.
+        description: ObjectID of the primary sync agent of domain.
+        readOnly: true
+        type: string
+      primaryImportAgent:
+        description: ObjectID of the primary import agent of domain.
         readOnly: true
         type: string
       useCase:
@@ -9865,7 +9871,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/activedirectories \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"delegationState":"ENABLED","domain":"string","useCase":"UNSET"}'
+              --data '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
         - lang: Python
           source: |-
             import requests
@@ -9875,6 +9881,7 @@ paths:
             payload = {
                 "delegationState": "ENABLED",
                 "domain": "string",
+                "groupsEnabled": True,
                 "useCase": "UNSET"
             }
             headers = {
@@ -9890,7 +9897,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","useCase":"UNSET"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
   '/activedirectories/{activedirectory_id}/agents':
@@ -10564,7 +10571,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/activedirectories/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"delegationState":"ENABLED","domain":"string","useCase":"UNSET"}'
+              --data '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
         - lang: Python
           source: |-
             import requests
@@ -10574,6 +10581,7 @@ paths:
             payload = {
                 "delegationState": "ENABLED",
                 "domain": "string",
+                "groupsEnabled": True,
                 "useCase": "UNSET"
             }
             headers = {
@@ -10589,7 +10597,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","useCase":"UNSET"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
   '/administrators/{administrator_id}/organizationlinks/{id}':
