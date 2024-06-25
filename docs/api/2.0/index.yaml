@@ -3044,6 +3044,13 @@ definitions:
         type: integer
     title: ProviderInvoiceResponse
     type: object
+  ProviderSettingsPut:
+    additionalProperties: false
+    properties:
+      requireAdminMFA:
+        type: boolean
+    title: ProviderSettings
+    type: object
   PushEndpointResponse:
     description: A push endpoint response from the auth service.
     properties:
@@ -28893,6 +28900,69 @@ paths:
         name: provider_id
         required: true
         type: string
+    put:
+      description: This endpoint edit settings about a provider
+      operationId: providers_putProvider
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              settings:
+                $ref: '#/definitions/ProviderSettingsPut'
+            type: object
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Provider'
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Retrieve Provider
+      tags:
+        - Providers
+        - Managed Service Provider
+      x-scopes:
+        - providers
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"settings":{"requireAdminMFA":true}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}"
+
+            payload = {"settings": {"requireAdminMFA": True}}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"settings":{"requireAdminMFA":true}}'
     x-functionalities-tags:
       - mtp-read-org
   '/providers/{provider_id}/administrators':
