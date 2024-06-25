@@ -2809,6 +2809,7 @@ definitions:
           - timeinput
           - datepickerrange
           - multilist
+          - paginationlist
         type: string
       id:
         description: ObjectId uniquely identifying a Policy Template Configuration Field
@@ -2956,6 +2957,12 @@ definitions:
         type: boolean
       id:
         type: string
+      settings:
+        properties:
+          requireAdminMFA:
+            type: boolean
+        title: ProviderSettings
+        type: object
   ProviderAdminReq:
     example:
       bindNoOrgs: false
@@ -4728,6 +4735,9 @@ definitions:
         description: first_occurred_at is the time of the first occurrence of the alert.
         format: date-time
         type: string
+      frequency:
+        format: int64
+        type: string
       lastOccurredAt:
         description: last_occurred_at is the time of the last occurrence of the alert.
         format: date-time
@@ -5439,6 +5449,9 @@ definitions:
       - DISPLAY_TYPE_TIMEINPUT
       - DISPLAY_TYPE_DATEPICKERRANGE
       - DISPLAY_TYPE_MULTILIST
+      - DISPLAY_TYPE_INPUTREADONLY
+      - DISPLAY_TYPE_ICONSTATUS
+      - DISPLAY_TYPE_ITEMLIST
     type: string
   jumpcloud.healthmonitoring.GetRuleResponse:
     description: GetRuleResponse is the response to the GetRuleRequest.
@@ -5607,6 +5620,8 @@ definitions:
         type: string
       osFamily:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleOsFamily'
+      status:
+        type: string
       type:
         type: string
       unrestricted:
@@ -10806,7 +10821,8 @@ paths:
           name: fields
           required: false
           type: array
-        - description: The offset into the records to return.
+        - default: '0'
+          description: The offset into the records to return.
           format: int64
           in: query
           name: skip
@@ -10822,7 +10838,8 @@ paths:
           name: sort
           required: false
           type: array
-        - description: |-
+        - default: '100'
+          description: |-
             The number of alerts to return at once.
             If the number of alerts returned is less than `limit` there are no more alerts to fetch.
             If the number of alerts returned is equal to limit there may be more alerts to fetch. Increment `skip` by `limit` to get the next set of alerts.
@@ -10849,7 +10866,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/alerts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/alerts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -10857,7 +10874,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/alerts"
 
-            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"0","sort":"SOME_ARRAY_VALUE","limit":"100"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -10868,7 +10885,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' -Method GET -Headers $headers
   /alerts-severitycounts:
     get:
       description: This endpoint allows you to get total number of alerts per alert severity
@@ -11121,7 +11138,8 @@ paths:
           name: fields
           required: false
           type: array
-        - description: The offset into the records to return.
+        - default: '0'
+          description: The offset into the records to return.
           format: int64
           in: query
           name: skip
@@ -11137,7 +11155,8 @@ paths:
           name: sort
           required: false
           type: array
-        - description: |-
+        - default: '100'
+          description: |-
             The number of alert occurrences to return at once.
             If the number of alert occurrences returned is less than `limit` there are no more alert occurrences to fetch.
             If the number of alert occurrences returned is equal to limit there may be more alert occurrences to fetch. Increment `skip` by `limit` to get the next set of alert occurrences.
@@ -11164,7 +11183,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/alerts/{id}/occurrences?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/alerts/{id}/occurrences?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -11172,7 +11191,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/alerts/{id}/occurrences"
 
-            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"0","sort":"SOME_ARRAY_VALUE","limit":"100"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -11183,7 +11202,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{id}/occurrences?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{id}/occurrences?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' -Method GET -Headers $headers
   '/alerts/{id}/status':
     post:
       description: This endpoint allows you to update the status of an alert.
@@ -19358,7 +19377,8 @@ paths:
           name: fields
           required: false
           type: array
-        - description: The offset into the records to return.
+        - default: '0'
+          description: The offset into the records to return.
           format: int64
           in: query
           name: skip
@@ -19374,7 +19394,8 @@ paths:
           name: sort
           required: false
           type: array
-        - description: |-
+        - default: '100'
+          description: |-
             The number of rules to return at once.
             If the number of rules returned is less than `limit` there are no more rules to fetch.
             If the number of rules returned is equal to limit there may be more rules to fetch. Increment `skip` by `limit` to get the next set of rules.
@@ -19401,7 +19422,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -19409,7 +19430,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules"
 
-            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"0","sort":"SOME_ARRAY_VALUE","limit":"100"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -19420,7 +19441,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' -Method GET -Headers $headers
     post:
       description: This endpoint allows you to create a health monitoring rule.
       operationId: RulesService_CreateRule
@@ -19678,7 +19699,8 @@ paths:
           name: fields
           required: false
           type: array
-        - description: The offset into the records to return.
+        - default: '0'
+          description: The offset into the records to return.
           format: int64
           in: query
           name: skip
@@ -19694,7 +19716,8 @@ paths:
           name: sort
           required: false
           type: array
-        - description: |-
+        - default: '100'
+          description: |-
             The number of rule templates to return at once.
             If the number of rule templates returned is less than `limit` there are no more rule templates to fetch.
             If the number of rule templates returned is equal to limit there may be more rule templates to fetch. Increment `skip` by `limit` to get the next set of rule templates.
@@ -19721,7 +19744,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -19729,7 +19752,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates"
 
-            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"0","sort":"SOME_ARRAY_VALUE","limit":"100"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -19740,7 +19763,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/ruletemplates?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' -Method GET -Headers $headers
   '/healthmonitoring/ruletemplates/{id}':
     get:
       description: This endpoint allows you get a health monitoring rule template.
