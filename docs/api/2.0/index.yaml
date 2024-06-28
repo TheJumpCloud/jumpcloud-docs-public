@@ -15562,6 +15562,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/customemails/{custom_email_type}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"body":"string","button":"string","header":"string","nextStepContactInfo":"string","subject":"string","title":"string","type":"activate_gapps_user"}'
     x-functionalities-tags:
       - custom-email
+  /defaultpolicygrouptemplates:
+    x-functionalities-tags:
+      - policy-group-templates
   /devices/os_aggregation:
     x-functionalities-tags:
       - reports-devices
