@@ -1188,6 +1188,8 @@ definitions:
     properties:
       billingModel:
         type: string
+      capUserQuantity:
+        type: boolean
       entitlementProducts:
         items:
           properties:
