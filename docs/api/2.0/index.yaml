@@ -4744,7 +4744,7 @@ definitions:
         type: string
       frequency:
         format: int64
-        type: string
+        type: integer
       lastOccurredAt:
         description: last_occurred_at is the time of the last occurrence of the alert.
         format: date-time

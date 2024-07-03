@@ -7989,7 +7989,15 @@ paths:
     x-functionalities-tags:
       - admin
   /users/generateApiKey:
-    parameters: []
+    parameters:
+      - in: body
+        name: body
+        required: false
+        schema:
+          properties:
+            ttl:
+              type: integer
+          type: object
     x-functionalities-tags:
       - admin
   /users/getSelf:
