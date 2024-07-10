@@ -4757,6 +4757,10 @@ definitions:
         description: occurrences_count is the number of occurrences of the alert.
         format: uint64
         type: integer
+      organizationObjectId:
+        format: byte
+        readOnly: true
+        type: string
       referenceId:
         type: string
       remark:
@@ -4769,6 +4773,9 @@ definitions:
       severity:
         $ref: '#/definitions/jumpcloud.alerts.AlertSeverity'
       sourceId:
+        type: string
+      sourceName:
+        readOnly: true
         type: string
       sourceType:
         $ref: '#/definitions/jumpcloud.alerts.AlertSourceType'
