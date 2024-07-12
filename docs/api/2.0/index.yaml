@@ -4749,6 +4749,10 @@ definitions:
         description: last_occurred_at is the time of the last occurrence of the alert.
         format: date-time
         type: string
+      lastOccurrenceContext:
+        description: context holds the context of of last alert occurrence.
+        readOnly: true
+        type: object
       objectId:
         description: id holds the unique identifier of an alert.
         format: byte
