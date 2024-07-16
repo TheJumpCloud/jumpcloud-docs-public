@@ -4920,6 +4920,19 @@ definitions:
       alert:
         $ref: '#/definitions/jumpcloud.alerts.Alert'
     type: object
+  jumpcloud.apple_mdm.CommandResponse:
+    type: object
+  jumpcloud.apple_mdm.DisableLostMode:
+    type: object
+  jumpcloud.apple_mdm.EnableLostMode:
+    properties:
+      footnote:
+        type: string
+      message:
+        type: string
+      phoneNumber:
+        type: string
+    type: object
   jumpcloud.auth.PushVerification:
     properties:
       confirmationCode:
@@ -12816,6 +12829,103 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/refreshdepdevices' -Method POST -Headers $headers
     x-functionalities-tags:
       - mdm
+  '/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode':
+    post:
+      description: This endpoint allows you to control the lost mode of a device
+      operationId: Devices_LostMode
+      parameters:
+        - format: byte
+          in: path
+          name: deviceManagerObjectId
+          required: true
+          type: string
+        - format: byte
+          in: path
+          name: deviceObjectId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              disableLostMode:
+                $ref: '#/definitions/jumpcloud.apple_mdm.DisableLostMode'
+              enableLostMode:
+                $ref: '#/definitions/jumpcloud.apple_mdm.EnableLostMode'
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.apple_mdm.CommandResponse'
+        '204':
+          description: A successful response.
+          schema: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Lost Mode
+      tags:
+        - mdm
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"disableLostMode":{},"enableLostMode":{"footnote":"string","message":"string","phoneNumber":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode"
+
+            payload = {
+                "disableLostMode": {},
+                "enableLostMode": {
+                    "footnote": "string",
+                    "message": "string",
+                    "phoneNumber": "string"
+                }
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"disableLostMode":{},"enableLostMode":{"footnote":"string","message":"string","phoneNumber":"string"}}'
   '/applemdms/{id}':
     delete:
       description: |-
@@ -41749,6 +41859,7 @@ tags:
   - name: WebAuthn
   - name: Workday Import
   - name: fde
+  - name: mdm
 x-scopes:
   - administrators
   - administrators.readonly
@@ -41855,3 +41966,4 @@ x-tagGroups:
       - Users
       - Workday Import
       - fde
+      - mdm
