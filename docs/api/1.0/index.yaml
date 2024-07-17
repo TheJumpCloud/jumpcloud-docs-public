@@ -1213,6 +1213,8 @@ definitions:
         type: array
       isManuallyBilled:
         type: boolean
+      maxUserQuantity:
+        type: integer
       pricePerUserSum:
         type: integer
       purchaseChannel:
