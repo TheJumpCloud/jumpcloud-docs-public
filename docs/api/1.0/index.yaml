@@ -2545,6 +2545,12 @@ definitions:
               type: string
           type: object
         type: array
+      admin:
+        properties:
+          id:
+            type: string
+        type: object
+        x-nullable: true
       allow_public_key:
         type: boolean
       alternateEmail:
