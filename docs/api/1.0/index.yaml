@@ -3191,32 +3191,38 @@ parameters:
       see the related `/search/<domain>` endpoints,
       e.g. `/search/systems`.
 
-      **Filter structure**: `<field>:<operator>:<value>`.
+      **Filter structure**: `<field>:<operator>:<value>` (e.g. `department:$eq:Finance`)
 
       **field** = Populate with a valid field from an endpoint response.
 
       **operator** = Supported operators are:
-      - `$eq` (equals)
-      - `$ne` (does not equal)
-      - `$gt` (is greater than)
-      - `$gte` (is greater than or equal to)
-      - `$lt` (is less than)
-      - `$lte` (is less than or equal to)
+      - `$eq` - equals (exact match)
+      - `$in` - equals (multiple match terms). Separate terms by `|` character: `<field>:$in:<term one>|<term two>`
+        - any item with `<field>` that matches ANY of the match terms will be returned
+      - `$ne` - does not equal
+      - `$nin` - does not equal (multiple match terms). Separate terms by `|` character: `<field>:$nin:<term one>|<term two>`
+        - any item with `<field>` that DOES NOT match ANY of the match terms will be returned
+      - `$lt` - is less than
+      - `$lte` - is less than or equal to
+      - `$gt` - is greater than
+      - `$gte` - is greater than or equal to
+      - `$sw` - starts with
 
       _Note: v1 operators differ from v2 operators._
 
-      _Note: For v1 operators, excluding the `$` will result in undefined behavior._
+      _Note: For v1 operators, excluding the `$` will result in undefined behavior **and is not recommended.**_
 
-      **value** = Populate with the value you want to search for. Is case sensitive.
+      **value** = Populate with the value you want to search for. **Case sensitive**.
 
       **Examples**
       - `GET /users?filter=username:$eq:testuser`
       - `GET /systemusers?filter=password_expiration_date:$lte:2021-10-24`
       - `GET /systemusers?filter=department:$ne:Accounting`
-      - `GET /systems?filter[0]=firstname:$eq:foo&filter[1]=lastname:$eq:bar` - this will
-         AND the filters together.
-      - `GET /systems?filter[or][0]=lastname:$eq:foo&filter[or][1]=lastname:$eq:bar` - this will
-         OR the filters together.
+      - `GET /systems?filter[0]=firstname:$eq:foo&filter[1]=lastname:$eq:bar` - this will AND the filters together.
+      - `GET /systems?filter[or][0]=lastname:$eq:foo&filter[or][1]=lastname:$eq:bar` - this will OR the filters together.
+      - `GET /systemusers?filter=department:$in:Finance|IT|Shipping & Receiving` - an item with `{ department: "IT" }` will match
+      - `GET /systemusers?filter=department:$nin:Finance|IT|Shipping & Receiving` - an item with `{ department: "HR" }` will match
+      - `GET /systemusers?filter=department:$sw:Shipping` - an item with `{ department: "Shipping & Receiving" }` will match
     in: query
     name: filter
     type: string
