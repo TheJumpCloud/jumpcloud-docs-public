@@ -4279,6 +4279,40 @@ definitions:
       policyCountData:
         $ref: '#/definitions/devices.AggregatedPolicyCount'
     type: object
+  devices.AppCatalogInstallableItem:
+    properties:
+      architectures:
+        items:
+          type: string
+        type: array
+      installerType:
+        type: string
+      objectId:
+        format: byte
+        type: string
+      operatingSystem:
+        type: string
+      softwareApp:
+        $ref: '#/definitions/devices.SoftwareApp'
+      version:
+        type: string
+    type: object
+  devices.AppCatalogItem:
+    properties:
+      iconUrl:
+        type: string
+      installableItems:
+        items:
+          $ref: '#/definitions/devices.AppCatalogInstallableItem'
+        type: array
+      name:
+        type: string
+      objectId:
+        format: byte
+        type: string
+      version:
+        type: string
+    type: object
   devices.GetDefaultPasswordSyncSettingsResponse:
     properties:
       enabled:
@@ -4293,6 +4327,35 @@ definitions:
         items:
           $ref: '#/definitions/devices.SignInWithJumpCloudSetting'
         type: array
+    type: object
+  devices.GetSsaoDevicesSettingsResponse:
+    properties:
+      organizationObjectId:
+        format: byte
+        type: string
+      settings:
+        items:
+          $ref: '#/definitions/devices.SsaoDevicesSettings'
+        type: array
+    type: object
+  devices.MetadataMSI:
+    properties:
+      manufacturer:
+        type: string
+      metadata:
+        additionalProperties:
+          type: string
+        type: object
+      productCode:
+        type: string
+      productName:
+        type: string
+      productVersion:
+        type: string
+      sha256sum:
+        type: string
+      upgradeCode:
+        type: string
     type: object
   devices.MetadataMSIPublic:
     properties:
@@ -4326,6 +4389,20 @@ definitions:
       title:
         type: string
     type: object
+  devices.ObjectStorageItem:
+    properties:
+      objectId:
+        format: byte
+        type: string
+      references:
+        items:
+          $ref: '#/definitions/devices.ObjectStorageReferrer'
+        type: array
+      versions:
+        items:
+          $ref: '#/definitions/devices.ObjectStorageVersion'
+        type: array
+    type: object
   devices.ObjectStorageItemPublic:
     properties:
       objectId:
@@ -4336,12 +4413,27 @@ definitions:
           $ref: '#/definitions/devices.ObjectStorageVersionPublic'
         type: array
     type: object
+  devices.ObjectStorageMetadata:
+    properties:
+      metadataMsi:
+        $ref: '#/definitions/devices.MetadataMSI'
+      metadataPkg:
+        $ref: '#/definitions/devices.MetadataPKG'
+    type: object
   devices.ObjectStorageMetadataPublic:
     properties:
       metadataMsi:
         $ref: '#/definitions/devices.MetadataMSIPublic'
       metadataPkg:
         $ref: '#/definitions/devices.MetadataPKG'
+    type: object
+  devices.ObjectStorageReferrer:
+    description: |-
+      When the status of an object changes we need to know how to contact external objects that refer to us.
+      Since a oneof field cannot be repeated we are wrapping it with the ObjectStorageReferrer.
+    properties:
+      trackObject:
+        $ref: '#/definitions/devices.TrackObject'
     type: object
   devices.ObjectStorageStatusResponse:
     properties:
@@ -4352,6 +4444,46 @@ definitions:
         format: int64
         type: integer
     type: object
+  devices.ObjectStorageVersion:
+    description: The Version is the details of actual blob stored by the underlying storage subsystem.
+    properties:
+      createdAt:
+        format: date-time
+        type: string
+      metadata:
+        $ref: '#/definitions/devices.ObjectStorageMetadata'
+      name:
+        type: string
+      objectId:
+        format: byte
+        type: string
+      rejectedReason:
+        type: string
+      sha256sum:
+        type: string
+      size:
+        format: int64
+        type: string
+      status:
+        $ref: '#/definitions/devices.ObjectStorageVersion.Status'
+      storagePath:
+        type: string
+      updatedAt:
+        format: date-time
+        type: string
+      version:
+        format: int64
+        type: string
+    type: object
+  devices.ObjectStorageVersion.Status:
+    default: UNKNOWN
+    enum:
+      - UNKNOWN
+      - PENDING
+      - VALIDATING
+      - AVAILABLE
+      - REJECTED
+    type: string
   devices.ObjectStorageVersionPublic:
     properties:
       createdAt:
@@ -4409,6 +4541,16 @@ definitions:
           $ref: '#/definitions/devices.SignInWithJumpCloudSetting'
         type: array
     type: object
+  devices.SetSsaoDevicesSettingsRequest:
+    properties:
+      organizationObjectId:
+        format: byte
+        type: string
+      settings:
+        items:
+          $ref: '#/definitions/devices.SsaoDevicesSettings'
+        type: array
+    type: object
   devices.SignInWithJumpCloudSetting:
     properties:
       defaultPermission:
@@ -4430,6 +4572,305 @@ definitions:
     enum:
       - STANDARD
       - ADMIN
+    type: string
+  devices.SoftwareApp:
+    properties:
+      displayName:
+        type: string
+      objectId:
+        format: byte
+        type: string
+      settings:
+        items:
+          $ref: '#/definitions/devices.SoftwareApp.Setting'
+        type: array
+    type: object
+  devices.SoftwareApp.Setting:
+    properties:
+      allowUpdateDelay:
+        type: boolean
+      appCatalogInstallableObjectId:
+        format: byte
+        type: string
+      appleVpp:
+        $ref: '#/definitions/devices.SoftwareAppAppleVpp'
+      assetKind:
+        type: string
+      assetSha256Size:
+        format: int64
+        type: string
+      assetSha256Strings:
+        items:
+          type: string
+        type: array
+      autoUpdate:
+        type: boolean
+      commandLineArguments:
+        type: string
+      description:
+        type: string
+      desiredState:
+        $ref: '#/definitions/devices.SoftwareAppDesiredState'
+      enterpriseObjectId:
+        format: byte
+        type: string
+      googleAndroid:
+        $ref: '#/definitions/devices.SoftwareAppGoogleAndroid'
+      location:
+        type: string
+      locationObjectId:
+        format: byte
+        type: string
+      microsoftStore:
+        $ref: '#/definitions/devices.SoftwareAppMicrosoftStore'
+      packageId:
+        type: string
+      packageKind:
+        type: string
+      packageManager:
+        $ref: '#/definitions/devices.SoftwareAppPackageManager'
+      packageSubtitle:
+        type: string
+      packageVersion:
+        type: string
+      scope:
+        $ref: '#/definitions/devices.SoftwareApp.Setting.Scope'
+      storedPackage:
+        $ref: '#/definitions/devices.ObjectStorageItem'
+      storedPackageObjectId:
+        format: byte
+        type: string
+    type: object
+  devices.SoftwareApp.Setting.Scope:
+    default: SYSTEM
+    enum:
+      - SYSTEM
+      - USER
+    type: string
+  devices.SoftwareAppAppleVpp:
+    properties:
+      appConfiguration:
+        title: Not adding an instrumentation annotation since this could potentially contain sensitive info
+        type: string
+      assignedLicenses:
+        format: int64
+        type: string
+      availableLicenses:
+        format: int64
+        type: string
+      details:
+        type: string
+      isConfigEnabled:
+        type: boolean
+      supportedDeviceFamilies:
+        items:
+          $ref: '#/definitions/devices.SoftwareAppAppleVpp.DeviceFamily'
+        type: array
+      totalLicenses:
+        format: int64
+        type: string
+    type: object
+  devices.SoftwareAppAppleVpp.DeviceFamily:
+    default: MAC
+    enum:
+      - MAC
+      - IPAD
+      - IPHONE
+      - IPOD
+    type: string
+  devices.SoftwareAppAutoUpdateMode:
+    default: AUTO_UPDATE_MODE_UNSPECIFIED
+    enum:
+      - AUTO_UPDATE_MODE_UNSPECIFIED
+      - AUTO_UPDATE_DEFAULT
+      - AUTO_UPDATE_POSTPONED
+      - AUTO_UPDATE_HIGH_PRIORITY
+    type: string
+  devices.SoftwareAppDesiredState:
+    default: INSTALL
+    enum:
+      - INSTALL
+      - UNINSTALL
+    type: string
+  devices.SoftwareAppGoogleAndroid:
+    properties:
+      androidFeatures:
+        items:
+          type: string
+        type: array
+      appPricing:
+        type: string
+      appVersion:
+        type: string
+      author:
+        type: string
+      autoUpdateMode:
+        $ref: '#/definitions/devices.SoftwareAppAutoUpdateMode'
+      category:
+        type: string
+      contentRating:
+        type: string
+      displayMode:
+        type: string
+      distributionChannel:
+        type: string
+      fullDescription:
+        type: string
+      iconUrl:
+        type: string
+      installType:
+        $ref: '#/definitions/devices.SoftwareAppInstallType'
+      managedConfigurationTemplateId:
+        type: string
+      managedProperties:
+        type: boolean
+      minSdkVersion:
+        format: int64
+        type: string
+      name:
+        type: string
+      permissionGrants:
+        items:
+          $ref: '#/definitions/devices.SoftwareAppPermissionGrant'
+        type: array
+      playStoreUrl:
+        type: string
+      runtimePermission:
+        $ref: '#/definitions/devices.SoftwareAppRuntimePermission'
+      startUrl:
+        type: string
+      type:
+        $ref: '#/definitions/devices.SoftwareAppType'
+      updateTime:
+        type: string
+      versionCode:
+        format: int64
+        type: string
+    type: object
+  devices.SoftwareAppInstallType:
+    default: INSTALL_TYPE_UNSPECIFIED
+    enum:
+      - INSTALL_TYPE_UNSPECIFIED
+      - PREINSTALLED
+      - FORCE_INSTALLED
+      - BLOCKED
+      - AVAILABLE
+      - REQUIRED_FOR_SETUP
+      - KIOSK
+    type: string
+  devices.SoftwareAppMicrosoftStore:
+    properties:
+      doNotUpdate:
+        type: boolean
+      nonRemovable:
+        type: boolean
+      packageFamilyName:
+        type: string
+    type: object
+  devices.SoftwareAppPackageManager:
+    default: UNKNOWN
+    enum:
+      - UNKNOWN
+      - CHOCOLATEY
+      - APPLE_VPP
+      - APPLE_CUSTOM
+      - GOOGLE_ANDROID
+      - WINDOWS_MDM
+      - MICROSOFT_STORE
+      - WINGET
+    type: string
+  devices.SoftwareAppPermissionGrant:
+    properties:
+      id:
+        type: string
+      policy:
+        $ref: '#/definitions/devices.SoftwareAppRuntimePermission'
+    type: object
+  devices.SoftwareAppRuntimePermission:
+    default: PERMISSION_POLICY_UNSPECIFIED
+    enum:
+      - PERMISSION_POLICY_UNSPECIFIED
+      - PROMPT
+      - GRANT
+      - DENY
+    type: string
+  devices.SoftwareAppType:
+    default: APP_TYPE_UNSPECIFIED
+    enum:
+      - APP_TYPE_UNSPECIFIED
+      - PUBLIC
+      - PRIVATE
+      - WEBAPP
+    type: string
+  devices.SsaoDevicesSettings:
+    properties:
+      defaultPermission:
+        $ref: '#/definitions/devices.SsaoDevicesSettings.Permission'
+      enabled:
+        type: boolean
+      osFamily:
+        $ref: '#/definitions/devices.SsaoDevicesSettings.OSFamily'
+      passwordSyncEnabled:
+        type: boolean
+    type: object
+  devices.SsaoDevicesSettings.OSFamily:
+    default: UNKNOWN
+    enum:
+      - UNKNOWN
+      - WINDOWS
+      - MACOS
+    type: string
+  devices.SsaoDevicesSettings.Permission:
+    default: STANDARD
+    enum:
+      - STANDARD
+      - ADMIN
+    type: string
+  devices.TrackObject:
+    description: TrackObject is a slimmed down version of a jumpcloud.directory.GraphObject.
+    properties:
+      objectId:
+        format: byte
+        type: string
+      type:
+        $ref: '#/definitions/directory.Type'
+    type: object
+  directory.Type:
+    default: UNKNOWN
+    description: |2-
+       - UNKNOWN: Unknown represents a type of directory object from the database the code
+      doesn't recognize; in general it should never ever happen.
+       - USER: Groups should be even, non-groups odd for the code to correct traverse; if
+      necessary reserve a space where we do not support a group for that type
+      yet.
+    enum:
+      - UNKNOWN
+      - USER
+      - USER_GROUP
+      - SYSTEM
+      - SYSTEM_GROUP
+      - RADIUS_SERVER
+      - RADIUS_SERVER_GROUP
+      - APPLICATION
+      - APPLICATION_GROUP
+      - COMMAND
+      - COMMAND_GROUP
+      - G_SUITE
+      - G_SUITE_GROUP
+      - OFFICE_365
+      - OFFICE_365_GROUP
+      - LDAP_SERVER
+      - LDAP_SERVER_GROUP
+      - POLICY
+      - POLICY_GROUP
+      - ACTIVE_DIRECTORY
+      - ACTIVE_DIRECTORY_GROUP
+      - WORKDAY
+      - WORKDAY_GROUP
+      - SCIM_CLIENT
+      - SCIM_CLIENT_GROUP
+      - SOFTWARE_APP
+      - SOFTWARE_APP_GROUP
     type: string
   feature:
     description: A feature represents JumpCloud functionality.
@@ -16022,6 +16463,186 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"organizationObjectId":"string","settings":[{"defaultPermission":"STANDARD","enabled":true,"osFamily":"UNKNOWN"}]}'
+  /devices/settings/ssao:
+    get:
+      description: |-
+        Gets the SSAO devices Settings for an Organization.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/devices/settings/ssao \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: SystemsOrgSettings_GetSsaoDevicesSettings
+      parameters:
+        - format: byte
+          in: query
+          name: organizationObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Settings successfully retrieved.
+          schema:
+            $ref: '#/definitions/devices.GetSsaoDevicesSettingsResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Get the SSAO Devices Settings for an Organization
+      tags:
+        - Systems Organization Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/devices/settings/ssao?organizationObjectId=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/devices/settings/ssao"
+
+            querystring = {"organizationObjectId":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/ssao?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+    put:
+      description: |-
+        Sets the SSAO devices Settings for an Organization.
+
+        #### Sample Request
+        ```
+        curl -X PUT https://console.jumpcloud.com/api/v2/devices/settings/ssao \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}' \
+          -d '{"settings":[{"osFamily":"WINDOWS","enabled":true,"defaultPermission":"STANDARD"}]}'
+        ```
+      operationId: SystemsOrgSettings_SetSsaoDevicesSettings
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/devices.SetSsaoDevicesSettingsRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+        '204':
+          description: Settings successfully changed.
+          schema: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Set the SSAO Devices Settings for an Organization
+      tags:
+        - Systems Organization Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/devices/settings/ssao \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"organizationObjectId":"string","settings":[{"defaultPermission":"STANDARD","enabled":true,"osFamily":"UNKNOWN","passwordSyncEnabled":true}]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/devices/settings/ssao"
+
+            payload = {
+                "organizationObjectId": "string",
+                "settings": [
+                    {
+                        "defaultPermission": "STANDARD",
+                        "enabled": True,
+                        "osFamily": "UNKNOWN",
+                        "passwordSyncEnabled": True
+                    }
+                ]
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/ssao' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"organizationObjectId":"string","settings":[{"defaultPermission":"STANDARD","enabled":true,"osFamily":"UNKNOWN","passwordSyncEnabled":true}]}'
   /directories:
     get:
       description: |-
@@ -31849,6 +32470,195 @@ paths:
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
+  /software/catalog/apps:
+    get:
+      description: "List the current App Catalog Items.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/software/catalog/apps \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 App Catalog Items in a single response."
+      operationId: AppCatalog_ListAppCatalogItems
+      parameters:
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - description: |-
+            The number of resources to return at once.
+            If the number of resources returned is less than `limit` there are no more resources to fetch.
+            If the number of resources returned is equal to limit there may be more resources to fetch. Increment `skip` by `limit` to get the next set of resources.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Success listing App Catalog Items.
+          schema:
+            items:
+              $ref: '#/definitions/devices.AppCatalogItem'
+            type: array
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: List the App Catalog
+      tags:
+        - App Catalog
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/software/catalog/apps?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/software/catalog/apps"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/software/catalog/apps?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+  '/software/catalog/apps/{objectId}':
+    get:
+      description: |
+        Get an App Catalog Item.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/software/catalog/apps/{object_id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: AppCatalog_GetAppCatalogItem
+      parameters:
+        - format: byte
+          in: path
+          name: objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success getting App Catalog Item.
+          schema:
+            $ref: '#/definitions/devices.AppCatalogItem'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/google.rpc.Status'
+      security:
+        - x-api-key: []
+      summary: Get an App Catalog Item
+      tags:
+        - App Catalog
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/software/catalog/apps/{objectId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/software/catalog/apps/{objectId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/software/catalog/apps/{objectId}' -Method GET -Headers $headers
   /softwareapps:
     get:
       description: |-
@@ -41784,6 +42594,7 @@ tags:
   - name: AddOn
   - name: Administrators
   - name: Aggregated Policy Stats
+  - name: App Catalog
   - name: Apple MDM
   - name: Apple VPP
   - name: Applications
@@ -41913,6 +42724,7 @@ x-tagGroups:
       - Active Directory
       - Administrators
       - Aggregated Policy Stats
+      - App Catalog
       - Apple MDM
       - Applications
       - Authentication Policies
