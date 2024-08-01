@@ -2910,9 +2910,8 @@ definitions:
 host: console.jumpcloud.com
 info:
   contact:
-    email: support@jumpcloud.com
     name: JumpCloud Support
-    url: 'https://support.jumpcloud.com/support/s/'
+    url: 'https://jumpcloud.com/support/contact-jumpcloud-support'
   description: |
     # Overview
 
