@@ -17636,6 +17636,155 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lock' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+  '/google-emm/devices/{deviceId}/lostmode/start':
+    post:
+      description: |-
+        Starts lost mode for a Google EMM enrolled device. Only supported on COPE devices.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/start \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Devices_StartLostMode
+      parameters:
+        - format: byte
+          in: path
+          name: deviceId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              emailAddress:
+                type: string
+              lostMessage:
+                type: string
+              organizationName:
+                type: string
+              phoneNumber:
+                type: string
+              streetAddress:
+                type: string
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.CommandResponse'
+      security:
+        - x-api-key: []
+      summary: Start lost mode
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/start \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"emailAddress":"string","lostMessage":"string","organizationName":"string","phoneNumber":"string","streetAddress":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/start"
+
+            payload = {
+                "emailAddress": "string",
+                "lostMessage": "string",
+                "organizationName": "string",
+                "phoneNumber": "string",
+                "streetAddress": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/start' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"emailAddress":"string","lostMessage":"string","organizationName":"string","phoneNumber":"string","streetAddress":"string"}'
+  '/google-emm/devices/{deviceId}/lostmode/stop':
+    post:
+      description: |-
+        Stops lost mode for a Google EMM enrolled device. Only supported on COPE devices.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/stop \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Devices_StopLostMode
+      parameters:
+        - format: byte
+          in: path
+          name: deviceId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.CommandResponse'
+      security:
+        - x-api-key: []
+      summary: Stop lost mode
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/stop \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/stop"
+
+            payload = {}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/stop' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   '/google-emm/devices/{deviceId}/policy_results':
     get:
       description: |-
