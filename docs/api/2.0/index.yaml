@@ -1419,6 +1419,8 @@ definitions:
         items:
           $ref: '#/definitions/CustomEmailTemplateField'
         type: array
+      messageType:
+        type: string
       type:
         $ref: '#/definitions/CustomEmailType'
     title: CustomEmailTemplate
