@@ -4600,7 +4600,7 @@ definitions:
         type: string
       assetSha256Size:
         format: int64
-        type: string
+        type: integer
       assetSha256Strings:
         items:
           type: string
@@ -32637,7 +32637,7 @@ paths:
       - devices-darwin-software-app-crud
   /software/catalog/apps:
     get:
-      description: "List the current App Catalog Items.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/software/catalog/apps \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 App Catalog Items in a single response."
+      description: "List the current App Catalog Items.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/software/catalog/apps \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The list results can be filtered by `name`, `operating_system`, and `installer_type` while sorting is only allowed on `name`.\tNote: The `limit` maximum is 100 App Catalog Items in a single response."
       operationId: AppCatalog_ListAppCatalogItems
       parameters:
         - collectionFormat: multi
