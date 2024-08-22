@@ -41709,6 +41709,11 @@ paths:
       summary: Delete a Push Endpoint associated with a User
       tags:
         - Users
+      x-restrict-elevated-user:
+        bypassScopes:
+          - administrators
+        model: SystemUser
+        pathParamName: user_id
       x-scopes:
         - users
       x-codeSamples:
@@ -41834,6 +41839,11 @@ paths:
       summary: Update a push endpoint associated with a User
       tags:
         - Users
+      x-restrict-elevated-user:
+        bypassScopes:
+          - administrators
+        model: SystemUser
+        pathParamName: user_id
       x-scopes:
         - users
       x-codeSamples:
