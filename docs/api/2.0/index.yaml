@@ -4873,6 +4873,10 @@ definitions:
       - SCIM_CLIENT_GROUP
       - SOFTWARE_APP
       - SOFTWARE_APP_GROUP
+      - IDP_ROUTING_POLICY
+      - IDP_ROUTING_POLICY_GROUP
+      - RULE
+      - RULE_GROUP
     type: string
   feature:
     description: A feature represents JumpCloud functionality.
@@ -6106,8 +6110,12 @@ definitions:
         type: string
       osFamily:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleOsFamily'
+      siRequired:
+        type: boolean
       status:
         type: string
+      systemBindingRequired:
+        type: boolean
       type:
         type: string
       unrestricted:
