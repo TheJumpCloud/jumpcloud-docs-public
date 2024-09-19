@@ -6427,6 +6427,8 @@ definitions:
       itemsInFolder:
         format: int32
         type: integer
+      maxLastSync:
+        type: string
       name:
         type: string
       oldPasswords:
@@ -7297,6 +7299,9 @@ definitions:
       allowUpdateDelay:
         default: false
         type: boolean
+      appCatalogInstallableObjectId:
+        description: ID of the app catalog installable that created this app.
+        type: string
       appleVpp:
         $ref: '#/definitions/software-app-apple-vpp'
       assetKind:
@@ -7327,6 +7332,9 @@ definitions:
         type: string
       googleAndroid:
         $ref: '#/definitions/software-app-google-android'
+      iconUrl:
+        description: URL to the icon for the app.
+        type: string
       location:
         description: Repository where the app is located within the package manager
         type: string
@@ -25962,6 +25970,7 @@ paths:
             type: object
       security:
         - x-api-key: []
+      summary: Deactivate Password Manager
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26018,6 +26027,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetAppVersionsListResponse'
       security:
         - x-api-key: []
+      summary: List App Versions
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26088,6 +26098,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.ListBackupKeysResponse'
       security:
         - x-api-key: []
+      summary: List Cloud Backup Keys
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26134,6 +26145,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.BackupKey'
       security:
         - x-api-key: []
+      summary: Create Cloud Backup Keys
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26194,6 +26206,7 @@ paths:
             type: object
       security:
         - x-api-key: []
+      summary: Delete Cloud Backup Key
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26236,6 +26249,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.BackupKey'
       security:
         - x-api-key: []
+      summary: Get Cloud Backup Key
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26283,6 +26297,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.BackupKey'
       security:
         - x-api-key: []
+      summary: Update Cloud Backup Key
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26352,6 +26367,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.ListBackupRestoresResponse'
       security:
         - x-api-key: []
+      summary: List Cloud Backup Restore Requests
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26415,6 +26431,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.BackupRestore'
       security:
         - x-api-key: []
+      summary: Update Cloud Backup Restore Request
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26484,6 +26501,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.ListBackupsResponse'
       security:
         - x-api-key: []
+      summary: List Cloud Backups
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26530,6 +26548,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.Backup'
       security:
         - x-api-key: []
+      summary: Get Cloud Backup
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26569,6 +26588,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.PoliciesResponse'
       security:
         - x-api-key: []
+      summary: Get Organization Policies
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26617,6 +26637,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.PoliciesResponse'
       security:
         - x-api-key: []
+      summary: Update Organization Policies
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26687,6 +26708,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.ListDevicesResponse'
       security:
         - x-api-key: []
+      summary: List Devices
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26733,6 +26755,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.Device'
       security:
         - x-api-key: []
+      summary: Get Device
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26798,6 +26821,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetMetadataResponse'
       security:
         - x-api-key: []
+      summary: Get Items Metadata
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26839,6 +26863,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.MainOverviewResponse'
       security:
         - x-api-key: []
+      summary: Get Overview Stats
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26878,6 +26903,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.FoldersPolicyResponse'
       security:
         - x-api-key: []
+      summary: Get Shared Folders Policy
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -26946,6 +26972,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.ListSelectedGroupsResponse'
       security:
         - x-api-key: []
+      summary: List Groups with Permission to Share Folders
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27016,6 +27043,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.ListSelectedUsersResponse'
       security:
         - x-api-key: []
+      summary: List Users with Permission to Share Folders
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27072,6 +27100,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.FoldersPolicyResponse'
       security:
         - x-api-key: []
+      summary: Update Shared Folders Policy
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27132,6 +27161,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetSharedFoldersResponse'
       security:
         - x-api-key: []
+      summary: Get Shared Folders
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27173,6 +27203,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetRolesResponse'
       security:
         - x-api-key: []
+      summary: Get Shared Folder Access Levels
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27217,6 +27248,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.Folder'
       security:
         - x-api-key: []
+      summary: Get Shared Folder Details
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27279,6 +27311,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetSharedFolderGroupsResponse'
       security:
         - x-api-key: []
+      summary: Get Shared Folder Groups
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27330,6 +27363,7 @@ paths:
             type: object
       security:
         - x-api-key: []
+      summary: Delete Shared Folder Group
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27380,6 +27414,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.FolderGroup'
       security:
         - x-api-key: []
+      summary: Update Shared Folder Group Access Level
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27443,6 +27478,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetSharedFolderUsersResponse'
       security:
         - x-api-key: []
+      summary: Get Shared Folder Users
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27494,6 +27530,7 @@ paths:
             type: object
       security:
         - x-api-key: []
+      summary: Delete Shared Folder User
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27545,6 +27582,7 @@ paths:
             type: object
       security:
         - x-api-key: []
+      summary: Update Shared Folder User Access Level
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27611,6 +27649,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetAllUsersResponse'
       security:
         - x-api-key: []
+      summary: Get users
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27661,6 +27700,7 @@ paths:
             type: object
       security:
         - x-api-key: []
+      summary: Resend User Invite
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27706,6 +27746,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetUserDetailsByIdResponse'
       security:
         - x-api-key: []
+      summary: Get User details
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27775,6 +27816,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetMetadataResponse'
       security:
         - x-api-key: []
+      summary: Get User Items
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -27839,6 +27881,7 @@ paths:
             $ref: '#/definitions/jumpcloud.pwm.GetSharedFoldersPerUserResponse'
       security:
         - x-api-key: []
+      summary: Get User Shared Folders
       tags:
         - Password Manager
       x-dynamic-gateway: true
@@ -32933,7 +32976,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/softwareapps \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
+              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
         - lang: Python
           source: |-
             import requests
@@ -32946,6 +32989,7 @@ paths:
                 "settings": [
                     {
                         "allowUpdateDelay": False,
+                        "appCatalogInstallableObjectId": "string",
                         "appleVpp": {
                             "appConfiguration": "string",
                             "assignedLicenses": 0,
@@ -32992,6 +33036,7 @@ paths:
                             "updateTime": "string",
                             "versionCode": 0
                         },
+                        "iconUrl": "string",
                         "location": "string",
                         "locationObjectId": "string",
                         "microsoftStore": {
@@ -33036,7 +33081,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
@@ -33381,7 +33426,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/softwareapps/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
+              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
         - lang: Python
           source: |-
             import requests
@@ -33394,6 +33439,7 @@ paths:
                 "settings": [
                     {
                         "allowUpdateDelay": False,
+                        "appCatalogInstallableObjectId": "string",
                         "appleVpp": {
                             "appConfiguration": "string",
                             "assignedLicenses": 0,
@@ -33440,6 +33486,7 @@ paths:
                             "updateTime": "string",
                             "versionCode": 0
                         },
+                        "iconUrl": "string",
                         "location": "string",
                         "locationObjectId": "string",
                         "microsoftStore": {
@@ -33484,7 +33531,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
