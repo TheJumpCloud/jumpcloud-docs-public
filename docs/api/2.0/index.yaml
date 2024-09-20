@@ -5311,6 +5311,7 @@ definitions:
       - ALERT_SOURCE_TYPE_USER
       - ALERT_SOURCE_TYPE_ADMIN
       - ALERT_SOURCE_TYPE_DEVICE
+      - ALERT_SOURCE_TYPE_USER_GROUP
     type: string
   jumpcloud.alerts.AlertStatus:
     default: ALERT_STATUS_UNSPECIFIED
