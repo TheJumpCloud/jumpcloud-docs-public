@@ -4902,6 +4902,7 @@ definitions:
           - primePass
           - radius
           - remoteAccess
+          - saasMgmt
           - sso
           - systemInsights
           - userLifecycle
