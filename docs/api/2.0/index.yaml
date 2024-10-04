@@ -15445,6 +15445,7 @@ paths:
         - Bulk Job Requests
       x-scopes:
         - users
+        - users.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
