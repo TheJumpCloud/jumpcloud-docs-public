@@ -4315,6 +4315,15 @@ definitions:
       version:
         type: string
     type: object
+  devices.Filters:
+    properties:
+      field:
+        type: string
+      values:
+        items:
+          type: string
+        type: array
+    type: object
   devices.GetDefaultPasswordSyncSettingsResponse:
     properties:
       enabled:
@@ -4525,6 +4534,54 @@ definitions:
       - AVAILABLE
       - REJECTED
     type: string
+  devices.SavedView:
+    properties:
+      columns:
+        items:
+          type: string
+        title: '["col1", "col2", "col3"]'
+        type: array
+      filters:
+        items:
+          $ref: '#/definitions/devices.Filters'
+        title: '[ {''field'': ''field1'', ''values'': [''val1'' , ''val2''] }, { ... } ]'
+        type: array
+      isDefault:
+        type: boolean
+      name:
+        type: string
+      objectId:
+        format: byte
+        type: string
+      shared:
+        type: boolean
+      userObjectId:
+        format: byte
+        type: string
+    type: object
+  devices.SavedViewCreateRequest:
+    properties:
+      columns:
+        items:
+          type: string
+        type: array
+      filters:
+        items:
+          $ref: '#/definitions/devices.Filters'
+        type: array
+      isDefault:
+        type: boolean
+      name:
+        type: string
+      objectId:
+        format: byte
+        type: string
+      shared:
+        type: boolean
+      userObjectId:
+        format: byte
+        type: string
+    type: object
   devices.SetDefaultPasswordSyncSettingsRequest:
     properties:
       enabled:
@@ -4577,6 +4634,10 @@ definitions:
     type: string
   devices.SoftwareApp:
     properties:
+      createdAt:
+        format: date-time
+        type: string
+        x-nullable: true
       displayName:
         type: string
       objectId:
@@ -4586,6 +4647,10 @@ definitions:
         items:
           $ref: '#/definitions/devices.SoftwareApp.Setting'
         type: array
+      updatedAt:
+        format: date-time
+        type: string
+        x-nullable: true
     type: object
   devices.SoftwareApp.Setting:
     properties:
@@ -4609,6 +4674,10 @@ definitions:
         type: boolean
       commandLineArguments:
         type: string
+      createdAt:
+        format: date-time
+        type: string
+        x-nullable: true
       description:
         type: string
       desiredState:
@@ -4618,6 +4687,8 @@ definitions:
         type: string
       googleAndroid:
         $ref: '#/definitions/devices.SoftwareAppGoogleAndroid'
+      iconUrl:
+        type: string
       location:
         type: string
       locationObjectId:
@@ -4635,6 +4706,10 @@ definitions:
         type: string
       packageVersion:
         type: string
+      packageVersionUpdatedAt:
+        format: date-time
+        type: string
+        x-nullable: true
       scope:
         $ref: '#/definitions/devices.SoftwareApp.Setting.Scope'
       storedPackage:
@@ -4642,6 +4717,10 @@ definitions:
       storedPackageObjectId:
         format: byte
         type: string
+      updatedAt:
+        format: date-time
+        type: string
+        x-nullable: true
     type: object
   devices.SoftwareApp.Setting.Scope:
     default: SYSTEM
@@ -4873,10 +4952,6 @@ definitions:
       - SCIM_CLIENT_GROUP
       - SOFTWARE_APP
       - SOFTWARE_APP_GROUP
-      - IDP_ROUTING_POLICY
-      - IDP_ROUTING_POLICY_GROUP
-      - RULE
-      - RULE_GROUP
     type: string
   feature:
     description: A feature represents JumpCloud functionality.
@@ -7116,6 +7191,9 @@ definitions:
     type: object
   software-app:
     properties:
+      createdAt:
+        format: date-time
+        type: string
       displayName:
         type: string
       id:
@@ -7124,6 +7202,9 @@ definitions:
         items:
           $ref: '#/definitions/software-app-settings'
         type: array
+      updatedAt:
+        format: date-time
+        type: string
     title: Software Application Package
     type: object
   software-app-apple-vpp:
@@ -7161,6 +7242,9 @@ definitions:
     type: object
   software-app-create:
     properties:
+      createdAt:
+        format: date-time
+        type: string
       displayName:
         type: string
       id:
@@ -7169,6 +7253,9 @@ definitions:
         items:
           $ref: '#/definitions/software-app-settings'
         type: array
+      updatedAt:
+        format: date-time
+        type: string
       uploadUrl:
         type: string
     title: SoftwareApplicationCreate
@@ -7333,6 +7420,9 @@ definitions:
       commandLineArguments:
         description: Command line arguments to use with the application.
         type: string
+      createdAt:
+        format: date-time
+        type: string
       description:
         description: The software app description.
         type: string
@@ -7369,6 +7459,9 @@ definitions:
       packageVersion:
         description: The package manifest version.
         type: string
+      packageVersionUpdatedAt:
+        format: date-time
+        type: string
       scope:
         description: The installation scope of the software app.
         type: string
@@ -7376,6 +7469,9 @@ definitions:
         $ref: '#/definitions/object-storage-item'
       storedPackageObjectId:
         description: ID of the stored package this app uses to reference the stored install media.
+        type: string
+      updatedAt:
+        format: date-time
         type: string
     type: object
     x-examples:
@@ -16292,10 +16388,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: Get the Default Password Sync Setting
@@ -16367,10 +16459,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: Set the Default Password Sync Setting
@@ -16455,10 +16543,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: Get the Sign In with JumpCloud Settings
@@ -16540,10 +16624,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: Set the Sign In with JumpCloud Settings
@@ -16634,10 +16714,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: Get the SSAO Devices Settings for an Organization
@@ -16719,10 +16795,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: Set the SSAO Devices Settings for an Organization
@@ -24942,10 +25014,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: List the Items stored in Object Storage
@@ -25008,10 +25076,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: Get the current Object Storage status
@@ -32854,10 +32918,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: List the App Catalog
@@ -32935,10 +32995,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: Get an App Catalog Item
@@ -33071,7 +33127,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/softwareapps \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
+              --data '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","updatedAt":"2019-08-24T14:15:22Z"}],"updatedAt":"2019-08-24T14:15:22Z"}'
         - lang: Python
           source: |-
             import requests
@@ -33079,6 +33135,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/softwareapps"
 
             payload = {
+                "createdAt": "2019-08-24T14:15:22Z",
                 "displayName": "string",
                 "id": "string",
                 "settings": [
@@ -33099,6 +33156,7 @@ paths:
                         "assetSha256Strings": ["string"],
                         "autoUpdate": False,
                         "commandLineArguments": "string",
+                        "createdAt": "2019-08-24T14:15:22Z",
                         "description": "string",
                         "desiredState": "string",
                         "enterpriseObjectId": "string",
@@ -33144,6 +33202,7 @@ paths:
                         "packageManager": "string",
                         "packageSubtitle": "string",
                         "packageVersion": "string",
+                        "packageVersionUpdatedAt": "2019-08-24T14:15:22Z",
                         "scope": "string",
                         "storedPackage": {
                             "objectId": "string",
@@ -33159,9 +33218,11 @@ paths:
                                 }
                             ]
                         },
-                        "storedPackageObjectId": "string"
+                        "storedPackageObjectId": "string",
+                        "updatedAt": "2019-08-24T14:15:22Z"
                     }
-                ]
+                ],
+                "updatedAt": "2019-08-24T14:15:22Z"
             }
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -33176,7 +33237,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","updatedAt":"2019-08-24T14:15:22Z"}],"updatedAt":"2019-08-24T14:15:22Z"}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
@@ -33521,7 +33582,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/softwareapps/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
+              --data '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","updatedAt":"2019-08-24T14:15:22Z"}],"updatedAt":"2019-08-24T14:15:22Z"}'
         - lang: Python
           source: |-
             import requests
@@ -33529,6 +33590,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/softwareapps/{id}"
 
             payload = {
+                "createdAt": "2019-08-24T14:15:22Z",
                 "displayName": "string",
                 "id": "string",
                 "settings": [
@@ -33549,6 +33611,7 @@ paths:
                         "assetSha256Strings": ["string"],
                         "autoUpdate": False,
                         "commandLineArguments": "string",
+                        "createdAt": "2019-08-24T14:15:22Z",
                         "description": "string",
                         "desiredState": "string",
                         "enterpriseObjectId": "string",
@@ -33594,6 +33657,7 @@ paths:
                         "packageManager": "string",
                         "packageSubtitle": "string",
                         "packageVersion": "string",
+                        "packageVersionUpdatedAt": "2019-08-24T14:15:22Z",
                         "scope": "string",
                         "storedPackage": {
                             "objectId": "string",
@@ -33609,9 +33673,11 @@ paths:
                                 }
                             ]
                         },
-                        "storedPackageObjectId": "string"
+                        "storedPackageObjectId": "string",
+                        "updatedAt": "2019-08-24T14:15:22Z"
                     }
-                ]
+                ],
+                "updatedAt": "2019-08-24T14:15:22Z"
             }
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -33626,7 +33692,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","updatedAt":"2019-08-24T14:15:22Z"}],"updatedAt":"2019-08-24T14:15:22Z"}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
@@ -38554,6 +38620,154 @@ paths:
         type: string
     x-functionalities-tags:
       - system-insights
+  /systems/views:
+    get:
+      description: "List the saved views for an Organization.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/systems/views \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 1000 Saved Views in a single response."
+      operationId: SavedViews_List
+      parameters:
+        - format: byte
+          in: query
+          name: organizationObjectId
+          required: false
+          type: string
+        - format: byte
+          in: query
+          name: userObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Success listing Saved Views.
+          schema:
+            items:
+              $ref: '#/definitions/devices.SavedView'
+            type: array
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: List the Items stored in SavedViews
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/systems/views?organizationObjectId=SOME_STRING_VALUE&userObjectId=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/systems/views"
+
+            querystring = {"organizationObjectId":"SOME_STRING_VALUE","userObjectId":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/views?organizationObjectId=SOME_STRING_VALUE&userObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+    post:
+      description: |-
+        Creates the saved view for an organization.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/systems/views \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: SavedViews_Create
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/devices.SavedViewCreateRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/devices.SavedView'
+      security:
+        - x-api-key: []
+      summary: Creates a saved view for an organization
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/systems/views \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"columns":["string"],"filters":[{"field":"string","values":["string"]}],"isDefault":true,"name":"string","objectId":"string","shared":true,"userObjectId":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/systems/views"
+
+            payload = {
+                "columns": ["string"],
+                "filters": [
+                    {
+                        "field": "string",
+                        "values": ["string"]
+                    }
+                ],
+                "isDefault": True,
+                "name": "string",
+                "objectId": "string",
+                "shared": True,
+                "userObjectId": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/views' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"columns":["string"],"filters":[{"field":"string","values":["string"]}],"isDefault":true,"name":"string","objectId":"string","shared":true,"userObjectId":"string"}'
   '/systems/{systemObjectId}/aggregated-policy-stats':
     get:
       description: |-
@@ -38583,10 +38797,6 @@ paths:
           description: A successful response.
           schema:
             $ref: '#/definitions/devices.AggregatedPolicyResultResponse'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/google.rpc.Status'
       security:
         - x-api-key: []
       summary: Get the Aggregated Policy Stats for a System
@@ -42979,6 +43189,7 @@ tags:
   - name: SSO
   - name: SaaS App Management
   - name: Samba Domains
+  - name: Saved Views
   - name: Software Apps
   - name: Software Catalog
   - name: SubscriptionComponent
@@ -43092,6 +43303,7 @@ x-tagGroups:
       - Rules
       - SCIM Import
       - Samba Domains
+      - Saved Views
       - Software Apps
       - Subscriptions
       - System Group Associations
