@@ -4966,6 +4966,10 @@ definitions:
       - SCIM_CLIENT_GROUP
       - SOFTWARE_APP
       - SOFTWARE_APP_GROUP
+      - IDP_ROUTING_POLICY
+      - IDP_ROUTING_POLICY_GROUP
+      - RULE
+      - RULE_GROUP
     type: string
   feature:
     description: A feature represents JumpCloud functionality.
@@ -6008,6 +6012,13 @@ definitions:
     properties:
       template:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleTemplate'
+    type: object
+  jumpcloud.healthmonitoring.GetRulesStatsResponse:
+    description: GetRulesStatsResponse is the response to the Get Rule Stats.
+    properties:
+      systemInsightsRequiredCount:
+        format: uint64
+        type: integer
     type: object
   jumpcloud.healthmonitoring.ListRuleTemplatesResponse:
     description: ListRuleTemplatesResponse holds the list of rules requested via a ListRulesRequest.
@@ -20573,6 +20584,46 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+  /healthmonitoring/rules-stats:
+    get:
+      description: This endpoint is used for getting rules stats.
+      operationId: RulesService_GetRulesStats
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.GetRulesStatsResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is getting rules stats.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - healthmonitoring.rules
+        - healthmonitoring.rules.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules-stats \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules-stats"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules-stats' -Method GET -Headers $headers
   '/healthmonitoring/rules/{id}':
     delete:
       description: This endpoint allows you to delete a health monitoring rule.
