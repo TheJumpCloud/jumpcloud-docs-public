@@ -6068,6 +6068,8 @@ definitions:
         type: string
       description:
         type: string
+      detectPreExistingAnamolies:
+        type: boolean
       eventType:
         type: string
       lastUpdatedAt:
@@ -20541,7 +20543,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -20559,6 +20561,7 @@ paths:
                     ],
                     "conditionsRelation": "LOGICAL_OPERATOR_UNSPECIFIED",
                     "description": "string",
+                    "detectPreExistingAnamolies": True,
                     "eventType": "string",
                     "name": "string",
                     "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
@@ -20579,7 +20582,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules-stats:
     get:
       description: This endpoint is used for getting rules stats.
@@ -20748,7 +20751,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -20766,6 +20769,7 @@ paths:
                     ],
                     "conditionsRelation": "LOGICAL_OPERATOR_UNSPECIFIED",
                     "description": "string",
+                    "detectPreExistingAnamolies": True,
                     "eventType": "string",
                     "name": "string",
                     "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
@@ -20786,7 +20790,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   '/healthmonitoring/rules/{rule_id}/associations':
     get:
       description: |-
