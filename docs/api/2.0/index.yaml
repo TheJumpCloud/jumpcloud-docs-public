@@ -4966,6 +4966,10 @@ definitions:
       - SCIM_CLIENT_GROUP
       - SOFTWARE_APP
       - SOFTWARE_APP_GROUP
+      - IDP_ROUTING_POLICY
+      - IDP_ROUTING_POLICY_GROUP
+      - RULE
+      - RULE_GROUP
     type: string
   feature:
     description: A feature represents JumpCloud functionality.
@@ -5996,6 +6000,7 @@ definitions:
       - DISPLAY_TYPE_INPUTREADONLY
       - DISPLAY_TYPE_ICONSTATUS
       - DISPLAY_TYPE_ITEMLIST
+      - DISPLAY_TYPE_EXISTING_VIOLATIONS
     type: string
   jumpcloud.healthmonitoring.GetRuleResponse:
     description: GetRuleResponse is the response to the GetRuleRequest.
