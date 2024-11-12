@@ -5030,7 +5030,7 @@ definitions:
             foo = any.unpack(Foo.class);
           }
 
-       Example 3: Pack and unpack a message in Python.
+      Example 3: Pack and unpack a message in Python.
 
           foo = Foo(...)
           any = Any()
@@ -5040,7 +5040,7 @@ definitions:
             any.Unpack(foo)
             ...
 
-       Example 4: Pack and unpack a message in Go
+      Example 4: Pack and unpack a message in Go
 
            foo := &pb.Foo{...}
            any, err := anypb.New(foo)
@@ -5061,7 +5061,7 @@ definitions:
 
 
       JSON
-      ====
+
       The JSON representation of an `Any` value uses the regular
       representation of the deserialized, embedded message, with an
       additional field `@type` which contains the type URL. Example:
@@ -6541,7 +6541,7 @@ definitions:
           type: string
         type: array
       searchRequest:
-        type: object
+        $ref: '#/definitions/jumpcloud.search.SearchRequest'
     type: object
   jumpcloud.insights.ReportTemplateResponse:
     properties:
@@ -6575,7 +6575,7 @@ definitions:
         title: Specifies the list of objects referred by this report
         type: array
       searchRequest:
-        type: object
+        $ref: '#/definitions/jumpcloud.search.SearchRequest'
       updatedAt:
         format: date-time
         readOnly: true
@@ -7272,6 +7272,126 @@ definitions:
         format: int32
         type: integer
     type: object
+  jumpcloud.search.Function:
+    default: COUNT
+    enum:
+      - COUNT
+      - AVG
+      - MAX
+      - MIN
+      - SUM
+    type: string
+  jumpcloud.search.SearchRequest:
+    properties:
+      aggregations:
+        items:
+          $ref: '#/definitions/jumpcloud.search.SearchRequestAggregation'
+        type: array
+      fields:
+        $ref: '#/definitions/jumpcloud.search.SearchRequestFields'
+      filters:
+        items:
+          $ref: '#/definitions/jumpcloud.search.SearchRequestFilter'
+        type: array
+      limit:
+        description: |-
+          Maximum number of rows (inclusive) to return in the objects.  Note that there is an implicit limit enforced always
+          in the external API.
+        format: int32
+        type: integer
+      sort:
+        items:
+          $ref: '#/definitions/jumpcloud.search.SearchRequestSort'
+        type: array
+    type: object
+  jumpcloud.search.SearchRequestAggregation:
+    properties:
+      field:
+        description: |-
+          This is a field on an object.  It should always be in the form of <objectName>.<fieldName>  This will be case
+          insensitive, and will be cast to lowercase always.
+        items:
+          type: string
+        type: array
+      function:
+        $ref: '#/definitions/jumpcloud.search.Function'
+      name:
+        type: string
+    type: object
+  jumpcloud.search.SearchRequestFields:
+    properties:
+      exclude:
+        items:
+          type: string
+        type: array
+      include:
+        items:
+          type: string
+        type: array
+    type: object
+  jumpcloud.search.SearchRequestFilter:
+    properties:
+      field:
+        description: |-
+          This is a field on an object.  It should always be in the form of <objectName>.<fieldName>  This will be case
+          insensitive, and will be cast to lowercase always.
+        type: string
+      filters:
+        description: |-
+          Only allowed when operation is 'and'/'or'.  This allows for logical groupings of sub-filters provided in this
+          field's array.
+        items:
+          $ref: '#/definitions/jumpcloud.search.SearchRequestFilter'
+        type: array
+      operation:
+        $ref: '#/definitions/jumpcloud.search.SearchRequestFilter.Operation'
+      value:
+        description: |-
+          Static value to be compared against. For values that will need to be compared as a datetime object, this should be
+          provided as an ISO8601 format string with no offset (UTC).
+    type: object
+  jumpcloud.search.SearchRequestFilter.Operation:
+    default: AND
+    description: |-
+      Filter operation to be applied:
+      and - Provides logical 'and' groupings of all elements provided in the `filters` array (all sub-filter criteria
+         must be satisfied).
+      or - Provides logical 'or' groupings of all elements provided in the `filters` array (any sub-filter criteria can
+         be satisfied).
+      equals - Compares `field` with `value` for a // match.  Case insensitive.
+      not_equals - Compares `field` with `value` for an exact non-match.  Case insensitive.
+      greater_than - Checks if `field` is greater numerically than static `value` (non-inclusive).  Works for numbers and
+         datetime types.
+      less_than - Checks if `field` is less than static `value` (non-inclusive).  Works for numbers and datetime types.
+      starts_with - Checks if `field` starts with static `value`.  Case insensitive.  Only works for string types.
+      ends_with - Checks if `field` ends with static `value`.  Case insensitive.  Only works for string types.
+    enum:
+      - AND
+      - OR
+      - EQUALS
+      - NOT_EQUAL
+      - GREATER_THAN
+      - LESS_THAN
+      - STARTS_WITH
+      - ENDS_WITH
+    type: string
+  jumpcloud.search.SearchRequestSort:
+    properties:
+      field:
+        description: |-
+          This is a field on an object.  It should always be in the form of
+          <objectName>.<fieldName>  This will be case insensitive, and will be cast to
+          lowercase always.
+        type: string
+      order:
+        $ref: '#/definitions/jumpcloud.search.SearchRequestSort.Order'
+    type: object
+  jumpcloud.search.SearchRequestSort.Order:
+    default: ASC
+    enum:
+      - ASC
+      - DESC
+    type: string
   ldap-server:
     properties:
       id:
@@ -33458,7 +33578,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/reports/custom \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{}}}'
+              --data '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{"aggregations":[{"field":["string"],"function":"COUNT","name":"string"}],"fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"AND","value":null}],"limit":0,"sort":[{"field":"string","order":"ASC"}]}}}'
         - lang: Python
           source: |-
             import requests
@@ -33471,7 +33591,34 @@ paths:
                     "displayName": "string",
                     "id": "string",
                     "resources": ["string"],
-                    "searchRequest": {}
+                    "searchRequest": {
+                        "aggregations": [
+                            {
+                                "field": ["string"],
+                                "function": "COUNT",
+                                "name": "string"
+                            }
+                        ],
+                        "fields": {
+                            "exclude": ["string"],
+                            "include": ["string"]
+                        },
+                        "filters": [
+                            {
+                                "field": "string",
+                                "filters": [{}],
+                                "operation": "AND",
+                                "value": None
+                            }
+                        ],
+                        "limit": 0,
+                        "sort": [
+                            {
+                                "field": "string",
+                                "order": "ASC"
+                            }
+                        ]
+                    }
                 }}
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -33486,7 +33633,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{}}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{"aggregations":[{"field":["string"],"function":"COUNT","name":"string"}],"fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"AND","value":null}],"limit":0,"sort":[{"field":"string","order":"ASC"}]}}}'
   '/reports/custom/{objectId}':
     delete:
       description: |-
@@ -33701,7 +33848,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/reports/custom/{objectId} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{}}}'
+              --data '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{"aggregations":[{"field":["string"],"function":"COUNT","name":"string"}],"fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"AND","value":null}],"limit":0,"sort":[{"field":"string","order":"ASC"}]}}}'
         - lang: Python
           source: |-
             import requests
@@ -33714,7 +33861,34 @@ paths:
                     "displayName": "string",
                     "id": "string",
                     "resources": ["string"],
-                    "searchRequest": {}
+                    "searchRequest": {
+                        "aggregations": [
+                            {
+                                "field": ["string"],
+                                "function": "COUNT",
+                                "name": "string"
+                            }
+                        ],
+                        "fields": {
+                            "exclude": ["string"],
+                            "include": ["string"]
+                        },
+                        "filters": [
+                            {
+                                "field": "string",
+                                "filters": [{}],
+                                "operation": "AND",
+                                "value": None
+                            }
+                        ],
+                        "limit": 0,
+                        "sort": [
+                            {
+                                "field": "string",
+                                "order": "ASC"
+                            }
+                        ]
+                    }
                 }}
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -33729,7 +33903,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{}}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{"aggregations":[{"field":["string"],"function":"COUNT","name":"string"}],"fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"AND","value":null}],"limit":0,"sort":[{"field":"string","order":"ASC"}]}}}'
   /reports/jumpcloud:
     get:
       description: |-
