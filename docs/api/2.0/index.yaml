@@ -4997,6 +4997,7 @@ definitions:
           - radius
           - remoteAccess
           - saasMgmt
+          - softwareManagement
           - sso
           - systemInsights
           - userLifecycle
