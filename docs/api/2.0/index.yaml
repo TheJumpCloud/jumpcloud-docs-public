@@ -43548,6 +43548,8 @@ paths:
           required: true
           schema:
             properties:
+              admin:
+                type: string
               organizationObjectId:
                 format: byte
                 type: string
@@ -43574,7 +43576,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/workflowaccessrequest/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"organizationObjectId":"string","status":"string"}'
+              --data '{"admin":"string","organizationObjectId":"string","status":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -43582,6 +43584,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/workflowaccessrequest/{id}"
 
             payload = {
+                "admin": "string",
                 "organizationObjectId": "string",
                 "status": "string"
             }
@@ -43598,7 +43601,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/workflowaccessrequest/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"organizationObjectId":"string","status":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/workflowaccessrequest/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"admin":"string","organizationObjectId":"string","status":"string"}'
 produces:
   - application/json
 responses:
