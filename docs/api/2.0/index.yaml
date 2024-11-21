@@ -4967,10 +4967,6 @@ definitions:
       - SCIM_CLIENT_GROUP
       - SOFTWARE_APP
       - SOFTWARE_APP_GROUP
-      - IDP_ROUTING_POLICY
-      - IDP_ROUTING_POLICY_GROUP
-      - RULE
-      - RULE_GROUP
     type: string
   feature:
     description: A feature represents JumpCloud functionality.
