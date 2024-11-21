@@ -5032,7 +5032,7 @@ definitions:
             foo = any.unpack(Foo.class);
           }
 
-      Example 3: Pack and unpack a message in Python.
+       Example 3: Pack and unpack a message in Python.
 
           foo = Foo(...)
           any = Any()
@@ -5042,7 +5042,7 @@ definitions:
             any.Unpack(foo)
             ...
 
-      Example 4: Pack and unpack a message in Go
+       Example 4: Pack and unpack a message in Go
 
            foo := &pb.Foo{...}
            any, err := anypb.New(foo)
@@ -5063,7 +5063,7 @@ definitions:
 
 
       JSON
-
+      ====
       The JSON representation of an `Any` value uses the regular
       representation of the deserialized, embedded message, with an
       additional field `@type` which contains the type URL. Example:
@@ -5601,7 +5601,7 @@ definitions:
     enum:
       - PERSONAL_USAGE_ALLOWED
       - PERSONAL_USAGE_DISALLOWED
-      - DEDICATED_DEVICE
+      - PERSONAL_USAGE_DISALLOWED_USERLESS
     title: |-
       Controls whether personal usage is allowed on a device provisioned
       Refer https://developers.google.com/android/management/reference/rest/v1/enterprises.enrollmentTokens
@@ -5803,6 +5803,8 @@ definitions:
         type: string
       displayName:
         type: string
+      googleAuthenticationRequired:
+        $ref: '#/definitions/jumpcloud.google_emm.GoogleAuthenticationRequired'
       name:
         type: string
       objectId:
@@ -5817,6 +5819,13 @@ definitions:
     enum:
       - SOFTWARE_MANAGEMENT
       - ZERO_TOUCH_CUSTOMER_MANAGEMENT
+    type: string
+  jumpcloud.google_emm.GoogleAuthenticationRequired:
+    default: GOOGLE_AUTHENTICATION_REQUIRED_UNSPECIFIED
+    enum:
+      - GOOGLE_AUTHENTICATION_REQUIRED_UNSPECIFIED
+      - NOT_REQUIRED
+      - REQUIRED
     type: string
   jumpcloud.google_emm.HardwareInfo:
     properties:
