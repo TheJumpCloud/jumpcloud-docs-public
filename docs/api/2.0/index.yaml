@@ -5129,7 +5129,9 @@ definitions:
       [API Design Guide](https://cloud.google.com/apis/design/errors).
     properties:
       code:
-        description: 'The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].'
+        description: |-
+          The status code, which should be an enum value of
+          [google.rpc.Code][google.rpc.Code].
         format: int32
         type: integer
       details:
@@ -5143,7 +5145,8 @@ definitions:
         description: |-
           A developer-facing error message, which should be in English. Any
           user-facing error message should be localized and sent in the
-          [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+          by the client.
         type: string
     type: object
   gsuite:
