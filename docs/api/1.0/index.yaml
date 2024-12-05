@@ -2555,6 +2555,8 @@ definitions:
         properties:
           id:
             type: string
+          roleName:
+            type: string
         type: object
         x-nullable: true
       allow_public_key:
