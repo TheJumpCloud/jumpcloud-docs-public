@@ -317,6 +317,7 @@ definitions:
         type: string
       type:
         enum:
+          - admin_portal
           - user_portal
           - application
           - ldap
@@ -345,6 +346,7 @@ definitions:
       - user_portal
       - application
       - ldap
+      - admin_portal
     title: AuthnPolicyType
     type: string
   AuthnPolicyUserAttributeFilter:
@@ -15010,7 +15012,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/authn/policies \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"user_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
         - lang: Python
           source: |-
             import requests
@@ -15033,7 +15035,7 @@ paths:
                     "resources": [
                         {
                             "id": "string",
-                            "type": "user_portal"
+                            "type": "admin_portal"
                         }
                     ],
                     "userAttributes": {
@@ -15073,7 +15075,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"user_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
     x-functionalities-tags:
       - policies
   '/authn/policies/{id}':
@@ -15254,7 +15256,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/authn/policies/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"user_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
         - lang: Python
           source: |-
             import requests
@@ -15277,7 +15279,7 @@ paths:
                     "resources": [
                         {
                             "id": "string",
-                            "type": "user_portal"
+                            "type": "admin_portal"
                         }
                     ],
                     "userAttributes": {
@@ -15317,7 +15319,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"user_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
     x-functionalities-tags:
       - policies
   '/authn/policy/fallback/{resource_type}':
