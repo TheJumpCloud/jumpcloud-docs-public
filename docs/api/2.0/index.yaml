@@ -4969,6 +4969,10 @@ definitions:
       - SCIM_CLIENT_GROUP
       - SOFTWARE_APP
       - SOFTWARE_APP_GROUP
+      - IDP_ROUTING_POLICY
+      - IDP_ROUTING_POLICY_GROUP
+      - RULE
+      - RULE_GROUP
     type: string
   feature:
     description: A feature represents JumpCloud functionality.
@@ -6037,6 +6041,7 @@ definitions:
     description: GetRulesStatsResponse is the response to the Get Rule Stats.
     properties:
       systemInsightsRequiredCount:
+        description: number of rules which require system insights to be enabled.
         format: uint64
         type: integer
     type: object
@@ -6055,9 +6060,11 @@ definitions:
     description: ListRulesResponse holds the list of rules requested via a ListRulesRequest.
     properties:
       count:
+        description: count specifies the number of rules returned in the response.
         format: uint64
         type: integer
       rules:
+        description: An array of rule objects.
         items:
           $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
         type: array
@@ -6067,6 +6074,10 @@ definitions:
     description: |-
       LogicalOperator specifies logical operations.
       Used to combine rule conditions and filters in a logical manner.
+
+       - LOGICAL_OPERATOR_UNSPECIFIED: No operator specified
+       - LOGICAL_OPERATOR_AND: Combine operands using AND
+       - LOGICAL_OPERATOR_OR: Combine operands using OR
     enum:
       - LOGICAL_OPERATOR_UNSPECIFIED
       - LOGICAL_OPERATOR_AND
@@ -6093,8 +6104,28 @@ definitions:
       description:
         type: string
       detectPreExistingAnamolies:
+        description: |2-
+            Toggle to specify whether the alert should be produced for
+            already existing anomalies when the rule is created
+            or
+            the rule applies to future violations.
         type: boolean
       eventType:
+        description: |2-
+
+            Supported values for event_type are
+             policy_result
+             command_result
+             software_status_update
+             user_create
+             user_admin_granted
+             user_group_admin_grant
+             software_add
+             software_remove
+             device_inactive
+             device_metrics_uptime_sample
+             device_metrics_disk_usage_sample
+             device_metrics_battery_sample.
         type: string
       lastUpdatedAt:
         format: date-time
@@ -6120,12 +6151,20 @@ definitions:
       status:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleStatus'
       templateObjectId:
+        description: |-
+          Identifies the rule template which is used to render the Rule configuration
+          parameters via GUI. It is still a required parameter even when GUI is not used
+          for configuring the rule.
+          Identify the rule type and corresponding
+          Rule template to fill this parameter during rule creation / updation
+          Templates can be fetched using GET on /api/v2/healthmonitoring/ruletemplates.
+          Please use the name field in the response to select
+          appropriate rule template object ID to be used for configuring the rule.
         format: byte
         type: string
     type: object
   jumpcloud.healthmonitoring.RuleCategory:
     default: RULE_CATEGORY_UNSPECIFIED
-    description: RuleCategory specifies different categories for a rule.
     enum:
       - RULE_CATEGORY_UNSPECIFIED
       - RULE_CATEGORY_DIRECTORY
@@ -6133,22 +6172,75 @@ definitions:
       - RULE_CATEGORY_ADMIN
       - RULE_CATEGORY_ACCESS
       - RULE_CATEGORY_GENERAL
+    title: |-
+      RuleCategory specifies the category for a rule.
+      Category specified in the rule decides the category of the produced alert.
+      This categorization allows easier filtering and management of alerts."
     type: string
   jumpcloud.healthmonitoring.RuleCondition:
-    description: RuleCondition holds a single condition bind to a rule.
     properties:
       eventType:
+        description: event_type specifies the event on which the rule's conditions have to be matched.
         type: string
       filters:
-        description: JSON configuration.
+        description: |-
+          filters specify how to filter event messages to match the conditions.
+            Example:
+            The example below is for matching policy_id in a rule with event_type: policy_result.
+            Note that each rule has a specific set of filters supported.
+
+              "filters":{
+                "resource.policy_id": {
+                  "match_type": "=",
+                  "value_type": "string",
+                  "value":"6661c734af8ad100010a2483",
+                  "type":"mandatory",
+                  "template_config_id":"664cbeded18e0095a00ba36a"
+                }
+              }.
+              Match the "policy_id" field nested under the "resource" object of the incoming JSON message.
+              This is an equal to match (specified in "match_type"),
+              with the field type as string (specified in "value_type").
+              The value to be matched is specified in "value". Supported values for match_type are
+              string fields - "contains", "contains_any", "not_contains", "regex", "match_all"
+              integer fields - ">", ">=", "<", "<="
         type: object
       objectId:
         format: byte
         type: string
+    title: |-
+      RuleCondition holds a single condition bound to a rule.
+      Example:
+         {
+            "conditions" : [
+               {
+                  "event_type" : "policy_result",
+                  "filters" : {
+                     "resource.policy_id" : {
+                        "match_type" : "=",
+                        "template_config_id" : "664cbeded18e0095a00ba36a",
+                        "type" : "mandatory",
+                        "value" : "6661c734af8ad100010a2483",
+                        "value_type" : "string"
+                     }
+                  }
+               }
+            ]
+         }
+         "eventType" specifies the event for which the conditions are applicable.
+         "filters" specifies a set of filters using which the condition match has to be checked."
     type: object
   jumpcloud.healthmonitoring.RuleOsFamily:
     default: RULE_OS_FAMILY_UNSPECIFIED
-    description: RuleOsFamily specifies the different OS families supported for a rule.
+    description: |-
+      RuleOsFamily specifies the OS family for a rule.
+      Currently not being used.
+
+       - RULE_OS_FAMILY_UNSPECIFIED: No OS family specified
+       - RULE_OS_FAMILY_ALL: Rule applies to all supported OS families
+       - RULE_OS_FAMILY_WINDOWS: Rule applies to windows OS family
+       - RULE_OS_FAMILY_DARWIN: Rule applies to darwin OS family
+       - RULE_OS_FAMILY_LINUX: Rule applies to linux OS family
     enum:
       - RULE_OS_FAMILY_UNSPECIFIED
       - RULE_OS_FAMILY_ALL
@@ -6158,7 +6250,15 @@ definitions:
     type: string
   jumpcloud.healthmonitoring.RuleSeverity:
     default: RULE_SEVERITY_UNSPECIFIED
-    description: RuleSeverity specifies different rule severities.
+    description: |-
+      RuleSeverity specifies the severity of a rule.
+      This severity decides the severity of the produced alert.
+      This allows the admin to assign different severities to alerts and helps prioritise the resolution.
+
+       - RULE_SEVERITY_UNSPECIFIED: No severity specified.
+       - RULE_SEVERITY_LOW: Severity of Low.
+       - RULE_SEVERITY_MEDIUM: Severity of Medium.
+       - RULE_SEVERITY_HIGH: Severity of High.
     enum:
       - RULE_SEVERITY_UNSPECIFIED
       - RULE_SEVERITY_LOW
@@ -6167,7 +6267,14 @@ definitions:
     type: string
   jumpcloud.healthmonitoring.RuleStatus:
     default: RULE_STATUS_UNSPECIFIED
-    description: RuleStatus specifies the different status.
+    description: |-
+      RuleStatus specifies the status of a rule.
+      The status of the rule which can be either enabled or disabled. 
+      The rule is processed only in an enabled state.
+
+       - RULE_STATUS_UNSPECIFIED: No status specified
+       - RULE_STATUS_ENABLED: rule is enabled
+       - RULE_STATUS_DISABLED: rule is disabled
     enum:
       - RULE_STATUS_UNSPECIFIED
       - RULE_STATUS_ENABLED
@@ -6432,6 +6539,10 @@ definitions:
         type: string
       status:
         type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
       userName:
         type: string
       workflowDescription:
@@ -6490,6 +6601,10 @@ definitions:
       runId:
         type: string
       status:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
         type: string
       userName:
         type: string
@@ -20780,7 +20895,18 @@ paths:
       operationId: RulesService_ListRules
       parameters:
         - collectionFormat: multi
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          description: |
+            A filter to apply to the query.
+
+              **Filter structure**: `<field>:<operator>:<value>`.
+
+              **field** = Populate with a valid field from an endpoint response.
+
+              **operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.
+
+              **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+              **Example** `GET /api/v2/groups?filter=name:eq:Test+Group`
           in: query
           items:
             type: string
@@ -20975,7 +21101,8 @@ paths:
       description: This endpoint allows you to delete a health monitoring rule.
       operationId: RulesService_DeleteRule
       parameters:
-        - format: byte
+        - description: Unique identifier of the rule to be deleted.
+          format: byte
           in: path
           name: id
           required: true
@@ -21019,7 +21146,8 @@ paths:
       description: This endpoint allows you get a health monitoring rule.
       operationId: RulesService_GetRule
       parameters:
-        - format: byte
+        - description: Unique identifier of the rule to be fetched
+          format: byte
           in: path
           name: id
           required: true
@@ -21064,7 +21192,8 @@ paths:
       description: This endpoint allows you to update a health monitoring rule.
       operationId: RulesService_UpdateRule
       parameters:
-        - format: byte
+        - description: Unique identifier of the rule to be modified.
+          format: byte
           in: path
           name: id
           required: true
