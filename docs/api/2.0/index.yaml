@@ -10715,10 +10715,17 @@ paths:
                 type: string
               name:
                 type: string
+              organizationObjectId:
+                format: byte
+                type: string
               resourceId:
                 type: string
               status:
                 type: string
+              visibleTo:
+                items:
+                  type: string
+                type: array
             type: object
       responses:
         '200':
@@ -10740,7 +10747,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/accessworkflows/{workflowId} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"approvalType":"string","description":"string","iconColor":"string","iconUrl":"string","name":"string","resourceId":"string","status":"string"}'
+              --data '{"approvalType":"string","description":"string","iconColor":"string","iconUrl":"string","name":"string","organizationObjectId":"string","resourceId":"string","status":"string","visibleTo":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -10753,8 +10760,10 @@ paths:
                 "iconColor": "string",
                 "iconUrl": "string",
                 "name": "string",
+                "organizationObjectId": "string",
                 "resourceId": "string",
-                "status": "string"
+                "status": "string",
+                "visibleTo": ["string"]
             }
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -10769,7 +10778,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/accessworkflows/{workflowId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","description":"string","iconColor":"string","iconUrl":"string","name":"string","resourceId":"string","status":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/accessworkflows/{workflowId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","description":"string","iconColor":"string","iconUrl":"string","name":"string","organizationObjectId":"string","resourceId":"string","status":"string","visibleTo":["string"]}'
   /accessworkflowsettings:
     post:
       description: Endpoint for adding a new access workflow Settings
@@ -43693,6 +43702,8 @@ paths:
               organizationObjectId:
                 format: byte
                 type: string
+              remarks:
+                type: string
               status:
                 type: string
             type: object
@@ -43716,7 +43727,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/workflowaccessrequest/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"admin":"string","organizationObjectId":"string","status":"string"}'
+              --data '{"admin":"string","organizationObjectId":"string","remarks":"string","status":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -43726,6 +43737,7 @@ paths:
             payload = {
                 "admin": "string",
                 "organizationObjectId": "string",
+                "remarks": "string",
                 "status": "string"
             }
             headers = {
@@ -43741,7 +43753,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/workflowaccessrequest/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"admin":"string","organizationObjectId":"string","status":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/workflowaccessrequest/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"admin":"string","organizationObjectId":"string","remarks":"string","status":"string"}'
 produces:
   - application/json
 responses:
