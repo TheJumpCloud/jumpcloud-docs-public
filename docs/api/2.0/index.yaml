@@ -18144,11 +18144,12 @@ paths:
         Gets a Google EMM enrolled device details.
 
         #### Sample Request
+
         ```
         curl -X GET https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId} \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: Devices_GetDevice
       parameters:
@@ -18196,14 +18197,18 @@ paths:
   '/google-emm/devices/{deviceId}/erase-device':
     post:
       description: |-
-        Removes the work profile and all policies from a personal/company-owned Android 8.0+ device. Company owned devices will be relinquished for personal use. Apps and data associated with the personal profile(s) are preserved.
+        Removes the work profile and all policies from a personal/company-owned
+        Android 8.0+ device. Company owned devices will be relinquished for
+        personal use. Apps and data associated with the personal profile(s) are
+        preserved.
 
         #### Sample Request
+
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/erase-device \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: Devices_EraseDevice
       parameters:
@@ -18262,14 +18267,16 @@ paths:
   '/google-emm/devices/{deviceId}/lock':
     post:
       description: |-
-        Locks a Google EMM enrolled device, as if the lock screen timeout had expired.
+        Locks a Google EMM enrolled device, as if the lock screen timeout had
+        expired.
 
         #### Sample Request
+
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lock \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: Devices_LockDevice
       parameters:
@@ -18328,14 +18335,16 @@ paths:
   '/google-emm/devices/{deviceId}/lostmode/start':
     post:
       description: |-
-        Starts lost mode for a Google EMM enrolled device. Only supported on COPE devices.
+        Starts lost mode for a Google EMM enrolled device.
+        Only supported on COPE devices.
 
         #### Sample Request
+
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/start \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: {API_KEY}"
         ```
       operationId: Devices_StartLostMode
       parameters:
@@ -18411,14 +18420,15 @@ paths:
   '/google-emm/devices/{deviceId}/lostmode/stop':
     post:
       description: |-
-        Stops lost mode for a Google EMM enrolled device. Only supported on COPE devices.
+        Stops lost mode for a Google EMM enrolled device.
+        Only supported on COPE devices.
 
         #### Sample Request
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/stop \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: {API_KEY}"
         ```
       operationId: Devices_StopLostMode
       parameters:
@@ -18480,11 +18490,12 @@ paths:
         Gets an android JSON policy for a Google EMM enrolled device.
 
         #### Sample Request
+
         ```
         curl -X GET https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/policy_results \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: Devices_GetDeviceAndroidPolicy
       parameters:
@@ -18532,14 +18543,16 @@ paths:
   '/google-emm/devices/{deviceId}/reboot':
     post:
       description: |-
-        Reboots a Google EMM enrolled device. Only supported on fully managed devices running Android 7.0 or higher.
+        Reboots a Google EMM enrolled device.
+        Only supported on fully managed devices running Android 7.0 or higher.
 
         #### Sample Request
+
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/reboot \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: Devices_RebootDevice
       parameters:
@@ -18601,12 +18614,13 @@ paths:
         Reset the user's password of a Google EMM enrolled device.
 
         #### Sample Request
+
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/resetpassword \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{ 'new_password' : 'string' }' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}" \
+          -d '{"new_password" : "string"}'
         ```
       operationId: Devices_ResetPassword
       parameters:
@@ -18676,21 +18690,26 @@ paths:
   /google-emm/enterprises:
     get:
       description: |-
-        Lists all Google EMM enterprises. An empty list indicates that the Organization is not configured with a Google EMM enterprise yet. 
+        List all Google EMM enterprises.
+        An empty list indicates that the Organization is not configured with a
+        Google EMM enterprise yet.
 
-         Note: Currently only one Google Enterprise per Organization is supported.
+        Note: Currently only one Google Enterprise per Organization is supported.
 
         #### Sample Request
+
         ```
         curl -X GET https://console.jumpcloud.com/api/v2/google-emm/enterprises \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: Enterprises_ListEnterprises
       parameters:
         - default: '100'
-          description: The number of records to return at once. Limited to 100.
+          description: |-
+            The number of records to return at once.
+            Limited to 100.
           format: int64
           in: query
           name: limit
@@ -18746,12 +18765,13 @@ paths:
         Creates a Google EMM enterprise.
 
         #### Sample Request
+
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/enterprises \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{ 'signupUrlName': 'string', 'enrollmentToken': 'string' }' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}" \
+          -d '{"signupUrlName": "string", "enrollmentToken": "string"}'
         ```
       operationId: Enterprises_CreateEnterprise
       parameters:
@@ -18810,14 +18830,17 @@ paths:
       description: |-
         Removes a Google EMM enterprise.
 
-         Warning: This is a destructive operation and will remove all data associated with Google EMM enterprise from JumpCloud including devices and applications associated with the given enterprise.
+        Warning: This is a destructive operation and will remove all data
+        associated with Google EMM enterprise from JumpCloud including devices and
+        applications associated with the given enterprise.
 
         #### Sample Request
+
         ```
         curl -X DELETE https://console.jumpcloud.com/api/v2/google-emm/devices/{enterpriseId} \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: Enterprises_DeleteEnterprise
       parameters:
@@ -18867,12 +18890,13 @@ paths:
         Updates a Google EMM enterprise details.
 
         #### Sample Request
+
         ```
         curl -X PATCH https://console.jumpcloud.com/api/v2/google-emm/enterprises \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{ 'allowDeviceEnrollment': true, 'deviceGroupId': 'string' }' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
+          -d '{"allowDeviceEnrollment": true, "deviceGroupId": "string"}'
         ```
       operationId: Enterprises_PatchEnterprise
       parameters:
@@ -18943,11 +18967,12 @@ paths:
         Gives a connection status between JumpCloud and Google.
 
         #### Sample Request
+
         ```
         curl -X GET https://console.jumpcloud.com/api/v2/google-emm/devices/{enterpriseId}/connection-status \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: Enterprises_GetConnectionStatus
       parameters:
@@ -19000,9 +19025,9 @@ paths:
         #### Sample Request
         ```
         curl -X DELETE https://console.jumpcloud.com/api/v2/enterprises/{enterprise_id}/enrollment-tokens/{token_id} \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: {API_KEY}"
         ```
       operationId: EnrollmentTokens_DeleteEnrollmentToken
       parameters:
@@ -19056,11 +19081,12 @@ paths:
         Lists google EMM enrolled devices.
 
         #### Sample Request
+
         ```
         curl -X GET https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterprise_object_id}/devices \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: Devices_ListDevices
       parameters:
@@ -19136,9 +19162,9 @@ paths:
         #### Sample Request
         ```
         curl -X GET https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterprise_object_id}/enrollment-tokens \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: {API_KEY}"
         ```
       operationId: EnrollmentTokens_ListEnrollmentTokens
       parameters:
@@ -19168,7 +19194,9 @@ paths:
           name: filter
           required: false
           type: array
-        - description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+        - description: |-
+            Use space separated sort parameters to sort the collection.
+            Default sort is ascending. Prefix with - to sort descending.
           in: query
           name: sort
           required: false
@@ -19216,11 +19244,12 @@ paths:
         Gets an enrollment token to enroll a device into Google EMM.
 
         #### Sample Request
+
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/enterpries/{enterprise_object_id}/enrollment-tokens \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: EnrollmentTokens_CreateEnterprisesEnrollmentToken
       parameters:
@@ -19322,11 +19351,12 @@ paths:
         Creates a Google EMM enterprise signup URL.
 
         #### Sample Request
+
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/signup-urls \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: ${API_KEY}"
         ```
       operationId: SignupURLs_Create
       parameters:
@@ -19380,14 +19410,16 @@ paths:
   /google-emm/web-tokens:
     post:
       description: |-
-        Creates a web token to access an embeddable managed Google Play web UI for a given Google EMM enterprise.
+        Creates a web token to access an embeddable managed Google Play web UI for
+        a given Google EMM enterprise.
 
         #### Sample Request
+
         ```
         curl -X POST https://console.jumpcloud.com/api/v2/google-emm/web-tokens \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: {API_KEY}"
         ```
       operationId: WebTokens_CreateWebToken
       parameters:
