@@ -5396,19 +5396,6 @@ definitions:
       - ALERT_SEVERITY_MEDIUM
       - ALERT_SEVERITY_HIGH
     type: string
-  jumpcloud.alerts.AlertSeverityCount:
-    description: AlertSeverityCount holds the alert severity count per source.
-    properties:
-      count:
-        format: uint64
-        type: integer
-      severity:
-        $ref: '#/definitions/jumpcloud.alerts.AlertSeverity'
-      sourceId:
-        type: string
-      sourceType:
-        $ref: '#/definitions/jumpcloud.alerts.AlertSourceType'
-    type: object
   jumpcloud.alerts.AlertSourceType:
     default: ALERT_SOURCE_TYPE_UNSPECIFIED
     description: AlertSourceType specifies the type of the source that generated the alert.
@@ -5453,17 +5440,6 @@ definitions:
       alertOccurrences:
         items:
           $ref: '#/definitions/jumpcloud.alerts.AlertOccurrence'
-        type: array
-      count:
-        format: uint64
-        type: integer
-    type: object
-  jumpcloud.alerts.ListAlertSeverityCountsResponse:
-    description: ListAlertSeverityCountsResponse is the response to ListAlertSeverityCountsRequest.
-    properties:
-      alertSeverityCounts:
-        items:
-          $ref: '#/definitions/jumpcloud.alerts.AlertSeverityCount'
         type: array
       count:
         format: uint64
@@ -12003,90 +11979,6 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' -Method GET -Headers $headers
-  /alerts-severitycounts:
-    get:
-      description: This endpoint allows you to get total number of alerts per alert severity
-      operationId: AlertsService_ListAlertSeverityCounts
-      parameters:
-        - collectionFormat: multi
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
-          in: query
-          items:
-            type: string
-          name: filter
-          required: false
-          type: array
-        - collectionFormat: multi
-          description: The fields on the items listed to return.
-          in: query
-          items:
-            type: string
-          name: fields
-          required: false
-          type: array
-        - description: The offset into the records to return.
-          format: int64
-          in: query
-          name: skip
-          required: false
-          type: string
-        - collectionFormat: multi
-          description: |-
-            An optional comma separated field names used to sort the collection.
-            Default sort is ascending, prefix with `-` to sort descending.
-          in: query
-          items:
-            type: string
-          name: sort
-          required: false
-          type: array
-        - description: |-
-            The number of alert counts to return at once.
-            If the number of alert counts returned is less than `limit` there are no more alerts to fetch.
-            If the number of alert counts returned is equal to limit there may be more alert counts to fetch. Increment `skip` by `limit` to get the next set of alerts.
-          format: int64
-          in: query
-          name: limit
-          required: false
-          type: string
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/jumpcloud.alerts.ListAlertSeverityCountsResponse'
-      security:
-        - x-api-key: []
-      summary: This endpoint provides total count of alerts per alert severity
-      tags:
-        - Monitoring and Alerting
-      x-dynamic-gateway: true
-      x-scopes:
-        - healthmonitoring.alerts
-        - healthmonitoring.alerts.readonly
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/alerts-severitycounts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' \
-              --header 'x-api-key: REPLACE_KEY_VALUE'
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/alerts-severitycounts"
-
-            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","limit":"SOME_STRING_VALUE"}
-
-            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            print(response.text)
-        - lang: Powershell
-          source: |-
-            $headers=@{}
-            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts-severitycounts?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
   /alerts-stats:
     get:
       description: This endpoint allows you to get alert statistics based on status and severity.
