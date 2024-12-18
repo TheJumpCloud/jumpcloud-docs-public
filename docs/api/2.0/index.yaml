@@ -6330,6 +6330,12 @@ definitions:
       rule:
         $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
     type: object
+  jumpcloud.healthmonitoring.UpdateRuleStatusResponse:
+    description: UpdateRuleStatusResponse is the response message to UpdateRuleStatusRequest.
+    properties:
+      rule:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
+    type: object
   jumpcloud.ingresso.CreateAccessRequestsRequest:
     properties:
       additionalAttributes:
@@ -21200,6 +21206,67 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+  '/healthmonitoring/rules/{id}/status':
+    patch:
+      description: This endpoint allows you to update the status of a health monitoring rule.
+      operationId: RulesService_UpdateRuleStatus
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            description: UpdateRuleStatusRequest is the request message used to update status of a single rule.
+            properties:
+              status:
+                $ref: '#/definitions/jumpcloud.healthmonitoring.RuleStatus'
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.healthmonitoring.UpdateRuleStatusResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for updating the status of a rule.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - healthmonitoring.rules
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}/status \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"status":"RULE_STATUS_UNSPECIFIED"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}/status"
+
+            payload = {"status": "RULE_STATUS_UNSPECIFIED"}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}/status' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"status":"RULE_STATUS_UNSPECIFIED"}'
   '/healthmonitoring/rules/{rule_id}/associations':
     get:
       description: |-
