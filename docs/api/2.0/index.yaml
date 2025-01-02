@@ -971,7 +971,7 @@ definitions:
     example:
       id: 63e6722746d3949ea9c073cc
       name: setallowDeviceNameModification
-      value: true
+      value: {}
     properties:
       configFieldId:
         description: The ObjectId of the corresponding Policy Template configuration field.
@@ -2774,7 +2774,6 @@ definitions:
           - agent
         description: string
         displayName: string
-        id: string
         name: string
         osMetaFamily: linux
         osRestrictions:
@@ -17270,19 +17269,19 @@ paths:
           description: OK
           examples:
             application/json:
-              - id: string
+              - id: 5f91c8695e980f0001c44619
                 name: string
                 type: active_directory
               - defaultDomain:
                   domain: string
                   id: string
-                id: string
+                id: 5f91c8695e980f0001c44618
                 name: string
                 type: office_365
               - defaultDomain:
                   domain: string
                   id: string
-                id: string
+                id: 5f91c8695e980f0001c44617
                 name: string
                 type: g_suite
           schema:
@@ -20311,7 +20310,7 @@ paths:
           examples:
             application/json:
               - field: g_suite_work_addresses
-                id: object_id_1
+                id: 5f91c8695e980f0001c44612
                 source_type: user
           schema:
             items:
@@ -26271,7 +26270,7 @@ paths:
           examples:
             application/json:
               - field: office_365_state
-                id: object_id_1
+                id: 5f91c8695e980f0001c44616
                 source_type: user
           schema:
             items:
@@ -31024,13 +31023,21 @@ paths:
             format: binary
             type: string
         '401':
-          $ref: '#/responses/trait:standardErrors:401'
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
         '403':
-          $ref: '#/responses/trait:standardErrors:403'
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
         '404':
-          $ref: '#/responses/trait:standardErrors:404'
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
         '500':
-          $ref: '#/responses/trait:standardErrors:500'
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
         default:
           description: An unexpected error response.
           schema:
@@ -34656,9 +34663,9 @@ paths:
           description: OK
           examples:
             application/json:
-              - id: '000000'
+              - id: 5f91c8695e980f0001c44611
               - type: system_group
-              - id: '000000'
+              - id: 5f91c8695e980f0001c44615
                 name: group1
           schema:
             items:
@@ -35738,7 +35745,7 @@ paths:
           description: OK
           examples:
             application/json:
-              id: '000000'
+              id: 5f91c8695e980f0001c44614
               name: group1
               type: system_group
           schema:
@@ -41643,7 +41650,7 @@ paths:
             properties:
               message:
                 type: string
-            title: SendVerificationPushRequest represents a create request
+            title: SendVerificationPushRequest-Represents-A-Create-Request
             type: object
       responses:
         '200':
