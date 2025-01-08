@@ -43756,31 +43756,31 @@ produces:
   - application/json
 responses:
   'trait:standardErrors:400':
-    description: ''
+    description: Bad Request
     schema:
       $ref: '#/definitions/ErrorDetails'
   'trait:standardErrors:401':
-    description: ''
+    description: Unauthenticated
     schema:
       $ref: '#/definitions/Error'
   'trait:standardErrors:403':
-    description: ''
+    description: Unauthorized
     schema:
       $ref: '#/definitions/Error'
   'trait:standardErrors:404':
-    description: ''
+    description: Not Found
     schema:
       $ref: '#/definitions/Error'
   'trait:standardErrors:409':
-    description: ''
+    description: Conflict
     schema:
       $ref: '#/definitions/Error'
   'trait:standardErrors:410':
-    description: ''
+    description: Gone
     schema:
       $ref: '#/definitions/Error'
   'trait:standardErrors:500':
-    description: ''
+    description: Internal Server Error
     schema:
       $ref: '#/definitions/Error'
 schemes:
