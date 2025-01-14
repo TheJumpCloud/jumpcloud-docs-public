@@ -2058,6 +2058,12 @@ definitions:
           unsupportedOs:
             type: integer
         type: object
+      primarySystemUser:
+        properties:
+          id:
+            type: string
+            x-nullable: true
+        type: object
       provisionMetadata:
         properties:
           provisioner:
