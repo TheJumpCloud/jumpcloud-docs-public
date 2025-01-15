@@ -10627,7 +10627,7 @@ paths:
         - x-api-key: []
       summary: Create Access Workflow
       tags:
-        - Workflows
+        - Access Requests
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement
@@ -10717,7 +10717,7 @@ paths:
         - x-api-key: []
       summary: Update Access Workflow
       tags:
-        - Workflows
+        - Access Requests
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement
@@ -10779,7 +10779,7 @@ paths:
         - x-api-key: []
       summary: Create Access Workflow Settings for an organization
       tags:
-        - Workflows
+        - Access Requests
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement
@@ -10836,7 +10836,7 @@ paths:
         - x-api-key: []
       summary: Update Access Workflow Settings
       tags:
-        - Workflows
+        - Access Requests
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement
@@ -43548,7 +43548,7 @@ paths:
         - x-api-key: []
       summary: Get all Workflow Access Requests
       tags:
-        - Workflows
+        - Access Requests
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement.readonly
@@ -43594,7 +43594,7 @@ paths:
         - x-api-key: []
       summary: Create Workflow Access Request
       tags:
-        - Workflows
+        - Access Requests
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement
@@ -43654,7 +43654,7 @@ paths:
         - x-api-key: []
       summary: Get Workflow Access Requests
       tags:
-        - Workflows
+        - Access Requests
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement.readonly
@@ -43714,7 +43714,7 @@ paths:
         - x-api-key: []
       summary: Update Workflow Access Requests
       tags:
-        - Workflows
+        - Access Requests
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement
@@ -43792,6 +43792,7 @@ securityDefinitions:
     type: apiKey
 swagger: '2.0'
 tags:
+  - name: Access Requests
   - name: AccountManagerCalendar
   - name: Active Directory
   - name: AddOn
@@ -43876,7 +43877,6 @@ tags:
   - name: Users
   - name: WebAuthn
   - name: Workday Import
-  - name: Workflows
   - name: fde
   - name: mdm
 x-scopes:
@@ -43931,6 +43931,7 @@ x-scopes:
 x-tagGroups:
   - name: endpoints
     tags:
+      - Access Requests
       - Active Directory
       - Administrators
       - Aggregated Policy Stats
@@ -43988,6 +43989,5 @@ x-tagGroups:
       - User Groups
       - Users
       - Workday Import
-      - Workflows
       - fde
       - mdm
