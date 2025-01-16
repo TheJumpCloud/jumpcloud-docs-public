@@ -1103,6 +1103,13 @@ definitions:
         type: integer
     title: CommandsList
     type: object
+  customEmailSettings:
+    description: Custom email settings for an organization
+    properties:
+      enabled:
+        description: Used to enable or disable custom emails for an organization.
+        type: boolean
+    type: object
   externallymanagedpropertyinfo:
     description: 'The externally_managed property has been deprecated. Whenever a user has their externally_managed field modified their restrictedFields property gets populated with the appropriate value, even if it is already set to a value an administrator manually set.'
     type: boolean
@@ -1161,6 +1168,8 @@ definitions:
         type: string
       created:
         type: string
+      customEmailSettings:
+        $ref: '#/definitions/customEmailSettings'
       displayName:
         type: string
       entitlement:
