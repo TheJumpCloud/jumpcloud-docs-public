@@ -5163,6 +5163,8 @@ definitions:
       id:
         readOnly: true
         type: string
+      importFilter:
+        type: string
       name:
         type: string
       userLockoutAction:
@@ -20793,7 +20795,7 @@ paths:
             curl --request PATCH \
               --url https://console.jumpcloud.com/api/v2/gsuites/{id} \
               --header 'content-type: application/json' \
-              --data '{"defaultDomain":{"id":"string"},"groupsEnabled":true,"name":"string","userLockoutAction":"suspend","userPasswordExpirationAction":"suspend"}'
+              --data '{"defaultDomain":{"id":"string"},"groupsEnabled":true,"importFilter":"string","name":"string","userLockoutAction":"suspend","userPasswordExpirationAction":"suspend"}'
         - lang: Python
           source: |-
             import requests
@@ -20803,6 +20805,7 @@ paths:
             payload = {
                 "defaultDomain": {"id": "string"},
                 "groupsEnabled": True,
+                "importFilter": "string",
                 "name": "string",
                 "userLockoutAction": "suspend",
                 "userPasswordExpirationAction": "suspend"
@@ -20816,7 +20819,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"defaultDomain":{"id":"string"},"groupsEnabled":true,"name":"string","userLockoutAction":"suspend","userPasswordExpirationAction":"suspend"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"defaultDomain":{"id":"string"},"groupsEnabled":true,"importFilter":"string","name":"string","userLockoutAction":"suspend","userPasswordExpirationAction":"suspend"}'
     x-functionalities-tags:
       - gsuites
   '/gsuites/{id}/reactivate':
