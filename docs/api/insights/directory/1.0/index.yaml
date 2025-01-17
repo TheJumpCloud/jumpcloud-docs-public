@@ -868,6 +868,7 @@ definitions:
             - object_storage
             - password_manager
             - radius
+            - reports
             - saas_app_management
             - software
             - sso
