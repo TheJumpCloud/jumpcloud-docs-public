@@ -1984,6 +1984,8 @@ definitions:
               windowsDeviceId:
                 type: string
             type: object
+          lostModeStatus:
+            type: string
           profileIdentifier:
             type: string
           providerId:
