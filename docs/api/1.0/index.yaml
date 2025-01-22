@@ -2090,6 +2090,8 @@ definitions:
                 type: string
             type: object
         type: object
+      remoteAssistAgentVersion:
+        type: string
       remoteIP:
         type: string
       secureLogin:
