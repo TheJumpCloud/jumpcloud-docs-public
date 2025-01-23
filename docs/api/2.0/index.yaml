@@ -6067,6 +6067,7 @@ definitions:
     properties:
       category:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleCategory'
+        readOnly: true
       conditions:
         items:
           $ref: '#/definitions/jumpcloud.healthmonitoring.RuleCondition'
@@ -6125,6 +6126,7 @@ definitions:
         type: string
       osFamily:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleOsFamily'
+        readOnly: true
       severity:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleSeverity'
       status:
