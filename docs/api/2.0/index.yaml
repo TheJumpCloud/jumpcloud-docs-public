@@ -6081,6 +6081,11 @@ definitions:
       createdBy:
         readOnly: true
         type: string
+      createdByObjectId:
+        format: byte
+        readOnly: true
+        title: specifies the ID of admin who created the rule
+        type: string
       description:
         type: string
       detectPreExistingAnamolies:
