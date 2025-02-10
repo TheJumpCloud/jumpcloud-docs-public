@@ -497,6 +497,9 @@ paths:
                   enum:
                     - browser-patch-policy
                     - os-patch-policy
+                    - os-version
+                    - software-inventory
+                    - users-account-health
                     - users-to-devices
                     - users-to-directories
                     - users-to-ldap-servers
@@ -635,6 +638,9 @@ paths:
         - enum:
             - browser-patch-policy
             - os-patch-policy
+            - os-version
+            - software-inventory
+            - user-account-health
             - users-to-devices
             - users-to-directories
             - users-to-ldap-servers
@@ -693,6 +699,9 @@ paths:
                 enum:
                   - browser-patch-policy
                   - os-patch-policy
+                  - os-version
+                  - software-inventory
+                  - user-account-health
                   - users-to-devices
                   - users-to-directories
                   - users-to-ldap-servers
