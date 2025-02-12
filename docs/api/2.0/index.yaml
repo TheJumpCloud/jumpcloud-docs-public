@@ -13825,6 +13825,80 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{apple_mdm_id}/refreshdepdevices' -Method POST -Headers $headers
     x-functionalities-tags:
       - mdm
+  '/applemdms/{deviceManagerObjectId}/abm_devices':
+    get:
+      description: "This endpoint lists the abm devices for the given device manager.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/v2/applemdms/{device_manager_object_id}/abm_devices \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 Abm device Items in a single response."
+      operationId: DeviceManagers_ListABMDevices
+      parameters:
+        - format: byte
+          in: path
+          name: deviceManagerObjectId
+          required: true
+          type: string
+        - description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - description: The number of resources to return at once.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: ABM Devices List
+      tags:
+        - mdm
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/abm_devices?skip=SOME_STRING_VALUE&limit=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/abm_devices"
+
+            querystring = {"skip":"SOME_STRING_VALUE","limit":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/abm_devices?skip=SOME_STRING_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
   '/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode':
     post:
       description: This endpoint allows you to control the lost mode of a device
