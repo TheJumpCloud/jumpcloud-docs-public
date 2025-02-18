@@ -6121,6 +6121,29 @@ definitions:
         type: string
       name:
         type: string
+      notificationChannelObjectIds:
+        description: |2-
+            List of notification channels to which the notification should be sent
+            when the rule is violated.
+        items:
+          format: byte
+          type: string
+        type: array
+      notifyOnAcknowledgement:
+        description: |2-
+            Toggle to specify whether the notification should be produced for
+            the acknowledgement of the alert.
+        type: boolean
+      notifyOnResolution:
+        description: |2-
+            Toggle to specify whether the notification should be produced for
+            the resolution of the rule.
+        type: boolean
+      notifyOnViolation:
+        description: |2-
+            Toggle to specify whether the notification should be produced for
+            the violation of the rule.
+        type: boolean
       objectId:
         format: byte
         readOnly: true
@@ -21042,7 +21065,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -21063,6 +21086,10 @@ paths:
                     "detectPreExistingAnamolies": True,
                     "eventType": "string",
                     "name": "string",
+                    "notificationChannelObjectIds": ["string"],
+                    "notifyOnAcknowledgement": True,
+                    "notifyOnResolution": True,
+                    "notifyOnViolation": True,
                     "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
                     "severity": "RULE_SEVERITY_UNSPECIFIED",
                     "status": "RULE_STATUS_UNSPECIFIED",
@@ -21081,7 +21108,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules-stats:
     get:
       description: This endpoint is used for getting rules stats.
@@ -21253,7 +21280,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -21274,6 +21301,10 @@ paths:
                     "detectPreExistingAnamolies": True,
                     "eventType": "string",
                     "name": "string",
+                    "notificationChannelObjectIds": ["string"],
+                    "notifyOnAcknowledgement": True,
+                    "notifyOnResolution": True,
+                    "notifyOnViolation": True,
                     "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
                     "severity": "RULE_SEVERITY_UNSPECIFIED",
                     "status": "RULE_STATUS_UNSPECIFIED",
@@ -21292,7 +21323,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   '/healthmonitoring/rules/{id}/status':
     patch:
       description: This endpoint allows you to update the status of a health monitoring rule.
