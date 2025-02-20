@@ -56,6 +56,7 @@ definitions:
           - '#FF6C03'
         type: string
       config:
+        description: Only required for SAML configuration (not required for Bookmarks)
         properties:
           acsUrl:
             properties:
