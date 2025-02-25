@@ -2881,7 +2881,6 @@ definitions:
       apiKeyAllowed:
         type: boolean
       apiKeyHash:
-        additionalProperties: false
         properties:
           createdAt:
             format: date-time

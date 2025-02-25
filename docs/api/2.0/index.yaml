@@ -2453,6 +2453,9 @@ definitions:
       earliestVersion:
         description: The earliest version of the OS in which the policy can be applied
         type: string
+      isMdmRequired:
+        description: Boolean representing if the policy requires the device to be MDM enrolled
+        type: boolean
       osName:
         description: The name of the OS in which this restriction applies
         type: string
