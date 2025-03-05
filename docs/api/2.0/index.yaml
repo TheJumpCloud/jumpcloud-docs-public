@@ -13867,12 +13867,33 @@ paths:
           name: skip
           required: false
           type: string
-        - description: The number of resources to return at once.
+        - description: |-
+            The number of resources to return at once.
+            If the number of resources returned is less than `limit` there are no more resources to fetch.
+            If the number of resources returned is equal to limit there may be more resources to fetch. Increment `skip` by `limit` to get the next set of resources.
           format: int64
           in: query
           name: limit
           required: false
           type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
       responses:
         '200':
           description: A successful response.
@@ -13905,7 +13926,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/abm_devices?skip=SOME_STRING_VALUE&limit=SOME_STRING_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/abm_devices?skip=SOME_STRING_VALUE&limit=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -13913,7 +13934,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/abm_devices"
 
-            querystring = {"skip":"SOME_STRING_VALUE","limit":"SOME_STRING_VALUE"}
+            querystring = {"skip":"SOME_STRING_VALUE","limit":"SOME_STRING_VALUE","sort":"SOME_ARRAY_VALUE","filter":"SOME_ARRAY_VALUE"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -13924,7 +13945,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/abm_devices?skip=SOME_STRING_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/abm_devices?skip=SOME_STRING_VALUE&limit=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   '/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode':
     post:
       description: This endpoint allows you to control the lost mode of a device
