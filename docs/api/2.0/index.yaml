@@ -5887,6 +5887,20 @@ definitions:
     type: object
   jumpcloud.google_emm.ProvisioningExtras:
     properties:
+      allowOfflineProvisioning:
+        type: boolean
+      enableSystemApps:
+        type: boolean
+      keepScreenOn:
+        type: boolean
+      language:
+        type: string
+      skipEducationScreens:
+        type: boolean
+      timeZone:
+        type: string
+      useMobileNetworkForProvisioning:
+        type: boolean
       wifiHiddenNetwork:
         type: boolean
       wifiPassword:
@@ -19339,7 +19353,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","createdWhere":"API","displayName":"string","duration":"string","enrollmentType":"WORK_PROFILE","oneTimeOnly":true,"provisioningExtras":{"wifiHiddenNetwork":true,"wifiPassword":"string","wifiSecurityType":"NONE","wifiSsid":"string"},"userObjectId":"string","zeroTouch":true}'
+              --data '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","createdWhere":"API","displayName":"string","duration":"string","enrollmentType":"WORK_PROFILE","oneTimeOnly":true,"provisioningExtras":{"allowOfflineProvisioning":true,"enableSystemApps":true,"keepScreenOn":true,"language":"string","skipEducationScreens":true,"timeZone":"string","useMobileNetworkForProvisioning":true,"wifiHiddenNetwork":true,"wifiPassword":"string","wifiSecurityType":"NONE","wifiSsid":"string"},"userObjectId":"string","zeroTouch":true}'
         - lang: Python
           source: |-
             import requests
@@ -19354,6 +19368,13 @@ paths:
                 "enrollmentType": "WORK_PROFILE",
                 "oneTimeOnly": True,
                 "provisioningExtras": {
+                    "allowOfflineProvisioning": True,
+                    "enableSystemApps": True,
+                    "keepScreenOn": True,
+                    "language": "string",
+                    "skipEducationScreens": True,
+                    "timeZone": "string",
+                    "useMobileNetworkForProvisioning": True,
                     "wifiHiddenNetwork": True,
                     "wifiPassword": "string",
                     "wifiSecurityType": "NONE",
@@ -19375,7 +19396,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","createdWhere":"API","displayName":"string","duration":"string","enrollmentType":"WORK_PROFILE","oneTimeOnly":true,"provisioningExtras":{"wifiHiddenNetwork":true,"wifiPassword":"string","wifiSecurityType":"NONE","wifiSsid":"string"},"userObjectId":"string","zeroTouch":true}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"allowPersonalUsage":"PERSONAL_USAGE_ALLOWED","createdWhere":"API","displayName":"string","duration":"string","enrollmentType":"WORK_PROFILE","oneTimeOnly":true,"provisioningExtras":{"allowOfflineProvisioning":true,"enableSystemApps":true,"keepScreenOn":true,"language":"string","skipEducationScreens":true,"timeZone":"string","useMobileNetworkForProvisioning":true,"wifiHiddenNetwork":true,"wifiPassword":"string","wifiSecurityType":"NONE","wifiSsid":"string"},"userObjectId":"string","zeroTouch":true}'
   /google-emm/signup-urls:
     post:
       description: |-
