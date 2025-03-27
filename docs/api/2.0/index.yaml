@@ -18671,6 +18671,64 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId}' -Method DELETE -Headers $headers
+    get:
+      description: |-
+        Retrieves an Enrollment token for a given enterprise and token id.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterprise_id}/enrollment-tokens/{token_id} \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: {API_KEY}"
+        ```
+      operationId: EnrollmentTokens_GetEnrollmentToken
+      parameters:
+        - format: byte
+          in: path
+          name: enterpriseId
+          required: true
+          type: string
+        - in: path
+          name: tokenId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.google_emm.EnrollmentToken'
+      security:
+        - x-api-key: []
+      summary: Get an enrollment token by ID
+      tags:
+        - Google EMM
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+        - mdm.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId}' -Method GET -Headers $headers
   '/google-emm/enterprises/{enterpriseObjectId}/devices':
     get:
       description: |-
