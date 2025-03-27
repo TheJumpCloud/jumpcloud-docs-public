@@ -6499,6 +6499,140 @@ definitions:
         format: int64
         type: integer
     type: object
+  jumpcloud.notifications.Channel:
+    description: Channel represents the notification channel.
+    properties:
+      config:
+        $ref: '#/definitions/jumpcloud.notifications.ChannelTypeConfig'
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      createdBy:
+        format: byte
+        readOnly: true
+        type: string
+      description:
+        description: represents the description of the channel.
+        type: string
+      name:
+        description: represents the name of the channel.
+        type: string
+      objectId:
+        description: 'Channel represents a medium through which notifications are sent, such as email notifications.'
+        format: byte
+        readOnly: true
+        type: string
+      organizationObjectId:
+        format: byte
+        readOnly: true
+        type: string
+      type:
+        $ref: '#/definitions/jumpcloud.notifications.ChannelType'
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      updatedBy:
+        format: byte
+        readOnly: true
+        type: string
+    type: object
+  jumpcloud.notifications.ChannelType:
+    default: CHANNEL_TYPE_UNSPECIFIED
+    description: |-
+      ChannelType represents the type of the channel.
+
+       - CHANNEL_TYPE_UNSPECIFIED: CHANNEL_TYPE_UNSPECIFIED represents an invalid channel type.
+       - CHANNEL_TYPE_EMAIL: CHANNEL_TYPE_EMAIL represents the email channel type.
+    enum:
+      - CHANNEL_TYPE_UNSPECIFIED
+      - CHANNEL_TYPE_EMAIL
+    type: string
+  jumpcloud.notifications.ChannelTypeConfig:
+    description: ChannelTypeConfig represents the configuration for the channel type.
+    properties:
+      email:
+        $ref: '#/definitions/jumpcloud.notifications.EmailRecipientConfig'
+    type: object
+  jumpcloud.notifications.CreateChannelRequest:
+    description: CreateChannelRequest represents the request to create a channel.
+    properties:
+      channel:
+        $ref: '#/definitions/jumpcloud.notifications.Channel'
+    type: object
+  jumpcloud.notifications.CreateChannelResponse:
+    description: CreateChannelResponse represents the response for creating a channel.
+    properties:
+      channel:
+        $ref: '#/definitions/jumpcloud.notifications.Channel'
+    type: object
+  jumpcloud.notifications.DeleteChannelResponse:
+    description: DeleteChannelResponse represents the response to delete channel request.
+    type: object
+  jumpcloud.notifications.EmailRecipientConfig:
+    description: EmailRecipientConfig represents the email recipient.
+    properties:
+      role:
+        items:
+          $ref: '#/definitions/jumpcloud.notifications.EmailRecipientConfigRole'
+        type: array
+      user:
+        items:
+          $ref: '#/definitions/jumpcloud.notifications.EmailRecipientConfigUser'
+        type: array
+    type: object
+  jumpcloud.notifications.EmailRecipientConfigRole:
+    description: EmailRecipientConfigRole represents the details of email recipient config role.
+    properties:
+      objectId:
+        description: represents the role identifier.
+        format: byte
+        type: string
+      roleObjectId:
+        description: represents the role object identifier.
+        format: byte
+        type: string
+    type: object
+  jumpcloud.notifications.EmailRecipientConfigUser:
+    description: EmailRecipientConfigUser represents the details of email recipient config user.
+    properties:
+      address:
+        description: represents the recipient email address.
+        type: string
+      name:
+        description: represents the recipient name.
+        type: string
+      objectId:
+        description: represents the address identifier.
+        format: byte
+        type: string
+    type: object
+  jumpcloud.notifications.GetChannelResponse:
+    description: GetChannelResponse represents the response for getting a channel.
+    properties:
+      channel:
+        $ref: '#/definitions/jumpcloud.notifications.Channel'
+    type: object
+  jumpcloud.notifications.ListChannelsResponse:
+    description: ListChannelResponse holds the list of channels requested via a ListChannelsRequest.
+    properties:
+      channels:
+        description: represents the list of channels.
+        items:
+          $ref: '#/definitions/jumpcloud.notifications.Channel'
+        type: array
+      count:
+        description: represents the count of channels.
+        format: uint64
+        type: integer
+    type: object
+  jumpcloud.notifications.UpdateChannelResponse:
+    description: UpdateChannelResponse represents the response for updating a channel.
+    properties:
+      channel:
+        $ref: '#/definitions/jumpcloud.notifications.Channel'
+    type: object
   jumpcloud.pwm.App:
     properties:
       appVersion:
@@ -25202,6 +25336,343 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/microsoft-mdm/configuration-files' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+  /notifications/channels:
+    get:
+      description: This endpoint allows you to list notification channels.
+      operationId: NotificationsChannelsService_ListChannels
+      parameters:
+        - collectionFormat: multi
+          description: |
+            A filter to apply to the query.
+
+              **Filter structure**: `<field>:<operator>:<value>`.
+
+              **field** = Populate with a valid field from an endpoint response.
+
+              **operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.
+
+              **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+              **Example** `GET /api/v2/groups?filter=name:eq:Test+Group`
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - default: '0'
+          description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - default: '100'
+          description: |-
+            The number of rules to return at once.
+            If the number of rules returned is less than `limit` there are no more rules to fetch.
+            If the number of rules returned is equal to limit there may be more rules to fetch. Increment `skip` by `limit` to get the next set of rules.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.notifications.ListChannelsResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for listing the notification channels.
+      tags:
+        - Notifications Channels
+      x-dynamic-gateway: true
+      x-scopes:
+        - notifications.channels
+        - notifications.channels.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/notifications/channels?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/notifications/channels"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"0","sort":"SOME_ARRAY_VALUE","limit":"100"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' -Method GET -Headers $headers
+    post:
+      description: This endpoint allows you to create a notification channel.
+      operationId: NotificationsChannelsService_CreateChannel
+      parameters:
+        - description: CreateChannelRequest represents the request to create a channel.
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.notifications.CreateChannelRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.notifications.CreateChannelResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for creating the channels.
+      tags:
+        - Notifications Channels
+      x-dynamic-gateway: true
+      x-scopes:
+        - notifications.channels
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/notifications/channels \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]}},"description":"string","name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/notifications/channels"
+
+            payload = {"channel": {
+                    "config": {"email": {
+                            "role": [
+                                {
+                                    "objectId": "string",
+                                    "roleObjectId": "string"
+                                }
+                            ],
+                            "user": [
+                                {
+                                    "address": "string",
+                                    "name": "string",
+                                    "objectId": "string"
+                                }
+                            ]
+                        }},
+                    "description": "string",
+                    "name": "string",
+                    "type": "CHANNEL_TYPE_UNSPECIFIED"
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]}},"description":"string","name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+  '/notifications/channels/{id}':
+    delete:
+      description: This endpoint allows you to delete a notification channel.
+      operationId: NotificationsChannelsService_DeleteChannel
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.notifications.DeleteChannelResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used to delete notification channels.
+      tags:
+        - Notifications Channels
+      x-dynamic-gateway: true
+      x-scopes:
+        - notifications.channels
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/notifications/channels/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/notifications/channels/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels/{id}' -Method DELETE -Headers $headers
+    get:
+      description: This endpoint allows you to get a notification channel.
+      operationId: NotificationsChannelsService_GetChannel
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.notifications.GetChannelResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for getting a notification channel.
+      tags:
+        - Notifications Channels
+      x-dynamic-gateway: true
+      x-scopes:
+        - notifications.channels
+        - notifications.channels.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/notifications/channels/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/notifications/channels/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels/{id}' -Method GET -Headers $headers
+    patch:
+      description: This endpoint allows you to update a notification channel.
+      operationId: NotificationsChannelsService_UpdateChannel
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            description: UpdateChannelRequest represents the request to update a channel.
+            properties:
+              channel:
+                $ref: '#/definitions/jumpcloud.notifications.Channel'
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.notifications.UpdateChannelResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for updating the channels.
+      tags:
+        - Notifications Channels
+      x-dynamic-gateway: true
+      x-scopes:
+        - notifications.channels
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/notifications/channels/{id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]}},"description":"string","name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/notifications/channels/{id}"
+
+            payload = {"channel": {
+                    "config": {"email": {
+                            "role": [
+                                {
+                                    "objectId": "string",
+                                    "roleObjectId": "string"
+                                }
+                            ],
+                            "user": [
+                                {
+                                    "address": "string",
+                                    "name": "string",
+                                    "objectId": "string"
+                                }
+                            ]
+                        }},
+                    "description": "string",
+                    "name": "string",
+                    "type": "CHANNEL_TYPE_UNSPECIFIED"
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]}},"description":"string","name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
   /object-storage/items:
     get:
       description: "List the current Object Storage Items for an Organization.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/object-storage/items \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 ObjectStorageItems in a single response.\n\n\tMSP Note: Currently ObjectStorage can only operate in the context of a single organization."
@@ -43355,6 +43826,7 @@ tags:
   - name: Microsoft MDM
   - name: Monitoring and Alerting
   - name: Nli
+  - name: Notifications Channels
   - name: Object Storage
   - name: Office 365
   - name: Office 365 Import
@@ -43428,6 +43900,8 @@ x-scopes:
   - mdm.readonly
   - mfa
   - mfa.readonly
+  - notifications.channels
+  - notifications.channels.readonly
   - organizations
   - organizations.billing
   - organizations.readonly
@@ -43479,6 +43953,7 @@ x-tagGroups:
       - Managed Service Provider
       - Microsoft MDM
       - Monitoring and Alerting
+      - Notifications Channels
       - Object Storage
       - Office 365
       - Office 365 Import
