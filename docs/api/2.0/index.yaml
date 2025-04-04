@@ -43004,7 +43004,7 @@ paths:
       summary: Delete a Push Endpoint associated with a User
       tags:
         - Users
-      x-restrict-elevated-user:
+      x-restrict-linked-identity:
         bypassScopes:
           - administrators
         model: SystemUser
@@ -43134,7 +43134,7 @@ paths:
       summary: Update a push endpoint associated with a User
       tags:
         - Users
-      x-restrict-elevated-user:
+      x-restrict-linked-identity:
         bypassScopes:
           - administrators
         model: SystemUser
