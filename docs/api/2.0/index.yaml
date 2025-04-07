@@ -3950,6 +3950,10 @@ definitions:
         type: boolean
       id:
         type: string
+      modelFamily:
+        type: string
+      osFamily:
+        type: string
       osVersion:
         type: string
       securityInfo:
@@ -3981,11 +3985,21 @@ definitions:
         type: boolean
       modelName:
         type: string
+      osBuildVersion:
+        type: string
+      osExtraVersion:
+        type: string
+      osMarketingName:
+        type: string
+      osSupplementalBuildVersion:
+        type: string
       secondIccid:
         type: string
       secondImei:
         type: string
       secondSubscriberCarrierNetwork:
+        type: string
+      sofwareUpdateId:
         type: string
       subscriberCarrierNetwork:
         type: string
@@ -4000,9 +4014,13 @@ definitions:
     properties:
       enrolledViaDep:
         type: boolean
+      filevaultEnabled:
+        type: boolean
       isActivationLockManageable:
         type: boolean
       isUserEnrollment:
+        type: boolean
+      passcodeCompliant:
         type: boolean
       passcodePresent:
         type: boolean
@@ -34837,7 +34855,7 @@ paths:
         -H 'Accept: application/json' \
         -H 'Content-Type: application/json' \
         -H 'x-api-key: {API_KEY}' \
-        -d '{"system_ids": "{<system_id_1>, <system_id_2>, ...}"}'
+        -d '{"system_ids": ["<system_id_1>", "<system_id_2>", ...]}'
         ```
       operationId: softwareApps_retryInstallation
       responses:
