@@ -44111,9 +44111,11 @@ tags:
   - name: Monitoring and Alerting
   - name: Nli
   - name: Notifications Channels
+  - name: OAuthPermissions
   - name: Object Storage
   - name: Office 365
   - name: Office 365 Import
+  - name: Organization Certificate
   - name: Organizations
   - name: Partners
   - name: Password Manager
@@ -44209,6 +44211,40 @@ x-scopes:
   - accessrequest
   - accessrequest.readonly
 x-tagGroups:
+  - name: Organization
+    tags:
+      - Access Requests
+      - Aggregated Policy Stats
+      - App Catalog
+      - Applications
+      - Durt
+      - G Suite
+      - Go
+      - Google EMM
+      - Identity Providers
+      - Microsoft MDM
+      - Monitoring and Alerting
+      - Nli
+      - Notifications Channels
+      - OAuthPermissions
+      - Object Storage
+      - Office 365
+      - Organization Certificate
+      - Partners
+      - Password Manager
+      - Policy Group Templates
+      - Providers
+      - Push Verification
+      - RADIUS Servers
+      - Remote Assist
+      - Reports
+      - SaaS App Management
+      - Saved Views
+      - Search
+      - Software Apps
+      - Systems
+      - Systems Organization Settings
+      - mdm
   - name: endpoints
     tags:
       - Active Directory

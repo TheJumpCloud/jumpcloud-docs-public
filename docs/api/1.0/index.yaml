@@ -1681,6 +1681,10 @@ definitions:
         type: string
       organization:
         type: string
+      radsecEnabled:
+        type: boolean
+      requireRadsec:
+        type: boolean
       requireTlsAuth:
         type: boolean
       sharedSecret:
@@ -1725,6 +1729,10 @@ definitions:
         type: string
       networkSourceIp:
         type: string
+      radsecEnabled:
+        type: boolean
+      requireRadsec:
+        type: boolean
       requireTlsAuth:
         type: boolean
       sharedSecret:
@@ -1772,6 +1780,10 @@ definitions:
         type: string
       networkSourceIp:
         type: string
+      radsecEnabled:
+        type: boolean
+      requireRadsec:
+        type: boolean
       requireTlsAuth:
         type: boolean
       tagNames:
@@ -5353,7 +5365,7 @@ paths:
               --url https://console.jumpcloud.com/api/radiusservers \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"authIdp":"JUMPCLOUD","caCert":"string","deviceCertEnabled":true,"mfa":"DISABLED","name":"string","networkSourceIp":"string","requireTlsAuth":true,"sharedSecret":"string","tagNames":["string"],"userCertEnabled":true,"userLockoutAction":"string","userPasswordEnabled":true,"userPasswordExpirationAction":"string"}'
+              --data '{"authIdp":"JUMPCLOUD","caCert":"string","deviceCertEnabled":true,"mfa":"DISABLED","name":"string","networkSourceIp":"string","radsecEnabled":true,"requireRadsec":true,"requireTlsAuth":true,"sharedSecret":"string","tagNames":["string"],"userCertEnabled":true,"userLockoutAction":"string","userPasswordEnabled":true,"userPasswordExpirationAction":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -5367,6 +5379,8 @@ paths:
                 "mfa": "DISABLED",
                 "name": "string",
                 "networkSourceIp": "string",
+                "radsecEnabled": True,
+                "requireRadsec": True,
                 "requireTlsAuth": True,
                 "sharedSecret": "string",
                 "tagNames": ["string"],
@@ -5388,7 +5402,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/radiusservers' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authIdp":"JUMPCLOUD","caCert":"string","deviceCertEnabled":true,"mfa":"DISABLED","name":"string","networkSourceIp":"string","requireTlsAuth":true,"sharedSecret":"string","tagNames":["string"],"userCertEnabled":true,"userLockoutAction":"string","userPasswordEnabled":true,"userPasswordExpirationAction":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/radiusservers' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authIdp":"JUMPCLOUD","caCert":"string","deviceCertEnabled":true,"mfa":"DISABLED","name":"string","networkSourceIp":"string","radsecEnabled":true,"requireRadsec":true,"requireTlsAuth":true,"sharedSecret":"string","tagNames":["string"],"userCertEnabled":true,"userLockoutAction":"string","userPasswordEnabled":true,"userPasswordExpirationAction":"string"}'
   '/radiusservers/{id}':
     delete:
       description: |-
@@ -5537,6 +5551,10 @@ paths:
                 type: string
               networkSourceIp:
                 type: string
+              radsecEnabled:
+                type: boolean
+              requireRadsec:
+                type: boolean
               requireTlsAuth:
                 type: boolean
               sharedSecret:
