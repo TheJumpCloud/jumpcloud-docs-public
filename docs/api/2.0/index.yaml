@@ -6655,6 +6655,137 @@ definitions:
       channel:
         $ref: '#/definitions/jumpcloud.notifications.Channel'
     type: object
+  jumpcloud.password.BatchDeleteRequest:
+    properties:
+      objectIds:
+        items:
+          format: byte
+          type: string
+        type: array
+      organizationObjectId:
+        format: byte
+        type: string
+    type: object
+  jumpcloud.password.GroupResponse:
+    properties:
+      groupId:
+        format: byte
+        type: string
+      name:
+        type: string
+    type: object
+  jumpcloud.password.InsertRequest:
+    properties:
+      groupIds:
+        items:
+          format: byte
+          type: string
+        type: array
+      organizationObjectId:
+        format: byte
+        type: string
+      policy:
+        $ref: '#/definitions/jumpcloud.password.PasswordPolicy'
+    type: object
+  jumpcloud.password.PasswordPolicy:
+    properties:
+      allowUnenrolledMFAPasswordReset:
+        type: boolean
+      allowUsernameSubstring:
+        type: boolean
+      daysAfterExpirationToSelfRecover:
+        format: int32
+        type: integer
+      daysBeforeExpirationToForceReset:
+        format: int32
+        type: integer
+      default:
+        type: boolean
+      description:
+        type: string
+      disallowCommonlyUsedPasswords:
+        type: boolean
+      disallowSequentialOrRepetitiveChars:
+        type: boolean
+      effectiveDate:
+        format: date-time
+        type: string
+      enableDaysAfterExpirationToSelfRecover:
+        type: boolean
+      enableDaysBeforeExpirationToForceReset:
+        type: boolean
+      enableLockoutTimeInSeconds:
+        type: boolean
+      enableMaxHistory:
+        type: boolean
+      enableMaxLoginAttempts:
+        type: boolean
+      enableMinChangePeriodInDays:
+        type: boolean
+      enableMinLength:
+        type: boolean
+      enablePasswordExpirationInDays:
+        type: boolean
+      enableRecoveryEmail:
+        type: boolean
+      enableResetLockoutCounter:
+        type: boolean
+      lockoutTimeInSeconds:
+        format: int32
+        type: integer
+      maxHistory:
+        format: int32
+        type: integer
+      maxLoginAttempts:
+        format: int32
+        type: integer
+      minChangePeriodInDays:
+        format: int32
+        type: integer
+      minLength:
+        format: int32
+        type: integer
+      name:
+        type: string
+      needsLowercase:
+        type: boolean
+      needsNumeric:
+        type: boolean
+      needsSymbolic:
+        type: boolean
+      needsUppercase:
+        type: boolean
+      passwordExpirationInDays:
+        format: int32
+        type: integer
+      precedence:
+        format: int32
+        type: integer
+      resetLockoutCounterMinutes:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.password.PolicyPrecedence:
+    properties:
+      objectId:
+        format: byte
+        type: string
+      precedence:
+        format: int32
+        type: integer
+    type: object
+  jumpcloud.password.Response:
+    properties:
+      groups:
+        items:
+          $ref: '#/definitions/jumpcloud.password.GroupResponse'
+        type: array
+      objectId:
+        format: byte
+        type: string
+      policy:
+        $ref: '#/definitions/jumpcloud.password.PasswordPolicy'
+    type: object
   jumpcloud.pwm.App:
     properties:
       appVersion:
@@ -29321,6 +29452,479 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}/sharedFolders?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /passwordpolicies:
+    delete:
+      description: Delete password policies for an organization.
+      operationId: Policy_BatchDelete
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.password.BatchDeleteRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      summary: Batch Delete Password Policy
+      tags:
+        - Password Policy
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/passwordpolicies \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"objectIds":["string"],"organizationObjectId":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordpolicies"
+
+            payload = {
+                "objectIds": ["string"],
+                "organizationObjectId": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("DELETE", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies' -Method DELETE -Headers $headers -ContentType 'application/json' -Body '{"objectIds":["string"],"organizationObjectId":"string"}'
+    post:
+      description: Create a new password policy for an organization.
+      operationId: Policy_Insert
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.password.InsertRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.password.Response'
+      security:
+        - x-api-key: []
+      summary: Create Password Policy
+      tags:
+        - Password Policy
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/passwordpolicies \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordpolicies"
+
+            payload = {
+                "groupIds": ["string"],
+                "organizationObjectId": "string",
+                "policy": {
+                    "allowUnenrolledMFAPasswordReset": True,
+                    "allowUsernameSubstring": True,
+                    "daysAfterExpirationToSelfRecover": 0,
+                    "daysBeforeExpirationToForceReset": 0,
+                    "default": True,
+                    "description": "string",
+                    "disallowCommonlyUsedPasswords": True,
+                    "disallowSequentialOrRepetitiveChars": True,
+                    "effectiveDate": "2019-08-24T14:15:22Z",
+                    "enableDaysAfterExpirationToSelfRecover": True,
+                    "enableDaysBeforeExpirationToForceReset": True,
+                    "enableLockoutTimeInSeconds": True,
+                    "enableMaxHistory": True,
+                    "enableMaxLoginAttempts": True,
+                    "enableMinChangePeriodInDays": True,
+                    "enableMinLength": True,
+                    "enablePasswordExpirationInDays": True,
+                    "enableRecoveryEmail": True,
+                    "enableResetLockoutCounter": True,
+                    "lockoutTimeInSeconds": 0,
+                    "maxHistory": 0,
+                    "maxLoginAttempts": 0,
+                    "minChangePeriodInDays": 0,
+                    "minLength": 0,
+                    "name": "string",
+                    "needsLowercase": True,
+                    "needsNumeric": True,
+                    "needsSymbolic": True,
+                    "needsUppercase": True,
+                    "passwordExpirationInDays": 0,
+                    "precedence": 0,
+                    "resetLockoutCounterMinutes": 0
+                }
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+  /passwordpolicies/precedence/set:
+    put:
+      description: Update the precedence of password policies for an organization.
+      operationId: Policy_UpdatePolicyPrecedence
+      parameters:
+        - in: body
+          name: policyPrecedences
+          required: true
+          schema:
+            items:
+              $ref: '#/definitions/jumpcloud.password.PolicyPrecedence'
+            type: array
+        - format: byte
+          in: query
+          name: organizationObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      summary: Update Password Policy Precedence
+      tags:
+        - Password Policy
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url 'https://console.jumpcloud.com/api/v2/passwordpolicies/precedence/set?organizationObjectId=SOME_STRING_VALUE' \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '[{"objectId":"string","precedence":0}]'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordpolicies/precedence/set"
+
+            querystring = {"organizationObjectId":"SOME_STRING_VALUE"}
+
+            payload = [
+                {
+                    "objectId": "string",
+                    "precedence": 0
+                }
+            ]
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/precedence/set?organizationObjectId=SOME_STRING_VALUE' -Method PUT -Headers $headers -ContentType 'application/json' -Body '[{"objectId":"string","precedence":0}]'
+  '/passwordpolicies/user/{systemUserId}':
+    get:
+      description: Get a password policy by user ID.
+      operationId: Policy_Get
+      parameters:
+        - format: byte
+          in: path
+          name: systemUserId
+          required: true
+          type: string
+        - format: byte
+          in: query
+          name: organizationObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.password.Response'
+      security:
+        - x-api-key: []
+      summary: Get Password Policy by User
+      tags:
+        - Password Policy
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
+        - groups.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordpolicies/user/{systemUserId}?organizationObjectId=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordpolicies/user/{systemUserId}"
+
+            querystring = {"organizationObjectId":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/user/{systemUserId}?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+  '/passwordpolicies/{objectId}':
+    delete:
+      description: Delete a password policy for an organization.
+      operationId: Policy_Delete
+      parameters:
+        - format: byte
+          in: path
+          name: objectId
+          required: true
+          type: string
+        - format: byte
+          in: query
+          name: organizationObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            properties: {}
+            type: object
+      security:
+        - x-api-key: []
+      summary: Delete Password Policy
+      tags:
+        - Password Policy
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}?organizationObjectId=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}"
+
+            querystring = {"organizationObjectId":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}?organizationObjectId=SOME_STRING_VALUE' -Method DELETE -Headers $headers
+    get:
+      description: Get a password policy by its object ID.
+      operationId: Policy_GetByID
+      parameters:
+        - format: byte
+          in: path
+          name: objectId
+          required: true
+          type: string
+        - format: byte
+          in: query
+          name: organizationObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.password.Response'
+      security:
+        - x-api-key: []
+      summary: Get Password Policy by ID
+      tags:
+        - Password Policy
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
+        - groups.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}?organizationObjectId=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}"
+
+            querystring = {"organizationObjectId":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+    put:
+      description: Update a password policy for an organization.
+      operationId: Policy_Update
+      parameters:
+        - format: byte
+          in: path
+          name: objectId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              groupIds:
+                items:
+                  format: byte
+                  type: string
+                type: array
+              organizationObjectId:
+                format: byte
+                type: string
+              policy:
+                $ref: '#/definitions/jumpcloud.password.PasswordPolicy'
+            type: object
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.password.Response'
+      security:
+        - x-api-key: []
+      summary: Update Password Policy
+      tags:
+        - Password Policy
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}"
+
+            payload = {
+                "groupIds": ["string"],
+                "organizationObjectId": "string",
+                "policy": {
+                    "allowUnenrolledMFAPasswordReset": True,
+                    "allowUsernameSubstring": True,
+                    "daysAfterExpirationToSelfRecover": 0,
+                    "daysBeforeExpirationToForceReset": 0,
+                    "default": True,
+                    "description": "string",
+                    "disallowCommonlyUsedPasswords": True,
+                    "disallowSequentialOrRepetitiveChars": True,
+                    "effectiveDate": "2019-08-24T14:15:22Z",
+                    "enableDaysAfterExpirationToSelfRecover": True,
+                    "enableDaysBeforeExpirationToForceReset": True,
+                    "enableLockoutTimeInSeconds": True,
+                    "enableMaxHistory": True,
+                    "enableMaxLoginAttempts": True,
+                    "enableMinChangePeriodInDays": True,
+                    "enableMinLength": True,
+                    "enablePasswordExpirationInDays": True,
+                    "enableRecoveryEmail": True,
+                    "enableResetLockoutCounter": True,
+                    "lockoutTimeInSeconds": 0,
+                    "maxHistory": 0,
+                    "maxLoginAttempts": 0,
+                    "minChangePeriodInDays": 0,
+                    "minLength": 0,
+                    "name": "string",
+                    "needsLowercase": True,
+                    "needsNumeric": True,
+                    "needsSymbolic": True,
+                    "needsUppercase": True,
+                    "passwordExpirationInDays": 0,
+                    "precedence": 0,
+                    "resetLockoutCounterMinutes": 0
+                }
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
   '/payNow/{id}':
     parameters:
       - in: path
@@ -44141,6 +44745,7 @@ tags:
   - name: Organizations
   - name: Partners
   - name: Password Manager
+  - name: Password Policy
   - name: PayNow
   - name: Plan
   - name: Plan Feature
@@ -44254,6 +44859,7 @@ x-tagGroups:
       - Organization Certificate
       - Partners
       - Password Manager
+      - Password Policy
       - Policy Group Templates
       - Providers
       - Push Verification
@@ -44301,6 +44907,7 @@ x-tagGroups:
       - Office 365 Import
       - Organizations
       - Password Manager
+      - Password Policy
       - Policies
       - Policy Group Associations
       - Policy Group Members & Membership
