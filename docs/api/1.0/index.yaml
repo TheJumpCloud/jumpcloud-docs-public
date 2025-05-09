@@ -1916,6 +1916,8 @@ definitions:
         type: string
       active:
         type: boolean
+      agentHasFullDiskAccess:
+        type: boolean
       agentVersion:
         type: string
       allowMultiFactorAuthentication:

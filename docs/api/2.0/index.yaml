@@ -7829,8 +7829,14 @@ definitions:
       appCatalogInstallableObjectId:
         description: ID of the app catalog installable that created this app.
         type: string
+      appFileName:
+        type: string
       appleVpp:
         $ref: '#/definitions/software-app-apple-vpp'
+      architectures:
+        items:
+          type: string
+        type: array
       assetKind:
         description: 'The manifest asset kind (ex: software).'
         type: string
@@ -7845,6 +7851,8 @@ definitions:
       autoUpdate:
         default: false
         type: boolean
+      bundleId:
+        type: string
       commandLineArguments:
         description: Command line arguments to use with the application.
         type: string
@@ -7857,8 +7865,12 @@ definitions:
       desiredState:
         description: State of Install or Uninstall
         type: string
+      downloadUrl:
+        type: string
       enterpriseObjectId:
         description: ID of the Enterprise with which this app is associated
+        type: string
+      format:
         type: string
       googleAndroid:
         $ref: '#/definitions/software-app-google-android'
@@ -7893,10 +7905,14 @@ definitions:
       scope:
         description: The installation scope of the software app.
         type: string
+      shortVersion:
+        type: string
       storedPackage:
         $ref: '#/definitions/object-storage-item'
       storedPackageObjectId:
         description: ID of the stored package this app uses to reference the stored install media.
+        type: string
+      teamId:
         type: string
       updatedAt:
         format: date-time
@@ -29939,6 +29955,9 @@ paths:
   /plan/features:
     x-functionalities-tags:
       - accounts-page-upgrade
+  /plans:
+    x-functionalities-tags:
+      - accounts-page-upgrade
   /policies:
     get:
       description: |-
@@ -34777,7 +34796,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/softwareapps \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","updatedAt":"2019-08-24T14:15:22Z","versionlessDownloadUrl":true}],"updatedAt":"2019-08-24T14:15:22Z"}'
+              --data '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appFileName":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"architectures":["string"],"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"bundleId":"string","commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","downloadUrl":"string","enterpriseObjectId":"string","format":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","shortVersion":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","teamId":"string","updatedAt":"2019-08-24T14:15:22Z","versionlessDownloadUrl":true}],"updatedAt":"2019-08-24T14:15:22Z"}'
         - lang: Python
           source: |-
             import requests
@@ -34792,6 +34811,7 @@ paths:
                     {
                         "allowUpdateDelay": False,
                         "appCatalogInstallableObjectId": "string",
+                        "appFileName": "string",
                         "appleVpp": {
                             "appConfiguration": "string",
                             "assignedLicenses": 0,
@@ -34801,15 +34821,19 @@ paths:
                             "supportedDeviceFamilies": ["IPAD"],
                             "totalLicenses": 0
                         },
+                        "architectures": ["string"],
                         "assetKind": "string",
                         "assetSha256Size": 0,
                         "assetSha256Strings": ["string"],
                         "autoUpdate": False,
+                        "bundleId": "string",
                         "commandLineArguments": "string",
                         "createdAt": "2019-08-24T14:15:22Z",
                         "description": "string",
                         "desiredState": "string",
+                        "downloadUrl": "string",
                         "enterpriseObjectId": "string",
+                        "format": "string",
                         "googleAndroid": {
                             "androidFeatures": ["string"],
                             "appPricing": "string",
@@ -34854,6 +34878,7 @@ paths:
                         "packageVersion": "string",
                         "packageVersionUpdatedAt": "2019-08-24T14:15:22Z",
                         "scope": "string",
+                        "shortVersion": "string",
                         "storedPackage": {
                             "objectId": "string",
                             "versions": [
@@ -34869,6 +34894,7 @@ paths:
                             ]
                         },
                         "storedPackageObjectId": "string",
+                        "teamId": "string",
                         "updatedAt": "2019-08-24T14:15:22Z",
                         "versionlessDownloadUrl": True
                     }
@@ -34888,7 +34914,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","updatedAt":"2019-08-24T14:15:22Z","versionlessDownloadUrl":true}],"updatedAt":"2019-08-24T14:15:22Z"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appFileName":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"architectures":["string"],"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"bundleId":"string","commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","downloadUrl":"string","enterpriseObjectId":"string","format":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","shortVersion":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","teamId":"string","updatedAt":"2019-08-24T14:15:22Z","versionlessDownloadUrl":true}],"updatedAt":"2019-08-24T14:15:22Z"}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
@@ -35152,7 +35178,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/softwareapps/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","updatedAt":"2019-08-24T14:15:22Z","versionlessDownloadUrl":true}],"updatedAt":"2019-08-24T14:15:22Z"}'
+              --data '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appFileName":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"architectures":["string"],"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"bundleId":"string","commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","downloadUrl":"string","enterpriseObjectId":"string","format":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","shortVersion":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","teamId":"string","updatedAt":"2019-08-24T14:15:22Z","versionlessDownloadUrl":true}],"updatedAt":"2019-08-24T14:15:22Z"}'
         - lang: Python
           source: |-
             import requests
@@ -35167,6 +35193,7 @@ paths:
                     {
                         "allowUpdateDelay": False,
                         "appCatalogInstallableObjectId": "string",
+                        "appFileName": "string",
                         "appleVpp": {
                             "appConfiguration": "string",
                             "assignedLicenses": 0,
@@ -35176,15 +35203,19 @@ paths:
                             "supportedDeviceFamilies": ["IPAD"],
                             "totalLicenses": 0
                         },
+                        "architectures": ["string"],
                         "assetKind": "string",
                         "assetSha256Size": 0,
                         "assetSha256Strings": ["string"],
                         "autoUpdate": False,
+                        "bundleId": "string",
                         "commandLineArguments": "string",
                         "createdAt": "2019-08-24T14:15:22Z",
                         "description": "string",
                         "desiredState": "string",
+                        "downloadUrl": "string",
                         "enterpriseObjectId": "string",
+                        "format": "string",
                         "googleAndroid": {
                             "androidFeatures": ["string"],
                             "appPricing": "string",
@@ -35229,6 +35260,7 @@ paths:
                         "packageVersion": "string",
                         "packageVersionUpdatedAt": "2019-08-24T14:15:22Z",
                         "scope": "string",
+                        "shortVersion": "string",
                         "storedPackage": {
                             "objectId": "string",
                             "versions": [
@@ -35244,6 +35276,7 @@ paths:
                             ]
                         },
                         "storedPackageObjectId": "string",
+                        "teamId": "string",
                         "updatedAt": "2019-08-24T14:15:22Z",
                         "versionlessDownloadUrl": True
                     }
@@ -35263,7 +35296,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","enterpriseObjectId":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","updatedAt":"2019-08-24T14:15:22Z","versionlessDownloadUrl":true}],"updatedAt":"2019-08-24T14:15:22Z"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"createdAt":"2019-08-24T14:15:22Z","displayName":"string","id":"string","settings":[{"allowUpdateDelay":false,"appCatalogInstallableObjectId":"string","appFileName":"string","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"architectures":["string"],"assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"autoUpdate":false,"bundleId":"string","commandLineArguments":"string","createdAt":"2019-08-24T14:15:22Z","description":"string","desiredState":"string","downloadUrl":"string","enterpriseObjectId":"string","format":"string","googleAndroid":{"androidFeatures":["string"],"appPricing":"string","appVersion":"string","author":"string","autoUpdateMode":"AUTO_UPDATE_DEFAULT","category":"string","contentRating":"string","displayMode":"string","distributionChannel":"string","fullDescription":"string","iconUrl":"string","installType":"AVAILABLE","managedConfigurationTemplateId":"string","managedProperties":true,"minSdkVersion":0,"name":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"runtimePermission":"PROMPT","startUrl":"string","type":"APP_TYPE_UNSPECIFIED","updateTime":"string","versionCode":0},"iconUrl":"string","location":"string","locationObjectId":"string","microsoftStore":{"doNotUpdate":true,"nonRemovable":true,"packageFamilyName":"string"},"packageId":"string","packageKind":"string","packageManager":"string","packageSubtitle":"string","packageVersion":"string","packageVersionUpdatedAt":"2019-08-24T14:15:22Z","scope":"string","shortVersion":"string","storedPackage":{"objectId":"string","versions":[{"metadata":{},"name":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"string","version":0}]},"storedPackageObjectId":"string","teamId":"string","updatedAt":"2019-08-24T14:15:22Z","versionlessDownloadUrl":true}],"updatedAt":"2019-08-24T14:15:22Z"}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
