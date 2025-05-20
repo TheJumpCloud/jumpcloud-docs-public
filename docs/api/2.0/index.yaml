@@ -13947,6 +13947,85 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"disableLostMode":{},"enableLostMode":{"footnote":"string","message":"string","phoneNumber":"string"}}'
+  '/applemdms/{deviceObjectId}/background_tasks':
+    get:
+      description: This endpoint lists the background tasks for the given device.
+      operationId: BackgroundTasks_List
+      parameters:
+        - format: byte
+          in: path
+          name: deviceObjectId
+          required: true
+          type: string
+        - format: int64
+          in: query
+          name: queryParameters.limit
+          required: false
+          type: string
+        - format: int64
+          in: query
+          name: queryParameters.skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          in: query
+          items:
+            type: string
+          name: queryParameters.fields
+          required: false
+          type: array
+      responses:
+        '200':
+          description: A successful response.
+          schema: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Background Tasks List
+      tags:
+        - mdm
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/applemdms/{deviceObjectId}/background_tasks?queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/{deviceObjectId}/background_tasks"
+
+            querystring = {"queryParameters.limit":"SOME_STRING_VALUE","queryParameters.skip":"SOME_STRING_VALUE","queryParameters.fields":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceObjectId}/background_tasks?queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   '/applemdms/{id}':
     delete:
       description: |-
