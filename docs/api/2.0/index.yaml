@@ -4596,6 +4596,8 @@ definitions:
         type: string
       shared:
         type: boolean
+      sortConfig:
+        type: string
       userObjectId:
         format: byte
         type: string
@@ -4619,6 +4621,8 @@ definitions:
         type: string
       shared:
         type: boolean
+      sortConfig:
+        type: string
       userObjectId:
         format: byte
         type: string
@@ -4700,8 +4704,14 @@ definitions:
       appCatalogInstallableObjectId:
         format: byte
         type: string
+      appFileName:
+        type: string
       appleVpp:
         $ref: '#/definitions/devices.SoftwareAppAppleVpp'
+      architectures:
+        items:
+          type: string
+        type: array
       assetKind:
         type: string
       assetSha256Size:
@@ -4713,6 +4723,8 @@ definitions:
         type: array
       autoUpdate:
         type: boolean
+      bundleId:
+        type: string
       commandLineArguments:
         type: string
       createdAt:
@@ -4723,9 +4735,13 @@ definitions:
         type: string
       desiredState:
         $ref: '#/definitions/devices.SoftwareAppDesiredState'
+      downloadUrl:
+        type: string
       enterpriseObjectId:
         format: byte
         type: string
+      format:
+        $ref: '#/definitions/devices.SoftwareApp.Setting.Format'
       googleAndroid:
         $ref: '#/definitions/devices.SoftwareAppGoogleAndroid'
       iconUrl:
@@ -4753,10 +4769,14 @@ definitions:
         x-nullable: true
       scope:
         $ref: '#/definitions/devices.SoftwareApp.Setting.Scope'
+      shortVersion:
+        type: string
       storedPackage:
         $ref: '#/definitions/devices.ObjectStorageItem'
       storedPackageObjectId:
         format: byte
+        type: string
+      teamId:
         type: string
       updatedAt:
         format: date-time
@@ -4765,6 +4785,13 @@ definitions:
       versionlessDownloadUrl:
         type: boolean
     type: object
+  devices.SoftwareApp.Setting.Format:
+    default: PKG
+    enum:
+      - PKG
+      - APP_IN_DMG
+      - PKG_IN_DMG
+    type: string
   devices.SoftwareApp.Setting.Scope:
     default: SYSTEM
     enum:
@@ -4902,6 +4929,7 @@ definitions:
       - WINDOWS_MDM
       - MICROSOFT_STORE
       - WINGET
+      - MAC_OS_APP_CATALOG
     type: string
   devices.SoftwareAppPermissionGrant:
     properties:
@@ -40416,7 +40444,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/systems/views \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"columns":["string"],"filters":[{"field":"string","values":["string"]}],"isDefault":true,"name":"string","objectId":"string","shared":true,"userObjectId":"string"}'
+              --data '{"columns":["string"],"filters":[{"field":"string","values":["string"]}],"isDefault":true,"name":"string","objectId":"string","shared":true,"sortConfig":"string","userObjectId":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -40435,6 +40463,7 @@ paths:
                 "name": "string",
                 "objectId": "string",
                 "shared": True,
+                "sortConfig": "string",
                 "userObjectId": "string"
             }
             headers = {
@@ -40450,7 +40479,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/views' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"columns":["string"],"filters":[{"field":"string","values":["string"]}],"isDefault":true,"name":"string","objectId":"string","shared":true,"userObjectId":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/views' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"columns":["string"],"filters":[{"field":"string","values":["string"]}],"isDefault":true,"name":"string","objectId":"string","shared":true,"sortConfig":"string","userObjectId":"string"}'
   '/systems/{systemObjectId}/aggregated-policy-stats':
     get:
       description: |-
