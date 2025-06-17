@@ -5449,6 +5449,7 @@ definitions:
       - ALERT_CATEGORY_ADMIN
       - ALERT_CATEGORY_ACCESS
       - ALERT_CATEGORY_GENERAL
+      - ALERT_CATEGORY_CUSTOM
     type: string
   jumpcloud.alerts.AlertOccurrence:
     description: AlertOccurrence holds the occurrence details of an alert.
