@@ -2817,6 +2817,7 @@ definitions:
           - multilist
           - paginationlist
           - searchandselect
+          - datetimepicker
         type: string
       id:
         description: ObjectId uniquely identifying a Policy Template Configuration Field
@@ -4441,6 +4442,31 @@ definitions:
       title:
         type: string
     type: object
+  devices.ObjectStorageCreateRequest:
+    properties:
+      referrer:
+        $ref: '#/definitions/devices.ObjectStorageReferrer'
+      version:
+        $ref: '#/definitions/devices.ObjectStorageVersion'
+    type: object
+  devices.ObjectStorageCreateResponse:
+    properties:
+      item:
+        $ref: '#/definitions/devices.ObjectStorageItem'
+      uploadUrl:
+        type: string
+    type: object
+  devices.ObjectStorageDeleteResponse:
+    properties:
+      objectId:
+        format: byte
+        type: string
+    type: object
+  devices.ObjectStorageGetResponse:
+    properties:
+      item:
+        $ref: '#/definitions/devices.ObjectStorageItem'
+    type: object
   devices.ObjectStorageItem:
     properties:
       objectId:
@@ -4515,7 +4541,7 @@ definitions:
         type: string
       size:
         format: int64
-        type: string
+        type: integer
       status:
         $ref: '#/definitions/devices.ObjectStorageVersion.Status'
       storagePath:
@@ -4525,7 +4551,7 @@ definitions:
         type: string
       version:
         format: int64
-        type: string
+        type: integer
     type: object
   devices.ObjectStorageVersion.Status:
     default: UNKNOWN
@@ -4777,6 +4803,10 @@ definitions:
         format: byte
         type: string
       teamId:
+        type: string
+      updateTool:
+        type: string
+      updateToolArguments:
         type: string
       updatedAt:
         format: date-time
@@ -6162,6 +6192,10 @@ definitions:
             or
             the rule applies to future violations.
         type: boolean
+      eventFilters:
+        items:
+          $ref: '#/definitions/jumpcloud.healthmonitoring.RuleEventFilter'
+        type: array
       eventType:
         description: |2-
 
@@ -6222,6 +6256,8 @@ definitions:
       osFamily:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleOsFamily'
         readOnly: true
+      ruleType:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.RuleType'
       severity:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleSeverity'
       status:
@@ -6248,6 +6284,7 @@ definitions:
       - RULE_CATEGORY_ADMIN
       - RULE_CATEGORY_ACCESS
       - RULE_CATEGORY_GENERAL
+      - RULE_CATEGORY_CUSTOM
     title: |-
       RuleCategory specifies the category for a rule.
       Category specified in the rule decides the category of the produced alert.
@@ -6306,6 +6343,34 @@ definitions:
          "eventType" specifies the event for which the conditions are applicable.
          "filters" specifies a set of filters using which the condition match has to be checked."
     type: object
+  jumpcloud.healthmonitoring.RuleEventFilter:
+    description: RuleEventFilter is the message that represents the event filter for a rule.
+    properties:
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      eventTypes:
+        items:
+          type: string
+        type: array
+      objectId:
+        format: byte
+        readOnly: true
+        type: string
+      referenceFields:
+        items:
+          type: string
+        type: array
+      resolutionCondition:
+        type: string
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      violationCondition:
+        type: string
+    type: object
   jumpcloud.healthmonitoring.RuleOsFamily:
     default: RULE_OS_FAMILY_UNSPECIFIED
     description: |-
@@ -6345,7 +6410,7 @@ definitions:
     default: RULE_STATUS_UNSPECIFIED
     description: |-
       RuleStatus specifies the status of a rule.
-      The status of the rule which can be either enabled or disabled. 
+      The status of the rule which can be either enabled or disabled.
       The rule is processed only in an enabled state.
 
        - RULE_STATUS_UNSPECIFIED: No status specified
@@ -6424,6 +6489,19 @@ definitions:
       validators:
         type: object
     type: object
+  jumpcloud.healthmonitoring.RuleType:
+    default: RULE_TYPE_UNSPECIFIED
+    description: |-
+      RuleType specifies the type of rule.
+
+       - RULE_TYPE_UNSPECIFIED: No rule type specified.
+       - RULE_TYPE_TEMPLATE_BASED: Rule type is template based.
+       - RULE_TYPE_EVENT_FILTER_BASED: Rule type is event filter based.
+    enum:
+      - RULE_TYPE_UNSPECIFIED
+      - RULE_TYPE_TEMPLATE_BASED
+      - RULE_TYPE_EVENT_FILTER_BASED
+    type: string
   jumpcloud.healthmonitoring.UpdateRuleResponse:
     description: UpdateRuleResponse is the response message to UpdateRuleRequest.
     properties:
@@ -6565,6 +6643,9 @@ definitions:
       description:
         description: represents the description of the channel.
         type: string
+      enabled:
+        description: represents the status of the channel.
+        type: boolean
       name:
         description: represents the name of the channel.
         type: string
@@ -6595,15 +6676,19 @@ definitions:
 
        - CHANNEL_TYPE_UNSPECIFIED: CHANNEL_TYPE_UNSPECIFIED represents an invalid channel type.
        - CHANNEL_TYPE_EMAIL: CHANNEL_TYPE_EMAIL represents the email channel type.
+       - CHANNEL_TYPE_WEBHOOK: CHANNEL_TYPE_WEBHOOK represents the webhook channel type.
     enum:
       - CHANNEL_TYPE_UNSPECIFIED
       - CHANNEL_TYPE_EMAIL
+      - CHANNEL_TYPE_WEBHOOK
     type: string
   jumpcloud.notifications.ChannelTypeConfig:
     description: ChannelTypeConfig represents the configuration for the channel type.
     properties:
       email:
         $ref: '#/definitions/jumpcloud.notifications.EmailRecipientConfig'
+      webhook:
+        $ref: '#/definitions/jumpcloud.notifications.WebhookConfig'
     type: object
   jumpcloud.notifications.CreateChannelRequest:
     description: CreateChannelRequest represents the request to create a channel.
@@ -6616,6 +6701,19 @@ definitions:
     properties:
       channel:
         $ref: '#/definitions/jumpcloud.notifications.Channel'
+    type: object
+  jumpcloud.notifications.CustomHeaders:
+    description: CustomHeaders represents the custom headers for the webhook.
+    properties:
+      key:
+        type: string
+      masked:
+        type: boolean
+      objectId:
+        format: byte
+        type: string
+      value:
+        type: string
     type: object
   jumpcloud.notifications.DeleteChannelResponse:
     description: DeleteChannelResponse represents the response to delete channel request.
@@ -6677,11 +6775,113 @@ definitions:
         format: uint64
         type: integer
     type: object
+  jumpcloud.notifications.ListWebhookChannelsResponse:
+    description: ListWebhookChannelsResponse holds the list of webhook channels requested via a ListWebhookChannelsRequest.
+    properties:
+      channels:
+        description: represents the list of webhook channels.
+        items:
+          $ref: '#/definitions/jumpcloud.notifications.WebhookChannel'
+        type: array
+      count:
+        description: represents the count of channels.
+        format: uint64
+        type: integer
+    type: object
+  jumpcloud.notifications.MaskedURLPortion:
+    description: MaskedURLPortion represents the masked portion of the URL.
+    properties:
+      key:
+        type: string
+      objectId:
+        format: byte
+        type: string
+      value:
+        type: string
+    type: object
   jumpcloud.notifications.UpdateChannelResponse:
     description: UpdateChannelResponse represents the response for updating a channel.
     properties:
       channel:
         $ref: '#/definitions/jumpcloud.notifications.Channel'
+    type: object
+  jumpcloud.notifications.WebhookAuthType:
+    default: WEBHOOK_AUTH_TYPE_UNSPECIFIED
+    description: |-
+      WebhookAuthType represents the authentication type for the webhook.
+
+       - WEBHOOK_AUTH_TYPE_UNSPECIFIED: WEBHOOK_AUTH_TYPE_UNSPECIFIED represents an invalid authentication type.
+       - WEBHOOK_AUTH_TYPE_BASIC: WEBHOOK_AUTH_TYPE_BASIC represents basic authentication.
+       - WEBHOOK_AUTH_TYPE_BEARER: WEBHOOK_AUTH_TYPE_BEARER represents bearer token authentication.
+    enum:
+      - WEBHOOK_AUTH_TYPE_UNSPECIFIED
+      - WEBHOOK_AUTH_TYPE_BASIC
+      - WEBHOOK_AUTH_TYPE_BEARER
+    type: string
+  jumpcloud.notifications.WebhookChannel:
+    description: WebhookChannel represents the webhook channel details needed for listing.
+    properties:
+      lastResponseStatusCode:
+        format: int32
+        readOnly: true
+        type: integer
+      lastResponseTimeStamp:
+        format: date-time
+        readOnly: true
+        type: string
+      name:
+        readOnly: true
+        type: string
+      numberOfRules:
+        format: int32
+        readOnly: true
+        type: integer
+      objectId:
+        format: byte
+        readOnly: true
+        type: string
+      organizationObjectId:
+        format: byte
+        readOnly: true
+        type: string
+      status:
+        readOnly: true
+        type: boolean
+      successPercentage:
+        format: int32
+        readOnly: true
+        type: integer
+    type: object
+  jumpcloud.notifications.WebhookConfig:
+    description: WebhookConfig represents the webhook configuration.
+    properties:
+      authPassword:
+        type: string
+      authToken:
+        type: string
+      authType:
+        $ref: '#/definitions/jumpcloud.notifications.WebhookAuthType'
+      authUsername:
+        type: string
+      customHeaders:
+        items:
+          $ref: '#/definitions/jumpcloud.notifications.CustomHeaders'
+        type: array
+      maskedUrlPortion:
+        items:
+          $ref: '#/definitions/jumpcloud.notifications.MaskedURLPortion'
+        type: array
+      objectId:
+        description: represents the webhook identifier.
+        format: byte
+        type: string
+      skipSslVerification:
+        type: boolean
+      url:
+        description: represents the webhook url.
+        type: string
+      urlMasked:
+        type: boolean
     type: object
   jumpcloud.password.BatchDeleteRequest:
     properties:
@@ -21165,7 +21365,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -21184,6 +21384,14 @@ paths:
                     "conditionsRelation": "LOGICAL_OPERATOR_UNSPECIFIED",
                     "description": "string",
                     "detectPreExistingAnamolies": True,
+                    "eventFilters": [
+                        {
+                            "eventTypes": ["string"],
+                            "referenceFields": ["string"],
+                            "resolutionCondition": "string",
+                            "violationCondition": "string"
+                        }
+                    ],
                     "eventType": "string",
                     "name": "string",
                     "notificationChannelObjectIds": ["string"],
@@ -21191,6 +21399,7 @@ paths:
                     "notifyOnResolution": True,
                     "notifyOnViolation": True,
                     "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
+                    "ruleType": "RULE_TYPE_UNSPECIFIED",
                     "severity": "RULE_SEVERITY_UNSPECIFIED",
                     "status": "RULE_STATUS_UNSPECIFIED",
                     "templateObjectId": "string"
@@ -21208,7 +21417,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules-stats:
     get:
       description: This endpoint is used for getting rules stats.
@@ -21380,7 +21589,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -21399,6 +21608,14 @@ paths:
                     "conditionsRelation": "LOGICAL_OPERATOR_UNSPECIFIED",
                     "description": "string",
                     "detectPreExistingAnamolies": True,
+                    "eventFilters": [
+                        {
+                            "eventTypes": ["string"],
+                            "referenceFields": ["string"],
+                            "resolutionCondition": "string",
+                            "violationCondition": "string"
+                        }
+                    ],
                     "eventType": "string",
                     "name": "string",
                     "notificationChannelObjectIds": ["string"],
@@ -21406,6 +21623,7 @@ paths:
                     "notifyOnResolution": True,
                     "notifyOnViolation": True,
                     "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
+                    "ruleType": "RULE_TYPE_UNSPECIFIED",
                     "severity": "RULE_SEVERITY_UNSPECIFIED",
                     "status": "RULE_STATUS_UNSPECIFIED",
                     "templateObjectId": "string"
@@ -21423,7 +21641,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   '/healthmonitoring/rules/{id}/status':
     patch:
       description: This endpoint allows you to update the status of a health monitoring rule.
@@ -25699,9 +25917,9 @@ paths:
           type: array
         - default: '100'
           description: |-
-            The number of rules to return at once.
-            If the number of rules returned is less than `limit` there are no more rules to fetch.
-            If the number of rules returned is equal to limit there may be more rules to fetch. Increment `skip` by `limit` to get the next set of rules.
+            The number of channels to return at once.
+            If the number of channels returned is less than `limit` there are no more channels to fetch.
+            If the number of channels returned is equal to limit there may be more channels to fetch. Increment `skip` by `limit` to get the next set of channels.
           format: int64
           in: query
           name: limit
@@ -25775,7 +25993,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/notifications/channels \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]}},"description":"string","name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","skipSslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
         - lang: Python
           source: |-
             import requests
@@ -25783,7 +26001,8 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/notifications/channels"
 
             payload = {"channel": {
-                    "config": {"email": {
+                    "config": {
+                        "email": {
                             "role": [
                                 {
                                     "objectId": "string",
@@ -25797,8 +26016,35 @@ paths:
                                     "objectId": "string"
                                 }
                             ]
-                        }},
+                        },
+                        "webhook": {
+                            "authPassword": "string",
+                            "authToken": "string",
+                            "authType": "WEBHOOK_AUTH_TYPE_UNSPECIFIED",
+                            "authUsername": "string",
+                            "customHeaders": [
+                                {
+                                    "key": "string",
+                                    "masked": True,
+                                    "objectId": "string",
+                                    "value": "string"
+                                }
+                            ],
+                            "maskedUrlPortion": [
+                                {
+                                    "key": "string",
+                                    "objectId": "string",
+                                    "value": "string"
+                                }
+                            ],
+                            "objectId": "string",
+                            "skipSslVerification": True,
+                            "url": "string",
+                            "urlMasked": True
+                        }
+                    },
                     "description": "string",
+                    "enabled": True,
                     "name": "string",
                     "type": "CHANNEL_TYPE_UNSPECIFIED"
                 }}
@@ -25815,7 +26061,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]}},"description":"string","name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","skipSslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
   '/notifications/channels/{id}':
     delete:
       description: This endpoint allows you to delete a notification channel.
@@ -25944,7 +26190,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/notifications/channels/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]}},"description":"string","name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","skipSslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
         - lang: Python
           source: |-
             import requests
@@ -25952,7 +26198,8 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/notifications/channels/{id}"
 
             payload = {"channel": {
-                    "config": {"email": {
+                    "config": {
+                        "email": {
                             "role": [
                                 {
                                     "objectId": "string",
@@ -25966,8 +26213,35 @@ paths:
                                     "objectId": "string"
                                 }
                             ]
-                        }},
+                        },
+                        "webhook": {
+                            "authPassword": "string",
+                            "authToken": "string",
+                            "authType": "WEBHOOK_AUTH_TYPE_UNSPECIFIED",
+                            "authUsername": "string",
+                            "customHeaders": [
+                                {
+                                    "key": "string",
+                                    "masked": True,
+                                    "objectId": "string",
+                                    "value": "string"
+                                }
+                            ],
+                            "maskedUrlPortion": [
+                                {
+                                    "key": "string",
+                                    "objectId": "string",
+                                    "value": "string"
+                                }
+                            ],
+                            "objectId": "string",
+                            "skipSslVerification": True,
+                            "url": "string",
+                            "urlMasked": True
+                        }
+                    },
                     "description": "string",
+                    "enabled": True,
                     "name": "string",
                     "type": "CHANNEL_TYPE_UNSPECIFIED"
                 }}
@@ -25984,7 +26258,296 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]}},"description":"string","name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","skipSslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+  /notifications/webhook/channels:
+    get:
+      description: This endpoint allows you to list webhook notification channels.
+      operationId: NotificationsChannelsService_ListWebhookChannels
+      parameters:
+        - collectionFormat: multi
+          description: |
+            A filter to apply to the query.
+
+              **Filter structure**: `<field>:<operator>:<value>`.
+
+              **field** = Populate with a valid field from an endpoint response.
+
+              **operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.
+
+              **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+              **Example** `GET /api/v2/groups?filter=name:eq:Test+Group`
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - default: '0'
+          description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          items:
+            type: string
+          name: sort
+          required: false
+          type: array
+        - default: '100'
+          description: |-
+            The number of channels to return at once.
+            If the number of channels returned is less than `limit` there are no more channels to fetch.
+            If the number of channels returned is equal to limit there may be more channels to fetch. Increment `skip` by `limit` to get the next set of channels.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.notifications.ListWebhookChannelsResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for listing the webhook notification channels.
+      tags:
+        - Webhook Notifications Channels
+      x-dynamic-gateway: true
+      x-scopes:
+        - notifications.channels
+        - notifications.channels.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/notifications/webhook/channels?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/notifications/webhook/channels"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"0","sort":"SOME_ARRAY_VALUE","limit":"100"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/webhook/channels?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' -Method GET -Headers $headers
+  /object-storage:
+    post:
+      description: |-
+        Create an Object Storage Item.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud/api/v2/object-storage \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json
+        ```
+      operationId: ObjectStorage_Create
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/devices.ObjectStorageCreateRequest'
+      responses:
+        '200':
+          description: Success Storing Object Storage Item.
+          schema:
+            $ref: '#/definitions/devices.ObjectStorageCreateResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Create an Item in Object Storage
+      tags:
+        - Object Storage
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/object-storage \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"referrer":{"trackObject":{"objectId":"string","type":"UNKNOWN"}},"version":{"createdAt":"2019-08-24T14:15:22Z","metadata":{"metadataMsi":{"manufacturer":"string","metadata":{"property1":"string","property2":"string"},"productCode":"string","productName":"string","productVersion":"string","sha256sum":"string","upgradeCode":"string"},"metadataPkg":{"assetKind":"string","bundleIdentifier":"string","bundleVersion":"string","packageKind":"string","sha256sum":"string","subtitle":"string","title":"string"}},"name":"string","objectId":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"UNKNOWN","storagePath":"string","updatedAt":"2019-08-24T14:15:22Z","version":0}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/object-storage"
+
+            payload = {
+                "referrer": {"trackObject": {
+                        "objectId": "string",
+                        "type": "UNKNOWN"
+                    }},
+                "version": {
+                    "createdAt": "2019-08-24T14:15:22Z",
+                    "metadata": {
+                        "metadataMsi": {
+                            "manufacturer": "string",
+                            "metadata": {
+                                "property1": "string",
+                                "property2": "string"
+                            },
+                            "productCode": "string",
+                            "productName": "string",
+                            "productVersion": "string",
+                            "sha256sum": "string",
+                            "upgradeCode": "string"
+                        },
+                        "metadataPkg": {
+                            "assetKind": "string",
+                            "bundleIdentifier": "string",
+                            "bundleVersion": "string",
+                            "packageKind": "string",
+                            "sha256sum": "string",
+                            "subtitle": "string",
+                            "title": "string"
+                        }
+                    },
+                    "name": "string",
+                    "objectId": "string",
+                    "rejectedReason": "string",
+                    "sha256sum": "string",
+                    "size": 0,
+                    "status": "UNKNOWN",
+                    "storagePath": "string",
+                    "updatedAt": "2019-08-24T14:15:22Z",
+                    "version": 0
+                }
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/object-storage' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"referrer":{"trackObject":{"objectId":"string","type":"UNKNOWN"}},"version":{"createdAt":"2019-08-24T14:15:22Z","metadata":{"metadataMsi":{"manufacturer":"string","metadata":{"property1":"string","property2":"string"},"productCode":"string","productName":"string","productVersion":"string","sha256sum":"string","upgradeCode":"string"},"metadataPkg":{"assetKind":"string","bundleIdentifier":"string","bundleVersion":"string","packageKind":"string","sha256sum":"string","subtitle":"string","title":"string"}},"name":"string","objectId":"string","rejectedReason":"string","sha256sum":"string","size":0,"status":"UNKNOWN","storagePath":"string","updatedAt":"2019-08-24T14:15:22Z","version":0}}'
+  '/object-storage/item/{objectId}':
+    get:
+      description: |-
+        Get an Object Storage Item.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud/api/v2/object-storage.
+        ```
+      operationId: ObjectStorage_Get
+      parameters:
+        - format: byte
+          in: path
+          name: objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success getting Object Storage Item.
+          schema:
+            $ref: '#/definitions/devices.ObjectStorageGetResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Get an Item in Object Storage
+      tags:
+        - Object Storage
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/object-storage/item/{objectId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/object-storage/item/{objectId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/object-storage/item/{objectId}' -Method GET -Headers $headers
   /object-storage/items:
     get:
       description: "List the current Object Storage Items for an Organization.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/object-storage/items \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 ObjectStorageItems in a single response.\n\n\tMSP Note: Currently ObjectStorage can only operate in the context of a single organization."
@@ -26151,6 +26714,84 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/object-storage/status' -Method GET -Headers $headers
+  '/object-storage/{objectId}':
+    delete:
+      description: |-
+        Delete an Object Storage Item.
+
+        #### Sample Request
+        ```
+        curl -X DELETE https://console.jumpcloud/api/v2/object-storage.
+        ```
+      operationId: ObjectStorage_Delete
+      parameters:
+        - format: byte
+          in: path
+          name: objectId
+          required: true
+          type: string
+        - format: byte
+          in: query
+          name: referrerObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Success deleting Object Storage Item.
+          schema:
+            $ref: '#/definitions/devices.ObjectStorageDeleteResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Delete an Item in Object Storage
+      tags:
+        - Object Storage
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url 'https://console.jumpcloud.com/api/v2/object-storage/{objectId}?referrerObjectId=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/object-storage/{objectId}"
+
+            querystring = {"referrerObjectId":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/object-storage/{objectId}?referrerObjectId=SOME_STRING_VALUE' -Method DELETE -Headers $headers
   /office365/activate:
     x-functionalities-tags:
       - m365-activate-deactivate
@@ -44848,6 +45489,7 @@ tags:
   - name: Apple MDM
   - name: Apple VPP
   - name: Applications
+  - name: Assets
   - name: Authentication Policies
   - name: Bulk Job Requests
   - name: Command Templates
@@ -44927,6 +45569,7 @@ tags:
   - name: User Groups
   - name: Users
   - name: WebAuthn
+  - name: Webhook Notifications Channels
   - name: Workday Import
   - name: fde
   - name: mdm
@@ -44986,6 +45629,7 @@ x-tagGroups:
       - Aggregated Policy Stats
       - App Catalog
       - Applications
+      - Assets
       - Durt
       - FulltextSearch
       - G Suite
@@ -45015,6 +45659,7 @@ x-tagGroups:
       - Software Apps
       - Systems
       - Systems Organization Settings
+      - Webhook Notifications Channels
       - mdm
   - name: endpoints
     tags:
