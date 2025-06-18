@@ -74,7 +74,7 @@ paths:
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -94,7 +94,6 @@ paths:
                     "not": {},
                     "or": {}
                 },
-                "skip": 0,
                 "sort": "string"
             }
             headers = {
@@ -112,7 +111,7 @@ paths:
             $headers.Add("accept", "application/json")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
   /events/count:
     post:
       security:
@@ -170,7 +169,7 @@ paths:
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -190,7 +189,6 @@ paths:
                     "not": {},
                     "or": {}
                 },
-                "skip": 0,
                 "sort": "string"
             }
             headers = {
@@ -208,7 +206,7 @@ paths:
             $headers.Add("accept", "application/json")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/count' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/count' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"sort":"string"}'
   /events/distinct:
     post:
       security:
@@ -848,11 +846,6 @@ definitions:
             x-go-name: SearchAfter
           search_term:
             $ref: '#/definitions/SearchTerm'
-          skip:
-            description: optional offset into the result set to start with when returning
-            type: integer
-            format: int64
-            x-go-name: Skip
           sort:
             description: ASC or DESC order for timestamp
             type: string
