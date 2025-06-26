@@ -268,6 +268,24 @@ definitions:
         $ref: '#/definitions/AuthnPolicyType'
     title: AuthnPolicy
     type: object
+  AuthnPolicyCustomErrorMessage:
+    description: Custom error message for an authentication policy.
+    properties:
+      enabled:
+        description: Indicates whether the custom error message is enabled or not.
+        type: boolean
+      message:
+        description: The custom error message to be displayed when the policy is applied.
+        type: string
+      primary_help_link:
+        $ref: '#/definitions/AuthnPolicyHelpLink'
+      secondary_help_link:
+        $ref: '#/definitions/AuthnPolicyHelpLink'
+    required:
+      - message
+      - enabled
+    title: AuthnPolicyCustomErrorMessage
+    type: object
   AuthnPolicyEffect:
     properties:
       action:
@@ -276,6 +294,8 @@ definitions:
           - deny
           - unknown
         type: string
+      custom_error_message:
+        $ref: '#/definitions/AuthnPolicyCustomErrorMessage'
       obligations:
         $ref: '#/definitions/AuthnPolicyObligations'
     required:
@@ -292,6 +312,17 @@ definitions:
             required: true
       example-deny:
         action: deny
+  AuthnPolicyHelpLink:
+    description: Help link for an authentication policy.
+    properties:
+      text:
+        description: The text to be displayed for the help link.
+        type: string
+      url:
+        description: The URL to be opened when the help link is clicked.
+        type: string
+    title: AuthnPolicyHelpLink
+    type: object
   AuthnPolicyObligations:
     properties:
       mfa:
@@ -5502,6 +5533,9 @@ definitions:
       - ALERT_SOURCE_TYPE_ADMIN
       - ALERT_SOURCE_TYPE_DEVICE
       - ALERT_SOURCE_TYPE_USER_GROUP
+      - ALERT_SOURCE_TYPE_DEVICES
+      - ALERT_SOURCE_TYPE_ACCESS_REQUEST
+      - ALERT_SOURCE_TYPE_SAAS_APPLICATION
     type: string
   jumpcloud.alerts.AlertStatus:
     default: ALERT_STATUS_UNSPECIFIED
@@ -15393,7 +15427,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/authn/policies \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help_link":{"text":"string","url":"string"},"secondary_help_link":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
         - lang: Python
           source: |-
             import requests
@@ -15406,6 +15440,18 @@ paths:
                 "disabled": True,
                 "effect": {
                     "action": "allow",
+                    "custom_error_message": {
+                        "enabled": True,
+                        "message": "string",
+                        "primary_help_link": {
+                            "text": "string",
+                            "url": "string"
+                        },
+                        "secondary_help_link": {
+                            "text": "string",
+                            "url": "string"
+                        }
+                    },
                     "obligations": {
                         "mfa": {"required": True},
                         "userVerification": {"requirement": "none"}
@@ -15456,7 +15502,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help_link":{"text":"string","url":"string"},"secondary_help_link":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
     x-functionalities-tags:
       - policies
   '/authn/policies/{id}':
@@ -15637,7 +15683,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/authn/policies/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help_link":{"text":"string","url":"string"},"secondary_help_link":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
         - lang: Python
           source: |-
             import requests
@@ -15650,6 +15696,18 @@ paths:
                 "disabled": True,
                 "effect": {
                     "action": "allow",
+                    "custom_error_message": {
+                        "enabled": True,
+                        "message": "string",
+                        "primary_help_link": {
+                            "text": "string",
+                            "url": "string"
+                        },
+                        "secondary_help_link": {
+                            "text": "string",
+                            "url": "string"
+                        }
+                    },
                     "obligations": {
                         "mfa": {"required": True},
                         "userVerification": {"requirement": "none"}
@@ -15700,7 +15758,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help_link":{"text":"string","url":"string"},"secondary_help_link":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
     x-functionalities-tags:
       - policies
   '/authn/policy/fallback/{resource_type}':
