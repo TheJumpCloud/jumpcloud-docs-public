@@ -3188,6 +3188,12 @@ definitions:
       createdBy:
         description: ID of the user who created this role
         type: string
+      description:
+        description: Description of the role and its purpose
+        type: string
+      id:
+        description: ID of the role
+        type: string
       isCustom:
         description: Indicates if this is a custom role (true) or a system role (false)
         type: boolean
@@ -3205,9 +3211,6 @@ definitions:
       providerId:
         description: ID of the provider associated with this role.
         type: string
-      roleDescription:
-        description: Description of the role and its purpose
-        type: string
       scopes:
         description: List of permission scopes associated with this role.
         items:
@@ -3220,6 +3223,9 @@ definitions:
     type: object
   RoleCreate:
     properties:
+      description:
+        description: Description of the role and its purpose
+        type: string
       name:
         description: Name of the role
         type: string
@@ -3230,9 +3236,6 @@ definitions:
         type: array
       providerId:
         description: ID of the provider to associate with this role
-        type: string
-      roleDescription:
-        description: Description of the role and its purpose
         type: string
       scopes:
         description: List of permission scopes to assign to this role
@@ -3246,7 +3249,7 @@ definitions:
     type: object
   RoleList:
     properties:
-      roles:
+      results:
         description: List of roles
         items:
           $ref: '#/definitions/Role'
@@ -3259,6 +3262,9 @@ definitions:
     type: object
   RoleUpdate:
     properties:
+      description:
+        description: Description of the role and its purpose
+        type: string
       name:
         description: Updated name of the role
         type: string
@@ -3269,9 +3275,6 @@ definitions:
         type: array
       providerId:
         description: ID of the provider to associate with this role
-        type: string
-      roleDescription:
-        description: Description of the role and its purpose
         type: string
       scopes:
         description: Updated list of permission scopes for this role
@@ -5221,6 +5224,7 @@ definitions:
           - radius
           - remoteAccess
           - saasMgmt
+          - assetMgmt
           - softwareManagement
           - sso
           - systemInsights
@@ -7009,9 +7013,6 @@ definitions:
       value:
         type: string
     type: object
-  jumpcloud.notifications.DeleteChannelResponse:
-    description: DeleteChannelResponse represents the response to delete channel request.
-    type: object
   jumpcloud.notifications.EmailRecipientConfig:
     description: EmailRecipientConfig represents the email recipient.
     properties:
@@ -7096,9 +7097,31 @@ definitions:
   jumpcloud.notifications.PostSaveWebhookRequest:
     description: PostSaveWebhookRequest represents the request to test a webhook after saving.
     properties:
+      authPassword:
+        type: string
+      authToken:
+        type: string
+      authType:
+        $ref: '#/definitions/jumpcloud.notifications.WebhookAuthType'
+      authUsername:
+        type: string
+      customHeaders:
+        items:
+          $ref: '#/definitions/jumpcloud.notifications.CustomHeaders'
+        type: array
+      maskedUrlPortion:
+        items:
+          $ref: '#/definitions/jumpcloud.notifications.MaskedURLPortion'
+        type: array
       objectId:
         format: byte
         type: string
+      sslVerification:
+        type: boolean
+      url:
+        type: string
+      urlMasked:
+        type: boolean
     type: object
   jumpcloud.notifications.PreSaveWebhookRequest:
     description: PreSaveWebhookRequest represents the request to test a webhook before saving.
@@ -7345,6 +7368,8 @@ definitions:
     type: object
   jumpcloud.password.Response:
     properties:
+      cached:
+        type: boolean
       groups:
         items:
           $ref: '#/definitions/jumpcloud.password.GroupResponse'
@@ -8050,6 +8075,7 @@ definitions:
       - max
       - min
       - sum
+      - count_unique
     type: string
   jumpcloud.search.MetadataContextEntry:
     description: MetadataContextEntry represents a single key-value pair for additional metadata context.
@@ -9051,9 +9077,10 @@ definitions:
     example:
       collection_time: '2019-06-03T19:41:30.658Z'
       conversion_status: 0
-      devide_id: '\\\\?\\Volume{3ba5cc52-e0fd-45fa-b8b8-5c88f44f8b17}\'
+      device_id: '\\\\?\\Volume{3ba5cc52-e0fd-45fa-b8b8-5c88f44f8b17}\'
       drive_letter: 'C:'
       encryption_method: None
+      percentage_encrypted: 0
       persistent_volume_id: ''
       protection_status: 0
       system_id: 5c9e51a13c5146f89bae12d9
@@ -9068,6 +9095,8 @@ definitions:
         type: string
       encryption_method:
         type: string
+      percentage_encrypted:
+        type: integer
       persistent_volume_id:
         type: string
       protection_status:
@@ -26585,6 +26614,10 @@ paths:
           description: A successful response.
           schema:
             $ref: '#/definitions/jumpcloud.notifications.CreateChannelResponse'
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/jumpcloud.notifications.CreateChannelResponse'
       security:
         - x-api-key: []
       summary: This endpoint is used for creating the channels.
@@ -26683,7 +26716,11 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/jumpcloud.notifications.DeleteChannelResponse'
+            properties: {}
+            type: object
+        '204':
+          description: No Content
+          schema: {}
       security:
         - x-api-key: []
       summary: This endpoint is used to delete notification channels.
@@ -26993,7 +27030,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/notifications/webhook/test \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"organizationObjectId":"string","postSave":{"objectId":"string"},"preSave":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"sslVerification":true,"url":"string","urlMasked":true}}'
+              --data '{"organizationObjectId":"string","postSave":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true},"preSave":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"sslVerification":true,"url":"string","urlMasked":true}}'
         - lang: Python
           source: |-
             import requests
@@ -27002,7 +27039,31 @@ paths:
 
             payload = {
                 "organizationObjectId": "string",
-                "postSave": {"objectId": "string"},
+                "postSave": {
+                    "authPassword": "string",
+                    "authToken": "string",
+                    "authType": "WEBHOOK_AUTH_TYPE_UNSPECIFIED",
+                    "authUsername": "string",
+                    "customHeaders": [
+                        {
+                            "key": "string",
+                            "masked": True,
+                            "objectId": "string",
+                            "value": "string"
+                        }
+                    ],
+                    "maskedUrlPortion": [
+                        {
+                            "key": "string",
+                            "objectId": "string",
+                            "value": "string"
+                        }
+                    ],
+                    "objectId": "string",
+                    "sslVerification": True,
+                    "url": "string",
+                    "urlMasked": True
+                },
                 "preSave": {
                     "authPassword": "string",
                     "authToken": "string",
@@ -27034,7 +27095,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/webhook/test' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"organizationObjectId":"string","postSave":{"objectId":"string"},"preSave":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"sslVerification":true,"url":"string","urlMasked":true}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/webhook/test' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"organizationObjectId":"string","postSave":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true},"preSave":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"sslVerification":true,"url":"string","urlMasked":true}}'
   /object-storage/items:
     get:
       description: "List the current Object Storage Items for an Organization.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/object-storage/items \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 ObjectStorageItems in a single response.\n\n\tMSP Note: Currently ObjectStorage can only operate in the context of a single organization."
@@ -31162,6 +31223,59 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/user/{systemUserId}?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+  '/passwordpolicies/usergroup/{userGroupId}':
+    get:
+      description: Get a password policy by user group ID.
+      operationId: Policy_GetByUserGroup
+      parameters:
+        - format: byte
+          in: path
+          name: userGroupId
+          required: true
+          type: string
+        - format: byte
+          in: query
+          name: organizationObjectId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.password.Response'
+      security:
+        - x-api-key: []
+      summary: Get Password Policy by User Group
+      tags:
+        - Password Policy
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
+        - groups.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/passwordpolicies/usergroup/{userGroupId}?organizationObjectId=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/passwordpolicies/usergroup/{userGroupId}"
+
+            querystring = {"organizationObjectId":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/usergroup/{userGroupId}?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
   '/passwordpolicies/{objectId}':
     delete:
       description: Delete a password policy for an organization.
@@ -36886,7 +37000,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/roles \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"name":"string","organizationIds":["string"],"providerId":"string","roleDescription":"string","scopes":["string"]}'
+              --data '{"description":"string","name":"string","organizationIds":["string"],"providerId":"string","scopes":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -36894,10 +37008,10 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/roles"
 
             payload = {
+                "description": "string",
                 "name": "string",
                 "organizationIds": ["string"],
                 "providerId": "string",
-                "roleDescription": "string",
                 "scopes": ["string"]
             }
             headers = {
@@ -36913,7 +37027,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/roles' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","organizationIds":["string"],"providerId":"string","roleDescription":"string","scopes":["string"]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/roles' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"description":"string","name":"string","organizationIds":["string"],"providerId":"string","scopes":["string"]}'
   '/roles/{role_id}':
     delete:
       description: Deletes a role with the specified ID.
@@ -37075,7 +37189,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/roles/{role_id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"name":"string","organizationIds":["string"],"providerId":"string","roleDescription":"string","scopes":["string"]}'
+              --data '{"description":"string","name":"string","organizationIds":["string"],"providerId":"string","scopes":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -37083,10 +37197,10 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/roles/{role_id}"
 
             payload = {
+                "description": "string",
                 "name": "string",
                 "organizationIds": ["string"],
                 "providerId": "string",
-                "roleDescription": "string",
                 "scopes": ["string"]
             }
             headers = {
@@ -37102,7 +37216,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/roles/{role_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","organizationIds":["string"],"providerId":"string","roleDescription":"string","scopes":["string"]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/roles/{role_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"description":"string","name":"string","organizationIds":["string"],"providerId":"string","scopes":["string"]}'
   /software/catalog:
     x-functionalities-tags:
       - devices-windows-software-app-crud
@@ -47332,6 +47446,7 @@ tags:
   - name: AccountManagerCalendar
   - name: Active Directory
   - name: AddOn
+  - name: Admin Settings
   - name: Administrators
   - name: Aggregated Policy Stats
   - name: App Catalog
@@ -47400,6 +47515,7 @@ tags:
   - name: SCIM Import
   - name: SSO
   - name: SaaS App Management
+  - name: SaaS License Management
   - name: Samba Domains
   - name: Saved Views
   - name: Search
@@ -47482,6 +47598,7 @@ x-tagGroups:
   - name: Organization
     tags:
       - Access Requests
+      - Admin Settings
       - Aggregated Policy Stats
       - App Catalog
       - Applications
@@ -47512,6 +47629,7 @@ x-tagGroups:
       - Reports
       - Roles
       - SaaS App Management
+      - SaaS License Management
       - Saved Views
       - Search
       - Software Apps

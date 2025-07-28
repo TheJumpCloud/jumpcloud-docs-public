@@ -874,6 +874,9 @@ definitions:
         default: linux
         description: The Command OS
         type: string
+      description:
+        description: Description of the command.
+        type: string
       files:
         description: An array of file IDs to include with the command.
         items:
@@ -1042,6 +1045,21 @@ definitions:
               description: The time (UTC) that the command was sent.
               format: date-time
               type: string
+            response:
+              properties:
+                data:
+                  properties:
+                    exitCode:
+                      description: The numeric exit code returned by the executed command.
+                      type: integer
+                    output:
+                      description: 'The successful command output, truncated to 40 characters.'
+                      type: string
+                  type: object
+                error:
+                  description: 'The error output from the command, truncated to 40 characters.'
+                  type: string
+              type: object
             responseTime:
               description: The time (UTC) that the command was completed.
               format: date-time
@@ -1081,6 +1099,9 @@ definitions:
               type: string
             commandType:
               description: The Command OS.
+              type: string
+            description:
+              description: Description of the command.
               type: string
             launchType:
               description: How the Command is executed.
@@ -4559,7 +4580,7 @@ paths:
               --url https://console.jumpcloud.com/api/commands \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"command":"string","commandRunners":["string"],"commandType":"linux","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
+              --data '{"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -4570,6 +4591,7 @@ paths:
                 "command": "string",
                 "commandRunners": ["string"],
                 "commandType": "linux",
+                "description": "string",
                 "files": ["string"],
                 "filesS3": [
                     {
@@ -4608,7 +4630,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandRunners":["string"],"commandType":"linux","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
   '/commands/{id}':
     delete:
       description: |-
@@ -4755,7 +4777,7 @@ paths:
               --url https://console.jumpcloud.com/api/commands/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"command":"string","commandRunners":["string"],"commandType":"linux","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
+              --data '{"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -4766,6 +4788,7 @@ paths:
                 "command": "string",
                 "commandRunners": ["string"],
                 "commandType": "linux",
+                "description": "string",
                 "files": ["string"],
                 "filesS3": [
                     {
@@ -4804,7 +4827,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandRunners":["string"],"commandType":"linux","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
   '/commands/{id}/results':
     get:
       description: |-
@@ -7621,7 +7644,8 @@ paths:
         type: string
     post:
       description: |-
-        This endpoint allows you to reset the TOTP key for a specified system user and put them in an TOTP MFA enrollment period. This will result in the user being prompted to setup TOTP MFA when logging into userportal. Please be aware that if the user does not complete TOTP MFA setup before the `exclusionUntil` date, they will be locked out of any resources that require TOTP MFA.
+        This endpoint resets the user's TOTP key and initiates a new MFA enrollment period. The user will be prompted to set up MFA at their next login. If `Unified MFA is enabled`, this action will also delete the user's existing Push Notification endpoint.
+        Warning: The user must complete the setup before the `exclusionUntil` date to avoid being locked out of MFA-protected resources.
 
         Please refer to our [Knowledge Base Article](https://support.jumpcloud.com/customer/en/portal/articles/2959138-using-multifactor-authentication-with-jumpcloud) on setting up MFA for more information.
 
