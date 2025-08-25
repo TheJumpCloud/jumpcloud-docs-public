@@ -860,6 +860,14 @@ definitions:
         type: integer
     title: ApplicationTemplatesList
     type: object
+  attribute:
+    properties:
+      name:
+        type: string
+      value:
+        maxLength: 1024
+        type: string
+    type: object
   command:
     properties:
       command:
@@ -2148,6 +2156,157 @@ definitions:
             type: string
             x-nullable: true
         type: object
+      primarySystemUser._id:
+        type: string
+      primarySystemUser.account_locked:
+        type: boolean
+      primarySystemUser.account_locked_date:
+        type: string
+        x-nullable: true
+      primarySystemUser.activated:
+        type: boolean
+      primarySystemUser.addresses:
+        $ref: '#/definitions/systemuserreturn/properties/addresses'
+      primarySystemUser.admin:
+        $ref: '#/definitions/systemuserreturn/properties/admin'
+      primarySystemUser.allow_public_key:
+        type: boolean
+      primarySystemUser.alternateEmail:
+        type: string
+      primarySystemUser.attributes:
+        items:
+          $ref: '#/definitions/attribute'
+        type: array
+      primarySystemUser.badLoginAttempts:
+        minimum: 0
+        type: integer
+      primarySystemUser.company:
+        maxLength: 1024
+        type: string
+      primarySystemUser.costCenter:
+        maxLength: 1024
+        type: string
+      primarySystemUser.created:
+        type: string
+      primarySystemUser.creationSource:
+        maxLength: 1024
+        type: string
+      primarySystemUser.department:
+        maxLength: 1024
+        type: string
+      primarySystemUser.description:
+        maxLength: 1024
+        type: string
+      primarySystemUser.disableDeviceMaxLoginAttempts:
+        type: boolean
+      primarySystemUser.displayname:
+        maxLength: 1024
+        type: string
+      primarySystemUser.email:
+        maxLength: 1024
+        type: string
+      primarySystemUser.employeeIdentifier:
+        description: 'Must be unique per user. '
+        maxLength: 256
+        type: string
+      primarySystemUser.employeeType:
+        maxLength: 1024
+        type: string
+      primarySystemUser.enable_managed_uid:
+        type: boolean
+      primarySystemUser.enable_user_portal_multifactor:
+        type: boolean
+      primarySystemUser.external_dn:
+        type: string
+      primarySystemUser.external_password_expiration_date:
+        type: string
+      primarySystemUser.external_source_type:
+        type: string
+      primarySystemUser.externally_managed:
+        $ref: '#/definitions/externallymanagedpropertyinfo'
+      primarySystemUser.firstname:
+        maxLength: 1024
+        type: string
+      primarySystemUser.jobTitle:
+        maxLength: 1024
+        type: string
+      primarySystemUser.lastname:
+        maxLength: 1024
+        type: string
+      primarySystemUser.ldap_binding_user:
+        type: boolean
+      primarySystemUser.location:
+        maxLength: 1024
+        type: string
+      primarySystemUser.managedAppleId:
+        maxLength: 1024
+        type: string
+      primarySystemUser.manager:
+        description: Relation with another systemuser to identify the last as a manager.
+        type: string
+      primarySystemUser.mfa:
+        $ref: '#/definitions/mfa'
+      primarySystemUser.mfaEnrollment:
+        $ref: '#/definitions/mfaEnrollment'
+      primarySystemUser.middlename:
+        maxLength: 1024
+        type: string
+      primarySystemUser.organization:
+        type: string
+      primarySystemUser.password_date:
+        type: string
+        x-nullable: true
+      primarySystemUser.password_expiration_date:
+        type: string
+        x-nullable: true
+      primarySystemUser.password_expired:
+        type: boolean
+      primarySystemUser.password_never_expires:
+        type: boolean
+      primarySystemUser.passwordless_sudo:
+        type: boolean
+      primarySystemUser.phoneNumbers:
+        $ref: '#/definitions/systemuserreturn/properties/phoneNumbers'
+      primarySystemUser.public_key:
+        type: string
+      primarySystemUser.recoveryEmail:
+        $ref: '#/definitions/systemuserreturn/properties/recoveryEmail'
+      primarySystemUser.relationships:
+        $ref: '#/definitions/systemuserreturn/properties/relationships'
+      primarySystemUser.restrictedFields:
+        items:
+          $ref: '#/definitions/restrictedField'
+      primarySystemUser.samba_service_user:
+        type: boolean
+      primarySystemUser.ssh_keys:
+        items:
+          $ref: '#/definitions/sshkeylist'
+        type: array
+      primarySystemUser.state:
+        enum:
+          - STAGED
+          - ACTIVATED
+          - SUSPENDED
+        type: string
+      primarySystemUser.sudo:
+        type: boolean
+      primarySystemUser.suspended:
+        type: boolean
+      primarySystemUser.tags:
+        items:
+          type: string
+        type: array
+      primarySystemUser.totp_enabled:
+        type: boolean
+      primarySystemUser.unix_guid:
+        minimum: 1
+        type: integer
+      primarySystemUser.unix_uid:
+        minimum: 1
+        type: integer
+      primarySystemUser.username:
+        maxLength: 1024
+        type: string
       provisionMetadata:
         properties:
           provisioner:
@@ -2657,13 +2816,7 @@ definitions:
         type: string
       attributes:
         items:
-          properties:
-            name:
-              type: string
-            value:
-              maxLength: 1024
-              type: string
-          type: object
+          $ref: '#/definitions/attribute'
         type: array
       badLoginAttempts:
         minimum: 0
@@ -3295,7 +3448,7 @@ parameters:
       see the related `/search/<domain>` endpoints,
       e.g. `/search/systems`.
 
-      **Filter structure**: `<field>:<operator>:<value>` (e.g. `department:$eq:Finance`)
+      **Filter structure**: The filter syntax follows a consistent pattern of `<field>:<operator>:<value>` (e.g. `department:$eq:Finance`)
 
       **field** = Populate with a valid field from an endpoint response.
 
@@ -3315,7 +3468,13 @@ parameters:
       - `$lte` - is less than or equal to
       - `$gt` - is greater than
       - `$gte` - is greater than or equal to
-      - `$sw` - starts with
+      - `$sw` - Finds items where the field value begins with the specified term.
+
+      **Eventually Consistent Operators** = These advanced operators support multiple-term matching and **require the `x-eventually-consistent` API request header** to be set as `true`. Terms within the `value` must be separated by the `|` character.
+      - `$sw` - Matches any item where the field value **begins** with **any one** of the provided terms. E.g `<field>:$sw:<term one>|<term two>`
+      - `$ew` - Matches any item where the field value **ends** with **any one** of the provided terms. E.g `<field>:$ew:<term one>|<term two>`
+      - `$co` - Matches any item where the field value **contains** **any one** of the provided terms. E.g `<field>:$co:<term one>|<term two>`
+      - `$nco` - Matches any item where the field value **does not contain** any of the provided terms. E.g `<field>:$nco:<term one>|<term two>`
 
       _Note: v1 operators differ from v2 operators._
 
@@ -3333,6 +3492,8 @@ parameters:
       - `GET /systems?filter[0]=firstname:$eq:foo&filter[1]=lastname:$eq:bar` - this will AND the filters together.
       - `GET /systems?filter[or][0]=lastname:$eq:foo&filter[or][1]=lastname:$eq:bar` - this will OR the filters together.
       - `GET /systemusers?filter=department:$sw:Shipping` - an item with `{ department: "Shipping & Receiving" }` will match
+      - `GET /systemusers?filter=department:$sw:Shipping\|Receiving` - an item with `{ department: "Shipping|Receiving Item" }` will match
+      - `GET /systemusers?filter=department:$sw:Shipping|Receiving` - an item with `{ department: "Shipping Item" }` will match or an item with `{ department: "Receiving Item" }` will match. **Use it with `x-eventually-consistent` header set to `true`:**
     in: query
     name: filter
     type: string
@@ -7543,6 +7704,7 @@ paths:
         - Systemusers
       x-scopes:
         - users
+        - users.update.passwordreset
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -8043,6 +8205,7 @@ paths:
         - Systemusers
       x-scopes:
         - users
+        - users.update.unlock
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -8436,6 +8599,8 @@ x-scopes:
   - systems.self
   - users
   - users.readonly
+  - users.update.passwordreset
+  - users.update.unlock
 x-tagGroups:
   - name: endpoints
     tags:

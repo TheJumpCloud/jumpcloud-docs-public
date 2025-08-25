@@ -36,6 +36,94 @@ definitions:
         $ref: '#/definitions/ADE'
     title: ADES
     type: object
+  ActiveDirectoriesBulkTranslationRulesUpdateRequest:
+    properties:
+      appliedOn:
+        description: 'Operations when this translation rule is applied (CREATE, UPDATE)'
+        items:
+          $ref: '#/definitions/jumpcloud.idm.AppliedOn'
+        type: array
+      destination:
+        description: Destination field path where translated value will be stored
+        type: string
+      direction:
+        $ref: '#/definitions/jumpcloud.idm.Direction'
+      objectId:
+        description: The objectId.
+        type: string
+      source:
+        description: Source field path or expression to be translated
+        type: string
+      sourceType:
+        $ref: '#/definitions/jumpcloud.idm.SourceType'
+    required:
+      - objectId
+    type: object
+  ActiveDirectoriesTranslationRulesBulkRequest:
+    properties:
+      deleteTranslationRuleObjectIds:
+        items:
+          format: byte
+          type: string
+        type: array
+      insertTranslationRules:
+        items:
+          $ref: '#/definitions/jumpcloud.idm.IdmTranslationRulesInsertRequest'
+        type: array
+      updateTranslationRules:
+        items:
+          $ref: '#/definitions/ActiveDirectoriesBulkTranslationRulesUpdateRequest'
+        type: array
+    type: object
+  ActiveDirectoriesTranslationRulesInsertResponse:
+    properties:
+      translation_rule:
+        $ref: '#/definitions/jumpcloud.idm.TranslationRule'
+    type: object
+  ActiveDirectoriesTranslationRulesListResponse:
+    properties:
+      rules:
+        items:
+          $ref: '#/definitions/jumpcloud.idm.TranslationRule'
+        type: array
+      totalCount:
+        description: Total number of translation rules matching the criteria.
+        format: int64
+        type: integer
+    type: object
+  ActiveDirectoriesTranslationRulesPreviewRequest:
+    description: Request to preview the result of applying a set of translation rules to a user's data.
+    properties:
+      translationRules:
+        description: A list of translation rules to apply for the preview.
+        items:
+          $ref: '#/definitions/jumpcloud.idm.TranslationRule'
+        type: array
+      userObjectId:
+        description: The unique identifier (Object ID) of the user whose data will be translated.
+        format: hex
+        type: string
+    required:
+      - translationRules
+      - userObjectId
+    type: object
+  ActiveDirectoriesTranslationRulesPreviewResponse:
+    description: 'The result of a translation rule preview, showing the original and translated user data.'
+    properties:
+      destinationUser:
+        description: 'The user data after the translation rules have been applied. This represents the final state in the destination system (e.g., JumpCloud).'
+        type: string
+      sourceUser:
+        description: 'The original user data from the source system (e.g., Active Directory) before any translation rules were applied.'
+        type: string
+    type: object
+  ActiveDirectoriesTranslationRulesUpdateResponse:
+    properties:
+      object_id:
+        description: Base64-encoded Object ID of the updated translation rule.
+        format: byte
+        type: string
+    type: object
   Address:
     properties:
       country:
@@ -330,6 +418,19 @@ definitions:
           required:
             type: boolean
         type: object
+      mfaFactors:
+        items:
+          properties:
+            type:
+              enum:
+                - DURT
+                - WEBAUTHN
+                - PUSH
+                - DUO
+                - TOTP
+              type: string
+          type: object
+        type: array
       userVerification:
         properties:
           requirement:
@@ -3021,6 +3122,11 @@ definitions:
             type: boolean
         title: ProviderSettings
         type: object
+      type:
+        enum:
+          - MSP
+          - OU
+        type: string
   ProviderAdminReq:
     example:
       bindNoOrgs: false
@@ -3298,6 +3404,83 @@ definitions:
     required:
       - install_action
       - product_key
+    type: object
+  Scope:
+    example:
+      description: Manage system resources and configurations
+      displayToUsers: true
+      key: systems
+      label: Systems
+      permissions:
+        edit:
+          - systems
+        readonly:
+          - systems.readonly
+    properties:
+      description:
+        description: Description of what this scope controls
+        type: string
+      displayToUsers:
+        description: Whether this scope should be displayed to users
+        type: boolean
+      key:
+        description: Unique key for the scope
+        type: string
+      label:
+        description: Human-readable label for the scope
+        type: string
+      permissions:
+        additionalProperties:
+          items:
+            type: string
+          type: array
+        description: Available permission levels for this scope
+        type: object
+    type: object
+  ScopeGroup:
+    example:
+      createdAt: '2023-07-23T12:00:00.000Z'
+      displayToUsers: true
+      groupDescription: Manage systems and system-related operations
+      groupName: System Management
+      id: 507f1f77bcf86cd799439011
+      scopes:
+        - description: Manage system resources and configurations
+          displayToUsers: true
+          key: systems
+          label: Systems
+          permissions:
+            edit:
+              - systems
+            readonly:
+              - systems.readonly
+      updatedAt: '2023-07-23T12:00:00.000Z'
+    properties:
+      createdAt:
+        description: When the scope group was created
+        format: date-time
+        type: string
+      displayToUsers:
+        description: Whether this scope group should be displayed to users
+        type: boolean
+      groupDescription:
+        description: Description of the scope group's purpose
+        type: string
+      groupName:
+        description: Name of the scope group
+        type: string
+      id:
+        description: Unique identifier for the scope group
+        type: string
+      scopes:
+        description: List of scopes within this group
+        items:
+          $ref: '#/definitions/Scope'
+        type: array
+      updatedAt:
+        description: When the scope group was last updated
+        format: date-time
+        type: string
     type: object
   SetupAssistantOption:
     description: |
@@ -5648,8 +5831,85 @@ definitions:
       - ALERT_STATUS_AUTO_RESOLVED
       - ALERT_STATUS_DELETED
     type: string
+  jumpcloud.alerts.BulkDeleteRequest:
+    description: BulkDeleteRequest is used to perform bulk delete operations on alerts.
+    properties:
+      excludeIds:
+        items:
+          format: byte
+          type: string
+        title: List of alert IDs to exclude from the operation
+        type: array
+      filter:
+        $ref: '#/definitions/jumpcloud.alerts.FilterCriteria'
+    type: object
+  jumpcloud.alerts.BulkDeleteResponse:
+    description: BulkDeleteResponse is the response message to BulkDeleteRequest.
+    properties:
+      affectedCount:
+        format: uint64
+        title: Number of alerts affected by the operation
+        type: integer
+    type: object
+  jumpcloud.alerts.BulkUpdateRequest:
+    description: BulkUpdateRequest is used to perform bulk update operations on alerts.
+    properties:
+      excludeIds:
+        items:
+          format: byte
+          type: string
+        title: List of alert IDs to exclude from the operation
+        type: array
+      filter:
+        $ref: '#/definitions/jumpcloud.alerts.FilterCriteria'
+      remark:
+        title: A remark associated with the bulk update operation
+        type: string
+      updateField:
+        $ref: '#/definitions/jumpcloud.alerts.UpdateField'
+    type: object
+  jumpcloud.alerts.BulkUpdateResponse:
+    description: BulkUpdateResponse is the response message to BulkUpdateRequest.
+    properties:
+      affectedCount:
+        format: uint64
+        title: Number of alerts affected by the operation
+        type: integer
+    type: object
   jumpcloud.alerts.DeleteAlertResponse:
     description: DeleteAlertResponse is the response message to DeleteAlertRequest.
+    type: object
+  jumpcloud.alerts.FilterCriteria:
+    properties:
+      category:
+        items:
+          $ref: '#/definitions/jumpcloud.alerts.AlertCategory'
+        type: array
+      existingCondition:
+        type: string
+      lastOccurredAtAfter:
+        type: string
+      lastOccurredAtBefore:
+        type: string
+      severity:
+        items:
+          $ref: '#/definitions/jumpcloud.alerts.AlertSeverity'
+        type: array
+      sourceId:
+        items:
+          type: string
+        type: array
+      sourceType:
+        items:
+          $ref: '#/definitions/jumpcloud.alerts.AlertSourceType'
+        type: array
+      status:
+        items:
+          $ref: '#/definitions/jumpcloud.alerts.AlertStatus'
+        type: array
+      title:
+        type: string
+    title: Filter criteria for selecting alerts
     type: object
   jumpcloud.alerts.GetAlertResponse:
     description: GetAlertResponse is the response message to GetAlertRequest.
@@ -5692,6 +5952,12 @@ definitions:
     properties:
       alert:
         $ref: '#/definitions/jumpcloud.alerts.Alert'
+    type: object
+  jumpcloud.alerts.UpdateField:
+    properties:
+      status:
+        $ref: '#/definitions/jumpcloud.alerts.AlertStatus'
+    title: UpdateField contains the fields that can be updated in bulk operations
     type: object
   jumpcloud.apple_mdm.CommandResponse:
     type: object
@@ -6659,6 +6925,123 @@ definitions:
       rule:
         $ref: '#/definitions/jumpcloud.healthmonitoring.Rule'
     type: object
+  jumpcloud.idm.AppliedOn:
+    default: CREATE
+    description: AppliedOn defines when the attribute mapping is applied.
+    enum:
+      - CREATE
+      - UPDATE
+    type: string
+  jumpcloud.idm.Direction:
+    default: UNSPECIFIED
+    description: Direction defines the direction of the attribute mapping.
+    enum:
+      - UNSPECIFIED
+      - EXPORT
+      - IMPORT
+    type: string
+  jumpcloud.idm.IdmTranslationRulesInsertRequest:
+    properties:
+      appliedOn:
+        description: 'Operations when this translation rule is applied (CREATE, UPDATE)'
+        items:
+          $ref: '#/definitions/jumpcloud.idm.AppliedOn'
+        type: array
+      destination:
+        description: Destination field path where translated value will be stored
+        type: string
+      direction:
+        $ref: '#/definitions/jumpcloud.idm.Direction'
+        description: Direction of translation (EXPORT or IMPORT)
+      source:
+        description: Source field path or expression to be translated
+        type: string
+      sourceType:
+        $ref: '#/definitions/jumpcloud.idm.SourceType'
+        description: 'Type of the source expression (PATH, GOLANG_TEMPLATE, or CONSTANT)'
+    type: object
+  jumpcloud.idm.IdmTranslationRulesUpdateRequest:
+    properties:
+      appliedOn:
+        description: Updated operations when this translation rule is applied
+        items:
+          $ref: '#/definitions/jumpcloud.idm.AppliedOn'
+        type: array
+      destination:
+        description: Updated destination field path
+        type: string
+      source:
+        description: Updated source field path or expression
+        type: string
+      sourceType:
+        $ref: '#/definitions/jumpcloud.idm.SourceType'
+        description: 'Updated source type (PATH, GOLANG_TEMPLATE, or CONSTANT)'
+    title: |-
+      NOTE: Do not use the same name for an RPC wrapper message and a nested message.
+      Previously, both the wrapper and nested messages were named TranslationRulesUpdateRequest.
+      This caused dynamic-gateway to misinterpret field mappings.
+      As a workaround, the nested message was renamed to IdmTranslationRulesUpdateRequest in IDM,
+      instead of changing the RPC wrapper message in SCIM. If dynamic-gateway is fixed, this may be reverted.
+      See Slack: https://thejumpcloud.slack.com/archives/C03LAL5MCEL/p1749447300486039
+    type: object
+  jumpcloud.idm.SourceType:
+    default: PATH
+    description: SourceType defines the type of the source field in attribute mapping.
+    enum:
+      - PATH
+      - GOLANG_TEMPLATE
+      - CONSTANT
+      - EXPR
+    type: string
+  jumpcloud.idm.TranslationRule:
+    description: TranslationRule proto message will only be used for responses.
+    properties:
+      appliedOn:
+        description: 'Operations when this translation rule is applied (CREATE, UPDATE)'
+        items:
+          $ref: '#/definitions/jumpcloud.idm.AppliedOn'
+        type: array
+      default:
+        description: Indicates if this is a default translation rule created by jumpcloud
+        type: boolean
+      destination:
+        description: Destination field path where translated value will be stored
+        type: string
+      direction:
+        $ref: '#/definitions/jumpcloud.idm.Direction'
+        description: Direction of translation (EXPORT or IMPORT)
+      editable:
+        description: Indicates if this translation rule can be modified
+        type: boolean
+      id:
+        description: Unique identifier for the translation rule
+        format: byte
+        type: string
+      required:
+        description: Indicates if this translation is required
+        type: boolean
+      source:
+        description: Source field path or expression to be translated
+        type: string
+      sourceType:
+        $ref: '#/definitions/jumpcloud.idm.SourceType'
+        description: 'Type of the source expression (PATH, GOLANG_TEMPLATE, or CONSTANT)'
+    type: object
+  jumpcloud.idm.TranslationRulesBulkResponse:
+    properties:
+      deletedTranslationRuleObjectIds:
+        description: IDs of translation rules deleted
+        format: hex
+        items:
+          format: byte
+          type: string
+        type: array
+      insertedTranslationRules:
+        description: The inserted translation rule
+        items:
+          $ref: '#/definitions/jumpcloud.idm.TranslationRule'
+        type: array
+    type: object
   jumpcloud.ingresso.CreateAccessRequestsRequest:
     properties:
       additionalAttributes:
@@ -6740,6 +7123,20 @@ definitions:
   jumpcloud.ingresso.RevokeAccessRequestsResponse:
     type: object
   jumpcloud.ingresso.UpdateAccessRequestsResponse:
+    type: object
+  jumpcloud.ingresso.UserApprovalRequestRequest:
+    properties:
+      id:
+        type: string
+      organizationObjectId:
+        format: byte
+        type: string
+      remarks:
+        type: string
+      status:
+        type: string
+    type: object
+  jumpcloud.ingresso.UserApprovalRequestResponse:
     type: object
   jumpcloud.insights.ColumnSettings:
     properties:
@@ -8233,6 +8630,8 @@ definitions:
       not_in - Checks if `field` is not in the static `value` array. Works with strings (case insensitive), numbers, and datetime types.
       greater_than_or_equals - Checks if `field` is greater than or equal to static `value`.  Works for numbers and datetime types.
       less_than_or_equals - Checks if `field` is less than or equal to static `value`.  Works for numbers and datetime types.
+      is_null - Checks if `field` is null. Works for all field types. Requires boolean value (true for null, false for not null).
+      is_empty - Checks if `field` is null or empty string. Works only for string field types. Requires boolean value (true for empty, false for not empty).
     enum:
       - operation_unknown
       - and
@@ -8249,6 +8648,8 @@ definitions:
       - not_in
       - greater_than_or_equals
       - less_than_or_equals
+      - is_null
+      - is_empty
     type: string
   jumpcloud.search.SearchRequestMetadata:
     description: |-
@@ -8288,6 +8689,202 @@ definitions:
       - asc
       - desc
     title: Sort order. Defaults to ascending
+    type: string
+  jumpcloud.service_accounts.ActorType:
+    default: ADMIN
+    description: |-
+      - ADMIN: the actor is admin
+       - SERVICE_ACCOUNT: the actor is a service account
+    enum:
+      - ADMIN
+      - SERVICE_ACCOUNT
+    title: enum for actor types
+    type: string
+  jumpcloud.service_accounts.AuthConfig:
+    properties:
+      authType:
+        $ref: '#/definitions/jumpcloud.service_accounts.AuthType'
+      clientSecretConfig:
+        $ref: '#/definitions/jumpcloud.service_accounts.ClientSecretConfig'
+    title: |-
+      contains authentication configuration, such as client secret config
+      might have new field here for JWT credentials in future
+    type: object
+  jumpcloud.service_accounts.AuthConfigParameter:
+    properties:
+      authType:
+        $ref: '#/definitions/jumpcloud.service_accounts.AuthType'
+      clientSecretConfig:
+        $ref: '#/definitions/jumpcloud.service_accounts.ClientSecretConfigParam'
+    required:
+      - authType
+      - clientSecretConfig
+    title: contains the configuration parameters required for the creation of auth config
+    type: object
+  jumpcloud.service_accounts.AuthType:
+    default: AUTH_TYPE_UNSPECIFIED
+    description: |-
+      - AUTH_TYPE_UNSPECIFIED: unspecified authentication type
+       - CLIENT_SECRET: client secret authentication
+    enum:
+      - AUTH_TYPE_UNSPECIFIED
+      - CLIENT_SECRET
+    title: enum for supported authentication types
+    type: string
+  jumpcloud.service_accounts.ClientSecretConfig:
+    properties:
+      clientId:
+        format: byte
+        title: client ID associated with the secret
+        type: string
+      clientSecret:
+        description: |-
+          client secret associated with the client ID.
+          This field will hold the secret only at the time of creation and will be visible to users only once.
+          The subsequent retrievals will not return the secret for security reasons.
+        type: string
+      createdAt:
+        format: date-time
+        title: creation timestamp of the client secret
+        type: string
+      createdBy:
+        $ref: '#/definitions/jumpcloud.service_accounts.ServiceAccountActor'
+      expiresAt:
+        format: date-time
+        title: expiration timestamp of the client secret
+        type: string
+      lifetime:
+        title: 'lifetime of the client secret (e.g., 1y, 30d)'
+        type: string
+      objectId:
+        format: byte
+        title: object ID of the client secret config
+        type: string
+      status:
+        $ref: '#/definitions/jumpcloud.service_accounts.Status'
+    title: 'contains configuration for a client secret, including metadata and audit information'
+    type: object
+  jumpcloud.service_accounts.ClientSecretConfigParam:
+    properties:
+      lifetime:
+        title: 'lifetime of the client secret (e.g., 1y, 30d)'
+        type: string
+    required:
+      - lifetime
+    title: contains the configuration parameters required for the creation of client secret
+    type: object
+  jumpcloud.service_accounts.CreateAuthConfigResponse:
+    properties:
+      authConfig:
+        $ref: '#/definitions/jumpcloud.service_accounts.AuthConfig'
+    title: contains auth config response
+    type: object
+  jumpcloud.service_accounts.CreateServiceAccountRequest:
+    properties:
+      authConfig:
+        $ref: '#/definitions/jumpcloud.service_accounts.AuthConfigParameter'
+      name:
+        title: the name of the service account
+        type: string
+      roleId:
+        format: byte
+        title: the role id associated with the service account
+        type: string
+      roleName:
+        title: the role name associated with the service account
+        type: string
+    required:
+      - name
+      - roleId
+      - roleName
+      - authConfig
+    title: contains the new service account's information
+    type: object
+  jumpcloud.service_accounts.CreateServiceAccountResponse:
+    properties:
+      serviceAccount:
+        $ref: '#/definitions/jumpcloud.service_accounts.ServiceAccount'
+    title: contains the response for creating a service account
+    type: object
+  jumpcloud.service_accounts.DeleteAuthConfigResponse:
+    title: response for deleting an auth config
+    type: object
+  jumpcloud.service_accounts.DeleteServiceAccountResponse:
+    title: response for deleting a service account
+    type: object
+  jumpcloud.service_accounts.ListServiceAccountsResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/jumpcloud.service_accounts.ServiceAccount'
+        type: array
+      totalCount:
+        format: int32
+        title: total number of service accounts (for pagination)
+        type: integer
+    title: contains the list of accounts for a given org / provider with pagination metadata
+    type: object
+  jumpcloud.service_accounts.ServiceAccount:
+    properties:
+      authConfigList:
+        items:
+          $ref: '#/definitions/jumpcloud.service_accounts.AuthConfig'
+        type: array
+      authType:
+        $ref: '#/definitions/jumpcloud.service_accounts.AuthType'
+      createdAt:
+        format: date-time
+        title: the creation date of the account
+        type: string
+      expiresAt:
+        format: date-time
+        title: this denotes when the auth associated with service account will expire
+        type: string
+      name:
+        title: the account's name
+        type: string
+      objectId:
+        format: byte
+        title: the account's id in object_id format
+        type: string
+      orgId:
+        format: byte
+        title: the organization id associated with the account
+        type: string
+      providerId:
+        format: byte
+        title: 'the provider id associated with the account, should be present if MTP'
+        type: string
+      roleId:
+        format: byte
+        title: role id associated with the account
+        type: string
+      roleName:
+        title: the account's assigned role name
+        type: string
+      status:
+        $ref: '#/definitions/jumpcloud.service_accounts.Status'
+    title: the service account object
+    type: object
+  jumpcloud.service_accounts.ServiceAccountActor:
+    properties:
+      id:
+        format: byte
+        title: 'the actor''s id, it can be a userID or serviceAccountID'
+        type: string
+      name:
+        title: 'the actor''s name, it can be a admin name or service account name'
+        type: string
+      type:
+        $ref: '#/definitions/jumpcloud.service_accounts.ActorType'
+    title: 'the actor object, it can be a user or service account'
+    type: object
+  jumpcloud.service_accounts.Status:
+    default: ACTIVE
+    enum:
+      - ACTIVE
+      - EXPIRED
+    title: enum for the status of the client secret
     type: string
   ldap-server:
     properties:
@@ -11799,6 +12396,102 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
+  /activedirectories/translation-rules/preview:
+    post:
+      description: |
+        This endpoint previews the translation rules for a user.
+
+        #### Sample Request
+        ```
+        curl -X POST '[https://console.jumpcloud.com/api/v2/activedirectories/](https://console.jumpcloud.com/api/v2/activedirectories/){activedirectory_id}/translationrules/preview' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -H 'x-org-id: {ORG_ID}' \
+          -d '{
+            "userObjectId": "{USER_ID_HEX}",
+            "idmTranslationRules": [
+              {
+                "source": "department",
+                "destination": "customDepartment",
+                "sourceType": "PATH",
+                "direction": "IMPORT",
+                "appliedOn": [
+                  "CREATE"
+                ]
+              }
+            ]
+          }'
+        ```
+      operationId: activedirectoriesTranslationRules_preview
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/ActiveDirectoriesTranslationRulesPreviewRequest'
+      responses:
+        '200':
+          description: Result of the preview operation.
+          schema:
+            $ref: '#/definitions/ActiveDirectoriesTranslationRulesPreviewResponse'
+        default:
+          description: Error response
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Preview of Translation Rules
+      tags:
+        - Translation Rules
+        - Active Directory
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/activedirectories/translation-rules/preview \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"translationRules":[{"appliedOn":["CREATE"],"default":true,"destination":"string","direction":"UNSPECIFIED","editable":true,"id":"string","required":true,"source":"string","sourceType":"PATH"}],"userObjectId":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/activedirectories/translation-rules/preview"
+
+            payload = {
+                "translationRules": [
+                    {
+                        "appliedOn": ["CREATE"],
+                        "default": True,
+                        "destination": "string",
+                        "direction": "UNSPECIFIED",
+                        "editable": True,
+                        "id": "string",
+                        "required": True,
+                        "source": "string",
+                        "sourceType": "PATH"
+                    }
+                ],
+                "userObjectId": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/translation-rules/preview' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"translationRules":[{"appliedOn":["CREATE"],"default":true,"destination":"string","direction":"UNSPECIFIED","editable":true,"id":"string","required":true,"source":"string","sourceType":"PATH"}],"userObjectId":"string"}'
   '/activedirectories/{activedirectory_id}/agents':
     get:
       description: |-
@@ -12169,6 +12862,497 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/associations' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"id":"string","op":"add","attributes":{},"type":"user"}'
     x-functionalities-tags:
       - active-directory
+  '/activedirectories/{activedirectory_id}/translation-rules':
+    get:
+      description: |
+        This endpoint allows you to list all translation rules for a given Active Directory domain instance.
+
+        #### Sample Request
+        ```
+        curl -X GET '[https://console.jumpcloud.com/api/v2/activedirectories/](https://console.jumpcloud.com/api/v2/activedirectories/){activedirectory_id}/translationrules?limit=100&skip=0' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -H 'x-org-id: {ORG_ID}'
+        ```
+      operationId: activedirectoriesTranslationRules_list
+      parameters:
+        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - $ref: '#/parameters/trait:skip:skip'
+      responses:
+        '200':
+          description: A list of translation rules.
+          schema:
+            $ref: '#/definitions/ActiveDirectoriesTranslationRulesListResponse'
+      security:
+        - x-api-key: []
+      summary: List Translation Rules of the given active directory
+      tags:
+        - Translation Rules
+        - Active Directory
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules?filter=&limit=10&skip=0' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules"
+
+            querystring = {"filter":"","limit":"10","skip":"0"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules?filter=&limit=10&skip=0' -Method GET -Headers $headers
+    parameters:
+      - description: ObjectID of the Active Directory instance.
+        in: path
+        name: activedirectory_id
+        required: true
+        type: string
+    post:
+      description: |
+        This endpoint allows you to create a new translation rule for a given Active Directory domain instance.
+
+        #### Sample Request
+        ```
+        curl -X POST '[https://console.jumpcloud.com/api/v2/activedirectories/](https://console.jumpcloud.com/api/v2/activedirectories/){activedirectory_id}/translationrules' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -H 'x-org-id: {ORG_ID}' \
+          -d '{
+            "organization_object_id": "{ORG_ID_BASE64}",
+            "domain_object_id": "{AD_ID_BASE64}",
+            "translation_rule": {
+              "source": "department",
+              "destination": "customDepartment",
+              "source_type": "PATH",
+              "direction": "EXPORT",
+              "applied_on": [
+                "CREATE",
+                "UPDATE"
+              ]
+            }
+          }'
+        ```
+      operationId: activedirectoriesTranslationRules_post
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/jumpcloud.idm.IdmTranslationRulesInsertRequest'
+      responses:
+        '200':
+          description: The created translation rule's object ID.
+          schema:
+            $ref: '#/definitions/ActiveDirectoriesTranslationRulesInsertResponse'
+        default:
+          description: Error response
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Create Translation Rule
+      tags:
+        - Translation Rules
+        - Active Directory
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"appliedOn":["CREATE"],"destination":"string","direction":"UNSPECIFIED","source":"string","sourceType":"PATH"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules"
+
+            payload = {
+                "appliedOn": ["CREATE"],
+                "destination": "string",
+                "direction": "UNSPECIFIED",
+                "source": "string",
+                "sourceType": "PATH"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"appliedOn":["CREATE"],"destination":"string","direction":"UNSPECIFIED","source":"string","sourceType":"PATH"}'
+  '/activedirectories/{activedirectory_id}/translation-rules/bulk':
+    parameters:
+      - in: path
+        name: activedirectory_id
+        required: true
+        type: string
+    post:
+      description: |
+        This endpoint allows performing multiple translation rule operations (insert, update, delete) in a single request.
+
+        #### Sample Request
+        ```
+        curl -X POST '[https://console.jumpcloud.com/api/v2/activedirectories/](https://console.jumpcloud.com/api/v2/activedirectories/){activedirectory_id}/translationrules/bulk' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -H 'x-org-id: {ORG_ID}' \
+          -d '{
+            "insertTranslationRule": [
+              {
+                "source": "title",
+                "destination": "jobTitle",
+                "sourceType": "PATH",
+                "direction": "EXPORT",
+                "appliedOn": [
+                  "CREATE",
+                  "UPDATE"
+                ]
+              }
+            ],
+            "updateTranslationRule": [
+              {
+                "objectId": "{RULE_ID_BASE64_1}",
+                "source": "department",
+                "destination": "customDepartmentV3",
+                "sourceType": "GOLANG_TEMPLATE",
+                "appliedOn": [
+                  "UPDATE"
+                ]
+              }
+            ],
+            "deleteTranslationRuleObjectIds": [
+              "{RULE_ID_BASE64_2}",
+              "{RULE_ID_BASE64_3}"
+            ]
+          }'
+        ```
+      operationId: activedirectoriesTranslationRules_bulk
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/ActiveDirectoriesTranslationRulesBulkRequest'
+      responses:
+        '200':
+          description: Result of the bulk operation.
+          schema:
+            $ref: '#/definitions/jumpcloud.idm.TranslationRulesBulkResponse'
+        default:
+          description: Error response
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Bulk Translation Rules Operations
+      tags:
+        - Translation Rules
+        - Active Directory
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/bulk \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"deleteTranslationRuleObjectIds":["string"],"insertTranslationRules":[{"appliedOn":["CREATE"],"destination":"string","direction":"UNSPECIFIED","source":"string","sourceType":"PATH"}],"updateTranslationRules":[{"appliedOn":["CREATE"],"destination":"string","direction":"UNSPECIFIED","objectId":"string","source":"string","sourceType":"PATH"}]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/bulk"
+
+            payload = {
+                "deleteTranslationRuleObjectIds": ["string"],
+                "insertTranslationRules": [
+                    {
+                        "appliedOn": ["CREATE"],
+                        "destination": "string",
+                        "direction": "UNSPECIFIED",
+                        "source": "string",
+                        "sourceType": "PATH"
+                    }
+                ],
+                "updateTranslationRules": [
+                    {
+                        "appliedOn": ["CREATE"],
+                        "destination": "string",
+                        "direction": "UNSPECIFIED",
+                        "objectId": "string",
+                        "source": "string",
+                        "sourceType": "PATH"
+                    }
+                ]
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/bulk' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"deleteTranslationRuleObjectIds":["string"],"insertTranslationRules":[{"appliedOn":["CREATE"],"destination":"string","direction":"UNSPECIFIED","source":"string","sourceType":"PATH"}],"updateTranslationRules":[{"appliedOn":["CREATE"],"destination":"string","direction":"UNSPECIFIED","objectId":"string","source":"string","sourceType":"PATH"}]}'
+  '/activedirectories/{activedirectory_id}/translation-rules/recommendation':
+    get:
+      description: |
+        This endpoint allows you to list all translation rules for a given Active Directory domain instance.
+
+        #### Sample Request
+        ```
+        curl -X GET '[https://console.jumpcloud.com/api/v2/activedirectories/](https://console.jumpcloud.com/api/v2/activedirectories/){activedirectory_id}/translationrules/recommendations?limit=100&skip=0&providerName=YOUR_PROVIDER_NAME' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -H 'x-org-id: {ORG_ID}'
+        ```
+      operationId: activedirectoriesTranslationRules_recommendations
+      parameters:
+        - description: The name of the provider for which recommendations are requested.
+          in: query
+          name: providerName
+          type: string
+        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - $ref: '#/parameters/trait:skip:skip'
+      responses:
+        '200':
+          description: A list of translation rules.
+          schema:
+            $ref: '#/definitions/ActiveDirectoriesTranslationRulesListResponse'
+        default:
+          description: Error response
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: List Recommendation Translation Rules of the given active directory
+      tags:
+        - Translation Rules
+        - Active Directory
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/recommendation?providerName=SOME_STRING_VALUE&filter=&limit=10&skip=0' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/recommendation"
+
+            querystring = {"providerName":"SOME_STRING_VALUE","filter":"","limit":"10","skip":"0"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/recommendation?providerName=SOME_STRING_VALUE&filter=&limit=10&skip=0' -Method GET -Headers $headers
+    parameters:
+      - description: ObjectID of the Active Directory instance.
+        in: path
+        name: activedirectory_id
+        required: true
+        type: string
+  '/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id}':
+    delete:
+      description: |
+        This endpoint allows you to delete a specific translation rule.
+
+        #### Sample Request
+        ```
+        curl -X DELETE '[https://console.jumpcloud.com/api/v2/activedirectories/](https://console.jumpcloud.com/api/v2/activedirectories/){activedirectory_id}/translationrules/{translation_rule_object_id}' \
+          -H 'accept: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -H 'x-org-id: {ORG_ID}'
+        ```
+      operationId: activedirectoriesTranslationRules_delete
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: Translation rule deleted successfully.
+          schema:
+            example: true
+            type: boolean
+        default:
+          description: Error response
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Delete Translation Rule
+      tags:
+        - Translation Rules
+        - Active Directory
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id}' -Method DELETE -Headers $headers
+    parameters:
+      - in: path
+        name: activedirectory_id
+        required: true
+        type: string
+      - in: path
+        name: translation_rule_object_id
+        required: true
+        type: string
+    put:
+      description: |
+        This endpoint allows you to update an existing translation rule. It supports partial updates using PATCH.
+
+        #### Sample Request
+        ```
+        curl -X PUT '[https://console.jumpcloud.com/api/v2/activedirectories/](https://console.jumpcloud.com/api/v2/activedirectories/){activedirectory_id}/translationrules/{translation_rule_object_id}' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -H 'x-org-id: {ORG_ID}' \
+          -d '{
+            "organization_object_id": "{ORG_ID_BASE64}",
+            "domain_object_id": "{AD_ID_BASE64}",
+            "translation_rule_object_id": "{RULE_ID_BASE64}",
+            "translation_rule": {
+              "source": "department",
+              "destination": "customDepartmentV2",
+              "source_type": "PATH",
+              "applied_on": [
+                "UPDATE"
+              ]
+            }
+          }'
+        ```
+      operationId: activedirectoriesTranslationRules_update
+      parameters:
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/jumpcloud.idm.IdmTranslationRulesUpdateRequest'
+      responses:
+        '200':
+          description: The updated translation rule's object ID.
+          schema:
+            $ref: '#/definitions/ActiveDirectoriesTranslationRulesUpdateResponse'
+        default:
+          description: Error response
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Update Translation Rule
+      tags:
+        - Translation Rules
+        - Active Directory
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"appliedOn":["CREATE"],"destination":"string","source":"string","sourceType":"PATH"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id}"
+
+            payload = {
+                "appliedOn": ["CREATE"],
+                "destination": "string",
+                "source": "string",
+                "sourceType": "PATH"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"appliedOn":["CREATE"],"destination":"string","source":"string","sourceType":"PATH"}'
   '/activedirectories/{activedirectory_id}/usergroups':
     get:
       description: |-
@@ -12821,6 +14005,140 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts-stats?groupBy=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  /alerts/bulk-delete:
+    post:
+      description: This endpoint allows you to perform bulk delete operations on alerts based on filter criteria.
+      operationId: AlertsService_BulkDelete
+      parameters:
+        - description: BulkDeleteRequest is used to perform bulk delete operations on alerts.
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.BulkDeleteRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.BulkDeleteResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for performing bulk delete operations on alerts.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - healthmonitoring.alerts
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/alerts/bulk-delete \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"excludeIds":["string"],"filter":{"category":["ALERT_CATEGORY_UNSPECIFIED"],"existingCondition":"string","lastOccurredAtAfter":"string","lastOccurredAtBefore":"string","severity":["ALERT_SEVERITY_UNSPECIFIED"],"sourceId":["string"],"sourceType":["ALERT_SOURCE_TYPE_UNSPECIFIED"],"status":["ALERT_STATUS_UNSPECIFIED"],"title":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/bulk-delete"
+
+            payload = {
+                "excludeIds": ["string"],
+                "filter": {
+                    "category": ["ALERT_CATEGORY_UNSPECIFIED"],
+                    "existingCondition": "string",
+                    "lastOccurredAtAfter": "string",
+                    "lastOccurredAtBefore": "string",
+                    "severity": ["ALERT_SEVERITY_UNSPECIFIED"],
+                    "sourceId": ["string"],
+                    "sourceType": ["ALERT_SOURCE_TYPE_UNSPECIFIED"],
+                    "status": ["ALERT_STATUS_UNSPECIFIED"],
+                    "title": "string"
+                }
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/bulk-delete' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"excludeIds":["string"],"filter":{"category":["ALERT_CATEGORY_UNSPECIFIED"],"existingCondition":"string","lastOccurredAtAfter":"string","lastOccurredAtBefore":"string","severity":["ALERT_SEVERITY_UNSPECIFIED"],"sourceId":["string"],"sourceType":["ALERT_SOURCE_TYPE_UNSPECIFIED"],"status":["ALERT_STATUS_UNSPECIFIED"],"title":"string"}}'
+  /alerts/bulk-update:
+    post:
+      description: This endpoint allows you to perform bulk update operations on alerts based on filter criteria.
+      operationId: AlertsService_BulkUpdate
+      parameters:
+        - description: BulkUpdateRequest is used to perform bulk update operations on alerts.
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.BulkUpdateRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.alerts.BulkUpdateResponse'
+      security:
+        - x-api-key: []
+      summary: This endpoint is used for performing bulk update operations on alerts.
+      tags:
+        - Monitoring and Alerting
+      x-dynamic-gateway: true
+      x-scopes:
+        - healthmonitoring.alerts
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/alerts/bulk-update \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"excludeIds":["string"],"filter":{"category":["ALERT_CATEGORY_UNSPECIFIED"],"existingCondition":"string","lastOccurredAtAfter":"string","lastOccurredAtBefore":"string","severity":["ALERT_SEVERITY_UNSPECIFIED"],"sourceId":["string"],"sourceType":["ALERT_SOURCE_TYPE_UNSPECIFIED"],"status":["ALERT_STATUS_UNSPECIFIED"],"title":"string"},"remark":"string","updateField":{"status":"ALERT_STATUS_UNSPECIFIED"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/bulk-update"
+
+            payload = {
+                "excludeIds": ["string"],
+                "filter": {
+                    "category": ["ALERT_CATEGORY_UNSPECIFIED"],
+                    "existingCondition": "string",
+                    "lastOccurredAtAfter": "string",
+                    "lastOccurredAtBefore": "string",
+                    "severity": ["ALERT_SEVERITY_UNSPECIFIED"],
+                    "sourceId": ["string"],
+                    "sourceType": ["ALERT_SOURCE_TYPE_UNSPECIFIED"],
+                    "status": ["ALERT_STATUS_UNSPECIFIED"],
+                    "title": "string"
+                },
+                "remark": "string",
+                "updateField": {"status": "ALERT_STATUS_UNSPECIFIED"}
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/bulk-update' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"excludeIds":["string"],"filter":{"category":["ALERT_CATEGORY_UNSPECIFIED"],"existingCondition":"string","lastOccurredAtAfter":"string","lastOccurredAtBefore":"string","severity":["ALERT_SEVERITY_UNSPECIFIED"],"sourceId":["string"],"sourceType":["ALERT_SOURCE_TYPE_UNSPECIFIED"],"status":["ALERT_STATUS_UNSPECIFIED"],"title":"string"},"remark":"string","updateField":{"status":"ALERT_STATUS_UNSPECIFIED"}}'
   '/alerts/{id}':
     delete:
       description: This endpoint allows you to delete a specific alert.
@@ -15993,7 +17311,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/authn/policies \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"mfaFactors":[{"type":"DURT"}],"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
         - lang: Python
           source: |-
             import requests
@@ -16020,6 +17338,7 @@ paths:
                     },
                     "obligations": {
                         "mfa": {"required": True},
+                        "mfaFactors": [{"type": "DURT"}],
                         "userVerification": {"requirement": "none"}
                     }
                 },
@@ -16068,7 +17387,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"mfaFactors":[{"type":"DURT"}],"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
     x-functionalities-tags:
       - policies
   '/authn/policies/{id}':
@@ -16249,7 +17568,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/authn/policies/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+              --data '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"mfaFactors":[{"type":"DURT"}],"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
         - lang: Python
           source: |-
             import requests
@@ -16276,6 +17595,7 @@ paths:
                     },
                     "obligations": {
                         "mfa": {"required": True},
+                        "mfaFactors": [{"type": "DURT"}],
                         "userVerification": {"requirement": "none"}
                     }
                 },
@@ -16324,7 +17644,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"conditions":{},"description":"string","disabled":true,"effect":{"action":"allow","custom_error_message":{"enabled":true,"message":"string","primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}},"obligations":{"mfa":{"required":true},"mfaFactors":[{"type":"DURT"}],"userVerification":{"requirement":"none"}}},"name":"string","targets":{"resources":[{"id":"string","type":"admin_portal"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"exclusions":["string"],"inclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal"}'
     x-functionalities-tags:
       - policies
   '/authn/policy/fallback/{resource_type}':
@@ -36171,7 +37491,8 @@ paths:
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key: {API_KEY}' \
-         -d '{ {Report_Parameters} }'```
+         -d '{ {Report_Parameters} }' \
+        ```
       operationId: Reports_CreateReportView
       parameters:
         - in: body
@@ -36309,7 +37630,7 @@ paths:
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key: {API_KEY}' \
-        '```
+        ```
       operationId: Reports_DeleteReportView
       parameters:
         - format: byte
@@ -36456,7 +37777,8 @@ paths:
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key: {API_KEY}' \
-         -d '{ {Report_Parameters} }'```
+         -d '{ {Report_Parameters} }' \
+        ```
       operationId: Reports_UpdateReportView
       parameters:
         - format: byte
@@ -36597,7 +37919,8 @@ paths:
         curl -X POST https://console.jumpcloud.com/api/v2/reports/export \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json \
-         -d '{ {Export_Parameters} }'```
+         -d '{ {Export_Parameters} }' \
+        ```
       operationId: Reports_ExportReport
       parameters:
         - in: body
@@ -36835,7 +38158,7 @@ paths:
         curl -X GET https://console.jumpcloud.com/api/v2/reports/jumpcloud/{object_id} \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
-          -H 'x-api-key:{API_KEY}'
+          -H 'x-api-key:{API_KEY}' \
         ```
       operationId: Reports_GetReportTemplate
       parameters:
@@ -37217,6 +38540,656 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/roles/{role_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"description":"string","name":"string","organizationIds":["string"],"providerId":"string","scopes":["string"]}'
+  /scope-groups:
+    get:
+      description: |-
+        Retrieve scope groups for custom role creation.
+
+        **Note**: Scope groups are global resources shared across all organizations.
+        No organization context (x-org-id) is required or used.
+
+        By default, returns scope groups with displayToUsers: true. Supports
+        JumpCloud standard pagination, sorting, and basic filtering.
+
+        **Response Format**: Returns an object with `totalCount` and `results` array.
+        The total count is also provided in the `X-Total-Count` response header.
+
+        #### Core Features
+        - **Global Resource**: Same scope groups available to all organizations
+        - **Pagination**: Standard `limit` and `skip` parameters
+        - **Sorting**: Default sort by `groupName` (ascending), user-configurable
+        - **Filtering**: `displayToUsers:eq:true|false` (defaults to true)
+
+        #### Sample Requests
+        ```
+        # Default - displayToUsers: true, sorted by groupName
+        curl https://console.jumpcloud.com/api/v2/scope-groups \
+          -H 'accept: application/json' \
+          -H 'x-api-key: {API_KEY}'
+
+        # With pagination
+        curl 'https://console.jumpcloud.com/api/v2/scope-groups?limit=10&skip=20' \
+          -H 'x-api-key: {API_KEY}'
+
+        # Custom sorting
+        curl 'https://console.jumpcloud.com/api/v2/scope-groups?sort[0][field]=groupName&sort[0][descending]=true' \
+          -H 'x-api-key: {API_KEY}'
+
+        # Get internal scope groups (admin use)
+        curl 'https://console.jumpcloud.com/api/v2/scope-groups?filter=displayToUsers:eq:false' \
+          -H 'x-api-key: {API_KEY}'
+        ```
+      operationId: scopegroups_list
+      parameters:
+        - $ref: '#/parameters/trait:listCount:x-total-count'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:skip:skip'
+        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:sort:sort'
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              results:
+                items:
+                  $ref: '#/definitions/ScopeGroup'
+                type: array
+              totalCount:
+                description: Total count of scope groups matching the filter criteria
+                type: integer
+            required:
+              - totalCount
+              - results
+            type: object
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: List Scope Groups
+      tags:
+        - Scope Groups
+      x-scopes:
+        - roles
+        - roles.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/scope-groups?limit=10&skip=0&filter=&sort=' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/scope-groups"
+
+            querystring = {"limit":"10","skip":"0","filter":"","sort":""}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/scope-groups?limit=10&skip=0&filter=&sort=' -Method GET -Headers $headers
+  /service-accounts:
+    get:
+      description: 'Retrieves a list of service accounts with support for filtering, sorting, and pagination. Auth config is not included in the service accounts'
+      operationId: ServiceAccounts_ListServiceAccounts
+      parameters:
+        - description: pagination - page size (maximum number of results to return)
+          format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - description: pagination - page offset (number of results to skip)
+          format: int32
+          in: query
+          name: skip
+          required: false
+          type: integer
+        - description: |-
+            sort configuration (allowed values: "name", "-name", "expiresAt", "-expiresAt")
+            "-" prefix indicates descending order
+          in: query
+          name: sort
+          required: false
+          type: string
+        - description: Organization identifier that can be obtained from console settings.
+          in: header
+          name: x-org-id
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Service accounts list successfully retrieved.
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.ListServiceAccountsResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Fetch all saved service accounts
+      tags:
+        - Service Accounts
+      x-dynamic-gateway: true
+      x-scopes:
+        - serviceaccounts
+        - serviceaccounts.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/service-accounts?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/service-accounts"
+
+            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE"}
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE' -Method GET -Headers $headers
+    post:
+      description: Creates a new service account.
+      operationId: ServiceAccounts_CreateServiceAccount
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.CreateServiceAccountRequest'
+        - description: Organization identifier that can be obtained from console settings.
+          in: header
+          name: x-org-id
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.CreateServiceAccountResponse'
+        '201':
+          description: Service account successfully created.
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.CreateServiceAccountResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Create a new service account
+      tags:
+        - Service Accounts
+      x-dynamic-gateway: true
+      x-scopes:
+        - serviceaccounts
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/service-accounts \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"authConfig":{"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}},"name":"string","roleId":"string","roleName":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/service-accounts"
+
+            payload = {
+                "authConfig": {
+                    "authType": "AUTH_TYPE_UNSPECIFIED",
+                    "clientSecretConfig": {"lifetime": "string"}
+                },
+                "name": "string",
+                "roleId": "string",
+                "roleName": "string"
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authConfig":{"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}},"name":"string","roleId":"string","roleName":"string"}'
+  '/service-accounts/{service_account_id}':
+    delete:
+      operationId: ServiceAccounts_DeleteServiceAccount
+      parameters:
+        - description: the service account id
+          format: byte
+          in: path
+          name: service_account_id
+          required: true
+          type: string
+        - description: Organization identifier that can be obtained from console settings.
+          in: header
+          name: x-org-id
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.DeleteServiceAccountResponse'
+        '202':
+          description: Delete service account request accepted.
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.DeleteServiceAccountResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Delete a service account
+      tags:
+        - Service Accounts
+      x-dynamic-gateway: true
+      x-scopes:
+        - serviceaccounts
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}' -Method DELETE -Headers $headers
+    get:
+      description: Get service account
+      operationId: ServiceAccounts_GetServiceAccount
+      parameters:
+        - description: the account's id
+          format: byte
+          in: path
+          name: service_account_id
+          required: true
+          type: string
+        - description: Organization identifier that can be obtained from console settings.
+          in: header
+          name: x-org-id
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Service account successfully retrieved.
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.ServiceAccount'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Fetch a service account by ID
+      tags:
+        - Service Accounts
+      x-dynamic-gateway: true
+      x-scopes:
+        - serviceaccounts
+        - serviceaccounts.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}' -Method GET -Headers $headers
+  '/service-accounts/{service_account_id}/auth-config':
+    post:
+      description: Creates a new authentication configuration for a service account.
+      operationId: ServiceAccounts_CreateServiceAccountAuthConfig
+      parameters:
+        - description: the service account id for which the auth config is being created (path parameter)
+          format: byte
+          in: path
+          name: service_account_id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              authConfig:
+                $ref: '#/definitions/jumpcloud.service_accounts.AuthConfigParameter'
+            type: object
+        - description: Organization identifier that can be obtained from console settings.
+          in: header
+          name: x-org-id
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.CreateAuthConfigResponse'
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.CreateAuthConfigResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Create a new service account authentication config
+      tags:
+        - Service Accounts
+      x-dynamic-gateway: true
+      x-scopes:
+        - serviceaccounts
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}/auth-config \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"authConfig":{"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}/auth-config"
+
+            payload = {"authConfig": {
+                    "authType": "AUTH_TYPE_UNSPECIFIED",
+                    "clientSecretConfig": {"lifetime": "string"}
+                }}
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}/auth-config' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authConfig":{"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}}}'
+  '/service-accounts/{service_account_id}/auth-config/{auth_config_id}':
+    delete:
+      description: Deletes a specific authentication configuration for a service account.
+      operationId: ServiceAccounts_DeleteServiceAccountAuthConfig
+      parameters:
+        - format: byte
+          in: path
+          name: service_account_id
+          required: true
+          type: string
+        - format: byte
+          in: path
+          name: auth_config_id
+          required: true
+          type: string
+        - description: Organization identifier that can be obtained from console settings.
+          in: header
+          name: x-org-id
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.DeleteAuthConfigResponse'
+        '202':
+          description: Delete auth config for service account request accepted.
+          schema:
+            $ref: '#/definitions/jumpcloud.service_accounts.DeleteAuthConfigResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Delete a specific auth config for a service account
+      tags:
+        - Service Accounts
+      x-dynamic-gateway: true
+      x-scopes:
+        - serviceaccounts
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}/auth-config/{auth_config_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}/auth-config/{auth_config_id}"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}/auth-config/{auth_config_id}' -Method DELETE -Headers $headers
   /software/catalog:
     x-functionalities-tags:
       - devices-windows-software-app-crud
@@ -43964,6 +45937,63 @@ paths:
   /trial-features/recaps:
     x-functionalities-tags:
       - settings-feature-trial
+  /userapprovalrequest:
+    post:
+      description: Endpoint for user approval
+      operationId: WorkflowAccessRequestApi_UserApprovalRequest
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.ingresso.UserApprovalRequestRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.ingresso.UserApprovalRequestResponse'
+      security:
+        - x-api-key: []
+      summary: User Approval Access Request
+      tags:
+        - Access Requests
+      x-dynamic-gateway: true
+      x-scopes:
+        - accessmanagement
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/userapprovalrequest \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"id":"string","organizationObjectId":"string","remarks":"string","status":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/userapprovalrequest"
+
+            payload = {
+                "id": "string",
+                "organizationObjectId": "string",
+                "remarks": "string",
+                "status": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/userapprovalrequest' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"id":"string","organizationObjectId":"string","remarks":"string","status":"string"}'
   /usergroups:
     get:
       description: |-
@@ -47465,7 +49495,6 @@ tags:
   - name: Directory Insights
   - name: Duo
   - name: Durt
-  - name: Edge
   - name: FeatureTrials
   - name: FulltextSearch
   - name: G Suite
@@ -47490,6 +49519,7 @@ tags:
   - name: Office 365
   - name: Office 365 Import
   - name: Organization Certificate
+  - name: Organization Feature Settings
   - name: Organizations
   - name: Partners
   - name: Password Manager
@@ -47518,7 +49548,9 @@ tags:
   - name: SaaS License Management
   - name: Samba Domains
   - name: Saved Views
+  - name: Scope Groups
   - name: Search
+  - name: Service Accounts
   - name: Software Apps
   - name: Software Catalog
   - name: SubscriptionComponent
@@ -47530,6 +49562,8 @@ tags:
   - name: System Insights
   - name: Systems
   - name: Systems Organization Settings
+  - name: TokenManagement
+  - name: Translation Rules
   - name: Trial Feature Insights
   - name: User Group Associations
   - name: User Group Members & Membership
@@ -47594,6 +49628,9 @@ x-scopes:
   - accessrequest.readonly
   - reports
   - reports.readonly
+  - accessmanagement
+  - serviceaccounts
+  - serviceaccounts.readonly
 x-tagGroups:
   - name: Organization
     tags:
@@ -47603,6 +49640,7 @@ x-tagGroups:
       - App Catalog
       - Applications
       - Assets
+      - Directories
       - Durt
       - FulltextSearch
       - G Suite
@@ -47617,6 +49655,7 @@ x-tagGroups:
       - Object Storage
       - Office 365
       - Organization Certificate
+      - Organization Feature Settings
       - Partners
       - Password Manager
       - Password Policy
@@ -47631,15 +49670,20 @@ x-tagGroups:
       - SaaS App Management
       - SaaS License Management
       - Saved Views
+      - Scope Groups
       - Search
+      - Service Accounts
       - Software Apps
       - Systems
       - Systems Organization Settings
+      - TokenManagement
+      - Translation Rules
       - Webhook Notifications
       - Webhook Notifications Channels
       - mdm
   - name: endpoints
     tags:
+      - Access Requests
       - Active Directory
       - Administrators
       - Aggregated Policy Stats
