@@ -13133,77 +13133,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/bulk' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"deleteTranslationRuleObjectIds":["string"],"insertTranslationRules":[{"appliedOn":["CREATE"],"destination":"string","direction":"UNSPECIFIED","source":"string","sourceType":"PATH"}],"updateTranslationRules":[{"appliedOn":["CREATE"],"destination":"string","direction":"UNSPECIFIED","objectId":"string","source":"string","sourceType":"PATH"}]}'
-  '/activedirectories/{activedirectory_id}/translation-rules/recommendation':
-    get:
-      description: |
-        This endpoint allows you to list all translation rules for a given Active Directory domain instance.
-
-        #### Sample Request
-        ```
-        curl -X GET '[https://console.jumpcloud.com/api/v2/activedirectories/](https://console.jumpcloud.com/api/v2/activedirectories/){activedirectory_id}/translationrules/recommendations?limit=100&skip=0&providerName=YOUR_PROVIDER_NAME' \
-          -H 'accept: application/json' \
-          -H 'content-type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -H 'x-org-id: {ORG_ID}'
-        ```
-      operationId: activedirectoriesTranslationRules_recommendations
-      parameters:
-        - description: The name of the provider for which recommendations are requested.
-          in: query
-          name: providerName
-          type: string
-        - $ref: '#/parameters/trait:filter:filter'
-        - $ref: '#/parameters/trait:limit:limit'
-        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
-        - $ref: '#/parameters/trait:skip:skip'
-      responses:
-        '200':
-          description: A list of translation rules.
-          schema:
-            $ref: '#/definitions/ActiveDirectoriesTranslationRulesListResponse'
-        default:
-          description: Error response
-          schema:
-            $ref: '#/definitions/Error'
-      security:
-        - x-api-key: []
-      summary: List Recommendation Translation Rules of the given active directory
-      tags:
-        - Translation Rules
-        - Active Directory
-      x-scopes:
-        - directories
-        - directories.readonly
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/recommendation?providerName=SOME_STRING_VALUE&filter=&limit=10&skip=0' \
-              --header 'x-api-key: REPLACE_KEY_VALUE'
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/recommendation"
-
-            querystring = {"providerName":"SOME_STRING_VALUE","filter":"","limit":"10","skip":"0"}
-
-            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            print(response.text)
-        - lang: Powershell
-          source: |-
-            $headers=@{}
-            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{activedirectory_id}/translation-rules/recommendation?providerName=SOME_STRING_VALUE&filter=&limit=10&skip=0' -Method GET -Headers $headers
-    parameters:
-      - description: ObjectID of the Active Directory instance.
-        in: path
-        name: activedirectory_id
-        required: true
-        type: string
   '/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id}':
     delete:
       description: |
@@ -13683,6 +13612,73 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
+  '/activedirectories/{provider_name}/translation-rules/recommendation':
+    get:
+      description: |
+        This endpoint allows you to list all translation rules for a given Active Directory domain instance.
+
+        #### Sample Request
+        ```
+        curl -X GET '[https://console.jumpcloud.com/api/v2/activedirectories/](https://console.jumpcloud.com/api/v2/activedirectories/){provider_name}/translationrules/recommendations?limit=100&skip=0' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -H 'x-org-id: {ORG_ID}'
+        ```
+      operationId: activedirectoriesTranslationRules_recommendations
+      parameters:
+        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+        - $ref: '#/parameters/trait:skip:skip'
+      responses:
+        '200':
+          description: A list of translation rules.
+          schema:
+            $ref: '#/definitions/ActiveDirectoriesTranslationRulesListResponse'
+        default:
+          description: Error response
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: List Recommendation Translation Rules of the given active directory
+      tags:
+        - Translation Rules
+        - Active Directory
+      x-scopes:
+        - directories
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/activedirectories/{provider_name}/translation-rules/recommendation?filter=&limit=10&skip=0' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/activedirectories/{provider_name}/translation-rules/recommendation"
+
+            querystring = {"filter":"","limit":"10","skip":"0"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{provider_name}/translation-rules/recommendation?filter=&limit=10&skip=0' -Method GET -Headers $headers
+    parameters:
+      - description: Provider name.
+        in: path
+        name: provider_name
+        required: true
+        type: string
   '/administrators/{administrator_id}/organizationlinks/{id}':
     delete:
       description: This endpoint removes the association link between an Administrator and an Organization.
