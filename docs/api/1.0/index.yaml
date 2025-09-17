@@ -2164,39 +2164,295 @@ definitions:
             type: string
             x-nullable: true
         type: object
-      primarySystemUser._id:
+      provisionMetadata:
+        properties:
+          provisioner:
+            properties:
+              provisionerId:
+                type: string
+              type:
+                default: administrator
+                enum:
+                  - administrator
+                  - mdm
+                  - user
+                type: string
+            type: object
+        type: object
+      remoteAssistAgentVersion:
         type: string
-      primarySystemUser.account_locked:
+      remoteIP:
+        type: string
+      secureLogin:
+        properties:
+          enabled:
+            type: boolean
+          supported:
+            type: boolean
+        type: object
+      serialNumber:
+        type: string
+      serviceAccountState:
+        properties:
+          hasSecureToken:
+            type: boolean
+          passwordAPFSValid:
+            type: boolean
+          passwordODValid:
+            type: boolean
+        type: object
+      sshRootEnabled:
         type: boolean
-      primarySystemUser.account_locked_date:
+      sshdParams:
+        items:
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+          type: object
+        type: array
+      systemInsights:
+        properties:
+          state:
+            enum:
+              - enabled
+              - disabled
+              - deferred
+            type: string
+        type: object
+      systemTimezone:
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+      templateName:
+        type: string
+      userMetrics:
+        items:
+          properties:
+            admin:
+              type: boolean
+            managed:
+              type: boolean
+            secureTokenEnabled:
+              type: boolean
+            suspended:
+              type: boolean
+            userName:
+              type: string
+          type: object
+        type: array
+      version:
+        type: string
+    title: System
+    type: object
+  systemSearch:
+    properties:
+      _id:
+        type: string
+      active:
+        type: boolean
+      agentHasFullDiskAccess:
+        type: boolean
+      agentVersion:
+        type: string
+      allowMultiFactorAuthentication:
+        type: boolean
+      allowPublicKeyAuthentication:
+        type: boolean
+      allowSshPasswordAuthentication:
+        type: boolean
+      allowSshRootLogin:
+        type: boolean
+      amazonInstanceID:
+        type: string
+      arch:
+        type: string
+      archFamily:
+        type: string
+      attributes:
+        items:
+          $ref: '#/definitions/attribute'
+        type: array
+      azureAdJoined:
+        type: boolean
+      builtInCommands:
+        items:
+          properties:
+            name:
+              enum:
+                - erase
+                - lock
+                - restart
+                - shutdown
+              type: string
+            type:
+              enum:
+                - security
+              type: string
+          type: object
+        readOnly: true
+        type: array
+      connectionHistory:
+        items:
+          type: object
+        type: array
+      created:
+        format: date-time
+        type: string
+      description:
+        type: string
+      desktopCapable:
+        type: boolean
+      displayManager:
+        type: string
+      displayName:
+        type: string
+      domainInfo:
+        properties:
+          domainName:
+            type: string
+          partOfDomain:
+            type: boolean
+        type: object
+      fde:
+        $ref: '#/definitions/fde'
+      fileSystem:
         type: string
         x-nullable: true
-      primarySystemUser.activated:
+      hasServiceAccount:
         type: boolean
-      primarySystemUser.addresses:
-        $ref: '#/definitions/systemuserreturn/properties/addresses'
-      primarySystemUser.admin:
-        $ref: '#/definitions/systemuserreturn/properties/admin'
-      primarySystemUser.allow_public_key:
+      hostname:
+        type: string
+      hwVendor:
+        type: string
+      isPolicyBound:
         type: boolean
-      primarySystemUser.alternateEmail:
+      lastContact:
+        format: date-time
+        type: string
+        x-nullable: true
+      mdm:
+        properties:
+          dep:
+            type: boolean
+          enrollmentType:
+            enum:
+              - unknown
+              - automated device
+              - device
+              - user
+            type: string
+          internal:
+            properties:
+              deviceId:
+                type: string
+              windowsDeviceId:
+                type: string
+            type: object
+          lostModeStatus:
+            type: string
+          profileIdentifier:
+            type: string
+          providerId:
+            type: string
+          userApproved:
+            type: boolean
+          vendor:
+            enum:
+              - unknown
+              - none
+              - internal
+              - external
+            type: string
+          windows:
+            properties:
+              upn:
+                type: string
+            type: object
+        type: object
+      modifySSHDConfig:
+        type: boolean
+      networkInterfaces:
+        items:
+          properties:
+            address:
+              type: string
+            family:
+              enum:
+                - IPv4
+                - IPv6
+              type: string
+            internal:
+              type: boolean
+            name:
+              type: string
+          type: object
+        type: array
+      organization:
+        type: string
+      os:
+        type: string
+      osFamily:
+        type: string
+      osVersionDetail:
+        properties:
+          distributionName:
+            type: string
+          major:
+            type: string
+          majorNumber:
+            type: integer
+          minor:
+            type: string
+          minorNumber:
+            type: integer
+          osName:
+            type: string
+          patch:
+            type: string
+          patchNumber:
+            type: integer
+          releaseName:
+            type: string
+          revision:
+            type: string
+          version:
+            type: string
+        type: object
+      policyStats:
+        properties:
+          duplicate:
+            type: integer
+          failed:
+            type: integer
+          pending:
+            type: integer
+          success:
+            type: integer
+          total:
+            type: integer
+          unsupportedOs:
+            type: integer
+        type: object
+      primarySystemUser:
+        properties:
+          id:
+            type: string
+            x-nullable: true
+        type: object
+      primarySystemUser._id:
         type: string
       primarySystemUser.attributes:
         items:
           $ref: '#/definitions/attribute'
         type: array
-      primarySystemUser.badLoginAttempts:
-        minimum: 0
-        type: integer
       primarySystemUser.company:
         maxLength: 1024
         type: string
       primarySystemUser.costCenter:
-        maxLength: 1024
-        type: string
-      primarySystemUser.created:
-        type: string
-      primarySystemUser.creationSource:
         maxLength: 1024
         type: string
       primarySystemUser.department:
@@ -2205,115 +2461,26 @@ definitions:
       primarySystemUser.description:
         maxLength: 1024
         type: string
-      primarySystemUser.disableDeviceMaxLoginAttempts:
-        type: boolean
-      primarySystemUser.displayname:
-        maxLength: 1024
-        type: string
       primarySystemUser.email:
         maxLength: 1024
         type: string
-      primarySystemUser.employeeIdentifier:
-        description: 'Must be unique per user. '
-        maxLength: 256
-        type: string
       primarySystemUser.employeeType:
-        maxLength: 1024
-        type: string
-      primarySystemUser.enable_managed_uid:
-        type: boolean
-      primarySystemUser.enable_user_portal_multifactor:
-        type: boolean
-      primarySystemUser.external_dn:
-        type: string
-      primarySystemUser.external_password_expiration_date:
-        type: string
-      primarySystemUser.external_source_type:
-        type: string
-      primarySystemUser.externally_managed:
-        $ref: '#/definitions/externallymanagedpropertyinfo'
-      primarySystemUser.firstname:
         maxLength: 1024
         type: string
       primarySystemUser.jobTitle:
         maxLength: 1024
         type: string
-      primarySystemUser.lastname:
-        maxLength: 1024
-        type: string
-      primarySystemUser.ldap_binding_user:
-        type: boolean
       primarySystemUser.location:
-        maxLength: 1024
-        type: string
-      primarySystemUser.managedAppleId:
         maxLength: 1024
         type: string
       primarySystemUser.manager:
         description: Relation with another systemuser to identify the last as a manager.
         type: string
-      primarySystemUser.mfa:
-        $ref: '#/definitions/mfa'
-      primarySystemUser.mfaEnrollment:
-        $ref: '#/definitions/mfaEnrollment'
-      primarySystemUser.middlename:
-        maxLength: 1024
-        type: string
-      primarySystemUser.organization:
-        type: string
-      primarySystemUser.password_date:
-        type: string
-        x-nullable: true
-      primarySystemUser.password_expiration_date:
-        type: string
-        x-nullable: true
-      primarySystemUser.password_expired:
-        type: boolean
-      primarySystemUser.password_never_expires:
-        type: boolean
-      primarySystemUser.passwordless_sudo:
-        type: boolean
-      primarySystemUser.phoneNumbers:
-        $ref: '#/definitions/systemuserreturn/properties/phoneNumbers'
-      primarySystemUser.public_key:
-        type: string
-      primarySystemUser.recoveryEmail:
-        $ref: '#/definitions/systemuserreturn/properties/recoveryEmail'
-      primarySystemUser.relationships:
-        $ref: '#/definitions/systemuserreturn/properties/relationships'
-      primarySystemUser.restrictedFields:
-        items:
-          $ref: '#/definitions/restrictedField'
-      primarySystemUser.samba_service_user:
-        type: boolean
-      primarySystemUser.ssh_keys:
-        items:
-          $ref: '#/definitions/sshkeylist'
-        type: array
       primarySystemUser.state:
         enum:
           - STAGED
           - ACTIVATED
           - SUSPENDED
-        type: string
-      primarySystemUser.sudo:
-        type: boolean
-      primarySystemUser.suspended:
-        type: boolean
-      primarySystemUser.tags:
-        items:
-          type: string
-        type: array
-      primarySystemUser.totp_enabled:
-        type: boolean
-      primarySystemUser.unix_guid:
-        minimum: 1
-        type: integer
-      primarySystemUser.unix_uid:
-        minimum: 1
-        type: integer
-      primarySystemUser.username:
-        maxLength: 1024
         type: string
       provisionMetadata:
         properties:
@@ -2423,6 +2590,18 @@ definitions:
           type: string
         type: array
     title: SystemPut
+    type: object
+  systemsSearchlist:
+    properties:
+      results:
+        description: The list of systems.
+        items:
+          $ref: '#/definitions/systemSearch'
+        type: array
+      totalCount:
+        description: The total number of systems.
+        type: integer
+    title: SystemsList
     type: object
   systemslist:
     properties:
@@ -6359,7 +6538,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/systemslist'
+            $ref: '#/definitions/systemsSearchlist'
         '401':
           description: Unauthorized
       security:
