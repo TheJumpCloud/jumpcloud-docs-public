@@ -3437,6 +3437,13 @@ definitions:
       label:
         description: Human-readable label for the scope
         type: string
+      permissionType:
+        description: The type of permission structure for UI rendering.
+        enum:
+          - granular
+          - access_level
+          - actions
+        type: string
       permissions:
         additionalProperties:
           items:
@@ -3444,24 +3451,44 @@ definitions:
           type: array
         description: Available permission levels for this scope
         type: object
+      permissionsV2:
+        additionalProperties: true
+        description: Available permission levels for this scope
+        items:
+          type: object
+        type: array
+      subgroupLabel:
+        description: A common label for a group of related scopes.
+        type: string
     type: object
   ScopeGroup:
     example:
       createdAt: '2023-07-23T12:00:00.000Z'
       displayToUsers: true
-      groupDescription: Manage systems and system-related operations
-      groupName: System Management
+      groupDescription: Manage users
+      groupKey: user-management
+      groupName: User Management
       id: 507f1f77bcf86cd799439011
       scopes:
-        - description: Manage system resources and configurations
+        - description: Manage user resources
           displayToUsers: true
-          key: systems
-          label: Systems
+          key: users
+          label: User Management
           permissions:
             edit:
-              - systems
+              - users
             readonly:
-              - systems.readonly
+              - users.readonly
+        - description: Unlock user accounts.
+          displayToUsers: true
+          key: users.unlock
+          label: Unlock user accounts
+          permissionType: actions
+          permissionsV2:
+            - key: allow
+              values:
+                - users.unlock
+          subgroupLabel: User Support
       updatedAt: '2023-07-23T12:00:00.000Z'
     properties:
       createdAt:
@@ -3471,8 +3498,16 @@ definitions:
       displayToUsers:
         description: Whether this scope group should be displayed to users
         type: boolean
+      fullAccessScopes:
+        description: List of scopes that grant full access to the group.
+        items:
+          type: string
+        type: array
       groupDescription:
         description: Description of the scope group's purpose
+        type: string
+      groupKey:
+        description: 'A unique, URL-friendly key for the scope group.'
         type: string
       groupName:
         description: Name of the scope group
@@ -11863,6 +11898,8 @@ info:
     # Overview
 
     JumpCloud's V2 API. This set of endpoints allows JumpCloud customers to manage objects, groupings and mappings and interact with the JumpCloud Graph.
+
+    > **Note:** Customers using the [EU Data Center](https://jumpcloud.com/support/jumpcloud-eu-data-center-faq) should use `https://console.eu.jumpcloud.com` in the endpoint URLs.
 
     ## API Best Practices
 
@@ -37687,6 +37724,91 @@ paths:
       - format: byte
         in: path
         name: provider_id
+        required: true
+        type: string
+    x-functionalities-tags:
+      - applications
+  '/providers/{provider_id}/applications/{id}/associations':
+    get:
+      description: Get the associations of a Provider SSO Application by ID. Returns organization IDs associated with the provider.
+      operationId: providerApplications_getAssociations
+      responses:
+        '200':
+          description: Successfully retrieved application associations
+          schema:
+            properties:
+              results:
+                description: Array of organization IDs associated with the provider
+                example:
+                  - org-id-one
+                  - org-id-two
+                items:
+                  description: Organization ID
+                  type: string
+                type: array
+              totalCount:
+                description: Total number of associated organizations
+                example: 2
+                type: integer
+            type: object
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Get Provider Application Associations
+      tags:
+        - Applications
+      x-scopes:
+        - applications
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/applications/{id}/associations \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/applications/{id}/associations"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/applications/{id}/associations' -Method GET -Headers $headers
+    parameters:
+      - format: byte
+        in: path
+        name: provider_id
+        required: true
+        type: string
+      - format: byte
+        in: path
+        name: id
         required: true
         type: string
     x-functionalities-tags:
