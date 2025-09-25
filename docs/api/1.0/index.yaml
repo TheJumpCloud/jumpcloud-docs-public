@@ -7973,6 +7973,7 @@ paths:
         - Systemusers
       x-scopes:
         - users
+        - users.mfa.sync
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -8063,6 +8064,7 @@ paths:
         - Systemusers
       x-scopes:
         - users
+        - users.mfa.reset
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -8798,6 +8800,8 @@ x-scopes:
   - systems.self
   - users
   - users.readonly
+  - users.mfa.reset
+  - users.mfa.sync
   - users.update.passwordreset
   - users.update.unlock
 x-tagGroups:
