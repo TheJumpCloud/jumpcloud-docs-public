@@ -7443,6 +7443,7 @@ paths:
         - user-create-active
       x-scopes:
         - users
+        - users.create
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -7603,6 +7604,7 @@ paths:
         - users-delete
       x-scopes:
         - users
+        - users.delete
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -7745,6 +7747,8 @@ paths:
         - Systemusers
       x-scopes:
         - users
+        - users.properties
+        - users.properties.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -7903,6 +7907,8 @@ paths:
         - Systemusers
       x-scopes:
         - users
+        - users.password
+        - users.password.expire
         - users.update.passwordreset
       x-codeSamples:
         - lang: Shell
@@ -7931,6 +7937,109 @@ paths:
       - users-device-windows-password-expiring
       - users-device-darwin-password-expiring
       - users-device-linux-password-expiring
+  '/systemusers/{id}/mfa/enforce':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    post:
+      description: |-
+        This endpoint updates a user's MFA properties.
+
+        #### Sample Request
+        ```
+        curl -X POST \
+          https://console.jumpcloud.com/api/systemusers/{UserID}/mfa/enforce \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "enable_user_portal_multifactor": true,
+            "mfa": {
+              "configured": true,
+              "exclusion": true,
+              "exclusionUntil": "{date-time}",
+              "exclusionDays": 7
+            }
+          }'
+        ```
+      operationId: systemusers_mfa_enforce
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              enable_user_portal_multifactor:
+                description: Whether to require MFA for user portal login
+                type: boolean
+              mfa:
+                $ref: '#/definitions/mfa'
+            type: object
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      produces:
+        - application/json
+        - text/plain
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+      security:
+        - x-api-key: []
+      summary: Update a system user's MFA properties
+      tags:
+        - Systemusers
+      x-scopes:
+        - users
+        - users.mfa
+        - users.mfa.enforce
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/systemusers/{id}/mfa/enforce \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"enable_user_portal_multifactor":true,"mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/systemusers/{id}/mfa/enforce"
+
+            payload = {
+                "enable_user_portal_multifactor": True,
+                "mfa": {
+                    "configured": True,
+                    "exclusion": True,
+                    "exclusionDays": 1,
+                    "exclusionUntil": "2019-08-24T14:15:22Z"
+                }
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/mfa/enforce' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"enable_user_portal_multifactor":true,"mfa":{"configured":true,"exclusion":true,"exclusionDays":1,"exclusionUntil":"2019-08-24T14:15:22Z"}}'
+    x-functionalities-tags:
+      - users
+      - users-mfa
   '/systemusers/{id}/mfasync':
     parameters:
       - in: path
@@ -7998,6 +8107,79 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/mfasync' -Method POST -Headers $headers
     x-functionalities-tags:
       - users
+  '/systemusers/{id}/password':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    post:
+      description: Force set a user's password.
+      operationId: systemusers_password
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              password:
+                type: string
+            type: object
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      produces:
+        - application/json
+        - text/plain
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+      security:
+        - x-api-key: []
+      summary: Force set a system user's password
+      tags:
+        - Systemusers
+      x-scopes:
+        - users
+        - users.password
+        - users.password.set
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/systemusers/{id}/password \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"password":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/systemusers/{id}/password"
+
+            payload = {"password": "string"}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/password' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"password":"string"}'
+    x-functionalities-tags:
+      - users
+      - users-password-reset
   '/systemusers/{id}/resetmfa':
     parameters:
       - in: path
@@ -8286,6 +8468,8 @@ paths:
         - Systemusers
       x-scopes:
         - users
+        - users.state
+        - users.state.activate
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -8318,6 +8502,73 @@ paths:
     x-functionalities-tags:
       - users-state-change
       - users
+  '/systemusers/{id}/state/suspend':
+    post:
+      description: |-
+        This endpoint changes the state of a user to SUSPENDED.
+        Request body must be empty.
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/systemusers/{id}/state/suspend \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: <api-key>'
+        ```
+      operationId: systemusers_state_suspend
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Suspend System User
+      tags:
+        - Systemusers
+      x-functionalities-tags:
+        - users
+        - users-state-change
+      x-scopes:
+        - users
+        - users.state
+        - users.state.suspend
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/systemusers/{id}/state/suspend \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/systemusers/{id}/state/suspend"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("POST", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/state/suspend' -Method POST -Headers $headers
   '/systemusers/{id}/totpinfo':
     get:
       description: This endpoint will return info for a specific System User's TOTP enrollment.
@@ -8406,6 +8657,8 @@ paths:
         - Systemusers
       x-scopes:
         - users
+        - users.state
+        - users.state.unlock
         - users.update.unlock
       x-codeSamples:
         - lang: Shell
@@ -8800,10 +9053,23 @@ x-scopes:
   - systems.self
   - users
   - users.readonly
+  - users.create
+  - users.delete
+  - users.properties
+  - users.properties.update
+  - users.password
+  - users.password.expire
+  - users.password.set
+  - users.state
+  - users.state.activate
+  - users.state.suspend
+  - users.state.unlock
   - users.mfa.reset
   - users.mfa.sync
   - users.update.passwordreset
   - users.update.unlock
+  - users.mfa
+  - users.mfa.enforce
 x-tagGroups:
   - name: endpoints
     tags:

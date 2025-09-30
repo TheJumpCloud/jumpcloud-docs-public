@@ -284,6 +284,22 @@ definitions:
       - id
     title: AppleMDM
     type: object
+  ApplicationAssociationRequest:
+    properties:
+      id:
+        description: The ObjectID of Organization being added or removed as an association.
+        type: string
+      op:
+        description: How to modify the Association.
+        enum:
+          - add
+          - remove
+        type: string
+    required:
+      - id
+      - op
+    title: ApplicationAssociationRequest
+    type: object
   AuthnPolicy:
     description: This represents an authentication policy.  See the details of each field for valid values and restrictions.
     properties:
@@ -20218,6 +20234,8 @@ paths:
         - Bulk Job Requests
       x-scopes:
         - users
+        - users.password
+        - users.password.expire
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -20277,6 +20295,8 @@ paths:
         - Bulk Job Requests
       x-scopes:
         - users
+        - users.state
+        - users.state.unlock
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -20337,6 +20357,8 @@ paths:
         - Bulk Job Requests
       x-scopes:
         - users
+        - users.properties
+        - users.properties.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -20462,6 +20484,7 @@ paths:
         - Bulk Job Requests
       x-scopes:
         - users
+        - users.create
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -20620,6 +20643,8 @@ paths:
       x-scopes:
         - users
         - users.readonly
+        - users.state
+        - users.state.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -20696,6 +20721,8 @@ paths:
         - Bulk Job Requests
       x-scopes:
         - users
+        - users.state
+        - users.state.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -20791,6 +20818,8 @@ paths:
       x-scopes:
         - users
         - users.readonly
+        - users.state
+        - users.state.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -20856,6 +20885,8 @@ paths:
         - Bulk Job Requests
       x-scopes:
         - users
+        - users.state
+        - users.state.delete
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -37811,6 +37842,103 @@ paths:
         name: id
         required: true
         type: string
+    post:
+      description: |-
+        Associates a Provider's SSO Application with an organization.
+
+        #### Sample Request
+        ```
+        curl -X POST 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/applications/{application_id}/associations' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "op": "add",
+            "type": "Organization",
+            "id": "{Org_ID}"
+          }'
+        ```
+      operationId: providerApplications_editAssociations
+      parameters:
+        - description: ObjectID of the Provider
+          format: byte
+          in: path
+          name: provider_id
+          required: true
+          type: string
+        - description: ObjectID of the Provider Application
+          in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/ApplicationAssociationRequest'
+      responses:
+        '204':
+          description: OK
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Edit associations of a Provider Application
+      tags:
+        - Applications
+        - Providers
+      x-scopes:
+        - applications
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/applications/{id}/associations \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"id":"string","op":"add"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/applications/{id}/associations"
+
+            payload = {
+                "id": "string",
+                "op": "add"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/applications/{id}/associations' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"id":"string","op":"add"}'
     x-functionalities-tags:
       - applications
   '/providers/{provider_id}/billing/contract':
@@ -52412,6 +52540,16 @@ x-scopes:
   - users
   - users.readonly
   - users.self
+  - users.create
+  - users.properties
+  - users.properties.update
+  - users.password
+  - users.password.expire
+  - users.state
+  - users.state.readonly
+  - users.state.delete
+  - users.state.update
+  - users.state.unlock
   - accessrequest
   - accessrequest.readonly
   - reports
