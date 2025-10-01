@@ -7594,6 +7594,11 @@ definitions:
       description:
         description: Description of the catalog application
         type: string
+      domains:
+        description: List of domains mapped with this application
+        items:
+          type: string
+        type: array
       id:
         description: Catalog application ID
         type: string
@@ -7653,6 +7658,32 @@ definitions:
         type: string
     required:
       - status
+    type: object
+  jumpcloud.http.saas_app_management.PublicAPIListAccountsResponse:
+    properties:
+      results:
+        description: List of application accounts
+        items:
+          $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPIAccount'
+        type: array
+      totalCount:
+        description: Total number of accounts available
+        format: int64
+        minimum: 0
+        type: integer
+    type: object
+  jumpcloud.http.saas_app_management.PublicAPIListApplicationsResponse:
+    properties:
+      results:
+        description: List of applications
+        items:
+          $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPIApplicationListEntity'
+        type: array
+      totalCount:
+        description: Total number of applications available
+        format: int64
+        minimum: 0
+        type: integer
     type: object
   jumpcloud.http.saas_app_management.PublicAPIUpdateApplicationRequest:
     properties:
@@ -41764,9 +41795,7 @@ paths:
         '200':
           description: List of applications
           schema:
-            items:
-              $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPIApplicationListEntity'
-            type: array
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPIListApplicationsResponse'
         '400':
           description: Bad request
           schema:
@@ -42167,9 +42196,7 @@ paths:
         '200':
           description: List of application accounts
           schema:
-            items:
-              $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPIAccount'
-            type: array
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPIListAccountsResponse'
         '400':
           description: Bad request
           schema:
