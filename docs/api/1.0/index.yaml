@@ -3993,6 +3993,7 @@ paths:
         - Applications
       x-scopes:
         - applications
+        - applications.create
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -4239,6 +4240,7 @@ paths:
         - Applications
       x-scopes:
         - applications
+        - applications.delete
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -4329,6 +4331,7 @@ paths:
         - Applications
       x-scopes:
         - applications
+        - applications.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -6105,6 +6108,7 @@ paths:
       x-scopes:
         - commands
         - commands.schedule
+        - systems.management
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -6945,6 +6949,7 @@ paths:
       x-scopes:
         - systems
         - systems.self
+        - systems.management
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -7099,6 +7104,7 @@ paths:
         - Systems
       x-scopes:
         - systems
+        - systems.management
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -7170,6 +7176,7 @@ paths:
         - Systems
       x-scopes:
         - systems
+        - systems.management
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -7240,6 +7247,7 @@ paths:
         - Systems
       x-scopes:
         - systems
+        - systems.management
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -8180,6 +8188,94 @@ paths:
     x-functionalities-tags:
       - users
       - users-password-reset
+  '/systemusers/{id}/reactivate':
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    post:
+      description: |-
+        This endpoint triggers the sending of a reactivation e-mail to a system user.
+        #### Sample Request
+        ```shell
+        curl -X POST https://console.jumpcloud.com/api/systemusers/{id}/reactivate \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -H "x-api-key: <api-key>" \
+          -d '{ "email": "<activation-email>" }'
+        ```
+      operationId: systemuser_reactivate
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              email:
+                description: 'Email address to which the activation email will be sent. If it is not provided, the activation email will be sent to the system user''s email address.'
+                format: email
+                type: string
+            type: object
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      produces:
+        - application/json
+        - text/plain
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/responses/trait:standardErrors:400'
+        '401':
+          $ref: '#/responses/trait:standardErrors:401'
+        '403':
+          $ref: '#/responses/trait:standardErrors:403'
+        '404':
+          $ref: '#/responses/trait:standardErrors:404'
+        '409':
+          $ref: '#/responses/trait:standardErrors:409'
+        '500':
+          $ref: '#/responses/trait:standardErrors:500'
+      security:
+        - x-api-key: []
+      summary: Reactivate System User
+      tags:
+        - Systemusers
+      x-scopes:
+        - users
+        - users.notification
+        - users.notification.send-activation-email
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/systemusers/{id}/reactivate \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"email":"user@example.com"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/systemusers/{id}/reactivate"
+
+            payload = {"email": "user@example.com"}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systemusers/{id}/reactivate' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"email":"user@example.com"}'
+    x-functionalities-tags:
+      - users
+      - users-state-change
   '/systemusers/{id}/resetmfa':
     parameters:
       - in: path
@@ -9038,6 +9134,9 @@ x-scopes:
   - administrators
   - applications
   - applications.readonly
+  - applications.create
+  - applications.update
+  - applications.delete
   - applicationtemplates
   - applicationtemplates.readonly
   - commandrunner.legacy
@@ -9049,6 +9148,7 @@ x-scopes:
   - radius
   - radius.readonly
   - systems
+  - systems.management
   - systems.readonly
   - systems.self
   - users
@@ -9064,6 +9164,8 @@ x-scopes:
   - users.state.activate
   - users.state.suspend
   - users.state.unlock
+  - users.notification
+  - users.notification.send-activation-email
   - users.mfa.reset
   - users.mfa.sync
   - users.update.passwordreset

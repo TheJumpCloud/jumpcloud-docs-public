@@ -2553,6 +2553,21 @@ definitions:
       - remove
     title: LDAP Server Action
     type: string
+  ManageAssociations-ActiveDirectory:
+    allOf:
+      - $ref: '#/definitions/GraphOperation'
+      - properties:
+          attributes:
+            $ref: '#/definitions/GraphAttributes'
+          type:
+            description: Targets which a "organization" can be associated to.
+            enum:
+              - organization
+            type: string
+        required:
+          - type
+    title: ManageAssociations (ActiveDirectory)
+    type: object
   MemberQuery:
     allOf:
       - $ref: '#/definitions/Query'
@@ -4269,6 +4284,14 @@ definitions:
         description: ObjectID of this Active Directory instance.
         readOnly: true
         type: string
+      permission:
+        description: Permission level for the Active Directory domain.
+        enum:
+          - PERMISSION_UNSPECIFIED
+          - PERMISSION_OWNER
+          - PERMISSION_READ_ONLY
+        readOnly: true
+        type: string
       primaryAgent:
         description: ObjectID of the primary sync agent of domain.
         readOnly: true
@@ -4276,6 +4299,9 @@ definitions:
       primaryImportAgent:
         description: ObjectID of the primary import agent of domain.
         readOnly: true
+        type: string
+      updatedAt:
+        format: date-time
         type: string
       useCase:
         enum:
@@ -6726,6 +6752,9 @@ definitions:
   jumpcloud.healthmonitoring.Rule:
     description: Rule represents a rule resource.
     properties:
+      alertsEnabled:
+        title: Presence-aware flags to decouple alert from notification delivery
+        type: boolean
       category:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleCategory'
         readOnly: true
@@ -8373,6 +8402,9 @@ definitions:
         type: string
       slackTeamId:
         description: represents the slack team identifier.
+        type: string
+      slackWorkspaceName:
+        description: represents the slack workspace name.
         type: string
     type: object
   jumpcloud.notifications.SlackConfig:
@@ -13266,7 +13298,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/activedirectories \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
+              --data '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"updatedAt":"2019-08-24T14:15:22Z","useCase":"UNSET"}'
         - lang: Python
           source: |-
             import requests
@@ -13277,6 +13309,7 @@ paths:
                 "delegationState": "ENABLED",
                 "domain": "string",
                 "groupsEnabled": True,
+                "updatedAt": "2019-08-24T14:15:22Z",
                 "useCase": "UNSET"
             }
             headers = {
@@ -13292,7 +13325,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"updatedAt":"2019-08-24T14:15:22Z","useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
   /activedirectories/translation-rules/preview:
@@ -13659,8 +13692,10 @@ paths:
         - Graph
         - Active Directory
       x-scopes:
-        - directories
-        - directories.readonly
+        - associations.directories
+        - associations.directories.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -13725,7 +13760,8 @@ paths:
         - Graph
         - Active Directory
       x-scopes:
-        - directories
+        - associations.directories
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -14478,7 +14514,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/activedirectories/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
+              --data '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"updatedAt":"2019-08-24T14:15:22Z","useCase":"UNSET"}'
         - lang: Python
           source: |-
             import requests
@@ -14489,6 +14525,7 @@ paths:
                 "delegationState": "ENABLED",
                 "domain": "string",
                 "groupsEnabled": True,
+                "updatedAt": "2019-08-24T14:15:22Z",
                 "useCase": "UNSET"
             }
             headers = {
@@ -14504,7 +14541,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"useCase":"UNSET"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/activedirectories/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"delegationState":"ENABLED","domain":"string","groupsEnabled":true,"updatedAt":"2019-08-24T14:15:22Z","useCase":"UNSET"}'
     x-functionalities-tags:
       - active-directory
   '/activedirectories/{provider_name}/translation-rules/recommendation':
@@ -16124,6 +16161,7 @@ paths:
         - Apple MDM
       x-scopes:
         - mdm
+        - systems.management
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -16386,6 +16424,7 @@ paths:
         - Apple MDM
       x-scopes:
         - mdm
+        - systems.management
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -16566,6 +16605,7 @@ paths:
         - Apple MDM
       x-scopes:
         - mdm
+        - systems.management
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -17662,8 +17702,10 @@ paths:
         - Graph
         - Applications
       x-scopes:
-        - applications
-        - applications.readonly
+        - associations.applications
+        - associations.applications.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -17727,8 +17769,8 @@ paths:
         - Graph
         - Applications
       x-scopes:
-        - applications
-        - groups
+        - associations.applications
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -17820,7 +17862,6 @@ paths:
         - Applications
       x-scopes:
         - applications
-        - applications.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -17904,6 +17945,7 @@ paths:
         - SCIM Import
       x-scopes:
         - applications
+        - applications.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -17969,6 +18011,7 @@ paths:
         - Image
       x-scopes:
         - applications
+        - applications.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -18037,6 +18080,7 @@ paths:
         - Applications
       x-scopes:
         - applications
+        - applications.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -21328,7 +21372,10 @@ paths:
         - Graph
         - Commands
       x-scopes:
-        - commands
+        - associations.commands
+        - associations.commands.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -21395,7 +21442,8 @@ paths:
         - Graph
         - Commands
       x-scopes:
-        - commands
+        - associations.commands
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -23336,6 +23384,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+        - systems.management
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -24684,8 +24733,10 @@ paths:
         - Graph
         - G Suite
       x-scopes:
-        - directories
-        - directories.readonly
+        - associations.directories
+        - associations.directories.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -24752,7 +24803,8 @@ paths:
         - Graph
         - G Suite
       x-scopes:
-        - directories
+        - associations.directories
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -26154,7 +26206,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -26162,6 +26214,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules"
 
             payload = {"rule": {
+                    "alertsEnabled": True,
                     "category": "RULE_CATEGORY_UNSPECIFIED",
                     "conditions": [
                         {
@@ -26206,7 +26259,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules-stats:
     get:
       description: This endpoint is used for getting rules stats.
@@ -26378,7 +26431,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -26386,6 +26439,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}"
 
             payload = {"rule": {
+                    "alertsEnabled": True,
                     "category": "RULE_CATEGORY_UNSPECIFIED",
                     "conditions": [
                         {
@@ -26430,7 +26484,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   '/healthmonitoring/rules/{id}/status':
     patch:
       description: This endpoint allows you to update the status of a health monitoring rule.
@@ -26870,8 +26924,10 @@ paths:
         - Graph
         - Identity Providers
       x-scopes:
-        - authn
-        - authn.readonly
+        - associations.authn
+        - associations.authn.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -26933,7 +26989,8 @@ paths:
         - Graph
         - Identity Providers
       x-scopes:
-        - authn
+        - associations.authn
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -29955,8 +30012,10 @@ paths:
       x-functionalities-tags:
         - ldap-management
       x-scopes:
-        - directories
-        - directories.readonly
+        - associations.directories
+        - associations.directories.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -30024,7 +30083,8 @@ paths:
       x-functionalities-tags:
         - ldap-management
       x-scopes:
-        - directories
+        - associations.directories
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -30786,7 +30846,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/notifications/channels \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"slack":{"slackChannel":[{"objectId":"string","slackChannelId":"string","slackTeamId":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"slack":{"slackChannel":[{"objectId":"string","slackChannelId":"string","slackTeamId":"string","slackWorkspaceName":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
         - lang: Python
           source: |-
             import requests
@@ -30814,7 +30874,8 @@ paths:
                                 {
                                     "objectId": "string",
                                     "slackChannelId": "string",
-                                    "slackTeamId": "string"
+                                    "slackTeamId": "string",
+                                    "slackWorkspaceName": "string"
                                 }
                             ]},
                         "webhook": {
@@ -30861,7 +30922,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"slack":{"slackChannel":[{"objectId":"string","slackChannelId":"string","slackTeamId":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"slack":{"slackChannel":[{"objectId":"string","slackChannelId":"string","slackTeamId":"string","slackWorkspaceName":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
   '/notifications/channels/{id}':
     delete:
       description: This endpoint allows you to delete a notification channel.
@@ -30994,7 +31055,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/notifications/channels/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"slack":{"slackChannel":[{"objectId":"string","slackChannelId":"string","slackTeamId":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+              --data '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"slack":{"slackChannel":[{"objectId":"string","slackChannelId":"string","slackTeamId":"string","slackWorkspaceName":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
         - lang: Python
           source: |-
             import requests
@@ -31022,7 +31083,8 @@ paths:
                                 {
                                     "objectId": "string",
                                     "slackChannelId": "string",
-                                    "slackTeamId": "string"
+                                    "slackTeamId": "string",
+                                    "slackWorkspaceName": "string"
                                 }
                             ]},
                         "webhook": {
@@ -31069,7 +31131,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"slack":{"slackChannel":[{"objectId":"string","slackChannelId":"string","slackTeamId":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/channels/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"channel":{"config":{"email":{"role":[{"objectId":"string","roleObjectId":"string"}],"user":[{"address":"string","name":"string","objectId":"string"}]},"slack":{"slackChannel":[{"objectId":"string","slackChannelId":"string","slackTeamId":"string","slackWorkspaceName":"string"}]},"webhook":{"authPassword":"string","authToken":"string","authType":"WEBHOOK_AUTH_TYPE_UNSPECIFIED","authUsername":"string","customHeaders":[{"key":"string","masked":true,"objectId":"string","value":"string"}],"maskedUrlPortion":[{"key":"string","objectId":"string","value":"string"}],"objectId":"string","sslVerification":true,"url":"string","urlMasked":true}},"description":"string","enabled":true,"name":"string","type":"CHANNEL_TYPE_UNSPECIFIED"}}'
   /notifications/webhook/channels:
     get:
       description: This endpoint allows you to list webhook notification channels.
@@ -31636,8 +31698,10 @@ paths:
         - Graph
         - Office 365
       x-scopes:
-        - directories
-        - directories.readonly
+        - associations.directories
+        - associations.directories.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -31703,7 +31767,8 @@ paths:
         - Graph
         - Office 365
       x-scopes:
-        - directories
+        - associations.directories
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -34888,8 +34953,10 @@ paths:
         - Graph
         - PasswordManagerItem
       x-scopes:
-        - directories
-        - directories.readonly
+        - associations.directories
+        - associations.directories.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -34951,7 +35018,8 @@ paths:
         - Graph
         - PasswordManagerItem
       x-scopes:
-        - directories
+        - associations.directories
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -36027,8 +36095,10 @@ paths:
         - Graph
         - Policies
       x-scopes:
-        - systems
-        - systems.readonly
+        - associations.systems
+        - associations.systems.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -36094,7 +36164,8 @@ paths:
         - Graph
         - Policies
       x-scopes:
-        - systems
+        - associations.systems
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -36658,8 +36729,10 @@ paths:
         - Policy Group Associations
         - Policy Groups
       x-scopes:
-        - groups
-        - groups.readonly
+        - associations.groups
+        - associations.groups.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -36727,7 +36800,8 @@ paths:
         - Policy Group Associations
         - Policy Groups
       x-scopes:
-        - groups
+        - associations.groups
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -37725,6 +37799,236 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"settings":{"requireAdminMFA":true}}'
     x-functionalities-tags:
       - mtp-read-org
+  '/providers/{provider_id}/activedirectories':
+    get:
+      description: |-
+        This endpoint allows you to list all your Active Directory Instances for a Providers primary organization.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-org-id: -' \
+          -H 'x-api-key: {API_KEY}'
+          ```
+      operationId: providers_listProvidersPrimaryOrganizationDomains
+      parameters:
+        - description: The ID of the provider
+          in: path
+          name: provider_id
+          required: true
+          type: string
+        - $ref: '#/parameters/trait:fields:fields'
+        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:limit:limit'
+        - $ref: '#/parameters/trait:skip:skip'
+        - $ref: '#/parameters/trait:sort:sort'
+        - $ref: '#/parameters/trait:multiTenantRequestHeaders:x-org-id'
+      responses:
+        '200':
+          description: ''
+          schema:
+            items:
+              $ref: '#/definitions/active-directory'
+            type: array
+      security:
+        - x-api-key: []
+      summary: List Active Directories
+      tags:
+        - Providers
+        - Active Directory
+      x-scopes:
+        - providers.readonly
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories?fields=&filter=&limit=10&skip=0&sort=' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories"
+
+            querystring = {"fields":"","filter":"","limit":"10","skip":"0","sort":""}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories?fields=&filter=&limit=10&skip=0&sort=' -Method GET -Headers $headers
+    parameters: []
+    x-functionalities-tags:
+      - active-directory
+      - mtp-account-overview
+  '/providers/{provider_id}/activedirectories/{ad_id}/associations':
+    get:
+      description: |-
+        This endpoint allows you to list all the associations for an Active Directory integration.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-org-id: -' \
+          -H 'x-api-key: {API_KEY}'
+        ```
+      operationId: providers_listAssociations
+      responses:
+        '200':
+          description: ''
+          schema:
+            items:
+              $ref: '#/definitions/GraphConnection'
+            type: array
+      security:
+        - x-api-key: []
+      summary: List Associations for an Active Directory Integration
+      tags:
+        - Providers
+        - Active Directory
+      x-scopes:
+        - providers.readonly
+        - directories.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations' -Method GET -Headers $headers
+    parameters:
+      - description: The ID of the provider
+        in: path
+        name: provider_id
+        required: true
+        type: string
+      - description: The ID of the Active Directory integration
+        in: path
+        name: ad_id
+        required: true
+        type: string
+    post:
+      description: |-
+        Creates or deletes an association between an Active Directory integration and a secondary organization.
+        This endpoint is the core mechanism for sharing or un-sharing an integration.
+
+        The caller must belong to the owner organization (the provider's primary organization).
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-org-id: -' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "op": "add",
+            "type": "organization",
+            "id": "org-secondary-12345"
+          }'
+        ```
+      operationId: providers_adbridgeManageAssociations
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/ManageAssociations-ActiveDirectory'
+      responses:
+        '204':
+          description: Association successfully created or deleted
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden - caller does not belong to the owner organization
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: 'Not Found - provider, AD integration, or organization not found'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Manage Active Directory Integration Associations for Provider
+      tags:
+        - Providers
+        - Graph
+        - Active Directory
+      x-scopes:
+        - providers
+        - directories
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"id":"string","op":"add","attributes":{},"type":"organization"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations"
+
+            payload = {
+                "id": "string",
+                "op": "add",
+                "attributes": {},
+                "type": "organization"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"id":"string","op":"add","attributes":{},"type":"organization"}'
+    x-functionalities-tags:
+      - active-directory
+      - mtp-account-overview
   '/providers/{provider_id}/administrators':
     get:
       description: This endpoint returns a list of the Administrators associated with the Provider. You must be associated with the provider to use this route.
@@ -38070,7 +38374,10 @@ paths:
       tags:
         - Applications
       x-scopes:
-        - applications
+        - associations.applications
+        - associations.applications.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -40296,8 +40603,10 @@ paths:
         - Graph
         - RADIUS Servers
       x-scopes:
-        - radius
-        - radius.readonly
+        - associations.radius
+        - associations.radius.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -40347,7 +40656,8 @@ paths:
         - Graph
         - RADIUS Servers
       x-scopes:
-        - radius
+        - associations.radius
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -43885,7 +44195,9 @@ paths:
         - Graph
         - Software Apps
       x-scopes:
-        - systems
+        - associations.systems
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -43949,7 +44261,8 @@ paths:
         - Graph
         - Software Apps
       x-scopes:
-        - systems
+        - associations.systems
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -44569,9 +44882,12 @@ paths:
         - System Group Associations
         - System Groups
       x-scopes:
-        - groups
-        - groups.readonly
+        - associations.groups
+        - associations.groups.readonly
         - groups.self
+        - associations
+        - associations.readonly
+        - associations.self
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -44639,8 +44955,10 @@ paths:
         - System Group Associations
         - System Groups
       x-scopes:
-        - groups
+        - associations.groups
         - groups.self
+        - associations
+        - associations.self
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -49025,9 +49343,12 @@ paths:
         - Graph
         - Systems
       x-scopes:
-        - systems
-        - systems.readonly
+        - associations.systems
+        - associations.systems.readonly
         - systems.self
+        - associations
+        - associations.readonly
+        - associations.self
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -49102,8 +49423,10 @@ paths:
         - Graph
         - Systems
       x-scopes:
-        - systems
+        - associations.systems
         - systems.self
+        - associations
+        - associations.self
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -50222,8 +50545,10 @@ paths:
         - User Group Associations
         - User Groups
       x-scopes:
-        - groups
-        - groups.readonly
+        - associations.groups
+        - associations.groups.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -50291,7 +50616,8 @@ paths:
         - User Group Associations
         - User Groups
       x-scopes:
-        - groups
+        - associations.groups
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -51701,8 +52027,10 @@ paths:
         - Graph
         - Users
       x-scopes:
-        - users
-        - users.readonly
+        - associations.users
+        - associations.users.readonly
+        - associations
+        - associations.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -51775,7 +52103,8 @@ paths:
         - Graph
         - Users
       x-scopes:
-        - users
+        - associations.users
+        - associations
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -53358,6 +53687,7 @@ tags:
   - name: Commands
   - name: Countries
   - name: Custom Emails
+  - name: DataContractRegistry
   - name: Devices
   - name: Directories
   - name: Directory Insights
@@ -53419,6 +53749,8 @@ tags:
   - name: Scope Groups
   - name: Search
   - name: Service Accounts
+  - name: Slack App Management
+  - name: Slack Integration
   - name: Software Apps
   - name: Software Catalog
   - name: SubscriptionComponent
@@ -53444,13 +53776,36 @@ tags:
   - name: fde
   - name: mdm
 x-scopes:
+  - accessmanagement
+  - accessrequest
+  - accessrequest.readonly
   - administrators
   - administrators.readonly
   - anonymous
   - applications
   - applications.readonly
+  - applications.update
   - assets
   - assets.readonly
+  - associations
+  - associations.applications
+  - associations.applications.readonly
+  - associations.authn
+  - associations.authn.readonly
+  - associations.commands
+  - associations.commands.readonly
+  - associations.directories
+  - associations.directories.readonly
+  - associations.groups
+  - associations.groups.readonly
+  - associations.radius
+  - associations.radius.readonly
+  - associations.readonly
+  - associations.self
+  - associations.systems
+  - associations.systems.readonly
+  - associations.users
+  - associations.users.readonly
   - authn
   - authn.readonly
   - billing
@@ -53477,42 +53832,40 @@ x-scopes:
   - organizations.readonly
   - passwordmanager
   - passwordmanager.readonly
+  - protect
   - providers
   - providers.readonly
-  - protect
   - radius
   - radius.readonly
+  - reports
+  - reports.readonly
   - roles
   - roles.readonly
+  - saas
+  - saas.readonly
+  - serviceaccounts
+  - serviceaccounts.readonly
   - subscriptions.readonly
   - support
   - support.readonly
   - systeminsights.readonly
   - systems
+  - systems.management
   - systems.readonly
   - systems.self
   - users
-  - users.readonly
-  - users.self
   - users.create
-  - users.properties
-  - users.properties.update
   - users.password
   - users.password.expire
+  - users.properties
+  - users.properties.update
+  - users.readonly
+  - users.self
   - users.state
-  - users.state.readonly
   - users.state.delete
-  - users.state.update
+  - users.state.readonly
   - users.state.unlock
-  - accessrequest
-  - accessrequest.readonly
-  - saas
-  - saas.readonly
-  - reports
-  - reports.readonly
-  - accessmanagement
-  - serviceaccounts
-  - serviceaccounts.readonly
+  - users.state.update
 x-tagGroups:
   - name: Organization
     tags:
@@ -53522,6 +53875,8 @@ x-tagGroups:
       - App Catalog
       - Applications
       - Assets
+      - Commands
+      - DataContractRegistry
       - Directories
       - Durt
       - FulltextSearch
@@ -53555,6 +53910,8 @@ x-tagGroups:
       - Scope Groups
       - Search
       - Service Accounts
+      - Slack App Management
+      - Slack Integration
       - Software Apps
       - Systems
       - Systems Organization Settings
