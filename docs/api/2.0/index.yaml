@@ -3456,6 +3456,9 @@ definitions:
         readonly:
           - systems.readonly
     properties:
+      allowsNoAccess:
+        description: 'Whether No Access option available for the scope. It would be applicable when permission_type:access_level'
+        type: boolean
       description:
         description: Description of what this scope controls
         type: string
