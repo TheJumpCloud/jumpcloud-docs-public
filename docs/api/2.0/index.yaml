@@ -7621,6 +7621,41 @@ definitions:
           - IGNORED
         type: string
     type: object
+  jumpcloud.http.saas_app_management.PublicAPIApplicationUsageListEntity:
+    properties:
+      account_email:
+        description: Account Email
+        type: string
+      account_id:
+        description: Account ID
+        type: string
+      account_username:
+        description: Account Username
+        type: string
+      latest_used_at:
+        description: Latest Used At
+        format: date-time
+        type: string
+      user_email:
+        description: User Email
+        type: string
+      user_id:
+        description: User ID
+        type: string
+    type: object
+  jumpcloud.http.saas_app_management.PublicAPIApplicationUsageResponse:
+    properties:
+      results:
+        description: List of application usages
+        items:
+          $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPIApplicationUsageListEntity'
+        type: array
+      totalCount:
+        description: Total number of application usages available
+        format: int64
+        minimum: 0
+        type: integer
+    type: object
   jumpcloud.http.saas_app_management.PublicAPICatalogApplication:
     properties:
       description:
@@ -42707,6 +42742,251 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saas-management/applications/{application_id}/accounts/{account_id}' -Method GET -Headers $headers
+  '/saas-management/applications/{application_id}/usage':
+    get:
+      description: Retrieve a specific application usage by application ID
+      operationId: getApplicationUsage
+      parameters:
+        - description: Application ID
+          in: path
+          name: application_id
+          required: true
+          type: string
+        - description: Day count to filter
+          in: query
+          name: day_count
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Application usage details
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPIApplicationUsageResponse'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        default:
+          description: Generic error response
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+      security:
+        - x-api-key: []
+      summary: Get application usage
+      tags:
+        - SaaS App Management
+      x-dynamic-gateway: true
+      x-scopes:
+        - saas.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/saas-management/applications/{application_id}/usage?day_count=SOME_INTEGER_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/saas-management/applications/{application_id}/usage"
+
+            querystring = {"day_count":"SOME_INTEGER_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saas-management/applications/{application_id}/usage?day_count=SOME_INTEGER_VALUE' -Method GET -Headers $headers
+  /sample-data:
+    post:
+      description: |
+        This endpoint creates sample data for the organization based on the requested resource types.
+
+        Supported resource types:
+        - `users`: Creates 6 sample users (2 activated, 2 staged, 2 suspended) with varying attributes
+        - `usergroups`: Creates a dynamic user group that automatically includes users in the Sales department
+
+        Each resource type is processed independently. If one fails, others may still succeed.
+        The response includes detailed results showing what was created, skipped, or failed.
+      operationId: sampleData_post
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              resourceTypes:
+                description: Array of resource types to create. Each resource type is processed independently.
+                example:
+                  - users
+                  - usergroups
+                items:
+                  enum:
+                    - users
+                    - usergroups
+                  type: string
+                minItems: 1
+                type: array
+            required:
+              - resourceTypes
+            type: object
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              message:
+                description: Response message describing the outcome.
+                example: Sample data created successfully.
+                type: string
+              results:
+                description: Detailed results of the sample data creation operation.
+                properties:
+                  created:
+                    description: List of successfully created resources.
+                    items:
+                      properties:
+                        count:
+                          description: Number of resources created.
+                          type: integer
+                        resourceType:
+                          description: The type of resource that was created.
+                          type: string
+                      type: object
+                    type: array
+                  failed:
+                    description: List of resources that failed to create.
+                    items:
+                      properties:
+                        error:
+                          description: Error message describing the failure.
+                          type: string
+                        resourceType:
+                          description: The type of resource that failed.
+                          type: string
+                      type: object
+                    type: array
+                  skipped:
+                    description: 'List of resources that were skipped (e.g., already exist).'
+                    items:
+                      properties:
+                        reason:
+                          description: Reason why the resource was skipped.
+                          type: string
+                        resourceType:
+                          description: The type of resource that was skipped.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+            type: object
+        '403':
+          description: Forbidden - Feature flag is disabled
+          schema:
+            type: object
+        '422':
+          description: Unprocessable Entity - One or more resources failed to create
+          schema:
+            properties:
+              message:
+                description: Error message.
+                example: Some sample data resources failed to create.
+                type: string
+              results:
+                description: Detailed results including failures.
+                properties:
+                  created:
+                    description: List of successfully created resources.
+                    items:
+                      properties:
+                        count:
+                          type: integer
+                        resourceType:
+                          type: string
+                      type: object
+                    type: array
+                  failed:
+                    description: List of resources that failed to create.
+                    items:
+                      properties:
+                        error:
+                          type: string
+                        resourceType:
+                          type: string
+                      type: object
+                    type: array
+                  skipped:
+                    description: List of resources that were skipped.
+                    items:
+                      properties:
+                        reason:
+                          type: string
+                        resourceType:
+                          type: string
+                      type: object
+                    type: array
+                type: object
+            type: object
+      security:
+        - x-api-key: []
+      summary: This endpoint creates sample data for trial organizations as part of the Sample data Opt-In functionality.
+      tags:
+        - Sample Data
+      x-scopes:
+        - users
+        - groups
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/sample-data \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"resourceTypes":["users","usergroups"]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/sample-data"
+
+            payload = {"resourceTypes": ["users", "usergroups"]}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/sample-data' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"resourceTypes":["users","usergroups"]}'
+    x-functionalities-tags:
+      - sample-data
   /scope-groups:
     get:
       description: |-
@@ -53748,6 +54028,7 @@ tags:
   - name: SaaS App Management
   - name: SaaS License Management
   - name: Samba Domains
+  - name: Sample Data
   - name: Saved Views
   - name: Scope Groups
   - name: Search
@@ -53909,6 +54190,7 @@ x-tagGroups:
       - Roles
       - SaaS App Management
       - SaaS License Management
+      - Sample Data
       - Saved Views
       - Scope Groups
       - Search
@@ -53974,6 +54256,7 @@ x-tagGroups:
       - Rules
       - SCIM Import
       - SaaS App Management
+      - Sample Data
       - Samba Domains
       - Saved Views
       - Software Apps
