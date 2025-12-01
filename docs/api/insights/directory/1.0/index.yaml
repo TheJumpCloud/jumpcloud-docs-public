@@ -903,6 +903,7 @@ definitions:
             - systems
             - access_management
             - asset_management
+            - workflows
       start_time:
         description: 'query start time, UTC in RFC3339 format'
         type: string
