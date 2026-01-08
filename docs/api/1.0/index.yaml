@@ -935,6 +935,9 @@ definitions:
       template:
         description: The template this command was created from
         type: string
+      templatingRequired:
+        description: Whether this command requires templating before execution.
+        type: boolean
       timeToLiveSeconds:
         description: Time in seconds a command can wait in the queue to be run before timing out
         type: integer
@@ -1136,6 +1139,9 @@ definitions:
             scheduleRepeatType:
               description: When the command will repeat.
               type: string
+            templatingRequired:
+              description: Whether this command requires templating before execution.
+              type: boolean
             trigger:
               description: Trigger to execute command.
               type: string
@@ -4980,7 +4986,7 @@ paths:
               --url https://console.jumpcloud.com/api/commands \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"aiGenerated":true,"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
+              --data '{"aiGenerated":true,"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","templatingRequired":true,"timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -5013,6 +5019,7 @@ paths:
                 "sudo": True,
                 "systems": ["string"],
                 "template": "string",
+                "templatingRequired": True,
                 "timeToLiveSeconds": 0,
                 "timeout": "string",
                 "trigger": "string",
@@ -5031,7 +5038,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"aiGenerated":true,"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"aiGenerated":true,"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","templatingRequired":true,"timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
   '/commands/{id}':
     delete:
       description: |-
@@ -5178,7 +5185,7 @@ paths:
               --url https://console.jumpcloud.com/api/commands/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"aiGenerated":true,"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
+              --data '{"aiGenerated":true,"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","templatingRequired":true,"timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -5211,6 +5218,7 @@ paths:
                 "sudo": True,
                 "systems": ["string"],
                 "template": "string",
+                "templatingRequired": True,
                 "timeToLiveSeconds": 0,
                 "timeout": "string",
                 "trigger": "string",
@@ -5229,7 +5237,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"aiGenerated":true,"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"aiGenerated":true,"command":"string","commandRunners":["string"],"commandType":"linux","description":"string","files":["string"],"filesS3":[{"destination":"string","name":"string","objectStorageId":"string","sha256":"string"}],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","scheduleYear":0,"shell":"string","sudo":true,"systems":["string"],"template":"string","templatingRequired":true,"timeToLiveSeconds":0,"timeout":"string","trigger":"string","user":"string"}'
   '/commands/{id}/results':
     get:
       description: |-
