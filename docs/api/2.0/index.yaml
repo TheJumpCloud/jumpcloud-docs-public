@@ -6110,6 +6110,12 @@ definitions:
       - ALERT_SOURCE_TYPE_DEVICES
       - ALERT_SOURCE_TYPE_ACCESS_REQUEST
       - ALERT_SOURCE_TYPE_SAAS_APPLICATION
+      - ALERT_SOURCE_TYPE_CUSTOM
+      - ALERT_SOURCE_TYPE_COMMAND
+      - ALERT_SOURCE_TYPE_POLICY
+      - ALERT_SOURCE_TYPE_APPLICATION
+      - ALERT_SOURCE_TYPE_IPLIST
+      - ALERT_SOURCE_TYPE_SOFTWARE
     type: string
   jumpcloud.alerts.AlertStatus:
     default: ALERT_STATUS_UNSPECIFIED
@@ -10335,12 +10341,11 @@ definitions:
         title: the role id associated with the service account
         type: string
       roleName:
-        title: the role name associated with the service account
+        description: 'DEPRECATED: the role name is ignored. Use role_id instead.'
         type: string
     required:
       - name
       - roleId
-      - roleName
       - authConfig
     title: contains the new service account information
     type: object
@@ -10408,7 +10413,7 @@ definitions:
         title: role id associated with the account
         type: string
       roleName:
-        title: the account's assigned role name
+        description: 'DEPRECATED: Call roles API with the role_id to get the role name.'
         type: string
       status:
         $ref: '#/definitions/jumpcloud.service_accounts.Status'
@@ -47665,7 +47670,6 @@ paths:
       x-scopes:
         - associations.groups
         - associations.groups.readonly
-        - groups.self
         - associations
         - associations.readonly
         - associations.self
@@ -47737,7 +47741,6 @@ paths:
         - System Groups
       x-scopes:
         - associations.groups
-        - groups.self
         - associations
         - associations.self
       x-codeSamples:
@@ -52126,7 +52129,6 @@ paths:
       x-scopes:
         - associations.systems
         - associations.systems.readonly
-        - systems.self
         - associations
         - associations.readonly
         - associations.self
@@ -52205,7 +52207,6 @@ paths:
         - Systems
       x-scopes:
         - associations.systems
-        - systems.self
         - associations
         - associations.self
       x-codeSamples:
@@ -56656,6 +56657,7 @@ tags:
   - name: WebAuthn
   - name: Webhook Notifications
   - name: Webhook Notifications Channels
+  - name: Windows Patch Management
   - name: Workday Import
   - name: Workflows
   - name: fde
@@ -56738,7 +56740,6 @@ x-scopes:
   - systems
   - systems.management
   - systems.readonly
-  - systems.self
   - transfer
   - users
   - users.create
@@ -56812,6 +56813,7 @@ x-tagGroups:
       - Translation Rules
       - Webhook Notifications
       - Webhook Notifications Channels
+      - Windows Patch Management
       - Workflows
       - mdm
   - name: endpoints
