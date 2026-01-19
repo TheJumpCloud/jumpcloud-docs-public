@@ -7876,6 +7876,113 @@ definitions:
     required:
       - status
     type: object
+  jumpcloud.http.saas_app_management.PublicAPILicenseContractEntity:
+    properties:
+      cost:
+        description: Total yearly contract cost
+        type: number
+      currency:
+        description: Contract currency
+        type: string
+      notes:
+        description: License contract user notes
+        type: string
+      renewal_date:
+        description: Contract renewal date
+        type: string
+      term:
+        description: License contract renewal period term
+        enum:
+          - MONTHLY_TERM
+          - YEARLY_TERM
+          - FREE_TERM
+        type: string
+    type: object
+  jumpcloud.http.saas_app_management.PublicAPILicenseEntity:
+    properties:
+      assigned:
+        description: License assigned user count
+        type: integer
+        x-omitempty: false
+      cost_per_license:
+        description: License cost per user per month
+        type: number
+      count:
+        description: License total user count
+        type: integer
+        x-omitempty: false
+      id:
+        description: License ID
+        type: string
+      is_unlimited:
+        description: License unlimited flag
+        type: boolean
+      name:
+        description: License name
+        type: string
+      unassigned:
+        description: License unassigned user count
+        type: integer
+        x-omitempty: false
+    type: object
+  jumpcloud.http.saas_app_management.PublicAPILicenseListResponse:
+    properties:
+      results:
+        description: List of licenses
+        items:
+          $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPILicenseListResponseItem'
+        type: array
+      totalCount:
+        description: Total number of licenses available
+        format: int64
+        minimum: 0
+        type: integer
+    type: object
+  jumpcloud.http.saas_app_management.PublicAPILicenseListResponseItem:
+    properties:
+      contract_term:
+        description: License contract renewal period term
+        enum:
+          - MONTHLY_TERM
+          - YEARLY_TERM
+          - FREE_TERM
+        type: string
+      costs:
+        description: Application licenses costs summary
+        properties:
+          contract_cost:
+            description: Total yearly cost of contract
+            type: number
+          estimated_cost:
+            description: Total yearly cost of all licenses to estimate yearly contract cost
+            type: number
+          saving_opportunity_cost:
+            description: Total yearly cost saving potential from unassigned licenses
+            type: number
+        type: object
+      currency:
+        description: Contract currency
+        type: string
+      id:
+        description: Contract ID
+        type: string
+      licenses:
+        description: Application licenses counts summary
+        properties:
+          assigned:
+            description: Assigned licenses count
+            type: integer
+          total:
+            description: Total licenses count
+            type: integer
+          unassigned:
+            description: Unassigned licenses count
+            type: integer
+        type: object
+      renewal_date:
+        description: Next renewal date of the application contract
+        type: string
+    type: object
   jumpcloud.http.saas_app_management.PublicAPIListAccountsResponse:
     properties:
       results:
@@ -7885,6 +7992,21 @@ definitions:
         type: array
       totalCount:
         description: Total number of accounts available
+        format: int64
+        minimum: 0
+        type: integer
+    type: object
+  jumpcloud.http.saas_app_management.PublicAPIListApplicationLicensesResponse:
+    properties:
+      contract:
+        $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPILicenseContractEntity'
+      results:
+        description: List of application licenses
+        items:
+          $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPILicenseEntity'
+        type: array
+      totalCount:
+        description: Total number of application licenses available
         format: int64
         minimum: 0
         type: integer
@@ -44622,6 +44744,156 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saas-management/application-catalog/{catalog_application_id}' -Method GET -Headers $headers
+  /saas-management/application-licenses:
+    get:
+      description: Retrieve a paginated list of licenses for an organization
+      operationId: listLicenses
+      parameters:
+        - default: 50
+          description: Maximum number of licenses to return
+          in: query
+          maximum: 1000
+          minimum: 1
+          name: limit
+          required: false
+          type: integer
+        - default: 0
+          description: Number of licenses to skip
+          in: query
+          minimum: 0
+          name: offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: List of licenses
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPILicenseListResponse'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        default:
+          description: Generic error response
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+      security:
+        - x-api-key: []
+      summary: List licenses
+      tags:
+        - SaaS App Management
+      x-dynamic-gateway: true
+      x-scopes:
+        - saas.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/saas-management/application-licenses?limit=50&offset=0' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/saas-management/application-licenses"
+
+            querystring = {"limit":"50","offset":"0"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saas-management/application-licenses?limit=50&offset=0' -Method GET -Headers $headers
+  '/saas-management/application-licenses/{application_id}':
+    get:
+      description: Retrieve a paginated list of licenses for a specific application
+      operationId: listApplicationLicenses
+      parameters:
+        - description: Application ID
+          in: path
+          name: application_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: List of application licenses
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.PublicAPIListApplicationLicensesResponse'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+        default:
+          description: Generic error response
+          schema:
+            $ref: '#/definitions/jumpcloud.http.saas_app_management.error'
+      security:
+        - x-api-key: []
+      summary: List application licenses
+      tags:
+        - SaaS App Management
+      x-dynamic-gateway: true
+      x-scopes:
+        - saas.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/saas-management/application-licenses/{application_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/saas-management/application-licenses/{application_id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saas-management/application-licenses/{application_id}' -Method GET -Headers $headers
   /saas-management/applications:
     get:
       description: Retrieve a paginated list of applications for the organization
@@ -45255,7 +45527,7 @@ paths:
           name: application_id
           required: true
           type: string
-        - description: Day count to filter
+        - description: 'Day count to filter (min:1 max:90)'
           in: query
           name: day_count
           required: true
