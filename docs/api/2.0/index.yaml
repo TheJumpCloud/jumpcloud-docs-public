@@ -8237,6 +8237,12 @@ definitions:
         items:
           $ref: '#/definitions/jumpcloud.ingresso.AccessWorkflowResources'
         type: array
+      slackConfig:
+        items:
+          $ref: '#/definitions/jumpcloud.ingresso.SlackConfig'
+        type: array
+      slackEnabled:
+        type: boolean
       status:
         type: string
       timeBasedAccess:
@@ -8422,6 +8428,12 @@ definitions:
         type: string
       resourceType:
         type: string
+      slackConfig:
+        items:
+          $ref: '#/definitions/jumpcloud.ingresso.SlackConfig'
+        type: array
+      slackEnabled:
+        type: boolean
       status:
         type: string
       timeBasedAccess:
@@ -8639,6 +8651,11 @@ definitions:
         type: string
     type: object
   jumpcloud.ingresso.RevokeAccessRequestsResponse:
+    type: object
+  jumpcloud.ingresso.SlackConfig:
+    properties:
+      slackResourceId:
+        type: string
     type: object
   jumpcloud.ingresso.TtlConfig:
     default: TTL_CONFIG_UNSPECIFIED
@@ -13342,6 +13359,50 @@ parameters:
       **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
 
       **EX:** `GET /api/v2/groups?filter=name:eq:Test+Group`
+    in: query
+    items:
+      type: string
+    name: filter
+    type: array
+  'trait:filter:filterUserGroupMembership':
+    default: []
+    description: |-
+      A filter to apply to the query.
+
+      **Filter structure**: `<field>:<operator>:<value>`.
+
+      **field** = Populate with a valid field from an endpoint response.
+
+      **operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.
+      _Note: v1 operators differ from v2 operators._
+
+      **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+      **Valid filter fields**: `object_id` and `type`.
+
+      **EX:** `GET /api/v2/usergroups/{GroupID}/membership?filter=type:eq:user_group`
+    in: query
+    items:
+      type: string
+    name: filter
+    type: array
+  'trait:filter:filterUserMemberOf':
+    default: []
+    description: |-
+      A filter to apply to the query.
+
+      **Filter structure**: `<field>:<operator>:<value>`.
+
+      **field** = Populate with a valid field from an endpoint response.
+
+      **operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.
+      _Note: v1 operators differ from v2 operators._
+
+      **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+      **Valid filter fields**: `object_id` and `type`.
+
+      **EX:** `GET /api/v2/users/{UserID}/memberof?filter=type:eq:user_group`
     in: query
     items:
       type: string
@@ -19786,7 +19847,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/approvalflows \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"category":"string","description":"string","fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","resourceType":"string","status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
+              --data '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"category":"string","description":"string","fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","resourceType":"string","slackConfig":[{"slackResourceId":"string"}],"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -19816,6 +19877,8 @@ paths:
                 "organizationObjectId": "string",
                 "resourceId": "string",
                 "resourceType": "string",
+                "slackConfig": [{"slackResourceId": "string"}],
+                "slackEnabled": True,
                 "status": "string",
                 "timeBasedAccess": True,
                 "ttlConfig": "TTL_CONFIG_UNSPECIFIED",
@@ -19834,7 +19897,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approvalflows' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"category":"string","description":"string","fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","resourceType":"string","status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approvalflows' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"category":"string","description":"string","fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","resourceType":"string","slackConfig":[{"slackResourceId":"string"}],"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
   '/approvalflows/{approvalFlowId}':
     delete:
       description: Endpoint for deleting accessworkflow by id
@@ -19978,6 +20041,12 @@ paths:
                 type: string
               resourceId:
                 type: string
+              slackConfig:
+                items:
+                  $ref: '#/definitions/jumpcloud.ingresso.SlackConfig'
+                type: array
+              slackEnabled:
+                type: boolean
               status:
                 type: string
               timeBasedAccess:
@@ -20009,7 +20078,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/approvalflows/{approvalFlowId} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"description":"string","fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
+              --data '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"description":"string","fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","slackConfig":[{"slackResourceId":"string"}],"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -20037,6 +20106,8 @@ paths:
                 "nonAdminApproval": True,
                 "organizationObjectId": "string",
                 "resourceId": "string",
+                "slackConfig": [{"slackResourceId": "string"}],
+                "slackEnabled": True,
                 "status": "string",
                 "timeBasedAccess": True,
                 "ttlConfig": "TTL_CONFIG_UNSPECIFIED",
@@ -20055,7 +20126,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approvalflows/{approvalFlowId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"description":"string","fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approvalflows/{approvalFlowId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"description":"string","fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","slackConfig":[{"slackResourceId":"string"}],"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
   /approvalflowsettings:
     get:
       description: Endpoint for getting workflow settings for an organisation
@@ -26662,6 +26733,7 @@ paths:
           - `name`
           - `disabled`
           - `type`
+          - `memberQueryErrorFlags`
 
         #### Sample Request
 
@@ -47753,6 +47825,7 @@ paths:
           - `disabled`
           - `type`
           - `membershipMethod`
+          - `memberQueryErrorFlags`
 
         #### Sample Request
 
@@ -53346,6 +53419,7 @@ paths:
           - `disabled`
           - `type`
           - `membershipMethod`
+          - `memberQueryErrorFlags`
           - `suggestionCounts.add`
           - `suggestionCounts.remove`
           - `suggestionCounts.total`
@@ -54194,7 +54268,7 @@ paths:
         ```
       operationId: graph_userGroupMembership
       parameters:
-        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:filter:filterUserGroupMembership'
         - $ref: '#/parameters/trait:limit:limit'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:sort:sort'
@@ -55538,7 +55612,7 @@ paths:
         ```
       operationId: graph_userMemberOf
       parameters:
-        - $ref: '#/parameters/trait:filter:filter'
+        - $ref: '#/parameters/trait:filter:filterUserMemberOf'
         - $ref: '#/parameters/trait:limit:limit'
         - $ref: '#/parameters/trait:skip:skip'
         - $ref: '#/parameters/trait:sort:sort'
