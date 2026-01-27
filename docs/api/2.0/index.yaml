@@ -9318,6 +9318,141 @@ definitions:
         format: int32
         type: integer
     type: object
+  jumpcloud.organization_settings.Configuration:
+    properties:
+      filters:
+        items:
+          $ref: '#/definitions/jumpcloud.organization_settings.Filters'
+        type: array
+      sort:
+        type: string
+    type: object
+  jumpcloud.organization_settings.Feature:
+    properties:
+      category:
+        type: string
+      name:
+        type: string
+      settings:
+        items:
+          $ref: '#/definitions/jumpcloud.organization_settings.Setting'
+        type: array
+    type: object
+  jumpcloud.organization_settings.Filters:
+    properties:
+      field:
+        type: string
+        x-nullable: true
+      operation:
+        $ref: '#/definitions/jumpcloud.organization_settings.Filters.Operation'
+      value:
+        description: |-
+          Static value to be compared against. For values that will need to be compared as a datetime object, this should be
+          provided as an ISO8601 format string with no offset (UTC). This is made optional so that
+          the client can omit this field on AND/OR filters.
+        x-nullable: true
+    type: object
+  jumpcloud.organization_settings.Filters.Operation:
+    default: OPERATION_UNKNOWN
+    description: |-
+      Filter operation to be applied:
+      and - Provides logical 'and' groupings of all elements provided in the `filters` array (all sub-filter criteria
+         must be satisfied).
+      or - Provides logical 'or' groupings of all elements provided in the `filters` array (any sub-filter criteria can
+         be satisfied).
+      equals - Compares `field` with `value` for a // match.  Case insensitive.
+      not_equals - Compares `field` with `value` for an exact non-match.  Case insensitive.
+      greater_than - Checks if `field` is greater numerically than static `value` (non-inclusive).  Works for numbers and
+         datetime types.
+      less_than - Checks if `field` is less than static `value` (non-inclusive).  Works for numbers and datetime types.
+      starts_with - Checks if `field` starts with static `value`.  Case insensitive.  Only works for string types.
+      ends_with - Checks if `field` ends with static `value`.  Case insensitive.  Only works for string types.
+    enum:
+      - OPERATION_UNKNOWN
+      - AND
+      - OR
+      - EQUALS
+      - NOT_EQUALS
+      - GREATER_THAN
+      - LESS_THAN
+      - STARTS_WITH
+      - ENDS_WITH
+      - IN
+      - CONTAINS
+      - NOT_CONTAINS
+      - BOOL
+      - GREATER_THAN_EQUAL
+      - LESS_THAN_EQUAL
+      - NOT_IN
+      - SEARCH
+    type: string
+  jumpcloud.organization_settings.ListFeatureSettingsResponse:
+    properties:
+      features:
+        items:
+          $ref: '#/definitions/jumpcloud.organization_settings.Feature'
+        type: array
+    type: object
+  jumpcloud.organization_settings.SavedView:
+    properties:
+      adminId:
+        format: byte
+        readOnly: true
+        type: string
+      columns:
+        items:
+          type: string
+        type: array
+      configuration:
+        $ref: '#/definitions/jumpcloud.organization_settings.Configuration'
+      id:
+        format: byte
+        type: string
+      isDefault:
+        type: boolean
+      name:
+        type: string
+      shared:
+        type: boolean
+      source:
+        type: string
+    type: object
+  jumpcloud.organization_settings.SavedViewCreateRequest:
+    properties:
+      columns:
+        items:
+          type: string
+        type: array
+      configuration:
+        $ref: '#/definitions/jumpcloud.organization_settings.Configuration'
+      id:
+        format: byte
+        type: string
+      isDefault:
+        type: boolean
+      name:
+        type: string
+      shared:
+        type: boolean
+      source:
+        type: string
+    type: object
+  jumpcloud.organization_settings.SavedViewsResponse:
+    properties:
+      totalCount:
+        format: int64
+        type: integer
+      views:
+        items:
+          $ref: '#/definitions/jumpcloud.organization_settings.SavedView'
+        type: array
+    type: object
+  jumpcloud.organization_settings.Setting:
+    properties:
+      name:
+        type: string
+      value: {}
+    type: object
   jumpcloud.password.BatchDeleteRequest:
     properties:
       objectIds:
@@ -25185,6 +25320,200 @@ paths:
         type: string
     x-functionalities-tags:
       - duo
+  /feature-settings:
+    get:
+      description: |-
+        Get organization feature settings using filters. Returns a list of features with their settings grouped by feature name.
+
+        #### Sample Request
+        ```
+        curl -X GET 'https://console.jumpcloud.com/api/v2/feature-settings?filter=feature.name:eq:mcp&filter=setting.name:eq:enabled' \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+
+        #### Sample Response
+        ```json
+        {
+          "features": [
+            {
+              "name": "mcp",
+              "settings": [
+                {
+                  "name": "enabled",
+                  "value": true
+                },
+                {
+                  "name": "threshold",
+                  "value": 10
+                }
+              ],
+              "category": "ai"
+            }
+          ]
+        }
+        ```
+      operationId: OrganizationFeatureSettingsService_List
+      parameters:
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/feature-settings?filter=feature.name:eq:mcp&filter=setting.name:eq:enabled`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: Success retrieving Organization Feature Settings.
+          schema:
+            $ref: '#/definitions/jumpcloud.organization_settings.ListFeatureSettingsResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Get Organization Feature Settings
+      tags:
+        - Organization Feature Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+        - organizations.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/feature-settings?filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/feature-settings"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/feature-settings?filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  '/feature-settings/{feature_name}/{setting_name}':
+    put:
+      description: |-
+        Updates organization feature settings by category, feature name, and setting name.
+
+        #### Sample Request
+        ```
+        curl -X PUT https://console.jumpcloud.com/api/v2/feature-settings/{feature_name}/{setting_name} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{"value": "true"}'
+        ```
+      operationId: OrganizationFeatureSettingsService_Update
+      parameters:
+        - in: path
+          name: feature_name
+          required: true
+          type: string
+        - in: path
+          name: setting_name
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              value: {}
+            type: object
+      responses:
+        '200':
+          description: Success updating Organization Feature Settings.
+          schema:
+            $ref: '#/definitions/jumpcloud.organization_settings.Setting'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Update Organization Feature Settings
+      tags:
+        - Organization Feature Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/feature-settings/{feature_name}/{setting_name} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"value":null}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/feature-settings/{feature_name}/{setting_name}"
+
+            payload = {"value": None}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/feature-settings/{feature_name}/{setting_name}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"value":null}'
   '/featureTrials/{feature_code}':
     get:
       description: |-
@@ -45834,6 +46163,321 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/sample-data' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"resourceTypes":["users","usergroups"]}'
     x-functionalities-tags:
       - sample-data
+  /saved-views:
+    get:
+      description: "List the shared saved views for an Organization having specific source.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/saved-views \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 Saved Views in a single response."
+      operationId: SavedViewsService_List
+      parameters:
+        - description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/saved-views?filter=source:eq:users`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: Success listing Saved Views.
+          schema:
+            $ref: '#/definitions/jumpcloud.organization_settings.SavedViewsResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: List the Items stored in SavedViews
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+        - organizations.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/saved-views?sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/saved-views"
+
+            querystring = {"sort":"SOME_STRING_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saved-views?sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+    post:
+      description: |-
+        Creates the saved view for an organization.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/views \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: SavedViewsService_Create
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.organization_settings.SavedViewCreateRequest'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/jumpcloud.organization_settings.SavedView'
+      security:
+        - x-api-key: []
+      summary: Creates a saved view for an organization belonging to a specific source
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/saved-views \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"columns":["string"],"configuration":{"filters":[{"field":"string","operation":"OPERATION_UNKNOWN","value":null}],"sort":"string"},"id":"string","isDefault":true,"name":"string","shared":true,"source":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/saved-views"
+
+            payload = {
+                "columns": ["string"],
+                "configuration": {
+                    "filters": [
+                        {
+                            "field": "string",
+                            "operation": "OPERATION_UNKNOWN",
+                            "value": None
+                        }
+                    ],
+                    "sort": "string"
+                },
+                "id": "string",
+                "isDefault": True,
+                "name": "string",
+                "shared": True,
+                "source": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saved-views' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"columns":["string"],"configuration":{"filters":[{"field":"string","operation":"OPERATION_UNKNOWN","value":null}],"sort":"string"},"id":"string","isDefault":true,"name":"string","shared":true,"source":"string"}'
+  '/saved-views/{id}':
+    delete:
+      description: Delete a saved view
+      operationId: SavedViewsService_Delete
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success deleting Saved Views.
+          schema:
+            properties: {}
+            type: object
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Delete Saved View
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/saved-views/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/saved-views/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saved-views/{id}' -Method DELETE -Headers $headers
+    put:
+      description: Updates a saved view
+      operationId: SavedViewsService_Update
+      parameters:
+        - format: byte
+          in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              savedView:
+                $ref: '#/definitions/jumpcloud.organization_settings.SavedView'
+            type: object
+      responses:
+        '200':
+          description: Success updating Saved Views.
+          schema:
+            $ref: '#/definitions/jumpcloud.organization_settings.SavedView'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Update Saved View
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/saved-views/{id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"savedView":{"columns":["string"],"configuration":{"filters":[{"field":"string","operation":"OPERATION_UNKNOWN","value":null}],"sort":"string"},"id":"string","isDefault":true,"name":"string","shared":true,"source":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/saved-views/{id}"
+
+            payload = {"savedView": {
+                    "columns": ["string"],
+                    "configuration": {
+                        "filters": [
+                            {
+                                "field": "string",
+                                "operation": "OPERATION_UNKNOWN",
+                                "value": None
+                            }
+                        ],
+                        "sort": "string"
+                    },
+                    "id": "string",
+                    "isDefault": True,
+                    "name": "string",
+                    "shared": True,
+                    "source": "string"
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saved-views/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"savedView":{"columns":["string"],"configuration":{"filters":[{"field":"string","operation":"OPERATION_UNKNOWN","value":null}],"sort":"string"},"id":"string","isDefault":true,"name":"string","shared":true,"source":"string"}}'
   /scope-groups:
     get:
       description: |-
