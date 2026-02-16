@@ -1192,7 +1192,7 @@ definitions:
               description: Whether this command was generated with AI assistance.
               type: boolean
             command:
-              description: The Command to execute.
+              description: The Command to execute, truncated to 10k characters.
               type: string
             commandType:
               description: The Command OS.
@@ -2576,6 +2576,10 @@ definitions:
       primarySystemUser.manager:
         description: Relation with another systemuser to identify the last as a manager.
         type: string
+      primarySystemUser.memberof:
+        items:
+          type: string
+        type: array
       primarySystemUser.state:
         enum:
           - STAGED

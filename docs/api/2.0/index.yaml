@@ -7396,6 +7396,12 @@ definitions:
     type: object
   jumpcloud.http.assets.BatchUpdateAccessoryAssetsRequest:
     description: Request payload for batch updating multiple accessory assets with a single field value
+    example:
+      assetIds:
+        - 6936c139154c470001b5f53d
+        - 507f1f77bcf86cd799439011
+      fields:
+        Model: Apple Pen
     properties:
       assetIds:
         description: Array of accessory asset IDs to update
@@ -7407,9 +7413,12 @@ definitions:
         type: array
       fieldValue:
         $ref: '#/definitions/jumpcloud.http.assets.BatchUpdateFieldValue'
+      fields:
+        additionalProperties: true
+        description: Asset field values organized by field label to update
+        type: object
     required:
       - assetIds
-      - fieldValue
     type: object
   jumpcloud.http.assets.BatchUpdateAccessoryAssetsResponse:
     description: Response containing results of batch accessory asset update operation
@@ -7430,6 +7439,12 @@ definitions:
     type: object
   jumpcloud.http.assets.BatchUpdateDeviceAssetsRequest:
     description: Request payload for batch updating multiple device assets with a single field value
+    example:
+      assetIds:
+        - 6936c139154c470001b5f53d
+      fields:
+        Status:
+          id: 6924631f16a853000117a678
     properties:
       assetIds:
         description: Array of device asset IDs to update
@@ -7441,9 +7456,12 @@ definitions:
         type: array
       fieldValue:
         $ref: '#/definitions/jumpcloud.http.assets.BatchUpdateFieldValue'
+      fields:
+        additionalProperties: true
+        description: Asset field values organized by field label to update
+        type: object
     required:
       - assetIds
-      - fieldValue
     type: object
   jumpcloud.http.assets.BatchUpdateDeviceAssetsResponse:
     description: Response containing results of batch device asset update operation
@@ -7477,6 +7495,12 @@ definitions:
     type: object
   jumpcloud.http.assets.BatchUpdateLocationAssetsRequest:
     description: Request payload for batch updating multiple location assets with a single field value
+    example:
+      assetIds:
+        - 6936c139154c470001b5f53d
+        - 507f1f77bcf86cd799439011
+      fields:
+        Name: Super HQ
     properties:
       assetIds:
         description: Array of location asset IDs to update
@@ -7488,9 +7512,12 @@ definitions:
         type: array
       fieldValue:
         $ref: '#/definitions/jumpcloud.http.assets.BatchUpdateFieldValue'
+      fields:
+        additionalProperties: true
+        description: Asset field values organized by field label to update
+        type: object
     required:
       - assetIds
-      - fieldValue
     type: object
   jumpcloud.http.assets.BatchUpdateLocationAssetsResponse:
     description: Response containing results of batch location asset update operation
@@ -8763,6 +8790,8 @@ definitions:
         type: string
       status:
         type: string
+      timeBasedAccess:
+        type: boolean
       updatedAt:
         type: string
       updatedBy:
@@ -20869,6 +20898,23 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/jumpcloud.http.assets.BatchUpdateAccessoryAssetsRequest'
+          x-examples:
+            application/json:
+              referenceFieldExample:
+                summary: Update a reference field (e.g. Status)
+                value:
+                  assetIds:
+                    - 6936c139154c470001b5f53d
+                  fields:
+                    Status:
+                      id: 6924631f16a853000117a678
+              stringFieldExample:
+                summary: Update a simple string field (e.g. Model)
+                value:
+                  assetIds:
+                    - 6936c139154c470001b5f53d
+                  fields:
+                    Model: Apple Pen
       responses:
         '200':
           description: Batch update completed
@@ -20900,7 +20946,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/assets/accessories/batch \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"assetIds":["507f1f77bcf86cd799439011","507f1f77bcf86cd799439012"],"fieldValue":{"label":"Status","value":{"id":"507f1f77bcf86cd799439013","name":"Active","type":"select"}}}'
+              --data '{"assetIds":["6936c139154c470001b5f53d","507f1f77bcf86cd799439011"],"fields":{"Model":"Apple Pen"}}'
         - lang: Python
           source: |-
             import requests
@@ -20908,15 +20954,8 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/assets/accessories/batch"
 
             payload = {
-                "assetIds": ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012"],
-                "fieldValue": {
-                    "label": "Status",
-                    "value": {
-                        "id": "507f1f77bcf86cd799439013",
-                        "name": "Active",
-                        "type": "select"
-                    }
-                }
+                "assetIds": ["6936c139154c470001b5f53d", "507f1f77bcf86cd799439011"],
+                "fields": {"Model": "Apple Pen"}
             }
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -20931,7 +20970,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/assets/accessories/batch' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"assetIds":["507f1f77bcf86cd799439011","507f1f77bcf86cd799439012"],"fieldValue":{"label":"Status","value":{"id":"507f1f77bcf86cd799439013","name":"Active","type":"select"}}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/assets/accessories/batch' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"assetIds":["6936c139154c470001b5f53d","507f1f77bcf86cd799439011"],"fields":{"Model":"Apple Pen"}}'
   /assets/accessories/{id}:
     delete:
       description: Delete an existing accessory asset by its ID
@@ -21423,6 +21462,23 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/jumpcloud.http.assets.BatchUpdateDeviceAssetsRequest'
+          x-examples:
+            application/json:
+              referenceFieldExample:
+                summary: Update a reference field (e.g. Status)
+                value:
+                  assetIds:
+                    - 6936c139154c470001b5f53d
+                  fields:
+                    Status:
+                      id: 6924631f16a853000117a678
+              stringFieldExample:
+                summary: Update a simple string field (e.g. Model)
+                value:
+                  assetIds:
+                    - 6936c139154c470001b5f53d
+                  fields:
+                    Model: Macbook Air
       responses:
         '200':
           description: Batch update completed
@@ -21454,7 +21510,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/assets/devices/batch \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"assetIds":["507f1f77bcf86cd799439011","507f1f77bcf86cd799439012"],"fieldValue":{"label":"Status","value":{"id":"507f1f77bcf86cd799439013","name":"Active","type":"select"}}}'
+              --data '{"assetIds":["6936c139154c470001b5f53d"],"fields":{"Status":{"id":"6924631f16a853000117a678"}}}'
         - lang: Python
           source: |-
             import requests
@@ -21462,15 +21518,8 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/assets/devices/batch"
 
             payload = {
-                "assetIds": ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012"],
-                "fieldValue": {
-                    "label": "Status",
-                    "value": {
-                        "id": "507f1f77bcf86cd799439013",
-                        "name": "Active",
-                        "type": "select"
-                    }
-                }
+                "assetIds": ["6936c139154c470001b5f53d"],
+                "fields": {"Status": {"id": "6924631f16a853000117a678"}}
             }
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -21485,7 +21534,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/assets/devices/batch' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"assetIds":["507f1f77bcf86cd799439011","507f1f77bcf86cd799439012"],"fieldValue":{"label":"Status","value":{"id":"507f1f77bcf86cd799439013","name":"Active","type":"select"}}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/assets/devices/batch' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"assetIds":["6936c139154c470001b5f53d"],"fields":{"Status":{"id":"6924631f16a853000117a678"}}}'
   /assets/devices/jc-system/{jcSystemId}:
     get:
       description: Retrieve a specific device asset by its JumpCloud System ID
@@ -22033,6 +22082,23 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/jumpcloud.http.assets.BatchUpdateLocationAssetsRequest'
+          x-examples:
+            application/json:
+              referenceFieldExample:
+                summary: Update a reference field (e.g. Status)
+                value:
+                  assetIds:
+                    - 6936c139154c470001b5f53d
+                  fields:
+                    Status:
+                      id: 6924631f16a853000117a678
+              stringFieldExample:
+                summary: Update a simple string field (e.g. Name)
+                value:
+                  assetIds:
+                    - 6936c139154c470001b5f53d
+                  fields:
+                    Name: Super HQ
       responses:
         '200':
           description: Batch update completed
@@ -22064,7 +22130,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/assets/locations/batch \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"assetIds":["507f1f77bcf86cd799439011","507f1f77bcf86cd799439012"],"fieldValue":{"label":"Status","value":{"id":"507f1f77bcf86cd799439013","name":"Active","type":"select"}}}'
+              --data '{"assetIds":["6936c139154c470001b5f53d","507f1f77bcf86cd799439011"],"fields":{"Name":"Super HQ"}}'
         - lang: Python
           source: |-
             import requests
@@ -22072,15 +22138,8 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/assets/locations/batch"
 
             payload = {
-                "assetIds": ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012"],
-                "fieldValue": {
-                    "label": "Status",
-                    "value": {
-                        "id": "507f1f77bcf86cd799439013",
-                        "name": "Active",
-                        "type": "select"
-                    }
-                }
+                "assetIds": ["6936c139154c470001b5f53d", "507f1f77bcf86cd799439011"],
+                "fields": {"Name": "Super HQ"}
             }
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -22095,7 +22154,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/assets/locations/batch' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"assetIds":["507f1f77bcf86cd799439011","507f1f77bcf86cd799439012"],"fieldValue":{"label":"Status","value":{"id":"507f1f77bcf86cd799439013","name":"Active","type":"select"}}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/assets/locations/batch' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"assetIds":["6936c139154c470001b5f53d","507f1f77bcf86cd799439011"],"fields":{"Name":"Super HQ"}}'
   /assets/locations/{id}:
     delete:
       description: Delete an existing location asset by its ID
