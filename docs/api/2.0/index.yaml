@@ -6970,6 +6970,8 @@ definitions:
              device_metrics_disk_usage_sample
              device_metrics_battery_sample.
         type: string
+      labels:
+        $ref: '#/definitions/jumpcloud.healthmonitoring.RuleLabel'
       lastUpdatedAt:
         format: date-time
         readOnly: true
@@ -7130,6 +7132,19 @@ definitions:
       violationCondition:
         type: string
     type: object
+  jumpcloud.healthmonitoring.RuleLabel:
+    default: RULE_LABEL_UNSPECIFIED
+    description: |-
+      RuleLabel indicates which service or surface created the rule.
+
+       - RULE_LABEL_UNSPECIFIED: No label specified; defaults to admin behaviour.
+       - RULE_LABEL_ADMIN: Rule was created through the Admin UI.
+       - RULE_LABEL_WORKFLOW: Rule was created by the Workflow service.
+    enum:
+      - RULE_LABEL_UNSPECIFIED
+      - RULE_LABEL_ADMIN
+      - RULE_LABEL_WORKFLOW
+    type: string
   jumpcloud.healthmonitoring.RuleOsFamily:
     default: RULE_OS_FAMILY_UNSPECIFIED
     description: |-
@@ -7204,6 +7219,8 @@ definitions:
         type: string
       osFamily:
         $ref: '#/definitions/jumpcloud.healthmonitoring.RuleOsFamily'
+      outputSchema:
+        type: object
       siRequired:
         type: boolean
       status:
@@ -29042,6 +29059,19 @@ paths:
           name: limit
           required: false
           type: string
+        - default: RULE_LABEL_UNSPECIFIED
+          description: |2-
+             - RULE_LABEL_UNSPECIFIED: No label specified; defaults to admin behaviour.
+             - RULE_LABEL_ADMIN: Rule was created through the Admin UI.
+             - RULE_LABEL_WORKFLOW: Rule was created by the Workflow service.
+          enum:
+            - RULE_LABEL_UNSPECIFIED
+            - RULE_LABEL_ADMIN
+            - RULE_LABEL_WORKFLOW
+          in: query
+          name: labels
+          required: false
+          type: string
       responses:
         '200':
           description: A successful response.
@@ -29060,7 +29090,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' \
+              --url 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100&labels=RULE_LABEL_UNSPECIFIED' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -29068,7 +29098,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules"
 
-            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"0","sort":"SOME_ARRAY_VALUE","limit":"100"}
+            querystring = {"filter":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE","skip":"0","sort":"SOME_ARRAY_VALUE","limit":"100","labels":"RULE_LABEL_UNSPECIFIED"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -29079,7 +29109,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=0&sort=SOME_ARRAY_VALUE&limit=100&labels=RULE_LABEL_UNSPECIFIED' -Method GET -Headers $headers
     post:
       description: This endpoint allows you to create a health monitoring rule.
       operationId: RulesService_CreateRule
@@ -29110,7 +29140,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -29140,6 +29170,7 @@ paths:
                         }
                     ],
                     "eventType": "string",
+                    "labels": "RULE_LABEL_UNSPECIFIED",
                     "name": "string",
                     "notificationChannelObjectIds": ["string"],
                     "notifyOnAcknowledgement": True,
@@ -29164,7 +29195,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules-stats:
     get:
       description: This endpoint is used for getting rules stats.
@@ -29336,7 +29367,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -29366,6 +29397,7 @@ paths:
                         }
                     ],
                     "eventType": "string",
+                    "labels": "RULE_LABEL_UNSPECIFIED",
                     "name": "string",
                     "notificationChannelObjectIds": ["string"],
                     "notifyOnAcknowledgement": True,
@@ -29390,7 +29422,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","ruleType":"RULE_TYPE_UNSPECIFIED","severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules/{id}/status:
     patch:
       description: This endpoint allows you to update the status of a health monitoring rule.
@@ -59208,6 +59240,7 @@ tags:
   - name: Bulk Job Requests
   - name: Command Templates
   - name: Commands
+  - name: Connector
   - name: Countries
   - name: Custom Emails
   - name: DataContractRegistry
@@ -59408,6 +59441,7 @@ x-tagGroups:
       - Assets
       - Automation Variables
       - Commands
+      - Connector
       - DataContractRegistry
       - Directories
       - Durt
