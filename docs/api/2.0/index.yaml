@@ -8840,6 +8840,26 @@ definitions:
       reportView:
         $ref: '#/definitions/jumpcloud.insights.ReportView'
     type: object
+  jumpcloud.insights.CreateScheduledReportRequest:
+    properties:
+      scheduledReport:
+        $ref: '#/definitions/jumpcloud.insights.ScheduledReport'
+    required:
+      - scheduledReport
+    type: object
+  jumpcloud.insights.CreateScheduledReportRunRequest:
+    properties:
+      scheduledReportRun:
+        $ref: '#/definitions/jumpcloud.insights.ScheduledReportRun'
+    required:
+      - scheduledReportRun
+    type: object
+  jumpcloud.insights.DeleteScheduledReportResponse:
+    properties:
+      message:
+        description: Success message (e.g. "Scheduled report deleted successfully")
+        type: string
+    type: object
   jumpcloud.insights.ExportReportRequest:
     properties:
       exportType:
@@ -8896,6 +8916,41 @@ definitions:
       totalCount:
         format: int64
         type: integer
+    type: object
+  jumpcloud.insights.ListScheduledReportRunsResponse:
+    properties:
+      runs:
+        items:
+          $ref: '#/definitions/jumpcloud.insights.ScheduledReportRun'
+        type: array
+    type: object
+  jumpcloud.insights.ListScheduledReportsResponse:
+    properties:
+      scheduledReports:
+        items:
+          $ref: '#/definitions/jumpcloud.insights.ScheduledReport'
+        type: array
+      totalCount:
+        format: int64
+        type: integer
+    type: object
+  jumpcloud.insights.Recipient:
+    description: |-
+      Recipient represents a notification recipient with channel type and a list of values.
+      For email: value is list of email addresses; for slack: list of channel names/IDs; for webhook: list of URLs.
+    properties:
+      channelType:
+        title: 'Stored and returned as lowercase: email, slack, webhook'
+        type: string
+      value:
+        description: 'List of values: email addresses (email), slack channel names/IDs (slack), or webhook URLs (webhook)'
+        items:
+          type: string
+        title: List of values for this channel (e.g. email addresses, slack channels, or webhook URLs)
+        type: array
+    required:
+      - channelType
+      - value
     type: object
   jumpcloud.insights.ReportTemplate:
     properties:
@@ -8966,6 +9021,156 @@ definitions:
       reportView:
         $ref: '#/definitions/jumpcloud.insights.ReportView'
     type: object
+  jumpcloud.insights.ScheduledReport:
+    properties:
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      cronExpression:
+        description: Generated cron expression (read-only, computed from schedule_frequency, schedule_time, and time_zone)
+        readOnly: true
+        type: string
+      days:
+        description: 'Weekly: e.g. ["MONDAY", "THURSDAY"]. Monthly/quarterly: ["FIRST_DAY"] or ["LAST_DAY"]. Daily: omit or [].'
+        items:
+          type: string
+        type: array
+      description:
+        type: string
+      displayName:
+        type: string
+      endDate:
+        description: Optional end date for the schedule
+        format: date-time
+        type: string
+        x-nullable: true
+      exportType:
+        title: 'Stored and returned as lowercase: csv, json'
+        type: string
+      id:
+        title: id is a UUID (scheduled_reports.id), not a JumpCloud object_id
+        type: string
+      isActive:
+        type: boolean
+      lastRunAt:
+        format: date-time
+        readOnly: true
+        type: string
+        x-nullable: true
+      lastRunStatus:
+        readOnly: true
+        type: string
+      nextRunAt:
+        format: date-time
+        readOnly: true
+        type: string
+      recipients:
+        description: List of notification recipients with channel type and recipient details
+        items:
+          $ref: '#/definitions/jumpcloud.insights.Recipient'
+        type: array
+      reportId:
+        description: Report definition ID (report_views.object_id or report_templates.object_id); hex in API. Omitted when not set.
+        format: byte
+        type: string
+        x-nullable: true
+      reportType:
+        description: report_view or report_template
+        type: string
+        x-nullable: true
+      scheduleFrequency:
+        title: 'Stored and returned as lowercase: daily, weekly, monthly, quarterly'
+        type: string
+      scheduleTime:
+        description: Time of day for the schedule (e.g., "09:00 AM", "14:30")
+        type: string
+      startDate:
+        description: Optional start date for the schedule
+        format: date-time
+        type: string
+      timeZone:
+        description: Timezone for the schedule (e.g., "GMT-2", "America/New_York")
+        type: string
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+    required:
+      - displayName
+      - scheduleFrequency
+      - scheduleTime
+      - timeZone
+      - recipients
+      - exportType
+      - isActive
+    type: object
+  jumpcloud.insights.ScheduledReportResponse:
+    properties:
+      scheduledReport:
+        $ref: '#/definitions/jumpcloud.insights.ScheduledReport'
+    type: object
+  jumpcloud.insights.ScheduledReportRun:
+    properties:
+      artifactId:
+        description: Artifact ID if execution was successful
+        readOnly: true
+        type: string
+      completedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      errorDetails:
+        description: Additional error context (JSON)
+        readOnly: true
+        type: string
+      errorMessage:
+        description: Error message if status is FAILED
+        readOnly: true
+        type: string
+      fileSize:
+        description: File size in bytes
+        readOnly: true
+        type: string
+        x-nullable: true
+      id:
+        title: id is a Temporal workflow execution ID (scheduled_report_runs.id), not a JumpCloud object_id
+        type: string
+      reportId:
+        description: Report ID if execution was successful
+        readOnly: true
+        type: string
+      rowCount:
+        description: Emitted as string in JSON (e.g. "123"); omit when not set to avoid validation errors.
+        readOnly: true
+        type: string
+        x-nullable: true
+      scheduledReportId:
+        readOnly: true
+        title: scheduled_report_id is a UUID (scheduled_reports.id), not a JumpCloud object_id
+        type: string
+      startedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      status:
+        description: 'Status: IN_PROGRESS, SUCCESS, FAILED'
+        type: string
+      timeoutAt:
+        description: Omit when not set to avoid null (validator expects string or absent).
+        format: date-time
+        readOnly: true
+        type: string
+        x-nullable: true
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+    type: object
   jumpcloud.insights.Source:
     default: unspecified
     enum:
@@ -8975,6 +9180,16 @@ definitions:
       - ai
     title: Indicates if the report was updated through the API or UI
     type: string
+  jumpcloud.insights.TriggerScheduledReportResponse:
+    properties:
+      runId:
+        description: The Temporal workflow execution ID for the triggered run
+        type: string
+      startedAt:
+        description: When the run was started
+        format: date-time
+        type: string
+    type: object
   jumpcloud.microsoft_mdm.DownloadConfigFilesRequest:
     type: object
   jumpcloud.msp.GetDetailsResponse:
@@ -10510,6 +10725,8 @@ definitions:
       not_contains_case_sensitive - Checks if `field` does not have the static `value` as its substring. Case sensitive. Only works for string types.
       in_case_sensitive - Checks if `field` is in the static `value` array. Works with strings (case sensitive), numbers, and datetime types.
       not_in_case_sensitive - Checks if `field` is not in the static `value` array. Works with strings (case sensitive), numbers, and datetime types.
+      member_of - Array column overlaps with the given list. Only for array-typed fields. Value must be list_value.
+      not_member_of - Array column does not overlap with the given list. Only for array-typed fields. Value must be list_value.
     enum:
       - operation_unknown
       - and
@@ -10536,6 +10753,8 @@ definitions:
       - not_contains_case_sensitive
       - in_case_sensitive
       - not_in_case_sensitive
+      - member_of
+      - not_member_of
     type: string
   jumpcloud.search.SearchRequestMetadata:
     description: |-
@@ -45587,6 +45806,833 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/jumpcloud/{objectId}' -Method GET -Headers $headers
+  /reports/scheduled:
+    get:
+      description: |-
+        List Scheduled Reports.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/reports/scheduled \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Reports_ListScheduledReports
+      parameters:
+        - default: '100'
+          description: The number of records to return at once. Limited to 100.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+        - default: '0'
+          description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: The fields on the items listed to return.
+          in: query
+          items:
+            type: string
+          name: fields
+          required: false
+          type: array
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Use camelCase only; allowed values: displayName, description, scheduleFrequency, isActive, createdAt, updatedAt. Do not use snake_case (e.g. display_name is invalid).\n\n\t**operator** = Supported operators: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Value to search for (case sensitive; supports wild cards).\n\n\t**Example** `GET /api/v2/reports/scheduled?filter=displayName:eq:Daily+Report`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: Success listing Scheduled Reports.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ListScheduledReportsResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: List Scheduled Reports
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+        - reports.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/reports/scheduled?limit=100&skip=0&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled"
+
+            querystring = {"limit":"100","skip":"0","sort":"SOME_STRING_VALUE","fields":"SOME_ARRAY_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled?limit=100&skip=0&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+    post:
+      description: |-
+        Create a Scheduled Report.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/reports/scheduled \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+         -d '{ {Scheduled_Report_Parameters} }' \
+        ```
+      operationId: Reports_CreateScheduledReport
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.CreateScheduledReportRequest'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ScheduledReport'
+        '201':
+          description: Success creating a Scheduled Report.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ScheduledReport'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Create a Scheduled Report
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/reports/scheduled \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"scheduledReport":{"days":["string"],"description":"string","displayName":"string","endDate":"2019-08-24T14:15:22Z","exportType":"string","id":"string","isActive":true,"recipients":[{"channelType":"string","value":["string"]}],"reportId":"string","reportType":"string","scheduleFrequency":"string","scheduleTime":"string","startDate":"2019-08-24T14:15:22Z","timeZone":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled"
+
+            payload = {"scheduledReport": {
+                    "days": ["string"],
+                    "description": "string",
+                    "displayName": "string",
+                    "endDate": "2019-08-24T14:15:22Z",
+                    "exportType": "string",
+                    "id": "string",
+                    "isActive": True,
+                    "recipients": [
+                        {
+                            "channelType": "string",
+                            "value": ["string"]
+                        }
+                    ],
+                    "reportId": "string",
+                    "reportType": "string",
+                    "scheduleFrequency": "string",
+                    "scheduleTime": "string",
+                    "startDate": "2019-08-24T14:15:22Z",
+                    "timeZone": "string"
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"scheduledReport":{"days":["string"],"description":"string","displayName":"string","endDate":"2019-08-24T14:15:22Z","exportType":"string","id":"string","isActive":true,"recipients":[{"channelType":"string","value":["string"]}],"reportId":"string","reportType":"string","scheduleFrequency":"string","scheduleTime":"string","startDate":"2019-08-24T14:15:22Z","timeZone":"string"}}'
+  /reports/scheduled/runs:
+    get:
+      description: |-
+        List all Scheduled Report Runs for an organization.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/reports/scheduled/runs \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Reports_ListScheduledReportRuns
+      parameters:
+        - default: '100'
+          description: The number of records to return at once. Limited to 100.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+        - default: '0'
+          description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/reports/scheduled/runs?filter=status:eq:SUCCESS`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: Success listing Scheduled Report Runs.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ListScheduledReportRunsResponse'
+        '400':
+          description: Bad Request
+          schema: {}
+        '500':
+          description: Internal Server Error
+          schema: {}
+      security:
+        - x-api-key: []
+      summary: List all Scheduled Report Runs
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+        - reports.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/reports/scheduled/runs?limit=100&skip=0&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled/runs"
+
+            querystring = {"limit":"100","skip":"0","sort":"SOME_STRING_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/runs?limit=100&skip=0&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+    post:
+      description: |-
+        Create a new Scheduled Report Run.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/reports/scheduled/runs \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{"scheduled_report_run": {...}}'
+        ```
+      operationId: Reports_CreateScheduledReportRun
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.CreateScheduledReportRunRequest'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ScheduledReportRun'
+        '201':
+          description: Success creating a Scheduled Report Run.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ScheduledReportRun'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Create a Scheduled Report Run
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/reports/scheduled/runs \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"scheduledReportRun":{"id":"string","status":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled/runs"
+
+            payload = {"scheduledReportRun": {
+                    "id": "string",
+                    "status": "string"
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/runs' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"scheduledReportRun":{"id":"string","status":"string"}}'
+  /reports/scheduled/runs/{objectId}:
+    get:
+      description: |-
+        Get a Scheduled Report Run by ID.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/reports/scheduled/runs/{object_id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Reports_GetScheduledReportRun
+      parameters:
+        - description: object_id is the run ID (scheduled_report_runs.id, e.g. Temporal workflow execution ID or UUID), bound from path
+          in: path
+          name: objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success retrieving a Scheduled Report Run.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ScheduledReportRun'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Get a Scheduled Report Run
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+        - reports.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/reports/scheduled/runs/{objectId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled/runs/{objectId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/runs/{objectId}' -Method GET -Headers $headers
+  /reports/scheduled/{objectId}:
+    delete:
+      description: |-
+        Delete a Scheduled Report.
+
+        #### Sample Request
+        ```
+        curl -X DELETE https://console.jumpcloud.com/api/v2/reports/scheduled/{id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Reports_DeleteScheduledReport
+      parameters:
+        - description: object_id path param (scheduled_reports.id, UUID)
+          in: path
+          name: objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success deleting a Scheduled Report.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.DeleteScheduledReportResponse'
+        '404':
+          description: Not Found
+          schema: {}
+        '500':
+          description: Internal Server Error
+          schema: {}
+      security:
+        - x-api-key: []
+      summary: Delete a Scheduled Report
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}' -Method DELETE -Headers $headers
+    get:
+      description: |-
+        Get a Scheduled Report.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/reports/scheduled/{id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Reports_GetScheduledReport
+      parameters:
+        - description: object_id path param (scheduled_reports.id, UUID); name allows gateway to bind path
+          in: path
+          name: objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success getting a Scheduled Report.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ScheduledReportResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+        - x-api-key: []
+      summary: Get a Scheduled Report
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+        - reports.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}' -Method GET -Headers $headers
+    put:
+      description: |-
+        Update a Scheduled Report.
+
+        #### Sample Request
+        ```
+        curl -X PUT https://console.jumpcloud.com/api/v2/reports/scheduled/{id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+         -d '{ {Scheduled_Report_Parameters} }' \
+        ```
+      operationId: Reports_UpdateScheduledReport
+      parameters:
+        - description: object_id path param (scheduled_reports.id, UUID)
+          in: path
+          name: objectId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              scheduledReport:
+                $ref: '#/definitions/jumpcloud.insights.ScheduledReport'
+            required:
+              - scheduledReport
+            type: object
+      responses:
+        '200':
+          description: Success updating a Scheduled Report.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ScheduledReportResponse'
+        '400':
+          description: Bad Request
+          schema: {}
+        '404':
+          description: Not Found
+          schema: {}
+        '500':
+          description: Internal Server Error
+          schema: {}
+      security:
+        - x-api-key: []
+      summary: Update a Scheduled Report
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"scheduledReport":{"days":["string"],"description":"string","displayName":"string","endDate":"2019-08-24T14:15:22Z","exportType":"string","id":"string","isActive":true,"recipients":[{"channelType":"string","value":["string"]}],"reportId":"string","reportType":"string","scheduleFrequency":"string","scheduleTime":"string","startDate":"2019-08-24T14:15:22Z","timeZone":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}"
+
+            payload = {"scheduledReport": {
+                    "days": ["string"],
+                    "description": "string",
+                    "displayName": "string",
+                    "endDate": "2019-08-24T14:15:22Z",
+                    "exportType": "string",
+                    "id": "string",
+                    "isActive": True,
+                    "recipients": [
+                        {
+                            "channelType": "string",
+                            "value": ["string"]
+                        }
+                    ],
+                    "reportId": "string",
+                    "reportType": "string",
+                    "scheduleFrequency": "string",
+                    "scheduleTime": "string",
+                    "startDate": "2019-08-24T14:15:22Z",
+                    "timeZone": "string"
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"scheduledReport":{"days":["string"],"description":"string","displayName":"string","endDate":"2019-08-24T14:15:22Z","exportType":"string","id":"string","isActive":true,"recipients":[{"channelType":"string","value":["string"]}],"reportId":"string","reportType":"string","scheduleFrequency":"string","scheduleTime":"string","startDate":"2019-08-24T14:15:22Z","timeZone":"string"}}'
+  /reports/scheduled/{objectId}/runs:
+    get:
+      description: |-
+        List Scheduled Report Runs for a specific scheduled report.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/reports/scheduled/{id}/runs \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Reports_ListScheduledReportRunsByReport
+      parameters:
+        - description: object_id path param (scheduled_reports.id, UUID)
+          in: path
+          name: objectId
+          required: true
+          type: string
+        - default: '100'
+          description: The number of records to return at once. Limited to 100.
+          format: int64
+          in: query
+          name: limit
+          required: false
+          type: string
+        - default: '0'
+          description: The offset into the records to return.
+          format: int64
+          in: query
+          name: skip
+          required: false
+          type: string
+        - description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          name: sort
+          required: false
+          type: string
+        - collectionFormat: multi
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/reports/scheduled/{id}/runs?filter=status:eq:SUCCESS`\n"
+          in: query
+          items:
+            type: string
+          name: filter
+          required: false
+          type: array
+      responses:
+        '200':
+          description: Success listing Scheduled Report Runs for a report.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.ListScheduledReportRunsResponse'
+        '400':
+          description: Bad Request
+          schema: {}
+        '404':
+          description: Not Found
+          schema: {}
+        '500':
+          description: Internal Server Error
+          schema: {}
+      security:
+        - x-api-key: []
+      summary: List Scheduled Report Runs by Report
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+        - reports.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}/runs?limit=100&skip=0&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}/runs"
+
+            querystring = {"limit":"100","skip":"0","sort":"SOME_STRING_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}/runs?limit=100&skip=0&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  /reports/scheduled/{objectId}/trigger:
+    post:
+      description: |-
+        Manually trigger a Scheduled Report execution (Run Now).
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/reports/scheduled/{id}/trigger \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: Reports_TriggerScheduledReport
+      parameters:
+        - description: object_id path param (scheduled_reports.id, UUID)
+          in: path
+          name: objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success triggering a Scheduled Report.
+          schema:
+            $ref: '#/definitions/jumpcloud.insights.TriggerScheduledReportResponse'
+        '404':
+          description: Not Found
+          schema: {}
+        '500':
+          description: Internal Server Error
+          schema: {}
+      security:
+        - x-api-key: []
+      summary: Trigger a Scheduled Report (Run Now)
+      tags:
+        - Reports
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}/trigger \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}/trigger"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("POST", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}/trigger' -Method POST -Headers $headers
   /roles:
     get:
       description: Returns a paginated list of all roles.
