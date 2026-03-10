@@ -2779,6 +2779,10 @@ definitions:
             type: string
           roleName:
             type: string
+          roleNames:
+            items:
+              type: string
+            type: array
         type: object
         x-nullable: true
       allow_public_key:
@@ -3357,6 +3361,10 @@ definitions:
             type: string
           roleName:
             type: string
+          roleNames:
+            items:
+              type: string
+            type: array
         type: object
         x-nullable: true
       allow_public_key:
@@ -3648,6 +3656,10 @@ definitions:
         type: string
       roleName:
         type: string
+      roleNames:
+        items:
+          type: string
+        type: array
     title: UserPut
     type: object
   userreturn:
@@ -3708,6 +3720,14 @@ definitions:
         type: string
       roleName:
         type: string
+      roleNames:
+        items:
+          type: string
+        type: array
+      roles:
+        items:
+          type: string
+        type: array
       sessionCount:
         type: integer
       suspended:
@@ -9700,7 +9720,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: ' \
-              --data '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string"}'
+              --data '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string","roleNames":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -9715,7 +9735,8 @@ paths:
                 "growthData": {},
                 "lastWhatsNewChecked": "2019-08-24",
                 "lastname": "string",
-                "roleName": "string"
+                "roleName": "string",
+                "roleNames": ["string"]
             }
             headers = {
                 "x-org-id": "",
@@ -9732,7 +9753,7 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/users/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/users/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string","roleNames":["string"]}'
 produces:
   - application/json
 responses:

@@ -200,6 +200,14 @@ definitions:
         type: string
       roleName:
         type: string
+      roleNames:
+        items:
+          type: string
+        type: array
+      roles:
+        items:
+          type: string
+        type: array
       suspended:
         type: boolean
     title: Administrator
