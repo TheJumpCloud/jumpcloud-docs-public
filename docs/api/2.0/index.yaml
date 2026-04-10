@@ -12707,8 +12707,14 @@ paths:
                   firstname: ''
                   lastname: ''
                   registered: true
-                  role: 5c3536e9e0a6840001872799
-                  roleName: Administrator
+                  role: 5c3536e9e0a684000187279a
+                  roleName: Multi Role
+                  roles:
+                    - 5c3536e9e0a6840001872799
+                    - 5c3536e9e0a6840001872788
+                  roleNames:
+                    - Administrator
+                    - Help Desk
                   organizationAccessTotal: 1
               totalCount: 2
           schema:
@@ -46735,6 +46741,14 @@ definitions:
         type: string
       roleName:
         type: string
+      roles:
+        type: array
+        items:
+          type: string
+      roleNames:
+        type: array
+        items:
+          type: string
       suspended:
         type: boolean
       organizationAccessTotal:
