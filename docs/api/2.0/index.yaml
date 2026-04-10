@@ -59723,6 +59723,7 @@ definitions:
         enum:
           - ACTOR_TYPE_USER
           - ACTOR_TYPE_SYSTEM
+          - ACTOR_TYPE_SERVICE_ACCOUNT
         description: The type of actor
         example: ACTOR_TYPE_USER
   jumpcloud.http.assets.FieldChange:
