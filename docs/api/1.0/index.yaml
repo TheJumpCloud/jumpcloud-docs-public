@@ -5112,7 +5112,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: ' \
-              --data '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string"}'
+              --data '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string","roles":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -5127,7 +5127,8 @@ paths:
                 "growthData": {},
                 "lastWhatsNewChecked": "2019-08-24",
                 "lastname": "string",
-                "roleName": "string"
+                "roleName": "string",
+                "roles": ["string"]
             }
             headers = {
                 "x-org-id": "",
@@ -5144,7 +5145,7 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/users/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/users/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"apiKeyAllowed":true,"email":"user@example.com","enableMultiFactor":true,"firstname":"string","growthData":{},"lastWhatsNewChecked":"2019-08-24","lastname":"string","roleName":"string","roles":["string"]}'
   /applications/selection:
     x-functionalities-tags:
       - applications
@@ -8983,6 +8984,10 @@ definitions:
             type: string
           roleName:
             type: string
+          roleNames:
+            type: array
+            items:
+              type: string
       addresses:
         type: array
         items:
@@ -9224,6 +9229,10 @@ definitions:
             type: string
           roleName:
             type: string
+          roleNames:
+            type: array
+            items:
+              type: string
       addresses:
         type: array
         items:
@@ -9472,6 +9481,10 @@ definitions:
         type: string
       roleName:
         type: string
+      roles:
+        type: array
+        items:
+          type: string
   userreturn:
     title: UserReturn
     type: object
@@ -9530,8 +9543,16 @@ definitions:
         type: string
       role:
         type: string
+      roles:
+        type: array
+        items:
+          type: string
       roleName:
         type: string
+      roleNames:
+        type: array
+        items:
+          type: string
       usersTimeZone:
         type: string
       suspended:
