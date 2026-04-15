@@ -60880,6 +60880,7 @@ tags:
   - name: Slack Notifications
   - name: Software Apps
   - name: Software Catalog
+  - name: SoftwareUsageWorkerService
   - name: SubscriptionComponent
   - name: SubscriptionData
   - name: Subscriptions
