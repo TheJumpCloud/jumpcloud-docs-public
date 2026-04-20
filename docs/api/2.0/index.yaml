@@ -50115,22 +50115,13 @@ definitions:
       displayToUsers: true
       groupDescription: Manage users
       scopes:
-        - key: users
-          label: User Management
-          displayToUsers: true
-          description: Manage user resources
-          permissions:
-            edit:
-              - users
-            readonly:
-              - users.readonly
         - key: users.unlock
           label: Unlock user accounts
           subgroupLabel: User Support
           displayToUsers: true
           description: Unlock user accounts.
           permissionType: actions
-          permissionsV2:
+          permissions:
             - key: allow
               values:
                 - users.unlock
@@ -50165,28 +50156,32 @@ definitions:
         type: boolean
         description: Whether No Access option available for the scope. It would be applicable when permission_type:access_level
       permissions:
-        type: object
-        description: Available permission levels for this scope
-        additionalProperties:
-          type: array
-          items:
-            type: string
-      permissionsV2:
         type: array
+        description: Available permission levels for this scope
         items:
           type: object
-        description: Available permission levels for this scope
-        additionalProperties: true
+          properties:
+            key:
+              type: string
+              description: Permission level key (e.g. fullAccess, view, create, update, delete, allow)
+            values:
+              type: array
+              items:
+                type: string
+              description: Scope strings granted at this permission level
     example:
       key: systems
       label: Systems
       displayToUsers: true
       description: Manage system resources and configurations
+      permissionType: access_level
       permissions:
-        edit:
-          - systems
-        readonly:
-          - systems.readonly
+        - key: fullAccess
+          values:
+            - systems
+        - key: view
+          values:
+            - systems.readonly
   SuggestionCounts:
     type: object
     properties:
