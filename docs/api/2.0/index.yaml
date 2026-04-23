@@ -16,7 +16,11 @@ info:
 
     JumpCloud's V2 API. This set of endpoints allows JumpCloud customers to manage objects, groupings and mappings and interact with the JumpCloud Graph.
 
-    > **Note:** Customers using the [EU Data Center](https://jumpcloud.com/support/jumpcloud-eu-data-center-faq) should use `https://console.eu.jumpcloud.com` in the endpoint URLs.
+    > **Note:** Depending on your region, you should use the following URLs as endpoint URLs.
+    > * For customers in EU: https://console.eu.jumpcloud.com
+    > * For customers in India: https://console.in.jumpcloud.com
+    >
+    > See [JumpCloud Data Centers: Login URLs and Service Endpoints](https://jumpcloud.com/support/jumpcloud-data-centers-login-urls-and-service-endpoints) to learn more.
 
     ## API Best Practices
 
