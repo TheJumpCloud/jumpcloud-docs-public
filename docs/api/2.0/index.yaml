@@ -41811,7 +41811,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/approvalflows \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"category":"string","description":"string","deviceLevelPermission":["string"],"fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","resourceType":"string","slackConfig":[{"slackResourceId":"string"}],"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
+              --data '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"category":"string","description":"string","deviceLevelPermission":["string"],"fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","resourceType":"string","slackConfig":[{"slackResourceId":"string"}],"slackDmEnabled":true,"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -41843,6 +41843,7 @@ paths:
                 "resourceId": "string",
                 "resourceType": "string",
                 "slackConfig": [{"slackResourceId": "string"}],
+                "slackDmEnabled": True,
                 "slackEnabled": True,
                 "status": "string",
                 "timeBasedAccess": True,
@@ -41862,7 +41863,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approvalflows' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"category":"string","description":"string","deviceLevelPermission":["string"],"fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","resourceType":"string","slackConfig":[{"slackResourceId":"string"}],"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approvalflows' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"category":"string","description":"string","deviceLevelPermission":["string"],"fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","resourceType":"string","slackConfig":[{"slackResourceId":"string"}],"slackDmEnabled":true,"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
   /approvalflows/{approvalFlowId}:
     get:
       summary: Get AccessWorkflow by id
@@ -41971,6 +41972,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/jumpcloud.ingresso.SlackConfig'
+              slackDmEnabled:
+                type: boolean
               slackEnabled:
                 type: boolean
               status:
@@ -41997,7 +42000,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/approvalflows/{approvalFlowId} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"description":"string","deviceLevelPermission":["string"],"fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","slackConfig":[{"slackResourceId":"string"}],"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
+              --data '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"description":"string","deviceLevelPermission":["string"],"fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","slackConfig":[{"slackResourceId":"string"}],"slackDmEnabled":true,"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -42027,6 +42030,7 @@ paths:
                 "organizationObjectId": "string",
                 "resourceId": "string",
                 "slackConfig": [{"slackResourceId": "string"}],
+                "slackDmEnabled": True,
                 "slackEnabled": True,
                 "status": "string",
                 "timeBasedAccess": True,
@@ -42046,7 +42050,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approvalflows/{approvalFlowId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"description":"string","deviceLevelPermission":["string"],"fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","slackConfig":[{"slackResourceId":"string"}],"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approvalflows/{approvalFlowId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"approvalType":"string","approverRequirement":"string","approverResources":[{"requireAll":true,"resourceId":"string","resourceName":"string","resourceOrder":0,"resourceType":"string"}],"description":"string","deviceLevelPermission":["string"],"fixedDuration":"string","iconColor":"string","iconUrl":"string","multiSelectDuration":["string"],"name":"string","nonAdminApproval":true,"organizationObjectId":"string","resourceId":"string","slackConfig":[{"slackResourceId":"string"}],"slackDmEnabled":true,"slackEnabled":true,"status":"string","timeBasedAccess":true,"ttlConfig":"TTL_CONFIG_UNSPECIFIED","visibleTo":["string"]}'
     delete:
       summary: Delete access workflow
       description: Endpoint for deleting accessworkflow by id
@@ -55948,6 +55952,8 @@ definitions:
         type: string
       bundleVersion:
         type: string
+      managedInstallEligibilityStatus:
+        $ref: '#/definitions/devices.MetadataPKG.ManagedInstallEligibilityStatus'
       packageKind:
         type: string
       sha256sum:
@@ -56817,6 +56823,10 @@ definitions:
         type: string
         format: date-time
         x-nullable: true
+      deletedAt:
+        type: string
+        format: date-time
+        x-nullable: true
       displayName:
         type: string
       objectId:
@@ -56836,6 +56846,8 @@ definitions:
   devices.SoftwareApp.Setting:
     type: object
     properties:
+      adminIntent:
+        $ref: '#/definitions/devices.SoftwareApp.Setting.AdminManagementIntent'
       allowUpdateDelay:
         type: boolean
       appCatalogInstallableObjectId:
@@ -56890,6 +56902,8 @@ definitions:
       locationObjectId:
         type: string
         format: byte
+      managedInstallEligibilityStatus:
+        $ref: '#/definitions/devices.MetadataPKG.ManagedInstallEligibilityStatus'
       microsoftStore:
         $ref: '#/definitions/devices.SoftwareAppMicrosoftStore'
       packageId:
@@ -57623,6 +57637,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/jumpcloud.ingresso.SlackConfig'
+      slackDmEnabled:
+        type: boolean
       slackEnabled:
         type: boolean
       status:
@@ -57714,6 +57730,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/jumpcloud.ingresso.SlackConfig'
+      slackDmEnabled:
+        type: boolean
       slackEnabled:
         type: boolean
       status:
@@ -57839,6 +57857,8 @@ definitions:
         type: string
       id:
         type: string
+      internalNote:
+        type: string
       manager:
         type: string
       metadata:
@@ -57937,6 +57957,8 @@ definitions:
       iconUrl:
         type: string
       id:
+        type: string
+      internalNote:
         type: string
       manager:
         type: string
@@ -59841,6 +59863,21 @@ definitions:
       - IMMEDIATE
       - ON_DEMAND
     default: IMMEDIATE
+  devices.MetadataPKG.ManagedInstallEligibilityStatus:
+    type: string
+    enum:
+      - MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED
+      - MANAGED_INSTALL_ELIGIBLE
+      - MANAGED_INSTALL_INELIGIBLE
+      - MANAGED_INSTALL_ELIGIBILITY_UNKNOWN
+    default: MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED
+  devices.SoftwareApp.Setting.AdminManagementIntent:
+    type: string
+    enum:
+      - INTENT_UNSPECIFIED
+      - INTENT_FORCE_MANAGED
+      - INTENT_FORCE_UNMANAGED
+    default: INTENT_UNSPECIFIED
   jumpcloud.http.assets.error:
     type: object
     description: Error response containing details about what went wrong
@@ -61595,6 +61632,7 @@ tags:
   - name: Windows Patch Management
   - name: Workday Import
   - name: Workflows
+    description: Operations related to public workflows
   - name: fde
   - name: mdm
 x-tagGroups:
