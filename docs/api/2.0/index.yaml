@@ -42276,7 +42276,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approvalflowsettings' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"adminApprovalEmail":true,"channelEvents":[{"channelObjectId":"string","eventTypes":["ACCESS_MANAGEMENT_EVENT_TYPE_UNSPECIFIED"]}],"exposeApprovalProgress":true,"organizationObjectId":"string","resourceRequest":true,"userApprovalEmail":true,"userRequestEmail":true}'
-  /systemusers/{systemuser_id}/transfer:
+  /users/{user_id}/transfer:
     x-functionalities-tags:
       - mtp-account-overview
   /notifications/slack/test:
