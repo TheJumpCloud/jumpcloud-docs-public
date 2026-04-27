@@ -61529,6 +61529,7 @@ securityDefinitions:
     description: API key for authentication
 tags:
   - name: AIDashboard
+  - name: AITokenMetrics
   - name: Access Requests
   - name: AccountManagerCalendar
   - name: AccountWorker
