@@ -16502,8 +16502,14 @@ paths:
           name: body
           schema:
             properties:
+              name:
+                type: string
+                maxLength: 255
+                description: MSP display name
               settings:
                 $ref: '#/definitions/ProviderSettingsPut'
+              contact:
+                $ref: '#/definitions/ProviderContactPut'
             type: object
       responses:
         '200':
@@ -16522,7 +16528,7 @@ paths:
           $ref: '#/responses/trait:standardErrors:500'
       security:
         - x-api-key: []
-      summary: Retrieve Provider
+      summary: Update provider name, settings, and contact
       tags:
         - Providers
         - Managed Service Provider
@@ -16535,14 +16541,21 @@ paths:
               --url https://console.jumpcloud.com/api/v2/providers/{provider_id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"settings":{"requireAdminMFA":true}}'
+              --data '{"name":"string","settings":{"requireAdminMFA":true},"contact":{"name":"string","email":"string"}}'
         - lang: Python
           source: |-
             import requests
 
             url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}"
 
-            payload = {"settings": {"requireAdminMFA": True}}
+            payload = {
+                "name": "string",
+                "settings": {"requireAdminMFA": True},
+                "contact": {
+                    "name": "string",
+                    "email": "string"
+                }
+            }
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
                 "content-type": "application/json"
@@ -16556,7 +16569,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"settings":{"requireAdminMFA":true}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","settings":{"requireAdminMFA":true},"contact":{"name":"string","email":"string"}}'
     get:
       description: This endpoint returns details about a provider
       operationId: providers_getProvider
@@ -50558,13 +50571,46 @@ definitions:
           $ref: '#/definitions/PolicyGroupTemplateMember'
     title: PolicyGroupTemplateMembers
     type: object
+  ProviderContact:
+    type: object
+    description: MSP contact information
+    required:
+      - name
+      - email
+    properties:
+      name:
+        type: string
+        maxLength: 30
+      email:
+        type: string
+        maxLength: 255
+        pattern: ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$
+  ProviderContactPut:
+    type: object
+    description: MSP contact; omit a property to leave it unchanged (including contact.email)
+    properties:
+      name:
+        type: string
+        maxLength: 30
+      email:
+        type: string
+        maxLength: 255
+        description: Include to update the MSP contact email (must be unique across providers)
+        pattern: ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$
   Provider:
     example:
       id: 5c3536e9e0a6840001872799
+      name: Example MSP
       disallowOrgCreation: true
+      contact:
+        name: Example MSP
+        email: contact@example.com
     properties:
       id:
         type: string
+      name:
+        type: string
+        maxLength: 255
       disallowOrgCreation:
         type: boolean
       settings:
@@ -50578,6 +50624,8 @@ definitions:
         enum:
           - MSP
           - OU
+      contact:
+        $ref: '#/definitions/ProviderContact'
   ProviderSettingsPut:
     additionalProperties: false
     properties:
