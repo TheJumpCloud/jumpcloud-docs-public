@@ -17534,7 +17534,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
+              --data '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
         - lang: Python
           source: |-
             import requests
@@ -17558,6 +17558,14 @@ paths:
                         "desiredState": "string",
                         "adminIntent": "INTENT_UNSPECIFIED",
                         "managedInstallEligibilityStatus": "MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED",
+                        "detectionRules": {
+                            "ruleType": "string",
+                            "expectedDisplayName": "string",
+                            "registryPath": "string",
+                            "registryValueName": "string",
+                            "registryExpectedValue": "string",
+                            "powerShellScript": "string"
+                        },
                         "appleVpp": {
                             "appConfiguration": "string",
                             "assignedLicenses": 0,
@@ -17615,7 +17623,10 @@ paths:
                                     "sha256sum": "string",
                                     "status": "string",
                                     "rejectedReason": "string",
-                                    "metadata": {}
+                                    "metadata": {"metadataExe": {
+                                            "installerEngineVersion": "string",
+                                            "signatureLabel": "string"
+                                        }}
                                 }
                             ]
                         },
@@ -17628,12 +17639,15 @@ paths:
                         "scope": "string",
                         "appCatalogInstallableObjectId": "string",
                         "iconUrl": "string",
+                        "installerEngineVersion": "string",
                         "versionlessDownloadUrl": True,
                         "bundleId": "string",
                         "teamId": "string",
                         "format": "string",
                         "appFileName": "string",
                         "shortVersion": "string",
+                        "signatureLabel": "string",
+                        "silentInstallFlags": ["string"],
                         "downloadUrl": "string",
                         "architectures": ["string"],
                         "updateTool": "string",
@@ -17662,7 +17676,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
@@ -17861,7 +17875,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
+              --data '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
         - lang: Python
           source: |-
             import requests
@@ -17885,6 +17899,14 @@ paths:
                         "desiredState": "string",
                         "adminIntent": "INTENT_UNSPECIFIED",
                         "managedInstallEligibilityStatus": "MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED",
+                        "detectionRules": {
+                            "ruleType": "string",
+                            "expectedDisplayName": "string",
+                            "registryPath": "string",
+                            "registryValueName": "string",
+                            "registryExpectedValue": "string",
+                            "powerShellScript": "string"
+                        },
                         "appleVpp": {
                             "appConfiguration": "string",
                             "assignedLicenses": 0,
@@ -17942,7 +17964,10 @@ paths:
                                     "sha256sum": "string",
                                     "status": "string",
                                     "rejectedReason": "string",
-                                    "metadata": {}
+                                    "metadata": {"metadataExe": {
+                                            "installerEngineVersion": "string",
+                                            "signatureLabel": "string"
+                                        }}
                                 }
                             ]
                         },
@@ -17955,12 +17980,15 @@ paths:
                         "scope": "string",
                         "appCatalogInstallableObjectId": "string",
                         "iconUrl": "string",
+                        "installerEngineVersion": "string",
                         "versionlessDownloadUrl": True,
                         "bundleId": "string",
                         "teamId": "string",
                         "format": "string",
                         "appFileName": "string",
                         "shortVersion": "string",
+                        "signatureLabel": "string",
+                        "silentInstallFlags": ["string"],
                         "downloadUrl": "string",
                         "architectures": ["string"],
                         "updateTool": "string",
@@ -17989,7 +18017,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
     get:
       description: |-
         Retrieves a Software Application.
@@ -51598,6 +51626,16 @@ definitions:
         type: string
       metadata:
         type: object
+        description: Parsed package metadata for the uploaded file (e.g. EXE code-signing subject).
+        properties:
+          metadataExe:
+            type: object
+            properties:
+              installerEngineVersion:
+                description: Installer engine identifier/version from EXE metadata (e.g. NSIS, Inno Setup).
+                type: string
+              signatureLabel:
+                type: string
   object-storage-item:
     title: Object Storage item
     type: object
@@ -51704,6 +51742,22 @@ definitions:
         $ref: '#/definitions/devices.SoftwareApp.Setting.AdminManagementIntent'
       managedInstallEligibilityStatus:
         $ref: '#/definitions/devices.MetadataPKG.ManagedInstallEligibilityStatus'
+      detectionRules:
+        type: object
+        description: Rules used to detect if the software app is installed on Windows.
+        properties:
+          ruleType:
+            type: string
+          expectedDisplayName:
+            type: string
+          registryPath:
+            type: string
+          registryValueName:
+            type: string
+          registryExpectedValue:
+            type: string
+          powerShellScript:
+            type: string
       appleVpp:
         $ref: '#/definitions/software-app-apple-vpp'
       packageSubtitle:
@@ -51753,6 +51807,9 @@ definitions:
       iconUrl:
         type: string
         description: URL to the icon for the app.
+      installerEngineVersion:
+        type: string
+        description: Installer engine/version from EXE object-storage metadata (read-only on GET).
       versionlessDownloadUrl:
         type: boolean
       bundleId:
@@ -51765,6 +51822,14 @@ definitions:
         type: string
       shortVersion:
         type: string
+      signatureLabel:
+        type: string
+        description: Code-signing subject from EXE object-storage metadata (read-only on GET).
+      silentInstallFlags:
+        type: array
+        description: Admin override for silent install arguments (Windows custom EXE).
+        items:
+          type: string
       downloadUrl:
         type: string
       architectures:
@@ -56955,6 +57020,22 @@ definitions:
         x-nullable: true
       description:
         type: string
+      detectionRules:
+        type: object
+        description: Rules used to detect if the software app is installed on Windows.
+        properties:
+          ruleType:
+            type: string
+          expectedDisplayName:
+            type: string
+          registryPath:
+            type: string
+          registryValueName:
+            type: string
+          registryExpectedValue:
+            type: string
+          powerShellScript:
+            type: string
       desiredState:
         $ref: '#/definitions/devices.SoftwareAppDesiredState'
       downloadUrl:
@@ -56995,6 +57076,11 @@ definitions:
         $ref: '#/definitions/devices.SoftwareApp.Setting.Scope'
       shortVersion:
         type: string
+      silentInstallFlags:
+        type: array
+        description: Admin override for silent install arguments (Windows custom EXE).
+        items:
+          type: string
       storedPackage:
         $ref: '#/definitions/devices.ObjectStorageItem'
       storedPackageObjectId:
@@ -57151,6 +57237,7 @@ definitions:
       - APPLE_CUSTOM
       - GOOGLE_ANDROID
       - WINDOWS_MDM
+      - WINDOWS_CUSTOM
       - MICROSOFT_STORE
       - WINGET
       - MAC_OS_APP_CATALOG
