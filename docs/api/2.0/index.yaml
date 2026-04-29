@@ -12344,6 +12344,21 @@ paths:
     x-functionalities-tags:
       - software-apps
       - associations
+  /providers/{provider_id}/policies/{resource_id}/associations:
+    parameters:
+      - name: provider_id
+        in: path
+        required: true
+        type: string
+        description: The ID of the provider
+      - name: resource_id
+        in: path
+        required: true
+        type: string
+        description: The ID of the policy
+    x-functionalities-tags:
+      - policies
+      - associations
   /providers/{provider_id}/activedirectories:
     get:
       description: |-
