@@ -50430,6 +50430,7 @@ definitions:
           - searchandselect
           - datetimepicker
           - numberinline
+          - objectstoragefile
         type: string
       id:
         description: ObjectId uniquely identifying a Policy Template Configuration Field

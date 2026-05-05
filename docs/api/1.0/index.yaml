@@ -2299,7 +2299,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: ' \
-              --data '{"authIdp":"JUMPCLOUD","mfa":"DISABLED","name":"string","networkSourceIp":"string","sharedSecret":"string","tagNames":["string"],"userLockoutAction":"string","userPasswordExpirationAction":"string","userPasswordEnabled":true,"userCertEnabled":true,"deviceCertEnabled":true,"caCert":"string","requireTlsAuth":true,"radsecEnabled":true,"requireRadsec":true}'
+              --data '{"authIdp":"JUMPCLOUD","mfa":"DISABLED","name":"string","networkSourceIp":"string","sharedSecret":"string","tagNames":["string"],"userLockoutAction":"string","userPasswordExpirationAction":"string","userPasswordEnabled":true,"userCertEnabled":true,"deviceCertEnabled":true,"caCert":"string","requireTlsAuth":true,"radsecEnabled":true,"requireRadsec":true,"caSource":"BYOC"}'
         - lang: Python
           source: |-
             import requests
@@ -2321,7 +2321,8 @@ paths:
                 "caCert": "string",
                 "requireTlsAuth": True,
                 "radsecEnabled": True,
-                "requireRadsec": True
+                "requireRadsec": True,
+                "caSource": "BYOC"
             }
             headers = {
                 "x-org-id": "",
@@ -2338,7 +2339,7 @@ paths:
             $headers.Add("x-org-id", "")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/radiusservers' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authIdp":"JUMPCLOUD","mfa":"DISABLED","name":"string","networkSourceIp":"string","sharedSecret":"string","tagNames":["string"],"userLockoutAction":"string","userPasswordExpirationAction":"string","userPasswordEnabled":true,"userCertEnabled":true,"deviceCertEnabled":true,"caCert":"string","requireTlsAuth":true,"radsecEnabled":true,"requireRadsec":true}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/radiusservers' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authIdp":"JUMPCLOUD","mfa":"DISABLED","name":"string","networkSourceIp":"string","sharedSecret":"string","tagNames":["string"],"userLockoutAction":"string","userPasswordExpirationAction":"string","userPasswordEnabled":true,"userCertEnabled":true,"deviceCertEnabled":true,"caCert":"string","requireTlsAuth":true,"radsecEnabled":true,"requireRadsec":true,"caSource":"BYOC"}'
   /radiusservers/{id}:
     get:
       description: |-
@@ -2466,6 +2467,12 @@ paths:
                 type: boolean
               requireRadsec:
                 type: boolean
+              caSource:
+                default: BYOC
+                enum:
+                  - BYOC
+                  - JUMPCLOUD_MANAGED
+                type: string
             required:
               - name
               - networkSourceIp
@@ -7750,6 +7757,12 @@ definitions:
         type: boolean
       requireRadsec:
         type: boolean
+      caSource:
+        default: BYOC
+        enum:
+          - BYOC
+          - JUMPCLOUD_MANAGED
+        type: string
     title: RadiusServer
     type: object
   radiusserverpost:
@@ -7795,6 +7808,12 @@ definitions:
         type: boolean
       requireRadsec:
         type: boolean
+      caSource:
+        default: BYOC
+        enum:
+          - BYOC
+          - JUMPCLOUD_MANAGED
+        type: string
     required:
       - networkSourceIp
       - name
@@ -7843,6 +7862,12 @@ definitions:
         type: boolean
       requireRadsec:
         type: boolean
+      caSource:
+        default: BYOC
+        enum:
+          - BYOC
+          - JUMPCLOUD_MANAGED
+        type: string
     title: RadiusServerPut
     type: object
   radiusserverslist:
