@@ -28221,7 +28221,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"name":"string","description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"users":{"inclusions":["string"]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"resources":[{"type":"admin_portal","id":"string"}]},"type":"user_portal","conditions":{}}'
+              --data '{"name":"string","description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
         - lang: Python
           source: |-
             import requests
@@ -28253,11 +28253,13 @@ paths:
                     }
                 },
                 "targets": {
-                    "users": {"inclusions": ["string"]},
-                    "userGroups": {
-                        "inclusions": ["string"],
-                        "exclusions": ["string"]
-                    },
+                    "excludedApplications": ["string"],
+                    "resources": [
+                        {
+                            "type": "admin_portal",
+                            "id": "string"
+                        }
+                    ],
                     "userAttributes": {
                         "exclusions": [
                             {
@@ -28274,12 +28276,11 @@ paths:
                             }
                         ]
                     },
-                    "resources": [
-                        {
-                            "type": "admin_portal",
-                            "id": "string"
-                        }
-                    ]
+                    "userGroups": {
+                        "inclusions": ["string"],
+                        "exclusions": ["string"]
+                    },
+                    "users": {"inclusions": ["string"]}
                 },
                 "type": "user_portal",
                 "conditions": {}
@@ -28299,7 +28300,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"users":{"inclusions":["string"]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"resources":[{"type":"admin_portal","id":"string"}]},"type":"user_portal","conditions":{}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
     x-functionalities-tags:
       - policies
   /authn/policies/{id}:
@@ -28491,7 +28492,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"name":"string","description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"users":{"inclusions":["string"]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"resources":[{"type":"admin_portal","id":"string"}]},"type":"user_portal","conditions":{}}'
+              --data '{"name":"string","description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
         - lang: Python
           source: |-
             import requests
@@ -28523,11 +28524,13 @@ paths:
                     }
                 },
                 "targets": {
-                    "users": {"inclusions": ["string"]},
-                    "userGroups": {
-                        "inclusions": ["string"],
-                        "exclusions": ["string"]
-                    },
+                    "excludedApplications": ["string"],
+                    "resources": [
+                        {
+                            "type": "admin_portal",
+                            "id": "string"
+                        }
+                    ],
                     "userAttributes": {
                         "exclusions": [
                             {
@@ -28544,12 +28547,11 @@ paths:
                             }
                         ]
                     },
-                    "resources": [
-                        {
-                            "type": "admin_portal",
-                            "id": "string"
-                        }
-                    ]
+                    "userGroups": {
+                        "inclusions": ["string"],
+                        "exclusions": ["string"]
+                    },
+                    "users": {"inclusions": ["string"]}
                 },
                 "type": "user_portal",
                 "conditions": {}
@@ -28569,7 +28571,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"name":"string","description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"users":{"inclusions":["string"]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"resources":[{"type":"admin_portal","id":"string"}]},"type":"user_portal","conditions":{}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"name":"string","description":"string","disabled":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
     x-functionalities-tags:
       - policies
   /iplists/{id}:
@@ -54270,16 +54272,21 @@ definitions:
     title: AuthnPolicyTargets
     type: object
     properties:
-      users:
-        $ref: '#/definitions/AuthnPolicyUserTarget'
-      userGroups:
-        $ref: '#/definitions/AuthnPolicyUserGroupTarget'
-      userAttributes:
-        $ref: '#/definitions/AuthnPolicyUserAttributeTarget'
+      excludedApplications:
+        type: array
+        items:
+          type: string
+        description: 'SSO application IDs to exclude when the policy applies to all applications (resources = [{ type: application }] with no id). Omitted or empty when targeting specific applications.'
       resources:
         type: array
         items:
           $ref: '#/definitions/AuthnPolicyResourceTarget'
+      userAttributes:
+        $ref: '#/definitions/AuthnPolicyUserAttributeTarget'
+      userGroups:
+        $ref: '#/definitions/AuthnPolicyUserGroupTarget'
+      users:
+        $ref: '#/definitions/AuthnPolicyUserTarget'
   AuthnPolicyType:
     title: AuthnPolicyType
     type: string
