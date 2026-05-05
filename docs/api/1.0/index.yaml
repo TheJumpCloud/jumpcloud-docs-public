@@ -16,11 +16,7 @@ info:
 
     JumpCloud's V1 API. This set of endpoints allows JumpCloud customers to manage commands, systems, and system users.
 
-    > **Note:** Depending on your region, you should use the following URLs as endpoint URLs.
-    > * For customers in EU: https://console.eu.jumpcloud.com
-    > * For customers in India: https://console.in.jumpcloud.com
-    >
-    > See [JumpCloud Data Centers: Login URLs and Service Endpoints](https://jumpcloud.com/support/jumpcloud-data-centers-login-urls-and-service-endpoints) to learn more.
+    > **Note:** See [JumpCloud Data Centers: Login URLs and Service Endpoints](https://jumpcloud.com/support/jumpcloud-data-centers-login-urls-and-service-endpoints) to learn more.
 
     ## API Best Practices
 

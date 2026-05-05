@@ -135,17 +135,32 @@
                 
               </ul>
             </li>
+            
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="jcRegionDropdown" role="button" data-toggle="dropdown"
+    aria-expanded="false"><span id="jcRegionLabel">United States</span></a>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="jcRegionDropdown">
+    
+    <li><a class="dropdown-item jc-region-item" href="#" data-jc-region="us">United States</a></li>
+    
+    <li><a class="dropdown-item jc-region-item" href="#" data-jc-region="eu">EU</a></li>
+    
+    <li><a class="dropdown-item jc-region-item" href="#" data-jc-region="in">India</a></li>
+    
+  </ul>
+</li>
+
           </ul>
         </div>
       </div>
     </div>
   </nav>
-  <redoc></redoc>
-  <script src="https://cdn.redoc.ly/redoc/v2.0.0/bundles/redoc.standalone.js"> </script>
+  
+  <div id="jc-region-spec-viewer-root"><redoc></redoc></div>
+  
+  <script src="https://cdn.redoc.ly/redoc/v2.0.0/bundles/redoc.standalone.js"></script>
   <script>
-    // Options: https://github.com/Redocly/redoc#redoc-options-object
-    // Theme settings: https://github.com/Redocly/redoc/blob/master/src/theme.ts
-    Redoc.init("index.yaml", {
+    window.__JC_REDOC_OPTS = {
       scrollYOffset: "nav",
       theme: {
         spacing: {
@@ -173,9 +188,210 @@
       ],
       pathInMiddlePanel: true,
       nativeScrollbars: true
-    }
-    );
+    };
   </script>
+  
+  
+
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js" crossorigin="anonymous"></script>
+<script>
+  (function () {
+    const STORAGE_KEY = "jumpcloudDocsRegion";
+    const REGION_SWITCHER = {"default_label": "United States", "default_region": "us", "regions": [{"host": "api.jumpcloud.com", "key": "us", "label": "United States"}, {"host": "api.eu.jumpcloud.com", "key": "eu", "label": "EU"}, {"host": "api.in.jumpcloud.com", "key": "in", "label": "India"}]};
+    const SPEC_URL = "index.yaml";
+
+    const REGIONS = Array.isArray(REGION_SWITCHER.regions) ? REGION_SWITCHER.regions : [];
+    const REGION_KEYS = REGIONS.map(function (region) { return region.key; });
+    const HOST_BY_REGION = Object.fromEntries(REGIONS.map(function (region) { return [region.key, region.host]; }));
+    const LABEL_BY_REGION = Object.fromEntries(REGIONS.map(function (region) { return [region.key, region.label]; }));
+    const HOST_ALIASES = REGIONS.map(function (region) { return String(region.host || "").toLowerCase(); }).filter(Boolean);
+
+    let jcMountGeneration = 0;
+
+    function jcNormalizeRegionHostStrings(value, targetHost) {
+      if (typeof value !== "string") return value;
+      let replaced = value;
+      for (const host of HOST_ALIASES) {
+        if (host !== targetHost) {
+          replaced = replaced.split(host).join(targetHost);
+        }
+      }
+      return replaced;
+    }
+
+    function jcWalkMutateStrings(node, targetHost) {
+      if (node === null || typeof node !== "object") {
+        return;
+      }
+      if (Array.isArray(node)) {
+        for (let idx = 0; idx < node.length; idx++) {
+          if (typeof node[idx] === "string") {
+            node[idx] = jcNormalizeRegionHostStrings(node[idx], targetHost);
+          } else {
+            jcWalkMutateStrings(node[idx], targetHost);
+          }
+        }
+        return;
+      }
+      for (const key of Object.keys(node)) {
+        const value = node[key];
+        if (typeof value === "string") {
+          node[key] = jcNormalizeRegionHostStrings(value, targetHost);
+        } else {
+          jcWalkMutateStrings(value, targetHost);
+        }
+      }
+    }
+
+    function jcApplyRegionToSpec(spec, targetHost) {
+      jcWalkMutateStrings(spec, targetHost);
+      if (typeof spec.host === "string") {
+        const host = spec.host.toLowerCase();
+        if (HOST_ALIASES.indexOf(host) !== -1) {
+          spec.host = targetHost;
+        }
+      }
+      if (spec.servers && Array.isArray(spec.servers)) {
+        for (const server of spec.servers) {
+          if (server && typeof server.url === "string") {
+            server.url = jcNormalizeRegionHostStrings(server.url, targetHost);
+          }
+        }
+      }
+    }
+
+    async function jcLoadSpecFromUrl() {
+      const response = await fetch(SPEC_URL);
+      if (!response.ok) {
+        throw new Error("Spec HTTP " + response.status);
+      }
+      const text = await response.text();
+      const trimmed = text.trim();
+      const spec = trimmed.startsWith("{")
+        ? JSON.parse(text)
+        : window.jsyaml.load(text);
+      if (!spec || typeof spec !== "object") {
+        throw new Error("Invalid spec payload");
+      }
+      return spec;
+    }
+
+    function jcSavedRegionKey() {
+      const configuredDefault = (REGION_SWITCHER.default_region || "").toLowerCase();
+      const fallbackDefault = REGION_KEYS.indexOf(configuredDefault) !== -1
+        ? configuredDefault
+        : (REGION_KEYS[0] || "");
+      const value = (localStorage.getItem(STORAGE_KEY) || fallbackDefault).toLowerCase();
+      return REGION_KEYS.indexOf(value) !== -1 ? value : fallbackDefault;
+    }
+
+    function jcSetSavedRegionKey(key) {
+      localStorage.setItem(STORAGE_KEY, key);
+    }
+
+    function jcSetRegionLabel(regionKey) {
+      const labelEl = document.getElementById("jcRegionLabel");
+      if (!labelEl) return;
+      labelEl.textContent = LABEL_BY_REGION[regionKey] || LABEL_BY_REGION[REGION_KEYS[0]] || regionKey;
+    }
+
+    function jcRestoreDocHash(savedHash) {
+      if (!savedHash) {
+        return;
+      }
+      try {
+        if (window.location.hash === savedHash) {
+          const base = window.location.pathname + window.location.search;
+          history.replaceState(null, document.title, base);
+        }
+        window.location.hash = savedHash;
+      } catch (e) {
+        console.warn("JumpCloud region switcher: could not restore doc hash", e);
+      }
+    }
+
+    async function jcMountViewer(regionKey) {
+      const targetHost = HOST_BY_REGION[regionKey] || HOST_BY_REGION[REGION_KEYS[0]];
+      const mountGeneration = ++jcMountGeneration;
+      let spec;
+      try {
+        spec = await jcLoadSpecFromUrl();
+      } catch (error) {
+        if (mountGeneration !== jcMountGeneration) {
+          return;
+        }
+        throw error;
+      }
+      if (mountGeneration !== jcMountGeneration) {
+        return;
+      }
+      jcApplyRegionToSpec(spec, targetHost);
+      const root = document.getElementById("jc-region-spec-viewer-root");
+      if (!root) {
+        return;
+      }
+
+      const docHash = window.location.hash || "";
+      root.innerHTML = "";
+      const redocEl = document.createElement("redoc");
+      root.appendChild(redocEl);
+      const opts = window.__JC_REDOC_OPTS || { scrollYOffset: "nav" };
+      const restoreTimer = setTimeout(function () {
+        if (mountGeneration !== jcMountGeneration) {
+          return;
+        }
+        jcRestoreDocHash(docHash);
+      }, 250);
+      Redoc.init(spec, opts, redocEl, function (maybeErr) {
+        clearTimeout(restoreTimer);
+        if (mountGeneration !== jcMountGeneration) {
+          return;
+        }
+        if (maybeErr instanceof Error) {
+          console.error("JumpCloud region switcher: Redoc render error", maybeErr);
+        }
+        jcRestoreDocHash(docHash);
+      });
+    }
+
+    function jcWireRegionMenu() {
+      const menuItems = document.querySelectorAll(".jc-region-item");
+      for (let idx = 0; idx < menuItems.length; idx++) {
+        menuItems[idx].addEventListener("click", async function (event) {
+          event.preventDefault();
+          const key = this.getAttribute("data-jc-region");
+          if (!key) {
+            return;
+          }
+          jcSetSavedRegionKey(key);
+          jcSetRegionLabel(key);
+          try {
+            await jcMountViewer(key);
+          } catch (error) {
+            console.error("JumpCloud region switcher: remount failed", error);
+          }
+        });
+      }
+    }
+
+    if (!REGION_KEYS.length) {
+      return;
+    }
+
+    jcWireRegionMenu();
+    const initialRegionKey = jcSavedRegionKey();
+    jcSetRegionLabel(initialRegionKey);
+    void (async function jcBootInitialMount() {
+      try {
+        await jcMountViewer(initialRegionKey);
+      } catch (error) {
+        console.error("JumpCloud region switcher: initial mount failed", error);
+      }
+    })();
+  })();
+</script>
+
+  
   <footer class="fixed-bottom text-muted">
     <div class="row">
       <div class="col-sm">
