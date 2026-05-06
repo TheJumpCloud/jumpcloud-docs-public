@@ -43869,6 +43869,74 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-manager?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /home-widgets:
+    get:
+      summary: List visible home widgets
+      description: |-
+        Returns widgets visible to admin ordered by display position (widget_position). Hidden widgets are omitted.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/home-widgets \
+          -H 'Accept: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: HomeWidgetsService_List
+      responses:
+        '200':
+          description: Visible home widgets returned.
+          schema:
+            $ref: '#/definitions/jumpcloud.organization_settings.HomeWidgetsListResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      tags:
+        - Home Widgets
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+        - organizations.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/home-widgets \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/home-widgets"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/home-widgets' -Method GET -Headers $headers
   /assets/field-configurations:
     get:
       tags:
@@ -60040,6 +60108,49 @@ definitions:
       - INTENT_FORCE_MANAGED
       - INTENT_FORCE_UNMANAGED
     default: INTENT_UNSPECIFIED
+  jumpcloud.organization_settings.HomeWidget:
+    type: object
+    properties:
+      category:
+        type: string
+        x-nullable: true
+      chartType:
+        type: string
+        x-nullable: true
+      data:
+        type: array
+        items: {}
+        description: ODS payload for this widget empty until ODS wiring is implemented.
+      description:
+        type: string
+        x-nullable: true
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+        x-nullable: true
+      size:
+        type: string
+        x-nullable: true
+      widgetPosition:
+        type: integer
+        format: int32
+        description: Display order from persistence (widget_position column); lower first.
+      widgetType:
+        type: string
+    description: HomeWidget is one visible widget row returned by List (DB columns mapped for the dashboard).
+  jumpcloud.organization_settings.HomeWidgetsListResponse:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int64
+      widgets:
+        type: array
+        items:
+          $ref: '#/definitions/jumpcloud.organization_settings.HomeWidget'
+    description: HomeWidgetsListResponse lists only visible widgets for the org and admin.
   jumpcloud.http.assets.error:
     type: object
     description: Error response containing details about what went wrong
@@ -61685,6 +61796,7 @@ tags:
   - name: Google EMM
   - name: Graph
   - name: Groups
+  - name: Home Widgets
   - name: IP Lists
   - name: Identity Providers
   - name: Identity Risk
@@ -61789,6 +61901,7 @@ x-tagGroups:
       - G Suite
       - Google EMM
       - Graph
+      - Home Widgets
       - Identity Providers
       - Microsoft MDM
       - Monitoring and Alerting
