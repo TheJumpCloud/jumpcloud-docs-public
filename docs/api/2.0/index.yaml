@@ -43873,7 +43873,7 @@ paths:
     get:
       summary: List visible home widgets
       description: |-
-        Returns widgets visible to admin ordered by display position (widget_position). Hidden widgets are omitted.
+        Returns widgets visible to admin ordered by display position (position). Hidden widgets are omitted.
 
         #### Sample Request
         ```
@@ -43937,6 +43937,86 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/home-widgets' -Method GET -Headers $headers
+    post:
+      summary: Upsert home widget
+      description: Creates or updates a home widget for the given admin. The response returns only public widget fields.
+      operationId: HomeWidgetsService_Upsert
+      responses:
+        '200':
+          description: Home widget upserted.
+          schema:
+            $ref: '#/definitions/jumpcloud.organization_settings.HomeWidget'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorDetails'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/jumpcloud.organization_settings.HomeWidgetUpsertRequest'
+      tags:
+        - Home Widgets
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+        - organizations.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/home-widgets \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"category":"string","chartType":"string","description":"string","id":"string","name":"string","position":0,"size":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/home-widgets"
+
+            payload = {
+                "category": "string",
+                "chartType": "string",
+                "description": "string",
+                "id": "string",
+                "name": "string",
+                "position": 0,
+                "size": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/home-widgets' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"category":"string","chartType":"string","description":"string","id":"string","name":"string","position":0,"size":"string"}'
   /assets/field-configurations:
     get:
       tags:
@@ -56185,6 +56265,8 @@ definitions:
   devices.ObjectStorageMetadataPublic:
     type: object
     properties:
+      metadataExe:
+        $ref: '#/definitions/devices.MetadataEXE'
       metadataFile:
         $ref: '#/definitions/devices.MetadataFile'
       metadataIpa:
@@ -56958,6 +57040,8 @@ definitions:
   devices.ObjectStorageMetadata:
     type: object
     properties:
+      metadataExe:
+        $ref: '#/definitions/devices.MetadataEXE'
       metadataFile:
         $ref: '#/definitions/devices.MetadataFile'
       metadataIpa:
@@ -57092,24 +57176,10 @@ definitions:
         x-nullable: true
       description:
         type: string
-      detectionRules:
-        type: object
-        description: Rules used to detect if the software app is installed on Windows.
-        properties:
-          ruleType:
-            type: string
-          expectedDisplayName:
-            type: string
-          registryPath:
-            type: string
-          registryValueName:
-            type: string
-          registryExpectedValue:
-            type: string
-          powerShellScript:
-            type: string
       desiredState:
         $ref: '#/definitions/devices.SoftwareAppDesiredState'
+      detectionRules:
+        $ref: '#/definitions/devices.WindowsCustomDetectionRules'
       downloadUrl:
         type: string
       enterpriseObjectId:
@@ -57150,9 +57220,9 @@ definitions:
         type: string
       silentInstallFlags:
         type: array
-        description: Admin override for silent install arguments (Windows custom EXE).
         items:
           type: string
+        description: Optional silent install flags (e.g. comma-separated in UI).
       storedPackage:
         $ref: '#/definitions/devices.ObjectStorageItem'
       storedPackageObjectId:
@@ -57309,11 +57379,14 @@ definitions:
       - APPLE_CUSTOM
       - GOOGLE_ANDROID
       - WINDOWS_MDM
-      - WINDOWS_CUSTOM
       - MICROSOFT_STORE
       - WINGET
       - MAC_OS_APP_CATALOG
+      - WINDOWS_CUSTOM
     default: UNKNOWN
+    description: |2-
+       - WINDOWS_MDM: Private-repo MSI installers (object storage).
+       - WINDOWS_CUSTOM: Private-repo EXE/MSIX and other non-MSI custom installers (object storage); agent uses windowsCustom.
   devices.SoftwareAppPermissionGrant:
     type: object
     properties:
@@ -60130,15 +60203,13 @@ definitions:
       name:
         type: string
         x-nullable: true
+      position:
+        type: integer
+        format: int32
+        description: Display order from persistence (position column); lower first.
       size:
         type: string
         x-nullable: true
-      widgetPosition:
-        type: integer
-        format: int32
-        description: Display order from persistence (widget_position column); lower first.
-      widgetType:
-        type: string
     description: HomeWidget is one visible widget row returned by List (DB columns mapped for the dashboard).
   jumpcloud.organization_settings.HomeWidgetsListResponse:
     type: object
@@ -60151,6 +60222,83 @@ definitions:
         items:
           $ref: '#/definitions/jumpcloud.organization_settings.HomeWidget'
     description: HomeWidgetsListResponse lists only visible widgets for the org and admin.
+  jumpcloud.organization_settings.HomeWidgetUpsertRequest:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Category is required for upsert.
+      chartType:
+        type: string
+        x-nullable: true
+      description:
+        type: string
+        x-nullable: true
+      id:
+        type: string
+        format: int64
+        x-nullable: true
+        description: Optional widget id. When provided, the upsert targets that widget.
+      name:
+        type: string
+        x-nullable: true
+      position:
+        type: integer
+        format: int32
+      size:
+        type: string
+        x-nullable: true
+  devices.DetectionRuleCustomScript:
+    type: object
+    properties:
+      powerShellScript:
+        type: string
+  devices.DetectionRuleDisplayName:
+    type: object
+    properties:
+      expectedDisplayName:
+        type: string
+  devices.DetectionRuleRegistry:
+    type: object
+    properties:
+      registryExpectedValue:
+        type: string
+      registryPath:
+        type: string
+      registryValueName:
+        type: string
+  devices.MetadataEXE:
+    type: object
+    properties:
+      arch:
+        type: string
+      author:
+        type: string
+      installerEngineVersion:
+        type: string
+      sha256sum:
+        type: string
+      signatureLabel:
+        type: string
+      size:
+        type: integer
+        format: int64
+      title:
+        type: string
+      url:
+        type: string
+      version:
+        type: string
+    description: MetadataEXE holds parsed metadata for a Windows .exe installer (NSIS, Inno Setup, etc.).
+  devices.WindowsCustomDetectionRules:
+    type: object
+    properties:
+      customScript:
+        $ref: '#/definitions/devices.DetectionRuleCustomScript'
+      displayName:
+        $ref: '#/definitions/devices.DetectionRuleDisplayName'
+      registry:
+        $ref: '#/definitions/devices.DetectionRuleRegistry'
   jumpcloud.http.assets.error:
     type: object
     description: Error response containing details about what went wrong
