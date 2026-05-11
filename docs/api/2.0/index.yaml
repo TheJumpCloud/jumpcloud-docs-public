@@ -56265,8 +56265,6 @@ definitions:
   devices.ObjectStorageMetadataPublic:
     type: object
     properties:
-      metadataExe:
-        $ref: '#/definitions/devices.MetadataEXE'
       metadataFile:
         $ref: '#/definitions/devices.MetadataFile'
       metadataIpa:
@@ -57040,8 +57038,6 @@ definitions:
   devices.ObjectStorageMetadata:
     type: object
     properties:
-      metadataExe:
-        $ref: '#/definitions/devices.MetadataEXE'
       metadataFile:
         $ref: '#/definitions/devices.MetadataFile'
       metadataIpa:
@@ -57176,10 +57172,24 @@ definitions:
         x-nullable: true
       description:
         type: string
+      detectionRules:
+        type: object
+        description: Rules used to detect if the software app is installed on Windows.
+        properties:
+          ruleType:
+            type: string
+          expectedDisplayName:
+            type: string
+          registryPath:
+            type: string
+          registryValueName:
+            type: string
+          registryExpectedValue:
+            type: string
+          powerShellScript:
+            type: string
       desiredState:
         $ref: '#/definitions/devices.SoftwareAppDesiredState'
-      detectionRules:
-        $ref: '#/definitions/devices.WindowsCustomDetectionRules'
       downloadUrl:
         type: string
       enterpriseObjectId:
@@ -57220,9 +57230,9 @@ definitions:
         type: string
       silentInstallFlags:
         type: array
+        description: Admin override for silent install arguments (Windows custom EXE).
         items:
           type: string
-        description: Optional silent install flags (e.g. comma-separated in UI).
       storedPackage:
         $ref: '#/definitions/devices.ObjectStorageItem'
       storedPackageObjectId:
@@ -57379,14 +57389,11 @@ definitions:
       - APPLE_CUSTOM
       - GOOGLE_ANDROID
       - WINDOWS_MDM
+      - WINDOWS_CUSTOM
       - MICROSOFT_STORE
       - WINGET
       - MAC_OS_APP_CATALOG
-      - WINDOWS_CUSTOM
     default: UNKNOWN
-    description: |2-
-       - WINDOWS_MDM: Private-repo MSI installers (object storage).
-       - WINDOWS_CUSTOM: Private-repo EXE/MSIX and other non-MSI custom installers (object storage); agent uses windowsCustom.
   devices.SoftwareAppPermissionGrant:
     type: object
     properties:
@@ -60248,57 +60255,6 @@ definitions:
       size:
         type: string
         x-nullable: true
-  devices.DetectionRuleCustomScript:
-    type: object
-    properties:
-      powerShellScript:
-        type: string
-  devices.DetectionRuleDisplayName:
-    type: object
-    properties:
-      expectedDisplayName:
-        type: string
-  devices.DetectionRuleRegistry:
-    type: object
-    properties:
-      registryExpectedValue:
-        type: string
-      registryPath:
-        type: string
-      registryValueName:
-        type: string
-  devices.MetadataEXE:
-    type: object
-    properties:
-      arch:
-        type: string
-      author:
-        type: string
-      installerEngineVersion:
-        type: string
-      sha256sum:
-        type: string
-      signatureLabel:
-        type: string
-      size:
-        type: integer
-        format: int64
-      title:
-        type: string
-      url:
-        type: string
-      version:
-        type: string
-    description: MetadataEXE holds parsed metadata for a Windows .exe installer (NSIS, Inno Setup, etc.).
-  devices.WindowsCustomDetectionRules:
-    type: object
-    properties:
-      customScript:
-        $ref: '#/definitions/devices.DetectionRuleCustomScript'
-      displayName:
-        $ref: '#/definitions/devices.DetectionRuleDisplayName'
-      registry:
-        $ref: '#/definitions/devices.DetectionRuleRegistry'
   jumpcloud.http.assets.error:
     type: object
     description: Error response containing details about what went wrong
