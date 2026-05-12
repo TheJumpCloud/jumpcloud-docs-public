@@ -49635,6 +49635,19 @@ paths:
           required: true
           schema:
             type: string
+        - name: expand
+          in: query
+          description: 'Optional list of related resources to include in the response. Supported values: `sso_apps`.'
+          required: false
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - sso_apps
+            uniqueItems: true
       responses:
         '200':
           description: Application details
@@ -49682,7 +49695,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url https://console.jumpcloud.com/api/v2/saas-management/applications/{application_id} \
+              --url 'https://console.jumpcloud.com/api/v2/saas-management/applications/{application_id}?expand=SOME_ARRAY_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -49690,16 +49703,18 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/saas-management/applications/{application_id}"
 
+            querystring = {"expand":"SOME_ARRAY_VALUE"}
+
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
-            response = requests.request("GET", url, headers=headers)
+            response = requests.request("GET", url, headers=headers, params=querystring)
 
             print(response.text)
         - lang: Powershell
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saas-management/applications/{application_id}' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/saas-management/applications/{application_id}?expand=SOME_ARRAY_VALUE' -Method GET -Headers $headers
     put:
       tags:
         - SaaS App Management
@@ -63971,6 +63986,37 @@ components:
           items:
             type: string
           description: List of excluded group IDs
+        sso_apps:
+          type: array
+          description: SSO connections associated with the application. Only populated when `sso_apps` is requested via the `expand` query parameter.
+          items:
+            $ref: '#/components/schemas/jumpcloud.http.saas_app_management.PublicAPISSOApp'
+          x-omitempty: true
+    jumpcloud.http.saas_app_management.PublicAPISSOApp:
+      type: object
+      description: SSO connection associated with an application
+      properties:
+        id:
+          type: string
+          description: SSO application ID
+        app_name:
+          type: string
+          description: Name of the catalog application associated with this SSO connection
+          x-omitempty: true
+        display_label:
+          type: string
+          description: Display label of the SSO application
+          x-omitempty: true
+        template_name:
+          type: string
+          description: Template name of the SSO application
+        status:
+          type: string
+          enum:
+            - UNSUPPORTED
+            - NOT_CONNECTED
+            - CONNECTED
+          description: SSO connection status
     jumpcloud.http.saas_app_management.PublicAPIApplicationListEntity:
       type: object
       properties:
