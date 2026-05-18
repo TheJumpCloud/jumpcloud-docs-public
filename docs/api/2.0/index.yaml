@@ -60380,6 +60380,14 @@ paths:
           schema:
             type: string
             format: byte
+        - name: x-org-id
+          in: header
+          description: Required header. Set to '-' to scope the request to all organizations under your account.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -60442,6 +60450,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/systems/{systemObjectId}/transfer \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
               --data '{"org_id":"string"}'
         - lang: Python
           source: |-
@@ -60451,6 +60460,7 @@ paths:
 
             payload = {"org_id": "string"}
             headers = {
+                "x-org-id": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE",
                 "content-type": "application/json"
             }
@@ -60461,6 +60471,7 @@ paths:
         - lang: Powershell
           source: |-
             $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/{systemObjectId}/transfer' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"org_id":"string"}'
