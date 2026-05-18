@@ -42879,6 +42879,15 @@ paths:
   /push/configs/{id}:
     x-functionalities-tags:
       - user-login
+  /sms/configs:
+    x-functionalities-tags:
+      - user-login
+  /sms/enrollments/count:
+    x-functionalities-tags:
+      - user-login
+  /sms/otp/enrollments/{user_id}:
+    x-functionalities-tags:
+      - user-login
   /gsuite/activate:
     x-functionalities-tags:
       - gsuites
@@ -50542,7 +50551,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendVerificationPushRequestRepresentsACreateRequest'
+              $ref: '#/components/schemas/SendVerificationPushRequest'
         required: true
       responses:
         '200':
@@ -72670,6 +72679,13 @@ components:
         usersWithAccess:
           type: integer
           format: int32
+    SendVerificationPushRequest:
+      title: SendVerificationPushRequest
+      type: object
+      properties:
+        message:
+          title: Optional message shown with the verification prompt
+          type: string
     jumpcloud.auth.PushVerification:
       type: object
       properties:
@@ -77262,12 +77278,6 @@ components:
           format: byte
         zeroTouch:
           type: boolean
-    SendVerificationPushRequestRepresentsACreateRequest:
-      title: SendVerificationPushRequest-Represents-A-Create-Request
-      type: object
-      properties:
-        message:
-          type: string
     accessrequests_accessId_body:
       type: object
       properties:
@@ -79265,6 +79275,7 @@ tags:
   - name: Roles
   - name: Rules
   - name: SCIM Import
+  - name: SMS OTP
   - name: SSO
   - name: SaaS App Management
   - name: SaaS License Management
