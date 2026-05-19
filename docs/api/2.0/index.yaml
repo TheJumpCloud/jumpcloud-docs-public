@@ -61861,6 +61861,450 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-manager?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /reports/custom-reports:
+    get:
+      tags:
+        - Reports
+      summary: List Custom Report Builder reports
+      description: List Custom Report Builder reports.
+      operationId: Reports_ListCustomReports
+      parameters:
+        - name: limit
+          in: query
+          description: The number of records to return at once. Limited to 100.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: int64
+            default: '100'
+        - name: skip
+          in: query
+          description: The offset into the records to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: int64
+            default: '0'
+        - name: sort
+          in: query
+          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+          allowReserved: true
+        - name: fields
+          in: query
+          description: The fields on the items listed to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filter
+          in: query
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.insights.ListCustomReportsResponse'
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+        - reports.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/reports/custom-reports?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/custom-reports"
+
+            querystring = {"limit":"SOME_STRING_VALUE","skip":"SOME_STRING_VALUE","sort":"SOME_STRING_VALUE","fields":"SOME_ARRAY_VALUE","filter":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+    post:
+      tags:
+        - Reports
+      summary: Create a Custom Report Builder report
+      description: Create a Custom Report Builder report.
+      operationId: Reports_CreateCustomReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.insights.CreateCustomReportRequest'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.insights.CustomReport'
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+      x-codegen-request-body-name: body
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/reports/custom-reports \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"customReport":{"columns":["string"],"description":"string","displayName":"string","filters":[{"field":"string","operation":"string","value":"string"}],"id":"string","primaryObject":"string","searchRequest":{"aggregations":[{"field":["string"],"function":"function_unknown","name":"string"}],"cacheToken":"string","fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"operation_unknown","query":{},"unit":"string","value":{}}],"limit":0,"metadata":{"context":[{"key":"string","value":"string"}],"searchPurpose":"unspecified","source":"string"},"pagination":{"offset":0,"pageSize":0},"requestCache":true,"sort":[{"field":"string","order":"asc"}]},"secondaryObjects":["string"]}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/custom-reports"
+
+            payload = {"customReport": {
+                    "columns": ["string"],
+                    "description": "string",
+                    "displayName": "string",
+                    "filters": [
+                        {
+                            "field": "string",
+                            "operation": "string",
+                            "value": "string"
+                        }
+                    ],
+                    "id": "string",
+                    "primaryObject": "string",
+                    "searchRequest": {
+                        "aggregations": [
+                            {
+                                "field": ["string"],
+                                "function": "function_unknown",
+                                "name": "string"
+                            }
+                        ],
+                        "cacheToken": "string",
+                        "fields": {
+                            "exclude": ["string"],
+                            "include": ["string"]
+                        },
+                        "filters": [
+                            {
+                                "field": "string",
+                                "filters": [{}],
+                                "operation": "operation_unknown",
+                                "query": {},
+                                "unit": "string",
+                                "value": {}
+                            }
+                        ],
+                        "limit": 0,
+                        "metadata": {
+                            "context": [
+                                {
+                                    "key": "string",
+                                    "value": "string"
+                                }
+                            ],
+                            "searchPurpose": "unspecified",
+                            "source": "string"
+                        },
+                        "pagination": {
+                            "offset": 0,
+                            "pageSize": 0
+                        },
+                        "requestCache": True,
+                        "sort": [
+                            {
+                                "field": "string",
+                                "order": "asc"
+                            }
+                        ]
+                    },
+                    "secondaryObjects": ["string"]
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"customReport":{"columns":["string"],"description":"string","displayName":"string","filters":[{"field":"string","operation":"string","value":"string"}],"id":"string","primaryObject":"string","searchRequest":{"aggregations":[{"field":["string"],"function":"function_unknown","name":"string"}],"cacheToken":"string","fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"operation_unknown","query":{},"unit":"string","value":{}}],"limit":0,"metadata":{"context":[{"key":"string","value":"string"}],"searchPurpose":"unspecified","source":"string"},"pagination":{"offset":0,"pageSize":0},"requestCache":true,"sort":[{"field":"string","order":"asc"}]},"secondaryObjects":["string"]}}'
+  /reports/custom-reports/{customReportId}:
+    get:
+      tags:
+        - Reports
+      summary: Get a Custom Report Builder report
+      description: Get a Custom Report Builder report.
+      operationId: Reports_GetCustomReport
+      parameters:
+        - name: customReportId
+          in: path
+          description: Path param (custom_reports.id, UUID). Named custom_report_id so gateways do not conflate with org object_id.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.insights.CustomReportResponse'
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+        - reports.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId}' -Method GET -Headers $headers
+    put:
+      tags:
+        - Reports
+      summary: Update a Custom Report Builder report
+      description: Update a Custom Report Builder report.
+      operationId: Reports_UpdateCustomReport
+      parameters:
+        - name: customReportId
+          in: path
+          description: Path param (custom_reports.id, UUID). Named custom_report_id so gateways do not conflate with org object_id.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/customreports_customReportId_body'
+        required: true
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.insights.CustomReportResponse'
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+      x-codegen-request-body-name: body
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"customReport":{"columns":["string"],"description":"string","displayName":"string","filters":[{"field":"string","operation":"string","value":"string"}],"id":"string","primaryObject":"string","searchRequest":{"aggregations":[{"field":["string"],"function":"function_unknown","name":"string"}],"cacheToken":"string","fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"operation_unknown","query":{},"unit":"string","value":{}}],"limit":0,"metadata":{"context":[{"key":"string","value":"string"}],"searchPurpose":"unspecified","source":"string"},"pagination":{"offset":0,"pageSize":0},"requestCache":true,"sort":[{"field":"string","order":"asc"}]},"secondaryObjects":["string"]}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId}"
+
+            payload = {"customReport": {
+                    "columns": ["string"],
+                    "description": "string",
+                    "displayName": "string",
+                    "filters": [
+                        {
+                            "field": "string",
+                            "operation": "string",
+                            "value": "string"
+                        }
+                    ],
+                    "id": "string",
+                    "primaryObject": "string",
+                    "searchRequest": {
+                        "aggregations": [
+                            {
+                                "field": ["string"],
+                                "function": "function_unknown",
+                                "name": "string"
+                            }
+                        ],
+                        "cacheToken": "string",
+                        "fields": {
+                            "exclude": ["string"],
+                            "include": ["string"]
+                        },
+                        "filters": [
+                            {
+                                "field": "string",
+                                "filters": [{}],
+                                "operation": "operation_unknown",
+                                "query": {},
+                                "unit": "string",
+                                "value": {}
+                            }
+                        ],
+                        "limit": 0,
+                        "metadata": {
+                            "context": [
+                                {
+                                    "key": "string",
+                                    "value": "string"
+                                }
+                            ],
+                            "searchPurpose": "unspecified",
+                            "source": "string"
+                        },
+                        "pagination": {
+                            "offset": 0,
+                            "pageSize": 0
+                        },
+                        "requestCache": True,
+                        "sort": [
+                            {
+                                "field": "string",
+                                "order": "asc"
+                            }
+                        ]
+                    },
+                    "secondaryObjects": ["string"]
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"customReport":{"columns":["string"],"description":"string","displayName":"string","filters":[{"field":"string","operation":"string","value":"string"}],"id":"string","primaryObject":"string","searchRequest":{"aggregations":[{"field":["string"],"function":"function_unknown","name":"string"}],"cacheToken":"string","fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"operation_unknown","query":{},"unit":"string","value":{}}],"limit":0,"metadata":{"context":[{"key":"string","value":"string"}],"searchPurpose":"unspecified","source":"string"},"pagination":{"offset":0,"pageSize":0},"requestCache":true,"sort":[{"field":"string","order":"asc"}]},"secondaryObjects":["string"]}}'
+    delete:
+      tags:
+        - Reports
+      summary: Delete a Custom Report Builder report
+      description: Delete a Custom Report Builder report.
+      operationId: Reports_DeleteCustomReport
+      parameters:
+        - name: customReportId
+          in: path
+          description: Path param (custom_reports.id, UUID). Named custom_report_id so gateways do not conflate with org object_id.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success deleting a Custom Report Builder report.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.insights.DeleteCustomReportResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - reports
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId}' -Method DELETE -Headers $headers
   /assets/field-configurations:
     get:
       tags:
@@ -76925,6 +77369,87 @@ components:
           $ref: '#/components/schemas/devices.DetectionRuleDisplayName'
         registry:
           $ref: '#/components/schemas/devices.DetectionRuleRegistry'
+    jumpcloud.insights.CreateCustomReportRequest:
+      type: object
+      properties:
+        customReport:
+          $ref: '#/components/schemas/jumpcloud.insights.CustomReport'
+    jumpcloud.insights.CustomReport:
+      required:
+        - displayName
+        - primaryObject
+        - searchRequest
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdBy:
+          type: string
+          readOnly: true
+        description:
+          type: string
+        displayName:
+          type: string
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.insights.CustomReportFilter'
+        id:
+          type: string
+        primaryObject:
+          type: string
+        searchRequest:
+          $ref: '#/components/schemas/jumpcloud.search.SearchRequest'
+        secondaryObjects:
+          type: array
+          items:
+            type: string
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedBy:
+          type: string
+          readOnly: true
+    jumpcloud.insights.CustomReportResponse:
+      type: object
+      properties:
+        customReport:
+          $ref: '#/components/schemas/jumpcloud.insights.CustomReport'
+    jumpcloud.insights.ListCustomReportsResponse:
+      type: object
+      properties:
+        customReports:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.insights.CustomReport'
+        totalCount:
+          type: integer
+          format: int64
+    jumpcloud.insights.CustomReportFilter:
+      type: object
+      properties:
+        field:
+          type: string
+        operation:
+          type: string
+        value:
+          type: string
+      description: |-
+        CustomReportFilter is one filter clause persisted with a custom report (JSON array in Postgres).
+        JSON uses camelCase: field, operation, value. Legacy stored rows may use "operator" instead of "operation"; readers accept both.
+    jumpcloud.insights.DeleteCustomReportResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Success message (e.g. "Custom report deleted successfully")
     inline_response_400:
       type: object
       properties:
@@ -77505,6 +78030,11 @@ components:
           pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
+    customreports_customReportId_body:
+      type: object
+      properties:
+        customReport:
+          $ref: '#/components/schemas/jumpcloud.insights.CustomReport'
     application_logo:
       type: object
       properties:
