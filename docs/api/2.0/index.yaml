@@ -52065,7 +52065,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -52096,12 +52096,14 @@ paths:
                     ],
                     "eventType": "string",
                     "excludeSuspendedUsers": True,
+                    "groupObjectIds": ["string"],
                     "labels": "RULE_LABEL_UNSPECIFIED",
                     "name": "string",
                     "notificationChannelObjectIds": ["string"],
                     "notifyOnAcknowledgement": True,
                     "notifyOnResolution": True,
                     "notifyOnViolation": True,
+                    "notifyPrimaryUserOfDevice": True,
                     "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
                     "pollConditions": [
                         {
@@ -52131,7 +52133,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules/{id}:
     get:
       tags:
@@ -52276,7 +52278,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -52307,12 +52309,14 @@ paths:
                     ],
                     "eventType": "string",
                     "excludeSuspendedUsers": True,
+                    "groupObjectIds": ["string"],
                     "labels": "RULE_LABEL_UNSPECIFIED",
                     "name": "string",
                     "notificationChannelObjectIds": ["string"],
                     "notifyOnAcknowledgement": True,
                     "notifyOnResolution": True,
                     "notifyOnViolation": True,
+                    "notifyPrimaryUserOfDevice": True,
                     "osFamily": "RULE_OS_FAMILY_UNSPECIFIED",
                     "pollConditions": [
                         {
@@ -52342,7 +52346,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/ruletemplates:
     get:
       tags:
@@ -73506,6 +73510,13 @@ components:
                device_metrics_battery_sample.
         excludeSuspendedUsers:
           type: boolean
+        groupObjectIds:
+          type: array
+          description: JumpCloud device (system) and user group object IDs for rule scope. Replaces existing bindings when sent on update.
+          items:
+            pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+            type: string
+            format: byte
         labels:
           $ref: '#/components/schemas/jumpcloud.healthmonitoring.RuleLabel'
         lastUpdatedAt:
@@ -73541,6 +73552,11 @@ components:
           description: |2-
               Toggle to specify whether the notification should be produced for
               the violation of the rule.
+        notifyPrimaryUserOfDevice:
+          type: boolean
+          description: |2-
+              When true, an extra notification to the device's primary user may be sent
+              in addition to configured notification channels.
         objectId:
           pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
