@@ -4965,7 +4965,7 @@ paths:
       tags:
         - Systems
       summary: Update a system
-      description: "This endpoint allows you to update a system.\n\n#### Sample Request \n```\ncurl -X PUT https://console.jumpcloud.com/api/systems/{SystemID} \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key: {API_KEY}' \\\n  -d '{\n\t\"displayName\":\"Name_Update\",\n\t\"allowSshPasswordAuthentication\":\"true\",\n\t\"allowSshRootLogin\":\"true\",\n\t\"allowMultiFactorAuthentication\":\"true\",\n\t\"allowPublicKeyAuthentication\":\"false\"\n}'\n```"
+      description: "This endpoint allows you to update a system.\n\n#### Sample Request \n```\ncurl -X PUT https://console.jumpcloud.com/api/systems/{SystemID} \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key: {API_KEY}' \\\n  -d '{\n\t\"displayName\":\"Name_Update\",\n\t\"allowSshPasswordAuthentication\":\"true\",\n\t\"allowSshRootLogin\":\"true\",\n\t\"allowMultiFactorAuthentication\":\"true\",\n\t\"allowPublicKeyAuthentication\":\"false\",\n\t\"attributes\":[\n\t\t{\"name\":\"{ATTRIBUTE_NAME}\",\"value\":\"{ATTRIBUTE_VALUE}\"}\n\t]\n}'\n```"
       operationId: systems_put
       parameters:
         - name: id
@@ -5028,7 +5028,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"agentBoundMessages":[{"cmd":"string"}],"allowMultiFactorAuthentication":true,"allowPublicKeyAuthentication":true,"allowSshPasswordAuthentication":true,"allowSshRootLogin":true,"displayName":"string","tags":["string"]}'
+              --data '{"agentBoundMessages":[{"cmd":"string"}],"allowMultiFactorAuthentication":true,"allowPublicKeyAuthentication":true,"allowSshPasswordAuthentication":true,"allowSshRootLogin":true,"displayName":"string","attributes":[{"name":"string","value":"string"}],"tags":["string"]}'
         - lang: Python
           source: |-
             import requests
@@ -5042,6 +5042,12 @@ paths:
                 "allowSshPasswordAuthentication": True,
                 "allowSshRootLogin": True,
                 "displayName": "string",
+                "attributes": [
+                    {
+                        "name": "string",
+                        "value": "string"
+                    }
+                ],
                 "tags": ["string"]
             }
             headers = {
@@ -5063,7 +5069,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systems/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"agentBoundMessages":[{"cmd":"string"}],"allowMultiFactorAuthentication":true,"allowPublicKeyAuthentication":true,"allowSshPasswordAuthentication":true,"allowSshRootLogin":true,"displayName":"string","tags":["string"]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/systems/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"agentBoundMessages":[{"cmd":"string"}],"allowMultiFactorAuthentication":true,"allowPublicKeyAuthentication":true,"allowSshPasswordAuthentication":true,"allowSshRootLogin":true,"displayName":"string","attributes":[{"name":"string","value":"string"}],"tags":["string"]}'
     delete:
       tags:
         - Systems
@@ -8825,6 +8831,8 @@ components:
           $ref: '#/components/schemas/mfaEnrollmentStatus'
         pushStatus:
           $ref: '#/components/schemas/mfaEnrollmentStatus'
+        smsStatus:
+          $ref: '#/components/schemas/mfaEnrollmentStatus'
         overallStatus:
           $ref: '#/components/schemas/mfaEnrollmentStatus'
         jcGoStatus:
@@ -9626,6 +9634,10 @@ components:
           type: boolean
         displayName:
           type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/attribute'
         tags:
           type: array
           items:
