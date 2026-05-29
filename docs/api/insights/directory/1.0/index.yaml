@@ -66,7 +66,7 @@ paths:
               --url https://api.jumpcloud.com/insights/directory/v1/events \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","exclude_provider_activity":true,"fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -78,6 +78,7 @@ paths:
                 "service": ["alerts"],
                 "start_time": "2019-08-24T14:15:22Z",
                 "exact_match": "string",
+                "exclude_provider_activity": True,
                 "fields": ["string"],
                 "limit": 0,
                 "q": "string",
@@ -103,7 +104,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","exclude_provider_activity":true,"fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
   /events/count:
     post:
       security:
@@ -161,7 +162,7 @@ paths:
               --url https://api.jumpcloud.com/insights/directory/v1/events/count \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","exclude_provider_activity":true,"fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -173,6 +174,7 @@ paths:
                 "service": ["alerts"],
                 "start_time": "2019-08-24T14:15:22Z",
                 "exact_match": "string",
+                "exclude_provider_activity": True,
                 "fields": ["string"],
                 "limit": 0,
                 "q": "string",
@@ -198,7 +200,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/count' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/count' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","exclude_provider_activity":true,"fields":["string"],"limit":0,"q":"string","search_after":[{}],"search_term":{"and":{},"not":{},"or":{}},"skip":0,"sort":"string"}'
   /events/distinct:
     post:
       security:
@@ -275,7 +277,7 @@ paths:
               --url https://api.jumpcloud.com/insights/directory/v1/events/distinct \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","field":"string","search_term":{"and":{},"not":{},"or":{}}}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exclude_provider_activity":true,"field":"string","search_term":{"and":{},"not":{},"or":{}}}'
         - lang: Python
           source: |-
             import requests
@@ -286,6 +288,7 @@ paths:
                 "end_time": "2019-08-24T14:15:22Z",
                 "service": ["alerts"],
                 "start_time": "2019-08-24T14:15:22Z",
+                "exclude_provider_activity": True,
                 "field": "string",
                 "search_term": {
                     "and": {},
@@ -306,7 +309,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/distinct' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","field":"string","search_term":{"and":{},"not":{},"or":{}}}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/distinct' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exclude_provider_activity":true,"field":"string","search_term":{"and":{},"not":{},"or":{}}}'
   /events/interval:
     post:
       security:
@@ -846,6 +849,9 @@ components:
           required:
             - field
           properties:
+            exclude_provider_activity:
+              description: When true, exclude provider-level events and return only child organization activity.
+              type: boolean
             field:
               description: field is what they wish to query on
               type: string
@@ -892,6 +898,9 @@ components:
             exact_match:
               description: optional string for specifying exact match query, do not use with full text query
               type: string
+            exclude_provider_activity:
+              description: When true, exclude provider-level events and return only child organization activity.
+              type: boolean
             fields:
               description: optional list of fields to return from query
               type: array
