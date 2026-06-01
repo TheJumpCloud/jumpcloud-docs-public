@@ -24970,6 +24970,141 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/organizations/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"id":"624d9eae6849cf3b3f93dc56","name":"Acme Inc"}'
     x-functionalities-tags:
       - mtp-update-org
+  /providers/{provider_id}/directoryinsights/events:
+    post:
+      tags:
+        - Providers
+        - Directory Insights
+      summary: POST provider Directory Insights events query (converged audit)
+      description: |-
+        Provider-scoped Directory Insights events query for converged (hybrid) audit logs.
+        Proxies to insights-internal ``POST /v1/providers/events``.
+
+        The ``provider_id`` in the path must match the authenticated provider (see ``providerTenancy``).
+        ``x-org-id`` is optional: when omitted, insights-internal may query provider-level logs only; when
+        provided (comma-separated org IDs), child-org scope is included per backend logic.
+
+        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes master
+        provider-level activity and limits results to child-organization activity.
+
+        #### Sample Request
+        ```
+        curl -X POST 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -H 'x-org-id: {OPTIONAL_COMMA_SEPARATED_ORG_IDS}' \
+          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z", "exclude_provider_activity": true }'
+        ```
+      operationId: providers_directoryInsightsEventsPost
+      parameters:
+        - name: provider_id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: x-org-id
+          in: header
+          description: Organization identifier that can be obtained from console settings.
+          required: false
+          style: simple
+          explode: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/directoryinsights_events_body'
+        required: false
+      responses:
+        '200':
+          description: directory insights provider-scoped events query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - x-api-key: []
+      x-scopes:
+        - directoryinsights.readonly
+        - providers.readonly
+      x-codegen-request-body-name: body
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"exclude_provider_activity":true}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events"
+
+            payload = {"exclude_provider_activity": True}
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"exclude_provider_activity":true}'
+    x-functionalities-tags:
+      - di-events
   /providers/{provider_id}/directoryinsights/events/distinct:
     post:
       tags:
@@ -24984,6 +25119,9 @@ paths:
         ``x-org-id`` is optional: when omitted, insights-internal may query provider-level logs only; when
         provided (comma-separated org IDs), child-org scope is included per backend logic.
 
+        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes master
+        provider-level activity and limits results to child-organization activity.
+
         #### Sample Request
         ```
         curl -X POST 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events/distinct' \
@@ -24991,7 +25129,7 @@ paths:
           -H 'content-type: application/json' \
           -H 'x-api-key: {API_KEY}' \
           -H 'x-org-id: {OPTIONAL_COMMA_SEPARATED_ORG_IDS}' \
-          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z", "field": "client_ip" }'
+          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z", "field": "client_ip", "exclude_provider_activity": true }'
         ```
       operationId: providers_directoryInsightsEventsDistinctPost
       parameters:
@@ -25014,7 +25152,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: '#/components/schemas/events_distinct_body'
         required: false
       responses:
         '200':
@@ -25073,14 +25211,14 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{}'
+              --data '{"exclude_provider_activity":true}'
         - lang: Python
           source: |-
             import requests
 
             url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events/distinct"
 
-            payload = {}
+            payload = {"exclude_provider_activity": True}
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -25096,7 +25234,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events/distinct' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events/distinct' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"exclude_provider_activity":true}'
     x-functionalities-tags:
       - di-events
   /providers/{provider_id}/paymentdetails:
@@ -76586,18 +76724,18 @@ components:
          - COMPLETED: Specifies that the export is completed and report is available for download
          - FAILED: Specifies that the export failed
       type: string
-      default: pending
       enum:
         - pending
         - in_progress
         - completed
         - failed
+      default: pending
     jumpcloud.insights.ExportType:
       type: string
-      default: csv
       enum:
         - csv
         - json
+      default: csv
     jumpcloud.google_emm.SignupURLRequest:
       type: object
     jumpcloud.ingresso.AccessWorkflow:
@@ -77025,12 +77163,12 @@ components:
     jumpcloud.insights.Source:
       title: Indicates if the report was updated through the API or UI
       type: string
-      default: unspecified
       enum:
         - unspecified
         - api
         - ui
         - ai
+      default: unspecified
     jumpcloud.notifications.Channel:
       type: object
       properties:
@@ -79335,6 +79473,18 @@ components:
             $ref: '#/components/schemas/Organization'
         totalCount:
           type: integer
+    directoryinsights_events_body:
+      type: object
+      properties:
+        exclude_provider_activity:
+          type: boolean
+          description: When true, excludes provider-level (master MSP) activity and limits results to child-organization activity.
+    events_distinct_body:
+      type: object
+      properties:
+        exclude_provider_activity:
+          type: boolean
+          description: When true, excludes provider-level (master MSP) activity and limits results to child-organization activity.
     group_id_suggestions_body:
       type: object
       properties:
