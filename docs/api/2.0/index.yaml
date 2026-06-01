@@ -63890,6 +63890,7 @@ paths:
       description: Retrieve a list of field configurations available for assets. Field configurations define all fields and their properties for organizing asset data.
       operationId: listFieldConfigurations
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -63970,6 +63971,7 @@ paths:
       description: Get all select options available for a specific field configuration by ID
       operationId: getFieldConfigSelectOptions
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -64054,6 +64056,7 @@ paths:
       description: Retrieve a specific device asset by its ID
       operationId: getDeviceAsset
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -64387,6 +64390,7 @@ paths:
       description: Retrieve a list of device assets with optional pagination
       operationId: listDeviceAssets
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -64722,6 +64726,7 @@ paths:
       description: Retrieve a specific device asset by its JumpCloud System ID
       operationId: getDeviceAssetByJCSystemID
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -64812,6 +64817,7 @@ paths:
       description: Retrieve a specific accessory asset by its ID
       operationId: getAccessoryAsset
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -65105,6 +65111,7 @@ paths:
       description: Retrieve a list of accessory assets with optional pagination
       operationId: listAccessoryAssets
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -65418,6 +65425,7 @@ paths:
       description: Retrieve a specific location asset by its ID
       operationId: getLocationAsset
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -65695,6 +65703,7 @@ paths:
       description: Retrieve a list of location assets with optional pagination
       operationId: listLocationAssets
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -66003,6 +66012,7 @@ paths:
       description: Retrieve the history of a device asset
       operationId: listDeviceAssetHistory
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -66172,6 +66182,7 @@ paths:
       description: Retrieve the history of an accessory asset
       operationId: listAccessoryAssetHistory
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
@@ -66341,6 +66352,7 @@ paths:
       description: Retrieve the history of a location asset
       operationId: listLocationAssetHistory
       x-scopes:
+        - assets
         - assets.readonly
       security:
         - x-api-key: []
