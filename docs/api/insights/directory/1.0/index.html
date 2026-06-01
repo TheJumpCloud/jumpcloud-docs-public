@@ -197,6 +197,7 @@
 <script>
   (function () {
     const STORAGE_KEY = "jumpcloudDocsRegion";
+    const REGION_SERVER_KEY = "x-jc-region";
     const REGION_SWITCHER = {"default_label": "United States", "default_region": "us", "regions": [{"host": "api.jumpcloud.com", "key": "us", "label": "United States"}, {"host": "api.eu.jumpcloud.com", "key": "eu", "label": "EU"}, {"host": "api.in.jumpcloud.com", "key": "in", "label": "India"}]};
     const SPEC_URL = "index.yaml";
 
@@ -244,20 +245,40 @@
     }
 
     function jcApplyRegionToSpec(spec, targetHost) {
+      const servers = spec.servers;
+      delete spec.servers;
       jcWalkMutateStrings(spec, targetHost);
+      if (servers) {
+        spec.servers = servers;
+      }
       if (typeof spec.host === "string") {
         const host = spec.host.toLowerCase();
         if (HOST_ALIASES.indexOf(host) !== -1) {
           spec.host = targetHost;
         }
       }
-      if (spec.servers && Array.isArray(spec.servers)) {
-        for (const server of spec.servers) {
-          if (server && typeof server.url === "string") {
-            server.url = jcNormalizeRegionHostStrings(server.url, targetHost);
-          }
-        }
+    }
+
+    function jcReorderServersForRegion(spec, regionKey) {
+      if (!spec.servers || !Array.isArray(spec.servers)) {
+        return;
       }
+      const key = String(regionKey || "").toLowerCase();
+      if (!key) {
+        return;
+      }
+      const matchIdx = spec.servers.findIndex((server) => {
+        if (!server || typeof server !== "object") {
+          return false;
+        }
+        const serverRegion = String(server[REGION_SERVER_KEY] || "").toLowerCase();
+        return serverRegion === key;
+      });
+      if (matchIdx <= 0) {
+        return;
+      }
+      const selected = spec.servers.splice(matchIdx, 1)[0];
+      spec.servers.unshift(selected);
     }
 
     async function jcLoadSpecFromUrl() {
@@ -326,6 +347,7 @@
         return;
       }
       jcApplyRegionToSpec(spec, targetHost);
+      jcReorderServersForRegion(spec, regionKey);
       const root = document.getElementById("jc-region-spec-viewer-root");
       if (!root) {
         return;

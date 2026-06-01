@@ -809,6 +809,14 @@ tags:
   - name: Reports
 servers:
   - url: https://api.jumpcloud.com/insights/directory/v1
+    description: United States
+    x-jc-region: us
+  - url: https://api.eu.jumpcloud.com/insights/directory/v1
+    description: EU
+    x-jc-region: eu
+  - url: https://api.in.jumpcloud.com/insights/directory/v1
+    description: India
+    x-jc-region: in
 components:
   requestBodies:
     EventQuery:
