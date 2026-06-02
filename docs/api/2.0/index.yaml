@@ -73338,6 +73338,14 @@ components:
           type: string
         country:
           type: string
+    importUserAttribute:
+      title: Import User Attribute
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
     importUser:
       title: Import User
       type: object
@@ -73382,6 +73390,10 @@ components:
           type: string
         alternateEmail:
           type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/importUserAttribute'
     importUsersResponse:
       title: Import Users Response
       type: object
