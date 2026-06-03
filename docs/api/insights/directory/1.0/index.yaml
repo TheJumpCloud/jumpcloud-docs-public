@@ -384,7 +384,7 @@ paths:
               --url https://api.jumpcloud.com/insights/directory/v1/events/interval \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","interval_unit":"s","interval_value":"string","q":"string","search_term":{"and":{},"not":{},"or":{}},"timezone":"string"}'
+              --data '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","exclude_provider_activity":true,"interval_unit":"s","interval_value":"string","q":"string","search_term":{"and":{},"not":{},"or":{}},"timezone":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -396,6 +396,7 @@ paths:
                 "service": ["alerts"],
                 "start_time": "2019-08-24T14:15:22Z",
                 "exact_match": "string",
+                "exclude_provider_activity": True,
                 "interval_unit": "s",
                 "interval_value": "string",
                 "q": "string",
@@ -419,7 +420,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/interval' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","interval_unit":"s","interval_value":"string","q":"string","search_term":{"and":{},"not":{},"or":{}},"timezone":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/insights/directory/v1/events/interval' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"end_time":"2019-08-24T14:15:22Z","service":["alerts"],"start_time":"2019-08-24T14:15:22Z","exact_match":"string","exclude_provider_activity":true,"interval_unit":"s","interval_value":"string","q":"string","search_term":{"and":{},"not":{},"or":{}},"timezone":"string"}'
   /reports:
     get:
       security:
@@ -876,6 +877,9 @@ components:
             exact_match:
               description: optional string for specifying exact match query, do not use with full text query
               type: string
+            exclude_provider_activity:
+              description: When true, exclude provider-level events and return only child organization activity.
+              type: boolean
             interval_unit:
               type: string
               enum:
