@@ -9800,7 +9800,9 @@ components:
           maxLength: 1024
           type: string
         delegatedAuthority:
-          $ref: '#/components/schemas/systemuserput_delegatedAuthority'
+          allOf:
+            - $ref: '#/components/schemas/systemuserput_delegatedAuthority'
+            - nullable: true
         restrictedFields:
           type: array
           items:
@@ -9926,7 +9928,9 @@ components:
           maxLength: 1024
           type: string
         delegatedAuthority:
-          $ref: '#/components/schemas/systemuserput_delegatedAuthority'
+          allOf:
+            - $ref: '#/components/schemas/systemuserput_delegatedAuthority'
+            - nullable: true
         restrictedFields:
           type: array
           items:
@@ -9945,7 +9949,9 @@ components:
         activated:
           type: boolean
         admin:
-          $ref: '#/components/schemas/systemuserreturn_admin'
+          allOf:
+            - $ref: '#/components/schemas/systemuserreturn_admin'
+            - nullable: true
         addresses:
           type: array
           items:
@@ -10090,7 +10096,9 @@ components:
           maxLength: 1024
           type: string
         delegatedAuthority:
-          $ref: '#/components/schemas/systemuserput_delegatedAuthority'
+          allOf:
+            - $ref: '#/components/schemas/systemuserput_delegatedAuthority'
+            - nullable: true
         restrictedFields:
           type: array
           items:
@@ -10121,7 +10129,9 @@ components:
         activated:
           type: boolean
         admin:
-          $ref: '#/components/schemas/systemuserreturn_admin'
+          allOf:
+            - $ref: '#/components/schemas/systemuserreturn_admin'
+            - nullable: true
         addresses:
           type: array
           items:

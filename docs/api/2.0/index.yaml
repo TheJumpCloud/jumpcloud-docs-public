@@ -76824,9 +76824,13 @@ components:
             in the external API.
           format: int32
         metadata:
-          $ref: '#/components/schemas/jumpcloud.search.SearchRequestMetadata'
+          allOf:
+            - $ref: '#/components/schemas/jumpcloud.search.SearchRequestMetadata'
+            - nullable: true
         pagination:
-          $ref: '#/components/schemas/jumpcloud.search.PaginationParams'
+          allOf:
+            - $ref: '#/components/schemas/jumpcloud.search.PaginationParams'
+            - nullable: true
         requestCache:
           title: 'Optional: If true, cache the full result set of this query'
           type: boolean
@@ -77999,7 +78003,9 @@ components:
           items:
             $ref: '#/components/schemas/jumpcloud.search.MetadataContextEntry'
         searchPurpose:
-          $ref: '#/components/schemas/jumpcloud.search.SearchPurpose'
+          allOf:
+            - $ref: '#/components/schemas/jumpcloud.search.SearchPurpose'
+            - nullable: true
         source:
           title: Source of the request (e.g., "insights-api", "monitoring", "alerts")
           type: string
