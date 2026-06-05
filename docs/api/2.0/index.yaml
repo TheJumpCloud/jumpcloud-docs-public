@@ -81947,48 +81947,7 @@ tags:
   - name: fde
   - name: mdm
 x-tagGroups:
-  - name: Organization
-    tags:
-      - Access Requests
-      - Aggregated Policy Stats
-      - App Catalog
-      - Applications
-      - Assets
-      - Commands
-      - Directories
-      - G Suite
-      - Google EMM
-      - Graph
-      - Identity Providers
-      - Microsoft MDM
-      - Monitoring and Alerting
-      - Notifications Channels
-      - Object Storage
-      - Office 365
-      - Organization Feature Settings
-      - Password Manager
-      - Password Policy
-      - PasswordManagerItem
-      - Policy Group Templates
-      - Providers
-      - Push Verification
-      - RADIUS Servers
-      - Reports
-      - Roles
-      - SaaS App Management
-      - Sample Data
-      - Saved Views
-      - Scope Groups
-      - Service Accounts
-      - Slack Notifications
-      - Software Apps
-      - Systems
-      - Systems Organization Settings
-      - Translation Rules
-      - Webhook Notifications
-      - Webhook Notifications Channels
-      - mdm
-  - name: endpoints
+  - name: Endpoints
     tags:
       - Access Requests
       - Active Directory
@@ -81997,6 +81956,7 @@ x-tagGroups:
       - App Catalog
       - Apple MDM
       - Applications
+      - Assets
       - Authentication Policies
       - Bulk Job Requests
       - Commands
@@ -82022,6 +81982,7 @@ x-tagGroups:
       - Object Storage
       - Office 365
       - Office 365 Import
+      - Organization Feature Settings
       - Organizations
       - Password Manager
       - Password Policy
@@ -82043,6 +82004,9 @@ x-tagGroups:
       - Samba Domains
       - Sample Data
       - Saved Views
+      - Scope Groups
+      - Service Accounts
+      - Slack Notifications
       - Software Apps
       - Subscriptions
       - System Group Associations
@@ -82051,10 +82015,13 @@ x-tagGroups:
       - System Insights
       - Systems
       - Systems Organization Settings
+      - Translation Rules
       - User Group Associations
       - User Group Members & Membership
       - User Groups
       - Users
+      - Webhook Notifications
+      - Webhook Notifications Channels
       - Workday Import
       - fde
       - mdm

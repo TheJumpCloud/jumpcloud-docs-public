@@ -11662,7 +11662,7 @@ tags:
   - name: User Portal
   - name: Users
 x-tagGroups:
-  - name: endpoints
+  - name: Endpoints
     tags:
       - Application Templates
       - Applications
