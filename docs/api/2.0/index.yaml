@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 servers:
   - url: https://console.jumpcloud.com/api/v2
     description: United States
@@ -2252,7 +2252,8 @@ paths:
             application/json:
               schema:
                 type: boolean
-                example: true
+                examples:
+                  - true
         default:
           description: Error response
           content:
@@ -28408,8 +28409,7 @@ paths:
           explode: true
           schema:
             type: string
-            enum:
-              - v1
+            const: v1
       responses:
         '200':
           description: OK
@@ -36927,8 +36927,7 @@ paths:
           explode: true
           schema:
             type: string
-            enum:
-              - v1
+            const: v1
       responses:
         '200':
           description: OK
@@ -49373,13 +49372,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/jumpcloud.msp.GetDetailsResponse'
         '401':
-          $ref: '#/components/responses/trait:standardErrors:401'
+          $ref: '#/components/responses/trait_standardErrors_401'
         '403':
-          $ref: '#/components/responses/trait:standardErrors:403'
+          $ref: '#/components/responses/trait_standardErrors_403'
         '404':
-          $ref: '#/components/responses/trait:standardErrors:404'
+          $ref: '#/components/responses/trait_standardErrors_404'
         '500':
-          $ref: '#/components/responses/trait:standardErrors:500'
+          $ref: '#/components/responses/trait_standardErrors_500'
         default:
           description: An unexpected error response.
           content:
@@ -50572,13 +50571,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/o365.DomainsListResponse'
         '401':
-          $ref: '#/components/responses/trait:standardErrors:401'
+          $ref: '#/components/responses/trait_standardErrors_401'
         '403':
-          $ref: '#/components/responses/trait:standardErrors:403'
+          $ref: '#/components/responses/trait_standardErrors_403'
         '404':
-          $ref: '#/components/responses/trait:standardErrors:404'
+          $ref: '#/components/responses/trait_standardErrors_404'
         '500':
-          $ref: '#/components/responses/trait:standardErrors:500'
+          $ref: '#/components/responses/trait_standardErrors_500'
         default:
           description: An unexpected error response.
           content:
@@ -50661,15 +50660,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/o365.DomainResponse'
         '401':
-          $ref: '#/components/responses/trait:standardErrors:401'
+          $ref: '#/components/responses/trait_standardErrors_401'
         '403':
-          $ref: '#/components/responses/trait:standardErrors:403'
+          $ref: '#/components/responses/trait_standardErrors_403'
         '404':
-          $ref: '#/components/responses/trait:standardErrors:404'
+          $ref: '#/components/responses/trait_standardErrors_404'
         '409':
-          $ref: '#/components/responses/trait:standardErrors:409'
+          $ref: '#/components/responses/trait_standardErrors_409'
         '500':
-          $ref: '#/components/responses/trait:standardErrors:500'
+          $ref: '#/components/responses/trait_standardErrors_500'
         default:
           description: An unexpected error response.
           content:
@@ -50754,13 +50753,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/o365.DomainResponse'
         '401':
-          $ref: '#/components/responses/trait:standardErrors:401'
+          $ref: '#/components/responses/trait_standardErrors_401'
         '403':
-          $ref: '#/components/responses/trait:standardErrors:403'
+          $ref: '#/components/responses/trait_standardErrors_403'
         '404':
-          $ref: '#/components/responses/trait:standardErrors:404'
+          $ref: '#/components/responses/trait_standardErrors_404'
         '500':
-          $ref: '#/components/responses/trait:standardErrors:500'
+          $ref: '#/components/responses/trait_standardErrors_500'
         default:
           description: An unexpected error response.
           content:
@@ -67155,8 +67154,7 @@ paths:
             type: array
             items:
               type: string
-              enum:
-                - discovery_source_types
+              const: discovery_source_types
             uniqueItems: true
       responses:
         '200':
@@ -67356,8 +67354,7 @@ paths:
             type: array
             items:
               type: string
-              enum:
-                - sso_apps
+              const: sso_apps
             uniqueItems: true
       responses:
         '200':
@@ -68244,13 +68241,13 @@ components:
           type: boolean
         organizationAccessTotal:
           type: number
-      example:
-        email: joe@example.com
-        enableMultiFactor: true
-        firstname: Joe
-        id: 0123456789abcdef01234567
-        lastname: Blough
-        registered: false
+      examples:
+        - email: joe@example.com
+          enableMultiFactor: true
+          firstname: Joe
+          id: 0123456789abcdef01234567
+          lastname: Blough
+          registered: false
     AdministratorOrganizationLink:
       title: AdministratorOrganizationLink
       type: object
@@ -68261,9 +68258,9 @@ components:
         organization:
           type: string
           description: The identifier for an organization
-      example:
-        administrator: 6230a0c233a6cbea7c470398
-        organization: 6230a0d26a4e4bc86c6b36f1
+      examples:
+        - administrator: 6230a0c233a6cbea7c470398
+          organization: 6230a0d26a4e4bc86c6b36f1
     AdministratorOrganizationLinkReq:
       title: AdministratorOrganizationLinkReq
       type: object
@@ -68271,8 +68268,8 @@ components:
         organization:
           type: string
           description: The identifier for an organization to link this administrator to.
-      example:
-        organization: 6230a0d26a4e4bc86c6b36f1
+      examples:
+        - organization: 6230a0d26a4e4bc86c6b36f1
     Address:
       type: object
       properties:
@@ -69714,9 +69711,9 @@ components:
           $ref: '#/components/schemas/GSuiteBuiltinTranslation'
         direction:
           $ref: '#/components/schemas/GSuiteDirectionTranslation'
-      example:
-        builtIn: user_home_addresses
-        direction: export
+      examples:
+        - builtIn: user_home_addresses
+          direction: export
     GraphAttributes:
       title: GraphAttributes
       type: object
@@ -69844,8 +69841,7 @@ components:
             type:
               type: string
               description: Targets which a "organization" can be associated to.
-              enum:
-                - organization
+              const: organization
     ManageAssociations-GSuiteAccount:
       title: ManageAssociations (GSuites)
       allOf:
@@ -69859,8 +69855,7 @@ components:
             type:
               type: string
               description: Targets which a "organization" can be associated to.
-              enum:
-                - organization
+              const: organization
     ManageAssociations-Group:
       title: ManageAssociations (Group)
       allOf:
@@ -69874,8 +69869,7 @@ components:
             type:
               type: string
               description: Targets which a "organization" can be associated to.
-              enum:
-                - organization
+              const: organization
     GraphOperation-Application:
       title: GraphOperation (Application)
       allOf:
@@ -70023,8 +70017,7 @@ components:
             type:
               type: string
               description: The member type.
-              enum:
-                - policy
+              const: policy
     GraphOperation-RadiusServer:
       title: GraphOperation (RadiusServer)
       allOf:
@@ -70198,8 +70191,7 @@ components:
             type:
               type: string
               description: The member type.
-              enum:
-                - system
+              const: system
     GraphOperation-UserGroup-Member:
       title: GraphOperation (UserGroup-Member)
       allOf:
@@ -70213,8 +70205,7 @@ components:
             type:
               type: string
               description: The member type.
-              enum:
-                - user
+              const: user
     GraphConnection:
       title: GraphConnection
       required:
@@ -70492,8 +70483,7 @@ components:
         Direction identify if a attribute is going to be exported or imported from Office365
         * `Export`- The data will exported from the user modal to Office365
       default: export
-      enum:
-        - export
+      const: export
     Office365TranslationRule:
       title: Office 365 Translation Rule
       type: object
@@ -70513,9 +70503,9 @@ components:
           $ref: '#/components/schemas/Office365BuiltinTranslation'
         direction:
           $ref: '#/components/schemas/Office365DirectionTranslation'
-      example:
-        builtIn: user_department
-        direction: export
+      examples:
+        - builtIn: user_department
+          direction: export
     Organization:
       title: Organization
       type: object
@@ -70527,9 +70517,9 @@ components:
         maxSystemUsers:
           type: integer
           description: The maximum number of users allowed in this organization. Requires organizations.billing scope to modify.
-      example:
-        id: 624d9eae6849cf3b3f93dc56
-        name: Acme Inc
+      examples:
+        - id: 624d9eae6849cf3b3f93dc56
+          name: Acme Inc
     CreateOrganization:
       title: CreateOrganization
       type: object
@@ -70539,9 +70529,9 @@ components:
         maxSystemUsers:
           type: integer
           description: The maximum number of users allowed in this organization. Requires organizations.billing scope to modify.
-      example:
-        name: Acme Inc
-        maxSystemUsers: 10
+      examples:
+        - name: Acme Inc
+          maxSystemUsers: 10
     Case:
       title: Case
       type: object
@@ -70615,17 +70605,17 @@ components:
         appleRestrictions:
           $ref: '#/components/schemas/OSRestriction_appleRestrictions'
       description: Contains OS properties to restrict the application of policies to devices based on the device's OS
-      example:
-        with-apple-restrictions:
-          osName: iPadOS
-          earliestVersion: '14.1'
-          deprecatedVersion: '16.2'
-          appleRestrictions:
-            requiresSupervision: false
-            supportedEnrollmentTypes:
-              - automated
-              - device
-              - user
+      examples:
+        - with-apple-restrictions:
+            osName: iPadOS
+            earliestVersion: '14.1'
+            deprecatedVersion: '16.2'
+            appleRestrictions:
+              requiresSupervision: false
+              supportedEnrollmentTypes:
+                - automated
+                - device
+                - user
     PhoneNumber:
       type: object
       properties:
@@ -70671,8 +70661,7 @@ components:
         type:
           type: string
           description: The type of the group; always 'policy' for a Policy Group.
-          enum:
-            - policy_group
+          const: policy_group
     PolicyGroupData:
       title: PolicyGroupData
       required:
@@ -70985,10 +70974,10 @@ components:
         value:
           type: object
           description: The value of this Configured Policy Template Value
-      example:
-        id: 63e6722746d3949ea9c073cc
-        name: setallowDeviceNameModification
-        value: {}
+      examples:
+        - id: 63e6722746d3949ea9c073cc
+          name: setallowDeviceNameModification
+          value: {}
     PolicyGroupTemplate:
       title: PolicyGroupTemplate
       type: object
@@ -71078,13 +71067,13 @@ components:
             - OU
         contact:
           $ref: '#/components/schemas/ProviderContact'
-      example:
-        id: 5c3536e9e0a6840001872799
-        name: Example MSP
-        disallowOrgCreation: true
-        contact:
+      examples:
+        - id: 5c3536e9e0a6840001872799
           name: Example MSP
-          email: contact@example.com
+          disallowOrgCreation: true
+          contact:
+            name: Example MSP
+            email: contact@example.com
     ProviderSettingsPut:
       title: ProviderSettings
       type: object
@@ -71128,14 +71117,14 @@ components:
           description: Array of organization ObjectIds for multi-org admin assignment (optional, requires multi-org admin workflow feature flag)
           items:
             type: string
-      example:
-        bindNoOrgs: false
-        email: joe@example.com
-        enableMultiFactor: true
-        firstname: Joe
-        lastname: Blough
-        role: 5c3536e9e0a6840001872799
-        roleName: Administrator
+      examples:
+        - bindNoOrgs: false
+          email: joe@example.com
+          enableMultiFactor: true
+          firstname: Joe
+          lastname: Blough
+          role: 5c3536e9e0a6840001872799
+          roleName: Administrator
     Query:
       title: Query
       required:
@@ -71219,25 +71208,25 @@ components:
           type: string
           description: When the scope group was last updated
           format: date-time
-      example:
-        id: 507f1f77bcf86cd799439011
-        groupName: User Management
-        groupKey: user-management
-        displayToUsers: true
-        groupDescription: Manage users
-        scopes:
-          - key: users.unlock
-            label: Unlock user accounts
-            subgroupLabel: User Support
-            displayToUsers: true
-            description: Unlock user accounts.
-            permissionType: actions
-            permissions:
-              - key: allow
-                values:
-                  - users.unlock
-        createdAt: 2023-07-23T12:00:00
-        updatedAt: 2023-07-23T12:00:00
+      examples:
+        - id: 507f1f77bcf86cd799439011
+          groupName: User Management
+          groupKey: user-management
+          displayToUsers: true
+          groupDescription: Manage users
+          scopes:
+            - key: users.unlock
+              label: Unlock user accounts
+              subgroupLabel: User Support
+              displayToUsers: true
+              description: Unlock user accounts.
+              permissionType: actions
+              permissions:
+                - key: allow
+                  values:
+                    - users.unlock
+          createdAt: 2023-07-23T12:00:00
+          updatedAt: 2023-07-23T12:00:00
     Scope:
       type: object
       properties:
@@ -71271,19 +71260,19 @@ components:
           description: Available permission levels for this scope
           items:
             $ref: '#/components/schemas/Scope_permissions'
-      example:
-        key: systems
-        label: Systems
-        displayToUsers: true
-        description: Manage system resources and configurations
-        permissionType: access_level
-        permissions:
-          - key: fullAccess
-            values:
-              - systems
-          - key: view
-            values:
-              - systems.readonly
+      examples:
+        - key: systems
+          label: Systems
+          displayToUsers: true
+          description: Manage system resources and configurations
+          permissionType: access_level
+          permissions:
+            - key: fullAccess
+              values:
+                - systems
+            - key: view
+              values:
+                - systems.readonly
     SuggestionCounts:
       type: object
       properties:
@@ -71328,8 +71317,7 @@ components:
         type:
           type: string
           description: The type of the group; always 'system' for a System Group.
-          enum:
-            - system_group
+          const: system_group
     SystemGroupPost:
       title: SystemGroupPost
       required:
@@ -71425,8 +71413,7 @@ components:
         type:
           type: string
           description: The type of the group.
-          enum:
-            - user_group
+          const: user_group
     UserGroupPost:
       title: UserGroupPost
       required:
@@ -71633,13 +71620,13 @@ components:
       properties:
         auth:
           $ref: '#/components/schemas/auth-input'
-      example:
-        auth:
-          basic:
-            password: mollit cillum
-            username: veniam dolore
-          oauth:
-            code: minim ad ea dolor
+      examples:
+        - auth:
+            basic:
+              password: mollit cillum
+              username: veniam dolore
+            oauth:
+              code: minim ad ea dolor
     bulk-scheduled-statechange-create:
       title: Bulk Schedule User State Change Create
       required:
@@ -72381,28 +72368,28 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        applescript_enabled: '1'
-        bundle_executable: App Store
-        bundle_identifier: com.apple.appstore
-        bundle_name: App Store
-        bundle_package_type: APPL
-        bundle_short_version: '2.4'
-        bundle_version: '658.1'
-        category: public.app-category.utilities
-        collection_time: 2019-06-03T19:41:30
-        compiler: com.apple.compilers.llvm.clang.1_0
-        copyright: ''
-        development_region: English
-        display_name: App Store
-        element: ''
-        environment: ''
-        info_string: ''
-        last_opened_time: 1556688963.50383
-        minimum_system_version: '10.13'
-        name: App Store.app
-        path: /Applications/App Store.app
-        system_id: 5c9e51a13c5146f89bae12d9
+      examples:
+        - applescript_enabled: '1'
+          bundle_executable: App Store
+          bundle_identifier: com.apple.appstore
+          bundle_name: App Store
+          bundle_package_type: APPL
+          bundle_short_version: '2.4'
+          bundle_version: '658.1'
+          category: public.app-category.utilities
+          collection_time: 2019-06-03T19:41:30
+          compiler: com.apple.compilers.llvm.clang.1_0
+          copyright: ''
+          development_region: English
+          display_name: App Store
+          element: ''
+          environment: ''
+          info_string: ''
+          last_opened_time: 1556688963.50383
+          minimum_system_version: '10.13'
+          name: App Store.app
+          path: /Applications/App Store.app
+          system_id: 5c9e51a13c5146f89bae12d9
     system-insights-authorized-keys:
       title: System Insights Authorized Keys
       type: object
@@ -72531,27 +72518,27 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        amperage: 93836453
-        charged: 63086136
-        charging: 6577424
-        collection_time: anim in dolor
-        condition: magna Ut dolor laborum
-        current_capacity: 95829126
-        cycle_count: -58203101
-        designed_capacity: 51607498
-        health: ipsum Duis amet magna sint
-        manufacture_date: 66625366
-        manufacturer: laboris
-        max_capacity: 407375
-        minutes_to_full_charge: -43087634
-        minutes_until_empty: 56660087
-        model: cupidatat quis esse tempor nostr
-        percent_remaining: -77798506
-        serial_number: est do nisi anim eu
-        state: Duis qui eu labore
-        system_id: elit nulla cillum et
-        voltage: -79728034
+      examples:
+        - amperage: 93836453
+          charged: 63086136
+          charging: 6577424
+          collection_time: anim in dolor
+          condition: magna Ut dolor laborum
+          current_capacity: 95829126
+          cycle_count: -58203101
+          designed_capacity: 51607498
+          health: ipsum Duis amet magna sint
+          manufacture_date: 66625366
+          manufacturer: laboris
+          max_capacity: 407375
+          minutes_to_full_charge: -43087634
+          minutes_until_empty: 56660087
+          model: cupidatat quis esse tempor nostr
+          percent_remaining: -77798506
+          serial_number: est do nisi anim eu
+          state: Duis qui eu labore
+          system_id: elit nulla cillum et
+          voltage: -79728034
     system-insights-bitlocker-info:
       title: System Insights Bitlocker Info
       type: object
@@ -72560,16 +72547,16 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        collection_time: 2019-06-03T19:41:30
-        conversion_status: 0
-        device_id: \\\\?\\Volume{3ba5cc52-e0fd-45fa-b8b8-5c88f44f8b17}\
-        drive_letter: 'C:'
-        percentage_encrypted: 0
-        encryption_method: None
-        persistent_volume_id: ''
-        protection_status: 0
-        system_id: 5c9e51a13c5146f89bae12d9
+      examples:
+        - collection_time: 2019-06-03T19:41:30
+          conversion_status: 0
+          device_id: \\\\?\\Volume{3ba5cc52-e0fd-45fa-b8b8-5c88f44f8b17}\
+          drive_letter: 'C:'
+          percentage_encrypted: 0
+          encryption_method: None
+          persistent_volume_id: ''
+          protection_status: 0
+          system_id: 5c9e51a13c5146f89bae12d9
     system-insights-browser-plugins:
       title: System Insights Browser Plugins
       type: object
@@ -72578,19 +72565,19 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        collection_time: 2019-06-03T19:41:30
-        description: LastPass Plugin
-        development_region: en-US
-        disabled: 0
-        identifier: com.lastpass.nplastpass
-        name: LastPass
-        native: 0
-        path: /Library/Internet Plug-Ins/nplastpass.plugin/
-        sdk: 7D175
-        system_id: 5c9e51a13c5146f89bae12d9
-        uid: '0'
-        version: 4.1.7
+      examples:
+        - collection_time: 2019-06-03T19:41:30
+          description: LastPass Plugin
+          development_region: en-US
+          disabled: 0
+          identifier: com.lastpass.nplastpass
+          name: LastPass
+          native: 0
+          path: /Library/Internet Plug-Ins/nplastpass.plugin/
+          sdk: 7D175
+          system_id: 5c9e51a13c5146f89bae12d9
+          uid: '0'
+          version: 4.1.7
     system-insights-chrome-extensions:
       title: System Insights Chrome Extensions
       type: object
@@ -72599,20 +72586,20 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        author: ''
-        collection_time: 2019-06-03t19:41:31.125z
-        description: provider for discovery and services for mirroring of chrome media router
-        identifier: pkedcjkdefgpdelpbcmbmeomcjbeemfm
-        locale: en
-        name: chrome media router
-        path: /users/thomas/library/application support/google/chrome/default/extensions/pkedcjkdefgpdelpbcmbmeomcjbeemfm/7419.311.0.1_0/
-        permissions: alarms, cast, cast.streaming, declarativewebrequest, desktopcapture, gcm, http://*/*, identity, identity.email, management, mdns, mediarouterprivate, metricsprivate, networkingprivate, processes, storage, system.cpu, settingsprivate, tabcapture, tabs, webview, https://hangouts.google.com/*, https://*.google.com/cast/chromecast/home/gsse
-        persistent: 0
-        system_id: 5c9e51a13c5146f89bae12d9
-        uid: '501'
-        update_url: https://clients2.google.com/service/update2/crx
-        version: 7419.311.0.1
+      examples:
+        - author: ''
+          collection_time: 2019-06-03t19:41:31.125z
+          description: provider for discovery and services for mirroring of chrome media router
+          identifier: pkedcjkdefgpdelpbcmbmeomcjbeemfm
+          locale: en
+          name: chrome media router
+          path: /users/thomas/library/application support/google/chrome/default/extensions/pkedcjkdefgpdelpbcmbmeomcjbeemfm/7419.311.0.1_0/
+          permissions: alarms, cast, cast.streaming, declarativewebrequest, desktopcapture, gcm, http://*/*, identity, identity.email, management, mdns, mediarouterprivate, metricsprivate, networkingprivate, processes, storage, system.cpu, settingsprivate, tabcapture, tabs, webview, https://hangouts.google.com/*, https://*.google.com/cast/chromecast/home/gsse
+          persistent: 0
+          system_id: 5c9e51a13c5146f89bae12d9
+          uid: '501'
+          update_url: https://clients2.google.com/service/update2/crx
+          version: 7419.311.0.1
     system-insights-connectivity:
       title: system insights connectivity
       type: object
@@ -72637,16 +72624,16 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        collection_time: 2019-06-03T19:41:31
-        encrypted: 0
-        encryption_status: undefined
-        name: /dev/disk8
-        system_id: 5c9e51a13c5146f89bae12d9
-        type: ''
-        uid: ''
-        user_uuid: ''
-        uuid: ''
+      examples:
+        - collection_time: 2019-06-03T19:41:31
+          encrypted: 0
+          encryption_status: undefined
+          name: /dev/disk8
+          system_id: 5c9e51a13c5146f89bae12d9
+          type: ''
+          uid: ''
+          user_uuid: ''
+          uuid: ''
     system-insights-disk-info:
       title: System Insights Disk Info
       type: object
@@ -72655,20 +72642,20 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        collection_time: 2019-06-03T19:41:30
-        description: Disk drive
-        disk_index: 0
-        disk_size: '64420392960'
-        hardware_model: VMware, VMware Virtual S SCSI Disk Device
-        id: \\.\PHYSICALDRIVE0
-        manufacturer: (Standard disk drives)
-        name: \\.\PHYSICALDRIVE0
-        partitions: 3
-        pnp_device_id: SCSI\DISK&VEN_VMWARE_&PROD_VMWARE_VIRTUAL_S\5&1EC51BF7&0&000000
-        serial: ''
-        system_id: 5c9e51a13c5146f89bae12d9
-        type: SCSI
+      examples:
+        - collection_time: 2019-06-03T19:41:30
+          description: Disk drive
+          disk_index: 0
+          disk_size: '64420392960'
+          hardware_model: VMware, VMware Virtual S SCSI Disk Device
+          id: \\.\PHYSICALDRIVE0
+          manufacturer: (Standard disk drives)
+          name: \\.\PHYSICALDRIVE0
+          partitions: 3
+          pnp_device_id: SCSI\DISK&VEN_VMWARE_&PROD_VMWARE_VIRTUAL_S\5&1EC51BF7&0&000000
+          serial: ''
+          system_id: 5c9e51a13c5146f89bae12d9
+          type: SCSI
     system-insights-etc-hosts:
       title: System Insights Etc Hosts
       type: object
@@ -72677,11 +72664,11 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        address: 192.168.2.21
-        collection_time: 2019-06-03T19:41:30
-        hostnames: hosty hosty.local
-        system_id: 5c9e51a13c5146f89bae12d9
+      examples:
+        - address: 192.168.2.21
+          collection_time: 2019-06-03T19:41:30
+          hostnames: hosty hosty.local
+          system_id: 5c9e51a13c5146f89bae12d9
     system-insights-firefox-addons:
       title: System Insights Firefox Addons
       type: object
@@ -72690,23 +72677,23 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        active: 1
-        autoupdate: 1
-        collection_time: 2019-06-03T19:41:31
-        creator: 'null'
-        description: ''
-        disabled: 0
-        identifier: fxmonitor@mozilla.org
-        location: app-system-addons
-        name: Firefox Monitor
-        path: ''
-        source_url: file:///var/folders/dn/zjm_0lzn4lv6bgnt5b3nkgxh0000gn/T/tmpaddon-9fb449
-        system_id: 5c9e51a13c5146f89bae12d9
-        type: extension
-        uid: '501'
-        version: '2.8'
-        visible: 1
+      examples:
+        - active: 1
+          autoupdate: 1
+          collection_time: 2019-06-03T19:41:31
+          creator: 'null'
+          description: ''
+          disabled: 0
+          identifier: fxmonitor@mozilla.org
+          location: app-system-addons
+          name: Firefox Monitor
+          path: ''
+          source_url: file:///var/folders/dn/zjm_0lzn4lv6bgnt5b3nkgxh0000gn/T/tmpaddon-9fb449
+          system_id: 5c9e51a13c5146f89bae12d9
+          type: extension
+          uid: '501'
+          version: '2.8'
+          visible: 1
     system-insights-groups:
       title: System Insights Groups
       type: object
@@ -72715,14 +72702,14 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        collection_time: 2019-06-03T19:41:31
-        comment: ''
-        gid: '701'
-        gid_signed: '701'
-        group_sid: ''
-        groupname: '1'
-        system_id: 5c9e51a13c5146f89bae12d9
+      examples:
+        - collection_time: 2019-06-03T19:41:31
+          comment: ''
+          gid: '701'
+          gid_signed: '701'
+          group_sid: ''
+          groupname: '1'
+          system_id: 5c9e51a13c5146f89bae12d9
     system-insights-ie-extensions:
       title: System Insights IE Extensions
       type: object
@@ -72739,16 +72726,16 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        address: '::1'
-        broadcast: ''
-        collection_time: 2019-06-03T19:41:31
-        friendly_name: ''
-        interface: lo0
-        mask: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
-        point_to_point: '::1'
-        system_id: 5c9e51a13c5146f89bae12d9
-        type: unknown
+      examples:
+        - address: '::1'
+          broadcast: ''
+          collection_time: 2019-06-03T19:41:31
+          friendly_name: ''
+          interface: lo0
+          mask: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+          point_to_point: '::1'
+          system_id: 5c9e51a13c5146f89bae12d9
+          type: unknown
     system-insights-kernel-info:
       title: System Insights Kernel Info
       type: object
@@ -72771,19 +72758,19 @@ components:
       properties:
         system_id:
           type: string
-      example:
-        arch: amd64
-        install_time: 100000
-        maintainer_or_vendor: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-        mount_namespace_id: id123
-        name: zip
-        package_group_or_section: utils
-        package_format: deb
-        pid_with_namespace: 0
-        release_or_revision: 11build1
-        size: '100000'
-        version: 3.0-11build1
-        system_id: 5c9e51a13c5146f89bae12d9
+      examples:
+        - arch: amd64
+          install_time: 100000
+          maintainer_or_vendor: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+          mount_namespace_id: id123
+          name: zip
+          package_group_or_section: utils
+          package_format: deb
+          pid_with_namespace: 0
+          release_or_revision: 11build1
+          size: '100000'
+          version: 3.0-11build1
+          system_id: 5c9e51a13c5146f89bae12d9
     system-insights-logged-in-users:
       title: System Insights Logged-In Users
       type: object
@@ -72800,15 +72787,15 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        boot_partition: 0
-        collection_time: 2019-06-03T19:41:30
-        device_id: 'C:'
-        file_system: NTFS
-        free_space: '43194331136'
-        size: '63778582528'
-        system_id: 5c9e51a13c5146f89bae12d9
-        type: Unknown
+      examples:
+        - boot_partition: 0
+          collection_time: 2019-06-03T19:41:30
+          device_id: 'C:'
+          file_system: NTFS
+          free_space: '43194331136'
+          size: '63778582528'
+          system_id: 5c9e51a13c5146f89bae12d9
+          type: Unknown
     system-insights-managed-policies:
       title: System Insights Managed Policies
       type: object
@@ -72825,20 +72812,20 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        blocks: '388086'
-        blocks_available: '95135'
-        blocks_free: '95135'
-        blocks_size: '4096'
-        collection_time: 2019-06-03T19:41:31
-        device: /dev/disk5s1
-        device_alias: /dev/disk5s1
-        flags: '70292505'
-        inodes: '4294967279'
-        inodes_free: '4294966853'
-        path: /private/var/folders/zz/zyxvpxvq6csfxvn_n0000000000000/T/.vbfolder_1dQavK
-        system_id: 5c9e51a13c5146f89bae12d9
-        type: hfs
+      examples:
+        - blocks: '388086'
+          blocks_available: '95135'
+          blocks_free: '95135'
+          blocks_size: '4096'
+          collection_time: 2019-06-03T19:41:31
+          device: /dev/disk5s1
+          device_alias: /dev/disk5s1
+          flags: '70292505'
+          inodes: '4294967279'
+          inodes_free: '4294966853'
+          path: /private/var/folders/zz/zyxvpxvq6csfxvn_n0000000000000/T/.vbfolder_1dQavK
+          system_id: 5c9e51a13c5146f89bae12d9
+          type: hfs
     system-insights-os-version:
       title: System Insights OS Version
       type: object
@@ -72847,19 +72834,19 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        build: 17G65
-        codename: ''
-        collection_time: 2019-06-03T19:41:30
-        install_date: ''
-        major: 10
-        minor: 13
-        name: Mac OS X
-        patch: 6
-        platform: darwin
-        platform_like: darwin
-        system_id: 5c9e51a13c5146f89bae12d9
-        version: 10.13.6
+      examples:
+        - build: 17G65
+          codename: ''
+          collection_time: 2019-06-03T19:41:30
+          install_date: ''
+          major: 10
+          minor: 13
+          name: Mac OS X
+          patch: 6
+          platform: darwin
+          platform_like: darwin
+          system_id: 5c9e51a13c5146f89bae12d9
+          version: 10.13.6
     system-insights-patches:
       title: System Insights Patches
       type: object
@@ -72868,17 +72855,17 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        caption: http://support.microsoft.com/?kbid=4503308
-        collection_time: 2019-06-03T19:41:31
-        csname: DESKTOP-B17DUKP
-        description: Security Update
-        fix_comments: ''
-        hotfix_id: KB4503308
-        install_date: ''
-        installed_by: NT AUTHORITY\SYSTEM
-        installed_on: 7/30/2019
-        system_id: 5c9e51a13c5146f89bae12d9
+      examples:
+        - caption: http://support.microsoft.com/?kbid=4503308
+          collection_time: 2019-06-03T19:41:31
+          csname: DESKTOP-B17DUKP
+          description: Security Update
+          fix_comments: ''
+          hotfix_id: KB4503308
+          install_date: ''
+          installed_by: NT AUTHORITY\SYSTEM
+          installed_on: 7/30/2019
+          system_id: 5c9e51a13c5146f89bae12d9
     system-insights-programs:
       title: System Insights Programs
       type: object
@@ -72887,18 +72874,18 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        collection_time: 2019-06-03T19:41:31
-        identifying_number: '{2E8B8BDD-03DF-4C1C-8C99-E6A4BCBF43CE}'
-        install_date: '20190724'
-        install_location: ''
-        install_source: C:\Windows\SoftwareDistribution\Download\b78f29c88063bd09e7afd48e257d0126\img\
-        language: '0'
-        name: Update for Windows 10 for x64-based Systems (KB4480730)
-        publisher: Microsoft Corporation
-        system_id: 5c9e51a13c5146f89bae12d9
-        uninstall_string: MsiExec.exe /X{2E8B8BDD-03DF-4C1C-8C99-E6A4BCBF43CE}
-        version: 2.51.0.0
+      examples:
+        - collection_time: 2019-06-03T19:41:31
+          identifying_number: '{2E8B8BDD-03DF-4C1C-8C99-E6A4BCBF43CE}'
+          install_date: '20190724'
+          install_location: ''
+          install_source: C:\Windows\SoftwareDistribution\Download\b78f29c88063bd09e7afd48e257d0126\img\
+          language: '0'
+          name: Update for Windows 10 for x64-based Systems (KB4480730)
+          publisher: Microsoft Corporation
+          system_id: 5c9e51a13c5146f89bae12d9
+          uninstall_string: MsiExec.exe /X{2E8B8BDD-03DF-4C1C-8C99-E6A4BCBF43CE}
+          version: 2.51.0.0
     system-insights-safari-extensions:
       title: System Insights Safari Extensions
       type: object
@@ -72907,19 +72894,19 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        author: Eyeo GmbH
-        collection_time: 2019-05-16T18:58:15
-        description: Used by over 50 million people, a free ad blocker that blocks ALL annoying ads, malware and tracking.
-        developer_id: GRYYZR985A
-        identifier: org.adblockplus.adblockplussafari
-        name: Adblock Plus
-        path: /Users/samuelharvanek/Library/Safari/Extensions/Adblock Plus.safariextz
-        sdk: '6.0'
-        system_id: 5cdb13e85a0e0719283583c0
-        uid: '501'
-        update_url: https://update.adblockplus.org/adblockplussafari/updates.plist
-        version: 1.12.5
+      examples:
+        - author: Eyeo GmbH
+          collection_time: 2019-05-16T18:58:15
+          description: Used by over 50 million people, a free ad blocker that blocks ALL annoying ads, malware and tracking.
+          developer_id: GRYYZR985A
+          identifier: org.adblockplus.adblockplussafari
+          name: Adblock Plus
+          path: /Users/samuelharvanek/Library/Safari/Extensions/Adblock Plus.safariextz
+          sdk: '6.0'
+          system_id: 5cdb13e85a0e0719283583c0
+          uid: '501'
+          update_url: https://update.adblockplus.org/adblockplussafari/updates.plist
+          version: 1.12.5
     system-insights-shadow:
       title: System Insights Shadow
       type: object
@@ -72976,24 +72963,24 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        collection_time: 2019-06-03T19:41:30
-        computer_name: Johnny's MacBook Pro (2)
-        cpu_brand: Intel(R) Core(TM) i7-7820HQ CPU @ 2.90GHz
-        cpu_logical_cores: 8
-        cpu_microcode: ''
-        cpu_physical_cores: 4
-        cpu_subtype: Intel x86-64h Haswell
-        cpu_type: x86_64h
-        hardware_model: 'MacBookPro14,3 '
-        hardware_serial: 111111FFFFFF
-        hardware_vendor: 'Apple Inc. '
-        hardware_version: '1.0 '
-        hostname: johnnys-macbook-pro-2.local
-        local_hostname: Jonnys-MacBook-Pro-2
-        physical_memory: '17179869184'
-        system_id: 5c9e51a13c5146f89bae12d9
-        uuid: 11111111-FFFF-1111-FFFF-111111111111
+      examples:
+        - collection_time: 2019-06-03T19:41:30
+          computer_name: Johnny's MacBook Pro (2)
+          cpu_brand: Intel(R) Core(TM) i7-7820HQ CPU @ 2.90GHz
+          cpu_logical_cores: 8
+          cpu_microcode: ''
+          cpu_physical_cores: 4
+          cpu_subtype: Intel x86-64h Haswell
+          cpu_type: x86_64h
+          hardware_model: 'MacBookPro14,3 '
+          hardware_serial: 111111FFFFFF
+          hardware_vendor: 'Apple Inc. '
+          hardware_version: '1.0 '
+          hostname: johnnys-macbook-pro-2.local
+          local_hostname: Jonnys-MacBook-Pro-2
+          physical_memory: '17179869184'
+          system_id: 5c9e51a13c5146f89bae12d9
+          uuid: 11111111-FFFF-1111-FFFF-111111111111
     system-insights-uptime:
       title: System Insights Uptime
       type: object
@@ -73034,19 +73021,19 @@ components:
           type: string
         system_id:
           type: string
-      example:
-        collection_time: 2019-06-03T19:41:29
-        description: AppleEvents Daemon
-        directory: /var/empty
-        gid: '55'
-        gid_signed: '55'
-        shell: /usr/bin/false
-        system_id: 5c9e51a13c5146f89bae12d9
-        type: ''
-        uid: '55'
-        uid_signed: '55'
-        username: _appleevents
-        uuid: FFFFEEEE-DDDD-CCCC-BBBB-AAAA00000037
+      examples:
+        - collection_time: 2019-06-03T19:41:29
+          description: AppleEvents Daemon
+          directory: /var/empty
+          gid: '55'
+          gid_signed: '55'
+          shell: /usr/bin/false
+          system_id: 5c9e51a13c5146f89bae12d9
+          type: ''
+          uid: '55'
+          uid_signed: '55'
+          username: _appleevents
+          uuid: FFFFEEEE-DDDD-CCCC-BBBB-AAAA00000037
     system-insights-certificates:
       type: object
       properties:
@@ -73108,15 +73095,15 @@ components:
           type: string
         reportUrl:
           type: string
-      example:
-        auth:
-          basic:
-            password: in tempor ipsum quis
-            username: mollit ex
-          oauth:
-            code: non laborum dolore
-        name: dolore tempor
-        reportUrl: est sit laboris
+      examples:
+        - auth:
+            basic:
+              password: in tempor ipsum quis
+              username: mollit ex
+            oauth:
+              code: non laborum dolore
+          name: dolore tempor
+          reportUrl: est sit laboris
     workday-output:
       title: Workday Output
       type: object
@@ -73409,8 +73396,7 @@ components:
           description: The only field that is currently supported is ldap_binding_user
         operator:
           type: string
-          enum:
-            - EQ
+          const: EQ
         value:
           $ref: '#/components/schemas/AnyValue'
     AuthnPolicyUserAttributeTarget:
@@ -73702,14 +73688,14 @@ components:
         currency:
           type: string
       description: Details of a an invoice
-      example:
-        id: '234324'
-        dueDate: '2021-08-07'
-        status: Partially Paid
-        amountBilled: '200.0'
-        amountRemaining: '189.1'
-        amountPaid: '10.9'
-        currency: USD
+      examples:
+        - id: '234324'
+          dueDate: 2021-08-07
+          status: Partially Paid
+          amountBilled: '200.0'
+          amountRemaining: '189.1'
+          amountPaid: '10.9'
+          currency: USD
     ProviderInvoiceResponse:
       title: ProviderInvoiceResponse
       type: object
@@ -74192,7 +74178,9 @@ components:
         hasContract:
           type: boolean
     o365.Domain:
-      type: object
+      type:
+        - object
+        - 'null'
       properties:
         objectId:
           pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
@@ -76224,13 +76212,15 @@ components:
       type: object
       properties:
         createdAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         deletedAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         displayName:
           type: string
         objectId:
@@ -76246,9 +76236,10 @@ components:
           items:
             $ref: '#/components/schemas/devices.SoftwareApp.Setting'
         updatedAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
     devices.SoftwareApp.Setting:
       type: object
       properties:
@@ -76286,9 +76277,10 @@ components:
         commandLineArguments:
           type: string
         createdAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         description:
           type: string
         desiredState:
@@ -76328,9 +76320,10 @@ components:
         packageVersion:
           type: string
         packageVersionUpdatedAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         scope:
           $ref: '#/components/schemas/devices.SoftwareApp.Setting.Scope'
         shortVersion:
@@ -76357,9 +76350,10 @@ components:
         updateToolArguments:
           type: string
         updatedAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         versionlessDownloadUrl:
           type: boolean
     devices.SoftwareApp.Setting.Scope:
@@ -76809,8 +76803,9 @@ components:
             $ref: '#/components/schemas/jumpcloud.search.SearchRequestAggregation'
         cacheToken:
           title: 'Optional: Token for retrieving data from a previously cached result set'
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         fields:
           $ref: '#/components/schemas/jumpcloud.search.SearchRequestFields'
         filters:
@@ -76826,11 +76821,11 @@ components:
         metadata:
           allOf:
             - $ref: '#/components/schemas/jumpcloud.search.SearchRequestMetadata'
-            - nullable: true
+            - {}
         pagination:
           allOf:
             - $ref: '#/components/schemas/jumpcloud.search.PaginationParams'
-            - nullable: true
+            - {}
         requestCache:
           title: 'Optional: If true, cache the full result set of this query'
           type: boolean
@@ -76867,11 +76862,12 @@ components:
       type: object
       properties:
         field:
-          type: string
+          type:
+            - string
+            - 'null'
           description: |-
             This is a field on an object.  It should always be in the form of <objectName>.<fieldName>  This will be case
             insensitive, and will be cast to lowercase always.
-          nullable: true
         filters:
           type: array
           description: |-
@@ -76884,8 +76880,9 @@ components:
         query:
           $ref: '#/components/schemas/jumpcloud.search.SearchRequest'
         unit:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         value:
           type: object
           description: |-
@@ -77640,17 +77637,19 @@ components:
       type: object
       properties:
         field:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         operation:
           $ref: '#/components/schemas/jumpcloud.organization_settings.Filters.Operation'
         value:
-          type: object
+          type:
+            - object
+            - 'null'
           description: |-
             Static value to be compared against. For values that will need to be compared as a datetime object, this should be
             provided as an ISO8601 format string with no offset (UTC). This is made optional so that
             the client can omit this field on AND/OR filters.
-          nullable: true
     jumpcloud.organization_settings.Filters.Operation:
       type: string
       description: |-
@@ -78005,11 +78004,12 @@ components:
         searchPurpose:
           allOf:
             - $ref: '#/components/schemas/jumpcloud.search.SearchPurpose'
-            - nullable: true
+            - {}
         source:
           title: Source of the request (e.g., "insights-api", "monitoring", "alerts")
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       description: |-
         Metadata about the search request including source information
         and some other metadata about the calling service.
@@ -79167,10 +79167,11 @@ components:
         displayName:
           type: string
         endDate:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Optional end date for the schedule
           format: date-time
-          nullable: true
         exportType:
           title: 'Stored and returned as lowercase: csv, json'
           type: string
@@ -79180,9 +79181,10 @@ components:
         isActive:
           type: boolean
         lastRunAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
           readOnly: true
         lastRunStatus:
           type: string
@@ -79198,14 +79200,16 @@ components:
             $ref: '#/components/schemas/jumpcloud.insights.Recipient'
         reportId:
           pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
-          type: string
+          type:
+            - string
+            - 'null'
           description: Report definition ID (report_views.object_id or report_templates.object_id); hex in API. Omitted when not set.
           format: byte
-          nullable: true
         reportType:
-          type: string
+          type:
+            - string
+            - 'null'
           description: report_view or report_template
-          nullable: true
         scheduleFrequency:
           title: 'Stored and returned as lowercase: daily, weekly, monthly, quarterly'
           type: string
@@ -79213,10 +79217,11 @@ components:
           type: string
           description: Time of day for the schedule (e.g., "09:00 AM", "14:30")
         startDate:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Optional start date for the schedule
           format: date-time
-          nullable: true
         timeZone:
           type: string
           description: Timezone for the schedule (e.g., "GMT-2", "America/New_York")
@@ -79233,31 +79238,35 @@ components:
       type: object
       properties:
         artifactUrl:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Presigned download URL when the run succeeded (same link as email/slack notifications). Falls back to a relative API path only when no stored URL exists.
-          nullable: true
           readOnly: true
         completedAt:
           type: string
           format: date-time
           readOnly: true
         displayName:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Scheduled report display name (primary label in history UI)
-          nullable: true
           readOnly: true
         fileSize:
-          type: string
+          type:
+            - string
+            - 'null'
           description: File size in bytes
-          nullable: true
           readOnly: true
         id:
           title: id is a Temporal workflow execution ID (scheduled_report_runs.id), not a JumpCloud object_id
           type: string
         rowCount:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Emitted as string in JSON (e.g. "123"); omit when not set to avoid validation errors.
-          nullable: true
           readOnly: true
         scheduledReportId:
           title: scheduled_report_id is a UUID (scheduled_reports.id), not a JumpCloud object_id
@@ -79271,10 +79280,11 @@ components:
           type: string
           description: 'Status: IN_PROGRESS, SUCCESS, FAILED'
         timeoutAt:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Omit when not set to avoid null (validator expects string or absent).
           format: date-time
-          nullable: true
           readOnly: true
     jumpcloud.insights.TriggerScheduledReportResponse:
       type: object
@@ -79532,7 +79542,8 @@ components:
           pattern: ^[0-9]{6}$
           type: string
           description: 6-digit PIN, required for MacOS, to erase the device
-          example: '123456'
+          examples:
+            - '123456'
     device_id_lock_body:
       type: object
       properties:
@@ -79540,7 +79551,8 @@ components:
           pattern: ^[0-9]{6}$
           type: string
           description: 6-digit PIN, required for MacOS, to lock the device
-          example: '123456'
+          examples:
+            - '123456'
     device_id_restart_body:
       type: object
       properties:
@@ -79599,9 +79611,9 @@ components:
           minItems: 1
           type: array
           description: Array of resource types to create. Each resource type is processed independently.
-          example:
-            - users
-            - usergroups
+          examples:
+            -   - users
+                - usergroups
           items:
             type: string
             enum:
@@ -79613,7 +79625,8 @@ components:
         message:
           type: string
           description: Response message describing the outcome.
-          example: Sample data created successfully.
+          examples:
+            - Sample data created successfully.
         results:
           $ref: '#/components/schemas/inline_response_200_6_results'
     inline_response_422:
@@ -79622,7 +79635,8 @@ components:
         message:
           type: string
           description: Error message.
-          example: Some sample data resources failed to create.
+          examples:
+            - Some sample data resources failed to create.
         results:
           $ref: '#/components/schemas/inline_response_422_results'
     inline_response_200_9:
@@ -79631,13 +79645,14 @@ components:
         totalCount:
           type: integer
           description: Total number of associated organizations
-          example: 2
+          examples:
+            - 2
         results:
           type: array
           description: Array of organization IDs associated with the provider
-          example:
-            - org-id-one
-            - org-id-two
+          examples:
+            -   - org-id-one
+                - org-id-two
           items:
             type: string
             description: Organization ID
@@ -80675,60 +80690,62 @@ components:
         id:
           type: string
           description: The unique identifier of the asset
-          example: 507f1f77bcf86cd799439011
+          examples:
+            - 507f1f77bcf86cd799439011
         jcSystemId:
           type: string
           description: JumpCloud system identifier for device assets, as a lowercase hex string.
-          example: 507f1f77bcf86cd799439012
+          examples:
+            - 507f1f77bcf86cd799439012
         fields:
           type: object
           description: Asset field values keyed by field label (`FieldValue` per key). Labels match `GET /assets/field-configurations`.
           additionalProperties:
             $ref: '#/components/schemas/jumpcloud.http.assets.FieldValue'
-          example:
+          examples:
+            - Name:
+                editable: true
+                value: Finance laptop 12
+              Model:
+                editable: true
+                value: MacBookPro18,3
+              Serial Number:
+                editable: true
+                value: C02XK0ZLMN8Q
+              Status:
+                editable: true
+                value:
+                  id: 6924631f16a853000117a678
+                  name: In stock
+                  type: select
+              Owner:
+                editable: true
+                value:
+                  id: 605a1f77bcf86cd7994390aa
+                  name: Jane Smith
+                  type: user
+              Location:
+                editable: true
+                value:
+                  id: 605b2f88bcf86cd7994390bb
+                  name: London HQ
+                  type: location
+      examples:
+        - id: 507f1f77bcf86cd799439011
+          jcSystemId: 605c3f99bcf86cd7994390cc
+          fields:
             Name:
               editable: true
               value: Finance laptop 12
             Model:
               editable: true
               value: MacBookPro18,3
-            Serial Number:
-              editable: true
-              value: C02XK0ZLMN8Q
             Status:
               editable: true
               value:
                 id: 6924631f16a853000117a678
                 name: In stock
                 type: select
-            Owner:
-              editable: true
-              value:
-                id: 605a1f77bcf86cd7994390aa
-                name: Jane Smith
-                type: user
-            Location:
-              editable: true
-              value:
-                id: 605b2f88bcf86cd7994390bb
-                name: London HQ
-                type: location
-      example:
-        id: 507f1f77bcf86cd799439011
-        jcSystemId: 605c3f99bcf86cd7994390cc
-        fields:
-          Name:
-            editable: true
-            value: Finance laptop 12
-          Model:
-            editable: true
-            value: MacBookPro18,3
-          Status:
-            editable: true
-            value:
-              id: 6924631f16a853000117a678
-              name: In stock
-              type: select
     jumpcloud.http.assets.CreateAssetRequest:
       type: object
       description: Request payload for creating a new asset of any type
@@ -80739,22 +80756,22 @@ components:
           type: object
           description: Map of field label to raw JSON value for each field to set (not `FieldValue` objects). Formats match the API overview (dates, RFC3339 datetimes, `{"id"}` for references, etc.).
           additionalProperties: true
-          example:
-            Name: Engineering MacBook Pro 14
-            Model: MacBookPro18,4
-            Serial Number: C02XG0FDJK7Q
-            Status:
-              id: 6924631f16a853000117a678
-            Owner:
-              id: 605a1f77bcf86cd7994390aa
-            Location:
-              id: 605b2f88bcf86cd7994390bb
-            Purchase Date: '2024-06-15'
-            Date Deployed: 2024-06-15T14:30:00
-            Purchase Cost:
-              amount: 2499.99
-              currency: USD
-            Disk Encrypted: true
+          examples:
+            - Name: Engineering MacBook Pro 14
+              Model: MacBookPro18,4
+              Serial Number: C02XG0FDJK7Q
+              Status:
+                id: 6924631f16a853000117a678
+              Owner:
+                id: 605a1f77bcf86cd7994390aa
+              Location:
+                id: 605b2f88bcf86cd7994390bb
+              Purchase Date: 2024-06-15
+              Date Deployed: 2024-06-15T14:30:00
+              Purchase Cost:
+                amount: 2499.99
+                currency: USD
+              Disk Encrypted: true
     jumpcloud.http.assets.UpdateAssetRequest:
       type: object
       description: Request payload for updating an existing asset of any type
@@ -80765,15 +80782,15 @@ components:
           type: object
           description: Asset field values organized by field label to update
           additionalProperties: true
-          example:
-            Status:
-              id: 6924631f16a853000117a679
-            Model: MacBookPro18,5
-            Purchase Date: '2025-01-10'
-            Date Deployed: 2025-01-10T09:00:00
-            Purchase Cost:
-              amount: 1999.5
-              currency: USD
+          examples:
+            - Status:
+                id: 6924631f16a853000117a679
+              Model: MacBookPro18,5
+              Purchase Date: 2025-01-10
+              Date Deployed: 2025-01-10T09:00:00
+              Purchase Cost:
+                amount: 1999.5
+                currency: USD
     jumpcloud.http.assets.AssetListResponse:
       type: object
       description: Response containing a paginated list of assets
@@ -80790,34 +80807,35 @@ components:
           type: integer
           format: int64
           description: Total number of assets available (for pagination)
-          example: 150
-      example:
-        results:
-          - id: 507f1f77bcf86cd799439011
-            jcSystemId: 605c3f99bcf86cd7994390cc
-            fields:
-              Name:
-                editable: true
-                value: Finance laptop 12
-              Model:
-                editable: true
-                value: MacBookPro18,3
-              Status:
-                editable: true
-                value:
-                  id: 6924631f16a853000117a678
-                  name: In stock
-                  type: select
-          - id: 507f1f77bcf86cd799439012
-            jcSystemId: 605c3f99bcf86cd7994390dd
-            fields:
-              Name:
-                editable: true
-                value: Staging MacBook
-              Purchase Date:
-                editable: true
-                value: '2024-11-01'
-        totalCount: 150
+          examples:
+            - 150
+      examples:
+        - results:
+            - id: 507f1f77bcf86cd799439011
+              jcSystemId: 605c3f99bcf86cd7994390cc
+              fields:
+                Name:
+                  editable: true
+                  value: Finance laptop 12
+                Model:
+                  editable: true
+                  value: MacBookPro18,3
+                Status:
+                  editable: true
+                  value:
+                    id: 6924631f16a853000117a678
+                    name: In stock
+                    type: select
+            - id: 507f1f77bcf86cd799439012
+              jcSystemId: 605c3f99bcf86cd7994390dd
+              fields:
+                Name:
+                  editable: true
+                  value: Staging MacBook
+                Purchase Date:
+                  editable: true
+                  value: 2024-11-01
+          totalCount: 150
     jumpcloud.http.assets.BatchUpdateFieldValue:
       type: object
       description: Field value for batch updating assets
@@ -80828,7 +80846,8 @@ components:
         label:
           type: string
           description: The label of the field to update
-          example: Status
+          examples:
+            - Status
         value:
           $ref: '#/components/schemas/jumpcloud.http.assets.BatchUpdateReference'
     jumpcloud.http.assets.BatchUpdateDeviceAssetsRequest:
@@ -80842,21 +80861,21 @@ components:
           description: Array of device asset IDs to update
           items:
             type: string
-          example:
-            - 507f1f77bcf86cd799439011
-            - 507f1f77bcf86cd799439012
+          examples:
+            -   - 507f1f77bcf86cd799439011
+                - 507f1f77bcf86cd799439012
         fieldValue:
           $ref: '#/components/schemas/jumpcloud.http.assets.BatchUpdateFieldValue'
         fields:
           type: object
           description: Asset field values organized by field label to update
           additionalProperties: true
-      example:
-        assetIds:
-          - 6936c139154c470001b5f53d
-        fields:
-          Status:
-            id: 6924631f16a853000117a678
+      examples:
+        - assetIds:
+            - 6936c139154c470001b5f53d
+          fields:
+            Status:
+              id: 6924631f16a853000117a678
     jumpcloud.http.assets.BatchUpdateDeviceAssetsResponse:
       type: object
       description: Response containing results of batch device asset update operation
@@ -80868,12 +80887,14 @@ components:
           type: integer
           format: int32
           description: Number of assets successfully updated
-          example: 5
+          examples:
+            - 5
         notUpdatedAssetCount:
           type: integer
           format: int32
           description: Number of assets that could not be updated
-          example: 0
+          examples:
+            - 0
     jumpcloud.http.assets.BatchUpdateAccessoryAssetsRequest:
       type: object
       description: Request payload for batch updating multiple accessory assets with a single field value
@@ -80885,21 +80906,21 @@ components:
           description: Array of accessory asset IDs to update
           items:
             type: string
-          example:
-            - 507f1f77bcf86cd799439011
-            - 507f1f77bcf86cd799439012
+          examples:
+            -   - 507f1f77bcf86cd799439011
+                - 507f1f77bcf86cd799439012
         fieldValue:
           $ref: '#/components/schemas/jumpcloud.http.assets.BatchUpdateFieldValue'
         fields:
           type: object
           description: Asset field values organized by field label to update
           additionalProperties: true
-      example:
-        assetIds:
-          - 6936c139154c470001b5f53d
-          - 507f1f77bcf86cd799439011
-        fields:
-          Model: Apple Pen
+      examples:
+        - assetIds:
+            - 6936c139154c470001b5f53d
+            - 507f1f77bcf86cd799439011
+          fields:
+            Model: Apple Pen
     jumpcloud.http.assets.BatchUpdateAccessoryAssetsResponse:
       type: object
       description: Response containing results of batch accessory asset update operation
@@ -80911,12 +80932,14 @@ components:
           type: integer
           format: int32
           description: Number of assets successfully updated
-          example: 5
+          examples:
+            - 5
         notUpdatedAssetCount:
           type: integer
           format: int32
           description: Number of assets that could not be updated
-          example: 0
+          examples:
+            - 0
     jumpcloud.http.assets.BatchUpdateLocationAssetsRequest:
       type: object
       description: Request payload for batch updating multiple location assets with a single field value
@@ -80928,21 +80951,21 @@ components:
           description: Array of location asset IDs to update
           items:
             type: string
-          example:
-            - 507f1f77bcf86cd799439011
-            - 507f1f77bcf86cd799439012
+          examples:
+            -   - 507f1f77bcf86cd799439011
+                - 507f1f77bcf86cd799439012
         fieldValue:
           $ref: '#/components/schemas/jumpcloud.http.assets.BatchUpdateFieldValue'
         fields:
           type: object
           description: Asset field values organized by field label to update
           additionalProperties: true
-      example:
-        assetIds:
-          - 6936c139154c470001b5f53d
-          - 507f1f77bcf86cd799439011
-        fields:
-          Name: Super HQ
+      examples:
+        - assetIds:
+            - 6936c139154c470001b5f53d
+            - 507f1f77bcf86cd799439011
+          fields:
+            Name: Super HQ
     jumpcloud.http.assets.BatchUpdateLocationAssetsResponse:
       type: object
       description: Response containing results of batch location asset update operation
@@ -80954,12 +80977,14 @@ components:
           type: integer
           format: int32
           description: Number of assets successfully updated
-          example: 5
+          examples:
+            - 5
         notUpdatedAssetCount:
           type: integer
           format: int32
           description: Number of assets that could not be updated
-          example: 0
+          examples:
+            - 0
     jumpcloud.http.assets.FieldValue:
       type: object
       description: Represents a field value with metadata indicating if it's editable
@@ -80970,7 +80995,8 @@ components:
         editable:
           type: boolean
           description: Whether this field can be edited by the user
-          example: true
+          examples:
+            - true
         value:
           description: The field value (type varies based on field configuration)
     jumpcloud.http.assets.Reference:
@@ -80983,11 +81009,13 @@ components:
         id:
           type: string
           description: The reference ID
-          example: 507f1f77bcf86cd799439013
+          examples:
+            - 507f1f77bcf86cd799439013
         name:
           type: string
           description: The reference display name
-          example: Active
+          examples:
+            - Active
         type:
           type: string
           description: The type of reference
@@ -80997,7 +81025,8 @@ components:
             - location
             - select
             - device_group
-          example: select
+          examples:
+            - select
     jumpcloud.http.assets.BatchUpdateReference:
       type: object
       description: Reference value for batch update operations
@@ -81007,11 +81036,13 @@ components:
         id:
           type: string
           description: The reference ID
-          example: 507f1f77bcf86cd799439013
+          examples:
+            - 507f1f77bcf86cd799439013
         name:
           type: string
           description: The reference display name
-          example: Active
+          examples:
+            - Active
         type:
           type: string
           description: The type of reference
@@ -81021,7 +81052,8 @@ components:
             - location
             - select
             - device_group
-          example: select
+          examples:
+            - select
     jumpcloud.http.assets.DeviceAssetByJCSystemID:
       type: object
       description: Device asset representation when retrieved by JumpCloud system ID
@@ -81031,21 +81063,24 @@ components:
         id:
           type: string
           description: The unique identifier of the device asset
-          example: 507f1f77bcf86cd799439011
+          examples:
+            - 507f1f77bcf86cd799439011
         assetStatus:
           $ref: '#/components/schemas/jumpcloud.http.assets.Reference'
         warrantyExpiredDate:
           type: string
           format: date
           description: The warranty expiration date
-          example: '2025-12-31'
+          examples:
+            - 2025-12-31
         purchaseCost:
           $ref: '#/components/schemas/jumpcloud.http.assets.Price'
         deployedDate:
           type: string
           format: date
           description: The date the device was deployed
-          example: '2024-01-15'
+          examples:
+            - 2024-01-15
         ownershipType:
           $ref: '#/components/schemas/jumpcloud.http.assets.Reference'
     jumpcloud.http.assets.Price:
@@ -81059,11 +81094,13 @@ components:
           type: number
           format: double
           description: The monetary amount
-          example: 1299.99
+          examples:
+            - 1299.99
         currency:
           type: string
           description: The currency code (ISO 4217)
-          example: USD
+          examples:
+            - USD
     jumpcloud.http.assets.CreateAssetHistoryNoteRequest:
       type: object
       description: Request payload for creating a note entry in asset history
@@ -81073,7 +81110,8 @@ components:
         note:
           type: string
           description: The content of the note to add to asset history
-          example: Asset transferred to new department
+          examples:
+            - Asset transferred to new department
     jumpcloud.http.assets.AssetHistoryEvent:
       type: object
       description: Represents a historical event that occurred on an asset
@@ -81097,11 +81135,13 @@ components:
             - ASSET_HISTORY_EVENT_TYPE_UPDATE_MDM_STATUS
             - ASSET_HISTORY_EVENT_TYPE_NOTE
           description: The type of history event
-          example: ASSET_HISTORY_EVENT_TYPE_NOTE
+          examples:
+            - ASSET_HISTORY_EVENT_TYPE_NOTE
         note:
           type: string
           description: Note content for note events
-          example: Asset transferred to new department
+          examples:
+            - Asset transferred to new department
         changedFields:
           type: array
           items:
@@ -81110,7 +81150,8 @@ components:
           type: string
           format: date-time
           description: When the event occurred
-          example: 2024-01-15T10:30:00
+          examples:
+            - 2024-01-15T10:30:00
         actor:
           $ref: '#/components/schemas/jumpcloud.http.assets.Actor'
         actionSource:
@@ -81121,7 +81162,8 @@ components:
             - ACTION_SOURCE_IMPORT
             - ACTION_SOURCE_API
           description: Source of the action
-          example: ACTION_SOURCE_MANUAL
+          examples:
+            - ACTION_SOURCE_MANUAL
     jumpcloud.http.assets.Actor:
       type: object
       description: Represents who performed an action on an asset
@@ -81132,11 +81174,13 @@ components:
         id:
           type: string
           description: The actor's unique identifier
-          example: 507f1f77bcf86cd799439011
+          examples:
+            - 507f1f77bcf86cd799439011
         name:
           type: string
           description: The actor's name
-          example: John Doe
+          examples:
+            - John Doe
         type:
           type: string
           enum:
@@ -81144,7 +81188,8 @@ components:
             - ACTOR_TYPE_SYSTEM
             - ACTOR_TYPE_SERVICE_ACCOUNT
           description: The type of actor
-          example: ACTOR_TYPE_USER
+          examples:
+            - ACTOR_TYPE_USER
     jumpcloud.http.assets.FieldChange:
       type: object
       description: Represents a field that was changed in an asset update event
@@ -81154,7 +81199,8 @@ components:
         label:
           type: string
           description: The field label that changed
-          example: Status
+          examples:
+            - Status
         oldValue:
           $ref: '#/components/schemas/jumpcloud.http.assets.ChangeValue'
         newValue:
@@ -81181,7 +81227,8 @@ components:
           type: integer
           format: int64
           description: Total number of history events available (for pagination)
-          example: 25
+          examples:
+            - 25
     jumpcloud.http.assets.SelectOption:
       type: object
       description: Represents a select field option with its properties
@@ -81192,11 +81239,13 @@ components:
         id:
           type: string
           description: The unique identifier of the select option
-          example: 507f1f77bcf86cd799439011
+          examples:
+            - 507f1f77bcf86cd799439011
         value:
           type: string
           description: The display value of the select option
-          example: Active
+          examples:
+            - Active
     jumpcloud.http.assets.ListSelectOptionsResponse:
       type: object
       description: Response containing select field options
@@ -81213,7 +81262,8 @@ components:
           type: integer
           format: int64
           description: Total number of select options available
-          example: 5
+          examples:
+            - 5
     jumpcloud.http.assets.FieldConfig:
       type: object
       description: Represents a field configuration
@@ -81227,19 +81277,23 @@ components:
         id:
           type: string
           description: The unique identifier of the field configuration
-          example: 507f1f77bcf86cd799439011
+          examples:
+            - 507f1f77bcf86cd799439011
         label:
           type: string
           description: The display label for the field
-          example: Status
+          examples:
+            - Status
         default:
           type: boolean
           description: Whether this is a default/system field
-          example: false
+          examples:
+            - false
         mandatory:
           type: boolean
           description: Whether the field is required
-          example: true
+          examples:
+            - true
         scope:
           type: string
           description: The asset type(s) this field applies to
@@ -81248,7 +81302,8 @@ components:
             - Device
             - Accessory
             - Location
-          example: Device
+          examples:
+            - Device
     jumpcloud.http.assets.ListFieldConfigsResponse:
       type: object
       description: Response containing a paginated list of field configurations
@@ -81265,7 +81320,8 @@ components:
           type: integer
           format: int64
           description: Total number of field configurations available
-          example: 10
+          examples:
+            - 10
     jumpcloud.http.saas_app_management.PublicAPIAccount:
       type: object
       properties:
@@ -81751,43 +81807,31 @@ components:
           description: Human-readable error message describing what went wrong
   parameters: {}
   responses:
-    trait:standardErrors:400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorDetails'
-    trait:standardErrors:401:
+    trait_standardErrors_401:
       description: Unauthenticated
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    trait:standardErrors:403:
+    trait_standardErrors_403:
       description: Unauthorized
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    trait:standardErrors:404:
+    trait_standardErrors_404:
       description: Not Found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    trait:standardErrors:409:
+    trait_standardErrors_409:
       description: Conflict
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    trait:standardErrors:410:
-      description: Gone
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    trait:standardErrors:500:
+    trait_standardErrors_500:
       description: Internal Server Error
       content:
         application/json:

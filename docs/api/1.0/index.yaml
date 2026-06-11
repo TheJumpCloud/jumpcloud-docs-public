@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 servers:
   - url: https://console.jumpcloud.com/api
     description: United States
@@ -9372,8 +9372,9 @@ components:
         fde:
           $ref: '#/components/schemas/fde'
         fileSystem:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         hasServiceAccount:
           type: boolean
         hostname:
@@ -9383,9 +9384,10 @@ components:
         isPolicyBound:
           type: boolean
         lastContact:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         modifySSHDConfig:
           type: boolean
         networkInterfaces:
@@ -9498,8 +9500,9 @@ components:
         fde:
           $ref: '#/components/schemas/fde'
         fileSystem:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         hasServiceAccount:
           type: boolean
         hostname:
@@ -9509,9 +9512,10 @@ components:
         isPolicyBound:
           type: boolean
         lastContact:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         modifySSHDConfig:
           type: boolean
         networkInterfaces:
@@ -9802,7 +9806,7 @@ components:
         delegatedAuthority:
           allOf:
             - $ref: '#/components/schemas/systemuserput_delegatedAuthority'
-            - nullable: true
+            - {}
         restrictedFields:
           type: array
           items:
@@ -9930,7 +9934,7 @@ components:
         delegatedAuthority:
           allOf:
             - $ref: '#/components/schemas/systemuserput_delegatedAuthority'
-            - nullable: true
+            - {}
         restrictedFields:
           type: array
           items:
@@ -9944,14 +9948,15 @@ components:
         account_locked:
           type: boolean
         account_locked_date:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         activated:
           type: boolean
         admin:
           allOf:
             - $ref: '#/components/schemas/systemuserreturn_admin'
-            - nullable: true
+            - {}
         addresses:
           type: array
           items:
@@ -10035,11 +10040,13 @@ components:
         organization:
           type: string
         password_date:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         password_expiration_date:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         password_expired:
           type: boolean
         password_never_expires:
@@ -10098,7 +10105,7 @@ components:
         delegatedAuthority:
           allOf:
             - $ref: '#/components/schemas/systemuserput_delegatedAuthority'
-            - nullable: true
+            - {}
         restrictedFields:
           type: array
           items:
@@ -10124,14 +10131,15 @@ components:
         account_locked:
           type: boolean
         account_locked_date:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         activated:
           type: boolean
         admin:
           allOf:
             - $ref: '#/components/schemas/systemuserreturn_admin'
-            - nullable: true
+            - {}
         addresses:
           type: array
           items:
@@ -10215,11 +10223,13 @@ components:
         organization:
           type: string
         password_date:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         password_expiration_date:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         password_expired:
           type: boolean
         password_never_expires:
@@ -10411,7 +10421,8 @@ components:
         checksum:
           type: string
           description: Checksum to validate the trustedApp configuration for the organization
-          example: thisIsAnExampleChecksum1234
+          examples:
+            - thisIsAnExampleChecksum1234
         trustedApps:
           minItems: 1
           type: array
@@ -10486,12 +10497,12 @@ components:
             - NONE
             - BYOC
             - JUMPCLOUD_MANAGED
-      example:
-        name: test radius
-        networkSourceIp: 0.0.0.0
-        sharedSecret: secretradiuspassword
-        tagsNames:
-          - tag1
+      examples:
+        - name: test radius
+          networkSourceIp: 0.0.0.0
+          sharedSecret: secretradiuspassword
+          tagsNames:
+            - tag1
     id_password_body:
       type: object
       properties:
@@ -11296,8 +11307,9 @@ components:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     system_sshdParams:
       type: object
       properties:
@@ -11362,8 +11374,7 @@ components:
       properties:
         type:
           type: string
-          enum:
-            - security
+          const: security
         name:
           type: string
           enum:
@@ -11457,18 +11468,18 @@ components:
           maxLength: 1024
           type: string
     systemuserput_delegatedAuthority:
-      type: object
+      type:
+        - object
+        - 'null'
       properties:
         name:
           type: string
           description: Authority name
-          enum:
-            - ActiveDirectory
+          const: ActiveDirectory
         id:
           type: string
           description: ObjectId of the target Active Directory connection
       description: Used by auth to determine password delegation authority
-      nullable: true
     systemuserputpost_addresses:
       type: object
       properties:
@@ -11501,7 +11512,9 @@ components:
         address:
           type: string
     systemuserreturn_admin:
-      type: object
+      type:
+        - object
+        - 'null'
       properties:
         id:
           type: string
@@ -11511,7 +11524,6 @@ components:
           type: array
           items:
             type: string
-      nullable: true
     systemuserreturn_addresses:
       type: object
       properties:
@@ -11589,54 +11601,21 @@ components:
         name:
           type: string
           description: Name of the trusted application
-          example: Application 1
+          examples:
+            - Application 1
         path:
           type: string
           description: Absolute path for the app's location in user's device
-          example: /someuser/Applications/application1.app
+          examples:
+            - /someuser/Applications/application1.app
         teamid:
           type: string
           description: App's Team ID
-          example: FakeTeamID
+          examples:
+            - FakeTeamID
       description: Represents an application that is going to be trusted by the organization
   parameters: {}
-  responses:
-    trait:standardErrors:400:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    trait:standardErrors:401:
-      description: Unauthenticated
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    trait:standardErrors:403:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    trait:standardErrors:404:
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    trait:standardErrors:409:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    trait:standardErrors:500:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  responses: {}
   requestBodies: {}
   securitySchemes:
     x-api-key:
