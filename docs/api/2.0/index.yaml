@@ -79268,6 +79268,18 @@ components:
             - 'null'
           description: Emitted as string in JSON (e.g. "123"); omit when not set to avoid validation errors.
           readOnly: true
+        scheduleFrequency:
+          type:
+            - string
+            - 'null'
+          description: 'Stored and returned as lowercase: daily, weekly, monthly, quarterly'
+          readOnly: true
+        scheduleTime:
+          type:
+            - string
+            - 'null'
+          description: Time of day for the schedule (e.g., "09:00 AM", "14:30")
+          readOnly: true
         scheduledReportId:
           title: scheduled_report_id is a UUID (scheduled_reports.id), not a JumpCloud object_id
           type: string
@@ -79279,6 +79291,12 @@ components:
         status:
           type: string
           description: 'Status: IN_PROGRESS, SUCCESS, FAILED'
+        timeZone:
+          type:
+            - string
+            - 'null'
+          description: Timezone for the schedule (e.g., "GMT-2", "America/New_York")
+          readOnly: true
         timeoutAt:
           type:
             - string
