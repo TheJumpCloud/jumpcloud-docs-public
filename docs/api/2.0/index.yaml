@@ -76286,7 +76286,9 @@ components:
         desiredState:
           $ref: '#/components/schemas/devices.SoftwareAppDesiredState'
         detectionRules:
-          $ref: '#/components/schemas/devices.WindowsCustomDetectionRules'
+          allOf:
+            - $ref: '#/components/schemas/devices.WindowsCustomDetectionRules'
+            - {}
         downloadUrl:
           type: string
         enterpriseObjectId:
