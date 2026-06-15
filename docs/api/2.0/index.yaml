@@ -53795,7 +53795,20 @@ paths:
       tags:
         - Monitoring and Alerting
       summary: This endpoint is used for creating the rules.
-      description: This endpoint allows you to create a health monitoring rule.
+      description: |-
+        Create a health monitoring rule.
+
+        Use one of:
+        - template_object_id — template-based or poll-based (UI / legacy clients)
+        - rule_type + rule_subtype — programmatic poll-based create without template_object_id
+        - rule_type RULE_TYPE_EVENT_FILTER_BASED + event_filters — insights rules
+
+        Poll-based rule_type + rule_subtype pairs:
+        | ruleType | ruleSubtype |
+        | RULE_TYPE_POLL_BASED | certificate_expiry_detection |
+        | RULE_TYPE_POLL_BASED | device_policy_detection |
+
+        Discover pairs from GET /api/v2/healthmonitoring/ruletemplates.
       operationId: RulesService_CreateRule
       requestBody:
         description: CreateRuleRequest is the request message used to create a single rule.
@@ -53824,7 +53837,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -53872,6 +53885,7 @@ paths:
                         }
                     ],
                     "postExpiryEnabled": True,
+                    "ruleSubtype": "string",
                     "ruleType": "RULE_TYPE_UNSPECIFIED",
                     "scopeType": "string",
                     "selectedScopeValues": ["string"],
@@ -53892,7 +53906,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules/{id}:
     get:
       tags:
@@ -54037,7 +54051,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -54085,6 +54099,7 @@ paths:
                         }
                     ],
                     "postExpiryEnabled": True,
+                    "ruleSubtype": "string",
                     "ruleType": "RULE_TYPE_UNSPECIFIED",
                     "scopeType": "string",
                     "selectedScopeValues": ["string"],
@@ -54105,13 +54120,16 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/ruletemplates:
     get:
       tags:
         - Monitoring and Alerting
       summary: This endpoint is used for listing the rules of health monitoring.
-      description: This endpoint allows you list health monitoring rule templates.
+      description: |-
+        List health monitoring rule templates. Each template includes rule_type and
+        rule_subtype — use these pairs on POST /api/v2/healthmonitoring/rules when creating
+        poll-based rules without template_object_id.
       operationId: RuleTemplatesService_ListRuleTemplates
       parameters:
         - name: filter
@@ -75578,6 +75596,19 @@ components:
             $ref: '#/components/schemas/jumpcloud.healthmonitoring.PollRuleCondition'
         postExpiryEnabled:
           type: boolean
+        ruleSubtype:
+          type: string
+          description: |2-
+              Template variant for rule_type. Required on create when using rule_type instead of
+              template_object_id (poll-based rules today).
+
+              Supported values (with rule_type = RULE_TYPE_POLL_BASED):
+              - certificate_expiry_detection — certificate expiration monitoring
+              - device_policy_detection — device with no JumpCloud policy
+
+              Omit for RULE_TYPE_TEMPLATE_BASED and RULE_TYPE_EVENT_FILTER_BASED.
+
+              List GET /api/v2/healthmonitoring/ruletemplates for the current catalog.
         ruleType:
           $ref: '#/components/schemas/jumpcloud.healthmonitoring.RuleType'
         scopeType:
@@ -75754,6 +75785,15 @@ components:
         outputSchema:
           type: object
           properties: {}
+        ruleSubtype:
+          type: string
+          description: |2-
+              Template variant paired with rule_type. For poll-based templates, pass this value
+              with rule_type on rule create instead of template_object_id.
+
+              Examples: certificate_expiry_detection, device_policy_detection.
+        ruleType:
+          $ref: '#/components/schemas/jumpcloud.healthmonitoring.RuleType'
         siRequired:
           type: boolean
         status:
@@ -78062,9 +78102,9 @@ components:
         RuleType specifies the type of rule.
 
          - RULE_TYPE_UNSPECIFIED: No rule type specified.
-         - RULE_TYPE_TEMPLATE_BASED: Rule type is template based.
-         - RULE_TYPE_EVENT_FILTER_BASED: Rule type is event filter based.
-         - RULE_TYPE_POLL_BASED: Rule type is poll based (scheduled evaluation).
+         - RULE_TYPE_TEMPLATE_BASED: Template-based rules; omit rule_subtype and set template_object_id.
+         - RULE_TYPE_EVENT_FILTER_BASED: Insights rules; omit rule_subtype and set event_filters.
+         - RULE_TYPE_POLL_BASED: Poll-based rules; set rule_subtype (e.g. certificate_expiry_detection) or template_object_id.
       default: RULE_TYPE_UNSPECIFIED
       enum:
         - RULE_TYPE_UNSPECIFIED
