@@ -81913,6 +81913,7 @@ components:
       description: API key for authentication
 tags:
   - name: Access Requests
+  - name: AccessorySync
   - name: AccountManagerCalendar
   - name: Active Directory
   - name: AddOn
