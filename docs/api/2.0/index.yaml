@@ -63644,6 +63644,120 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-manager?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /alerts/{alertObjectId}/notes:
+    get:
+      tags:
+        - Monitoring and Alerting
+      summary: This endpoint provides all notes for an alert.
+      description: This endpoint allows you to get all notes for a specific alert.
+      operationId: AlertsService_GetAlertNotes
+      parameters:
+        - name: alertObjectId
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: byte
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.alerts.GetAlertNotesResponse'
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - healthmonitoring.alerts
+        - healthmonitoring.alerts.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/alerts/{alertObjectId}/notes \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/{alertObjectId}/notes"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{alertObjectId}/notes' -Method GET -Headers $headers
+    post:
+      tags:
+        - Monitoring and Alerting
+      summary: This endpoint is used for adding notes to alerts.
+      description: This endpoint allows you to add a note to a specific alert.
+      operationId: AlertsService_AddAlertNote
+      parameters:
+        - name: alertObjectId
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/alertObjectId_notes_body'
+        required: true
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.alerts.AddAlertNoteResponse'
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - healthmonitoring.alerts
+      x-codegen-request-body-name: body
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/alerts/{alertObjectId}/notes \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"alertNote":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/alerts/{alertObjectId}/notes"
+
+            payload = {"alertNote": "string"}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{alertObjectId}/notes' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"alertNote":"string"}'
   /reports/custom-reports:
     get:
       tags:
@@ -79590,6 +79704,43 @@ components:
       properties:
         savedReport:
           $ref: '#/components/schemas/jumpcloud.insights.SavedReport'
+    jumpcloud.alerts.AddAlertNoteResponse:
+      type: object
+      properties:
+        note:
+          $ref: '#/components/schemas/jumpcloud.alerts.AlertNote'
+      description: AddAlertNoteResponse returns the created note.
+    jumpcloud.alerts.AlertNote:
+      type: object
+      properties:
+        alertNote:
+          type: string
+        alertNoteObjectId:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          format: byte
+          readOnly: true
+        authorEmail:
+          type: string
+        authorId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+      description: AlertNote represents a note/comment on an alert.
+    jumpcloud.alerts.GetAlertNotesResponse:
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.alerts.AlertNote'
+      description: GetAlertNotesResponse returns all notes for an alert.
     inline_response_400:
       type: object
       properties:
@@ -80199,6 +80350,12 @@ components:
           pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
+    alertObjectId_notes_body:
+      type: object
+      properties:
+        alertNote:
+          type: string
+      description: AddAlertNoteRequest is used to add a new note to an alert.
     customreports_customReportId_body:
       type: object
       properties:
