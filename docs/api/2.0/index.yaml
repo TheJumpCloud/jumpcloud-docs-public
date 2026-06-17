@@ -1,13 +1,13 @@
 openapi: 3.1.0
 servers:
   - url: https://console.jumpcloud.com/api/v2
-    description: United States
+    description: United States (US)
     x-jc-region: us
   - url: https://console.eu.jumpcloud.com/api/v2
-    description: EU
+    description: European Union (EU)
     x-jc-region: eu
   - url: https://console.in.jumpcloud.com/api/v2
-    description: India
+    description: India (IN)
     x-jc-region: in
 info:
   contact:

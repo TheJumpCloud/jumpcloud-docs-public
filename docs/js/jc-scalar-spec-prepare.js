@@ -227,6 +227,18 @@
     scheduleSidebarSupportLink(support);
   };
 
+  JumpCloudDocs.prepareScalarSpec = function (spec) {
+    var copy = JSON.parse(JSON.stringify(spec));
+    removeXInternalTrue(copy);
+    prependOperationPaths(copy);
+    return copy;
+  };
+
+  JumpCloudDocs.getSupportLinkFromSpec = getSupportLinkFromSpec;
+  JumpCloudDocs.scheduleSidebarSupportLink = scheduleSidebarSupportLink;
+  JumpCloudDocs.syncScalarViewportHeight = syncScalarViewportHeight;
+  JumpCloudDocs.scheduleScalarViewportSync = scheduleScalarViewportSync;
+
   JumpCloudDocs.mountScalarFromUrl = async function (options) {
     var specUrl = options && options.specUrl;
     var selector = options && options.selector;

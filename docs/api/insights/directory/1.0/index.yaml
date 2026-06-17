@@ -810,13 +810,13 @@ tags:
   - name: Reports
 servers:
   - url: https://api.jumpcloud.com/insights/directory/v1
-    description: United States
+    description: United States (US)
     x-jc-region: us
   - url: https://api.eu.jumpcloud.com/insights/directory/v1
-    description: EU
+    description: European Union (EU)
     x-jc-region: eu
   - url: https://api.in.jumpcloud.com/insights/directory/v1
-    description: India
+    description: India (IN)
     x-jc-region: in
 components:
   requestBodies:
