@@ -797,7 +797,7 @@ paths:
 x-scopes:
   - directoryinsights.readonly
 x-tagGroups:
-  - name: Endpoints
+  - name: API Reference
     tags:
       - EventDistinctQuery
       - EventIntervalQuery

@@ -68034,6 +68034,7 @@ components:
       description: Device asset representation when retrieved by JumpCloud system ID
       required:
         - id
+        - connectedAccessoryCount
       properties:
         id:
           type: string
@@ -68058,6 +68059,12 @@ components:
             - 2024-01-15
         ownershipType:
           $ref: '#/components/schemas/jumpcloud.http.assets.Reference'
+        connectedAccessoryCount:
+          type: integer
+          format: int32
+          description: Number of accessory assets connected to this device
+          examples:
+            - 3
     jumpcloud.http.assets.Price:
       type: object
       description: Monetary amount with currency
@@ -68221,6 +68228,11 @@ components:
           description: The display value of the select option
           examples:
             - Active
+        editable:
+          type: boolean
+          description: Whether the option can be edited or removed by the organization.
+          examples:
+            - false
     jumpcloud.http.assets.ListSelectOptionsResponse:
       type: object
       description: Response containing select field options
@@ -69657,7 +69669,7 @@ tags:
   - name: fde
   - name: mdm
 x-tagGroups:
-  - name: Endpoints
+  - name: API Reference
     tags:
       - Access Requests
       - Active Directory

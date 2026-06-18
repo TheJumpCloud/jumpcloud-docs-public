@@ -10094,7 +10094,7 @@ tags:
   - name: User Portal
   - name: Users
 x-tagGroups:
-  - name: Endpoints
+  - name: API Reference
     tags:
       - Application Templates
       - Applications
