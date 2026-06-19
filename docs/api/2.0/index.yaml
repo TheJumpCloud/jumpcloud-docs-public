@@ -40673,8 +40673,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/views' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"columns":["string"],"filters":[{"field":"string","values":["string"]}],"isDefault":true,"name":"string","objectId":"string","shared":true,"sortConfig":"string","userObjectId":"string"}'
   /reports/custom:
     get:
-      tags:
-        - Reports
       summary: List Custom Reports
       description: |-
         list Custom Reports.
@@ -40687,57 +40685,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_ListReportViews
-      parameters:
-        - name: limit
-          in: query
-          description: The number of records to return at once. Limited to 100.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '100'
-        - name: skip
-          in: query
-          description: The offset into the records to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '0'
-        - name: sort
-          in: query
-          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          description: The fields on the items listed to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
       responses:
         '200':
           description: Success listing Custom Reports.
@@ -40775,6 +40722,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: limit
+          description: The number of records to return at once. Limited to 100.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '100'
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '0'
+        - name: sort
+          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: fields
+          description: The fields on the items listed to return.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -40806,8 +40798,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
     post:
-      tags:
-        - Reports
       summary: Create a Custom Report
       description: |-
         Create a Custom report.
@@ -40821,12 +40811,6 @@ paths:
          -d '{ {Report_Parameters} }' \
         ```
       operationId: Reports_CreateReportView
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.insights.CreateReportViewRequest'
-        required: true
       responses:
         '200':
           description: ''
@@ -40870,12 +40854,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.insights.CreateReportViewRequest'
+        required: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - reports
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -40960,8 +40951,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{"aggregations":[{"field":["string"],"function":"function_unknown","name":"string"}],"cacheToken":"string","fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"operation_unknown","query":{},"unit":"string","value":null}],"limit":0,"metadata":{"context":[{"key":"string","value":"string"}],"searchPurpose":"unspecified","source":"string"},"pagination":{"offset":0,"pageSize":0},"requestCache":true,"sort":[{"field":"string","order":"asc"}]},"updatedBySource":"unspecified"}}'
   /reports/custom/{objectId}:
     get:
-      tags:
-        - Reports
       summary: Get a Custom Report
       description: |-
         Get a Custom Report.
@@ -40974,15 +40963,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_GetReportView
-      parameters:
-        - name: objectId
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
       responses:
         '200':
           description: Success getting a Custom Report.
@@ -41020,6 +41000,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -41049,8 +41038,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom/{objectId}' -Method GET -Headers $headers
     put:
-      tags:
-        - Reports
       summary: Update Custom Report
       description: |-
         Update an existing Custom Report.
@@ -41064,21 +41051,6 @@ paths:
          -d '{ {Report_Parameters} }' \
         ```
       operationId: Reports_UpdateReportView
-      parameters:
-        - name: objectId
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/custom_objectId_body'
-        required: true
       responses:
         '200':
           description: Success updating a Custom Report.
@@ -41116,12 +41088,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reportView:
+                  $ref: '#/components/schemas/jumpcloud.insights.ReportView'
+        required: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - reports
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -41205,8 +41194,6 @@ paths:
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"reportView":{"configuration":{"columnSettings":{"fixed":["string"]}},"description":"string","displayName":"string","id":"string","resources":["string"],"searchRequest":{"aggregations":[{"field":["string"],"function":"function_unknown","name":"string"}],"cacheToken":"string","fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"operation_unknown","query":{},"unit":"string","value":null}],"limit":0,"metadata":{"context":[{"key":"string","value":"string"}],"searchPurpose":"unspecified","source":"string"},"pagination":{"offset":0,"pageSize":0},"requestCache":true,"sort":[{"field":"string","order":"asc"}]},"updatedBySource":"unspecified"}}'
     delete:
-      tags:
-        - Reports
       summary: Delete a Custom report
       description: |-
         Delete an existing Custom Report.
@@ -41219,15 +41206,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_DeleteReportView
-      parameters:
-        - name: objectId
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
       responses:
         '200':
           description: A successful response.
@@ -41235,12 +41213,12 @@ paths:
             application/json:
               schema:
                 type: object
+                properties: {}
         '204':
           description: Success deleting a Custom Report.
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '401':
           description: Unauthorized
           content:
@@ -41265,6 +41243,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -41294,8 +41281,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom/{objectId}' -Method DELETE -Headers $headers
   /reports/jumpcloud:
     get:
-      tags:
-        - Reports
       summary: List Jumpcloud Reports
       description: |-
         List Jumpcloud Reports.
@@ -41308,57 +41293,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_ListReportTemplates
-      parameters:
-        - name: limit
-          in: query
-          description: The number of records to return at once. Limited to 100.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '100'
-        - name: skip
-          in: query
-          description: The offset into the records to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '0'
-        - name: sort
-          in: query
-          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          description: The fields on the items listed to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
       responses:
         '200':
           description: Success listing Jumpcloud Reports.
@@ -41396,6 +41330,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: limit
+          description: The number of records to return at once. Limited to 100.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '100'
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '0'
+        - name: sort
+          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: fields
+          description: The fields on the items listed to return.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -41428,8 +41407,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/jumpcloud?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /reports/jumpcloud/{objectId}:
     get:
-      tags:
-        - Reports
       summary: Get a Jumpcloud Report
       description: |-
         Get a Jumpcloud Report.
@@ -41442,15 +41419,6 @@ paths:
           -H 'x-api-key:{API_KEY}' \
         ```
       operationId: Reports_GetReportTemplate
-      parameters:
-        - name: objectId
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
       responses:
         '200':
           description: Success getting a Jumpcloud Report.
@@ -41488,6 +41456,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -41560,8 +41537,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules-stats' -Method GET -Headers $headers
   /reports/export:
     post:
-      tags:
-        - Reports
       summary: Export a report
       description: |-
         Export a report.
@@ -41574,12 +41549,6 @@ paths:
          -d '{ {Export_Parameters} }' \
         ```
       operationId: Reports_ExportReport
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.insights.ExportReportRequest'
-        required: true
       responses:
         '200':
           description: Success exporting the report.
@@ -41617,13 +41586,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.insights.ExportReportRequest'
+        required: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - reports
         - reports.readonly
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -46858,8 +46834,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/{systemObjectId}/transfer' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"org_id":"string"}'
   /reports/scheduled:
     get:
-      tags:
-        - Reports
       summary: List Scheduled Reports
       description: |-
         List Scheduled Reports.
@@ -46872,57 +46846,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_ListScheduledReports
-      parameters:
-        - name: limit
-          in: query
-          description: The number of records to return at once. Limited to 100.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '100'
-        - name: skip
-          in: query
-          description: The offset into the records to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '0'
-        - name: sort
-          in: query
-          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          description: The fields on the items listed to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Use camelCase only; allowed values: displayName, description, scheduleFrequency, isActive, createdAt, updatedAt. Do not use snake_case (e.g. display_name is invalid).\n\n\t**operator** = Supported operators: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Value to search for (case sensitive; supports wild cards).\n\n\t**Example** `GET /api/v2/reports/scheduled?filter=displayName:eq:Daily+Report`\n"
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
       responses:
         '200':
           description: Success listing Scheduled Reports.
@@ -46954,6 +46877,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: limit
+          description: The number of records to return at once. Limited to 100.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '100'
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '0'
+        - name: sort
+          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: fields
+          description: The fields on the items listed to return.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Use camelCase only; allowed values: displayName, description, scheduleFrequency, isActive, createdAt, updatedAt. Do not use snake_case (e.g. display_name is invalid).\n\n\t**operator** = Supported operators: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Value to search for (case sensitive; supports wild cards).\n\n\t**Example** `GET /api/v2/reports/scheduled?filter=displayName:eq:Daily+Report`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -46985,8 +46953,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
     post:
-      tags:
-        - Reports
       summary: Create a Scheduled Report
       description: |-
         Create a Scheduled Report.
@@ -47000,12 +46966,6 @@ paths:
          -d '{ {Scheduled_Report_Parameters} }' \
         ```
       operationId: Reports_CreateScheduledReport
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.insights.CreateScheduledReportRequest'
-        required: true
       responses:
         '200':
           description: ''
@@ -47043,12 +47003,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.insights.CreateScheduledReportRequest'
+        required: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - reports
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -47100,8 +47067,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"scheduledReport":{"days":["string"],"description":"string","displayName":"string","endDate":"2019-08-24T14:15:22Z","exportType":"string","id":"string","isActive":true,"recipients":[{"channelType":"string","value":["string"]}],"reportId":"string","reportType":"string","scheduleFrequency":"string","scheduleTime":"string","startDate":"2019-08-24T14:15:22Z","timeZone":"string"}}'
   /reports/scheduled/{objectId}:
     get:
-      tags:
-        - Reports
       summary: Get a Scheduled Report
       description: |-
         Get a Scheduled Report.
@@ -47114,15 +47079,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_GetScheduledReport
-      parameters:
-        - name: objectId
-          in: path
-          description: object_id path param (scheduled_reports.id, UUID); name allows gateway to bind path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: Success getting a Scheduled Report.
@@ -47160,6 +47116,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: objectId
+          description: object_id path param (scheduled_reports.id, UUID); name allows gateway to bind path
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -47189,8 +47154,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}' -Method GET -Headers $headers
     put:
-      tags:
-        - Reports
       summary: Update a Scheduled Report
       description: |-
         Update a Scheduled Report.
@@ -47204,21 +47167,6 @@ paths:
          -d '{ {Scheduled_Report_Parameters} }' \
         ```
       operationId: Reports_UpdateScheduledReport
-      parameters:
-        - name: objectId
-          in: path
-          description: object_id path param (scheduled_reports.id, UUID)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/scheduled_objectId_body'
-        required: true
       responses:
         '200':
           description: Success updating a Scheduled Report.
@@ -47230,26 +47178,42 @@ paths:
           description: Bad Request
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '404':
           description: Not Found
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '500':
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
+      parameters:
+        - name: objectId
+          description: object_id path param (scheduled_reports.id, UUID)
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scheduledReport:
+                  $ref: '#/components/schemas/jumpcloud.insights.ScheduledReport'
+              required:
+                - scheduledReport
+        required: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - reports
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -47300,8 +47264,6 @@ paths:
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"scheduledReport":{"days":["string"],"description":"string","displayName":"string","endDate":"2019-08-24T14:15:22Z","exportType":"string","id":"string","isActive":true,"recipients":[{"channelType":"string","value":["string"]}],"reportId":"string","reportType":"string","scheduleFrequency":"string","scheduleTime":"string","startDate":"2019-08-24T14:15:22Z","timeZone":"string"}}'
     delete:
-      tags:
-        - Reports
       summary: Delete a Scheduled Report
       description: |-
         Delete a Scheduled Report.
@@ -47314,15 +47276,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_DeleteScheduledReport
-      parameters:
-        - name: objectId
-          in: path
-          description: object_id path param (scheduled_reports.id, UUID)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: Success deleting a Scheduled Report.
@@ -47334,14 +47287,21 @@ paths:
           description: Not Found
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '500':
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
+      parameters:
+        - name: objectId
+          description: object_id path param (scheduled_reports.id, UUID)
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -47371,8 +47331,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}' -Method DELETE -Headers $headers
   /reports/scheduled/{objectId}/runs:
     get:
-      tags:
-        - Reports
       summary: List Scheduled Report Runs by Report
       description: |-
         List Scheduled Report Runs for a specific scheduled report (all statuses: IN_PROGRESS, SUCCESS, FAILED).
@@ -47385,73 +47343,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_ListScheduledReportRunsByReport
-      parameters:
-        - name: objectId
-          in: path
-          description: object_id path param (scheduled_reports.id, UUID)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-        - name: limit
-          in: query
-          description: The number of records to return at once. Limited to 100.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '100'
-        - name: skip
-          in: query
-          description: The offset into the records to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '0'
-        - name: sort
-          in: query
-          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-          allowReserved: true
-        - name: filter
-          in: query
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/reports/scheduled/{id}/runs?filter=status:eq:SUCCESS`\n"
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-        - name: startDate
-          in: query
-          description: Inclusive start of completed_at range for history filtering (RFC3339).
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: date-time
-        - name: endDate
-          in: query
-          description: Inclusive end of completed_at range for history filtering (RFC3339).
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: date-time
       responses:
         '200':
           description: Success listing Scheduled Report Runs for a report.
@@ -47463,20 +47354,73 @@ paths:
           description: Bad Request
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '404':
           description: Not Found
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '500':
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
+      parameters:
+        - name: objectId
+          description: object_id path param (scheduled_reports.id, UUID)
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          description: The number of records to return at once. Limited to 100.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '100'
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '0'
+        - name: sort
+          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/reports/scheduled/{id}/runs?filter=status:eq:SUCCESS`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: startDate
+          description: Inclusive start of completed_at range for history filtering (RFC3339).
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          description: Inclusive end of completed_at range for history filtering (RFC3339).
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -47509,8 +47453,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}/runs?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE&startDate=SOME_STRING_VALUE&endDate=SOME_STRING_VALUE' -Method GET -Headers $headers
   /reports/scheduled/{objectId}/trigger:
     post:
-      tags:
-        - Reports
       summary: Trigger a Scheduled Report (Run Now)
       description: |-
         Manually trigger a Scheduled Report execution (Run Now).
@@ -47523,15 +47465,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_TriggerScheduledReport
-      parameters:
-        - name: objectId
-          in: path
-          description: object_id path param (scheduled_reports.id, UUID)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: Success triggering a Scheduled Report.
@@ -47543,14 +47476,21 @@ paths:
           description: Not Found
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '500':
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
+      parameters:
+        - name: objectId
+          description: object_id path param (scheduled_reports.id, UUID)
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -47580,8 +47520,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/{objectId}/trigger' -Method POST -Headers $headers
   /reports/scheduled/runs:
     get:
-      tags:
-        - Reports
       summary: List all Scheduled Report Runs
       description: |-
         List Scheduled Report Runs for an organization (all statuses: IN_PROGRESS, SUCCESS, FAILED).
@@ -47594,65 +47532,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_ListScheduledReportRuns
-      parameters:
-        - name: limit
-          in: query
-          description: The number of records to return at once. Limited to 100.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '100'
-        - name: skip
-          in: query
-          description: The offset into the records to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '0'
-        - name: sort
-          in: query
-          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-          allowReserved: true
-        - name: filter
-          in: query
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/reports/scheduled/runs?filter=status:eq:SUCCESS`\n"
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-        - name: startDate
-          in: query
-          description: Inclusive start of completed_at range for history filtering (RFC3339).
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: date-time
-        - name: endDate
-          in: query
-          description: Inclusive end of completed_at range for history filtering (RFC3339).
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: date-time
       responses:
         '200':
           description: Success listing Scheduled Report Runs.
@@ -47664,14 +47543,62 @@ paths:
           description: Bad Request
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '500':
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
+      parameters:
+        - name: limit
+          description: The number of records to return at once. Limited to 100.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '100'
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '0'
+        - name: sort
+          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/reports/scheduled/runs?filter=status:eq:SUCCESS`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: startDate
+          description: Inclusive start of completed_at range for history filtering (RFC3339).
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          description: Inclusive end of completed_at range for history filtering (RFC3339).
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -47703,8 +47630,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/runs?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE&startDate=SOME_STRING_VALUE&endDate=SOME_STRING_VALUE' -Method GET -Headers $headers
     post:
-      tags:
-        - Reports
       summary: Create a Scheduled Report Run
       description: |-
         Create a new Scheduled Report Run.
@@ -47718,12 +47643,6 @@ paths:
           -d '{"scheduled_report_run": {...}}'
         ```
       operationId: Reports_CreateScheduledReportRun
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.insights.CreateScheduledReportRunRequest'
-        required: true
       responses:
         '200':
           description: ''
@@ -47767,12 +47686,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.insights.CreateScheduledReportRunRequest'
+        required: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - reports
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -47807,8 +47733,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/scheduled/runs' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"scheduledReportRun":{"id":"string","status":"string"}}'
   /reports/scheduled/runs/{objectId}:
     get:
-      tags:
-        - Reports
       summary: Get a Scheduled Report Run
       description: |-
         Get a Scheduled Report Run by ID.
@@ -47821,15 +47745,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: Reports_GetScheduledReportRun
-      parameters:
-        - name: objectId
-          in: path
-          description: object_id is the run ID (scheduled_report_runs.id, e.g. Temporal workflow execution ID or UUID), bound from path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: Success retrieving a Scheduled Report Run.
@@ -47849,6 +47764,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: objectId
+          description: object_id is the run ID (scheduled_report_runs.id, e.g. Temporal workflow execution ID or UUID), bound from path
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -48349,62 +48273,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts/{alertObjectId}/notes' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"alertNote":"string"}'
   /reports/custom-reports:
     get:
-      tags:
-        - Reports
       summary: List Custom Report Builder reports
       description: List Custom Report Builder reports.
       operationId: Reports_ListCustomReports
-      parameters:
-        - name: limit
-          in: query
-          description: The number of records to return at once. Limited to 100.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '100'
-        - name: skip
-          in: query
-          description: The offset into the records to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '0'
-        - name: sort
-          in: query
-          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          description: The fields on the items listed to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
       responses:
         '200':
           description: A successful response.
@@ -48412,6 +48283,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/jumpcloud.insights.ListCustomReportsResponse'
+      parameters:
+        - name: limit
+          description: The number of records to return at once. Limited to 100.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '100'
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '0'
+        - name: sort
+          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: fields
+          description: The fields on the items listed to return.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -48443,17 +48359,9 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
     post:
-      tags:
-        - Reports
       summary: Create a Custom Report Builder report
       description: Create a Custom Report Builder report.
       operationId: Reports_CreateCustomReport
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.insights.CreateCustomReportRequest'
-        required: true
       responses:
         '200':
           description: ''
@@ -48461,12 +48369,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/jumpcloud.insights.CustomReport'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.insights.CreateCustomReportRequest'
+        required: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - reports
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -48558,20 +48473,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"customReport":{"columns":["string"],"description":"string","displayName":"string","filters":[{"field":"string","operation":"string","value":"string"}],"id":"string","primaryObject":"string","searchRequest":{"aggregations":[{"field":["string"],"function":"function_unknown","name":"string"}],"cacheToken":"string","fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"operation_unknown","query":{},"unit":"string","value":null}],"limit":0,"metadata":{"context":[{"key":"string","value":"string"}],"searchPurpose":"unspecified","source":"string"},"pagination":{"offset":0,"pageSize":0},"requestCache":true,"sort":[{"field":"string","order":"asc"}]},"secondaryObjects":["string"]}}'
   /reports/custom-reports/{customReportId}:
     get:
-      tags:
-        - Reports
       summary: Get a Custom Report Builder report
       description: Get a Custom Report Builder report.
       operationId: Reports_GetCustomReport
-      parameters:
-        - name: customReportId
-          in: path
-          description: Path param (custom_reports.id, UUID). Named custom_report_id so gateways do not conflate with org object_id.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: A successful response.
@@ -48579,6 +48483,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/jumpcloud.insights.CustomReportResponse'
+      parameters:
+        - name: customReportId
+          description: Path param (custom_reports.id, UUID). Named custom_report_id so gateways do not conflate with org object_id.
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -48608,26 +48521,9 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId}' -Method GET -Headers $headers
     put:
-      tags:
-        - Reports
       summary: Update a Custom Report Builder report
       description: Update a Custom Report Builder report.
       operationId: Reports_UpdateCustomReport
-      parameters:
-        - name: customReportId
-          in: path
-          description: Path param (custom_reports.id, UUID). Named custom_report_id so gateways do not conflate with org object_id.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/customreports_customReportId_body'
-        required: true
       responses:
         '200':
           description: A successful response.
@@ -48635,12 +48531,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/jumpcloud.insights.CustomReportResponse'
+      parameters:
+        - name: customReportId
+          description: Path param (custom_reports.id, UUID). Named custom_report_id so gateways do not conflate with org object_id.
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customReport:
+                  $ref: '#/components/schemas/jumpcloud.insights.CustomReport'
+        required: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - reports
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -48731,20 +48644,9 @@ paths:
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"customReport":{"columns":["string"],"description":"string","displayName":"string","filters":[{"field":"string","operation":"string","value":"string"}],"id":"string","primaryObject":"string","searchRequest":{"aggregations":[{"field":["string"],"function":"function_unknown","name":"string"}],"cacheToken":"string","fields":{"exclude":["string"],"include":["string"]},"filters":[{"field":"string","filters":[{}],"operation":"operation_unknown","query":{},"unit":"string","value":null}],"limit":0,"metadata":{"context":[{"key":"string","value":"string"}],"searchPurpose":"unspecified","source":"string"},"pagination":{"offset":0,"pageSize":0},"requestCache":true,"sort":[{"field":"string","order":"asc"}]},"secondaryObjects":["string"]}}'
     delete:
-      tags:
-        - Reports
       summary: Delete a Custom Report Builder report
       description: Delete a Custom Report Builder report.
       operationId: Reports_DeleteCustomReport
-      parameters:
-        - name: customReportId
-          in: path
-          description: Path param (custom_reports.id, UUID). Named custom_report_id so gateways do not conflate with org object_id.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: Success deleting a Custom Report Builder report.
@@ -48756,14 +48658,21 @@ paths:
           description: Not Found
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '500':
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
+      parameters:
+        - name: customReportId
+          description: Path param (custom_reports.id, UUID). Named custom_report_id so gateways do not conflate with org object_id.
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -48793,62 +48702,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/custom-reports/{customReportId}' -Method DELETE -Headers $headers
   /reports/saved-reports:
     get:
-      tags:
-        - Reports
       summary: List saved reports
       description: List saved report views and custom reports in one collection.
       operationId: Reports_ListSavedReports
-      parameters:
-        - name: limit
-          in: query
-          description: The number of records to return at once. Limited to 100.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '100'
-        - name: skip
-          in: query
-          description: The offset into the records to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-            default: '0'
-        - name: sort
-          in: query
-          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          description: The fields on the items listed to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
       responses:
         '200':
           description: Success listing saved reports.
@@ -48886,6 +48742,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: limit
+          description: The number of records to return at once. Limited to 100.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '100'
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: '0'
+        - name: sort
+          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: fields
+          description: The fields on the items listed to return.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -48918,27 +48819,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/saved-reports?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /reports/saved-reports/{id}:
     get:
-      tags:
-        - Reports
       summary: Get a saved report
       description: Get a saved report view or custom report by id and report_type.
       operationId: Reports_GetSavedReport
-      parameters:
-        - name: id
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-        - name: reportType
-          in: query
-          description: report_view or custom_report
-          required: true
-          style: form
-          explode: true
-          schema:
-            type: string
       responses:
         '200':
           description: Success getting a saved report.
@@ -48976,6 +48859,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: reportType
+          description: report_view or custom_report
+          in: query
+          required: true
+          schema:
+            type: string
+      tags:
+        - Reports
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -64428,10 +64325,10 @@ components:
       type: object
       properties:
         fixed:
-          title: Specifies the fixed columns used in report-preview
           type: array
           items:
             type: string
+          title: Specifies the fixed columns used in report-preview
     jumpcloud.insights.Configuration:
       type: object
       properties:
@@ -64472,7 +64369,6 @@ components:
         displayName:
           type: string
         id:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         resources:
@@ -64493,38 +64389,37 @@ components:
         configuration:
           $ref: '#/components/schemas/jumpcloud.insights.Configuration'
         createdAt:
-          title: Specifies the time when this report was created
           type: string
           format: date-time
+          title: Specifies the time when this report was created
           readOnly: true
         createdBy:
-          title: Specifies the email of the user who created this report
           type: string
+          title: Specifies the email of the user who created this report
           readOnly: true
         description:
           type: string
         displayName:
           type: string
         id:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         resources:
-          title: Specifies the list of objects referred by this report
           type: array
           items:
             type: string
             readOnly: true
+          title: Specifies the list of objects referred by this report
         searchRequest:
           $ref: '#/components/schemas/jumpcloud.search.SearchRequest'
         updatedAt:
-          title: Specifies the time when this report was last updated
           type: string
           format: date-time
+          title: Specifies the time when this report was last updated
           readOnly: true
         updatedBy:
-          title: Specifies the email of the user who updated this report last
           type: string
+          title: Specifies the email of the user who updated this report last
           readOnly: true
         updatedBySource:
           $ref: '#/components/schemas/jumpcloud.insights.Source'
@@ -64804,24 +64699,24 @@ components:
         status:
           $ref: '#/components/schemas/jumpcloud.insights.ExportStatus'
     jumpcloud.insights.ExportStatus:
-      title: |-
-        - PENDING: Specifies that the export is pending
-         - IN_PROGRESS: Specifies that the export is processing and report will be sent to user's email
-         - COMPLETED: Specifies that the export is completed and report is available for download
-         - FAILED: Specifies that the export failed
       type: string
-      default: pending
       enum:
         - pending
         - in_progress
         - completed
         - failed
+      default: pending
+      title: |-
+        - PENDING: Specifies that the export is pending
+         - IN_PROGRESS: Specifies that the export is processing and report will be sent to user's email
+         - COMPLETED: Specifies that the export is completed and report is available for download
+         - FAILED: Specifies that the export failed
     jumpcloud.insights.ExportType:
       type: string
-      default: csv
       enum:
         - csv
         - json
+      default: csv
     jumpcloud.google_emm.SignupURLRequest:
       type: object
     jumpcloud.ingresso.AccessWorkflow:
@@ -65247,14 +65142,14 @@ components:
           $ref: '#/components/schemas/jumpcloud.healthmonitoring.Rule'
       description: UpdateRuleStatusResponse is the response message to UpdateRuleStatusRequest.
     jumpcloud.insights.Source:
-      title: Indicates if the report was updated through the API or UI
       type: string
-      default: unspecified
       enum:
         - unspecified
         - api
         - ui
         - ai
+      default: unspecified
+      title: Indicates if the report was updated through the API or UI
     jumpcloud.notifications.Channel:
       type: object
       properties:
@@ -66878,19 +66773,19 @@ components:
         - RULE_LABEL_ADMIN
         - RULE_LABEL_WORKFLOW
     jumpcloud.insights.CreateScheduledReportRequest:
-      required:
-        - scheduledReport
       type: object
       properties:
         scheduledReport:
           $ref: '#/components/schemas/jumpcloud.insights.ScheduledReport'
-    jumpcloud.insights.CreateScheduledReportRunRequest:
       required:
-        - scheduledReportRun
+        - scheduledReport
+    jumpcloud.insights.CreateScheduledReportRunRequest:
       type: object
       properties:
         scheduledReportRun:
           $ref: '#/components/schemas/jumpcloud.insights.ScheduledReportRun'
+      required:
+        - scheduledReportRun
     jumpcloud.insights.DeleteScheduledReportResponse:
       type: object
       properties:
@@ -66906,8 +66801,8 @@ components:
             $ref: '#/components/schemas/jumpcloud.insights.ScheduledReportRun'
         totalCount:
           type: integer
-          description: Total number of runs matching the list filters (before limit/skip pagination).
           format: int64
+          description: Total number of runs matching the list filters (before limit/skip pagination).
           readOnly: true
     jumpcloud.insights.ListScheduledReportsResponse:
       type: object
@@ -66920,32 +66815,24 @@ components:
           type: integer
           format: int64
     jumpcloud.insights.Recipient:
-      required:
-        - channelType
-        - value
       type: object
       properties:
         channelType:
-          title: 'Stored and returned as lowercase: email, slack, webhook'
           type: string
+          title: 'Stored and returned as lowercase: email, slack, webhook'
         value:
-          title: List of values for this channel (e.g. email addresses, slack channels, or webhook URLs)
           type: array
-          description: 'List of values: email addresses (email), slack channel names/IDs (slack), or webhook URLs (webhook)'
           items:
             type: string
+          description: 'List of values: email addresses (email), slack channel names/IDs (slack), or webhook URLs (webhook)'
+          title: List of values for this channel (e.g. email addresses, slack channels, or webhook URLs)
       description: |-
         Recipient represents a notification recipient with channel type and a list of values.
         For email: value is list of email addresses; for slack: list of channel names/IDs; for webhook: list of URLs.
-    jumpcloud.insights.ScheduledReport:
       required:
-        - displayName
-        - exportType
-        - isActive
-        - recipients
-        - scheduleFrequency
-        - scheduleTime
-        - timeZone
+        - channelType
+        - value
+    jumpcloud.insights.ScheduledReport:
       type: object
       properties:
         createdAt:
@@ -66958,30 +66845,32 @@ components:
           readOnly: true
         days:
           type: array
-          description: 'Weekly: e.g. ["MONDAY", "THURSDAY"]. Monthly/quarterly: ["FIRST_DAY"] or ["LAST_DAY"]. Daily: omit or [].'
           items:
             type: string
+          description: 'Weekly: e.g. ["MONDAY", "THURSDAY"]. Monthly/quarterly: ["FIRST_DAY"] or ["LAST_DAY"]. Daily: omit or [].'
         description:
           type: string
         displayName:
           type: string
         endDate:
-          type: string
-          description: Optional end date for the schedule
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
+          description: Optional end date for the schedule
         exportType:
+          type: string
           title: 'Stored and returned as lowercase: csv, json'
-          type: string
         id:
-          title: id is a UUID (scheduled_reports.id), not a JumpCloud object_id
           type: string
+          title: id is a UUID (scheduled_reports.id), not a JumpCloud object_id
         isActive:
           type: boolean
         lastRunAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
           readOnly: true
         lastRunStatus:
           type: string
@@ -66992,30 +66881,32 @@ components:
           readOnly: true
         recipients:
           type: array
-          description: List of notification recipients with channel type and recipient details
           items:
             $ref: '#/components/schemas/jumpcloud.insights.Recipient'
+          description: List of notification recipients with channel type and recipient details
         reportId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
-          type: string
-          description: Report definition ID (report_views.object_id or report_templates.object_id); hex in API. Omitted when not set.
+          type:
+            - string
+            - 'null'
           format: byte
-          nullable: true
+          description: Report definition ID (report_views.object_id or report_templates.object_id); hex in API. Omitted when not set.
         reportType:
-          type: string
+          type:
+            - string
+            - 'null'
           description: report_view or report_template
-          nullable: true
         scheduleFrequency:
-          title: 'Stored and returned as lowercase: daily, weekly, monthly, quarterly'
           type: string
+          title: 'Stored and returned as lowercase: daily, weekly, monthly, quarterly'
         scheduleTime:
           type: string
           description: Time of day for the schedule (e.g., "09:00 AM", "14:30")
         startDate:
-          type: string
-          description: Optional start date for the schedule
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
+          description: Optional start date for the schedule
         timeZone:
           type: string
           description: Timezone for the schedule (e.g., "GMT-2", "America/New_York")
@@ -67023,6 +66914,14 @@ components:
           type: string
           format: date-time
           readOnly: true
+      required:
+        - displayName
+        - scheduleFrequency
+        - scheduleTime
+        - timeZone
+        - recipients
+        - exportType
+        - isActive
     jumpcloud.insights.ScheduledReportResponse:
       type: object
       properties:
@@ -67032,45 +66931,51 @@ components:
       type: object
       properties:
         artifactUrl:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Presigned download URL when the run succeeded (same link as email/slack notifications). Falls back to a relative API path only when no stored URL exists.
-          nullable: true
           readOnly: true
         completedAt:
           type: string
           format: date-time
           readOnly: true
         displayName:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Scheduled report display name (primary label in history UI)
-          nullable: true
           readOnly: true
         fileSize:
-          type: string
+          type:
+            - string
+            - 'null'
           description: File size in bytes
-          nullable: true
           readOnly: true
         id:
+          type: string
           title: id is a Temporal workflow execution ID (scheduled_report_runs.id), not a JumpCloud object_id
-          type: string
         rowCount:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Emitted as string in JSON (e.g. "123"); omit when not set to avoid validation errors.
-          nullable: true
           readOnly: true
         scheduleFrequency:
-          type: string
+          type:
+            - string
+            - 'null'
           description: 'Stored and returned as lowercase: daily, weekly, monthly, quarterly'
-          nullable: true
           readOnly: true
         scheduleTime:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Time of day for the schedule (e.g., "09:00 AM", "14:30")
-          nullable: true
           readOnly: true
         scheduledReportId:
-          title: scheduled_report_id is a UUID (scheduled_reports.id), not a JumpCloud object_id
           type: string
+          title: scheduled_report_id is a UUID (scheduled_reports.id), not a JumpCloud object_id
           readOnly: true
         startedAt:
           type: string
@@ -67080,15 +66985,17 @@ components:
           type: string
           description: 'Status: IN_PROGRESS, SUCCESS, FAILED'
         timeZone:
-          type: string
+          type:
+            - string
+            - 'null'
           description: Timezone for the schedule (e.g., "GMT-2", "America/New_York")
-          nullable: true
           readOnly: true
         timeoutAt:
-          type: string
-          description: Omit when not set to avoid null (validator expects string or absent).
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
+          description: Omit when not set to avoid null (validator expects string or absent).
           readOnly: true
     jumpcloud.insights.TriggerScheduledReportResponse:
       type: object
@@ -67098,8 +67005,8 @@ components:
           description: The Temporal workflow execution ID for the triggered run
         startedAt:
           type: string
-          description: When the run was started
           format: date-time
+          description: When the run was started
     jumpcloud.ingresso.CancelWorkflowAccessRequestResponse:
       type: object
     jumpcloud.ingresso.EndSessionResponse:
@@ -67230,10 +67137,6 @@ components:
         customReport:
           $ref: '#/components/schemas/jumpcloud.insights.CustomReport'
     jumpcloud.insights.CustomReport:
-      required:
-        - displayName
-        - primaryObject
-        - searchRequest
       type: object
       properties:
         columns:
@@ -67272,6 +67175,10 @@ components:
         updatedBy:
           type: string
           readOnly: true
+      required:
+        - displayName
+        - searchRequest
+        - primaryObject
     jumpcloud.insights.CustomReportResponse:
       type: object
       properties:
@@ -67581,23 +67488,6 @@ components:
           type: array
           items:
             type: string
-    customreports_customReportId_body:
-      type: object
-      properties:
-        customReport:
-          $ref: '#/components/schemas/jumpcloud.insights.CustomReport'
-    custom_objectId_body:
-      type: object
-      properties:
-        reportView:
-          $ref: '#/components/schemas/jumpcloud.insights.ReportView'
-    scheduled_objectId_body:
-      required:
-        - scheduledReport
-      type: object
-      properties:
-        scheduledReport:
-          $ref: '#/components/schemas/jumpcloud.insights.ScheduledReport'
     channels_id_body:
       type: object
       properties:
