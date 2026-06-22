@@ -19055,7 +19055,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
+              --data '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","displayVersion":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","displayVersion":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
         - lang: Python
           source: |-
             import requests
@@ -19097,6 +19097,7 @@ paths:
                             "totalLicenses": 0
                         },
                         "packageSubtitle": "string",
+                        "displayVersion": "string",
                         "packageVersion": "string",
                         "packageKind": "string",
                         "assetKind": "string",
@@ -19144,6 +19145,9 @@ paths:
                                     "sha256sum": "string",
                                     "status": "string",
                                     "rejectedReason": "string",
+                                    "displayVersion": "string",
+                                    "createdAt": "2019-08-24T14:15:22Z",
+                                    "updatedAt": "2019-08-24T14:15:22Z",
                                     "metadata": {"metadataExe": {
                                             "installerEngineVersion": "string",
                                             "signatureLabel": "string"
@@ -19197,7 +19201,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","displayVersion":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","displayVersion":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
     x-functionalities-tags:
       - devices-windows-software-app-crud
       - devices-darwin-software-app-crud
@@ -19398,7 +19402,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
+              --data '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","displayVersion":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","displayVersion":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
         - lang: Python
           source: |-
             import requests
@@ -19440,6 +19444,7 @@ paths:
                             "totalLicenses": 0
                         },
                         "packageSubtitle": "string",
+                        "displayVersion": "string",
                         "packageVersion": "string",
                         "packageKind": "string",
                         "assetKind": "string",
@@ -19487,6 +19492,9 @@ paths:
                                     "sha256sum": "string",
                                     "status": "string",
                                     "rejectedReason": "string",
+                                    "displayVersion": "string",
+                                    "createdAt": "2019-08-24T14:15:22Z",
+                                    "updatedAt": "2019-08-24T14:15:22Z",
                                     "metadata": {"metadataExe": {
                                             "installerEngineVersion": "string",
                                             "signatureLabel": "string"
@@ -19540,7 +19548,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"id":"string","organization":"string","displayName":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","settings":[{"packageId":"string","autoUpdate":false,"allowUpdateDelay":false,"packageManager":"string","locationObjectId":"string","location":"string","desiredState":"string","adminIntent":"INTENT_UNSPECIFIED","managedInstallEligibilityStatus":"MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED","detectionRules":{"ruleType":"string","expectedDisplayName":"string","registryPath":"string","registryValueName":"string","registryExpectedValue":"string","powerShellScript":"string"},"appleVpp":{"appConfiguration":"string","assignedLicenses":0,"availableLicenses":0,"details":{},"isConfigEnabled":true,"supportedDeviceFamilies":["IPAD"],"totalLicenses":0},"packageSubtitle":"string","displayVersion":"string","packageVersion":"string","packageKind":"string","assetKind":"string","assetSha256Size":0,"assetSha256Strings":["string"],"description":"string","googleAndroid":{"name":"string","type":"APP_TYPE_UNSPECIFIED","iconUrl":"string","author":"string","category":"string","appPricing":"string","distributionChannel":"string","minSdkVersion":0,"contentRating":"string","updateTime":"string","appVersion":"string","fullDescription":"string","startUrl":"string","displayMode":"string","versionCode":0,"managedProperties":true,"autoUpdateMode":"AUTO_UPDATE_DEFAULT","runtimePermission":"PROMPT","installType":"AVAILABLE","managedConfigurationTemplateId":"string","permissionGrants":[{"id":"string","policy":"PROMPT"}],"androidFeatures":["string"]},"enterpriseObjectId":"string","commandLineArguments":"string","storedPackage":{"objectId":"string","versions":[{"name":"string","version":0,"size":0,"sha256sum":"string","status":"string","rejectedReason":"string","displayVersion":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","metadata":{"metadataExe":{"installerEngineVersion":"string","signatureLabel":"string"}}}]},"storedPackageObjectId":"string","microsoftStore":{"packageFamilyName":"string","nonRemovable":true,"doNotUpdate":true},"scope":"string","appCatalogInstallableObjectId":"string","iconUrl":"string","installerEngineVersion":"string","versionlessDownloadUrl":true,"bundleId":"string","teamId":"string","format":"string","appFileName":"string","shortVersion":"string","signatureLabel":"string","silentInstallFlags":["string"],"downloadUrl":"string","architectures":["string"],"updateTool":"string","updateToolArguments":"string","uninstallOnUnbind":true,"unsafeUninstall":true,"appDeliveryMethod":"string","createdAt":"2019-08-24T14:15:22Z","updatedAt":"2019-08-24T14:15:22Z","packageVersionUpdatedAt":"2019-08-24T14:15:22Z"}]}'
     get:
       description: |-
         Retrieves a Software Application.
@@ -19766,6 +19774,86 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{software_app_id}/associations' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"id":"string","op":"add","attributes":{},"type":"system"}'
+  /softwareapps/{software_app_id}/stored-package-versions:
+    parameters:
+      - name: software_app_id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      tags:
+        - Software Apps
+      summary: Prepare a stored package version upload
+      operationId: softwareApps_prepareStoredPackageUpload
+      description: Prepares a stored package version upload for a software app.
+      parameters:
+        - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/software-app-stored-package-version-request'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/software-app-stored-package-version-response'
+        '400':
+          $ref: '#/components/responses/trait_standardErrors_400'
+        '401':
+          $ref: '#/components/responses/trait_standardErrors_401'
+        '403':
+          $ref: '#/components/responses/trait_standardErrors_403'
+        '404':
+          $ref: '#/components/responses/trait_standardErrors_404'
+        '409':
+          $ref: '#/components/responses/trait_standardErrors_409'
+        '500':
+          $ref: '#/components/responses/trait_standardErrors_500'
+      security:
+        - x-api-key: []
+      x-scopes:
+        - systems
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/softwareapps/{software_app_id}/stored-package-versions \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"name":"string","size":0,"displayVersion":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/softwareapps/{software_app_id}/stored-package-versions"
+
+            payload = {
+                "name": "string",
+                "size": 0,
+                "displayVersion": "string"
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{software_app_id}/stored-package-versions' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","size":0,"displayVersion":"string"}'
   /softwareapps/{software_app_id}/reclaim-licenses:
     parameters:
       - name: software_app_id
@@ -44139,68 +44227,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/usergroup/{userGroupId}?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
   /service-accounts:
     get:
-      tags:
-        - Service Accounts
       summary: Fetch all saved service accounts
       description: Retrieves a list of service accounts with support for filtering, sorting, and pagination. Auth config is not included in the service accounts
       operationId: ServiceAccounts_ListServiceAccounts
-      parameters:
-        - name: limit
-          in: query
-          description: pagination - page size (maximum number of results to return)
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: integer
-            format: int32
-        - name: skip
-          in: query
-          description: pagination - page offset (number of results to skip)
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: integer
-            format: int32
-        - name: search.fields
-          in: query
-          description: search field (currently only supports "name")
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: search.searchTerm
-          in: query
-          description: search term/value (e.g., "John")
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-        - name: sort
-          in: query
-          description: |-
-            sort configuration (allowed values: "name", "-name", "expiresAt", "-expiresAt")
-            "-" prefix indicates descending order
-            if search config is provided, it will override the sort field to "name" and sort order to ascending
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-          allowReserved: true
-        - name: x-org-id
-          in: header
-          description: Organization identifier that can be obtained from console settings.
-          required: false
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: Service accounts list successfully retrieved.
@@ -44238,6 +44267,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: limit
+          description: pagination - page size (maximum number of results to return)
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skip
+          description: pagination - page offset (number of results to skip)
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search.fields
+          description: search field (currently only supports "name")
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: search.searchTerm
+          description: search term/value (e.g., "John")
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: sort
+          description: |-
+            sort configuration (allowed values: "name", "-name", "expiresAt", "-expiresAt")
+            "-" prefix indicates descending order
+            if search config is provided, it will override the sort field to "name" and sort order to ascending
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: x-org-id
+          description: Organization identifier that can be obtained from console settings.
+          in: header
+          required: false
+          schema:
+            type: string
+      tags:
+        - Service Accounts
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -44274,26 +44351,9 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&search.fields=SOME_ARRAY_VALUE&search.searchTerm=SOME_STRING_VALUE&sort=SOME_STRING_VALUE' -Method GET -Headers $headers
     post:
-      tags:
-        - Service Accounts
       summary: Create a new service account
       description: Creates a new service account.
       operationId: ServiceAccounts_CreateServiceAccount
-      parameters:
-        - name: x-org-id
-          in: header
-          description: Organization identifier that can be obtained from console settings.
-          required: false
-          style: simple
-          explode: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.service_accounts.CreateServiceAccountRequest'
-        required: true
       responses:
         '200':
           description: A successful response.
@@ -44349,12 +44409,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: x-org-id
+          description: Organization identifier that can be obtained from console settings.
+          in: header
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.service_accounts.CreateServiceAccountRequest'
+        required: true
+      tags:
+        - Service Accounts
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - serviceaccounts
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -44363,7 +44437,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"authConfig":{"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}},"name":"string","roleId":"string","roleName":"string"}'
+              --data '{"authConfig":{"apiKeyConfig":{"lifetime":"string"},"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}},"name":"string","roleId":"string","roleName":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -44372,6 +44446,7 @@ paths:
 
             payload = {
                 "authConfig": {
+                    "apiKeyConfig": {"lifetime": "string"},
                     "authType": "AUTH_TYPE_UNSPECIFIED",
                     "clientSecretConfig": {"lifetime": "string"}
                 },
@@ -44394,32 +44469,12 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authConfig":{"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}},"name":"string","roleId":"string","roleName":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authConfig":{"apiKeyConfig":{"lifetime":"string"},"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}},"name":"string","roleId":"string","roleName":"string"}'
   /service-accounts/{service_account_id}:
     get:
-      tags:
-        - Service Accounts
       summary: Fetch a service account by ID
       description: Get service account
       operationId: ServiceAccounts_GetServiceAccount
-      parameters:
-        - name: service_account_id
-          in: path
-          description: the account's id
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
-        - name: x-org-id
-          in: header
-          description: Organization identifier that can be obtained from console settings.
-          required: false
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: Service account successfully retrieved.
@@ -44463,6 +44518,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: service_account_id
+          description: the account's id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: x-org-id
+          description: Organization identifier that can be obtained from console settings.
+          in: header
+          required: false
+          schema:
+            type: string
+      tags:
+        - Service Accounts
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -44497,28 +44568,8 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}' -Method GET -Headers $headers
     delete:
-      tags:
-        - Service Accounts
       summary: Delete a service account
       operationId: ServiceAccounts_DeleteServiceAccount
-      parameters:
-        - name: service_account_id
-          in: path
-          description: the service account id
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
-        - name: x-org-id
-          in: header
-          description: Organization identifier that can be obtained from console settings.
-          required: false
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: A successful response.
@@ -44568,6 +44619,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: service_account_id
+          description: the service account id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: x-org-id
+          description: Organization identifier that can be obtained from console settings.
+          in: header
+          required: false
+          schema:
+            type: string
+      tags:
+        - Service Accounts
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -44602,35 +44669,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}' -Method DELETE -Headers $headers
   /service-accounts/{service_account_id}/auth-config:
     post:
-      tags:
-        - Service Accounts
       summary: Create a new service account authentication config
       description: Creates a new authentication configuration for a service account.
       operationId: ServiceAccounts_CreateServiceAccountAuthConfig
-      parameters:
-        - name: service_account_id
-          in: path
-          description: the service account id for which the auth config is being created (path parameter)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
-        - name: x-org-id
-          in: header
-          description: Organization identifier that can be obtained from console settings.
-          required: false
-          style: simple
-          explode: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/service_account_id_authconfig_body_1'
-        required: true
       responses:
         '200':
           description: A successful response.
@@ -44680,12 +44721,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: service_account_id
+          description: the service account id for which the auth config is being created (path parameter)
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: x-org-id
+          description: Organization identifier that can be obtained from console settings.
+          in: header
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authConfig:
+                  $ref: '#/components/schemas/jumpcloud.service_accounts.AuthConfigParameter'
+        required: true
+      tags:
+        - Service Accounts
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - serviceaccounts
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -44694,7 +44759,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"authConfig":{"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}}}'
+              --data '{"authConfig":{"apiKeyConfig":{"lifetime":"string"},"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}}}'
         - lang: Python
           source: |-
             import requests
@@ -44702,6 +44767,7 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}/auth-config"
 
             payload = {"authConfig": {
+                    "apiKeyConfig": {"lifetime": "string"},
                     "authType": "AUTH_TYPE_UNSPECIFIED",
                     "clientSecretConfig": {"lifetime": "string"}
                 }}
@@ -44720,39 +44786,12 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}/auth-config' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authConfig":{"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}/auth-config' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"authConfig":{"apiKeyConfig":{"lifetime":"string"},"authType":"AUTH_TYPE_UNSPECIFIED","clientSecretConfig":{"lifetime":"string"}}}'
   /service-accounts/{service_account_id}/auth-config/{auth_config_id}:
     delete:
-      tags:
-        - Service Accounts
       summary: Delete a specific auth config for a service account
       description: Deletes a specific authentication configuration for a service account.
       operationId: ServiceAccounts_DeleteServiceAccountAuthConfig
-      parameters:
-        - name: service_account_id
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
-        - name: auth_config_id
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
-        - name: x-org-id
-          in: header
-          description: Organization identifier that can be obtained from console settings.
-          required: false
-          style: simple
-          explode: false
-          schema:
-            type: string
       responses:
         '200':
           description: A successful response.
@@ -44808,6 +44847,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: service_account_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: auth_config_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: x-org-id
+          description: Organization identifier that can be obtained from console settings.
+          in: header
+          required: false
+          schema:
+            type: string
+      tags:
+        - Service Accounts
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -57397,6 +57457,17 @@ components:
           type: string
         rejectedReason:
           type: string
+        displayVersion:
+          type: string
+          description: Admin-defined display label for this package version.
+        createdAt:
+          type: string
+          format: date-time
+          description: When this package version was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: When this package version was last updated.
         metadata:
           type: object
           description: Parsed package metadata for the uploaded file (e.g. EXE code-signing subject).
@@ -57445,6 +57516,40 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/software-app-settings'
+    software-app-stored-package-version-request:
+      title: softwareAppStoredPackageVersionRequest
+      type: object
+      description: Software app stored package version request
+      properties:
+        name:
+          type: string
+          description: The name of the package.
+        size:
+          type: integer
+          description: The size of the package.
+        displayVersion:
+          type: string
+          maxLength: 256
+          description: Optional display version for the package. Defaults to "Version N" when omitted.
+      required:
+        - name
+        - size
+    software-app-stored-package-version-response:
+      title: softwareAppStoredPackageVersionResponse
+      type: object
+      description: Software app stored package version response
+      properties:
+        uploadUrl:
+          type: string
+          description: The upload URL for the package.
+        pendingVersionObjectId:
+          type: string
+          description: The object ID of the pending version.
+        metadata:
+          $ref: '#/components/schemas/devices.ObjectStorageMetadata'
+      required:
+        - uploadUrl
+        - pendingVersionObjectId
     software-app-create:
       title: SoftwareApplicationCreate
       type: object
@@ -57544,6 +57649,10 @@ components:
         packageSubtitle:
           type: string
           description: The package manifest subtitle.
+        displayVersion:
+          type: string
+          maxLength: 256
+          description: Optional display version for the software app. Defaults to "Version N" when omitted.
         packageVersion:
           type: string
           description: The package manifest version.
@@ -63048,6 +63157,8 @@ components:
         createdAt:
           type: string
           format: date-time
+        displayVersion:
+          type: string
         metadata:
           $ref: '#/components/schemas/devices.ObjectStorageMetadataPublic'
         name:
@@ -63081,6 +63192,7 @@ components:
         - VALIDATING
         - AVAILABLE
         - REJECTED
+        - INACTIVE
     jumpcloud.healthmonitoring.CreateRuleRequest:
       type: object
       properties:
@@ -63878,6 +63990,9 @@ components:
         createdAt:
           type: string
           format: date-time
+        displayVersion:
+          type: string
+          description: Optional admin display label for this upload; copied to software_app_settings on successful validation.
         metadata:
           $ref: '#/components/schemas/devices.ObjectStorageMetadata'
         name:
@@ -63913,6 +64028,7 @@ components:
         - VALIDATING
         - AVAILABLE
         - REJECTED
+        - INACTIVE
     devices.SetSsaoDevicesSettingsRequest:
       type: object
       properties:
@@ -64001,6 +64117,8 @@ components:
           allOf:
             - $ref: '#/components/schemas/devices.WindowsCustomDetectionRules'
             - nullable: true
+        displayVersion:
+          type: string
         downloadUrl:
           type: string
         enterpriseObjectId:
@@ -66149,53 +66267,55 @@ components:
         instead of changing the RPC wrapper message in SCIM. If dynamic-gateway is fixed, this may be reverted.
         See Slack: https://thejumpcloud.slack.com/archives/C03LAL5MCEL/p1749447300486039
     jumpcloud.service_accounts.ActorType:
-      title: enum for actor types
       type: string
-      description: |-
-        - ADMIN: the actor is admin
-         - SERVICE_ACCOUNT: the actor is a service account
-      default: ADMIN
       enum:
         - ADMIN
         - SERVICE_ACCOUNT
+      default: ADMIN
+      description: |-
+        - ADMIN: the actor is admin
+         - SERVICE_ACCOUNT: the actor is a service account
+      title: enum for actor types
     jumpcloud.service_accounts.AuthConfig:
-      title: |-
-        contains authentication configuration, such as client secret config
-        might have new field here for JWT credentials in future
       type: object
       properties:
+        apiKeyConfig:
+          $ref: '#/components/schemas/jumpcloud.service_accounts.ApiKeyConfig'
         authType:
           $ref: '#/components/schemas/jumpcloud.service_accounts.AuthType'
         clientSecretConfig:
           $ref: '#/components/schemas/jumpcloud.service_accounts.ClientSecretConfig'
+      description: Contains authentication configuration, such as Client Secret or API key config.
     jumpcloud.service_accounts.AuthConfigParameter:
-      title: contains the configuration parameters required for the creation of auth config
-      required:
-        - authType
-        - clientSecretConfig
       type: object
       properties:
+        apiKeyConfig:
+          $ref: '#/components/schemas/jumpcloud.service_accounts.ApiKeyConfigParam'
         authType:
           $ref: '#/components/schemas/jumpcloud.service_accounts.AuthType'
         clientSecretConfig:
           $ref: '#/components/schemas/jumpcloud.service_accounts.ClientSecretConfigParam'
+      description: Contains the configuration parameters required for the creation of auth config.
+      required:
+        - authType
     jumpcloud.service_accounts.AuthType:
-      title: enum for supported authentication types
       type: string
-      description: |-
-        - AUTH_TYPE_UNSPECIFIED: unspecified authentication type
-         - CLIENT_SECRET: client secret authentication
-      default: AUTH_TYPE_UNSPECIFIED
       enum:
         - AUTH_TYPE_UNSPECIFIED
         - CLIENT_SECRET
+        - API_KEY
+      default: AUTH_TYPE_UNSPECIFIED
+      description: |-
+        - AUTH_TYPE_UNSPECIFIED: unspecified authentication type
+         - CLIENT_SECRET: client secret authentication
+         - API_KEY: API key authentication (jcs_* direct org)
+      title: enum for supported authentication types
     jumpcloud.service_accounts.ClientSecretConfig:
-      title: contains configuration for a client secret, including metadata and audit information
       type: object
       properties:
         clientId:
-          title: client ID associated with the secret
           type: string
+          title: client ID associated with the secret
         clientSecret:
           type: string
           description: |-
@@ -66203,75 +66323,73 @@ components:
             This field will hold the secret only at the time of creation and will be visible to users only once.
             The subsequent retrievals will not return the secret for security reasons.
         createdAt:
-          title: creation timestamp of the client secret
           type: string
           format: date-time
+          title: creation timestamp of the client secret
         createdBy:
           $ref: '#/components/schemas/jumpcloud.service_accounts.ServiceAccountActor'
         expiresAt:
-          title: expiration timestamp of the client secret
           type: string
           format: date-time
+          title: expiration timestamp of the client secret
         lifetime:
-          title: lifetime of the client secret (e.g., 1y, 30d)
           type: string
+          title: lifetime of the client secret (e.g., "30 Days", "60 Days", "90 Days", "365 Days")
         objectId:
-          title: object ID of the client secret config
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
+          title: object ID of the client secret config
         status:
           $ref: '#/components/schemas/jumpcloud.service_accounts.Status'
+      title: contains configuration for a client secret, including metadata and audit information
     jumpcloud.service_accounts.ClientSecretConfigParam:
-      title: contains the configuration parameters required for the creation of client secret
-      required:
-        - lifetime
       type: object
       properties:
         lifetime:
-          title: lifetime of the client secret (e.g., 1y, 30d)
           type: string
+          title: lifetime of the client secret (e.g., "30 Days", "60 Days", "90 Days", "365 Days")
+      title: contains the configuration parameters required for the creation of client secret
+      required:
+        - lifetime
     jumpcloud.service_accounts.CreateAuthConfigResponse:
-      title: contains auth config response
       type: object
       properties:
         authConfig:
           $ref: '#/components/schemas/jumpcloud.service_accounts.AuthConfig'
+      title: contains auth config response
     jumpcloud.service_accounts.CreateServiceAccountRequest:
-      title: contains the new service account information
-      required:
-        - authConfig
-        - name
-        - roleId
       type: object
       properties:
         authConfig:
           $ref: '#/components/schemas/jumpcloud.service_accounts.AuthConfigParameter'
         name:
-          title: the name of the service account
           type: string
+          title: the name of the service account
         roleId:
-          title: the role id associated with the service account
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
+          title: the role id associated with the service account
         roleName:
           type: string
           description: 'DEPRECATED: the role name is ignored. Use role_id instead.'
+      title: contains the new service account information
+      required:
+        - name
+        - roleId
+        - authConfig
     jumpcloud.service_accounts.CreateServiceAccountResponse:
-      title: contains the response for creating a service account
       type: object
       properties:
         serviceAccount:
           $ref: '#/components/schemas/jumpcloud.service_accounts.ServiceAccount'
+      title: contains the response for creating a service account
     jumpcloud.service_accounts.DeleteAuthConfigResponse:
+      type: object
       title: response for deleting an auth config
-      type: object
     jumpcloud.service_accounts.DeleteServiceAccountResponse:
-      title: response for deleting a service account
       type: object
+      title: response for deleting a service account
     jumpcloud.service_accounts.ListServiceAccountsResponse:
-      title: contains the list of accounts for a given org / provider with pagination metadata
       type: object
       properties:
         results:
@@ -66279,11 +66397,11 @@ components:
           items:
             $ref: '#/components/schemas/jumpcloud.service_accounts.ServiceAccount'
         totalCount:
-          title: total number of service accounts (for pagination)
           type: integer
           format: int32
+          title: total number of service accounts (for pagination)
+      title: contains the list of accounts for a given org / provider with pagination metadata
     jumpcloud.service_accounts.ServiceAccount:
-      title: the service account object
       type: object
       properties:
         authConfigList:
@@ -66293,67 +66411,63 @@ components:
         authType:
           $ref: '#/components/schemas/jumpcloud.service_accounts.AuthType'
         createdAt:
+          type: string
+          format: date-time
           title: the creation date of the account
-          type: string
-          format: date-time
         expiresAt:
-          title: this denotes when the auth associated with service account will expire
           type: string
           format: date-time
+          title: this denotes when the auth associated with service account will expire
         name:
-          title: the account's name
           type: string
+          title: the account's name
         objectId:
-          title: the account's id in object_id format
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
+          title: the account's id in object_id format
         orgCount:
-          title: the count of organizations assigned to service-account from provider
           type: integer
           format: int32
+          title: the count of organizations assigned to service-account from provider
         orgId:
+          type: string
+          format: byte
           title: the organization id associated with the account
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
-          type: string
-          format: byte
         providerId:
+          type: string
+          format: byte
           title: the provider id associated with the account, should be present if MTP
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
-          type: string
-          format: byte
         roleId:
-          title: role id associated with the account
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
+          title: role id associated with the account
         roleName:
           type: string
           description: 'DEPRECATED: Call roles API with the role_id to get the role name.'
         status:
           $ref: '#/components/schemas/jumpcloud.service_accounts.Status'
+      title: the service account object
     jumpcloud.service_accounts.ServiceAccountActor:
-      title: the actor object, it can be a user or service account
       type: object
       properties:
         id:
-          title: the actor's id, it can be a userID or serviceAccountID
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
+          title: the actor's id, it can be a userID or serviceAccountID
         name:
-          title: the actor's name, it can be a admin name or service account name
           type: string
+          title: the actor's name, it can be a admin name or service account name
         type:
           $ref: '#/components/schemas/jumpcloud.service_accounts.ActorType'
+      title: the actor object, it can be a user or service account
     jumpcloud.service_accounts.Status:
-      title: enum for the status of the client secret
       type: string
-      default: ACTIVE
       enum:
         - ACTIVE
         - EXPIRED
         - EXPIRING
+      default: ACTIVE
+      title: enum for the status of the client secret
     jumpcloud.alerts.BulkDeleteRequest:
       type: object
       properties:
@@ -67278,6 +67392,42 @@ components:
           items:
             $ref: '#/components/schemas/jumpcloud.alerts.AlertNote'
       description: GetAlertNotesResponse returns all notes for an alert.
+    jumpcloud.service_accounts.ApiKeyConfig:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          title: full jcs_* API key; returned only on create responses, never on list/get
+        apiKeyPrefix:
+          type: string
+          title: first 8 characters of the full jcs_* secret (e.g. jcs_BWx3); always on list/get
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          $ref: '#/components/schemas/jumpcloud.service_accounts.ServiceAccountActor'
+        expiresAt:
+          type: string
+          format: date-time
+        lifetime:
+          type: string
+          title: 'lifetime of the API key; allowed values: "30 Days", "60 Days", "90 Days", "365 Days" (same format as client secret)'
+        objectId:
+          type: string
+          format: byte
+          title: object ID of the API key auth config
+        status:
+          $ref: '#/components/schemas/jumpcloud.service_accounts.Status'
+      description: contains configuration for an API key auth config (prefix on read; full key once on create).
+    jumpcloud.service_accounts.ApiKeyConfigParam:
+      type: object
+      properties:
+        lifetime:
+          type: string
+          title: 'lifetime of the API key; allowed values: "30 Days", "60 Days", "90 Days", "365 Days" (same format as client secret)'
+      title: contains the configuration parameters required for the creation of an API key
+      required:
+        - lifetime
     alertObjectId_notes_body:
       type: object
       properties:
@@ -67531,11 +67681,6 @@ components:
           $ref: '#/components/schemas/jumpcloud.pwm.SharedFolderPermission'
         users:
           $ref: '#/components/schemas/jumpcloud.pwm.SharedFolderPermission'
-    service_account_id_authconfig_body_1:
-      type: object
-      properties:
-        authConfig:
-          $ref: '#/components/schemas/jumpcloud.service_accounts.AuthConfigParameter'
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
