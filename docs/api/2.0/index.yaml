@@ -36121,25 +36121,25 @@ paths:
           content:
             application/pdf:
               schema:
-                $ref: '#/components/responses/trait_standardErrors_401'
+                $ref: '#/components/schemas/Error'
         '403':
           description: ''
           content:
             application/pdf:
               schema:
-                $ref: '#/components/responses/trait_standardErrors_403'
+                $ref: '#/components/schemas/Error'
         '404':
           description: ''
           content:
             application/pdf:
               schema:
-                $ref: '#/components/responses/trait_standardErrors_404'
+                $ref: '#/components/schemas/Error'
         '500':
           description: ''
           content:
             application/pdf:
               schema:
-                $ref: '#/components/responses/trait_standardErrors_500'
+                $ref: '#/components/schemas/Error'
         default:
           description: An unexpected error response.
           content:
