@@ -30509,6 +30509,295 @@ paths:
           type: string
     x-functionalities-tags:
       - gsuites
+  /authn/policy-evaluations/summary:
+    post:
+      summary: Get Policy Evaluations Summary
+      description: |-
+        Get aggregated KPI summary and available policies for Conditional Access Policy (CAP) evaluations.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/authn/policy-evaluations/summary \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "timeRange": {
+              "start": "2026-06-01T00:00:00Z",
+              "end": "2026-06-07T00:00:00Z"
+            },
+            "filters": {
+              "resourceType": "USER_PORTAL"
+            }
+          }'
+        ```
+      operationId: authnpolicyanalytics_summary
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthnPolicyEvaluationsSummaryRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthnPolicyEvaluationsSummaryResponse'
+        '400':
+          $ref: '#/components/responses/trait_standardErrors_400'
+        '401':
+          $ref: '#/components/responses/trait_standardErrors_401'
+        '403':
+          $ref: '#/components/responses/trait_standardErrors_403'
+        '404':
+          $ref: '#/components/responses/trait_standardErrors_404'
+        '500':
+          $ref: '#/components/responses/trait_standardErrors_500'
+      tags:
+        - Authentication Policies
+      x-scopes:
+        - authn
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/authn/policy-evaluations/summary \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"timeRange":{"start":"2019-08-24T14:15:22Z","end":"2019-08-24T14:15:22Z"},"filters":{"policyId":"string","policyName":"string","userGroupIds":["string"],"userObjectId":"string","applicationObjectId":"string","resourceType":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/authn/policy-evaluations/summary"
+
+            payload = {
+                "timeRange": {
+                    "start": "2019-08-24T14:15:22Z",
+                    "end": "2019-08-24T14:15:22Z"
+                },
+                "filters": {
+                    "policyId": "string",
+                    "policyName": "string",
+                    "userGroupIds": ["string"],
+                    "userObjectId": "string",
+                    "applicationObjectId": "string",
+                    "resourceType": "string"
+                }
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policy-evaluations/summary' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"timeRange":{"start":"2019-08-24T14:15:22Z","end":"2019-08-24T14:15:22Z"},"filters":{"policyId":"string","policyName":"string","userGroupIds":["string"],"userObjectId":"string","applicationObjectId":"string","resourceType":"string"}}'
+  /authn/policy-evaluations/options:
+    post:
+      summary: Get Policy Evaluations Filter Options
+      description: |-
+        Get the available filter options for Conditional Access Policy (CAP) evaluation events.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/authn/policy-evaluations/options \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "timeRange": {
+              "start": "2026-06-01T00:00:00Z",
+              "end": "2026-06-07T00:00:00Z"
+            }
+          }'
+        ```
+      operationId: authnpolicyanalytics_options
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthnPolicyEvaluationsFilterOptionsRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthnPolicyEvaluationsOptionsResponse'
+        '400':
+          $ref: '#/components/responses/trait_standardErrors_400'
+        '401':
+          $ref: '#/components/responses/trait_standardErrors_401'
+        '403':
+          $ref: '#/components/responses/trait_standardErrors_403'
+        '404':
+          $ref: '#/components/responses/trait_standardErrors_404'
+        '500':
+          $ref: '#/components/responses/trait_standardErrors_500'
+      tags:
+        - Authentication Policies
+      x-scopes:
+        - authn
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/authn/policy-evaluations/options \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"timeRange":{"start":"2019-08-24T14:15:22Z","end":"2019-08-24T14:15:22Z"},"policyId":"string","policyName":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/authn/policy-evaluations/options"
+
+            payload = {
+                "timeRange": {
+                    "start": "2019-08-24T14:15:22Z",
+                    "end": "2019-08-24T14:15:22Z"
+                },
+                "policyId": "string",
+                "policyName": "string"
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policy-evaluations/options' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"timeRange":{"start":"2019-08-24T14:15:22Z","end":"2019-08-24T14:15:22Z"},"policyId":"string","policyName":"string"}'
+  /authn/policy-evaluations/details:
+    post:
+      summary: Get Policy Evaluations Details
+      description: |-
+        Get a paginated list of detailed Conditional Access Policy (CAP) evaluation events.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/authn/policy-evaluations/details \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "timeRange": {
+              "start": "2026-06-01T00:00:00Z",
+              "end": "2026-06-07T00:00:00Z"
+            },
+            "limit": 10,
+            "skip": 0
+          }'
+        ```
+      operationId: authnpolicyanalytics_details
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthnPolicyEvaluationsDetailsRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthnPolicyEvaluationsDetailsResponse'
+        '400':
+          $ref: '#/components/responses/trait_standardErrors_400'
+        '401':
+          $ref: '#/components/responses/trait_standardErrors_401'
+        '403':
+          $ref: '#/components/responses/trait_standardErrors_403'
+        '404':
+          $ref: '#/components/responses/trait_standardErrors_404'
+        '500':
+          $ref: '#/components/responses/trait_standardErrors_500'
+      tags:
+        - Authentication Policies
+      x-scopes:
+        - authn
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/authn/policy-evaluations/details \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"timeRange":{"start":"2019-08-24T14:15:22Z","end":"2019-08-24T14:15:22Z"},"filters":{"policyId":"string","policyName":"string","userGroupIds":["string"],"userObjectId":"string","applicationObjectId":"string","resourceType":"string"},"limit":10,"skip":0}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/authn/policy-evaluations/details"
+
+            payload = {
+                "timeRange": {
+                    "start": "2019-08-24T14:15:22Z",
+                    "end": "2019-08-24T14:15:22Z"
+                },
+                "filters": {
+                    "policyId": "string",
+                    "policyName": "string",
+                    "userGroupIds": ["string"],
+                    "userObjectId": "string",
+                    "applicationObjectId": "string",
+                    "resourceType": "string"
+                },
+                "limit": 10,
+                "skip": 0
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policy-evaluations/details' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"timeRange":{"start":"2019-08-24T14:15:22Z","end":"2019-08-24T14:15:22Z"},"filters":{"policyId":"string","policyName":"string","userGroupIds":["string"],"userObjectId":"string","applicationObjectId":"string","resourceType":"string"},"limit":10,"skip":0}'
   /authn/policies:
     get:
       summary: List Authentication Policies
@@ -61434,6 +61723,197 @@ components:
           type: boolean
         recoveryLockEnabled:
           type: boolean
+    AuthnPolicyEvaluationsTimeRange:
+      type: object
+      required:
+        - start
+        - end
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+    AuthnPolicyEvaluationsFilters:
+      type: object
+      properties:
+        policyId:
+          type: string
+        policyName:
+          type: string
+        userGroupIds:
+          type: array
+          items:
+            type: string
+        userObjectId:
+          type: string
+        applicationObjectId:
+          type: string
+        resourceType:
+          type: string
+    AuthnPolicyEvaluationsFilterOptionsRequest:
+      type: object
+      description: Request to get filter options for the authn policy evaluations.
+      required:
+        - timeRange
+      properties:
+        timeRange:
+          $ref: '#/components/schemas/AuthnPolicyEvaluationsTimeRange'
+        policyId:
+          type: string
+        policyName:
+          type: string
+    AuthnPolicyEvaluationsOptionsResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthnPolicyEvaluationsFilterOption'
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthnPolicyEvaluationsFilterOption'
+        userGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthnPolicyEvaluationsFilterOption'
+        resourceTypes:
+          type: array
+          items:
+            type: string
+        usersTruncated:
+          description: Indicates if the users list is truncated.
+          type: boolean
+        applicationsTruncated:
+          description: Indicates if the applications list is truncated.
+          type: boolean
+        userGroupsTruncated:
+          description: Indicates if the user groups list is truncated.
+          type: boolean
+    AuthnPolicyEvaluationsFilterOption:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    AuthnPolicyEvaluationsSummaryRequest:
+      type: object
+      properties:
+        timeRange:
+          $ref: '#/components/schemas/AuthnPolicyEvaluationsTimeRange'
+        filters:
+          $ref: '#/components/schemas/AuthnPolicyEvaluationsFilters'
+    AuthnPolicyEvaluationsSummaryResponse:
+      type: object
+      properties:
+        aggregates:
+          type: object
+          properties:
+            totalHits:
+              type: integer
+            policiesApplied:
+              type: integer
+            notApplied:
+              type: integer
+            failedConditionCounts:
+              type: object
+              additionalProperties:
+                type: integer
+            actionResultDistribution:
+              type: object
+              additionalProperties:
+                type: integer
+            mfaDistribution:
+              type: object
+              additionalProperties:
+                type: integer
+        availablePolicies:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthnPolicyEvaluationsAvailablePolicy'
+    AuthnPolicyEvaluationsAvailablePolicy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    AuthnPolicyEvaluationsDetailsRequest:
+      type: object
+      properties:
+        timeRange:
+          $ref: '#/components/schemas/AuthnPolicyEvaluationsTimeRange'
+        filters:
+          $ref: '#/components/schemas/AuthnPolicyEvaluationsFilters'
+        limit:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        skip:
+          type: integer
+          default: 0
+          minimum: 0
+    AuthnPolicyEvaluationsDetailsResponse:
+      type: object
+      properties:
+        governedCount:
+          type: integer
+        notGovernedCount:
+          type: integer
+        totalRowCount:
+          type: integer
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthnPolicyEvaluationsEvent'
+    AuthnPolicyEvaluationsEvent:
+      type: object
+      properties:
+        correlationId:
+          type: string
+        policy:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            displayName:
+              type: string
+        application:
+          type: object
+          properties:
+            id:
+              type: string
+            displayName:
+              type: string
+        userGroups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              displayName:
+                type: string
+        resourceType:
+          type: string
+        actionResult:
+          type: string
+        monitorOnly:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
     AuthnPolicy:
       title: AuthnPolicy
       type: object
