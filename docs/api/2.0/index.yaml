@@ -17646,7 +17646,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/providers/{provider_id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"name":"string","settings":{"requireAdminMFA":true},"contact":{"name":"string","email":"string"}}'
+              --data '{"name":"string","settings":{"allowMfaOverride":true,"requireAdminMFA":true},"contact":{"name":"string","email":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -17655,7 +17655,10 @@ paths:
 
             payload = {
                 "name": "string",
-                "settings": {"requireAdminMFA": True},
+                "settings": {
+                    "allowMfaOverride": True,
+                    "requireAdminMFA": True
+                },
                 "contact": {
                     "name": "string",
                     "email": "string"
@@ -17674,7 +17677,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","settings":{"requireAdminMFA":true},"contact":{"name":"string","email":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","settings":{"allowMfaOverride":true,"requireAdminMFA":true},"contact":{"name":"string","email":"string"}}'
     get:
       description: This endpoint returns details about a provider
       operationId: providers_getProvider
@@ -55470,6 +55473,9 @@ components:
         name:
           description: Duo application name.
           type: string
+        readOnly:
+          description: When true, the credential is governed by the primary organization and cannot be modified.
+          type: boolean
       required:
         - id
       title: DuoAccount
@@ -55484,6 +55490,9 @@ components:
           type: string
         name:
           type: string
+        readOnly:
+          description: When true, the credential is governed by the primary organization and cannot be modified.
+          type: boolean
       required:
         - id
         - name
@@ -57158,6 +57167,9 @@ components:
           type: boolean
         settings:
           properties:
+            allowMfaOverride:
+              type: boolean
+              default: true
             requireAdminMFA:
               type: boolean
           title: ProviderSettings
@@ -57172,6 +57184,8 @@ components:
     ProviderSettingsPut:
       additionalProperties: false
       properties:
+        allowMfaOverride:
+          type: boolean
         requireAdminMFA:
           type: boolean
       title: ProviderSettings
@@ -70398,6 +70412,7 @@ tags:
   - name: Aggregated Policy Stats
   - name: App Catalog
   - name: Apple MDM
+  - name: Apple Update Insights
   - name: Apple VPP
   - name: Applications
   - name: AssetFieldConfigService
