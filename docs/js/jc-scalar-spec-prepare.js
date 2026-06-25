@@ -94,12 +94,25 @@
   var viewportResizeObserver = null;
   var viewportResizeListenerAttached = false;
 
+  function readScalarChromeHeights() {
+    var nav = document.querySelector("body.jc-scalar-docs-body > nav.sticky-top");
+    var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+    return {
+      nav: nav ? nav.offsetHeight : 0,
+      footer: footer ? footer.offsetHeight : 0,
+    };
+  }
+
   function syncScalarViewportHeight() {
     var host = document.querySelector(".jc-scalar-scroll-host");
     if (!host) {
       return;
     }
     var height = host.clientHeight;
+    if (height <= 0) {
+      var chrome = readScalarChromeHeights();
+      height = window.innerHeight - chrome.nav - chrome.footer;
+    }
     if (height <= 0) {
       return;
     }
@@ -134,6 +147,14 @@
       syncScalarViewportHeight();
     });
     viewportResizeObserver.observe(host);
+    var nav = document.querySelector("body.jc-scalar-docs-body > nav.sticky-top");
+    if (nav) {
+      viewportResizeObserver.observe(nav);
+    }
+    var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+    if (footer) {
+      viewportResizeObserver.observe(footer);
+    }
     global.addEventListener("resize", syncScalarViewportHeight);
     viewportResizeListenerAttached = true;
   }
@@ -221,10 +242,8 @@
   JumpCloudDocs.mountScalarApiReference = function (selector, spec) {
     removeXInternalTrue(spec);
     prependOperationPaths(spec);
-    var support = getSupportLinkFromSpec(spec);
     scalarApp = global.Scalar.createApiReference(selector, buildScalarCreateOptions(spec));
     scheduleScalarViewportSync();
-    scheduleSidebarSupportLink(support);
   };
 
   JumpCloudDocs.prepareScalarSpec = function (spec) {
