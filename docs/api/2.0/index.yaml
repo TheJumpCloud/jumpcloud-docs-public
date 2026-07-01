@@ -19933,6 +19933,12 @@ paths:
         -H 'x-api-key: {API_KEY}' \
         -d '{"system_ids": ["<system_id_1>", "<system_id_2>", ...]}'
         ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SoftwareAppsRetryInstallationRequest'
+        required: true
       tags:
         - Software Apps
       responses:
@@ -19950,23 +19956,30 @@ paths:
           source: |-
             curl --request POST \
               --url https://console.jumpcloud.com/api/v2/softwareapps/{software_app_id}/retry-installation \
-              --header 'x-api-key: REPLACE_KEY_VALUE'
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"system_ids":["string"]}'
         - lang: Python
           source: |-
             import requests
 
             url = "https://console.jumpcloud.com/api/v2/softwareapps/{software_app_id}/retry-installation"
 
-            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+            payload = {"system_ids": ["string"]}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
 
-            response = requests.request("POST", url, headers=headers)
+            response = requests.request("POST", url, json=payload, headers=headers)
 
             print(response.text)
         - lang: Powershell
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{software_app_id}/retry-installation' -Method POST -Headers $headers
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/softwareapps/{software_app_id}/retry-installation' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"system_ids":["string"]}'
   /softwareapps/{software_app_id}/statuses:
     parameters:
       - description: ObjectID of the Software App.
@@ -62213,6 +62226,15 @@ components:
           type: array
           items:
             type: string
+    SoftwareAppsRetryInstallationRequest:
+      title: SoftwareAppsRetryInstallationRequest
+      type: object
+      properties:
+        system_ids:
+          type: array
+          items:
+            type: string
+          description: An array of system IDs to retry the software application installation.
     CustomEmailType:
       type: string
       enum:
