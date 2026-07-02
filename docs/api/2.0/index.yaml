@@ -55474,6 +55474,10 @@ components:
           type:
             - object
             - 'null'
+        organizationId:
+          description: ObjectID of the organization that owns this directory.
+          type: string
+          readOnly: true
       required:
         - id
         - name
@@ -57761,6 +57765,10 @@ components:
             - PERMISSION_UNSPECIFIED
             - PERMISSION_OWNER
             - PERMISSION_READ_ONLY
+        organizationId:
+          description: ObjectID of the organization that owns this Active Directory instance.
+          readOnly: true
+          type: string
       title: Active Directory
       type: object
     apple-mdm-patch:
