@@ -65540,9 +65540,13 @@ components:
             Maximum number of rows (inclusive) to return in the objects.  Note that there is an implicit limit enforced always
             in the external API.
         metadata:
-          $ref: '#/components/schemas/jumpcloud.search.SearchRequestMetadata'
+          anyOf:
+            - $ref: '#/components/schemas/jumpcloud.search.SearchRequestMetadata'
+            - type: 'null'
         pagination:
-          $ref: '#/components/schemas/jumpcloud.search.PaginationParams'
+          anyOf:
+            - $ref: '#/components/schemas/jumpcloud.search.PaginationParams'
+            - type: 'null'
         requestCache:
           type: boolean
           title: 'Optional: If true, cache the full result set of this query'
@@ -66690,7 +66694,9 @@ components:
             Additional context about the request (use for any extra metadata)
             This can contain information such as report type and other contextual values
         searchPurpose:
-          $ref: '#/components/schemas/jumpcloud.search.SearchPurpose'
+          anyOf:
+            - $ref: '#/components/schemas/jumpcloud.search.SearchPurpose'
+            - type: 'null'
         source:
           type:
             - string
