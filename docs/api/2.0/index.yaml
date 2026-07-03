@@ -61760,6 +61760,7 @@ components:
           type: boolean
     AuthnPolicyEvaluationsTimeRange:
       type: object
+      description: Inclusive UTC window; maximum span is 90 days.
       required:
         - start
         - end
@@ -61779,6 +61780,7 @@ components:
           type: string
         userGroupIds:
           type: array
+          maxItems: 50
           items:
             type: string
         userObjectId:
