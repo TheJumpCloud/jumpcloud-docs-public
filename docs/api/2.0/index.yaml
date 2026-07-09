@@ -39315,7 +39315,7 @@ paths:
                 $ref: '#/components/schemas/jumpcloud.alerts.ListAlertsResponse'
       parameters:
         - name: filter
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          description: "A filter to apply to the query.\n\n\n\n\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\n\n\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\n\n\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\n\n\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\n\n\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
           in: query
           required: false
           explode: true
@@ -39323,7 +39323,6 @@ paths:
             type: array
             items:
               type: string
-          allowReserved: true
         - name: fields
           description: The fields on the items listed to return.
           in: query
@@ -39352,7 +39351,6 @@ paths:
             type: array
             items:
               type: string
-          allowReserved: true
         - name: limit
           description: |-
             The number of alerts to return at once.
@@ -39513,7 +39511,7 @@ paths:
             type: string
             format: byte
         - name: filter
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          description: "A filter to apply to the query.\n\n\n\n\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\n\n\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\n\n\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\n\n\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\n\n\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
           in: query
           required: false
           explode: true
@@ -39521,7 +39519,6 @@ paths:
             type: array
             items:
               type: string
-          allowReserved: true
         - name: fields
           description: The fields on the items listed to return.
           in: query
@@ -39550,7 +39547,6 @@ paths:
             type: array
             items:
               type: string
-          allowReserved: true
         - name: limit
           description: |-
             The number of alert occurrences to return at once.
@@ -64696,6 +64692,8 @@ components:
         - ALERT_SOURCE_TYPE_APPLICATION
         - ALERT_SOURCE_TYPE_IPLIST
         - ALERT_SOURCE_TYPE_SOFTWARE
+        - ALERT_SOURCE_TYPE_ACCESSORY
+        - ALERT_SOURCE_TYPE_LOCATION
       default: ALERT_SOURCE_TYPE_UNSPECIFIED
       description: AlertSourceType specifies the type of the source that generated the alert.
     jumpcloud.alerts.AlertStatus:
