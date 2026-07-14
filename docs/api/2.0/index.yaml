@@ -36489,8 +36489,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/billing/contract' -Method GET -Headers $headers
   /devices/settings/signinwithjumpcloud:
     get:
-      tags:
-        - Systems Organization Settings
       summary: Get the Sign In with JumpCloud Settings
       description: |-
         Gets the Sign In with JumpCloud Settings for an Organization.
@@ -36503,15 +36501,6 @@ paths:
           -H 'x-api-key:{API_KEY}'
         ```
       operationId: SystemsOrgSettings_GetSignInWithJumpCloudSettings
-      parameters:
-        - name: organizationObjectId
-          in: query
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: byte
       responses:
         '200':
           description: Settings successfully retrieved.
@@ -36549,6 +36538,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Systems Organization Settings
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -36580,8 +36578,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/signinwithjumpcloud?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
     put:
-      tags:
-        - Systems Organization Settings
       summary: Set the Sign In with JumpCloud Settings
       description: |-
         Sets the Sign In with JumpCloud Settings for an Organization.
@@ -36595,12 +36591,6 @@ paths:
           -d '{"settings":[{"osFamily":"WINDOWS","enabled":true,"defaultPermission":"STANDARD"}]}'
         ```
       operationId: SystemsOrgSettings_SetSignInWithJumpCloudSettings
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/devices.SetSignInWithJumpCloudSettingsRequest'
-        required: true
       responses:
         '200':
           description: A successful response.
@@ -36608,12 +36598,12 @@ paths:
             application/json:
               schema:
                 type: object
+                properties: {}
         '204':
           description: Settings successfully changed.
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '400':
           description: Bad Request
           content:
@@ -36644,12 +36634,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devices.SetSignInWithJumpCloudSettingsRequest'
+        required: true
+      tags:
+        - Systems Organization Settings
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - systems
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -37111,8 +37108,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId}' -Method GET -Headers $headers
   /systems/{systemObjectId}/aggregated-policy-stats:
     get:
-      tags:
-        - Aggregated Policy Stats
       summary: Get the Aggregated Policy Stats for a System
       description: |-
         Gets the aggregated policy stats for a system.
@@ -37125,23 +37120,6 @@ paths:
           -H 'x-api-key:{API_KEY}'
         ```
       operationId: AggregatedPolicyResults_Get
-      parameters:
-        - name: systemObjectId
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
-        - name: organizationObjectId
-          in: query
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: byte
       responses:
         '200':
           description: A successful response.
@@ -37149,6 +37127,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/devices.AggregatedPolicyResultResponse'
+      parameters:
+        - name: systemObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Aggregated Policy Stats
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -37236,20 +37229,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/microsoft-mdm/configuration-files' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /devices/settings/defaultpasswordsync:
     get:
-      tags:
-        - Systems Organization Settings
       summary: Get the Default Password Sync Setting
       description: Gets the Default Password Sync Setting for an Organization.
       operationId: SystemsOrgSettings_GetDefaultPasswordSyncSettings
-      parameters:
-        - name: organizationObjectId
-          in: query
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: byte
       responses:
         '200':
           description: Setting successfully retrieved.
@@ -37287,6 +37269,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Systems Organization Settings
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -37318,17 +37309,9 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/defaultpasswordsync?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
     put:
-      tags:
-        - Systems Organization Settings
       summary: Set the Default Password Sync Setting
       description: Sets the Default Password Sync Setting for an Organization.
       operationId: SystemsOrgSettings_SetDefaultPasswordSyncSettings
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/devices.SetDefaultPasswordSyncSettingsRequest'
-        required: true
       responses:
         '200':
           description: A successful response.
@@ -37336,12 +37319,12 @@ paths:
             application/json:
               schema:
                 type: object
+                properties: {}
         '204':
           description: Setting successfully changed.
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '400':
           description: Bad Request
           content:
@@ -37372,12 +37355,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devices.SetDefaultPasswordSyncSettingsRequest'
+        required: true
+      tags:
+        - Systems Organization Settings
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - systems
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -38506,67 +38496,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}?sendEmail=SOME_BOOLEAN_VALUE' -Method PATCH -Headers $headers
   /object-storage/items:
     get:
-      tags:
-        - Object Storage
       summary: List the Items stored in Object Storage
       description: "List the current Object Storage Items for an Organization.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/object-storage/items \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 ObjectStorageItems in a single response.\n\n\tMSP Note: Currently ObjectStorage can only operate in the context of a single organization."
       operationId: ObjectStorage_ListObjectStorageItemsPublic
-      parameters:
-        - name: filter
-          in: query
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          description: The fields on the items listed to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: skip
-          in: query
-          description: The offset into the records to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-        - name: sort
-          in: query
-          description: |-
-            An optional comma separated field names used to sort the collection.
-            Default sort is ascending, prefix with `-` to sort descending.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-        - name: limit
-          in: query
-          description: |-
-            The number of resources to return at once.
-            If the number of resources returned is less than `limit` there are no more resources to fetch.
-            If the number of resources returned is equal to limit there may be more resources to fetch. Increment `skip` by `limit` to get the next set of resources.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
       responses:
         '200':
           description: Success listing Object Storage Items.
@@ -38606,6 +38538,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: fields
+          description: The fields on the items listed to return.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+        - name: sort
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: limit
+          description: |-
+            The number of resources to return at once.
+            If the number of resources returned is less than `limit` there are no more resources to fetch.
+            If the number of resources returned is equal to limit there may be more resources to fetch. Increment `skip` by `limit` to get the next set of resources.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+      tags:
+        - Object Storage
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -38638,8 +38621,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/object-storage/items?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
   /object-storage/status:
     get:
-      tags:
-        - Object Storage
       summary: Get the current Object Storage status
       description: Get the current status of Object Storage.
       operationId: ObjectStorage_GetStatus
@@ -38680,6 +38661,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      tags:
+        - Object Storage
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -39928,8 +39911,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"disableLostMode":{},"enableLostMode":{"footnote":"string","message":"string","phoneNumber":"string"}}'
   /devices/settings/ssao:
     get:
-      tags:
-        - Systems Organization Settings
       summary: Get the SSAO Devices Settings for an Organization
       description: |-
         Gets the SSAO devices Settings for an Organization.
@@ -39942,15 +39923,6 @@ paths:
           -H 'x-api-key:{API_KEY}'
         ```
       operationId: SystemsOrgSettings_GetSsaoDevicesSettings
-      parameters:
-        - name: organizationObjectId
-          in: query
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: byte
       responses:
         '200':
           description: Settings successfully retrieved.
@@ -39988,6 +39960,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Systems Organization Settings
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -40019,8 +40000,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/ssao?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
     put:
-      tags:
-        - Systems Organization Settings
       summary: Set the SSAO Devices Settings for an Organization
       description: |-
         Sets the SSAO devices Settings for an Organization.
@@ -40034,12 +40013,6 @@ paths:
           -d '{"settings":[{"osFamily":"WINDOWS","enabled":true,"defaultPermission":"STANDARD"}]}'
         ```
       operationId: SystemsOrgSettings_SetSsaoDevicesSettings
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/devices.SetSsaoDevicesSettingsRequest'
-        required: true
       responses:
         '200':
           description: A successful response.
@@ -40047,12 +40020,12 @@ paths:
             application/json:
               schema:
                 type: object
+                properties: {}
         '204':
           description: Settings successfully changed.
           content:
             application/json:
-              schema:
-                type: object
+              schema: {}
         '400':
           description: Bad Request
           content:
@@ -40083,12 +40056,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devices.SetSsaoDevicesSettingsRequest'
+        required: true
+      tags:
+        - Systems Organization Settings
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - systems
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -40130,67 +40110,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/ssao' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"organizationObjectId":"string","settings":[{"defaultPermission":"STANDARD","enabled":true,"osFamily":"UNKNOWN","passwordSyncEnabled":true}]}'
   /software/catalog/apps:
     get:
-      tags:
-        - App Catalog
       summary: List the App Catalog
       description: "List the current App Catalog Items.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/software/catalog/apps \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The list results can be filtered by `name`, `operating_system`, and `installer_type` while sorting is only allowed on `name`.\tNote: The `limit` maximum is 100 App Catalog Items in a single response."
       operationId: AppCatalog_ListAppCatalogItems
-      parameters:
-        - name: filter
-          in: query
-          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          description: The fields on the items listed to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: skip
-          in: query
-          description: The offset into the records to return.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
-        - name: sort
-          in: query
-          description: |-
-            An optional comma separated field names used to sort the collection.
-            Default sort is ascending, prefix with `-` to sort descending.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-        - name: limit
-          in: query
-          description: |-
-            The number of resources to return at once.
-            If the number of resources returned is less than `limit` there are no more resources to fetch.
-            If the number of resources returned is equal to limit there may be more resources to fetch. Increment `skip` by `limit` to get the next set of resources.
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: int64
       responses:
         '200':
           description: Success listing App Catalog Items.
@@ -40230,6 +40152,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**field** = Populate with a valid field from an endpoint response.\n\n\t**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.\n\n\t**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.\n\n\t**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: fields
+          description: The fields on the items listed to return.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+        - name: sort
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: limit
+          description: |-
+            The number of resources to return at once.
+            If the number of resources returned is less than `limit` there are no more resources to fetch.
+            If the number of resources returned is equal to limit there may be more resources to fetch. Increment `skip` by `limit` to get the next set of resources.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+      tags:
+        - App Catalog
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -40262,8 +40235,6 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/software/catalog/apps?filter=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE&skip=SOME_STRING_VALUE&sort=SOME_ARRAY_VALUE&limit=SOME_STRING_VALUE' -Method GET -Headers $headers
   /software/catalog/apps/{objectId}:
     get:
-      tags:
-        - App Catalog
       summary: Get an App Catalog Item
       description: |
         Get an App Catalog Item.
@@ -40276,15 +40247,6 @@ paths:
           -H 'x-api-key:{API_KEY}'
         ```
       operationId: AppCatalog_GetAppCatalogItem
-      parameters:
-        - name: objectId
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
       responses:
         '200':
           description: Success getting App Catalog Item.
@@ -40322,6 +40284,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - App Catalog
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -40600,28 +40571,9 @@ paths:
           source: '$response = Invoke-RestMethod -Uri ''https://console.jumpcloud.com/api/v2/applemdms/{organizationObjectId}/account-driven-service-discovery/config'' -Method GET '
   /systems/views:
     get:
-      tags:
-        - Saved Views
       summary: List the Items stored in SavedViews
       description: "List the saved views for an Organization.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/systems/views \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 1000 Saved Views in a single response."
       operationId: SavedViews_List
-      parameters:
-        - name: organizationObjectId
-          in: query
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: byte
-        - name: userObjectId
-          in: query
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: byte
       responses:
         '200':
           description: Success listing Saved Views.
@@ -40661,6 +40613,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: userObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Saved Views
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -40692,8 +40659,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/views?organizationObjectId=SOME_STRING_VALUE&userObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
     post:
-      tags:
-        - Saved Views
       summary: Creates a saved view for an organization
       description: |-
         Creates the saved view for an organization.
@@ -40706,12 +40671,6 @@ paths:
           -H 'x-api-key: {API_KEY}' \
         ```
       operationId: SavedViews_Create
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/devices.SavedViewCreateRequest'
-        required: true
       responses:
         '200':
           description: A successful response.
@@ -40719,12 +40678,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/devices.SavedView'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devices.SavedViewCreateRequest'
+        required: true
+      tags:
+        - Saved Views
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - systems
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -46729,35 +46695,9 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseId}/generate-upgrade-url' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"domainsAllowed":["string"]}'
   /systems/{systemObjectId}/transfer:
     post:
-      tags:
-        - Graph
-        - Systems
       summary: Basic Transfer Device Between Organizations
       description: Performs a basic transfer of a device (no system user transfer) from one organization to another.
       operationId: SystemsInternal_BasicTransferDevice
-      parameters:
-        - name: systemObjectId
-          in: path
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: byte
-        - name: x-org-id
-          in: header
-          description: Required header. Set to '-' to scope the request to all organizations under your account.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/systemObjectId_transfer_body'
-        required: true
       responses:
         '200':
           description: Device Successfully Transferred
@@ -46801,12 +46741,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      parameters:
+        - name: systemObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: x-org-id
+          description: Required header. Set to '-' to scope the request to all organizations under your account.
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                org_id:
+                  type: string
+                  format: byte
+        required: true
+      tags:
+        - Graph
+        - Systems
       security:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
         - transfer
-      x-codegen-request-body-name: body
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -62916,7 +62881,9 @@ components:
         hasContract:
           type: boolean
     o365.Domain:
-      type: object
+      type:
+        - object
+        - 'null'
       properties:
         objectId:
           type: string
@@ -62948,7 +62915,6 @@ components:
       type: object
       properties:
         organizationObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         settings:
@@ -62966,22 +62932,21 @@ components:
           $ref: '#/components/schemas/devices.SignInWithJumpCloudSetting.OSFamily'
     devices.SignInWithJumpCloudSetting.OSFamily:
       type: string
-      default: UNKNOWN
       enum:
         - UNKNOWN
         - WINDOWS
         - MACOS
+      default: UNKNOWN
     devices.SignInWithJumpCloudSetting.Permission:
       type: string
-      default: STANDARD
       enum:
         - STANDARD
         - ADMIN
+      default: STANDARD
     devices.SetSignInWithJumpCloudSettingsRequest:
       type: object
       properties:
         organizationObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         settings:
@@ -62989,33 +62954,33 @@ components:
           items:
             $ref: '#/components/schemas/devices.SignInWithJumpCloudSetting'
     devices.AggregatedPolicyCount:
-      title: Responses
       type: object
       properties:
         duplicate:
           type: integer
-          description: the count of duplicate policies.
           format: int64
+          description: the count of duplicate policies.
         failed:
           type: integer
-          description: the count of failing policies.
           format: int64
+          description: the count of failing policies.
         pending:
           type: integer
-          description: the count of pending policies.
           format: int64
+          description: the count of pending policies.
         success:
           type: integer
-          description: the count of successful policies.
           format: int64
+          description: the count of successful policies.
         total:
           type: integer
-          description: the count of all the policies attached to the system.
           format: int64
+          description: the count of all the policies attached to the system.
         unsupportedOs:
           type: integer
-          description: the count of policies for which os is unsupported.
           format: int64
+          description: the count of policies for which os is unsupported.
+      title: Responses
     devices.AggregatedPolicyResultResponse:
       type: object
       properties:
@@ -63216,7 +63181,6 @@ components:
         enabled:
           type: boolean
         organizationObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
     jumpcloud.pwm.App:
@@ -64097,7 +64061,6 @@ components:
           format: int64
     devices.ObjectStorageVersionPublic.Status:
       type: string
-      default: UNKNOWN
       enum:
         - UNKNOWN
         - PENDING
@@ -64105,6 +64068,7 @@ components:
         - AVAILABLE
         - REJECTED
         - INACTIVE
+      default: UNKNOWN
     jumpcloud.healthmonitoring.CreateRuleRequest:
       type: object
       properties:
@@ -64787,7 +64751,6 @@ components:
         installerType:
           type: string
         objectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         operatingSystem:
@@ -64810,7 +64773,6 @@ components:
         name:
           type: string
         objectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         version:
@@ -64819,7 +64781,6 @@ components:
       type: object
       properties:
         organizationObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         settings:
@@ -64845,7 +64806,6 @@ components:
       type: object
       properties:
         objectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         references:
@@ -64891,7 +64851,6 @@ components:
         name:
           type: string
         objectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         rejectedReason:
@@ -64914,7 +64873,6 @@ components:
       description: The Version is the details of actual blob stored by the underlying storage subsystem.
     devices.ObjectStorageVersion.Status:
       type: string
-      default: UNKNOWN
       enum:
         - UNKNOWN
         - PENDING
@@ -64922,11 +64880,11 @@ components:
         - AVAILABLE
         - REJECTED
         - INACTIVE
+      default: UNKNOWN
     devices.SetSsaoDevicesSettingsRequest:
       type: object
       properties:
         organizationObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         settings:
@@ -64937,21 +64895,21 @@ components:
       type: object
       properties:
         createdAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         deletedAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         displayName:
           type: string
         objectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         organizationObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         settings:
@@ -64959,9 +64917,10 @@ components:
           items:
             $ref: '#/components/schemas/devices.SoftwareApp.Setting'
         updatedAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
     devices.SoftwareApp.Setting:
       type: object
       properties:
@@ -64970,7 +64929,6 @@ components:
         allowUpdateDelay:
           type: boolean
         appCatalogInstallableObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         appDeliveryMethod:
@@ -64999,23 +64957,23 @@ components:
         commandLineArguments:
           type: string
         createdAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         description:
           type: string
         desiredState:
           $ref: '#/components/schemas/devices.SoftwareAppDesiredState'
         detectionRules:
-          allOf:
+          anyOf:
             - $ref: '#/components/schemas/devices.WindowsCustomDetectionRules'
-            - nullable: true
+            - type: 'null'
         displayVersion:
           type: string
         downloadUrl:
           type: string
         enterpriseObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         format:
@@ -65024,10 +64982,13 @@ components:
           $ref: '#/components/schemas/devices.SoftwareAppGoogleAndroid'
         iconUrl:
           type: string
+        installerConfig:
+          anyOf:
+            - $ref: '#/components/schemas/devices.WindowsCustomInstallerConfig'
+            - type: 'null'
         location:
           type: string
         locationObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         managedInstallEligibilityStatus:
@@ -65045,22 +65006,22 @@ components:
         packageVersion:
           type: string
         packageVersionUpdatedAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         scope:
           $ref: '#/components/schemas/devices.SoftwareApp.Setting.Scope'
         shortVersion:
           type: string
         silentInstallFlags:
           type: array
-          description: Optional silent install flags (e.g. comma-separated in UI).
           items:
             type: string
+          description: Optional silent install flags (e.g. comma-separated in UI).
         storedPackage:
           $ref: '#/components/schemas/devices.ObjectStorageItem'
         storedPackageObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         teamId:
@@ -65074,23 +65035,24 @@ components:
         updateToolArguments:
           type: string
         updatedAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         versionlessDownloadUrl:
           type: boolean
     devices.SoftwareApp.Setting.Scope:
       type: string
-      default: SYSTEM
       enum:
         - SYSTEM
         - USER
+      default: SYSTEM
     devices.SoftwareAppAppleVpp:
       type: object
       properties:
         appConfiguration:
-          title: Not adding an instrumentation annotation since this could potentially contain sensitive info
           type: string
+          title: Not adding an instrumentation annotation since this could potentially contain sensitive info
         assignedLicenses:
           type: string
           format: int64
@@ -65110,26 +65072,26 @@ components:
           format: int64
     devices.SoftwareAppAppleVpp.DeviceFamily:
       type: string
-      default: MAC
       enum:
         - MAC
         - IPAD
         - IPHONE
         - IPOD
+      default: MAC
     devices.SoftwareAppAutoUpdateMode:
       type: string
-      default: AUTO_UPDATE_MODE_UNSPECIFIED
       enum:
         - AUTO_UPDATE_MODE_UNSPECIFIED
         - AUTO_UPDATE_DEFAULT
         - AUTO_UPDATE_POSTPONED
         - AUTO_UPDATE_HIGH_PRIORITY
+      default: AUTO_UPDATE_MODE_UNSPECIFIED
     devices.SoftwareAppDesiredState:
       type: string
-      default: INSTALL
       enum:
         - INSTALL
         - UNINSTALL
+      default: INSTALL
     devices.SoftwareAppGoogleAndroid:
       type: object
       properties:
@@ -65187,7 +65149,6 @@ components:
           format: int64
     devices.SoftwareAppInstallType:
       type: string
-      default: INSTALL_TYPE_UNSPECIFIED
       enum:
         - INSTALL_TYPE_UNSPECIFIED
         - PREINSTALLED
@@ -65196,6 +65157,7 @@ components:
         - AVAILABLE
         - REQUIRED_FOR_SETUP
         - KIOSK
+      default: INSTALL_TYPE_UNSPECIFIED
     devices.SoftwareAppMicrosoftStore:
       type: object
       properties:
@@ -65207,10 +65169,6 @@ components:
           type: string
     devices.SoftwareAppPackageManager:
       type: string
-      description: |2-
-         - WINDOWS_MDM: Private-repo MSI installers (object storage).
-         - WINDOWS_CUSTOM: Private-repo EXE/MSIX and other non-MSI custom installers (object storage); agent uses windowsCustom.
-      default: UNKNOWN
       enum:
         - UNKNOWN
         - CHOCOLATEY
@@ -65222,6 +65180,10 @@ components:
         - WINGET
         - MAC_OS_APP_CATALOG
         - WINDOWS_CUSTOM
+      default: UNKNOWN
+      description: |2-
+         - WINDOWS_MDM: Private-repo MSI installers (object storage).
+         - WINDOWS_CUSTOM: Private-repo EXE/MSIX and other non-MSI custom installers (object storage); agent uses windowsCustom.
     devices.SoftwareAppPermissionGrant:
       type: object
       properties:
@@ -65231,20 +65193,20 @@ components:
           $ref: '#/components/schemas/devices.SoftwareAppRuntimePermission'
     devices.SoftwareAppRuntimePermission:
       type: string
-      default: PERMISSION_POLICY_UNSPECIFIED
       enum:
         - PERMISSION_POLICY_UNSPECIFIED
         - PROMPT
         - GRANT
         - DENY
+      default: PERMISSION_POLICY_UNSPECIFIED
     devices.SoftwareAppType:
       type: string
-      default: APP_TYPE_UNSPECIFIED
       enum:
         - APP_TYPE_UNSPECIFIED
         - PUBLIC
         - PRIVATE
         - WEBAPP
+      default: APP_TYPE_UNSPECIFIED
     devices.SsaoDevicesSettings:
       type: object
       properties:
@@ -65258,22 +65220,21 @@ components:
           type: boolean
     devices.SsaoDevicesSettings.OSFamily:
       type: string
-      default: UNKNOWN
       enum:
         - UNKNOWN
         - WINDOWS
         - MACOS
+      default: UNKNOWN
     devices.SsaoDevicesSettings.Permission:
       type: string
-      default: STANDARD
       enum:
         - STANDARD
         - ADMIN
+      default: STANDARD
     devices.TrackObject:
       type: object
       properties:
         objectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         type:
@@ -65452,21 +65413,20 @@ components:
       type: object
       properties:
         columns:
-          title: '["col1", "col2", "col3"]'
           type: array
           items:
             type: string
+          title: '["col1", "col2", "col3"]'
         filters:
-          title: '[ {''field'': ''field1'', ''values'': [''val1'' , ''val2''] }, { ... } ]'
           type: array
           items:
             $ref: '#/components/schemas/devices.Filters'
+          title: '[ {''field'': ''field1'', ''values'': [''val1'' , ''val2''] }, { ... } ]'
         isDefault:
           type: boolean
         name:
           type: string
         objectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         shared:
@@ -65474,7 +65434,6 @@ components:
         sortConfig:
           type: string
         userObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
     devices.SavedViewCreateRequest:
@@ -65493,7 +65452,6 @@ components:
         name:
           type: string
         objectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
         shared:
@@ -65501,7 +65459,6 @@ components:
         sortConfig:
           type: string
         userObjectId:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
           type: string
           format: byte
     jumpcloud.search.Function:
@@ -65598,6 +65555,7 @@ components:
             field's array.
         operation:
           $ref: '#/components/schemas/jumpcloud.search.SearchRequestFilter.Operation'
+          x-skip-validation: true
         query:
           $ref: '#/components/schemas/jumpcloud.search.SearchRequest'
         unit:
@@ -65609,6 +65567,7 @@ components:
             Static value to be compared against. For values that will need to be compared as a datetime object, this should be
             provided as an ISO8601 format string with no offset (UTC). This is made optional so that
             the client can omit this field on AND/OR filters.
+          x-skip-validation: true
       description: A filter for a search query.
     jumpcloud.search.SearchRequestFilter.Operation:
       type: string
@@ -66601,7 +66560,6 @@ components:
       description: Parameters for controlling pagination of search results.
     devices.SoftwareApp.Setting.Format:
       type: string
-      default: PKG
       enum:
         - PKG
         - APP_IN_DMG
@@ -66610,6 +66568,7 @@ components:
         - APP_IN_ZIP
         - PKG_IN_ZIP
         - APP_IN_DMG_ZIP
+      default: PKG
     jumpcloud.idm.AppliedOn:
       type: string
       enum:
@@ -66714,6 +66673,7 @@ components:
         value:
           type: string
           title: The context value
+          x-skip-validation: true
       description: MetadataContextEntry represents a single key-value pair for additional metadata context.
     jumpcloud.healthmonitoring.RuleEventFilter:
       type: object
@@ -68035,25 +67995,25 @@ components:
           type: string
     devices.SoftwareApp.Setting.AppDeliveryMethod:
       type: string
-      default: IMMEDIATE
       enum:
         - IMMEDIATE
         - ON_DEMAND
+      default: IMMEDIATE
     devices.MetadataPKG.ManagedInstallEligibilityStatus:
       type: string
-      default: MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED
       enum:
         - MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED
         - MANAGED_INSTALL_ELIGIBLE
         - MANAGED_INSTALL_INELIGIBLE
         - MANAGED_INSTALL_ELIGIBILITY_UNKNOWN
+      default: MANAGED_INSTALL_ELIGIBILITY_NOT_EVALUATED
     devices.SoftwareApp.Setting.AdminManagementIntent:
       type: string
-      default: INTENT_UNSPECIFIED
       enum:
         - INTENT_UNSPECIFIED
         - INTENT_FORCE_MANAGED
         - INTENT_FORCE_UNMANAGED
+      default: INTENT_UNSPECIFIED
     devices.DetectionRuleCustomScript:
       type: object
       properties:
@@ -68287,13 +68247,14 @@ components:
       title: contains the configuration parameters required for the creation of an API key
       required:
         - lifetime
-    systemObjectId_transfer_body:
+    devices.WindowsCustomInstallerConfig:
       type: object
       properties:
-        org_id:
-          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
-          type: string
-          format: byte
+        successExitCodes:
+          type: array
+          items:
+            type: integer
+            format: int32
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
