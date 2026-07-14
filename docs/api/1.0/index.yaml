@@ -5457,14 +5457,14 @@ paths:
           type: string
     x-functionalities-tags:
       - accounts-page-payment-info
-  /organizations/{organizationId}/applications/{applicationId}/metadata.xml:
+  /organizations/{organization_id}/applications/{id}/metadata.xml:
     parameters:
-      - name: organizationId
+      - name: organization_id
         in: path
         required: true
         schema:
           type: string
-      - name: applicationId
+      - name: id
         in: path
         required: true
         schema:
