@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Migrating to Standardized OpenAPI Operation IDs | JumpCloud API Docs</title>
+  <meta http-equiv="strict-transport-security" content="max-age=31536000">
+  <meta http-equiv="x-content-type-options" content="nosniff">
+  <meta http-equiv="referrer-policy" content="strict-origin-when-cross-origin">
+  
+  <link rel="shortcut icon" type="image/png" href="/images/API Docs Favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/atom-one-dark.min.css">
+  <link rel="stylesheet" href="../../jc_docs_chrome.css?v=1784124910">
+  
+<!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
+<script>
+  (function (h, o, u, d) {
+    var agent = (h[d] = h[d] || {
+      q: [],
+      onReady: function (callback) {
+        agent.q.push(callback);
+      },
+    });
+    var script = o.createElement(u);
+    script.async = 1;
+    script.src = "https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js";
+    var first = o.getElementsByTagName(u)[0];
+    if (first && first.parentNode) {
+      first.parentNode.insertBefore(script, first);
+    } else {
+      o.head.appendChild(script);
+    }
+  })(window, document, "script", "DD_RUM");
+  window.DD_RUM.onReady(function () {
+    window.DD_RUM.init({
+      clientToken: "pub4df04d743394daeb846048dc7d655830",
+      applicationId: "2d2cb82d-0d76-4ed9-b4bc-02999f2a342c",
+      site: "datadoghq.com",
+      service: "jumpcloud-docs",
+      env: "production",
+      sessionSampleRate: 100,
+      trackResources: true,
+      trackLongTasks: true,
+      trackUserInteractions: true,
+      defaultPrivacyLevel: "mask-user-input",
+    });
+  });
+</script>
+
+</head>
+
+<body class="jc-docs-landing jc-circuit-landing jc-guide-page jc-guide-page--no-sidebar">
+  <a href="#main-content" class="jc-skip-link">Skip to main content</a>
+
+  <nav class="sticky-top" aria-label="Site">
+    
+        <header class="jc-docs-top-bar jc-docs-chrome-light" aria-label="API Docs">
+      <div class="jc-docs-top-bar-inner">
+        <div class="jc-docs-top-bar-brand-group">
+          <a class="jc-docs-top-bar-brand" href="../../index.html">
+            <img src="../../jumpcloud-brand-logo.svg" alt="JumpCloud" width="108" height="18" class="jc-docs-top-bar-logo" />
+          </a>
+          <span class="jc-docs-top-bar-divider" aria-hidden="true"></span>
+          <span class="jc-docs-top-bar-label">API Docs</span>
+        </div>
+        
+      </div>
+    </header>
+    
+  </nav>
+
+  <main id="main-content" class="jc-circuit-main jc-guide-main" tabindex="-1">
+    <div class="jc-guide-shell">
+      
+
+      <div class="jc-guide-center">
+        <div class="jc-guide-center-inner">
+          <nav class="jc-guide-breadcrumb" aria-label="Breadcrumb">
+            <a href="../../index.html">API Docs</a>
+            
+            <span aria-hidden="true">›</span>
+            <span class="jc-guide-breadcrumb-current" aria-current="page">Migrating to Standardized OpenAPI Operation IDs</span>
+          </nav>
+
+          <header class="jc-guide-header">
+            <h1 class="jc-guide-title">Migrating to Standardized OpenAPI Operation IDs</h1>
+            
+          </header>
+
+          <article class="jc-guide-prose">
+            <p>As part of our commitment to improving our developer experience and tooling, JumpCloud is updating its API documentation pipeline to standardize how <code>operationId</code> fields are generated across our OpenAPI specifications.</p>
+<p>This article explains what is changing, how it might affect your automated workflows or SDKs, and how you can use our migration mapping file to transition smoothly.</p>
+<h2 id="what-is-changing"><strong>What is Changing?</strong><a class="jc-guide-heading-anchor" href="#what-is-changing" aria-label="Link to this section">#</a></h2>
+<p>We are moving away from legacy, manually managed Operation IDs to a programmatic, codegen-style naming convention. In our new specification bundles (to be published on the <strong><a href="https://docs.jumpcloud.com/new">https://docs.jumpcloud.com/new</a></strong> page), every API endpoint will have its <code>operationId</code> automatically derived from its <strong>HTTP Method</strong> and its <strong>Host-Root Path</strong>.</p>
+<ul>
+<li><strong>The Legacy Format:</strong> Historically, operation IDs used a mix of camelCase and snakecase format, such as <code>groups_system_list</code>.  </li>
+<li><strong>The Standardized Format:</strong> The new format uses a deterministic camelCase structure, transforming the previous example into <code>getApiV2Systemgroups</code>.</li>
+</ul>
+<blockquote>
+<p><strong>NOTE: Our legacy documentation (<a href="https://docs.jumpcloud.com/">https://docs.jumpcloud.com/</a>) will continue to serve the older upstream Operation IDs until the official final cutover date, giving your engineering teams ample time to test and adapt.</strong></p>
+</blockquote>
+<h2 id="what-is-not-changing"><strong>What is Not Changing?</strong><a class="jc-guide-heading-anchor" href="#what-is-not-changing" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>HTTP methods and paths (e.g. <code>GET /api/v2/systemgroups</code>)  </li>
+<li>Request and response payloads  </li>
+<li>Authentication, headers, and query parameters  </li>
+<li>Runtime API behavior</li>
+</ul>
+<h2 id="how-this-impacts-you"><strong>How This Impacts You</strong><a class="jc-guide-heading-anchor" href="#how-this-impacts-you" aria-label="Link to this section">#</a></h2>
+<p>If you interact with JumpCloud APIs purely through standard HTTP requests, this change won’t impact you.<br>
+However, if your development team uses automated tools (such as OpenAPI Generator or AutoRest) to automatically generate SDKs, API clients, or wrapper libraries, this update will change the names of the methods generated by your code.<br>
+For example, a generated code snippet that previously called a legacy method name will now map to a new, standardized method name:</p>
+<table>
+<thead>
+<tr>
+<th>Integration Element</th>
+<th>Legacy Behavior</th>
+<th>Standardized Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OpenAPI Spec ID</strong></td>
+<td><code>groups_system_list</code></td>
+<td><code>getApiV2Systemgroups</code></td>
+</tr>
+<tr>
+<td><strong>Generated Go SDK Method</strong></td>
+<td><code>client.GroupsSystemList()</code></td>
+<td><code>client.GetApiV2Systemgroups()</code></td>
+</tr>
+<tr>
+<td><strong>Generated Python SDK Method</strong></td>
+<td><code>client.groupssystemlist()</code></td>
+<td><code>client.getapiv2systemgroups()</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="migration-support"><strong>Migration Support</strong><a class="jc-guide-heading-anchor" href="#migration-support" aria-label="Link to this section">#</a></h2>
+<p>To help you migrate your downstream SDKs and software development lifecycles, our docs pipeline now publishes a machine-readable sidecar mapping file alongside each aggregated documentation bundle. The mapping files will be published separately for both JumpCloud Console API and Directory Insights API separately. </p>
+<ul>
+<li><a href="../../console/operation-id-mapping.yaml">JumpCloud Console APIs</a></li>
+<li><a href="../../api/insights/directory/operation-id-mapping.yaml">Directory Insights APIs</a></li>
+</ul>
+<p>This YAML schema provides an explicit bridge between old and new identifiers, featuring five key attributes per entry to help you programmatically script your internal updates:</p>
+<ol>
+<li><code>method</code> (The HTTP Verb)</li>
+<li><code>host_root_path</code></li>
+<li><code>base_path</code></li>
+<li><code>legacy_operation_id</code></li>
+<li><code>standardized_operation_id</code></li>
+</ol>
+<h2 id="the-mapping-structure"><strong>The Mapping Structure</strong><a class="jc-guide-heading-anchor" href="#the-mapping-structure" aria-label="Link to this section">#</a></h2>
+<p>The sidecar file structure looks like this:</p>
+<pre><code class="language-yaml"># operation-id-mapping.yaml snippet
+- method: &quot;GET&quot;
+  host_root_path: &quot;api/v2&quot;
+  base_path: &quot;/systemgroups&quot;
+  legacy_operation_id: &quot;groups_system_list&quot;
+  standardized_operation_id: &quot;getApiV2Systemgroups&quot;
+</code></pre>
+<p>To help you understand the change, let’s look at the “<strong>list system groups</strong>” operation as an example.</p>
+<blockquote>
+<p><strong>Important</strong></p>
+<p>The code samples in this guide are <strong>illustrative examples only</strong>, not implementation requirements. Your migration approach may vary based on your SDK, codegen tooling, and internal automation. Use the published <a href="#migration-support">operation ID mapping files</a> as the authoritative reference when updating legacy operation IDs on your side.</p>
+</blockquote>
+<p>While the API call remains the same, only the identifier changes. </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Before (legacy)</th>
+<th>After (standardized)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP Request</td>
+<td>GET <a href="https://console.jumpcloud.com/api/v2/systemgroups">https://console.jumpcloud.com/api/v2/systemgroups</a></td>
+<td>(unchanged)</td>
+</tr>
+<tr>
+<td>operationId</td>
+<td><code>groups_system_list</code></td>
+<td><code>getApiV2Systemgroups</code></td>
+</tr>
+</tbody>
+</table>
+<p>In the OpenAPI spec file, you’ll see the following change: </p>
+<pre><code class="language-yaml"># Before
+paths:
+ /api/v2/systemgroups:
+   get:
+     operationId: groups_system_list
+
+
+# After
+paths:
+ /api/v2/systemgroups:
+   get:
+     operationId: getApiV2Systemgroups
+
+</code></pre>
+<h3 id="openapi-generated-client">OpenAPI Generated Client<a class="jc-guide-heading-anchor" href="#openapi-generated-client" aria-label="Link to this section">#</a></h3>
+<p>Many teams generate a client from our OpenAPI specifications. The method names are derived from each operation’s <code>operationId</code>. After we publish the new specs, regenerating the client will produce new method names (as shown below).<br>
+This is not a runtime change to the API itself. You will need to regenerate your client and update your code if it references the old method names.</p>
+<pre><code class="language-python"># Before — method name came from legacy operationId
+system_groups = client.groups_system_list()
+
+# After — same HTTP call, new method name
+system_groups = client.get_api_v2_systemgroups()
+</code></pre>
+<h3 id="custom-operation-based-on-operationid">Custom Operation Based on <code>operationId</code><a class="jc-guide-heading-anchor" href="#custom-operation-based-on-operationid" aria-label="Link to this section">#</a></h3>
+<p>If your automation stores JumpCloud API actions by name (for example in config files, test suites, or internal wrappers) and those names come from the OpenAPI <code>operationId</code>, you will need to update them to match the new standardized names.</p>
+<pre><code class="language-python"># Before
+OPERATIONS = {
+    &quot;groups_system_list&quot;: {
+        &quot;method&quot;: &quot;GET&quot;,
+        &quot;path&quot;: &quot;/api/v2/systemgroups&quot;,
+    },
+}
+
+# After
+OPERATIONS = {
+    &quot;getApiV2Systemgroups&quot;: {
+        &quot;method&quot;: &quot;GET&quot;,
+        &quot;path&quot;: &quot;/api/v2/systemgroups&quot;,
+    },
+}
+</code></pre>
+<pre><code class="language-python"># Before
+def run(client, operation_id, **kwargs):
+    if operation_id == &quot;groups_system_list&quot;:
+        return client.get(&quot;/api/v2/systemgroups&quot;, **kwargs)
+
+run(client, &quot;groups_system_list&quot;)
+
+# After
+def run(client, operation_id, **kwargs):
+    if operation_id == &quot;getApiV2Systemgroups&quot;:
+        return client.get(&quot;/api/v2/systemgroups&quot;, **kwargs)
+
+run(client, &quot;getApiV2Systemgroups&quot;)
+</code></pre>
+<p>For a Direct HTTP request, you won’t see any change.</p>
+<pre><code class="language-python"># Unchanged — operationId is not used in direct HTTP calls
+import requests
+
+response = requests.get(
+    &quot;https://console.jumpcloud.com/api/v2/systemgroups&quot;,
+    headers={&quot;x-api-key&quot;: API_KEY},
+)
+</code></pre>
+          </article>
+        </div>
+      </div>
+
+      <aside class="jc-guide-toc" aria-label="On this page">
+        <div class="jc-guide-toc-inner">
+          <h2 class="jc-guide-toc-heading">In this article</h2>
+          
+          <nav>
+            <ul class="jc-guide-toc-list">
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#what-is-changing"
+                >What is Changing?</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#what-is-not-changing"
+                >What is Not Changing?</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#how-this-impacts-you"
+                >How This Impacts You</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#migration-support"
+                >Migration Support</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#the-mapping-structure"
+                >The Mapping Structure</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#openapi-generated-client"
+                >OpenAPI Generated Client</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#custom-operation-based-on-operationid"
+                >Custom Operation Based on operationId</a>
+              </li>
+              
+            </ul>
+          </nav>
+          
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="jc-landing-footer jc-circuit-landing-footer jc-docs-chrome-light">
+  <nav class="jc-circuit-footer-nav" aria-label="Footer">
+    <a href="https://jumpcloud.com" target="_blank" rel="noopener noreferrer">
+      Go to JumpCloud.com
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <a href="https://jumpcloud.com/support/contact-jumpcloud-support" target="_blank" rel="noopener noreferrer">
+      JumpCloud Support
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <span class="jc-circuit-footer-copy">Copyright © 2026 JumpCloud.</span>
+  </nav>
+</footer>
+
+    <script>
+    (function () {
+      function syncDocsChromeOffset() {
+        var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+        if (!nav) {
+          return;
+        }
+        document.documentElement.style.setProperty(
+          "--jc-docs-chrome-offset",
+          nav.offsetHeight + "px"
+        );
+        var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+        if (footer) {
+          document.documentElement.style.setProperty(
+            "--jc-scalar-footer-height",
+            footer.offsetHeight + "px"
+          );
+        }
+        if (window.JumpCloudDocs && typeof JumpCloudDocs.syncScalarViewportHeight === "function") {
+          JumpCloudDocs.syncScalarViewportHeight();
+        }
+      }
+
+      function init() {
+        syncDocsChromeOffset();
+        if (typeof ResizeObserver !== "undefined") {
+          var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+          if (nav) {
+            new ResizeObserver(syncDocsChromeOffset).observe(nav);
+          }
+          var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+          if (footer) {
+            new ResizeObserver(syncDocsChromeOffset).observe(footer);
+          }
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+      window.addEventListener("resize", syncDocsChromeOffset);
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof hljs !== "undefined") {
+        hljs.highlightAll();
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -171,6 +171,40 @@
     }
 
     
+    .jc-migration-banner {
+      position: fixed;
+      left: 0;
+      right: 0;
+      padding: 0.75rem 1.25rem;
+      background-color: #186aaa;
+      color: #fff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1020;
+      text-align: center;
+    }
+
+    .jc-migration-banner-text {
+      margin: 0 auto;
+      max-width: 960px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .jc-migration-banner-text a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    .jc-migration-banner-text a:hover,
+    .jc-migration-banner-text a:focus {
+      color: #fff;
+      text-decoration: underline;
+    }
+    
   </style>
   
 <!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
@@ -222,6 +256,13 @@
       
     </nav>
   </header>
+  
+  <div id="jc-migration-banner" class="jc-migration-banner" role="status">
+    <p class="jc-migration-banner-text">
+      JumpCloud API documentation is moving to a newly designed experience <a id="jc-migration-banner-new-docs-link" href="https://docs.jumpcloud.com/new">on this page</a>. 
+      This is a preview release. The final cutover is the 15th of November. See the <a href="https://jumpcloud.com/support/whats-new-api-docs-and-operation-id-migration">What's New page</a> and <a href="https://jumpcloud.com/support/faqs-new-api-docs-and-operation-id-migration">FAQs</a> to learn more.
+    </p>
+  </div>
   
   <main role="main">
     <div class="jumbotron text-center">
@@ -324,6 +365,27 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
     crossorigin="anonymous"></script>
+  
+  <script>
+    (function () {
+      var header = document.querySelector("header.fixed-top");
+      var banner = document.getElementById("jc-migration-banner");
+      var newDocsLink = document.getElementById("jc-migration-banner-new-docs-link");
+      if (newDocsLink && window.location.hostname !== "docs.jumpcloud.com") {
+        newDocsLink.href = window.location.origin + "/new" + window.location.pathname;
+      }
+      if (!header || !banner) {
+        return;
+      }
+
+      function positionBanner() {
+        banner.style.top = header.offsetHeight + "px";
+      }
+
+      positionBanner();
+      window.addEventListener("resize", positionBanner);
+    })();
+  </script>
   
 </body>
 

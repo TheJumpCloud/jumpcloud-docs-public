@@ -1,0 +1,3663 @@
+schema_version: 1
+host: console.jumpcloud.com
+operations:
+  - method: get
+    host_root_path: /api/application-templates
+    base_path: /api
+    legacy_operation_id: application_templates_list
+    standardized_operation_id: getApiApplicationTemplates
+  - method: get
+    host_root_path: /api/application-templates/{id}
+    base_path: /api
+    legacy_operation_id: application_templates_get
+    standardized_operation_id: getApiApplicationTemplatesById
+  - method: get
+    host_root_path: /api/applications
+    base_path: /api
+    legacy_operation_id: applications_list
+    standardized_operation_id: getApiApplications
+  - method: post
+    host_root_path: /api/applications
+    base_path: /api
+    legacy_operation_id: applications_post
+    standardized_operation_id: postApiApplications
+  - method: get
+    host_root_path: /api/applications/{id}
+    base_path: /api
+    legacy_operation_id: applications_get
+    standardized_operation_id: getApiApplicationsById
+  - method: put
+    host_root_path: /api/applications/{id}
+    base_path: /api
+    legacy_operation_id: applications_put
+    standardized_operation_id: putApiApplicationsById
+  - method: delete
+    host_root_path: /api/applications/{id}
+    base_path: /api
+    legacy_operation_id: applications_delete
+    standardized_operation_id: deleteApiApplicationsById
+  - method: post
+    host_root_path: /api/command/trigger/{triggername}
+    base_path: /api
+    legacy_operation_id: command_trigger_webhook_post
+    standardized_operation_id: postApiCommandTriggerByTriggername
+  - method: get
+    host_root_path: /api/commandresults
+    base_path: /api
+    legacy_operation_id: command_results_list
+    standardized_operation_id: getApiCommandresults
+  - method: get
+    host_root_path: /api/commandresults/{id}
+    base_path: /api
+    legacy_operation_id: command_results_get
+    standardized_operation_id: getApiCommandresultsById
+  - method: delete
+    host_root_path: /api/commandresults/{id}
+    base_path: /api
+    legacy_operation_id: command_results_delete
+    standardized_operation_id: deleteApiCommandresultsById
+  - method: get
+    host_root_path: /api/commands
+    base_path: /api
+    legacy_operation_id: commands_list
+    standardized_operation_id: getApiCommands
+  - method: post
+    host_root_path: /api/commands
+    base_path: /api
+    legacy_operation_id: commands_post
+    standardized_operation_id: postApiCommands
+  - method: get
+    host_root_path: /api/commands/{id}
+    base_path: /api
+    legacy_operation_id: commands_get
+    standardized_operation_id: getApiCommandsById
+  - method: put
+    host_root_path: /api/commands/{id}
+    base_path: /api
+    legacy_operation_id: commands_put
+    standardized_operation_id: putApiCommandsById
+  - method: delete
+    host_root_path: /api/commands/{id}
+    base_path: /api
+    legacy_operation_id: commands_delete
+    standardized_operation_id: deleteApiCommandsById
+  - method: get
+    host_root_path: /api/files/command/{id}
+    base_path: /api
+    legacy_operation_id: command_file_get
+    standardized_operation_id: getApiFilesCommandById
+  - method: get
+    host_root_path: /api/organizations
+    base_path: /api
+    legacy_operation_id: organization_list
+    standardized_operation_id: getApiOrganizations
+  - method: get
+    host_root_path: /api/organizations/{id}
+    base_path: /api
+    legacy_operation_id: organizations_get
+    standardized_operation_id: getApiOrganizationsById
+  - method: put
+    host_root_path: /api/organizations/{id}
+    base_path: /api
+    legacy_operation_id: organization_put
+    standardized_operation_id: putApiOrganizationsById
+  - method: get
+    host_root_path: /api/radiusservers
+    base_path: /api
+    legacy_operation_id: radius_servers_list
+    standardized_operation_id: getApiRadiusservers
+  - method: post
+    host_root_path: /api/radiusservers
+    base_path: /api
+    legacy_operation_id: radius_servers_post
+    standardized_operation_id: postApiRadiusservers
+  - method: get
+    host_root_path: /api/radiusservers/{id}
+    base_path: /api
+    legacy_operation_id: radius_servers_get
+    standardized_operation_id: getApiRadiusserversById
+  - method: put
+    host_root_path: /api/radiusservers/{id}
+    base_path: /api
+    legacy_operation_id: radius_servers_put
+    standardized_operation_id: putApiRadiusserversById
+  - method: delete
+    host_root_path: /api/radiusservers/{id}
+    base_path: /api
+    legacy_operation_id: radius_servers_delete
+    standardized_operation_id: deleteApiRadiusserversById
+  - method: post
+    host_root_path: /api/search/organizations
+    base_path: /api
+    legacy_operation_id: search_organizations_post
+    standardized_operation_id: postApiSearchOrganizations
+  - method: post
+    host_root_path: /api/search/systems
+    base_path: /api
+    legacy_operation_id: search_systems_post
+    standardized_operation_id: postApiSearchSystems
+  - method: post
+    host_root_path: /api/search/systemusers
+    base_path: /api
+    legacy_operation_id: search_systemusers_post
+    standardized_operation_id: postApiSearchSystemusers
+  - method: post
+    host_root_path: /api/search/commands
+    base_path: /api
+    legacy_operation_id: search_commands_post
+    standardized_operation_id: postApiSearchCommands
+  - method: post
+    host_root_path: /api/search/commandresults
+    base_path: /api
+    legacy_operation_id: search_commandresults_post
+    standardized_operation_id: postApiSearchCommandresults
+  - method: get
+    host_root_path: /api/systems
+    base_path: /api
+    legacy_operation_id: systems_list
+    standardized_operation_id: getApiSystems
+  - method: get
+    host_root_path: /api/systems/{id}
+    base_path: /api
+    legacy_operation_id: systems_get
+    standardized_operation_id: getApiSystemsById
+  - method: put
+    host_root_path: /api/systems/{id}
+    base_path: /api
+    legacy_operation_id: systems_put
+    standardized_operation_id: putApiSystemsById
+  - method: delete
+    host_root_path: /api/systems/{id}
+    base_path: /api
+    legacy_operation_id: systems_delete
+    standardized_operation_id: deleteApiSystemsById
+  - method: get
+    host_root_path: /api/systemusers
+    base_path: /api
+    legacy_operation_id: systemusers_list
+    standardized_operation_id: getApiSystemusers
+  - method: post
+    host_root_path: /api/systemusers
+    base_path: /api
+    legacy_operation_id: systemusers_post
+    standardized_operation_id: postApiSystemusers
+  - method: get
+    host_root_path: /api/systemusers/{id}
+    base_path: /api
+    legacy_operation_id: systemusers_get
+    standardized_operation_id: getApiSystemusersById
+  - method: put
+    host_root_path: /api/systemusers/{id}
+    base_path: /api
+    legacy_operation_id: systemusers_put
+    standardized_operation_id: putApiSystemusersById
+  - method: delete
+    host_root_path: /api/systemusers/{id}
+    base_path: /api
+    legacy_operation_id: systemusers_delete
+    standardized_operation_id: deleteApiSystemusersById
+  - method: post
+    host_root_path: /api/systemusers/{id}/expire
+    base_path: /api
+    legacy_operation_id: systemusers_expire
+    standardized_operation_id: postApiSystemusersByIdExpire
+  - method: post
+    host_root_path: /api/systemusers/{id}/password
+    base_path: /api
+    legacy_operation_id: systemusers_password
+    standardized_operation_id: postApiSystemusersByIdPassword
+  - method: post
+    host_root_path: /api/systemusers/{id}/mfa/enforce
+    base_path: /api
+    legacy_operation_id: systemusers_mfa_enforce
+    standardized_operation_id: postApiSystemusersByIdMfaEnforce
+  - method: post
+    host_root_path: /api/systemusers/{id}/resetmfa
+    base_path: /api
+    legacy_operation_id: systemusers_resetmfa
+    standardized_operation_id: postApiSystemusersByIdResetmfa
+  - method: post
+    host_root_path: /api/systemusers/{id}/mfasync
+    base_path: /api
+    legacy_operation_id: systemusers_mfasync
+    standardized_operation_id: postApiSystemusersByIdMfasync
+  - method: get
+    host_root_path: /api/systemusers/{id}/sshkeys
+    base_path: /api
+    legacy_operation_id: sshkey_list
+    standardized_operation_id: getApiSystemusersByIdSshkeys
+  - method: post
+    host_root_path: /api/systemusers/{id}/sshkeys
+    base_path: /api
+    legacy_operation_id: sshkey_post
+    standardized_operation_id: postApiSystemusersByIdSshkeys
+  - method: get
+    host_root_path: /api/systemusers/{id}/totpinfo
+    base_path: /api
+    legacy_operation_id: systemusers_totp_info
+    standardized_operation_id: getApiSystemusersByIdTotpinfo
+  - method: post
+    host_root_path: /api/systemusers/{id}/unlock
+    base_path: /api
+    legacy_operation_id: systemusers_unlock
+    standardized_operation_id: postApiSystemusersByIdUnlock
+  - method: delete
+    host_root_path: /api/systemusers/{systemuser_id}/sshkeys/{id}
+    base_path: /api
+    legacy_operation_id: sshkey_delete
+    standardized_operation_id: deleteApiSystemusersBySystemuserIdSshkeysById
+  - method: post
+    host_root_path: /api/systemusers/{id}/state/activate
+    base_path: /api
+    legacy_operation_id: systemusers_state_activate
+    standardized_operation_id: postApiSystemusersByIdStateActivate
+  - method: post
+    host_root_path: /api/systemusers/{id}/state/suspend
+    base_path: /api
+    legacy_operation_id: systemusers_state_suspend
+    standardized_operation_id: postApiSystemusersByIdStateSuspend
+  - method: post
+    host_root_path: /api/users/resettotp/{id}
+    base_path: /api
+    legacy_operation_id: admin_totpreset_begin
+    standardized_operation_id: postApiUsersResettotpById
+  - method: put
+    host_root_path: /api/users/{id}
+    base_path: /api
+    legacy_operation_id: users_put
+    standardized_operation_id: putApiUsersById
+  - method: get
+    host_root_path: /api/commands/{id}/results
+    base_path: /api
+    legacy_operation_id: commands_getResults
+    standardized_operation_id: getApiCommandsByIdResults
+  - method: post
+    host_root_path: /api/systemusers/{id}/reactivate
+    base_path: /api
+    legacy_operation_id: systemuser_reactivate
+    standardized_operation_id: postApiSystemusersByIdReactivate
+  - method: get
+    host_root_path: /api/users/reactivate/{id}
+    base_path: /api
+    legacy_operation_id: users_reactivate_get
+    standardized_operation_id: getApiUsersReactivateById
+  - method: post
+    host_root_path: /api/runCommand
+    base_path: /api
+    legacy_operation_id: commands_run
+    standardized_operation_id: postApiRuncommand
+  - method: post
+    host_root_path: /api/systems/{system_id}/command/builtin/erase
+    base_path: /api
+    legacy_operation_id: systems_commandBuiltinErase
+    standardized_operation_id: postApiSystemsBySystemIdCommandBuiltinErase
+  - method: post
+    host_root_path: /api/systems/{system_id}/command/builtin/lock
+    base_path: /api
+    legacy_operation_id: systems_commandBuiltinLock
+    standardized_operation_id: postApiSystemsBySystemIdCommandBuiltinLock
+  - method: post
+    host_root_path: /api/systems/{system_id}/command/builtin/restart
+    base_path: /api
+    legacy_operation_id: systems_commandBuiltinRestart
+    standardized_operation_id: postApiSystemsBySystemIdCommandBuiltinRestart
+  - method: post
+    host_root_path: /api/systems/{system_id}/command/builtin/shutdown
+    base_path: /api
+    legacy_operation_id: systems_commandBuiltinShutdown
+    standardized_operation_id: postApiSystemsBySystemIdCommandBuiltinShutdown
+  - method: get
+    host_root_path: /api/v2/activedirectories
+    base_path: /api/v2
+    legacy_operation_id: activedirectories_list
+    standardized_operation_id: getApiV2Activedirectories
+  - method: post
+    host_root_path: /api/v2/activedirectories
+    base_path: /api/v2
+    legacy_operation_id: activedirectories_post
+    standardized_operation_id: postApiV2Activedirectories
+  - method: get
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/agents
+    base_path: /api/v2
+    legacy_operation_id: activedirectories_agentsList
+    standardized_operation_id: getApiV2ActivedirectoriesByActivedirectoryIdAgents
+  - method: post
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/agents
+    base_path: /api/v2
+    legacy_operation_id: activedirectories_agentsPost
+    standardized_operation_id: postApiV2ActivedirectoriesByActivedirectoryIdAgents
+  - method: get
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/agents/{agent_id}
+    base_path: /api/v2
+    legacy_operation_id: activedirectories_agentsGet
+    standardized_operation_id: getApiV2ActivedirectoriesByActivedirectoryIdAgentsByAgentId
+  - method: delete
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/agents/{agent_id}
+    base_path: /api/v2
+    legacy_operation_id: activedirectories_agentsDelete
+    standardized_operation_id: deleteApiV2ActivedirectoriesByActivedirectoryIdAgentsByAgentId
+  - method: get
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_activeDirectoryAssociationsList
+    standardized_operation_id: getApiV2ActivedirectoriesByActivedirectoryIdAssociations
+  - method: post
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_activeDirectoryAssociationsPost
+    standardized_operation_id: postApiV2ActivedirectoriesByActivedirectoryIdAssociations
+  - method: get
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_activeDirectoryTraverseUserGroup
+    standardized_operation_id: getApiV2ActivedirectoriesByActivedirectoryIdUsergroups
+  - method: get
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_activeDirectoryTraverseUser
+    standardized_operation_id: getApiV2ActivedirectoriesByActivedirectoryIdUsers
+  - method: get
+    host_root_path: /api/v2/activedirectories/{id}
+    base_path: /api/v2
+    legacy_operation_id: activedirectories_get
+    standardized_operation_id: getApiV2ActivedirectoriesById
+  - method: patch
+    host_root_path: /api/v2/activedirectories/{id}
+    base_path: /api/v2
+    legacy_operation_id: activedirectories_patch
+    standardized_operation_id: patchApiV2ActivedirectoriesById
+  - method: delete
+    host_root_path: /api/v2/activedirectories/{id}
+    base_path: /api/v2
+    legacy_operation_id: activedirectories_delete
+    standardized_operation_id: deleteApiV2ActivedirectoriesById
+  - method: post
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/translation-rules/bulk
+    base_path: /api/v2
+    legacy_operation_id: activedirectoriesTranslationRules_bulk
+    standardized_operation_id: postApiV2ActivedirectoriesByActivedirectoryIdTranslationRulesBulk
+  - method: get
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/translation-rules
+    base_path: /api/v2
+    legacy_operation_id: activedirectoriesTranslationRules_list
+    standardized_operation_id: getApiV2ActivedirectoriesByActivedirectoryIdTranslationRules
+  - method: post
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/translation-rules
+    base_path: /api/v2
+    legacy_operation_id: activedirectoriesTranslationRules_post
+    standardized_operation_id: postApiV2ActivedirectoriesByActivedirectoryIdTranslationRules
+  - method: get
+    host_root_path: /api/v2/activedirectories/{provider_name}/translation-rules/recommendation
+    base_path: /api/v2
+    legacy_operation_id: activedirectoriesTranslationRules_recommendations
+    standardized_operation_id: getApiV2ActivedirectoriesByProviderNameTranslationRulesRecommendation
+  - method: put
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id}
+    base_path: /api/v2
+    legacy_operation_id: activedirectoriesTranslationRules_update
+    standardized_operation_id: putApiV2ActivedirectoriesByActivedirectoryIdTranslationRulesByTranslationRuleObjectId
+  - method: delete
+    host_root_path: /api/v2/activedirectories/{activedirectory_id}/translation-rules/{translation_rule_object_id}
+    base_path: /api/v2
+    legacy_operation_id: activedirectoriesTranslationRules_delete
+    standardized_operation_id: deleteApiV2ActivedirectoriesByActivedirectoryIdTranslationRulesByTranslationRuleObjectId
+  - method: post
+    host_root_path: /api/v2/activedirectories/translation-rules/preview
+    base_path: /api/v2
+    legacy_operation_id: activedirectoriesTranslationRules_preview
+    standardized_operation_id: postApiV2ActivedirectoriesTranslationRulesPreview
+  - method: get
+    host_root_path: /api/v2/administrators/{id}/organizationlinks
+    base_path: /api/v2
+    legacy_operation_id: administratorOrganizations_listByAdministrator
+    standardized_operation_id: getApiV2AdministratorsByIdOrganizationlinks
+  - method: post
+    host_root_path: /api/v2/administrators/{id}/organizationlinks
+    base_path: /api/v2
+    legacy_operation_id: administratorOrganizations_createByAdministrator
+    standardized_operation_id: postApiV2AdministratorsByIdOrganizationlinks
+  - method: delete
+    host_root_path: /api/v2/administrators/{administrator_id}/organizationlinks/{id}
+    base_path: /api/v2
+    legacy_operation_id: administratorOrganizations_removeByAdministrator
+    standardized_operation_id: deleteApiV2AdministratorsByAdministratorIdOrganizationlinksById
+  - method: get
+    host_root_path: /api/v2/applemdms
+    base_path: /api/v2
+    legacy_operation_id: applemdms_list
+    standardized_operation_id: getApiV2Applemdms
+  - method: put
+    host_root_path: /api/v2/applemdms/{id}
+    base_path: /api/v2
+    legacy_operation_id: applemdms_put
+    standardized_operation_id: putApiV2ApplemdmsById
+  - method: delete
+    host_root_path: /api/v2/applemdms/{id}
+    base_path: /api/v2
+    legacy_operation_id: applemdms_delete
+    standardized_operation_id: deleteApiV2ApplemdmsById
+  - method: get
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/csr
+    base_path: /api/v2
+    legacy_operation_id: applemdms_csrget
+    standardized_operation_id: getApiV2ApplemdmsByAppleMdmIdCsr
+  - method: get
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/depkey
+    base_path: /api/v2
+    legacy_operation_id: applemdms_depkeyget
+    standardized_operation_id: getApiV2ApplemdmsByAppleMdmIdDepkey
+  - method: get
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/enrollmentprofiles
+    base_path: /api/v2
+    legacy_operation_id: applemdms_enrollmentprofileslist
+    standardized_operation_id: getApiV2ApplemdmsByAppleMdmIdEnrollmentprofiles
+  - method: get
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/enrollmentprofiles/{id}
+    base_path: /api/v2
+    legacy_operation_id: applemdms_enrollmentprofilesget
+    standardized_operation_id: getApiV2ApplemdmsByAppleMdmIdEnrollmentprofilesById
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/refreshdepdevices
+    base_path: /api/v2
+    legacy_operation_id: applemdms_refreshdepdevices
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdRefreshdepdevices
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/erase
+    base_path: /api/v2
+    legacy_operation_id: applemdms_deviceserase
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdErase
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/clearPasscode
+    base_path: /api/v2
+    legacy_operation_id: applemdms_deviceClearPasscode
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdClearpasscode
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/lock
+    base_path: /api/v2
+    legacy_operation_id: applemdms_deviceslock
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdLock
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/restart
+    base_path: /api/v2
+    legacy_operation_id: applemdms_devicesrestart
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdRestart
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/shutdown
+    base_path: /api/v2
+    legacy_operation_id: applemdms_devicesshutdown
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdShutdown
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/clearRestrictionsPassword
+    base_path: /api/v2
+    legacy_operation_id: applemdms_devicesClearRestrictionsPassword
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdClearrestrictionspassword
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/clearActivationLock
+    base_path: /api/v2
+    legacy_operation_id: applemdms_devicesClearActivationLock
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdClearactivationlock
+  - method: get
+    host_root_path: /api/v2/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: applications_get
+    standardized_operation_id: getApiV2ApplicationsByApplicationId
+  - method: get
+    host_root_path: /api/v2/applications/{application_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_applicationAssociationsList
+    standardized_operation_id: getApiV2ApplicationsByApplicationIdAssociations
+  - method: post
+    host_root_path: /api/v2/applications/{application_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_applicationAssociationsPost
+    standardized_operation_id: postApiV2ApplicationsByApplicationIdAssociations
+  - method: post
+    host_root_path: /api/v2/applications/{application_id}/import/jobs
+    base_path: /api/v2
+    legacy_operation_id: import_create
+    standardized_operation_id: postApiV2ApplicationsByApplicationIdImportJobs
+  - method: post
+    host_root_path: /api/v2/applications/{application_id}/logo
+    base_path: /api/v2
+    legacy_operation_id: applications_postLogo
+    standardized_operation_id: postApiV2ApplicationsByApplicationIdLogo
+  - method: delete
+    host_root_path: /api/v2/applications/{application_id}/logo
+    base_path: /api/v2
+    legacy_operation_id: applications_deleteLogo
+    standardized_operation_id: deleteApiV2ApplicationsByApplicationIdLogo
+  - method: get
+    host_root_path: /api/v2/applications/{application_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_applicationTraverseUserGroup
+    standardized_operation_id: getApiV2ApplicationsByApplicationIdUsergroups
+  - method: get
+    host_root_path: /api/v2/applications/{application_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_applicationTraverseUser
+    standardized_operation_id: getApiV2ApplicationsByApplicationIdUsers
+  - method: get
+    host_root_path: /api/v2/applications/{application_id}/import/users
+    base_path: /api/v2
+    legacy_operation_id: import_users
+    standardized_operation_id: getApiV2ApplicationsByApplicationIdImportUsers
+  - method: post
+    host_root_path: /api/v2/bulk/users
+    base_path: /api/v2
+    legacy_operation_id: bulk_usersCreate
+    standardized_operation_id: postApiV2BulkUsers
+  - method: patch
+    host_root_path: /api/v2/bulk/users
+    base_path: /api/v2
+    legacy_operation_id: bulk_usersUpdate
+    standardized_operation_id: patchApiV2BulkUsers
+  - method: post
+    host_root_path: /api/v2/bulk/user/expires
+    base_path: /api/v2
+    legacy_operation_id: bulk_userExpires
+    standardized_operation_id: postApiV2BulkUserExpires
+  - method: post
+    host_root_path: /api/v2/bulk/user/unlocks
+    base_path: /api/v2
+    legacy_operation_id: bulk_userUnlocks
+    standardized_operation_id: postApiV2BulkUserUnlocks
+  - method: get
+    host_root_path: /api/v2/bulk/users/{job_id}/results
+    base_path: /api/v2
+    legacy_operation_id: bulk_usersCreateResults
+    standardized_operation_id: getApiV2BulkUsersByJobIdResults
+  - method: get
+    host_root_path: /api/v2/bulk/userstates
+    base_path: /api/v2
+    legacy_operation_id: bulk_userStatesList
+    standardized_operation_id: getApiV2BulkUserstates
+  - method: post
+    host_root_path: /api/v2/bulk/userstates
+    base_path: /api/v2
+    legacy_operation_id: bulk_userStatesCreate
+    standardized_operation_id: postApiV2BulkUserstates
+  - method: delete
+    host_root_path: /api/v2/bulk/userstates/{id}
+    base_path: /api/v2
+    legacy_operation_id: bulk_userStatesDelete
+    standardized_operation_id: deleteApiV2BulkUserstatesById
+  - method: get
+    host_root_path: /api/v2/bulk/userstates/eventlist/next
+    base_path: /api/v2
+    legacy_operation_id: bulk_userStatesGetNextScheduled
+    standardized_operation_id: getApiV2BulkUserstatesEventlistNext
+  - method: get
+    host_root_path: /api/v2/commands/{command_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_commandAssociationsList
+    standardized_operation_id: getApiV2CommandsByCommandIdAssociations
+  - method: post
+    host_root_path: /api/v2/commands/{command_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_commandAssociationsPost
+    standardized_operation_id: postApiV2CommandsByCommandIdAssociations
+  - method: get
+    host_root_path: /api/v2/commands/{command_id}/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_commandTraverseSystemGroup
+    standardized_operation_id: getApiV2CommandsByCommandIdSystemgroups
+  - method: get
+    host_root_path: /api/v2/commands/{command_id}/systems
+    base_path: /api/v2
+    legacy_operation_id: graph_commandTraverseSystem
+    standardized_operation_id: getApiV2CommandsByCommandIdSystems
+  - method: get
+    host_root_path: /api/v2/queuedcommand/workflows
+    base_path: /api/v2
+    legacy_operation_id: commands_getQueuedCommandsByWorkflow
+    standardized_operation_id: getApiV2QueuedcommandWorkflows
+  - method: delete
+    host_root_path: /api/v2/commandqueue/{workflow_instance_id}
+    base_path: /api/v2
+    legacy_operation_id: commands_cancelQueuedCommandsByWorkflowInstanceId
+    standardized_operation_id: deleteApiV2CommandqueueByWorkflowInstanceId
+  - method: get
+    host_root_path: /api/v2/directories
+    base_path: /api/v2
+    legacy_operation_id: directories_list
+    standardized_operation_id: getApiV2Directories
+  - method: get
+    host_root_path: /api/v2/duo/accounts
+    base_path: /api/v2
+    legacy_operation_id: duo_accountList
+    standardized_operation_id: getApiV2DuoAccounts
+  - method: post
+    host_root_path: /api/v2/duo/accounts
+    base_path: /api/v2
+    legacy_operation_id: duo_accountPost
+    standardized_operation_id: postApiV2DuoAccounts
+  - method: get
+    host_root_path: /api/v2/duo/accounts/{account_id}/applications
+    base_path: /api/v2
+    legacy_operation_id: duo_applicationList
+    standardized_operation_id: getApiV2DuoAccountsByAccountIdApplications
+  - method: post
+    host_root_path: /api/v2/duo/accounts/{account_id}/applications
+    base_path: /api/v2
+    legacy_operation_id: duo_applicationPost
+    standardized_operation_id: postApiV2DuoAccountsByAccountIdApplications
+  - method: get
+    host_root_path: /api/v2/duo/accounts/{account_id}/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: duo_applicationGet
+    standardized_operation_id: getApiV2DuoAccountsByAccountIdApplicationsByApplicationId
+  - method: put
+    host_root_path: /api/v2/duo/accounts/{account_id}/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: duo_applicationUpdate
+    standardized_operation_id: putApiV2DuoAccountsByAccountIdApplicationsByApplicationId
+  - method: delete
+    host_root_path: /api/v2/duo/accounts/{account_id}/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: duo_applicationDelete
+    standardized_operation_id: deleteApiV2DuoAccountsByAccountIdApplicationsByApplicationId
+  - method: get
+    host_root_path: /api/v2/duo/accounts/{id}
+    base_path: /api/v2
+    legacy_operation_id: duo_accountGet
+    standardized_operation_id: getApiV2DuoAccountsById
+  - method: delete
+    host_root_path: /api/v2/duo/accounts/{id}
+    base_path: /api/v2
+    legacy_operation_id: duo_accountDelete
+    standardized_operation_id: deleteApiV2DuoAccountsById
+  - method: get
+    host_root_path: /api/v2/groups
+    base_path: /api/v2
+    legacy_operation_id: groups_list
+    standardized_operation_id: getApiV2Groups
+  - method: get
+    host_root_path: /api/v2/gsuites/{gsuite_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_gSuiteAssociationsList
+    standardized_operation_id: getApiV2GsuitesByGsuiteIdAssociations
+  - method: post
+    host_root_path: /api/v2/gsuites/{gsuite_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_gSuiteAssociationsPost
+    standardized_operation_id: postApiV2GsuitesByGsuiteIdAssociations
+  - method: get
+    host_root_path: /api/v2/gsuites/{gsuite_id}/translationrules
+    base_path: /api/v2
+    legacy_operation_id: translationRules_gSuiteList
+    standardized_operation_id: getApiV2GsuitesByGsuiteIdTranslationrules
+  - method: post
+    host_root_path: /api/v2/gsuites/{gsuite_id}/translationrules
+    base_path: /api/v2
+    legacy_operation_id: translationRules_gSuitePost
+    standardized_operation_id: postApiV2GsuitesByGsuiteIdTranslationrules
+  - method: get
+    host_root_path: /api/v2/gsuites/{gsuite_id}/translationrules/{id}
+    base_path: /api/v2
+    legacy_operation_id: translationRules_gSuiteGet
+    standardized_operation_id: getApiV2GsuitesByGsuiteIdTranslationrulesById
+  - method: delete
+    host_root_path: /api/v2/gsuites/{gsuite_id}/translationrules/{id}
+    base_path: /api/v2
+    legacy_operation_id: translationRules_gSuiteDelete
+    standardized_operation_id: deleteApiV2GsuitesByGsuiteIdTranslationrulesById
+  - method: get
+    host_root_path: /api/v2/gsuites/{gsuite_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_gSuiteTraverseUserGroup
+    standardized_operation_id: getApiV2GsuitesByGsuiteIdUsergroups
+  - method: get
+    host_root_path: /api/v2/gsuites/{gsuite_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_gSuiteTraverseUser
+    standardized_operation_id: getApiV2GsuitesByGsuiteIdUsers
+  - method: get
+    host_root_path: /api/v2/gsuites/{id}
+    base_path: /api/v2
+    legacy_operation_id: gsuites_get
+    standardized_operation_id: getApiV2GsuitesById
+  - method: patch
+    host_root_path: /api/v2/gsuites/{id}
+    base_path: /api/v2
+    legacy_operation_id: gsuites_patch
+    standardized_operation_id: patchApiV2GsuitesById
+  - method: get
+    host_root_path: /api/v2/iplists
+    base_path: /api/v2
+    legacy_operation_id: iplists_list
+    standardized_operation_id: getApiV2Iplists
+  - method: post
+    host_root_path: /api/v2/iplists
+    base_path: /api/v2
+    legacy_operation_id: iplists_post
+    standardized_operation_id: postApiV2Iplists
+  - method: get
+    host_root_path: /api/v2/ldapservers
+    base_path: /api/v2
+    legacy_operation_id: ldapservers_list
+    standardized_operation_id: getApiV2Ldapservers
+  - method: get
+    host_root_path: /api/v2/ldapservers/{id}
+    base_path: /api/v2
+    legacy_operation_id: ldapservers_get
+    standardized_operation_id: getApiV2LdapserversById
+  - method: patch
+    host_root_path: /api/v2/ldapservers/{id}
+    base_path: /api/v2
+    legacy_operation_id: ldapservers_patch
+    standardized_operation_id: patchApiV2LdapserversById
+  - method: get
+    host_root_path: /api/v2/ldapservers/{ldapserver_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_ldapServerAssociationsList
+    standardized_operation_id: getApiV2LdapserversByLdapserverIdAssociations
+  - method: post
+    host_root_path: /api/v2/ldapservers/{ldapserver_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_ldapServerAssociationsPost
+    standardized_operation_id: postApiV2LdapserversByLdapserverIdAssociations
+  - method: get
+    host_root_path: /api/v2/ldapservers/{ldapserver_id}/sambadomains
+    base_path: /api/v2
+    legacy_operation_id: ldapservers_sambaDomainsList
+    standardized_operation_id: getApiV2LdapserversByLdapserverIdSambadomains
+  - method: post
+    host_root_path: /api/v2/ldapservers/{ldapserver_id}/sambadomains
+    base_path: /api/v2
+    legacy_operation_id: ldapservers_sambaDomainsPost
+    standardized_operation_id: postApiV2LdapserversByLdapserverIdSambadomains
+  - method: get
+    host_root_path: /api/v2/ldapservers/{ldapserver_id}/sambadomains/{id}
+    base_path: /api/v2
+    legacy_operation_id: ldapservers_sambaDomainsGet
+    standardized_operation_id: getApiV2LdapserversByLdapserverIdSambadomainsById
+  - method: put
+    host_root_path: /api/v2/ldapservers/{ldapserver_id}/sambadomains/{id}
+    base_path: /api/v2
+    legacy_operation_id: ldapservers_sambaDomainsPut
+    standardized_operation_id: putApiV2LdapserversByLdapserverIdSambadomainsById
+  - method: delete
+    host_root_path: /api/v2/ldapservers/{ldapserver_id}/sambadomains/{id}
+    base_path: /api/v2
+    legacy_operation_id: ldapservers_sambaDomainsDelete
+    standardized_operation_id: deleteApiV2LdapserversByLdapserverIdSambadomainsById
+  - method: get
+    host_root_path: /api/v2/ldapservers/{ldapserver_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_ldapServerTraverseUserGroup
+    standardized_operation_id: getApiV2LdapserversByLdapserverIdUsergroups
+  - method: get
+    host_root_path: /api/v2/ldapservers/{ldapserver_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_ldapServerTraverseUser
+    standardized_operation_id: getApiV2LdapserversByLdapserverIdUsers
+  - method: get
+    host_root_path: /api/v2/passwordmanageritems/{passwordmanageritem_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_passwordManagerItemAssociationsList
+    standardized_operation_id: getApiV2PasswordmanageritemsByPasswordmanageritemIdAssociations
+  - method: post
+    host_root_path: /api/v2/passwordmanageritems/{passwordmanageritem_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_passwordManagerItemAssociationsPost
+    standardized_operation_id: postApiV2PasswordmanageritemsByPasswordmanageritemIdAssociations
+  - method: get
+    host_root_path: /api/v2/passwordmanageritems/{passwordmanageritem_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_passwordManagerItemTraverseUser
+    standardized_operation_id: getApiV2PasswordmanageritemsByPasswordmanageritemIdUsers
+  - method: get
+    host_root_path: /api/v2/passwordmanageritems/{passwordmanageritem_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_passwordManagerItemTraverseUserGroup
+    standardized_operation_id: getApiV2PasswordmanageritemsByPasswordmanageritemIdUsergroups
+  - method: get
+    host_root_path: /api/v2/office365s/{office365_id}
+    base_path: /api/v2
+    legacy_operation_id: office365s_get
+    standardized_operation_id: getApiV2Office365sByOffice365Id
+  - method: patch
+    host_root_path: /api/v2/office365s/{office365_id}
+    base_path: /api/v2
+    legacy_operation_id: office365s_patch
+    standardized_operation_id: patchApiV2Office365sByOffice365Id
+  - method: get
+    host_root_path: /api/v2/office365s/{office365_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_office365AssociationsList
+    standardized_operation_id: getApiV2Office365sByOffice365IdAssociations
+  - method: post
+    host_root_path: /api/v2/office365s/{office365_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_office365AssociationsPost
+    standardized_operation_id: postApiV2Office365sByOffice365IdAssociations
+  - method: get
+    host_root_path: /api/v2/office365s/{office365_id}/translationrules
+    base_path: /api/v2
+    legacy_operation_id: translationRules_office365List
+    standardized_operation_id: getApiV2Office365sByOffice365IdTranslationrules
+  - method: post
+    host_root_path: /api/v2/office365s/{office365_id}/translationrules
+    base_path: /api/v2
+    legacy_operation_id: translationRules_office365Post
+    standardized_operation_id: postApiV2Office365sByOffice365IdTranslationrules
+  - method: get
+    host_root_path: /api/v2/office365s/{office365_id}/translationrules/{id}
+    base_path: /api/v2
+    legacy_operation_id: translationRules_office365Get
+    standardized_operation_id: getApiV2Office365sByOffice365IdTranslationrulesById
+  - method: delete
+    host_root_path: /api/v2/office365s/{office365_id}/translationrules/{id}
+    base_path: /api/v2
+    legacy_operation_id: translationRules_office365Delete
+    standardized_operation_id: deleteApiV2Office365sByOffice365IdTranslationrulesById
+  - method: get
+    host_root_path: /api/v2/office365s/{office365_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_office365TraverseUserGroup
+    standardized_operation_id: getApiV2Office365sByOffice365IdUsergroups
+  - method: get
+    host_root_path: /api/v2/office365s/{office365_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_office365TraverseUser
+    standardized_operation_id: getApiV2Office365sByOffice365IdUsers
+  - method: get
+    host_root_path: /api/v2/organizations/{id}/administratorlinks
+    base_path: /api/v2
+    legacy_operation_id: administratorOrganizations_listByOrganization
+    standardized_operation_id: getApiV2OrganizationsByIdAdministratorlinks
+  - method: get
+    host_root_path: /api/v2/organizations/cases
+    base_path: /api/v2
+    legacy_operation_id: organizations_orgListCases
+    standardized_operation_id: getApiV2OrganizationsCases
+  - method: post
+    host_root_path: /api/v2/sample-data
+    base_path: /api/v2
+    legacy_operation_id: sampleData_post
+    standardized_operation_id: postApiV2SampleData
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/cases
+    base_path: /api/v2
+    legacy_operation_id: providers_providerListCase
+    standardized_operation_id: getApiV2ProvidersByProviderIdCases
+  - method: get
+    host_root_path: /api/v2/cases/metadata
+    base_path: /api/v2
+    legacy_operation_id: organizations_casesMetadata
+    standardized_operation_id: getApiV2CasesMetadata
+  - method: get
+    host_root_path: /api/v2/subscriptions
+    base_path: /api/v2
+    legacy_operation_id: subscriptions_get
+    standardized_operation_id: getApiV2Subscriptions
+  - method: get
+    host_root_path: /api/v2/policies
+    base_path: /api/v2
+    legacy_operation_id: policies_list
+    standardized_operation_id: getApiV2Policies
+  - method: post
+    host_root_path: /api/v2/policies
+    base_path: /api/v2
+    legacy_operation_id: policies_post
+    standardized_operation_id: postApiV2Policies
+  - method: get
+    host_root_path: /api/v2/policies/{id}
+    base_path: /api/v2
+    legacy_operation_id: policies_get
+    standardized_operation_id: getApiV2PoliciesById
+  - method: put
+    host_root_path: /api/v2/policies/{id}
+    base_path: /api/v2
+    legacy_operation_id: policies_put
+    standardized_operation_id: putApiV2PoliciesById
+  - method: delete
+    host_root_path: /api/v2/policies/{id}
+    base_path: /api/v2
+    legacy_operation_id: policies_delete
+    standardized_operation_id: deleteApiV2PoliciesById
+  - method: get
+    host_root_path: /api/v2/policies/{policy_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_policyAssociationsList
+    standardized_operation_id: getApiV2PoliciesByPolicyIdAssociations
+  - method: post
+    host_root_path: /api/v2/policies/{policy_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_policyAssociationsPost
+    standardized_operation_id: postApiV2PoliciesByPolicyIdAssociations
+  - method: get
+    host_root_path: /api/v2/policies/{policy_id}/memberof
+    base_path: /api/v2
+    legacy_operation_id: graph_policyMemberOf
+    standardized_operation_id: getApiV2PoliciesByPolicyIdMemberof
+  - method: get
+    host_root_path: /api/v2/policies/{policy_id}/policyresults
+    base_path: /api/v2
+    legacy_operation_id: policyresults_list
+    standardized_operation_id: getApiV2PoliciesByPolicyIdPolicyresults
+  - method: get
+    host_root_path: /api/v2/policies/{policy_id}/policystatuses
+    base_path: /api/v2
+    legacy_operation_id: policystatuses_policiesList
+    standardized_operation_id: getApiV2PoliciesByPolicyIdPolicystatuses
+  - method: get
+    host_root_path: /api/v2/policies/{policy_id}/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_policyTraverseSystemGroup
+    standardized_operation_id: getApiV2PoliciesByPolicyIdSystemgroups
+  - method: get
+    host_root_path: /api/v2/policies/{policy_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_policyTraverseUser
+    standardized_operation_id: getApiV2PoliciesByPolicyIdUsers
+  - method: get
+    host_root_path: /api/v2/policies/{policy_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_policyTraverseUserGroup
+    standardized_operation_id: getApiV2PoliciesByPolicyIdUsergroups
+  - method: get
+    host_root_path: /api/v2/policies/{policy_id}/systems
+    base_path: /api/v2
+    legacy_operation_id: graph_policyTraverseSystem
+    standardized_operation_id: getApiV2PoliciesByPolicyIdSystems
+  - method: get
+    host_root_path: /api/v2/policygroups
+    base_path: /api/v2
+    legacy_operation_id: groups_policy_list
+    standardized_operation_id: getApiV2Policygroups
+  - method: post
+    host_root_path: /api/v2/policygroups
+    base_path: /api/v2
+    legacy_operation_id: groups_policy_post
+    standardized_operation_id: postApiV2Policygroups
+  - method: get
+    host_root_path: /api/v2/policygroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_policyGroupAssociationsList
+    standardized_operation_id: getApiV2PolicygroupsByGroupIdAssociations
+  - method: post
+    host_root_path: /api/v2/policygroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_policyGroupAssociationsPost
+    standardized_operation_id: postApiV2PolicygroupsByGroupIdAssociations
+  - method: get
+    host_root_path: /api/v2/policygroups/{group_id}/members
+    base_path: /api/v2
+    legacy_operation_id: graph_policyGroupMembersList
+    standardized_operation_id: getApiV2PolicygroupsByGroupIdMembers
+  - method: post
+    host_root_path: /api/v2/policygroups/{group_id}/members
+    base_path: /api/v2
+    legacy_operation_id: graph_policyGroupMembersPost
+    standardized_operation_id: postApiV2PolicygroupsByGroupIdMembers
+  - method: get
+    host_root_path: /api/v2/policygroups/{group_id}/membership
+    base_path: /api/v2
+    legacy_operation_id: graph_policyGroupMembership
+    standardized_operation_id: getApiV2PolicygroupsByGroupIdMembership
+  - method: get
+    host_root_path: /api/v2/policygroups/{group_id}/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_policyGroupTraverseSystemGroup
+    standardized_operation_id: getApiV2PolicygroupsByGroupIdSystemgroups
+  - method: get
+    host_root_path: /api/v2/policygroups/{group_id}/systems
+    base_path: /api/v2
+    legacy_operation_id: graph_policyGroupTraverseSystem
+    standardized_operation_id: getApiV2PolicygroupsByGroupIdSystems
+  - method: get
+    host_root_path: /api/v2/policygroups/{group_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_policyGroupTraverseUser
+    standardized_operation_id: getApiV2PolicygroupsByGroupIdUsers
+  - method: get
+    host_root_path: /api/v2/policygroups/{group_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_policyGroupTraverseUserGroup
+    standardized_operation_id: getApiV2PolicygroupsByGroupIdUsergroups
+  - method: get
+    host_root_path: /api/v2/policygroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_policy_get
+    standardized_operation_id: getApiV2PolicygroupsById
+  - method: put
+    host_root_path: /api/v2/policygroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_policy_put
+    standardized_operation_id: putApiV2PolicygroupsById
+  - method: delete
+    host_root_path: /api/v2/policygroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_policy_delete
+    standardized_operation_id: deleteApiV2PolicygroupsById
+  - method: get
+    host_root_path: /api/v2/policyresults
+    base_path: /api/v2
+    legacy_operation_id: policyresults_org_list
+    standardized_operation_id: getApiV2Policyresults
+  - method: get
+    host_root_path: /api/v2/policyresults/{id}
+    base_path: /api/v2
+    legacy_operation_id: policyresults_get
+    standardized_operation_id: getApiV2PolicyresultsById
+  - method: get
+    host_root_path: /api/v2/policytemplates
+    base_path: /api/v2
+    legacy_operation_id: policytemplates_list
+    standardized_operation_id: getApiV2Policytemplates
+  - method: get
+    host_root_path: /api/v2/policytemplates/{id}
+    base_path: /api/v2
+    legacy_operation_id: policytemplates_get
+    standardized_operation_id: getApiV2PolicytemplatesById
+  - method: get
+    host_root_path: /api/v2/providers
+    base_path: /api/v2
+    legacy_operation_id: providers_getProviders
+    standardized_operation_id: getApiV2Providers
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/applications
+    base_path: /api/v2
+    legacy_operation_id: applications_listProviderApplications
+    standardized_operation_id: getApiV2ProvidersByProviderIdApplications
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providers_listAssociations
+    standardized_operation_id: getApiV2ProvidersByProviderIdActivedirectoriesByAdIdAssociations
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/activedirectories/{ad_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providers_adbridgeManageAssociations
+    standardized_operation_id: postApiV2ProvidersByProviderIdActivedirectoriesByAdIdAssociations
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/g_suites/{gsuite_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providers_gSuitesListAssociations
+    standardized_operation_id: getApiV2ProvidersByProviderIdGSuitesByGsuiteIdAssociations
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/g_suites/{gsuite_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providers_gSuitesManageAssociations
+    standardized_operation_id: postApiV2ProvidersByProviderIdGSuitesByGsuiteIdAssociations
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/usergroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providers_userGroupsManageAssociations
+    standardized_operation_id: postApiV2ProvidersByProviderIdUsergroupsByGroupIdAssociations
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/systemgroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providers_systemGroupsManageAssociations
+    standardized_operation_id: postApiV2ProvidersByProviderIdSystemgroupsByGroupIdAssociations
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/policygroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providers_policyGroupsManageAssociations
+    standardized_operation_id: postApiV2ProvidersByProviderIdPolicygroupsByGroupIdAssociations
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/activedirectories
+    base_path: /api/v2
+    legacy_operation_id: providers_listProvidersPrimaryOrganizationDomains
+    standardized_operation_id: getApiV2ProvidersByProviderIdActivedirectories
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/g_suites
+    base_path: /api/v2
+    legacy_operation_id: providers_gSuitesListProvidersPrimaryOrganizationAccounts
+    standardized_operation_id: getApiV2ProvidersByProviderIdGSuites
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/applications/{id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providerApplications_getAssociations
+    standardized_operation_id: getApiV2ProvidersByProviderIdApplicationsByIdAssociations
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/applications/{id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providerApplications_editAssociations
+    standardized_operation_id: postApiV2ProvidersByProviderIdApplicationsByIdAssociations
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/administrators
+    base_path: /api/v2
+    legacy_operation_id: providers_listAdministrators
+    standardized_operation_id: getApiV2ProvidersByProviderIdAdministrators
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/administrators
+    base_path: /api/v2
+    legacy_operation_id: providers_postAdmins
+    standardized_operation_id: postApiV2ProvidersByProviderIdAdministrators
+  - method: delete
+    host_root_path: /api/v2/providers/{provider_id}/administrators/{id}
+    base_path: /api/v2
+    legacy_operation_id: providers_removeAdministrator
+    standardized_operation_id: deleteApiV2ProvidersByProviderIdAdministratorsById
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/integrations
+    base_path: /api/v2
+    legacy_operation_id: providers_retrieveIntegrations
+    standardized_operation_id: getApiV2ProvidersByProviderIdIntegrations
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/integrations/connectwise
+    base_path: /api/v2
+    legacy_operation_id: connectwise_createConfiguration
+    standardized_operation_id: postApiV2ProvidersByProviderIdIntegrationsConnectwise
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/invoices
+    base_path: /api/v2
+    legacy_operation_id: providers_retrieveInvoices
+    standardized_operation_id: getApiV2ProvidersByProviderIdInvoices
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/invoices/{ID}
+    base_path: /api/v2
+    legacy_operation_id: providers_retrieveInvoice
+    standardized_operation_id: getApiV2ProvidersByProviderIdInvoicesById
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/configuredpolicytemplates/{id}
+    base_path: /api/v2
+    legacy_operation_id: policyGroupTemplates_getConfiguredPolicyTemplate
+    standardized_operation_id: getApiV2ProvidersByProviderIdConfiguredpolicytemplatesById
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/configuredpolicytemplates
+    base_path: /api/v2
+    legacy_operation_id: policyGroupTemplates_listConfiguredPolicyTemplates
+    standardized_operation_id: getApiV2ProvidersByProviderIdConfiguredpolicytemplates
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/policygrouptemplates
+    base_path: /api/v2
+    legacy_operation_id: policyGroupTemplates_list
+    standardized_operation_id: getApiV2ProvidersByProviderIdPolicygrouptemplates
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/policygrouptemplates/{id}
+    base_path: /api/v2
+    legacy_operation_id: policyGroupTemplates_get
+    standardized_operation_id: getApiV2ProvidersByProviderIdPolicygrouptemplatesById
+  - method: delete
+    host_root_path: /api/v2/providers/{provider_id}/policygrouptemplates/{id}
+    base_path: /api/v2
+    legacy_operation_id: policyGroupTemplates_delete
+    standardized_operation_id: deleteApiV2ProvidersByProviderIdPolicygrouptemplatesById
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/policygrouptemplates/{id}/members
+    base_path: /api/v2
+    legacy_operation_id: policyGroupTemplates_listMembers
+    standardized_operation_id: getApiV2ProvidersByProviderIdPolicygrouptemplatesByIdMembers
+  - method: get
+    host_root_path: /api/v2/integrations/{integration_type}/{UUID}/errors
+    base_path: /api/v2
+    legacy_operation_id: mtpIntegration_retrieveSyncErrors
+    standardized_operation_id: getApiV2IntegrationsByIntegrationTypeByUuidErrors
+  - method: get
+    host_root_path: /api/v2/integrations/connectwise/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: connectwise_getConfiguration
+    standardized_operation_id: getApiV2IntegrationsConnectwiseByUuid
+  - method: patch
+    host_root_path: /api/v2/integrations/connectwise/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: connectwise_updateConfiguration
+    standardized_operation_id: patchApiV2IntegrationsConnectwiseByUuid
+  - method: delete
+    host_root_path: /api/v2/integrations/connectwise/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: connectwise_deleteConfiguration
+    standardized_operation_id: deleteApiV2IntegrationsConnectwiseByUuid
+  - method: get
+    host_root_path: /api/v2/integrations/connectwise/{UUID}/agreements
+    base_path: /api/v2
+    legacy_operation_id: connectwise_retrieveAgreements
+    standardized_operation_id: getApiV2IntegrationsConnectwiseByUuidAgreements
+  - method: get
+    host_root_path: /api/v2/integrations/connectwise/{UUID}/agreements/{agreement_ID}/additions
+    base_path: /api/v2
+    legacy_operation_id: connectwise_retrieveAdditions
+    standardized_operation_id: getApiV2IntegrationsConnectwiseByUuidAgreementsByAgreementIdAdditions
+  - method: get
+    host_root_path: /api/v2/integrations/connectwise/{UUID}/companies
+    base_path: /api/v2
+    legacy_operation_id: connectwise_retrieveCompanies
+    standardized_operation_id: getApiV2IntegrationsConnectwiseByUuidCompanies
+  - method: get
+    host_root_path: /api/v2/integrations/connectwise/{UUID}/companytypes
+    base_path: /api/v2
+    legacy_operation_id: connectwise_retrieveCompanyTypes
+    standardized_operation_id: getApiV2IntegrationsConnectwiseByUuidCompanytypes
+  - method: get
+    host_root_path: /api/v2/integrations/connectwise/{UUID}/mappings
+    base_path: /api/v2
+    legacy_operation_id: connectwise_retrieveMappings
+    standardized_operation_id: getApiV2IntegrationsConnectwiseByUuidMappings
+  - method: patch
+    host_root_path: /api/v2/integrations/connectwise/{UUID}/mappings
+    base_path: /api/v2
+    legacy_operation_id: connectwise_patchMappings
+    standardized_operation_id: patchApiV2IntegrationsConnectwiseByUuidMappings
+  - method: get
+    host_root_path: /api/v2/integrations/connectwise/{UUID}/settings
+    base_path: /api/v2
+    legacy_operation_id: connectwise_retrieveSettings
+    standardized_operation_id: getApiV2IntegrationsConnectwiseByUuidSettings
+  - method: patch
+    host_root_path: /api/v2/integrations/connectwise/{UUID}/settings
+    base_path: /api/v2
+    legacy_operation_id: connectwise_patchSettings
+    standardized_operation_id: patchApiV2IntegrationsConnectwiseByUuidSettings
+  - method: put
+    host_root_path: /api/v2/providers/{provider_id}/integrations/connectwise/alerts/{alert_UUID}/configuration
+    base_path: /api/v2
+    legacy_operation_id: connectwise_updateAlertConfiguration
+    standardized_operation_id: putApiV2ProvidersByProviderIdIntegrationsConnectwiseAlertsByAlertUuidConfiguration
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/integrations/connectwise/alerts/configuration
+    base_path: /api/v2
+    legacy_operation_id: connectwise_retrieveAllAlertConfigurations
+    standardized_operation_id: getApiV2ProvidersByProviderIdIntegrationsConnectwiseAlertsConfiguration
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/integrations/connectwise/alerts/configuration/options
+    base_path: /api/v2
+    legacy_operation_id: connectwise_retrieveAllAlertConfigurationOptions
+    standardized_operation_id: getApiV2ProvidersByProviderIdIntegrationsConnectwiseAlertsConfigurationOptions
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/integrations/autotask
+    base_path: /api/v2
+    legacy_operation_id: autotask_createConfiguration
+    standardized_operation_id: postApiV2ProvidersByProviderIdIntegrationsAutotask
+  - method: get
+    host_root_path: /api/v2/integrations/autotask/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: autotask_getConfiguration
+    standardized_operation_id: getApiV2IntegrationsAutotaskByUuid
+  - method: patch
+    host_root_path: /api/v2/integrations/autotask/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: autotask_updateConfiguration
+    standardized_operation_id: patchApiV2IntegrationsAutotaskByUuid
+  - method: delete
+    host_root_path: /api/v2/integrations/autotask/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: autotask_deleteConfiguration
+    standardized_operation_id: deleteApiV2IntegrationsAutotaskByUuid
+  - method: get
+    host_root_path: /api/v2/integrations/autotask/{UUID}/companytypes
+    base_path: /api/v2
+    legacy_operation_id: autotask_retrieveCompanyTypes
+    standardized_operation_id: getApiV2IntegrationsAutotaskByUuidCompanytypes
+  - method: get
+    host_root_path: /api/v2/integrations/autotask/{UUID}/settings
+    base_path: /api/v2
+    legacy_operation_id: autotask_retrieveSettings
+    standardized_operation_id: getApiV2IntegrationsAutotaskByUuidSettings
+  - method: patch
+    host_root_path: /api/v2/integrations/autotask/{UUID}/settings
+    base_path: /api/v2
+    legacy_operation_id: autotask_patchSettings
+    standardized_operation_id: patchApiV2IntegrationsAutotaskByUuidSettings
+  - method: get
+    host_root_path: /api/v2/integrations/autotask/{UUID}/contracts
+    base_path: /api/v2
+    legacy_operation_id: autotask_retrieveContracts
+    standardized_operation_id: getApiV2IntegrationsAutotaskByUuidContracts
+  - method: get
+    host_root_path: /api/v2/integrations/autotask/{UUID}/contracts/services
+    base_path: /api/v2
+    legacy_operation_id: autotask_retrieveServices
+    standardized_operation_id: getApiV2IntegrationsAutotaskByUuidContractsServices
+  - method: get
+    host_root_path: /api/v2/integrations/autotask/{UUID}/contracts/fields
+    base_path: /api/v2
+    legacy_operation_id: autotask_retrieveContractsFields
+    standardized_operation_id: getApiV2IntegrationsAutotaskByUuidContractsFields
+  - method: get
+    host_root_path: /api/v2/integrations/autotask/{UUID}/companies
+    base_path: /api/v2
+    legacy_operation_id: autotask_retrieveCompanies
+    standardized_operation_id: getApiV2IntegrationsAutotaskByUuidCompanies
+  - method: get
+    host_root_path: /api/v2/integrations/autotask/{UUID}/mappings
+    base_path: /api/v2
+    legacy_operation_id: autotask_retrieveMappings
+    standardized_operation_id: getApiV2IntegrationsAutotaskByUuidMappings
+  - method: patch
+    host_root_path: /api/v2/integrations/autotask/{UUID}/mappings
+    base_path: /api/v2
+    legacy_operation_id: autotask_patchMappings
+    standardized_operation_id: patchApiV2IntegrationsAutotaskByUuidMappings
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/integrations/ticketing/alerts
+    base_path: /api/v2
+    legacy_operation_id: mtpIntegration_retrieveAlerts
+    standardized_operation_id: getApiV2ProvidersByProviderIdIntegrationsTicketingAlerts
+  - method: put
+    host_root_path: /api/v2/providers/{provider_id}/integrations/autotask/alerts/{alert_UUID}/configuration
+    base_path: /api/v2
+    legacy_operation_id: autotask_updateAlertConfiguration
+    standardized_operation_id: putApiV2ProvidersByProviderIdIntegrationsAutotaskAlertsByAlertUuidConfiguration
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/integrations/autotask/alerts/configuration
+    base_path: /api/v2
+    legacy_operation_id: autotask_retrieveAllAlertConfigurations
+    standardized_operation_id: getApiV2ProvidersByProviderIdIntegrationsAutotaskAlertsConfiguration
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/integrations/autotask/alerts/configuration/options
+    base_path: /api/v2
+    legacy_operation_id: autotask_retrieveAllAlertConfigurationOptions
+    standardized_operation_id: getApiV2ProvidersByProviderIdIntegrationsAutotaskAlertsConfigurationOptions
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/integrations/syncro
+    base_path: /api/v2
+    legacy_operation_id: syncro_createConfiguration
+    standardized_operation_id: postApiV2ProvidersByProviderIdIntegrationsSyncro
+  - method: get
+    host_root_path: /api/v2/integrations/syncro/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: syncro_getConfiguration
+    standardized_operation_id: getApiV2IntegrationsSyncroByUuid
+  - method: patch
+    host_root_path: /api/v2/integrations/syncro/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: syncro_updateConfiguration
+    standardized_operation_id: patchApiV2IntegrationsSyncroByUuid
+  - method: delete
+    host_root_path: /api/v2/integrations/syncro/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: syncro_deleteConfiguration
+    standardized_operation_id: deleteApiV2IntegrationsSyncroByUuid
+  - method: get
+    host_root_path: /api/v2/integrations/syncro/{UUID}/settings
+    base_path: /api/v2
+    legacy_operation_id: syncro_retrieveSettings
+    standardized_operation_id: getApiV2IntegrationsSyncroByUuidSettings
+  - method: patch
+    host_root_path: /api/v2/integrations/syncro/{UUID}/settings
+    base_path: /api/v2
+    legacy_operation_id: syncro_patchSettings
+    standardized_operation_id: patchApiV2IntegrationsSyncroByUuidSettings
+  - method: put
+    host_root_path: /api/v2/providers/{provider_id}/integrations/syncro/alerts/{alert_UUID}/configuration
+    base_path: /api/v2
+    legacy_operation_id: syncro_updateAlertConfiguration
+    standardized_operation_id: putApiV2ProvidersByProviderIdIntegrationsSyncroAlertsByAlertUuidConfiguration
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/integrations/syncro/alerts/configuration
+    base_path: /api/v2
+    legacy_operation_id: syncro_retrieveAllAlertConfigurations
+    standardized_operation_id: getApiV2ProvidersByProviderIdIntegrationsSyncroAlertsConfiguration
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/integrations/syncro/alerts/configuration/options
+    base_path: /api/v2
+    legacy_operation_id: syncro_retrieveAllAlertConfigurationOptions
+    standardized_operation_id: getApiV2ProvidersByProviderIdIntegrationsSyncroAlertsConfigurationOptions
+  - method: get
+    host_root_path: /api/v2/integrations/syncro/{UUID}/companies
+    base_path: /api/v2
+    legacy_operation_id: syncro_retrieveCompanies
+    standardized_operation_id: getApiV2IntegrationsSyncroByUuidCompanies
+  - method: get
+    host_root_path: /api/v2/integrations/syncro/{UUID}/mappings
+    base_path: /api/v2
+    legacy_operation_id: syncro_retrieveMappings
+    standardized_operation_id: getApiV2IntegrationsSyncroByUuidMappings
+  - method: patch
+    host_root_path: /api/v2/integrations/syncro/{UUID}/mappings
+    base_path: /api/v2
+    legacy_operation_id: syncro_patchMappings
+    standardized_operation_id: patchApiV2IntegrationsSyncroByUuidMappings
+  - method: get
+    host_root_path: /api/v2/integrations/syncro/{UUID}/billing_mapping_configuration_options
+    base_path: /api/v2
+    legacy_operation_id: syncro_retrieveBillingMappingConfigurationOptions
+    standardized_operation_id: getApiV2IntegrationsSyncroByUuidBillingMappingConfigurationOptions
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}
+    base_path: /api/v2
+    legacy_operation_id: providers_getProvider
+    standardized_operation_id: getApiV2ProvidersByProviderId
+  - method: put
+    host_root_path: /api/v2/providers/{provider_id}
+    base_path: /api/v2
+    legacy_operation_id: providers_putProvider
+    standardized_operation_id: putApiV2ProvidersByProviderId
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/organizations
+    base_path: /api/v2
+    legacy_operation_id: providers_listOrganizations
+    standardized_operation_id: getApiV2ProvidersByProviderIdOrganizations
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/organizations
+    base_path: /api/v2
+    legacy_operation_id: providerOrganizations_createOrg
+    standardized_operation_id: postApiV2ProvidersByProviderIdOrganizations
+  - method: put
+    host_root_path: /api/v2/providers/{provider_id}/organizations/{id}
+    base_path: /api/v2
+    legacy_operation_id: providerOrganizations_updateOrg
+    standardized_operation_id: putApiV2ProvidersByProviderIdOrganizationsById
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/directoryinsights/events
+    base_path: /api/v2
+    legacy_operation_id: providers_directoryInsightsEventsPost
+    standardized_operation_id: postApiV2ProvidersByProviderIdDirectoryinsightsEvents
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/directoryinsights/events/distinct
+    base_path: /api/v2
+    legacy_operation_id: providers_directoryInsightsEventsDistinctPost
+    standardized_operation_id: postApiV2ProvidersByProviderIdDirectoryinsightsEventsDistinct
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/directoryinsights/events/count
+    base_path: /api/v2
+    legacy_operation_id: providers_directoryInsightsEventsCountPost
+    standardized_operation_id: postApiV2ProvidersByProviderIdDirectoryinsightsEventsCount
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/directoryinsights/events/interval
+    base_path: /api/v2
+    legacy_operation_id: providers_directoryInsightsEventsIntervalPost
+    standardized_operation_id: postApiV2ProvidersByProviderIdDirectoryinsightsEventsInterval
+  - method: get
+    host_root_path: /api/v2/radiusservers/{radiusserver_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_radiusServerAssociationsList
+    standardized_operation_id: getApiV2RadiusserversByRadiusserverIdAssociations
+  - method: post
+    host_root_path: /api/v2/radiusservers/{radiusserver_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_radiusServerAssociationsPost
+    standardized_operation_id: postApiV2RadiusserversByRadiusserverIdAssociations
+  - method: get
+    host_root_path: /api/v2/radiusservers/{radiusserver_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_radiusServerTraverseUserGroup
+    standardized_operation_id: getApiV2RadiusserversByRadiusserverIdUsergroups
+  - method: get
+    host_root_path: /api/v2/radiusservers/{radiusserver_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_radiusServerTraverseUser
+    standardized_operation_id: getApiV2RadiusserversByRadiusserverIdUsers
+  - method: get
+    host_root_path: /api/v2/healthmonitoring/rules/{rule_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_ruleAssociationsList
+    standardized_operation_id: getApiV2HealthmonitoringRulesByRuleIdAssociations
+  - method: post
+    host_root_path: /api/v2/healthmonitoring/rules/{rule_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_ruleAssociationsPost
+    standardized_operation_id: postApiV2HealthmonitoringRulesByRuleIdAssociations
+  - method: get
+    host_root_path: /api/v2/healthmonitoring/rules/{rule_id}/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_ruleTraverseSystemGroup
+    standardized_operation_id: getApiV2HealthmonitoringRulesByRuleIdSystemgroups
+  - method: get
+    host_root_path: /api/v2/softwareapps
+    base_path: /api/v2
+    legacy_operation_id: softwareApps_list
+    standardized_operation_id: getApiV2Softwareapps
+  - method: post
+    host_root_path: /api/v2/softwareapps
+    base_path: /api/v2
+    legacy_operation_id: softwareApps_post
+    standardized_operation_id: postApiV2Softwareapps
+  - method: get
+    host_root_path: /api/v2/softwareapps/{id}
+    base_path: /api/v2
+    legacy_operation_id: softwareApps_get
+    standardized_operation_id: getApiV2SoftwareappsById
+  - method: put
+    host_root_path: /api/v2/softwareapps/{id}
+    base_path: /api/v2
+    legacy_operation_id: softwareApps_update
+    standardized_operation_id: putApiV2SoftwareappsById
+  - method: delete
+    host_root_path: /api/v2/softwareapps/{id}
+    base_path: /api/v2
+    legacy_operation_id: softwareApps_delete
+    standardized_operation_id: deleteApiV2SoftwareappsById
+  - method: get
+    host_root_path: /api/v2/softwareapps/{software_app_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_softwareappsAssociationsList
+    standardized_operation_id: getApiV2SoftwareappsBySoftwareAppIdAssociations
+  - method: post
+    host_root_path: /api/v2/softwareapps/{software_app_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_softwareappsAssociationsPost
+    standardized_operation_id: postApiV2SoftwareappsBySoftwareAppIdAssociations
+  - method: post
+    host_root_path: /api/v2/softwareapps/{software_app_id}/stored-package-versions
+    base_path: /api/v2
+    legacy_operation_id: softwareApps_prepareStoredPackageUpload
+    standardized_operation_id: postApiV2SoftwareappsBySoftwareAppIdStoredPackageVersions
+  - method: post
+    host_root_path: /api/v2/softwareapps/{software_app_id}/reclaim-licenses
+    base_path: /api/v2
+    legacy_operation_id: softwareApps_reclaimLicenses
+    standardized_operation_id: postApiV2SoftwareappsBySoftwareAppIdReclaimLicenses
+  - method: post
+    host_root_path: /api/v2/softwareapps/{software_app_id}/retry-installation
+    base_path: /api/v2
+    legacy_operation_id: softwareApps_retryInstallation
+    standardized_operation_id: postApiV2SoftwareappsBySoftwareAppIdRetryInstallation
+  - method: get
+    host_root_path: /api/v2/softwareapps/{software_app_id}/statuses
+    base_path: /api/v2
+    legacy_operation_id: softwareAppStatuses_list
+    standardized_operation_id: getApiV2SoftwareappsBySoftwareAppIdStatuses
+  - method: get
+    host_root_path: /api/v2/softwareapps/{software_app_id}/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_softwareappsTraverseSystemGroup
+    standardized_operation_id: getApiV2SoftwareappsBySoftwareAppIdSystemgroups
+  - method: get
+    host_root_path: /api/v2/softwareapps/{software_app_id}/systems
+    base_path: /api/v2
+    legacy_operation_id: graph_softwareappsTraverseSystem
+    standardized_operation_id: getApiV2SoftwareappsBySoftwareAppIdSystems
+  - method: get
+    host_root_path: /api/v2/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: groups_system_list
+    standardized_operation_id: getApiV2Systemgroups
+  - method: post
+    host_root_path: /api/v2/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: groups_system_post
+    standardized_operation_id: postApiV2Systemgroups
+  - method: get
+    host_root_path: /api/v2/systemgroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupAssociationsList
+    standardized_operation_id: getApiV2SystemgroupsByGroupIdAssociations
+  - method: post
+    host_root_path: /api/v2/systemgroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupAssociationsPost
+    standardized_operation_id: postApiV2SystemgroupsByGroupIdAssociations
+  - method: get
+    host_root_path: /api/v2/systemgroups/{group_id}/commands
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupTraverseCommand
+    standardized_operation_id: getApiV2SystemgroupsByGroupIdCommands
+  - method: get
+    host_root_path: /api/v2/systemgroups/{group_id}/members
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupMembersList
+    standardized_operation_id: getApiV2SystemgroupsByGroupIdMembers
+  - method: post
+    host_root_path: /api/v2/systemgroups/{group_id}/members
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupMembersPost
+    standardized_operation_id: postApiV2SystemgroupsByGroupIdMembers
+  - method: get
+    host_root_path: /api/v2/systemgroups/{group_id}/membership
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupMembership
+    standardized_operation_id: getApiV2SystemgroupsByGroupIdMembership
+  - method: get
+    host_root_path: /api/v2/systemgroups/{group_id}/policygroups
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupTraversePolicyGroup
+    standardized_operation_id: getApiV2SystemgroupsByGroupIdPolicygroups
+  - method: get
+    host_root_path: /api/v2/systemgroups/{group_id}/policies
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupTraversePolicy
+    standardized_operation_id: getApiV2SystemgroupsByGroupIdPolicies
+  - method: get
+    host_root_path: /api/v2/systemgroups/{group_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupTraverseUserGroup
+    standardized_operation_id: getApiV2SystemgroupsByGroupIdUsergroups
+  - method: get
+    host_root_path: /api/v2/systemgroups/{group_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_systemGroupTraverseUser
+    standardized_operation_id: getApiV2SystemgroupsByGroupIdUsers
+  - method: get
+    host_root_path: /api/v2/systemgroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_system_get
+    standardized_operation_id: getApiV2SystemgroupsById
+  - method: put
+    host_root_path: /api/v2/systemgroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_system_put
+    standardized_operation_id: putApiV2SystemgroupsById
+  - method: delete
+    host_root_path: /api/v2/systemgroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_system_delete
+    standardized_operation_id: deleteApiV2SystemgroupsById
+  - method: get
+    host_root_path: /api/v2/systeminsights/alf
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_alf
+    standardized_operation_id: getApiV2SysteminsightsAlf
+  - method: get
+    host_root_path: /api/v2/systeminsights/alf_exceptions
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_alf_exceptions
+    standardized_operation_id: getApiV2SysteminsightsAlfExceptions
+  - method: get
+    host_root_path: /api/v2/systeminsights/alf_explicit_auths
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_alf_explicit_auths
+    standardized_operation_id: getApiV2SysteminsightsAlfExplicitAuths
+  - method: get
+    host_root_path: /api/v2/systeminsights/appcompat_shims
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_appcompat_shims
+    standardized_operation_id: getApiV2SysteminsightsAppcompatShims
+  - method: get
+    host_root_path: /api/v2/systeminsights/apps
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_apps
+    standardized_operation_id: getApiV2SysteminsightsApps
+  - method: get
+    host_root_path: /api/v2/systeminsights/authorized_keys
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_authorized_keys
+    standardized_operation_id: getApiV2SysteminsightsAuthorizedKeys
+  - method: get
+    host_root_path: /api/v2/systeminsights/battery
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_battery
+    standardized_operation_id: getApiV2SysteminsightsBattery
+  - method: get
+    host_root_path: /api/v2/systeminsights/bitlocker_info
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_bitlocker_info
+    standardized_operation_id: getApiV2SysteminsightsBitlockerInfo
+  - method: get
+    host_root_path: /api/v2/systeminsights/browser_plugins
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_browser_plugins
+    standardized_operation_id: getApiV2SysteminsightsBrowserPlugins
+  - method: get
+    host_root_path: /api/v2/systeminsights/certificates
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_certificates
+    standardized_operation_id: getApiV2SysteminsightsCertificates
+  - method: get
+    host_root_path: /api/v2/systeminsights/chrome_extensions
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_chrome_extensions
+    standardized_operation_id: getApiV2SysteminsightsChromeExtensions
+  - method: get
+    host_root_path: /api/v2/systeminsights/connectivity
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_connectivity
+    standardized_operation_id: getApiV2SysteminsightsConnectivity
+  - method: get
+    host_root_path: /api/v2/systeminsights/crashes
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_crashes
+    standardized_operation_id: getApiV2SysteminsightsCrashes
+  - method: get
+    host_root_path: /api/v2/systeminsights/cups_destinations
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_cups_destinations
+    standardized_operation_id: getApiV2SysteminsightsCupsDestinations
+  - method: get
+    host_root_path: /api/v2/systeminsights/disk_encryption
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_disk_encryption
+    standardized_operation_id: getApiV2SysteminsightsDiskEncryption
+  - method: get
+    host_root_path: /api/v2/systeminsights/disk_info
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_disk_info
+    standardized_operation_id: getApiV2SysteminsightsDiskInfo
+  - method: get
+    host_root_path: /api/v2/systeminsights/dns_resolvers
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_dns_resolvers
+    standardized_operation_id: getApiV2SysteminsightsDnsResolvers
+  - method: get
+    host_root_path: /api/v2/systeminsights/etc_hosts
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_etc_hosts
+    standardized_operation_id: getApiV2SysteminsightsEtcHosts
+  - method: get
+    host_root_path: /api/v2/systeminsights/firefox_addons
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_firefox_addons
+    standardized_operation_id: getApiV2SysteminsightsFirefoxAddons
+  - method: get
+    host_root_path: /api/v2/systeminsights/groups
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_groups
+    standardized_operation_id: getApiV2SysteminsightsGroups
+  - method: get
+    host_root_path: /api/v2/systeminsights/ie_extensions
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_ie_extensions
+    standardized_operation_id: getApiV2SysteminsightsIeExtensions
+  - method: get
+    host_root_path: /api/v2/systeminsights/interface_addresses
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_interface_addresses
+    standardized_operation_id: getApiV2SysteminsightsInterfaceAddresses
+  - method: get
+    host_root_path: /api/v2/systeminsights/interface_details
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_interface_details
+    standardized_operation_id: getApiV2SysteminsightsInterfaceDetails
+  - method: get
+    host_root_path: /api/v2/systeminsights/kernel_info
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_kernel_info
+    standardized_operation_id: getApiV2SysteminsightsKernelInfo
+  - method: get
+    host_root_path: /api/v2/systeminsights/launchd
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_launchd
+    standardized_operation_id: getApiV2SysteminsightsLaunchd
+  - method: get
+    host_root_path: /api/v2/systeminsights/linux_packages
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_linux_packages
+    standardized_operation_id: getApiV2SysteminsightsLinuxPackages
+  - method: get
+    host_root_path: /api/v2/systeminsights/logged_in_users
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_logged_in_users
+    standardized_operation_id: getApiV2SysteminsightsLoggedInUsers
+  - method: get
+    host_root_path: /api/v2/systeminsights/logical_drives
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_logical_drives
+    standardized_operation_id: getApiV2SysteminsightsLogicalDrives
+  - method: get
+    host_root_path: /api/v2/systeminsights/managed_policies
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_managed_policies
+    standardized_operation_id: getApiV2SysteminsightsManagedPolicies
+  - method: get
+    host_root_path: /api/v2/systeminsights/mounts
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_mounts
+    standardized_operation_id: getApiV2SysteminsightsMounts
+  - method: get
+    host_root_path: /api/v2/systeminsights/os_version
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_os_version
+    standardized_operation_id: getApiV2SysteminsightsOsVersion
+  - method: get
+    host_root_path: /api/v2/systeminsights/patches
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_patches
+    standardized_operation_id: getApiV2SysteminsightsPatches
+  - method: get
+    host_root_path: /api/v2/systeminsights/programs
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_programs
+    standardized_operation_id: getApiV2SysteminsightsPrograms
+  - method: get
+    host_root_path: /api/v2/systeminsights/python_packages
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_python_packages
+    standardized_operation_id: getApiV2SysteminsightsPythonPackages
+  - method: get
+    host_root_path: /api/v2/systeminsights/safari_extensions
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_safari_extensions
+    standardized_operation_id: getApiV2SysteminsightsSafariExtensions
+  - method: get
+    host_root_path: /api/v2/systeminsights/scheduled_tasks
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_scheduled_tasks
+    standardized_operation_id: getApiV2SysteminsightsScheduledTasks
+  - method: get
+    host_root_path: /api/v2/systeminsights/services
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_services
+    standardized_operation_id: getApiV2SysteminsightsServices
+  - method: get
+    host_root_path: /api/v2/systeminsights/shadow
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_shadow
+    standardized_operation_id: getApiV2SysteminsightsShadow
+  - method: get
+    host_root_path: /api/v2/systeminsights/shared_folders
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_shared_folders
+    standardized_operation_id: getApiV2SysteminsightsSharedFolders
+  - method: get
+    host_root_path: /api/v2/systeminsights/shared_resources
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_shared_resources
+    standardized_operation_id: getApiV2SysteminsightsSharedResources
+  - method: get
+    host_root_path: /api/v2/systeminsights/sharing_preferences
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_sharing_preferences
+    standardized_operation_id: getApiV2SysteminsightsSharingPreferences
+  - method: get
+    host_root_path: /api/v2/systeminsights/sip_config
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_sip_config
+    standardized_operation_id: getApiV2SysteminsightsSipConfig
+  - method: get
+    host_root_path: /api/v2/systeminsights/startup_items
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_startup_items
+    standardized_operation_id: getApiV2SysteminsightsStartupItems
+  - method: get
+    host_root_path: /api/v2/systeminsights/system_controls
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_system_controls
+    standardized_operation_id: getApiV2SysteminsightsSystemControls
+  - method: get
+    host_root_path: /api/v2/systeminsights/system_info
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_system_info
+    standardized_operation_id: getApiV2SysteminsightsSystemInfo
+  - method: get
+    host_root_path: /api/v2/systeminsights/uptime
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_uptime
+    standardized_operation_id: getApiV2SysteminsightsUptime
+  - method: get
+    host_root_path: /api/v2/systeminsights/usb_devices
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_usb_devices
+    standardized_operation_id: getApiV2SysteminsightsUsbDevices
+  - method: get
+    host_root_path: /api/v2/systeminsights/user_groups
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_user_groups
+    standardized_operation_id: getApiV2SysteminsightsUserGroups
+  - method: get
+    host_root_path: /api/v2/systeminsights/user_ssh_keys
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_user_ssh_keys
+    standardized_operation_id: getApiV2SysteminsightsUserSshKeys
+  - method: get
+    host_root_path: /api/v2/systeminsights/users
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_users
+    standardized_operation_id: getApiV2SysteminsightsUsers
+  - method: get
+    host_root_path: /api/v2/systeminsights/wifi_networks
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_wifi_networks
+    standardized_operation_id: getApiV2SysteminsightsWifiNetworks
+  - method: get
+    host_root_path: /api/v2/systeminsights/wifi_status
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_wifi_status
+    standardized_operation_id: getApiV2SysteminsightsWifiStatus
+  - method: get
+    host_root_path: /api/v2/systeminsights/windows_security_products
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_windows_security_products
+    standardized_operation_id: getApiV2SysteminsightsWindowsSecurityProducts
+  - method: get
+    host_root_path: /api/v2/systeminsights/windows_security_center
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_windows_security_center
+    standardized_operation_id: getApiV2SysteminsightsWindowsSecurityCenter
+  - method: get
+    host_root_path: /api/v2/systeminsights/userassist
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_userassist
+    standardized_operation_id: getApiV2SysteminsightsUserassist
+  - method: get
+    host_root_path: /api/v2/systeminsights/chassis_info
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_chassis_info
+    standardized_operation_id: getApiV2SysteminsightsChassisInfo
+  - method: get
+    host_root_path: /api/v2/systeminsights/secureboot
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_secureboot
+    standardized_operation_id: getApiV2SysteminsightsSecureboot
+  - method: get
+    host_root_path: /api/v2/systeminsights/tpm_info
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_tpm_info
+    standardized_operation_id: getApiV2SysteminsightsTpmInfo
+  - method: get
+    host_root_path: /api/v2/systeminsights/azure_instance_metadata
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_azure_instance_metadata
+    standardized_operation_id: getApiV2SysteminsightsAzureInstanceMetadata
+  - method: get
+    host_root_path: /api/v2/systeminsights/azure_instance_tags
+    base_path: /api/v2
+    legacy_operation_id: systeminsights_list_azure_instance_tags
+    standardized_operation_id: getApiV2SysteminsightsAzureInstanceTags
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_systemAssociationsList
+    standardized_operation_id: getApiV2SystemsBySystemIdAssociations
+  - method: post
+    host_root_path: /api/v2/systems/{system_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_systemAssociationsPost
+    standardized_operation_id: postApiV2SystemsBySystemIdAssociations
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/commands
+    base_path: /api/v2
+    legacy_operation_id: graph_systemTraverseCommand
+    standardized_operation_id: getApiV2SystemsBySystemIdCommands
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/fdekey
+    base_path: /api/v2
+    legacy_operation_id: systems_getFDEKey
+    standardized_operation_id: getApiV2SystemsBySystemIdFdekey
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/memberof
+    base_path: /api/v2
+    legacy_operation_id: graph_systemMemberOf
+    standardized_operation_id: getApiV2SystemsBySystemIdMemberof
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/softwareappstatuses
+    base_path: /api/v2
+    legacy_operation_id: systems_ListSoftwareAppsWithStatuses
+    standardized_operation_id: getApiV2SystemsBySystemIdSoftwareappstatuses
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/policygroups
+    base_path: /api/v2
+    legacy_operation_id: graph_systemTraversePolicyGroup
+    standardized_operation_id: getApiV2SystemsBySystemIdPolicygroups
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/policies
+    base_path: /api/v2
+    legacy_operation_id: graph_systemTraversePolicy
+    standardized_operation_id: getApiV2SystemsBySystemIdPolicies
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/policystatuses
+    base_path: /api/v2
+    legacy_operation_id: policystatuses_systemsList
+    standardized_operation_id: getApiV2SystemsBySystemIdPolicystatuses
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_systemTraverseUserGroup
+    standardized_operation_id: getApiV2SystemsBySystemIdUsergroups
+  - method: get
+    host_root_path: /api/v2/systems/{system_id}/users
+    base_path: /api/v2
+    legacy_operation_id: graph_systemTraverseUser
+    standardized_operation_id: getApiV2SystemsBySystemIdUsers
+  - method: get
+    host_root_path: /api/v2/usergroups
+    base_path: /api/v2
+    legacy_operation_id: groups_user_list
+    standardized_operation_id: getApiV2Usergroups
+  - method: post
+    host_root_path: /api/v2/usergroups
+    base_path: /api/v2
+    legacy_operation_id: groups_user_post
+    standardized_operation_id: postApiV2Usergroups
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/activedirectories
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraverseActiveDirectory
+    standardized_operation_id: getApiV2UsergroupsByGroupIdActivedirectories
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/applications
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraverseApplication
+    standardized_operation_id: getApiV2UsergroupsByGroupIdApplications
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupAssociationsList
+    standardized_operation_id: getApiV2UsergroupsByGroupIdAssociations
+  - method: post
+    host_root_path: /api/v2/usergroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupAssociationsPost
+    standardized_operation_id: postApiV2UsergroupsByGroupIdAssociations
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/directories
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraverseDirectory
+    standardized_operation_id: getApiV2UsergroupsByGroupIdDirectories
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/gsuites
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraverseGSuite
+    standardized_operation_id: getApiV2UsergroupsByGroupIdGsuites
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/ldapservers
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraverseLdapServer
+    standardized_operation_id: getApiV2UsergroupsByGroupIdLdapservers
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/members
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupMembersList
+    standardized_operation_id: getApiV2UsergroupsByGroupIdMembers
+  - method: post
+    host_root_path: /api/v2/usergroups/{group_id}/members
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupMembersPost
+    standardized_operation_id: postApiV2UsergroupsByGroupIdMembers
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/membership
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupMembership
+    standardized_operation_id: getApiV2UsergroupsByGroupIdMembership
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/office365s
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraverseOffice365
+    standardized_operation_id: getApiV2UsergroupsByGroupIdOffice365s
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/policies
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraversePolicy
+    standardized_operation_id: getApiV2UsergroupsByGroupIdPolicies
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/policygroups
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraversePolicyGroup
+    standardized_operation_id: getApiV2UsergroupsByGroupIdPolicygroups
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/radiusservers
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraverseRadiusServer
+    standardized_operation_id: getApiV2UsergroupsByGroupIdRadiusservers
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraverseSystemGroup
+    standardized_operation_id: getApiV2UsergroupsByGroupIdSystemgroups
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/systems
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupTraverseSystem
+    standardized_operation_id: getApiV2UsergroupsByGroupIdSystems
+  - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/suggestions
+    base_path: /api/v2
+    legacy_operation_id: groups_user_suggestions_get
+    standardized_operation_id: getApiV2UsergroupsByGroupIdSuggestions
+  - method: post
+    host_root_path: /api/v2/usergroups/{group_id}/suggestions
+    base_path: /api/v2
+    legacy_operation_id: groups_user_suggestions_post
+    standardized_operation_id: postApiV2UsergroupsByGroupIdSuggestions
+  - method: get
+    host_root_path: /api/v2/systemgroups/{group_id}/suggestions
+    base_path: /api/v2
+    legacy_operation_id: groups_system_suggestions_get
+    standardized_operation_id: getApiV2SystemgroupsByGroupIdSuggestions
+  - method: post
+    host_root_path: /api/v2/systemgroups/{group_id}/suggestions
+    base_path: /api/v2
+    legacy_operation_id: groups_system_suggestions_post
+    standardized_operation_id: postApiV2SystemgroupsByGroupIdSuggestions
+  - method: get
+    host_root_path: /api/v2/usergroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_user_get
+    standardized_operation_id: getApiV2UsergroupsById
+  - method: put
+    host_root_path: /api/v2/usergroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_user_put
+    standardized_operation_id: putApiV2UsergroupsById
+  - method: delete
+    host_root_path: /api/v2/usergroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_user_delete
+    standardized_operation_id: deleteApiV2UsergroupsById
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/activedirectories
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraverseActiveDirectory
+    standardized_operation_id: getApiV2UsersByUserIdActivedirectories
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/applications
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraverseApplication
+    standardized_operation_id: getApiV2UsersByUserIdApplications
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_userAssociationsList
+    standardized_operation_id: getApiV2UsersByUserIdAssociations
+  - method: post
+    host_root_path: /api/v2/users/{user_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_userAssociationsPost
+    standardized_operation_id: postApiV2UsersByUserIdAssociations
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/directories
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraverseDirectory
+    standardized_operation_id: getApiV2UsersByUserIdDirectories
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/gsuites
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraverseGSuite
+    standardized_operation_id: getApiV2UsersByUserIdGsuites
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/ldapservers
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraverseLdapServer
+    standardized_operation_id: getApiV2UsersByUserIdLdapservers
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/memberof
+    base_path: /api/v2
+    legacy_operation_id: graph_userMemberOf
+    standardized_operation_id: getApiV2UsersByUserIdMemberof
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/office365s
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraverseOffice365
+    standardized_operation_id: getApiV2UsersByUserIdOffice365s
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/policies
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraversePolicy
+    standardized_operation_id: getApiV2UsersByUserIdPolicies
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/policygroups
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraversePolicyGroup
+    standardized_operation_id: getApiV2UsersByUserIdPolicygroups
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/policystatuses
+    base_path: /api/v2
+    legacy_operation_id: policystatuses_usersList
+    standardized_operation_id: getApiV2UsersByUserIdPolicystatuses
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/pushendpoints
+    base_path: /api/v2
+    legacy_operation_id: pushEndpoints_list
+    standardized_operation_id: getApiV2UsersByUserIdPushendpoints
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/pushendpoints/{push_endpoint_id}
+    base_path: /api/v2
+    legacy_operation_id: pushEndpoints_get
+    standardized_operation_id: getApiV2UsersByUserIdPushendpointsByPushEndpointId
+  - method: patch
+    host_root_path: /api/v2/users/{user_id}/pushendpoints/{push_endpoint_id}
+    base_path: /api/v2
+    legacy_operation_id: pushEndpoints_patch
+    standardized_operation_id: patchApiV2UsersByUserIdPushendpointsByPushEndpointId
+  - method: delete
+    host_root_path: /api/v2/users/{user_id}/pushendpoints/{push_endpoint_id}
+    base_path: /api/v2
+    legacy_operation_id: pushEndpoints_delete
+    standardized_operation_id: deleteApiV2UsersByUserIdPushendpointsByPushEndpointId
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/radiusservers
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraverseRadiusServer
+    standardized_operation_id: getApiV2UsersByUserIdRadiusservers
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraverseSystemGroup
+    standardized_operation_id: getApiV2UsersByUserIdSystemgroups
+  - method: get
+    host_root_path: /api/v2/users/{user_id}/systems
+    base_path: /api/v2
+    legacy_operation_id: graph_userTraverseSystem
+    standardized_operation_id: getApiV2UsersByUserIdSystems
+  - method: get
+    host_root_path: /api/v2/workdays
+    base_path: /api/v2
+    legacy_operation_id: workdays_list
+    standardized_operation_id: getApiV2Workdays
+  - method: post
+    host_root_path: /api/v2/workdays
+    base_path: /api/v2
+    legacy_operation_id: workdays_post
+    standardized_operation_id: postApiV2Workdays
+  - method: get
+    host_root_path: /api/v2/workdays/{id}
+    base_path: /api/v2
+    legacy_operation_id: workdays_get
+    standardized_operation_id: getApiV2WorkdaysById
+  - method: put
+    host_root_path: /api/v2/workdays/{id}
+    base_path: /api/v2
+    legacy_operation_id: workdays_put
+    standardized_operation_id: putApiV2WorkdaysById
+  - method: get
+    host_root_path: /api/v2/workdays/{id}/import/{job_id}/results
+    base_path: /api/v2
+    legacy_operation_id: workdays_importresults
+    standardized_operation_id: getApiV2WorkdaysByIdImportByJobIdResults
+  - method: post
+    host_root_path: /api/v2/workdays/{workday_id}/auth
+    base_path: /api/v2
+    legacy_operation_id: workdays_authorize
+    standardized_operation_id: postApiV2WorkdaysByWorkdayIdAuth
+  - method: delete
+    host_root_path: /api/v2/workdays/{workday_id}/auth
+    base_path: /api/v2
+    legacy_operation_id: workdays_deauthorize
+    standardized_operation_id: deleteApiV2WorkdaysByWorkdayIdAuth
+  - method: post
+    host_root_path: /api/v2/workdays/{workday_id}/import
+    base_path: /api/v2
+    legacy_operation_id: workdays_import
+    standardized_operation_id: postApiV2WorkdaysByWorkdayIdImport
+  - method: get
+    host_root_path: /api/v2/workdays/{workday_id}/workers
+    base_path: /api/v2
+    legacy_operation_id: workdays_workers
+    standardized_operation_id: getApiV2WorkdaysByWorkdayIdWorkers
+  - method: get
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices
+    base_path: /api/v2
+    legacy_operation_id: applemdms_deviceslist
+    standardized_operation_id: getApiV2ApplemdmsByAppleMdmIdDevices
+  - method: get
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}
+    base_path: /api/v2
+    legacy_operation_id: applemdms_getdevice
+    standardized_operation_id: getApiV2ApplemdmsByAppleMdmIdDevicesByDeviceId
+  - method: delete
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}
+    base_path: /api/v2
+    legacy_operation_id: applemdms_deletedevice
+    standardized_operation_id: deleteApiV2ApplemdmsByAppleMdmIdDevicesByDeviceId
+  - method: post
+    host_root_path: /api/v2/authn/policy-evaluations/summary
+    base_path: /api/v2
+    legacy_operation_id: authnpolicyanalytics_summary
+    standardized_operation_id: postApiV2AuthnPolicyEvaluationsSummary
+  - method: post
+    host_root_path: /api/v2/authn/policy-evaluations/options
+    base_path: /api/v2
+    legacy_operation_id: authnpolicyanalytics_options
+    standardized_operation_id: postApiV2AuthnPolicyEvaluationsOptions
+  - method: post
+    host_root_path: /api/v2/authn/policy-evaluations/details
+    base_path: /api/v2
+    legacy_operation_id: authnpolicyanalytics_details
+    standardized_operation_id: postApiV2AuthnPolicyEvaluationsDetails
+  - method: get
+    host_root_path: /api/v2/authn/policies
+    base_path: /api/v2
+    legacy_operation_id: authnpolicies_list
+    standardized_operation_id: getApiV2AuthnPolicies
+  - method: post
+    host_root_path: /api/v2/authn/policies
+    base_path: /api/v2
+    legacy_operation_id: authnpolicies_post
+    standardized_operation_id: postApiV2AuthnPolicies
+  - method: get
+    host_root_path: /api/v2/authn/policies/{id}
+    base_path: /api/v2
+    legacy_operation_id: authnpolicies_get
+    standardized_operation_id: getApiV2AuthnPoliciesById
+  - method: patch
+    host_root_path: /api/v2/authn/policies/{id}
+    base_path: /api/v2
+    legacy_operation_id: authnpolicies_patch
+    standardized_operation_id: patchApiV2AuthnPoliciesById
+  - method: delete
+    host_root_path: /api/v2/authn/policies/{id}
+    base_path: /api/v2
+    legacy_operation_id: authnpolicies_delete
+    standardized_operation_id: deleteApiV2AuthnPoliciesById
+  - method: get
+    host_root_path: /api/v2/iplists/{id}
+    base_path: /api/v2
+    legacy_operation_id: iplists_get
+    standardized_operation_id: getApiV2IplistsById
+  - method: put
+    host_root_path: /api/v2/iplists/{id}
+    base_path: /api/v2
+    legacy_operation_id: iplists_put
+    standardized_operation_id: putApiV2IplistsById
+  - method: patch
+    host_root_path: /api/v2/iplists/{id}
+    base_path: /api/v2
+    legacy_operation_id: iplists_patch
+    standardized_operation_id: patchApiV2IplistsById
+  - method: delete
+    host_root_path: /api/v2/iplists/{id}
+    base_path: /api/v2
+    legacy_operation_id: iplists_delete
+    standardized_operation_id: deleteApiV2IplistsById
+  - method: get
+    host_root_path: /api/v2/gsuites/{gsuite_id}/import/users
+    base_path: /api/v2
+    legacy_operation_id: gsuites_listImportUsers
+    standardized_operation_id: getApiV2GsuitesByGsuiteIdImportUsers
+  - method: get
+    host_root_path: /api/v2/gsuites/{gsuite_id}/import/jumpcloudusers
+    base_path: /api/v2
+    legacy_operation_id: gsuites_listImportJumpcloudUsers
+    standardized_operation_id: getApiV2GsuitesByGsuiteIdImportJumpcloudusers
+  - method: get
+    host_root_path: /api/v2/office365s/{office365_id}/import/users
+    base_path: /api/v2
+    legacy_operation_id: office365s_listImportUsers
+    standardized_operation_id: getApiV2Office365sByOffice365IdImportUsers
+  - method: post
+    host_root_path: /api/v2/customemails
+    base_path: /api/v2
+    legacy_operation_id: customEmails_create
+    standardized_operation_id: postApiV2Customemails
+  - method: get
+    host_root_path: /api/v2/customemails/{custom_email_type}
+    base_path: /api/v2
+    legacy_operation_id: customEmails_read
+    standardized_operation_id: getApiV2CustomemailsByCustomEmailType
+  - method: put
+    host_root_path: /api/v2/customemails/{custom_email_type}
+    base_path: /api/v2
+    legacy_operation_id: customEmails_update
+    standardized_operation_id: putApiV2CustomemailsByCustomEmailType
+  - method: delete
+    host_root_path: /api/v2/customemails/{custom_email_type}
+    base_path: /api/v2
+    legacy_operation_id: customEmails_destroy
+    standardized_operation_id: deleteApiV2CustomemailsByCustomEmailType
+  - method: get
+    host_root_path: /api/v2/customemail/templates
+    base_path: /api/v2
+    legacy_operation_id: customEmails_getTemplates
+    standardized_operation_id: getApiV2CustomemailTemplates
+  - method: get
+    host_root_path: /api/v2/logos/{id}
+    base_path: /api/v2
+    legacy_operation_id: logos_get
+    standardized_operation_id: getApiV2LogosById
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/refreshActivationLockInformation
+    base_path: /api/v2
+    legacy_operation_id: applemdms_devicesRefreshActivationLockInformation
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdRefreshactivationlockinformation
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/scheduleOSUpdate
+    base_path: /api/v2
+    legacy_operation_id: applemdms_devicesScheduleOSUpdate
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdScheduleosupdate
+  - method: post
+    host_root_path: /api/v2/applemdms/{apple_mdm_id}/devices/{device_id}/osUpdateStatus
+    base_path: /api/v2
+    legacy_operation_id: applemdms_devicesOSUpdateStatus
+    standardized_operation_id: postApiV2ApplemdmsByAppleMdmIdDevicesByDeviceIdOsupdatestatus
+  - method: get
+    host_root_path: /api/v2/featureTrials/{feature_code}
+    base_path: /api/v2
+    legacy_operation_id: featureTrials_getFeatureTrials
+    standardized_operation_id: getApiV2FeaturetrialsByFeatureCode
+  - method: delete
+    host_root_path: /api/v2/passwordmanager
+    base_path: /api/v2
+    legacy_operation_id: CompanyService_DeleteCompany
+    standardized_operation_id: deleteApiV2Passwordmanager
+  - method: get
+    host_root_path: /api/v2/passwordmanager/appversions
+    base_path: /api/v2
+    legacy_operation_id: OverviewService_GetAppVersionsList
+    standardized_operation_id: getApiV2PasswordmanagerAppversions
+  - method: get
+    host_root_path: /api/v2/passwordmanager/items
+    base_path: /api/v2
+    legacy_operation_id: ItemMetadataService_GetMetadata
+    standardized_operation_id: getApiV2PasswordmanagerItems
+  - method: get
+    host_root_path: /api/v2/passwordmanager/overview
+    base_path: /api/v2
+    legacy_operation_id: OverviewService_MainOverview
+    standardized_operation_id: getApiV2PasswordmanagerOverview
+  - method: get
+    host_root_path: /api/v2/passwordmanager/sharedfolders
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_GetSharedFolders
+    standardized_operation_id: getApiV2PasswordmanagerSharedfolders
+  - method: post
+    host_root_path: /api/v2/passwordmanager/sharedfolders
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_CreateSharedFolder
+    standardized_operation_id: postApiV2PasswordmanagerSharedfolders
+  - method: delete
+    host_root_path: /api/v2/passwordmanager/sharedfolders
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_BatchDeleteSharedFolders
+    standardized_operation_id: deleteApiV2PasswordmanagerSharedfolders
+  - method: get
+    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_GetSharedFolder
+    standardized_operation_id: getApiV2PasswordmanagerSharedfoldersByFolderid
+  - method: put
+    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_UpdateSharedFolder
+    standardized_operation_id: putApiV2PasswordmanagerSharedfoldersByFolderid
+  - method: get
+    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/groups
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_GetSharedFolderGroups
+    standardized_operation_id: getApiV2PasswordmanagerSharedfoldersByFolderidGroups
+  - method: put
+    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_UpdateGroupPermission
+    standardized_operation_id: putApiV2PasswordmanagerSharedfoldersByFolderidGroupsByGroupid
+  - method: delete
+    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_RevokeGroupAccess
+    standardized_operation_id: deleteApiV2PasswordmanagerSharedfoldersByFolderidGroupsByGroupid
+  - method: get
+    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/users
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_GetSharedFolderUsers
+    standardized_operation_id: getApiV2PasswordmanagerSharedfoldersByFolderidUsers
+  - method: put
+    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_UpdateUserPermission
+    standardized_operation_id: putApiV2PasswordmanagerSharedfoldersByFolderidUsersByUserid
+  - method: delete
+    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_RevokeUserAccess
+    standardized_operation_id: deleteApiV2PasswordmanagerSharedfoldersByFolderidUsersByUserid
+  - method: get
+    host_root_path: /api/v2/passwordmanager/sharedfolders/accessLevels
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_GetRoles
+    standardized_operation_id: getApiV2PasswordmanagerSharedfoldersAccesslevels
+  - method: get
+    host_root_path: /api/v2/passwordmanager/users
+    base_path: /api/v2
+    legacy_operation_id: UserService_GetAllUsers
+    standardized_operation_id: getApiV2PasswordmanagerUsers
+  - method: get
+    host_root_path: /api/v2/passwordmanager/users/{userId}
+    base_path: /api/v2
+    legacy_operation_id: UserService_GetUserDetailsById
+    standardized_operation_id: getApiV2PasswordmanagerUsersByUserid
+  - method: get
+    host_root_path: /api/v2/passwordmanager/users/{userId}/items
+    base_path: /api/v2
+    legacy_operation_id: ItemMetadataService_GetMetadataPerUser
+    standardized_operation_id: getApiV2PasswordmanagerUsersByUseridItems
+  - method: get
+    host_root_path: /api/v2/passwordmanager/users/{userId}/sharedFolders
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_GetSharedFoldersPerUser
+    standardized_operation_id: getApiV2PasswordmanagerUsersByUseridSharedfolders
+  - method: post
+    host_root_path: /api/v2/passwordmanager/users/reinvite
+    base_path: /api/v2
+    legacy_operation_id: UserService_ResendUserInvite
+    standardized_operation_id: postApiV2PasswordmanagerUsersReinvite
+  - method: get
+    host_root_path: /api/v2/google-emm/devices/{deviceId}
+    base_path: /api/v2
+    legacy_operation_id: Devices_GetDevice
+    standardized_operation_id: getApiV2GoogleEmmDevicesByDeviceid
+  - method: post
+    host_root_path: /api/v2/google-emm/devices/{deviceId}/lock
+    base_path: /api/v2
+    legacy_operation_id: Devices_LockDevice
+    standardized_operation_id: postApiV2GoogleEmmDevicesByDeviceidLock
+  - method: post
+    host_root_path: /api/v2/google-emm/devices/{deviceId}/resetpassword
+    base_path: /api/v2
+    legacy_operation_id: Devices_ResetPassword
+    standardized_operation_id: postApiV2GoogleEmmDevicesByDeviceidResetpassword
+  - method: get
+    host_root_path: /api/v2/google-emm/enterprises
+    base_path: /api/v2
+    legacy_operation_id: Enterprises_ListEnterprises
+    standardized_operation_id: getApiV2GoogleEmmEnterprises
+  - method: post
+    host_root_path: /api/v2/google-emm/enterprises
+    base_path: /api/v2
+    legacy_operation_id: Enterprises_CreateEnterprise
+    standardized_operation_id: postApiV2GoogleEmmEnterprises
+  - method: patch
+    host_root_path: /api/v2/google-emm/enterprises/{enterpriseId}
+    base_path: /api/v2
+    legacy_operation_id: Enterprises_PatchEnterprise
+    standardized_operation_id: patchApiV2GoogleEmmEnterprisesByEnterpriseid
+  - method: delete
+    host_root_path: /api/v2/google-emm/enterprises/{enterpriseId}
+    base_path: /api/v2
+    legacy_operation_id: Enterprises_DeleteEnterprise
+    standardized_operation_id: deleteApiV2GoogleEmmEnterprisesByEnterpriseid
+  - method: post
+    host_root_path: /api/v2/google-emm/signup-urls
+    base_path: /api/v2
+    legacy_operation_id: SignupURLs_Create
+    standardized_operation_id: postApiV2GoogleEmmSignupUrls
+  - method: post
+    host_root_path: /api/v2/google-emm/web-tokens
+    base_path: /api/v2
+    legacy_operation_id: WebTokens_CreateWebToken
+    standardized_operation_id: postApiV2GoogleEmmWebTokens
+  - method: get
+    host_root_path: /api/v2/google-emm/devices/{deviceId}/policy_results
+    base_path: /api/v2
+    legacy_operation_id: Devices_GetDeviceAndroidPolicy
+    standardized_operation_id: getApiV2GoogleEmmDevicesByDeviceidPolicyResults
+  - method: get
+    host_root_path: /api/v2/google-emm/enterprises/{enterpriseId}/connection-status
+    base_path: /api/v2
+    legacy_operation_id: Enterprises_GetConnectionStatus
+    standardized_operation_id: getApiV2GoogleEmmEnterprisesByEnterpriseidConnectionStatus
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/billing/details
+    base_path: /api/v2
+    legacy_operation_id: Billing_GetDetails
+    standardized_operation_id: getApiV2ProvidersByProviderIdBillingDetails
+  - method: post
+    host_root_path: /api/v2/google-emm/devices/{deviceId}/erase-device
+    base_path: /api/v2
+    legacy_operation_id: Devices_EraseDevice
+    standardized_operation_id: postApiV2GoogleEmmDevicesByDeviceidEraseDevice
+  - method: get
+    host_root_path: /api/v2/passwordmanager/backup/keys
+    base_path: /api/v2
+    legacy_operation_id: BackupKeyService_ListBackupKeys
+    standardized_operation_id: getApiV2PasswordmanagerBackupKeys
+  - method: post
+    host_root_path: /api/v2/passwordmanager/backup/keys
+    base_path: /api/v2
+    legacy_operation_id: BackupKeyService_CreateBackupKey
+    standardized_operation_id: postApiV2PasswordmanagerBackupKeys
+  - method: get
+    host_root_path: /api/v2/passwordmanager/backup/keys/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: BackupKeyService_GetBackupKey
+    standardized_operation_id: getApiV2PasswordmanagerBackupKeysByUuid
+  - method: put
+    host_root_path: /api/v2/passwordmanager/backup/keys/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: BackupKeyService_UpdateBackupKey
+    standardized_operation_id: putApiV2PasswordmanagerBackupKeysByUuid
+  - method: delete
+    host_root_path: /api/v2/passwordmanager/backup/keys/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: BackupKeyService_DeleteBackupKey
+    standardized_operation_id: deleteApiV2PasswordmanagerBackupKeysByUuid
+  - method: get
+    host_root_path: /api/v2/passwordmanager/backup/restores
+    base_path: /api/v2
+    legacy_operation_id: BackupRestoreService_ListBackupRestores
+    standardized_operation_id: getApiV2PasswordmanagerBackupRestores
+  - method: put
+    host_root_path: /api/v2/passwordmanager/backup/restores/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: BackupRestoreService_UpdateBackupRestore
+    standardized_operation_id: putApiV2PasswordmanagerBackupRestoresByUuid
+  - method: get
+    host_root_path: /api/v2/passwordmanager/backups
+    base_path: /api/v2
+    legacy_operation_id: BackupService_ListBackups
+    standardized_operation_id: getApiV2PasswordmanagerBackups
+  - method: get
+    host_root_path: /api/v2/passwordmanager/backups/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: BackupService_GetBackup
+    standardized_operation_id: getApiV2PasswordmanagerBackupsByUuid
+  - method: get
+    host_root_path: /api/v2/passwordmanager/devices
+    base_path: /api/v2
+    legacy_operation_id: DeviceService_ListDevices
+    standardized_operation_id: getApiV2PasswordmanagerDevices
+  - method: get
+    host_root_path: /api/v2/passwordmanager/devices/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: DeviceService_GetDevice
+    standardized_operation_id: getApiV2PasswordmanagerDevicesByUuid
+  - method: get
+    host_root_path: /api/v2/passwordmanager/policy/sharedfolders
+    base_path: /api/v2
+    legacy_operation_id: FoldersPolicyService_GetFoldersPolicy
+    standardized_operation_id: getApiV2PasswordmanagerPolicySharedfolders
+  - method: put
+    host_root_path: /api/v2/passwordmanager/policy/sharedfolders/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: FoldersPolicyService_UpdateFoldersPolicy
+    standardized_operation_id: putApiV2PasswordmanagerPolicySharedfoldersByUuid
+  - method: get
+    host_root_path: /api/v2/passwordmanager/policy/sharedfolders/groups
+    base_path: /api/v2
+    legacy_operation_id: FoldersPolicyService_ListSelectedGroups
+    standardized_operation_id: getApiV2PasswordmanagerPolicySharedfoldersGroups
+  - method: get
+    host_root_path: /api/v2/passwordmanager/policy/sharedfolders/users
+    base_path: /api/v2
+    legacy_operation_id: FoldersPolicyService_ListSelectedUsers
+    standardized_operation_id: getApiV2PasswordmanagerPolicySharedfoldersUsers
+  - method: get
+    host_root_path: /api/v2/office365s/{office365_id}/domains
+    base_path: /api/v2
+    legacy_operation_id: Domains_List
+    standardized_operation_id: getApiV2Office365sByOffice365IdDomains
+  - method: post
+    host_root_path: /api/v2/office365s/{office365_id}/domains
+    base_path: /api/v2
+    legacy_operation_id: Domains_Insert
+    standardized_operation_id: postApiV2Office365sByOffice365IdDomains
+  - method: delete
+    host_root_path: /api/v2/office365s/{office365_id}/domains/{domain_id}
+    base_path: /api/v2
+    legacy_operation_id: Domains_Delete
+    standardized_operation_id: deleteApiV2Office365sByOffice365IdDomainsByDomainId
+  - method: get
+    host_root_path: /api/v2/gsuites/{gsuite_id}/domains
+    base_path: /api/v2
+    legacy_operation_id: Gapps_Domains_List
+    standardized_operation_id: getApiV2GsuitesByGsuiteIdDomains
+  - method: post
+    host_root_path: /api/v2/gsuites/{gsuite_id}/domains
+    base_path: /api/v2
+    legacy_operation_id: Gapps_Domains_Insert
+    standardized_operation_id: postApiV2GsuitesByGsuiteIdDomains
+  - method: delete
+    host_root_path: /api/v2/gsuites/{gsuite_id}/domains/{domainId}
+    base_path: /api/v2
+    legacy_operation_id: Gapps_Domains_Delete
+    standardized_operation_id: deleteApiV2GsuitesByGsuiteIdDomainsByDomainid
+  - method: post
+    host_root_path: /api/v2/google-emm/devices/{deviceId}/reboot
+    base_path: /api/v2
+    legacy_operation_id: Devices_RebootDevice
+    standardized_operation_id: postApiV2GoogleEmmDevicesByDeviceidReboot
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/billing/contract
+    base_path: /api/v2
+    legacy_operation_id: Billing_GetContract
+    standardized_operation_id: getApiV2ProvidersByProviderIdBillingContract
+  - method: get
+    host_root_path: /api/v2/devices/settings/signinwithjumpcloud
+    base_path: /api/v2
+    legacy_operation_id: SystemsOrgSettings_GetSignInWithJumpCloudSettings
+    standardized_operation_id: getApiV2DevicesSettingsSigninwithjumpcloud
+  - method: put
+    host_root_path: /api/v2/devices/settings/signinwithjumpcloud
+    base_path: /api/v2
+    legacy_operation_id: SystemsOrgSettings_SetSignInWithJumpCloudSettings
+    standardized_operation_id: putApiV2DevicesSettingsSigninwithjumpcloud
+  - method: get
+    host_root_path: /api/v2/google-emm/enterprises/{enterpriseObjectId}/devices
+    base_path: /api/v2
+    legacy_operation_id: Devices_ListDevices
+    standardized_operation_id: getApiV2GoogleEmmEnterprisesByEnterpriseobjectidDevices
+  - method: get
+    host_root_path: /api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens
+    base_path: /api/v2
+    legacy_operation_id: EnrollmentTokens_ListEnrollmentTokens
+    standardized_operation_id: getApiV2GoogleEmmEnterprisesByEnterpriseobjectidEnrollmentTokens
+  - method: post
+    host_root_path: /api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens
+    base_path: /api/v2
+    legacy_operation_id: EnrollmentTokens_CreateEnterprisesEnrollmentToken
+    standardized_operation_id: postApiV2GoogleEmmEnterprisesByEnterpriseobjectidEnrollmentTokens
+  - method: get
+    host_root_path: /api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId}
+    base_path: /api/v2
+    legacy_operation_id: EnrollmentTokens_GetEnrollmentToken
+    standardized_operation_id: getApiV2GoogleEmmEnterprisesByEnterpriseidEnrollmentTokensByTokenid
+  - method: delete
+    host_root_path: /api/v2/google-emm/enterprises/{enterpriseId}/enrollment-tokens/{tokenId}
+    base_path: /api/v2
+    legacy_operation_id: EnrollmentTokens_DeleteEnrollmentToken
+    standardized_operation_id: deleteApiV2GoogleEmmEnterprisesByEnterpriseidEnrollmentTokensByTokenid
+  - method: get
+    host_root_path: /api/v2/systems/{systemObjectId}/aggregated-policy-stats
+    base_path: /api/v2
+    legacy_operation_id: AggregatedPolicyResults_Get
+    standardized_operation_id: getApiV2SystemsBySystemobjectidAggregatedPolicyStats
+  - method: post
+    host_root_path: /api/v2/microsoft-mdm/configuration-files
+    base_path: /api/v2
+    legacy_operation_id: Enrollments_DownloadConfigFiles
+    standardized_operation_id: postApiV2MicrosoftMdmConfigurationFiles
+  - method: get
+    host_root_path: /api/v2/devices/settings/defaultpasswordsync
+    base_path: /api/v2
+    legacy_operation_id: SystemsOrgSettings_GetDefaultPasswordSyncSettings
+    standardized_operation_id: getApiV2DevicesSettingsDefaultpasswordsync
+  - method: put
+    host_root_path: /api/v2/devices/settings/defaultpasswordsync
+    base_path: /api/v2
+    legacy_operation_id: SystemsOrgSettings_SetDefaultPasswordSyncSettings
+    standardized_operation_id: putApiV2DevicesSettingsDefaultpasswordsync
+  - method: get
+    host_root_path: /api/v2/pushendpoints/verifications/{verificationId}
+    base_path: /api/v2
+    legacy_operation_id: PushVerifications_Get
+    standardized_operation_id: getApiV2PushendpointsVerificationsByVerificationid
+  - method: post
+    host_root_path: /api/v2/users/{userId}/pushendpoints/{pushEndpointId}/verify
+    base_path: /api/v2
+    legacy_operation_id: PushVerifications_Start
+    standardized_operation_id: postApiV2UsersByUseridPushendpointsByPushendpointidVerify
+  - method: get
+    host_root_path: /api/v2/identity-provider/policies/{idp_routing_policy_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_idpRoutingPolicyAssociationsList
+    standardized_operation_id: getApiV2IdentityProviderPoliciesByIdpRoutingPolicyIdAssociations
+  - method: post
+    host_root_path: /api/v2/identity-provider/policies/{idp_routing_policy_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_idpRoutingPolicyAssociationsPost
+    standardized_operation_id: postApiV2IdentityProviderPoliciesByIdpRoutingPolicyIdAssociations
+  - method: get
+    host_root_path: /api/v2/identity-provider/policies/{idp_routing_policy_id}/associations/usergroups
+    base_path: /api/v2
+    legacy_operation_id: graph_idpRoutingPolicyTraverseUserGroup
+    standardized_operation_id: getApiV2IdentityProviderPoliciesByIdpRoutingPolicyIdAssociationsUsergroups
+  - method: get
+    host_root_path: /api/v2/identity-provider/policies/{idp_routing_policy_id}/associations/users
+    base_path: /api/v2
+    legacy_operation_id: graph_idpRoutingPolicyTraverseUser
+    standardized_operation_id: getApiV2IdentityProviderPoliciesByIdpRoutingPolicyIdAssociationsUsers
+  - method: post
+    host_root_path: /api/v2/accessrequests
+    base_path: /api/v2
+    legacy_operation_id: AccessRequestApi_CreateAccessRequest
+    standardized_operation_id: postApiV2Accessrequests
+  - method: get
+    host_root_path: /api/v2/accessrequests/{accessId}
+    base_path: /api/v2
+    legacy_operation_id: AccessRequestApi_GetAccessRequest
+    standardized_operation_id: getApiV2AccessrequestsByAccessid
+  - method: put
+    host_root_path: /api/v2/accessrequests/{accessId}
+    base_path: /api/v2
+    legacy_operation_id: AccessRequestApi_UpdateAccessRequest
+    standardized_operation_id: putApiV2AccessrequestsByAccessid
+  - method: post
+    host_root_path: /api/v2/accessrequests/{accessId}/revoke
+    base_path: /api/v2
+    legacy_operation_id: AccessRequestApi_RevokeAccessRequest
+    standardized_operation_id: postApiV2AccessrequestsByAccessidRevoke
+  - method: get
+    host_root_path: /api/v2/gsuites/{gsuite_id}/import/schedules
+    base_path: /api/v2
+    legacy_operation_id: Gapps_Scheduled_Import_List
+    standardized_operation_id: getApiV2GsuitesByGsuiteIdImportSchedules
+  - method: post
+    host_root_path: /api/v2/gsuites/{gsuite_id}/import/schedules
+    base_path: /api/v2
+    legacy_operation_id: Gapps_Scheduled_Import_Create
+    standardized_operation_id: postApiV2GsuitesByGsuiteIdImportSchedules
+  - method: patch
+    host_root_path: /api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}
+    base_path: /api/v2
+    legacy_operation_id: Gapps_Scheduled_Import_Update
+    standardized_operation_id: patchApiV2GsuitesByGsuiteIdImportSchedulesByScheduledjobid
+  - method: delete
+    host_root_path: /api/v2/gsuites/{gsuite_id}/import/schedules/{scheduledJobId}
+    base_path: /api/v2
+    legacy_operation_id: Gapps_Scheduled_Import_Delete
+    standardized_operation_id: deleteApiV2GsuitesByGsuiteIdImportSchedulesByScheduledjobid
+  - method: get
+    host_root_path: /api/v2/object-storage/items
+    base_path: /api/v2
+    legacy_operation_id: ObjectStorage_ListObjectStorageItemsPublic
+    standardized_operation_id: getApiV2ObjectStorageItems
+  - method: get
+    host_root_path: /api/v2/object-storage/status
+    base_path: /api/v2
+    legacy_operation_id: ObjectStorage_GetStatus
+    standardized_operation_id: getApiV2ObjectStorageStatus
+  - method: get
+    host_root_path: /api/v2/healthmonitoring/rules
+    base_path: /api/v2
+    legacy_operation_id: RulesService_ListRules
+    standardized_operation_id: getApiV2HealthmonitoringRules
+  - method: post
+    host_root_path: /api/v2/healthmonitoring/rules
+    base_path: /api/v2
+    legacy_operation_id: RulesService_CreateRule
+    standardized_operation_id: postApiV2HealthmonitoringRules
+  - method: get
+    host_root_path: /api/v2/healthmonitoring/rules/{id}
+    base_path: /api/v2
+    legacy_operation_id: RulesService_GetRule
+    standardized_operation_id: getApiV2HealthmonitoringRulesById
+  - method: patch
+    host_root_path: /api/v2/healthmonitoring/rules/{id}
+    base_path: /api/v2
+    legacy_operation_id: RulesService_UpdateRule
+    standardized_operation_id: patchApiV2HealthmonitoringRulesById
+  - method: delete
+    host_root_path: /api/v2/healthmonitoring/rules/{id}
+    base_path: /api/v2
+    legacy_operation_id: RulesService_DeleteRule
+    standardized_operation_id: deleteApiV2HealthmonitoringRulesById
+  - method: get
+    host_root_path: /api/v2/healthmonitoring/ruletemplates
+    base_path: /api/v2
+    legacy_operation_id: RuleTemplatesService_ListRuleTemplates
+    standardized_operation_id: getApiV2HealthmonitoringRuletemplates
+  - method: get
+    host_root_path: /api/v2/healthmonitoring/ruletemplates/{id}
+    base_path: /api/v2
+    legacy_operation_id: RuleTemplatesService_GetRuleTemplate
+    standardized_operation_id: getApiV2HealthmonitoringRuletemplatesById
+  - method: get
+    host_root_path: /api/v2/alerts
+    base_path: /api/v2
+    legacy_operation_id: AlertsService_ListAlerts
+    standardized_operation_id: getApiV2Alerts
+  - method: get
+    host_root_path: /api/v2/alerts/{id}
+    base_path: /api/v2
+    legacy_operation_id: AlertsService_GetAlert
+    standardized_operation_id: getApiV2AlertsById
+  - method: delete
+    host_root_path: /api/v2/alerts/{id}
+    base_path: /api/v2
+    legacy_operation_id: AlertsService_DeleteAlert
+    standardized_operation_id: deleteApiV2AlertsById
+  - method: get
+    host_root_path: /api/v2/alerts/{id}/occurrences
+    base_path: /api/v2
+    legacy_operation_id: AlertOccurrencesService_ListAlertOccurrences
+    standardized_operation_id: getApiV2AlertsByIdOccurrences
+  - method: post
+    host_root_path: /api/v2/alerts/{id}/status
+    base_path: /api/v2
+    legacy_operation_id: AlertsService_UpdateAlertStatus
+    standardized_operation_id: postApiV2AlertsByIdStatus
+  - method: get
+    host_root_path: /api/v2/alerts-stats
+    base_path: /api/v2
+    legacy_operation_id: AlertsService_GetAlertStats
+    standardized_operation_id: getApiV2AlertsStats
+  - method: get
+    host_root_path: /api/v2/passwordmanager/company/policies
+    base_path: /api/v2
+    legacy_operation_id: CompanyService_GetPolicies
+    standardized_operation_id: getApiV2PasswordmanagerCompanyPolicies
+  - method: put
+    host_root_path: /api/v2/passwordmanager/company/policies/{UUID}
+    base_path: /api/v2
+    legacy_operation_id: CompanyService_UpdatePolicies
+    standardized_operation_id: putApiV2PasswordmanagerCompanyPoliciesByUuid
+  - method: post
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode
+    base_path: /api/v2
+    legacy_operation_id: Devices_LostMode
+    standardized_operation_id: postApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLostmode
+  - method: get
+    host_root_path: /api/v2/devices/settings/ssao
+    base_path: /api/v2
+    legacy_operation_id: SystemsOrgSettings_GetSsaoDevicesSettings
+    standardized_operation_id: getApiV2DevicesSettingsSsao
+  - method: put
+    host_root_path: /api/v2/devices/settings/ssao
+    base_path: /api/v2
+    legacy_operation_id: SystemsOrgSettings_SetSsaoDevicesSettings
+    standardized_operation_id: putApiV2DevicesSettingsSsao
+  - method: get
+    host_root_path: /api/v2/software/catalog/apps
+    base_path: /api/v2
+    legacy_operation_id: AppCatalog_ListAppCatalogItems
+    standardized_operation_id: getApiV2SoftwareCatalogApps
+  - method: get
+    host_root_path: /api/v2/software/catalog/apps/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: AppCatalog_GetAppCatalogItem
+    standardized_operation_id: getApiV2SoftwareCatalogAppsByObjectid
+  - method: post
+    host_root_path: /api/v2/google-emm/devices/{deviceId}/lostmode/start
+    base_path: /api/v2
+    legacy_operation_id: Devices_StartLostMode
+    standardized_operation_id: postApiV2GoogleEmmDevicesByDeviceidLostmodeStart
+  - method: post
+    host_root_path: /api/v2/google-emm/devices/{deviceId}/lostmode/stop
+    base_path: /api/v2
+    legacy_operation_id: Devices_StopLostMode
+    standardized_operation_id: postApiV2GoogleEmmDevicesByDeviceidLostmodeStop
+  - method: get
+    host_root_path: /api/v2/applemdms/{organizationObjectId}/account-driven-service-discovery
+    base_path: /api/v2
+    legacy_operation_id: EnrollmentProfiles_GetAdueRedirect
+    standardized_operation_id: getApiV2ApplemdmsByOrganizationobjectidAccountDrivenServiceDiscovery
+  - method: get
+    host_root_path: /api/v2/applemdms/{organizationObjectId}/account-driven-service-discovery/config
+    base_path: /api/v2
+    legacy_operation_id: EnrollmentProfiles_GetAdueConfig
+    standardized_operation_id: getApiV2ApplemdmsByOrganizationobjectidAccountDrivenServiceDiscoveryConfig
+  - method: get
+    host_root_path: /api/v2/systems/views
+    base_path: /api/v2
+    legacy_operation_id: SavedViews_List
+    standardized_operation_id: getApiV2SystemsViews
+  - method: post
+    host_root_path: /api/v2/systems/views
+    base_path: /api/v2
+    legacy_operation_id: SavedViews_Create
+    standardized_operation_id: postApiV2SystemsViews
+  - method: get
+    host_root_path: /api/v2/reports/custom
+    base_path: /api/v2
+    legacy_operation_id: Reports_ListReportViews
+    standardized_operation_id: getApiV2ReportsCustom
+  - method: post
+    host_root_path: /api/v2/reports/custom
+    base_path: /api/v2
+    legacy_operation_id: Reports_CreateReportView
+    standardized_operation_id: postApiV2ReportsCustom
+  - method: get
+    host_root_path: /api/v2/reports/custom/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_GetReportView
+    standardized_operation_id: getApiV2ReportsCustomByObjectid
+  - method: put
+    host_root_path: /api/v2/reports/custom/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_UpdateReportView
+    standardized_operation_id: putApiV2ReportsCustomByObjectid
+  - method: delete
+    host_root_path: /api/v2/reports/custom/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_DeleteReportView
+    standardized_operation_id: deleteApiV2ReportsCustomByObjectid
+  - method: get
+    host_root_path: /api/v2/reports/jumpcloud
+    base_path: /api/v2
+    legacy_operation_id: Reports_ListReportTemplates
+    standardized_operation_id: getApiV2ReportsJumpcloud
+  - method: get
+    host_root_path: /api/v2/reports/jumpcloud/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_GetReportTemplate
+    standardized_operation_id: getApiV2ReportsJumpcloudByObjectid
+  - method: get
+    host_root_path: /api/v2/healthmonitoring/rules-stats
+    base_path: /api/v2
+    legacy_operation_id: RulesService_GetRulesStats
+    standardized_operation_id: getApiV2HealthmonitoringRulesStats
+  - method: post
+    host_root_path: /api/v2/reports/export
+    base_path: /api/v2
+    legacy_operation_id: Reports_ExportReport
+    standardized_operation_id: postApiV2ReportsExport
+  - method: patch
+    host_root_path: /api/v2/healthmonitoring/rules/{id}/status
+    base_path: /api/v2
+    legacy_operation_id: RulesService_UpdateRuleStatus
+    standardized_operation_id: patchApiV2HealthmonitoringRulesByIdStatus
+  - method: get
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/abm_devices
+    base_path: /api/v2
+    legacy_operation_id: DeviceManagers_ListABMDevices
+    standardized_operation_id: getApiV2ApplemdmsByDevicemanagerobjectidAbmDevices
+  - method: get
+    host_root_path: /api/v2/notifications/channels
+    base_path: /api/v2
+    legacy_operation_id: NotificationsChannelsService_ListChannels
+    standardized_operation_id: getApiV2NotificationsChannels
+  - method: post
+    host_root_path: /api/v2/notifications/channels
+    base_path: /api/v2
+    legacy_operation_id: NotificationsChannelsService_CreateChannel
+    standardized_operation_id: postApiV2NotificationsChannels
+  - method: get
+    host_root_path: /api/v2/notifications/channels/{id}
+    base_path: /api/v2
+    legacy_operation_id: NotificationsChannelsService_GetChannel
+    standardized_operation_id: getApiV2NotificationsChannelsById
+  - method: patch
+    host_root_path: /api/v2/notifications/channels/{id}
+    base_path: /api/v2
+    legacy_operation_id: NotificationsChannelsService_UpdateChannel
+    standardized_operation_id: patchApiV2NotificationsChannelsById
+  - method: delete
+    host_root_path: /api/v2/notifications/channels/{id}
+    base_path: /api/v2
+    legacy_operation_id: NotificationsChannelsService_DeleteChannel
+    standardized_operation_id: deleteApiV2NotificationsChannelsById
+  - method: post
+    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/manage
+    base_path: /api/v2
+    legacy_operation_id: SharedFolderService_ManageSharedFolderPermission
+    standardized_operation_id: postApiV2PasswordmanagerSharedfoldersByFolderidManage
+  - method: get
+    host_root_path: /api/v2/saved-views
+    base_path: /api/v2
+    legacy_operation_id: SavedViewsService_List
+    standardized_operation_id: getApiV2SavedViews
+  - method: post
+    host_root_path: /api/v2/saved-views
+    base_path: /api/v2
+    legacy_operation_id: SavedViewsService_Create
+    standardized_operation_id: postApiV2SavedViews
+  - method: put
+    host_root_path: /api/v2/saved-views/{id}
+    base_path: /api/v2
+    legacy_operation_id: SavedViewsService_Update
+    standardized_operation_id: putApiV2SavedViewsById
+  - method: delete
+    host_root_path: /api/v2/saved-views/{id}
+    base_path: /api/v2
+    legacy_operation_id: SavedViewsService_Delete
+    standardized_operation_id: deleteApiV2SavedViewsById
+  - method: post
+    host_root_path: /api/v2/passwordpolicies
+    base_path: /api/v2
+    legacy_operation_id: Policy_Insert
+    standardized_operation_id: postApiV2Passwordpolicies
+  - method: delete
+    host_root_path: /api/v2/passwordpolicies
+    base_path: /api/v2
+    legacy_operation_id: Policy_BatchDelete
+    standardized_operation_id: deleteApiV2Passwordpolicies
+  - method: get
+    host_root_path: /api/v2/passwordpolicies/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Policy_GetByID
+    standardized_operation_id: getApiV2PasswordpoliciesByObjectid
+  - method: put
+    host_root_path: /api/v2/passwordpolicies/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Policy_Update
+    standardized_operation_id: putApiV2PasswordpoliciesByObjectid
+  - method: delete
+    host_root_path: /api/v2/passwordpolicies/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Policy_Delete
+    standardized_operation_id: deleteApiV2PasswordpoliciesByObjectid
+  - method: put
+    host_root_path: /api/v2/passwordpolicies/precedence/set
+    base_path: /api/v2
+    legacy_operation_id: Policy_UpdatePolicyPrecedence
+    standardized_operation_id: putApiV2PasswordpoliciesPrecedenceSet
+  - method: get
+    host_root_path: /api/v2/passwordpolicies/user/{systemUserId}
+    base_path: /api/v2
+    legacy_operation_id: Policy_Get
+    standardized_operation_id: getApiV2PasswordpoliciesUserBySystemuserid
+  - method: get
+    host_root_path: /api/v2/applemdms/{deviceObjectId}/background_tasks
+    base_path: /api/v2
+    legacy_operation_id: BackgroundTasks_List
+    standardized_operation_id: getApiV2ApplemdmsByDeviceobjectidBackgroundTasks
+  - method: get
+    host_root_path: /api/v2/notifications/webhook/channels
+    base_path: /api/v2
+    legacy_operation_id: NotificationsChannelsService_ListWebhookChannels
+    standardized_operation_id: getApiV2NotificationsWebhookChannels
+  - method: post
+    host_root_path: /api/v2/notifications/webhook/test
+    base_path: /api/v2
+    legacy_operation_id: NotificationsChannelsService_TestWebhook
+    standardized_operation_id: postApiV2NotificationsWebhookTest
+  - method: get
+    host_root_path: /api/v2/scope-groups
+    base_path: /api/v2
+    legacy_operation_id: scopegroups_list
+    standardized_operation_id: getApiV2ScopeGroups
+  - method: get
+    host_root_path: /api/v2/roles
+    base_path: /api/v2
+    legacy_operation_id: roles_list
+    standardized_operation_id: getApiV2Roles
+  - method: post
+    host_root_path: /api/v2/roles
+    base_path: /api/v2
+    legacy_operation_id: roles_create
+    standardized_operation_id: postApiV2Roles
+  - method: get
+    host_root_path: /api/v2/roles/{role_id}
+    base_path: /api/v2
+    legacy_operation_id: roles_get
+    standardized_operation_id: getApiV2RolesByRoleId
+  - method: put
+    host_root_path: /api/v2/roles/{role_id}
+    base_path: /api/v2
+    legacy_operation_id: roles_update
+    standardized_operation_id: putApiV2RolesByRoleId
+  - method: delete
+    host_root_path: /api/v2/roles/{role_id}
+    base_path: /api/v2
+    legacy_operation_id: roles_delete
+    standardized_operation_id: deleteApiV2RolesByRoleId
+  - method: get
+    host_root_path: /api/v2/passwordpolicies/usergroup/{userGroupId}
+    base_path: /api/v2
+    legacy_operation_id: Policy_GetByUserGroup
+    standardized_operation_id: getApiV2PasswordpoliciesUsergroupByUsergroupid
+  - method: get
+    host_root_path: /api/v2/service-accounts
+    base_path: /api/v2
+    legacy_operation_id: ServiceAccounts_ListServiceAccounts
+    standardized_operation_id: getApiV2ServiceAccounts
+  - method: post
+    host_root_path: /api/v2/service-accounts
+    base_path: /api/v2
+    legacy_operation_id: ServiceAccounts_CreateServiceAccount
+    standardized_operation_id: postApiV2ServiceAccounts
+  - method: get
+    host_root_path: /api/v2/service-accounts/{service_account_id}
+    base_path: /api/v2
+    legacy_operation_id: ServiceAccounts_GetServiceAccount
+    standardized_operation_id: getApiV2ServiceAccountsByServiceAccountId
+  - method: delete
+    host_root_path: /api/v2/service-accounts/{service_account_id}
+    base_path: /api/v2
+    legacy_operation_id: ServiceAccounts_DeleteServiceAccount
+    standardized_operation_id: deleteApiV2ServiceAccountsByServiceAccountId
+  - method: post
+    host_root_path: /api/v2/service-accounts/{service_account_id}/auth-config
+    base_path: /api/v2
+    legacy_operation_id: ServiceAccounts_CreateServiceAccountAuthConfig
+    standardized_operation_id: postApiV2ServiceAccountsByServiceAccountIdAuthConfig
+  - method: delete
+    host_root_path: /api/v2/service-accounts/{service_account_id}/auth-config/{auth_config_id}
+    base_path: /api/v2
+    legacy_operation_id: ServiceAccounts_DeleteServiceAccountAuthConfig
+    standardized_operation_id: deleteApiV2ServiceAccountsByServiceAccountIdAuthConfigByAuthConfigId
+  - method: post
+    host_root_path: /api/v2/alerts/bulk-delete
+    base_path: /api/v2
+    legacy_operation_id: AlertsService_BulkDelete
+    standardized_operation_id: postApiV2AlertsBulkDelete
+  - method: post
+    host_root_path: /api/v2/alerts/bulk-update
+    base_path: /api/v2
+    legacy_operation_id: AlertsService_BulkUpdate
+    standardized_operation_id: postApiV2AlertsBulkUpdate
+  - method: post
+    host_root_path: /api/v2/userapprovalrequest
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_UserApprovalRequest
+    standardized_operation_id: postApiV2Userapprovalrequest
+  - method: get
+    host_root_path: /api/v2/feature-settings
+    base_path: /api/v2
+    legacy_operation_id: OrganizationFeatureSettingsService_List
+    standardized_operation_id: getApiV2FeatureSettings
+  - method: put
+    host_root_path: /api/v2/feature-settings/{feature_name}/{setting_name}
+    base_path: /api/v2
+    legacy_operation_id: OrganizationFeatureSettingsService_Update
+    standardized_operation_id: putApiV2FeatureSettingsByFeatureNameBySettingName
+  - method: get
+    host_root_path: /api/v2/approversprogress/{id}
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_GetAccessRequestApprovalProgressAdminPortal
+    standardized_operation_id: getApiV2ApproversprogressById
+  - method: post
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/service-discovery-url
+    base_path: /api/v2
+    legacy_operation_id: EnrollmentProfiles_UpdateServiceDiscoveryURL
+    standardized_operation_id: postApiV2ApplemdmsByDevicemanagerobjectidServiceDiscoveryUrl
+  - method: delete
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/service-discovery-url
+    base_path: /api/v2
+    legacy_operation_id: EnrollmentProfiles_DeleteServiceDiscoveryURL
+    standardized_operation_id: deleteApiV2ApplemdmsByDevicemanagerobjectidServiceDiscoveryUrl
+  - method: get
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/validate-service-discovery-url
+    base_path: /api/v2
+    legacy_operation_id: EnrollmentProfiles_ValidateServiceDiscoveryURL
+    standardized_operation_id: getApiV2ApplemdmsByDevicemanagerobjectidValidateServiceDiscoveryUrl
+  - method: get
+    host_root_path: /api/v2/approvalflowrequest
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_GetAllWorkflowAccessRequests
+    standardized_operation_id: getApiV2Approvalflowrequest
+  - method: post
+    host_root_path: /api/v2/approvalflowrequest
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_CreateWorkflowAccessRequest
+    standardized_operation_id: postApiV2Approvalflowrequest
+  - method: get
+    host_root_path: /api/v2/approvalflowrequest/{id}
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_GetWorkflowAccessRequests
+    standardized_operation_id: getApiV2ApprovalflowrequestById
+  - method: put
+    host_root_path: /api/v2/approvalflowrequest/{id}
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_UpdateWorkflowAccessRequests
+    standardized_operation_id: putApiV2ApprovalflowrequestById
+  - method: get
+    host_root_path: /api/v2/approvalflows
+    base_path: /api/v2
+    legacy_operation_id: AccessWorkflowApi_GetAllAccessWorkFlows
+    standardized_operation_id: getApiV2Approvalflows
+  - method: post
+    host_root_path: /api/v2/approvalflows
+    base_path: /api/v2
+    legacy_operation_id: AccessWorkflowApi_CreateAccessWorkflow
+    standardized_operation_id: postApiV2Approvalflows
+  - method: get
+    host_root_path: /api/v2/approvalflows/{approvalFlowId}
+    base_path: /api/v2
+    legacy_operation_id: AccessWorkflowApi_GetAccessWorkflow
+    standardized_operation_id: getApiV2ApprovalflowsByApprovalflowid
+  - method: put
+    host_root_path: /api/v2/approvalflows/{approvalFlowId}
+    base_path: /api/v2
+    legacy_operation_id: AccessWorkflowApi_UpdateAccessWorkflow
+    standardized_operation_id: putApiV2ApprovalflowsByApprovalflowid
+  - method: delete
+    host_root_path: /api/v2/approvalflows/{approvalFlowId}
+    base_path: /api/v2
+    legacy_operation_id: AccessWorkflowApi_DeleteAccessWorkflow
+    standardized_operation_id: deleteApiV2ApprovalflowsByApprovalflowid
+  - method: get
+    host_root_path: /api/v2/approvalflowsettings
+    base_path: /api/v2
+    legacy_operation_id: AccessWorkflowSettingsApi_GetAccessWorkflowSettings
+    standardized_operation_id: getApiV2Approvalflowsettings
+  - method: post
+    host_root_path: /api/v2/approvalflowsettings
+    base_path: /api/v2
+    legacy_operation_id: AccessWorkflowSettingsApi_CreateAccessWorkflowSettings
+    standardized_operation_id: postApiV2Approvalflowsettings
+  - method: put
+    host_root_path: /api/v2/approvalflowsettings
+    base_path: /api/v2
+    legacy_operation_id: AccessWorkflowSettingsApi_UpdateAccessWorkflowSettings
+    standardized_operation_id: putApiV2Approvalflowsettings
+  - method: post
+    host_root_path: /api/v2/notifications/slack/test
+    base_path: /api/v2
+    legacy_operation_id: NotificationsChannelsService_TestSlack
+    standardized_operation_id: postApiV2NotificationsSlackTest
+  - method: get
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockconfig
+    base_path: /api/v2
+    legacy_operation_id: Devices_GetRecoveryLockConfig
+    standardized_operation_id: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidGetrecoverylockconfig
+  - method: get
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockpassword
+    base_path: /api/v2
+    legacy_operation_id: Devices_GetRecoveryLockPassword
+    standardized_operation_id: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidGetrecoverylockpassword
+  - method: post
+    host_root_path: /api/v2/google-emm/enterprises/{enterpriseId}/generate-upgrade-url
+    base_path: /api/v2
+    legacy_operation_id: Enterprises_GenerateEnterpriseUpgradeURL
+    standardized_operation_id: postApiV2GoogleEmmEnterprisesByEnterpriseidGenerateUpgradeUrl
+  - method: post
+    host_root_path: /api/v2/systems/{systemObjectId}/transfer
+    base_path: /api/v2
+    legacy_operation_id: SystemsInternal_BasicTransferDevice
+    standardized_operation_id: postApiV2SystemsBySystemobjectidTransfer
+  - method: get
+    host_root_path: /api/v2/reports/scheduled
+    base_path: /api/v2
+    legacy_operation_id: Reports_ListScheduledReports
+    standardized_operation_id: getApiV2ReportsScheduled
+  - method: post
+    host_root_path: /api/v2/reports/scheduled
+    base_path: /api/v2
+    legacy_operation_id: Reports_CreateScheduledReport
+    standardized_operation_id: postApiV2ReportsScheduled
+  - method: get
+    host_root_path: /api/v2/reports/scheduled/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_GetScheduledReport
+    standardized_operation_id: getApiV2ReportsScheduledByObjectid
+  - method: put
+    host_root_path: /api/v2/reports/scheduled/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_UpdateScheduledReport
+    standardized_operation_id: putApiV2ReportsScheduledByObjectid
+  - method: delete
+    host_root_path: /api/v2/reports/scheduled/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_DeleteScheduledReport
+    standardized_operation_id: deleteApiV2ReportsScheduledByObjectid
+  - method: get
+    host_root_path: /api/v2/reports/scheduled/{objectId}/runs
+    base_path: /api/v2
+    legacy_operation_id: Reports_ListScheduledReportRunsByReport
+    standardized_operation_id: getApiV2ReportsScheduledByObjectidRuns
+  - method: post
+    host_root_path: /api/v2/reports/scheduled/{objectId}/trigger
+    base_path: /api/v2
+    legacy_operation_id: Reports_TriggerScheduledReport
+    standardized_operation_id: postApiV2ReportsScheduledByObjectidTrigger
+  - method: get
+    host_root_path: /api/v2/reports/scheduled/runs
+    base_path: /api/v2
+    legacy_operation_id: Reports_ListScheduledReportRuns
+    standardized_operation_id: getApiV2ReportsScheduledRuns
+  - method: post
+    host_root_path: /api/v2/reports/scheduled/runs
+    base_path: /api/v2
+    legacy_operation_id: Reports_CreateScheduledReportRun
+    standardized_operation_id: postApiV2ReportsScheduledRuns
+  - method: get
+    host_root_path: /api/v2/reports/scheduled/runs/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_GetScheduledReportRun
+    standardized_operation_id: getApiV2ReportsScheduledRunsByObjectid
+  - method: post
+    host_root_path: /api/v2/approvalflowrequest/{id}/cancel
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_CancelWorkflowAccessRequest
+    standardized_operation_id: postApiV2ApprovalflowrequestByIdCancel
+  - method: post
+    host_root_path: /api/v2/approvalflowrequest/{id}/endsession
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_EndSession
+    standardized_operation_id: postApiV2ApprovalflowrequestByIdEndsession
+  - method: post
+    host_root_path: /api/v2/approvalflowrequest/{id}/startsession
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_StartSession
+    standardized_operation_id: postApiV2ApprovalflowrequestByIdStartsession
+  - method: post
+    host_root_path: /api/v2/approvalflowrequest/revoke-ttl-active-session
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_RevokeTTLActiveSession
+    standardized_operation_id: postApiV2ApprovalflowrequestRevokeTtlActiveSession
+  - method: post
+    host_root_path: /api/v2/sudoactivesessions/revoke
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_RevokeElevatedPermissions
+    standardized_operation_id: postApiV2SudoactivesessionsRevoke
+  - method: get
+    host_root_path: /api/v2/password-manager
+    base_path: /api/v2
+    legacy_operation_id: Config_Get
+    standardized_operation_id: getApiV2PasswordManager
+  - method: get
+    host_root_path: /api/v2/alerts/{alertObjectId}/notes
+    base_path: /api/v2
+    legacy_operation_id: AlertsService_GetAlertNotes
+    standardized_operation_id: getApiV2AlertsByAlertobjectidNotes
+  - method: post
+    host_root_path: /api/v2/alerts/{alertObjectId}/notes
+    base_path: /api/v2
+    legacy_operation_id: AlertsService_AddAlertNote
+    standardized_operation_id: postApiV2AlertsByAlertobjectidNotes
+  - method: get
+    host_root_path: /api/v2/reports/custom-reports
+    base_path: /api/v2
+    legacy_operation_id: Reports_ListCustomReports
+    standardized_operation_id: getApiV2ReportsCustomReports
+  - method: post
+    host_root_path: /api/v2/reports/custom-reports
+    base_path: /api/v2
+    legacy_operation_id: Reports_CreateCustomReport
+    standardized_operation_id: postApiV2ReportsCustomReports
+  - method: get
+    host_root_path: /api/v2/reports/custom-reports/{customReportId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_GetCustomReport
+    standardized_operation_id: getApiV2ReportsCustomReportsByCustomreportid
+  - method: put
+    host_root_path: /api/v2/reports/custom-reports/{customReportId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_UpdateCustomReport
+    standardized_operation_id: putApiV2ReportsCustomReportsByCustomreportid
+  - method: delete
+    host_root_path: /api/v2/reports/custom-reports/{customReportId}
+    base_path: /api/v2
+    legacy_operation_id: Reports_DeleteCustomReport
+    standardized_operation_id: deleteApiV2ReportsCustomReportsByCustomreportid
+  - method: get
+    host_root_path: /api/v2/reports/saved-reports
+    base_path: /api/v2
+    legacy_operation_id: Reports_ListSavedReports
+    standardized_operation_id: getApiV2ReportsSavedReports
+  - method: get
+    host_root_path: /api/v2/reports/saved-reports/{id}
+    base_path: /api/v2
+    legacy_operation_id: Reports_GetSavedReport
+    standardized_operation_id: getApiV2ReportsSavedReportsById
+  - method: get
+    host_root_path: /api/v2/assets/field-configurations
+    base_path: /api/v2
+    legacy_operation_id: listFieldConfigurations
+    standardized_operation_id: getApiV2AssetsFieldConfigurations
+  - method: get
+    host_root_path: /api/v2/assets/field-configurations/{id}/select-options
+    base_path: /api/v2
+    legacy_operation_id: getFieldConfigSelectOptions
+    standardized_operation_id: getApiV2AssetsFieldConfigurationsByIdSelectOptions
+  - method: get
+    host_root_path: /api/v2/assets/devices/{id}
+    base_path: /api/v2
+    legacy_operation_id: getDeviceAsset
+    standardized_operation_id: getApiV2AssetsDevicesById
+  - method: put
+    host_root_path: /api/v2/assets/devices/{id}
+    base_path: /api/v2
+    legacy_operation_id: updateDeviceAsset
+    standardized_operation_id: putApiV2AssetsDevicesById
+  - method: delete
+    host_root_path: /api/v2/assets/devices/{id}
+    base_path: /api/v2
+    legacy_operation_id: deleteDeviceAsset
+    standardized_operation_id: deleteApiV2AssetsDevicesById
+  - method: get
+    host_root_path: /api/v2/assets/devices
+    base_path: /api/v2
+    legacy_operation_id: listDeviceAssets
+    standardized_operation_id: getApiV2AssetsDevices
+  - method: post
+    host_root_path: /api/v2/assets/devices
+    base_path: /api/v2
+    legacy_operation_id: createDeviceAsset
+    standardized_operation_id: postApiV2AssetsDevices
+  - method: patch
+    host_root_path: /api/v2/assets/devices/batch
+    base_path: /api/v2
+    legacy_operation_id: batchUpdateDeviceAssets
+    standardized_operation_id: patchApiV2AssetsDevicesBatch
+  - method: get
+    host_root_path: /api/v2/assets/devices/jc-system/{jcSystemId}
+    base_path: /api/v2
+    legacy_operation_id: getDeviceAssetByJCSystemID
+    standardized_operation_id: getApiV2AssetsDevicesJcSystemByJcsystemid
+  - method: get
+    host_root_path: /api/v2/assets/accessories/{id}
+    base_path: /api/v2
+    legacy_operation_id: getAccessoryAsset
+    standardized_operation_id: getApiV2AssetsAccessoriesById
+  - method: put
+    host_root_path: /api/v2/assets/accessories/{id}
+    base_path: /api/v2
+    legacy_operation_id: updateAccessoryAsset
+    standardized_operation_id: putApiV2AssetsAccessoriesById
+  - method: delete
+    host_root_path: /api/v2/assets/accessories/{id}
+    base_path: /api/v2
+    legacy_operation_id: deleteAccessoryAsset
+    standardized_operation_id: deleteApiV2AssetsAccessoriesById
+  - method: get
+    host_root_path: /api/v2/assets/accessories
+    base_path: /api/v2
+    legacy_operation_id: listAccessoryAssets
+    standardized_operation_id: getApiV2AssetsAccessories
+  - method: post
+    host_root_path: /api/v2/assets/accessories
+    base_path: /api/v2
+    legacy_operation_id: createAccessoryAsset
+    standardized_operation_id: postApiV2AssetsAccessories
+  - method: patch
+    host_root_path: /api/v2/assets/accessories/batch
+    base_path: /api/v2
+    legacy_operation_id: batchUpdateAccessoryAssets
+    standardized_operation_id: patchApiV2AssetsAccessoriesBatch
+  - method: get
+    host_root_path: /api/v2/assets/locations/{id}
+    base_path: /api/v2
+    legacy_operation_id: getLocationAsset
+    standardized_operation_id: getApiV2AssetsLocationsById
+  - method: put
+    host_root_path: /api/v2/assets/locations/{id}
+    base_path: /api/v2
+    legacy_operation_id: updateLocationAsset
+    standardized_operation_id: putApiV2AssetsLocationsById
+  - method: delete
+    host_root_path: /api/v2/assets/locations/{id}
+    base_path: /api/v2
+    legacy_operation_id: deleteLocationAsset
+    standardized_operation_id: deleteApiV2AssetsLocationsById
+  - method: get
+    host_root_path: /api/v2/assets/locations
+    base_path: /api/v2
+    legacy_operation_id: listLocationAssets
+    standardized_operation_id: getApiV2AssetsLocations
+  - method: post
+    host_root_path: /api/v2/assets/locations
+    base_path: /api/v2
+    legacy_operation_id: createLocationAsset
+    standardized_operation_id: postApiV2AssetsLocations
+  - method: patch
+    host_root_path: /api/v2/assets/locations/batch
+    base_path: /api/v2
+    legacy_operation_id: batchUpdateLocationAssets
+    standardized_operation_id: patchApiV2AssetsLocationsBatch
+  - method: get
+    host_root_path: /api/v2/assets/devices/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: listDeviceAssetHistory
+    standardized_operation_id: getApiV2AssetsDevicesByIdHistory
+  - method: post
+    host_root_path: /api/v2/assets/devices/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: createDeviceAssetHistoryNote
+    standardized_operation_id: postApiV2AssetsDevicesByIdHistory
+  - method: get
+    host_root_path: /api/v2/assets/accessories/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: listAccessoryAssetHistory
+    standardized_operation_id: getApiV2AssetsAccessoriesByIdHistory
+  - method: post
+    host_root_path: /api/v2/assets/accessories/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: createAccessoryAssetHistoryNote
+    standardized_operation_id: postApiV2AssetsAccessoriesByIdHistory
+  - method: get
+    host_root_path: /api/v2/assets/locations/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: listLocationAssetHistory
+    standardized_operation_id: getApiV2AssetsLocationsByIdHistory
+  - method: post
+    host_root_path: /api/v2/assets/locations/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: createLocationAssetHistoryNote
+    standardized_operation_id: postApiV2AssetsLocationsByIdHistory
+  - method: get
+    host_root_path: /api/v2/saas-management/application-catalog
+    base_path: /api/v2
+    legacy_operation_id: listCatalogApplications
+    standardized_operation_id: getApiV2SaasManagementApplicationCatalog
+  - method: get
+    host_root_path: /api/v2/saas-management/application-catalog/{catalog_application_id}
+    base_path: /api/v2
+    legacy_operation_id: getCatalogApplication
+    standardized_operation_id: getApiV2SaasManagementApplicationCatalogByCatalogApplicationId
+  - method: get
+    host_root_path: /api/v2/saas-management/applications
+    base_path: /api/v2
+    legacy_operation_id: listApplications
+    standardized_operation_id: getApiV2SaasManagementApplications
+  - method: post
+    host_root_path: /api/v2/saas-management/applications
+    base_path: /api/v2
+    legacy_operation_id: createApplication
+    standardized_operation_id: postApiV2SaasManagementApplications
+  - method: get
+    host_root_path: /api/v2/saas-management/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: getApplication
+    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationId
+  - method: put
+    host_root_path: /api/v2/saas-management/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: updateApplication
+    standardized_operation_id: putApiV2SaasManagementApplicationsByApplicationId
+  - method: delete
+    host_root_path: /api/v2/saas-management/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: deleteApplication
+    standardized_operation_id: deleteApiV2SaasManagementApplicationsByApplicationId
+  - method: get
+    host_root_path: /api/v2/saas-management/applications/{application_id}/usage
+    base_path: /api/v2
+    legacy_operation_id: getApplicationUsage
+    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationIdUsage
+  - method: get
+    host_root_path: /api/v2/saas-management/application-licenses
+    base_path: /api/v2
+    legacy_operation_id: listLicenses
+    standardized_operation_id: getApiV2SaasManagementApplicationLicenses
+  - method: get
+    host_root_path: /api/v2/saas-management/application-licenses/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: listApplicationLicenses
+    standardized_operation_id: getApiV2SaasManagementApplicationLicensesByApplicationId
+  - method: get
+    host_root_path: /api/v2/saas-management/applications/{application_id}/accounts
+    base_path: /api/v2
+    legacy_operation_id: listApplicationAccounts
+    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationIdAccounts
+  - method: get
+    host_root_path: /api/v2/saas-management/applications/{application_id}/accounts/{account_id}
+    base_path: /api/v2
+    legacy_operation_id: getAccount
+    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationIdAccountsByAccountId
+  - method: delete
+    host_root_path: /api/v2/saas-management/applications/{application_id}/accounts/{account_id}
+    base_path: /api/v2
+    legacy_operation_id: deleteAccount
+    standardized_operation_id: deleteApiV2SaasManagementApplicationsByApplicationIdAccountsByAccountId
+  - method: get
+    host_root_path: /api/v2/workflows
+    base_path: /api/v2
+    legacy_operation_id: listWorkflows
+    standardized_operation_id: getApiV2Workflows
+  - method: post
+    host_root_path: /api/v2/workflows
+    base_path: /api/v2
+    legacy_operation_id: createWorkflow
+    standardized_operation_id: postApiV2Workflows
+  - method: get
+    host_root_path: /api/v2/workflows/{id}
+    base_path: /api/v2
+    legacy_operation_id: getWorkflow
+    standardized_operation_id: getApiV2WorkflowsById
+  - method: put
+    host_root_path: /api/v2/workflows/{id}
+    base_path: /api/v2
+    legacy_operation_id: updateWorkflow
+    standardized_operation_id: putApiV2WorkflowsById
+  - method: delete
+    host_root_path: /api/v2/workflows/{id}
+    base_path: /api/v2
+    legacy_operation_id: deleteWorkflow
+    standardized_operation_id: deleteApiV2WorkflowsById
+  - method: post
+    host_root_path: /api/v2/workflows/{id}/runs
+    base_path: /api/v2
+    legacy_operation_id: triggerWorkflow
+    standardized_operation_id: postApiV2WorkflowsByIdRuns
+  - method: get
+    host_root_path: /api/v2/workflows/runs
+    base_path: /api/v2
+    legacy_operation_id: listWorkflowRuns
+    standardized_operation_id: getApiV2WorkflowsRuns
+  - method: get
+    host_root_path: /api/v2/workflows/runs/{runId}
+    base_path: /api/v2
+    legacy_operation_id: getWorkflowRun
+    standardized_operation_id: getApiV2WorkflowsRunsByRunid
+  - method: get
+    host_root_path: /api/v2/workflows/templates
+    base_path: /api/v2
+    legacy_operation_id: listTemplates
+    standardized_operation_id: getApiV2WorkflowsTemplates
+  - method: get
+    host_root_path: /api/v2/workflows/templates/{templateId}
+    base_path: /api/v2
+    legacy_operation_id: getTemplate
+    standardized_operation_id: getApiV2WorkflowsTemplatesByTemplateid

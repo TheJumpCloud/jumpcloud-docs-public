@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JumpCloud Docs (Latest)</title>
+  <meta http-equiv="strict-transport-security" content="max-age=31536000">
+  <meta http-equiv="x-content-type-options" content="nosniff">
+  <meta http-equiv="referrer-policy" content="strict-origin-when-cross-origin">
+  <link rel="shortcut icon" type="image/png" href="/images/API Docs Favicon.ico" />
+  <meta property="description"
+    content="Learn how JumpCloud's APIs extend and bring customization to your experience with JumpCloud" />
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="JumpCloud API Docs">
+  <meta property="og:title" content="JumpCloud API Docs">
+  <meta property="og:url" content="/new/external/index.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/atom-one-dark.min.css">
+  <link rel="stylesheet" href="jc_docs_chrome.css?v=1784124910">
+  
+<!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
+<script>
+  (function (h, o, u, d) {
+    var agent = (h[d] = h[d] || {
+      q: [],
+      onReady: function (callback) {
+        agent.q.push(callback);
+      },
+    });
+    var script = o.createElement(u);
+    script.async = 1;
+    script.src = "https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js";
+    var first = o.getElementsByTagName(u)[0];
+    if (first && first.parentNode) {
+      first.parentNode.insertBefore(script, first);
+    } else {
+      o.head.appendChild(script);
+    }
+  })(window, document, "script", "DD_RUM");
+  window.DD_RUM.onReady(function () {
+    window.DD_RUM.init({
+      clientToken: "pub4df04d743394daeb846048dc7d655830",
+      applicationId: "2d2cb82d-0d76-4ed9-b4bc-02999f2a342c",
+      site: "datadoghq.com",
+      service: "jumpcloud-docs",
+      env: "production",
+      sessionSampleRate: 100,
+      trackResources: true,
+      trackLongTasks: true,
+      trackUserInteractions: true,
+      defaultPrivacyLevel: "mask-user-input",
+    });
+  });
+</script>
+
+</head>
+
+<body class="jc-docs-landing jc-circuit-landing">
+  <a href="#main-content" class="jc-skip-link">Skip to main content</a>
+
+  <nav class="sticky-top" aria-label="Site">
+        
+        <header class="jc-docs-top-bar jc-docs-chrome-light" aria-label="API Docs">
+      <div class="jc-docs-top-bar-inner">
+        <div class="jc-docs-top-bar-brand-group">
+          <a class="jc-docs-top-bar-brand" href="index.html">
+            <img src="jumpcloud-brand-logo.svg" alt="JumpCloud" width="108" height="18" class="jc-docs-top-bar-logo" />
+          </a>
+          <span class="jc-docs-top-bar-divider" aria-hidden="true"></span>
+          <span class="jc-docs-top-bar-label">API Docs</span>
+        </div>
+        
+      </div>
+    </header>
+  </nav>
+
+  <section class="jc-circuit-hero" aria-labelledby="jc-hero-heading">
+    <div class="jc-circuit-container jc-circuit-hero-grid">
+      <div>
+        <p class="jc-circuit-eyebrow">Developer tools</p>
+        <h1 class="jc-circuit-hero-title" id="jc-hero-heading">JumpCloud API</h1>
+        <p class="jc-circuit-hero-desc">Build secure identity, device, and access management workflows with the JumpCloud API.</p>
+        <a class="jc-circuit-btn-primary" href="reference/index.html#console">Browse API Reference</a>
+      </div>
+      <figure class="jc-circuit-code-window">
+        <div class="jc-circuit-code-window-header" aria-hidden="true">
+          <span class="jc-circuit-code-dot jc-circuit-code-dot--red"></span>
+          <span class="jc-circuit-code-dot jc-circuit-code-dot--yellow"></span>
+          <span class="jc-circuit-code-dot jc-circuit-code-dot--green"></span>
+        </div>
+        <figcaption class="jc-sr-only">
+          Example JumpCloud API request and response: GET /api/systemusers
+        </figcaption>
+        <pre class="jc-circuit-code-pre jc-circuit-hero-code-pre"><code class="jc-circuit-hero-request"><span class="jc-circuit-code-method">GET</span> <span class="jc-circuit-code-path">/api/systemusers</span></code>
+<span class="jc-circuit-hero-response-wrap"><code class="language-json jc-circuit-hero-response">{
+  &#34;results&#34;: [
+    {
+      &#34;_id&#34;: &#34;5f14e379abf74…&#34;,
+      &#34;username&#34;: &#34;jane.doe&#34;,
+      &#34;email&#34;: &#34;jane@example.com&#34;,
+      &#34;state&#34;: &#34;ACTIVATED&#34;,
+      &#34;firstname&#34;: &#34;Jane&#34;,
+      &#34;lastname&#34;: &#34;Doe&#34;
+    }
+  ],
+  &#34;totalCount&#34;: 42
+}</code></span></pre>
+      </figure>
+    </div>
+  </section>
+
+  <main id="main-content" class="jc-circuit-main" tabindex="-1">
+    <div class="jc-circuit-container jc-circuit-main-inner">
+      
+      <section class="jc-circuit-section" id="essentials" aria-labelledby="jc-essentials-heading">
+        <div>
+          <h2 class="jc-circuit-section-title" id="jc-essentials-heading">Essentials</h2>
+          <p class="jc-circuit-section-lead">Core concepts and setup for working with JumpCloud APIs.</p>
+        </div>
+        <ul class="jc-circuit-essentials-grid">
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#console/description/access-your-api-key">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-info" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Accessing your API Key</h3>
+  
+  <p class="jc-circuit-card-desc">Locate and manage your administrator API key in the Console.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#console/description/multi-tenant-portal-headers">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-aster" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5a17.92 17.92 0 0 1-8.716-2.247m0 0A8.966 8.966 0 0 1 3 12c0-1.264.26-2.467.732-3.553" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Multi-Tenant Portal Headers</h3>
+  
+  <p class="jc-circuit-card-desc">Headers for API requests across managed organizations.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="https://support.jumpcloud.com/support/s/article/JumpCloud-API-Best-Practices" target="_blank" rel="noopener noreferrer" aria-label="API Best Practices (opens in new tab)">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-success" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <div class="jc-circuit-card-title-row">
+    <h3 class="jc-circuit-card-title">API Best Practices</h3>
+    <svg class="jc-circuit-card-external-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+    <span class="jc-sr-only"> (opens in new tab)</span>
+  </div>
+  
+  <p class="jc-circuit-card-desc">Guidelines for secure and reliable API integration.</p>
+</div>
+</a>
+
+          </li>
+          
+        </ul>
+      </section>
+      
+
+      
+      <section class="jc-circuit-section" aria-labelledby="jc-guides-heading">
+        <div>
+          <h2 class="jc-circuit-section-title" id="jc-guides-heading">Guides</h2>
+          <p class="jc-circuit-section-lead">Step-by-step workflows for common JumpCloud API integration scenarios.</p>
+        </div>
+        <ul class="jc-circuit-api-grid">
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="guides/sso-integrations/index.html">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-violet" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Build SSO integrations</h3>
+  
+  <p class="jc-circuit-card-desc">Create and configure SAML/OIDC applications and control which users and groups have access.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="guides/user-provisioning-with-scim-and-hris/index.html">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-info" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">User onboarding</h3>
+  
+  <p class="jc-circuit-card-desc">Provision a new employee from your HRIS or ITSM workflow — create a STAGED user, assign groups, and activate.</p>
+</div>
+</a>
+
+          </li>
+          
+        </ul>
+      </section>
+      
+
+      
+      <section class="jc-circuit-section" id="api-reference" aria-labelledby="jc-api-reference-heading">
+        <div>
+          <h2 class="jc-circuit-section-title" id="jc-api-reference-heading">API reference</h2>
+          <p class="jc-circuit-section-lead">Explore JumpCloud API domains.</p>
+        </div>
+        <ul class="jc-circuit-api-grid">
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#console/tag/Assets">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-info" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Manage Assets</h3>
+  
+  <p class="jc-circuit-card-desc">Manage and query organization assets through the Console API.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#console/tag/Users">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-violet" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Manage Users</h3>
+  
+  <p class="jc-circuit-card-desc">Create, update, and manage directory users and memberships.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#console/tag/Policies">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-aster" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Manage Policies</h3>
+  
+  <p class="jc-circuit-card-desc">Apply and manage device and user policies at scale.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#console/tag/Applications">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-coral" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Manage Applications</h3>
+  
+  <p class="jc-circuit-card-desc">Configure SSO applications and access controls.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#console/tag/Organizations">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-yellow" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008H17.25v-.008Zm0 3h.008v.008H17.25v-.008Zm0 3h.008v.008H17.25v-.008Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Manage Organizations</h3>
+  
+  <p class="jc-circuit-card-desc">Manage organization settings, features, and multi-tenant structure.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#console/tag/SaaS-App-Management">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-branding" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">SaaS App Management</h3>
+  
+  <p class="jc-circuit-card-desc">Manage SaaS applications and integrations in your organization.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#api-insights-directory">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--chart-info-dark" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Directory Insights</h3>
+  
+  <p class="jc-circuit-card-desc">Query directory events, audit trails, and authentication activity.</p>
+</div>
+</a>
+
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            
+<a class="jc-circuit-card" href="reference/index.html#console">
+  
+<span class="jc-circuit-icon-square jc-circuit-icon-square--neutral-subtle jc-circuit-icon-square--muted" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
+</svg>
+</span>
+
+  <div class="jc-circuit-card-content">
+  
+  <h3 class="jc-circuit-card-title">Explore More</h3>
+  
+  <p class="jc-circuit-card-desc">Browse the full JumpCloud Console API reference.</p>
+</div>
+</a>
+
+          </li>
+          
+        </ul>
+      </section>
+      
+
+      <section class="jc-circuit-section" id="tools-resources" aria-labelledby="jc-tools-heading">
+        <div>
+          <h2 class="jc-circuit-section-title" id="jc-tools-heading">Tools &amp; resources</h2>
+          <p class="jc-circuit-section-lead">Helpful developer resources for building with JumpCloud.</p>
+        </div>
+        <ul class="jc-circuit-tools-grid">
+          
+          <li class="jc-circuit-card-li">
+            <article class="jc-circuit-tools-card">
+              
+<span class="jc-circuit-icon-circle jc-circuit-icon-circle--chart-purple" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+</svg>
+</span>
+
+              <div class="jc-circuit-card-content">
+                <h3 class="jc-circuit-card-title">SDKs</h3>
+                <p class="jc-circuit-card-desc">Client libraries and tooling for JumpCloud APIs.</p>
+              </div>
+              <div class="jc-circuit-tools-footer">
+                
+                
+                <a href="https://github.com/TheJumpCloud/jcapi-powershell" class="jc-circuit-tool-link" target="_blank" rel="noopener noreferrer" aria-label="PowerShell (opens in new tab)">
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--github" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+  
+  <span>PowerShell</span>
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--action" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+  
+</a>
+                
+                
+              </div>
+            </article>
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            <article class="jc-circuit-tools-card">
+              
+<span class="jc-circuit-icon-circle jc-circuit-icon-circle--chart-branding" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+</svg>
+</span>
+
+              <div class="jc-circuit-card-content">
+                <h3 class="jc-circuit-card-title">CLI</h3>
+                <p class="jc-circuit-card-desc">Command-line interface for JumpCloud APIs.</p>
+              </div>
+              <div class="jc-circuit-tools-footer">
+                
+                
+                <a href="https://github.com/TheJumpCloud/jc-cli" class="jc-circuit-tool-link" target="_blank" rel="noopener noreferrer" aria-label="JumpCloud CLI (opens in new tab)">
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--github" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+  
+  <span>JumpCloud CLI</span>
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--action" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+  
+</a>
+                
+                
+              </div>
+            </article>
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            <article class="jc-circuit-tools-card">
+              
+<span class="jc-circuit-icon-circle jc-circuit-icon-circle--chart-info" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+</svg>
+</span>
+
+              <div class="jc-circuit-card-content">
+                <h3 class="jc-circuit-card-title">Download OpenAPI Specs</h3>
+                <p class="jc-circuit-card-desc">Download machine-readable OpenAPI YAML for JumpCloud APIs.</p>
+              </div>
+              <div class="jc-circuit-tools-footer">
+                
+                
+                <a href="console/index.yaml" class="jc-circuit-tool-link" download aria-label="JumpCloud API (download)">
+  
+  <span>JumpCloud API</span>
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--action" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+  
+</a>
+                
+                <a href="api/insights/directory/index.yaml" class="jc-circuit-tool-link" download aria-label="Directory Insights API (download)">
+  
+  <span>Directory Insights API</span>
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--action" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+  
+</a>
+                
+                
+              </div>
+            </article>
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            <article class="jc-circuit-tools-card">
+              
+<span class="jc-circuit-icon-circle jc-circuit-icon-circle--chart-info-dark" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+</svg>
+</span>
+
+              <div class="jc-circuit-card-content">
+                <h3 class="jc-circuit-card-title">What&#39;s new?</h3>
+                <p class="jc-circuit-card-desc">Overview of changes to the JumpCloud API Docs experience.</p>
+              </div>
+              <div class="jc-circuit-tools-footer">
+                
+                
+                <a href="others/whats-new/index.html" class="jc-circuit-tool-link" target="_blank" rel="noopener noreferrer" aria-label="What&#39;s new? (opens in new tab)">
+  
+  <span>What&#39;s new?</span>
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--action" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+  
+</a>
+                
+                
+              </div>
+            </article>
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            <article class="jc-circuit-tools-card">
+              
+<span class="jc-circuit-icon-circle jc-circuit-icon-circle--chart-coral" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+</svg>
+</span>
+
+              <div class="jc-circuit-card-content">
+                <h3 class="jc-circuit-card-title">User Forum</h3>
+                <p class="jc-circuit-card-desc">Join our Slack Channel for support and discussions.</p>
+              </div>
+              <div class="jc-circuit-tools-footer">
+                
+                
+                <a href="https://app.slack.com/client/T0143NXUWDS/C014ADFUXTK" class="jc-circuit-tool-link" target="_blank" rel="noopener noreferrer" aria-label="Join Slack Channel (opens in new tab)">
+  
+  <span>Join Slack Channel</span>
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--action" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+  
+</a>
+                
+                
+              </div>
+            </article>
+          </li>
+          
+          <li class="jc-circuit-card-li">
+            <article class="jc-circuit-tools-card">
+              
+<span class="jc-circuit-icon-circle jc-circuit-icon-circle--chart-info" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+</svg>
+</span>
+
+              <div class="jc-circuit-card-content">
+                <h3 class="jc-circuit-card-title">Need Support?</h3>
+                <p class="jc-circuit-card-desc">Search the JumpCloud Help Center or contact support for product help.</p>
+              </div>
+              <div class="jc-circuit-tools-footer">
+                
+                
+                <a href="https://jumpcloud.com/support" class="jc-circuit-tool-link" target="_blank" rel="noopener noreferrer" aria-label="Visit Help Center (opens in new tab)">
+  
+  <span>Visit Help Center</span>
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--action" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+  
+</a>
+                
+                <a href="https://jumpcloud.com/support/contact-jumpcloud-support" class="jc-circuit-tool-link" target="_blank" rel="noopener noreferrer" aria-label="Contact Support (opens in new tab)">
+  
+  <span>Contact Support</span>
+  
+  <svg width="16" height="16" class="jc-circuit-tool-link-icon jc-circuit-tool-link-icon--action" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+  
+</a>
+                
+                
+              </div>
+            </article>
+          </li>
+          
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="jc-landing-footer jc-circuit-landing-footer jc-docs-chrome-light">
+  <nav class="jc-circuit-footer-nav" aria-label="Footer">
+    <a href="https://jumpcloud.com" target="_blank" rel="noopener noreferrer">
+      Go to JumpCloud.com
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <a href="https://jumpcloud.com/support/contact-jumpcloud-support" target="_blank" rel="noopener noreferrer">
+      JumpCloud Support
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <span class="jc-circuit-footer-copy">Copyright © 2026 JumpCloud.</span>
+  </nav>
+</footer>
+
+    <script>
+    (function () {
+      function syncDocsChromeOffset() {
+        var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+        if (!nav) {
+          return;
+        }
+        document.documentElement.style.setProperty(
+          "--jc-docs-chrome-offset",
+          nav.offsetHeight + "px"
+        );
+        var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+        if (footer) {
+          document.documentElement.style.setProperty(
+            "--jc-scalar-footer-height",
+            footer.offsetHeight + "px"
+          );
+        }
+        if (window.JumpCloudDocs && typeof JumpCloudDocs.syncScalarViewportHeight === "function") {
+          JumpCloudDocs.syncScalarViewportHeight();
+        }
+      }
+
+      function init() {
+        syncDocsChromeOffset();
+        if (typeof ResizeObserver !== "undefined") {
+          var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+          if (nav) {
+            new ResizeObserver(syncDocsChromeOffset).observe(nav);
+          }
+          var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+          if (footer) {
+            new ResizeObserver(syncDocsChromeOffset).observe(footer);
+          }
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+      window.addEventListener("resize", syncDocsChromeOffset);
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var response = document.querySelector(".jc-circuit-hero-response");
+      if (response && typeof hljs !== "undefined") {
+        hljs.highlightElement(response);
+      }
+    });
+  </script>
+</body>
+
+</html>

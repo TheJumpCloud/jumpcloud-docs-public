@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Use Case: User Provisioning with SCIM and HRIS | JumpCloud API Docs</title>
+  <meta http-equiv="strict-transport-security" content="max-age=31536000">
+  <meta http-equiv="x-content-type-options" content="nosniff">
+  <meta http-equiv="referrer-policy" content="strict-origin-when-cross-origin">
+  
+  <link rel="shortcut icon" type="image/png" href="/images/API Docs Favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/atom-one-dark.min.css">
+  <link rel="stylesheet" href="../../jc_docs_chrome.css?v=1784124910">
+  
+<!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
+<script>
+  (function (h, o, u, d) {
+    var agent = (h[d] = h[d] || {
+      q: [],
+      onReady: function (callback) {
+        agent.q.push(callback);
+      },
+    });
+    var script = o.createElement(u);
+    script.async = 1;
+    script.src = "https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js";
+    var first = o.getElementsByTagName(u)[0];
+    if (first && first.parentNode) {
+      first.parentNode.insertBefore(script, first);
+    } else {
+      o.head.appendChild(script);
+    }
+  })(window, document, "script", "DD_RUM");
+  window.DD_RUM.onReady(function () {
+    window.DD_RUM.init({
+      clientToken: "pub4df04d743394daeb846048dc7d655830",
+      applicationId: "2d2cb82d-0d76-4ed9-b4bc-02999f2a342c",
+      site: "datadoghq.com",
+      service: "jumpcloud-docs",
+      env: "production",
+      sessionSampleRate: 100,
+      trackResources: true,
+      trackLongTasks: true,
+      trackUserInteractions: true,
+      defaultPrivacyLevel: "mask-user-input",
+    });
+  });
+</script>
+
+</head>
+
+<body class="jc-docs-landing jc-circuit-landing jc-guide-page">
+  <a href="#main-content" class="jc-skip-link">Skip to main content</a>
+
+  <nav class="sticky-top" aria-label="Site">
+    
+        <header class="jc-docs-top-bar jc-docs-chrome-light" aria-label="API Docs">
+      <div class="jc-docs-top-bar-inner">
+        <div class="jc-docs-top-bar-brand-group">
+          <a class="jc-docs-top-bar-brand" href="../../index.html">
+            <img src="../../jumpcloud-brand-logo.svg" alt="JumpCloud" width="108" height="18" class="jc-docs-top-bar-logo" />
+          </a>
+          <span class="jc-docs-top-bar-divider" aria-hidden="true"></span>
+          <span class="jc-docs-top-bar-label">API Docs</span>
+        </div>
+        
+      </div>
+    </header>
+    
+  </nav>
+
+  <main id="main-content" class="jc-circuit-main jc-guide-main" tabindex="-1">
+    <div class="jc-guide-shell">
+      
+      <aside class="jc-guide-sidebar" aria-label="Guides">
+        <div class="jc-guide-sidebar-inner">
+          <h2 class="jc-guide-sidebar-heading">Guides</h2>
+          <ul class="jc-guide-sidebar-list">
+            
+            <li>
+              
+              <a class="jc-guide-sidebar-link" href="../sso-integrations/index.html">Build SSO integrations</a>
+              
+            </li>
+            
+            <li>
+              
+              <span class="jc-guide-sidebar-link jc-guide-sidebar-link--active" aria-current="page">User onboarding</span>
+              
+            </li>
+            
+          </ul>
+        </div>
+      </aside>
+      
+
+      <div class="jc-guide-center">
+        <div class="jc-guide-center-inner">
+          <nav class="jc-guide-breadcrumb" aria-label="Breadcrumb">
+            <a href="../../index.html">API Docs</a>
+            
+            <span aria-hidden="true">›</span>
+            <span class="jc-guide-breadcrumb-muted">Guides</span>
+            
+            <span aria-hidden="true">›</span>
+            <span class="jc-guide-breadcrumb-current" aria-current="page">Use Case: User Provisioning with SCIM and HRIS</span>
+          </nav>
+
+          <header class="jc-guide-header">
+            <h1 class="jc-guide-title">Use Case: User Provisioning with SCIM and HRIS</h1>
+            
+          </header>
+
+          <article class="jc-guide-prose">
+            <p>Automate identity lifecycle using JumpCloud Identity Management (IDM): pull users <strong>from</strong> an HRIS into JumpCloud, and push users <strong>to</strong> SaaS applications via SCIM.</p>
+<p>JumpCloud plays two SCIM-related roles in these flows:</p>
+<table>
+<thead>
+<tr>
+<th>Direction</th>
+<th>JumpCloud role</th>
+<th>Typical source / target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Inbound (HRIS import)</strong></td>
+<td>Identity hub — creates/updates system users</td>
+<td>HRIS REST API → JumpCloud</td>
+</tr>
+<tr>
+<td><strong>Outbound (SCIM provision)</strong></td>
+<td>SCIM client — provisions bound users</td>
+<td>JumpCloud → SaaS SCIM endpoint</td>
+</tr>
+</tbody>
+</table>
+<p><strong>STAGED behavior:</strong> Users in STAGED state are created/updated in JumpCloud but are <strong>not</strong> provisioned to outbound SCIM applications until activated.</p>
+<hr>
+<h2 id="prerequisites-admin-portal">Prerequisites (Admin Portal)<a class="jc-guide-heading-anchor" href="#prerequisites-admin-portal" aria-label="Link to this section">#</a></h2>
+<p>Complete these steps in the <strong>Admin Portal</strong> before calling the API endpoints in this guide.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connect an HRIS or custom REST identity source</td>
+<td>Applications → Identity Management</td>
+</tr>
+<tr>
+<td>Configure IDM translation rules</td>
+<td>Applications → Identity Management → Translation rules</td>
+</tr>
+<tr>
+<td>Enable outbound SCIM on a SaaS application</td>
+<td>Applications → User Provisioning</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Support articles:</strong></p>
+<ul>
+<li><a href="https://support.jumpcloud.com/support/s/article/Import-users-from-a-custom-rest-API-integration">Import users from a custom REST API integration</a></li>
+<li><a href="https://support.jumpcloud.com/support/s/article/Custom-SCIM-Identity-Management">Custom SCIM identity management</a></li>
+</ul>
+<hr>
+<h2 id="api-reference">API reference<a class="jc-guide-heading-anchor" href="#api-reference" aria-label="Link to this section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Method</th>
+<th>Path</th>
+<th>API docs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>importusers</td>
+<td>GET</td>
+<td>/api/v2/applications/{applicationid}/import/users</td>
+<td><a href="../../reference/index.html#console/tag/SCIM-Import/operation/getApiV2ApplicationsByApplicationIdImportUsers">List users to import</a></td>
+</tr>
+<tr>
+<td>importcreate</td>
+<td>POST</td>
+<td>/api/v2/applications/{applicationid}/import/jobs</td>
+<td><a href="../../reference/index.html#console/tag/Applications/operation/postApiV2ApplicationsByApplicationIdImportJobs">Create an import job</a></td>
+</tr>
+<tr>
+<td>systemusersstateactivate</td>
+<td>POST</td>
+<td>/api/systemusers/{id}/state/activate</td>
+<td><a href="../../reference/index.html#console/tag/Systemusers/operation/postApiSystemusersByIdStateActivate">Activate system user (v1)</a></td>
+</tr>
+<tr>
+<td>workdaysworkers</td>
+<td>GET</td>
+<td>/api/v2/workdays/{workdayid}/workers</td>
+<td><a href="../../reference/index.html#console/tag/Workday-Import/operation/getApiV2WorkdaysByWorkdayIdWorkers">List Workday workers</a></td>
+</tr>
+<tr>
+<td>workdaysimport</td>
+<td>POST</td>
+<td>/api/v2/workdays/{workdayid}/import</td>
+<td><a href="../../reference/index.html#console/tag/Workday-Import/operation/postApiV2WorkdaysByWorkdayIdImport">Workday import</a></td>
+</tr>
+<tr>
+<td>workdaysimportresults</td>
+<td>GET</td>
+<td>/api/v2/workdays/{id}/import/{jobid}/results</td>
+<td><a href="../../reference/index.html#console/tag/Workday-Import/operation/getApiV2WorkdaysByIdImportByJobIdResults">List import results</a></td>
+</tr>
+<tr>
+<td>graphapplicationAssociationsPost</td>
+<td>POST</td>
+<td>/api/v2/applications/{applicationid}/associations</td>
+<td><a href="../../reference/index.html#console/tag/Applications/operation/postApiV2ApplicationsByApplicationIdAssociations">Manage application associations</a></td>
+</tr>
+<tr>
+<td>graphapplicationTraverseUser</td>
+<td>GET</td>
+<td>/api/v2/applications/{applicationid}/users</td>
+<td><a href="../../reference/index.html#console/tag/Applications/operation/getApiV2ApplicationsByApplicationIdUsers">List users bound to application</a></td>
+</tr>
+<tr>
+<td>bulkuserStatesCreate</td>
+<td>POST</td>
+<td>/api/v2/bulk/userstates</td>
+<td><a href="../../reference/index.html#console/tag/Bulk-Job-Requests/operation/postApiV2BulkUserstates">Create scheduled user state job</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="workflow-a-hris-jumpcloud-inbound-import">Workflow A: HRIS → JumpCloud (inbound import)<a class="jc-guide-heading-anchor" href="#workflow-a-hris-jumpcloud-inbound-import" aria-label="Link to this section">#</a></h2>
+<p>Import employees from an HRIS or custom REST identity source into JumpCloud system users.</p>
+<h3 id="workflow-at-a-glance">Workflow at a glance<a class="jc-guide-heading-anchor" href="#workflow-at-a-glance" aria-label="Link to this section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>API reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>List users available from HRIS (optional)</td>
+<td><a href="../../reference/index.html#console/tag/SCIM-Import/operation/getApiV2ApplicationsByApplicationIdImportUsers">List users to import (v2)</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Run import job</td>
+<td><a href="../../reference/index.html#console/tag/Applications/operation/postApiV2ApplicationsByApplicationIdImportJobs">Create an import job (v2)</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Activate staged users (if needed)</td>
+<td><a href="../../reference/index.html#console/tag/Systemusers/operation/postApiSystemusersByIdStateActivate">Activate system user (v1)</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Prebuilt Workday path:</strong> use <a href="../../reference/index.html#console/tag/Workday-Import/operation/getApiV2WorkdaysByWorkdayIdWorkers">List Workday workers</a> and <a href="../../reference/index.html#console/tag/Workday-Import/operation/postApiV2WorkdaysByWorkdayIdImport">Workday import</a> instead of Steps 1–2.</p>
+<hr>
+<h3 id="step-a1-list-users-from-hris-optional">Step A1: List users from HRIS (optional)<a class="jc-guide-heading-anchor" href="#step-a1-list-users-from-hris-optional" aria-label="Link to this section">#</a></h3>
+<h4 id="overview"><em>Overview</em></h4>
+<p>Fetch a paginated list of users from the connected HRIS before committing an import. Useful for selective import UIs or validating connectivity.</p>
+<h4 id="requirements"><em>Requirements</em></h4>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API key</td>
+<td>Yes — scope: applications</td>
+</tr>
+<tr>
+<td>Application ID</td>
+<td>Yes — active custom protocol integration configured in Admin Portal</td>
+</tr>
+</tbody>
+</table>
+<h4 id="endpoint"><em>Endpoint</em></h4>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/SCIM-Import/operation/getApiV2ApplicationsByApplicationIdImportUsers">Get a list of users to import from an Application IdM service provider</a></p>
+<pre><code class="language-bash">GET https://console.jumpcloud.com/api/v2/applications/{application_id}/import/users
+</code></pre>
+<h4 id="request"><em>Request</em></h4>
+<pre><code class="language-bash">curl -X GET 'https://console.jumpcloud.com/api/v2/applications/{Application_ID}/import/users?limit=100' \
+  -H 'Accept: application/json' \
+  -H 'x-api-key: {API_KEY}'
+</code></pre>
+<h4 id="successful-response"><em>Successful response</em></h4>
+<p><strong>HTTP 200</strong> — array of HRIS user records available for import.</p>
+<h4 id="next-steps"><em>Next steps</em></h4>
+<p>Run a full or filtered import job (Step A2).</p>
+<hr>
+<h3 id="step-a2-create-an-import-job">Step A2: Create an import job<a class="jc-guide-heading-anchor" href="#step-a2-create-an-import-job" aria-label="Link to this section">#</a></h3>
+<h4 id="overview_1"><em>Overview</em></h4>
+<p>Asynchronously import new users and/or update existing JumpCloud system users from the HRIS. Imported users receive creation-source: jumpcloud:scim (or connector-specific source). User state is determined by IDM translation rules configured in Admin Portal or by organization defaults.</p>
+<h4 id="requirements_1"><em>Requirements</em></h4>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API key</td>
+<td>Yes</td>
+<td>Scope: applications</td>
+</tr>
+<tr>
+<td>Application ID</td>
+<td>Yes</td>
+<td>Active custom protocol integration</td>
+</tr>
+<tr>
+<td>operations</td>
+<td>Yes</td>
+<td>For example "users.create", "users.update"</td>
+</tr>
+<tr>
+<td>allowUserReactivation</td>
+<td>Optional</td>
+<td>Allow suspended users to be reactivated on update</td>
+</tr>
+<tr>
+<td>queryString</td>
+<td>Optional</td>
+<td>Filter passed to HRIS API (connector-specific)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="endpoint_1"><em>Endpoint</em></h4>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/Applications/operation/postApiV2ApplicationsByApplicationIdImportJobs">Create an import job</a></p>
+<pre><code class="language-bash">POST https://console.jumpcloud.com/api/v2/applications/{application_id}/import/jobs
+</code></pre>
+<h4 id="request_1"><em>Request</em></h4>
+<pre><code class="language-bash">curl -X POST https://console.jumpcloud.com/api/v2/applications/{Application_ID}/import/jobs \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -d '{
+    &quot;allowUserReactivation&quot;: true,
+    &quot;operations&quot;: [
+      &quot;users.create&quot;,
+      &quot;users.update&quot;
+    ],
+    &quot;queryString&quot;: &quot;department=Engineering&quot;
+  }'
+</code></pre>
+<h4 id="successful-response_1"><em>Successful response</em></h4>
+<p><strong>HTTP 200</strong></p>
+<pre><code class="language-json">{
+  &quot;_id&quot;: &quot;5be9fb4ddb01290001e85121&quot;
+}
+</code></pre>
+<p>The id is the import job ID.</p>
+<h4 id="next-steps_1"><em>Next steps</em></h4>
+<ul>
+<li>Monitor import results in Directory Insights events or Admin Portal</li>
+<li>Bind imported users to outbound SCIM apps: <a href="#workflow-b-jumpcloud-saas-outbound-scim">Workflow B</a> below</li>
+</ul>
+<hr>
+<h3 id="step-a3-activate-staged-users-if-needed">Step A3: Activate staged users (if needed)<a class="jc-guide-heading-anchor" href="#step-a3-activate-staged-users-if-needed" aria-label="Link to this section">#</a></h3>
+<p>If imported users are in STAGED state, activate them before they can access resources or be provisioned to outbound SCIM applications.</p>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/Systemusers/operation/postApiSystemusersByIdStateActivate">systemusersstateactivate</a></p>
+<pre><code class="language-bash">POST https://console.jumpcloud.com/api/systemusers/{id}/state/activate
+</code></pre>
+<p>Schedule a future activation date with <a href="../../reference/index.html#console/tag/Bulk-Job-Requests/operation/postApiV2BulkUserstates">Create scheduled user state job</a> when HRIS provides a future hire date.</p>
+<hr>
+<h3 id="workday-variant-prebuilt-hris">Workday variant (prebuilt HRIS)<a class="jc-guide-heading-anchor" href="#workday-variant-prebuilt-hris" aria-label="Link to this section">#</a></h3>
+<p>Workday uses dedicated endpoints instead of the generic application import job.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>API reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>List workers from Workday report</td>
+<td><a href="../../reference/index.html#console/tag/Workday-Import/operation/getApiV2WorkdaysByWorkdayIdWorkers">List Workday workers</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Import selected workers</td>
+<td><a href="../../reference/index.html#console/tag/Workday-Import/operation/postApiV2WorkdaysByWorkdayIdImport">Workday import</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Poll import results</td>
+<td><a href="../../reference/index.html#console/tag/Workday-Import/operation/getApiV2WorkdaysByIdImportByJobIdResults">List import results</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="import-request"><em>Import request</em></h4>
+<pre><code class="language-bash">curl -X POST https://console.jumpcloud.com/api/v2/workdays/{Workday_ID}/import \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -d '[
+    {
+      &quot;email&quot;: &quot;jsmith@example.com&quot;,
+      &quot;firstname&quot;: &quot;Jane&quot;,
+      &quot;lastname&quot;: &quot;Smith&quot;,
+      &quot;username&quot;: &quot;jsmith&quot;,
+      &quot;state&quot;: &quot;STAGED&quot;,
+      &quot;attributes&quot;: [
+        { &quot;name&quot;: &quot;EmployeeID&quot;, &quot;value&quot;: &quot;1042&quot; }
+      ]
+    }
+  ]'
+</code></pre>
+<h4 id="successful-response_2"><em>Successful response</em></h4>
+<p><strong>HTTP 201</strong> — job ID object (same shape as bulk create).</p>
+<hr>
+<h2 id="workflow-b-jumpcloud-saas-outbound-scim">Workflow B: JumpCloud → SaaS (outbound SCIM)<a class="jc-guide-heading-anchor" href="#workflow-b-jumpcloud-saas-outbound-scim" aria-label="Link to this section">#</a></h2>
+<p>Provision JumpCloud users to a SaaS application’s SCIM endpoint (Slack, GitHub, 1Password, etc.) when users are bound to the application and in <strong>ACTIVATED</strong> state.</p>
+<p>Enable SCIM provisioning on the target application in <strong>Admin Portal → Applications → User Provisioning</strong> before running the API steps below. If the application does not exist yet, see <a href="../sso-integrations/index.html">SSO application setup</a>.</p>
+<h3 id="workflow-at-a-glance_1">Workflow at a glance<a class="jc-guide-heading-anchor" href="#workflow-at-a-glance_1" aria-label="Link to this section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>API reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Bind users or groups to app</td>
+<td><a href="../../reference/index.html#console/tag/Applications/operation/postApiV2ApplicationsByApplicationIdAssociations">Manage application associations (v2)</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Confirm bound users</td>
+<td><a href="../../reference/index.html#console/tag/Applications/operation/getApiV2ApplicationsByApplicationIdUsers">List users bound to application (v2)</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="step-b1-bind-users-or-groups-for-provisioning">Step B1: Bind users or groups for provisioning<a class="jc-guide-heading-anchor" href="#step-b1-bind-users-or-groups-for-provisioning" aria-label="Link to this section">#</a></h3>
+<h4 id="overview_2"><em>Overview</em></h4>
+<p>Only <strong>bound</strong> users are candidates for outbound SCIM. Group binding is recommended; members inherit access. Users must be <strong>ACTIVATED</strong> — STAGED users remain bound in JumpCloud but are skipped for SCIM export.</p>
+<h4 id="requirements_2"><em>Requirements</em></h4>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API key</td>
+<td>Yes — scopes: associations.applications, associations</td>
+</tr>
+<tr>
+<td>Application ID</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>User Group ID or User ID</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h4 id="endpoint_2"><em>Endpoint</em></h4>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/Applications/operation/postApiV2ApplicationsByApplicationIdAssociations">Manage the associations of an Application</a></p>
+<pre><code class="language-bash">POST https://console.jumpcloud.com/api/v2/applications/{application_id}/associations
+</code></pre>
+<h4 id="request-group-binding-recommended"><em>Request (group binding — recommended)</em></h4>
+<pre><code class="language-bash">curl -X POST https://console.jumpcloud.com/api/v2/applications/{Application_ID}/associations \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -d '{
+    &quot;op&quot;: &quot;add&quot;,
+    &quot;type&quot;: &quot;user_group&quot;,
+    &quot;id&quot;: &quot;{Group_ID}&quot;
+  }'
+</code></pre>
+<h4 id="request-individual-user"><em>Request (individual user)</em></h4>
+<pre><code class="language-json">{ &quot;op&quot;: &quot;add&quot;, &quot;type&quot;: &quot;user&quot;, &quot;id&quot;: &quot;{User_ID}&quot; }
+</code></pre>
+<h4 id="successful-response_3"><em>Successful response</em></h4>
+<p><strong>HTTP 204</strong> — no response body.</p>
+<p>Provisioning to the SaaS SCIM endpoint runs asynchronously after binding. ACTIVATED users are created/updated at the service provider; deprovisioning occurs when bindings are removed or the user is suspended/deleted.</p>
+<h4 id="next-steps_2"><em>Next steps</em></h4>
+<p>Confirm effective bindings with Step B2. To change or disable provisioning, use Admin Portal → Applications → User Provisioning.</p>
+<hr>
+<h3 id="step-b2-confirm-bound-users">Step B2: Confirm bound users<a class="jc-guide-heading-anchor" href="#step-b2-confirm-bound-users" aria-label="Link to this section">#</a></h3>
+<h4 id="overview_3"><em>Overview</em></h4>
+<p>List users currently bound to the application to verify provisioning scope.</p>
+<h4 id="endpoint_3"><em>Endpoint</em></h4>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/Applications/operation/getApiV2ApplicationsByApplicationIdUsers">List the Users bound to an Application</a></p>
+<pre><code class="language-bash">GET https://console.jumpcloud.com/api/v2/applications/{applicationid}/users
+</code></pre>
+<h4 id="request_2"><em>Request</em></h4>
+<pre><code class="language-bash">curl -X GET 'https://console.jumpcloud.com/api/v2/applications/{Application_ID}/users?limit=100' \
+  -H 'Accept: application/json' \
+  -H 'x-api-key: {API_KEY}'
+</code></pre>
+<h4 id="successful-response_4"><em>Successful response</em></h4>
+<p><strong>HTTP 200</strong> — array of bound user objects.</p>
+<hr>
+<h2 id="end-to-end-hris-hire-saas-access">End-to-end: HRIS hire → SaaS access<a class="jc-guide-heading-anchor" href="#end-to-end-hris-hire-saas-access" aria-label="Link to this section">#</a></h2>
+<p>HRIS record (Pre-Hire)<br>
+    → Admin Portal: configure connector  translation rules<br>
+    → Import job (Workflow A) → JumpCloud user (STAGED)<br>
+    → Assign groups<br>
+    → Activate user<br>
+    → Admin Portal: enable SCIM on target SaaS app<br>
+    → Bind users/groups (Workflow B) → SCIM provision to SaaS</p>
+<hr>
+<h2 id="related-reading">Related reading<a class="jc-guide-heading-anchor" href="#related-reading" aria-label="Link to this section">#</a></h2>
+<ul>
+<li><a href="../../index.html">JumpCloud API documentation</a></li>
+<li><a href="https://support.jumpcloud.com/support/s/article/Import-users-from-a-custom-rest-API-integration">Import users from a custom REST API integration</a></li>
+<li><a href="https://support.jumpcloud.com/support/s/article/Custom-SCIM-Identity-Management">Custom SCIM identity management</a></li>
+</ul>
+          </article>
+        </div>
+      </div>
+
+      <aside class="jc-guide-toc" aria-label="On this page">
+        <div class="jc-guide-toc-inner">
+          <h2 class="jc-guide-toc-heading">In this article</h2>
+          
+          <nav>
+            <ul class="jc-guide-toc-list">
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#prerequisites-admin-portal"
+                >Prerequisites (Admin Portal)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#api-reference"
+                >API reference</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#workflow-a-hris-jumpcloud-inbound-import"
+                >Workflow A: HRIS → JumpCloud (inbound import)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#workflow-at-a-glance"
+                >Workflow at a glance</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#step-a1-list-users-from-hris-optional"
+                >Step A1: List users from HRIS (optional)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#step-a2-create-an-import-job"
+                >Step A2: Create an import job</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#step-a3-activate-staged-users-if-needed"
+                >Step A3: Activate staged users (if needed)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#workday-variant-prebuilt-hris"
+                >Workday variant (prebuilt HRIS)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#workflow-b-jumpcloud-saas-outbound-scim"
+                >Workflow B: JumpCloud → SaaS (outbound SCIM)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#workflow-at-a-glance_1"
+                >Workflow at a glance</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#step-b1-bind-users-or-groups-for-provisioning"
+                >Step B1: Bind users or groups for provisioning</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#step-b2-confirm-bound-users"
+                >Step B2: Confirm bound users</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#end-to-end-hris-hire-saas-access"
+                >End-to-end: HRIS hire → SaaS access</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#related-reading"
+                >Related reading</a>
+              </li>
+              
+            </ul>
+          </nav>
+          
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="jc-landing-footer jc-circuit-landing-footer jc-docs-chrome-light">
+  <nav class="jc-circuit-footer-nav" aria-label="Footer">
+    <a href="https://jumpcloud.com" target="_blank" rel="noopener noreferrer">
+      Go to JumpCloud.com
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <a href="https://jumpcloud.com/support/contact-jumpcloud-support" target="_blank" rel="noopener noreferrer">
+      JumpCloud Support
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <span class="jc-circuit-footer-copy">Copyright © 2026 JumpCloud.</span>
+  </nav>
+</footer>
+
+    <script>
+    (function () {
+      function syncDocsChromeOffset() {
+        var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+        if (!nav) {
+          return;
+        }
+        document.documentElement.style.setProperty(
+          "--jc-docs-chrome-offset",
+          nav.offsetHeight + "px"
+        );
+        var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+        if (footer) {
+          document.documentElement.style.setProperty(
+            "--jc-scalar-footer-height",
+            footer.offsetHeight + "px"
+          );
+        }
+        if (window.JumpCloudDocs && typeof JumpCloudDocs.syncScalarViewportHeight === "function") {
+          JumpCloudDocs.syncScalarViewportHeight();
+        }
+      }
+
+      function init() {
+        syncDocsChromeOffset();
+        if (typeof ResizeObserver !== "undefined") {
+          var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+          if (nav) {
+            new ResizeObserver(syncDocsChromeOffset).observe(nav);
+          }
+          var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+          if (footer) {
+            new ResizeObserver(syncDocsChromeOffset).observe(footer);
+          }
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+      window.addEventListener("resize", syncDocsChromeOffset);
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof hljs !== "undefined") {
+        hljs.highlightAll();
+      }
+    });
+  </script>
+</body>
+
+</html>

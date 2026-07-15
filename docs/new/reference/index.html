@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JumpCloud API Reference</title>
+  <meta http-equiv="strict-transport-security" content="max-age=31536000">
+  <meta http-equiv="x-content-type-options" content="nosniff">
+  <meta http-equiv="referrer-policy" content="strict-origin-when-cross-origin">
+  <link rel="shortcut icon" type="image/png" href="/images/API Docs Favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.57.5/dist/style.css"
+    integrity="sha384-Va788c5uqbNp8QGBHPx0gzDoF8TU0VhoTZ7ChD+Ja1CjhkKVoqjwalgbaoA0YDnw" crossorigin="anonymous">
+  <link rel="stylesheet" href="../jc_docs_chrome.css?v=1784124910">
+  
+<!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
+<script>
+  (function (h, o, u, d) {
+    var agent = (h[d] = h[d] || {
+      q: [],
+      onReady: function (callback) {
+        agent.q.push(callback);
+      },
+    });
+    var script = o.createElement(u);
+    script.async = 1;
+    script.src = "https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js";
+    var first = o.getElementsByTagName(u)[0];
+    if (first && first.parentNode) {
+      first.parentNode.insertBefore(script, first);
+    } else {
+      o.head.appendChild(script);
+    }
+  })(window, document, "script", "DD_RUM");
+  window.DD_RUM.onReady(function () {
+    window.DD_RUM.init({
+      clientToken: "pub4df04d743394daeb846048dc7d655830",
+      applicationId: "2d2cb82d-0d76-4ed9-b4bc-02999f2a342c",
+      site: "datadoghq.com",
+      service: "jumpcloud-docs",
+      env: "production",
+      sessionSampleRate: 100,
+      trackResources: true,
+      trackLongTasks: true,
+      trackUserInteractions: true,
+      defaultPrivacyLevel: "mask-user-input",
+    });
+  });
+</script>
+
+</head>
+
+<body class="jc-docs-landing jc-circuit-landing jc-scalar-docs-body">
+  <a href="#jc-scalar-root" class="jc-skip-link">Skip to API reference</a>
+
+  <nav class="sticky-top" aria-label="Site">
+        
+    
+        <header class="jc-docs-top-bar jc-docs-chrome-light" aria-label="API Docs">
+      <div class="jc-docs-top-bar-inner">
+        <div class="jc-docs-top-bar-brand-group">
+          <a class="jc-docs-top-bar-brand" href="../index.html">
+            <img src="../jumpcloud-brand-logo.svg" alt="JumpCloud" width="108" height="18" class="jc-docs-top-bar-logo" />
+          </a>
+          <span class="jc-docs-top-bar-divider" aria-hidden="true"></span>
+          <span class="jc-docs-top-bar-label">API Docs</span>
+        </div>
+        
+        <div class="jc-docs-top-bar-controls">
+          <div id="jcRegionWrap" class="jc-region-wrap is-hidden">
+            <span class="jc-region-label">Data Center</span>
+            <button type="button" id="jcRegionButton" class="jc-region-button" aria-haspopup="true"
+              aria-expanded="false">
+              <span id="jcRegionLabel">—</span>
+            </button>
+            <div id="jcRegionMenu" class="jc-region-menu" role="menu"></div>
+          </div>
+        </div>
+        
+      </div>
+    </header>
+    
+  </nav>
+  <div class="jc-scalar-scroll-host">
+    <div id="jc-scalar-root" tabindex="-1"></div>
+  </div>
+
+  <footer class="jc-landing-footer jc-circuit-landing-footer jc-docs-chrome-light">
+  <nav class="jc-circuit-footer-nav" aria-label="Footer">
+    <a href="https://jumpcloud.com" target="_blank" rel="noopener noreferrer">
+      Go to JumpCloud.com
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <a href="https://jumpcloud.com/support/contact-jumpcloud-support" target="_blank" rel="noopener noreferrer">
+      JumpCloud Support
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <span class="jc-circuit-footer-copy">Copyright © 2026 JumpCloud.</span>
+  </nav>
+</footer>
+
+    <script>
+    (function () {
+      function syncDocsChromeOffset() {
+        var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+        if (!nav) {
+          return;
+        }
+        document.documentElement.style.setProperty(
+          "--jc-docs-chrome-offset",
+          nav.offsetHeight + "px"
+        );
+        var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+        if (footer) {
+          document.documentElement.style.setProperty(
+            "--jc-scalar-footer-height",
+            footer.offsetHeight + "px"
+          );
+        }
+        if (window.JumpCloudDocs && typeof JumpCloudDocs.syncScalarViewportHeight === "function") {
+          JumpCloudDocs.syncScalarViewportHeight();
+        }
+      }
+
+      function init() {
+        syncDocsChromeOffset();
+        if (typeof ResizeObserver !== "undefined") {
+          var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+          if (nav) {
+            new ResizeObserver(syncDocsChromeOffset).observe(nav);
+          }
+          var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+          if (footer) {
+            new ResizeObserver(syncDocsChromeOffset).observe(footer);
+          }
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+      window.addEventListener("resize", syncDocsChromeOffset);
+    })();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.2.0/dist/js-yaml.min.js"
+    integrity="sha384-hyhT0yrWXjngXhDa5wpJTU0pt/Djmlx4KtZECqqS6ZHf3ah4fWkFeW/2eWX9cX5J"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.57.5/dist/browser/standalone.js"
+    integrity="sha384-t5h38o34qqR7GUJVk2SXZl4p7wXfwNuV04PZALl5ae4ih2PEwQtGRPLiAax9r7V8"
+    crossorigin="anonymous"></script>
+  <script src="../js/jc-spec-parse.js"></script>
+  <script src="../js/jc-scalar-spec-prepare.js"></script>
+  <script src="../js/jc-landing.js"></script>
+    <script>
+    window.__JC_SCALAR_CREATE_OPTS = {
+      hideClientButton: true,
+      showDeveloperTools: 'never',
+      telemetry: false,
+      hideModels: true,
+      hideTestRequestButton: true,
+      agent: { disabled: true },
+      mcp: { disabled: true },
+      hiddenClients: {
+        c: ['libcurl'],
+        clojure: ['clj_http'],
+        csharp: ['httpclient', 'restsharp'],
+        dart: ['http'],
+        fsharp: ['httpclient'],
+        kotlin: ['okhttp'],
+        node: ['ofetch', 'undici'],
+        objc: ['nsurlsession'],
+        ocaml: ['cohttp'],
+        php: ['curl', 'guzzle', 'laravel'],
+        python: ['aiohttp', 'httpx_async', 'httpx_sync'],
+        r: ['httr2'],
+        rust: ['reqwest'],
+        swift: ['nsurlsession'],
+      },
+      generateTagSlug: (tag) => String(tag?.name ?? tag ?? '').replace(/\s+/g, '-'),
+      // Scalar defaults use {docSlug}/description/{heading-slug}, matching build_landing_heading_href().
+      generateOperationSlug: (operation) => {
+        if (operation.operationId) {
+          return `operation/${operation.operationId}`
+        }
+        return `${operation.method.toLowerCase()}${operation.path.replace(/\//g, '-')}`
+      },
+      theme: 'kepler',
+      layout: 'modern',
+      customCss: `
+        :root {
+          --scalar-background-1: #202d38;
+          --scalar-background-2: #1a252e;
+          --scalar-background-3: #253340;
+          --scalar-color-1: #e3e8e9;
+          --scalar-color-2: #b8c4c9;
+          --scalar-color-accent: #4373c7;
+          --scalar-border-color: #454c52;
+          --scalar-sidebar-background-1: #202d38;
+          --scalar-sidebar-item-hover-color: #4373c7;
+          --scalar-sidebar-item-hover-background: rgba(67, 115, 199, 0.12);
+        }
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path:first-child {
+          font-family: var(--scalar-font-code);
+          font-size: var(--scalar-heading-2);
+          font-weight: var(--scalar-bold);
+          margin-top: 0.25rem;
+          margin-bottom: 1rem;
+          line-height: 1.4;
+          padding: 0;
+        }
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-path {
+          color: var(--scalar-color-2);
+          font-weight: var(--scalar-regular);
+        }
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-get {
+          color: var(--scalar-color-blue);
+        }
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-post {
+          color: var(--scalar-color-green);
+        }
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-put {
+          color: var(--scalar-color-orange);
+        }
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-patch {
+          color: var(--scalar-color-yellow);
+        }
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-delete {
+          color: var(--scalar-color-red);
+        }
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-options {
+          color: var(--scalar-color-purple);
+        }
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-head,
+        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-trace {
+          color: var(--scalar-color-2);
+        }
+        /*
+         * Sidebar footer: hide Scalar branding and support link; page footer has support.
+         */
+        .darklight-reference a[href="https://www.scalar.com"],
+        .darklight-reference a.jc-scalar-support-link {
+          display: none !important;
+        }
+        /*
+         * Hide Scalar's info.contact chip in the intro; support lives in the sidebar footer.
+         */
+        .introduction-section .custom-scroll > .group:has(a[href^="mailto:"]),
+        .introduction-section .custom-scroll > .group:has(> span.rounded-lg.border) {
+          display: none !important;
+        }
+        .response-card .scalar-code-block pre {
+          white-space: pre !important;
+          text-wrap: wrap;
+        }
+        /*
+         * Keep JumpCloud header/footer light when Scalar dark mode is toggled.
+         */
+        body.jc-scalar-docs-body .jc-docs-chrome-light,
+        body.jc-scalar-docs-body .jc-docs-chrome-light * {
+          color-scheme: only light;
+        }
+        body.jc-scalar-docs-body .jc-docs-chrome-light.jc-docs-top-bar {
+          background: #f8f8f9 !important;
+          border-bottom-color: #e7e9ea !important;
+        }
+        body.jc-scalar-docs-body .jc-docs-chrome-light.jc-circuit-landing-footer {
+          background: #ffffff !important;
+          border-top-color: #e7e9ea !important;
+          color: rgba(15, 32, 47, 0.74) !important;
+        }
+        body.jc-scalar-docs-body .jc-docs-chrome-light.jc-circuit-landing-footer a {
+          color: #186aaa !important;
+        }
+        body.jc-scalar-docs-body .jc-docs-chrome-light .jc-circuit-footer-copy,
+        body.jc-scalar-docs-body .jc-docs-chrome-light .jc-circuit-footer-separator {
+          color: rgba(15, 32, 47, 0.74) !important;
+        }
+        body.jc-scalar-docs-body .jc-docs-chrome-light .jc-circuit-footer-separator {
+          color: #8a96a3 !important;
+        }
+        
+        /*
+         * Multi-region: navbar region switcher is authoritative; intro Server card is read-only.
+         */
+        .scalar-reference-intro-server .group button,
+        .scalar-reference-intro-server button {
+          pointer-events: none !important;
+          cursor: default !important;
+        }
+        .scalar-reference-intro-server button svg {
+          display: none !important;
+        }
+        .scalar-reference-intro-server .group button:focus,
+        .scalar-reference-intro-server .group button:focus-visible,
+        .scalar-reference-intro-server button:focus,
+        .scalar-reference-intro-server button:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
+        }
+        
+      `,
+    };
+  </script>
+  <script>
+    window.LANDING_SOURCES = [{"slug": "api-insights-directory", "title": "Directory Insights API", "url": "../api/insights/directory/index.yaml"}, {"slug": "console", "title": "JumpCloud Console API", "url": "../console/index.yaml"}];
+    window.LANDING_SOURCES_META = [{"region_switcher": {"default_label": "United States (US)", "default_region": "us", "regions": [{"host": "api.jumpcloud.com", "key": "us", "label": "United States (US)"}, {"host": "api.eu.jumpcloud.com", "key": "eu", "label": "European Union (EU)"}, {"host": "api.in.jumpcloud.com", "key": "in", "label": "India (IN)"}]}, "slug": "api-insights-directory"}, {"region_switcher": {"default_label": "United States (US)", "default_region": "us", "regions": [{"host": "console.jumpcloud.com", "key": "us", "label": "United States (US)"}, {"host": "console.eu.jumpcloud.com", "key": "eu", "label": "European Union (EU)"}, {"host": "console.in.jumpcloud.com", "key": "in", "label": "India (IN)"}]}, "slug": "console"}];
+    JumpCloudDocs.initLanding();
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        if (window.JumpCloudDocs && typeof JumpCloudDocs.syncScalarViewportHeight === "function") {
+          JumpCloudDocs.syncScalarViewportHeight();
+        }
+        if (window.JumpCloudDocs && typeof JumpCloudDocs.scheduleScalarViewportSync === "function") {
+          JumpCloudDocs.scheduleScalarViewportSync();
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

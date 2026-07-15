@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Use Case: Build SSO Integrations | JumpCloud API Docs</title>
+  <meta http-equiv="strict-transport-security" content="max-age=31536000">
+  <meta http-equiv="x-content-type-options" content="nosniff">
+  <meta http-equiv="referrer-policy" content="strict-origin-when-cross-origin">
+  
+  <link rel="shortcut icon" type="image/png" href="/images/API Docs Favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/atom-one-dark.min.css">
+  <link rel="stylesheet" href="../../jc_docs_chrome.css?v=1784124910">
+  
+<!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
+<script>
+  (function (h, o, u, d) {
+    var agent = (h[d] = h[d] || {
+      q: [],
+      onReady: function (callback) {
+        agent.q.push(callback);
+      },
+    });
+    var script = o.createElement(u);
+    script.async = 1;
+    script.src = "https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js";
+    var first = o.getElementsByTagName(u)[0];
+    if (first && first.parentNode) {
+      first.parentNode.insertBefore(script, first);
+    } else {
+      o.head.appendChild(script);
+    }
+  })(window, document, "script", "DD_RUM");
+  window.DD_RUM.onReady(function () {
+    window.DD_RUM.init({
+      clientToken: "pub4df04d743394daeb846048dc7d655830",
+      applicationId: "2d2cb82d-0d76-4ed9-b4bc-02999f2a342c",
+      site: "datadoghq.com",
+      service: "jumpcloud-docs",
+      env: "production",
+      sessionSampleRate: 100,
+      trackResources: true,
+      trackLongTasks: true,
+      trackUserInteractions: true,
+      defaultPrivacyLevel: "mask-user-input",
+    });
+  });
+</script>
+
+</head>
+
+<body class="jc-docs-landing jc-circuit-landing jc-guide-page">
+  <a href="#main-content" class="jc-skip-link">Skip to main content</a>
+
+  <nav class="sticky-top" aria-label="Site">
+    
+        <header class="jc-docs-top-bar jc-docs-chrome-light" aria-label="API Docs">
+      <div class="jc-docs-top-bar-inner">
+        <div class="jc-docs-top-bar-brand-group">
+          <a class="jc-docs-top-bar-brand" href="../../index.html">
+            <img src="../../jumpcloud-brand-logo.svg" alt="JumpCloud" width="108" height="18" class="jc-docs-top-bar-logo" />
+          </a>
+          <span class="jc-docs-top-bar-divider" aria-hidden="true"></span>
+          <span class="jc-docs-top-bar-label">API Docs</span>
+        </div>
+        
+      </div>
+    </header>
+    
+  </nav>
+
+  <main id="main-content" class="jc-circuit-main jc-guide-main" tabindex="-1">
+    <div class="jc-guide-shell">
+      
+      <aside class="jc-guide-sidebar" aria-label="Guides">
+        <div class="jc-guide-sidebar-inner">
+          <h2 class="jc-guide-sidebar-heading">Guides</h2>
+          <ul class="jc-guide-sidebar-list">
+            
+            <li>
+              
+              <span class="jc-guide-sidebar-link jc-guide-sidebar-link--active" aria-current="page">Build SSO integrations</span>
+              
+            </li>
+            
+            <li>
+              
+              <a class="jc-guide-sidebar-link" href="../user-provisioning-with-scim-and-hris/index.html">User onboarding</a>
+              
+            </li>
+            
+          </ul>
+        </div>
+      </aside>
+      
+
+      <div class="jc-guide-center">
+        <div class="jc-guide-center-inner">
+          <nav class="jc-guide-breadcrumb" aria-label="Breadcrumb">
+            <a href="../../index.html">API Docs</a>
+            
+            <span aria-hidden="true">›</span>
+            <span class="jc-guide-breadcrumb-muted">Guides</span>
+            
+            <span aria-hidden="true">›</span>
+            <span class="jc-guide-breadcrumb-current" aria-current="page">Use Case: Build SSO Integrations</span>
+          </nav>
+
+          <header class="jc-guide-header">
+            <h1 class="jc-guide-title">Use Case: Build SSO Integrations</h1>
+            
+          </header>
+
+          <article class="jc-guide-prose">
+            <p>Create and configure SAML or OIDC applications, then grant access to users and user groups.</p>
+<hr>
+<h2 id="step-1-discover-application-templates-saml">Step 1: Discover application templates (SAML)<a class="jc-guide-heading-anchor" href="#step-1-discover-application-templates-saml" aria-label="Link to this section">#</a></h2>
+<h3 id="overview">Overview<a class="jc-guide-heading-anchor" href="#overview" aria-label="Link to this section">#</a></h3>
+<p>JumpCloud provides pre-built SAML templates (Slack, AWS, Salesforce, and others). Fetch available templates to obtain the name value and required config fields before creating an application.</p>
+<h3 id="requirements">Requirements<a class="jc-guide-heading-anchor" href="#requirements" aria-label="Link to this section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API key <code>x-api-key</code></td>
+<td>Yes</td>
+<td>Scopes: <code>applicationtemplates</code>, <code>applicationtemplates.readonly</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="endpoint">Endpoint<a class="jc-guide-heading-anchor" href="#endpoint" aria-label="Link to this section">#</a></h3>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/Application-Templates/operation/getApiApplicationTemplates">List Application Templates</a></p>
+<pre><code class="language-bash">GET https://console.jumpcloud.com/api/application-templates
+</code></pre>
+<p>To inspect a single template:</p>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/Application-Templates/operation/getApiApplicationTemplatesById">Get an Application Template</a></p>
+<pre><code class="language-bash">GET https://console.jumpcloud.com/api/application-templates/{id}
+</code></pre>
+<h3 id="request">Request<a class="jc-guide-heading-anchor" href="#request" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-bash">curl -X GET https://console.jumpcloud.com/api/application-templates \
+  -H 'Accept: application/json' \
+  -H 'x-api-key: {API_KEY}'
+</code></pre>
+<h3 id="successful-response">Successful response<a class="jc-guide-heading-anchor" href="#successful-response" aria-label="Link to this section">#</a></h3>
+<p><strong>HTTP 200</strong> — paginated list of templates. Each record includes <code>name</code>, <code>displayName</code>, and default <code>config</code> field definitions for the service provider.</p>
+<p>Example (abbreviated):</p>
+<pre><code class="language-json">{
+  &quot;results&quot;: [
+    {
+      &quot;_id&quot;: &quot;5be9fb4ddb01290001e85120&quot;,
+      &quot;name&quot;: &quot;slack&quot;,
+      &quot;displayName&quot;: &quot;Slack&quot;,
+      &quot;config&quot;: { }
+    }
+  ],
+  &quot;totalCount&quot;: 1
+}
+</code></pre>
+<hr>
+<h2 id="step-2-create-a-saml-application-v1">Step 2: Create a SAML application (v1)<a class="jc-guide-heading-anchor" href="#step-2-create-a-saml-application-v1" aria-label="Link to this section">#</a></h2>
+<h3 id="overview_1">Overview<a class="jc-guide-heading-anchor" href="#overview_1" aria-label="Link to this section">#</a></h3>
+<p>Create an SSO/SAML application in a single request. The v1 Applications API is the public, documented path for SAML configuration. Required SP settings are passed in the <code>config</code> object; field shapes vary by template.</p>
+<h3 id="requirements_1">Requirements<a class="jc-guide-heading-anchor" href="#requirements_1" aria-label="Link to this section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API key <code>x-api-key</code></td>
+<td>Yes</td>
+<td>Scopes: <code>applications</code>, <code>applications.create</code></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Yes</td>
+<td>Template name from Step 1 (for example <code>slack</code>)</td>
+</tr>
+<tr>
+<td><code>displayLabel</code></td>
+<td>Yes</td>
+<td>Label shown in the admin console</td>
+</tr>
+<tr>
+<td><code>displayName</code></td>
+<td>Yes</td>
+<td>Name shown in the user portal</td>
+</tr>
+<tr>
+<td><code>ssoUrl</code></td>
+<td>Yes</td>
+<td>Unique SSO URL slug for the application</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>Yes (SAML)</td>
+<td>SP settings such as <code>acsUrl</code>, <code>spEntityId</code>, signing options</td>
+</tr>
+</tbody>
+</table>
+<h3 id="endpoint_1">Endpoint<a class="jc-guide-heading-anchor" href="#endpoint_1" aria-label="Link to this section">#</a></h3>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/Applications/operation/postApiApplications">Create an Application</a></p>
+<pre><code class="language-bash">POST https://console.jumpcloud.com/api/applications
+</code></pre>
+<h3 id="request_1">Request<a class="jc-guide-heading-anchor" href="#request_1" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-bash">curl -X POST https://console.jumpcloud.com/api/applications \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -d '{
+    &quot;name&quot;: &quot;slack&quot;,
+    &quot;displayName&quot;: &quot;Slack&quot;,
+    &quot;displayLabel&quot;: &quot;Slack SSO&quot;,
+    &quot;ssoUrl&quot;: &quot;slack-engineering&quot;,
+    &quot;config&quot;: {
+      &quot;acsUrl&quot;: { &quot;value&quot;: &quot;https://example.slack.com/sso/saml&quot; },
+      &quot;spEntityId&quot;: { &quot;value&quot;: &quot;https://example.slack.com&quot; },
+      &quot;signResponse&quot;: { &quot;value&quot;: true }
+    }
+  }'
+</code></pre>
+<h3 id="successful-response_1">Successful response<a class="jc-guide-heading-anchor" href="#successful-response_1" aria-label="Link to this section">#</a></h3>
+<h4 id="http-200"><strong>HTTP 200</strong></h4>
+<pre><code class="language-json">{
+  &quot;_id&quot;: &quot;5be9fb4ddb01290001e85110&quot;,
+  &quot;name&quot;: &quot;slack&quot;,
+  &quot;displayName&quot;: &quot;Slack&quot;,
+  &quot;displayLabel&quot;: &quot;Slack SSO&quot;,
+  &quot;ssoUrl&quot;: &quot;slack-engineering&quot;,
+  &quot;active&quot;: true
+}
+</code></pre>
+<p>Save <code>_id</code> for Step 3.</p>
+<hr>
+<h2 id="step-3-control-user-and-group-access">Step 3: Control user and group access<a class="jc-guide-heading-anchor" href="#step-3-control-user-and-group-access" aria-label="Link to this section">#</a></h2>
+<h3 id="overview_2">Overview<a class="jc-guide-heading-anchor" href="#overview_2" aria-label="Link to this section">#</a></h3>
+<p>Associate user groups or individual users with the application. Only bound users and members of bound groups see the app in the user portal and can initiate SSO.</p>
+<p>Supported association targets: <code>user_group</code>, <code>user</code>.</p>
+<h3 id="requirements_2">Requirements<a class="jc-guide-heading-anchor" href="#requirements_2" aria-label="Link to this section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API key <code>x-api-key</code></td>
+<td>Yes</td>
+<td>Scopes: <code>associations.applications</code>, <code>associations</code></td>
+</tr>
+<tr>
+<td>Application ID</td>
+<td>Yes</td>
+<td><code>_id</code> from Step 2</td>
+</tr>
+<tr>
+<td>Target ID</td>
+<td>Yes</td>
+<td>User Group ID or User ID</td>
+</tr>
+<tr>
+<td><code>op</code></td>
+<td>Yes</td>
+<td><code>"add"</code> to grant access; <code>"remove"</code> to revoke</td>
+</tr>
+</tbody>
+</table>
+<h3 id="endpoint_2">Endpoint<a class="jc-guide-heading-anchor" href="#endpoint_2" aria-label="Link to this section">#</a></h3>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/Applications/operation/postApiV2ApplicationsByApplicationIdAssociations">Manage the associations of an Application</a></p>
+<pre><code class="language-bash">POST https://console.jumpcloud.com/api/v2/applications/{application_id}/associations
+</code></pre>
+<h3 id="request-grant-group-access">Request (grant group access)<a class="jc-guide-heading-anchor" href="#request-grant-group-access" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-bash">curl -X POST https://console.jumpcloud.com/api/v2/applications/{Application_ID}/associations \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -d '{
+    &quot;op&quot;: &quot;add&quot;,
+    &quot;type&quot;: &quot;user_group&quot;,
+    &quot;id&quot;: &quot;{Group_ID}&quot;
+  }'
+</code></pre>
+<h3 id="request-grant-individual-user-access">Request (grant individual user access)<a class="jc-guide-heading-anchor" href="#request-grant-individual-user-access" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-bash">curl -X POST https://console.jumpcloud.com/api/v2/applications/{Application_ID}/associations \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -d '{
+    &quot;op&quot;: &quot;add&quot;,
+    &quot;type&quot;: &quot;user&quot;,
+    &quot;id&quot;: &quot;{User_ID}&quot;
+  }'
+</code></pre>
+<h3 id="successful-response_2">Successful response<a class="jc-guide-heading-anchor" href="#successful-response_2" aria-label="Link to this section">#</a></h3>
+<p><strong>HTTP 204</strong> — no response body.</p>
+<hr>
+<h2 id="step-4-verify-user-and-group-bindings">Step 4: Verify user and group bindings<a class="jc-guide-heading-anchor" href="#step-4-verify-user-and-group-bindings" aria-label="Link to this section">#</a></h2>
+<h3 id="overview_3">Overview<a class="jc-guide-heading-anchor" href="#overview_3" aria-label="Link to this section">#</a></h3>
+<p>After granting access in Step 3, list the application's direct associations to confirm the expected users or user groups are bound. The grant endpoint returns HTTP 204 with no body, so this read call is how you validate that bindings took effect.</p>
+<p>Filter by association target with the required <code>targets</code> query parameter: <code>user_group</code> or <code>user</code>.</p>
+<h3 id="requirements_3">Requirements<a class="jc-guide-heading-anchor" href="#requirements_3" aria-label="Link to this section">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API key <code>x-api-key</code></td>
+<td>Yes</td>
+<td>Scopes: <code>associations.applications</code>, <code>associations.applications.readonly</code></td>
+</tr>
+<tr>
+<td>Application ID</td>
+<td>Yes</td>
+<td><code>_id</code> from Step 2</td>
+</tr>
+<tr>
+<td><code>targets</code></td>
+<td>Yes</td>
+<td><code>user_group</code> or <code>user</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="endpoint_3">Endpoint<a class="jc-guide-heading-anchor" href="#endpoint_3" aria-label="Link to this section">#</a></h3>
+<p><strong>Reference:</strong> <a href="../../reference/index.html#console/tag/Applications/operation/getApiV2ApplicationsByApplicationIdAssociations">List the associations of an Application</a></p>
+<pre><code class="language-bash">GET https://console.jumpcloud.com/api/v2/applications/{application_id}/associations?targets=user_group
+</code></pre>
+<h3 id="request-list-group-bindings">Request (list group bindings)<a class="jc-guide-heading-anchor" href="#request-list-group-bindings" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-bash">curl -X GET &quot;https://console.jumpcloud.com/api/v2/applications/{Application_ID}/associations?targets=user_group&quot; \
+  -H 'Accept: application/json' \
+  -H 'x-api-key: {API_KEY}'
+</code></pre>
+<h3 id="request-list-individual-user-bindings">Request (list individual user bindings)<a class="jc-guide-heading-anchor" href="#request-list-individual-user-bindings" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-bash">curl -X GET &quot;https://console.jumpcloud.com/api/v2/applications/{Application_ID}/associations?targets=user&quot; \
+  -H 'Accept: application/json' \
+  -H 'x-api-key: {API_KEY}'
+</code></pre>
+<h3 id="successful-response_3">Successful response<a class="jc-guide-heading-anchor" href="#successful-response_3" aria-label="Link to this section">#</a></h3>
+<p><strong>HTTP 200</strong> — array of direct associations. Each record includes a <code>to</code> object with the bound target's <code>type</code> and <code>id</code>.</p>
+<p>Example (abbreviated):</p>
+<pre><code class="language-json">[
+  {
+    &quot;to&quot;: {
+      &quot;type&quot;: &quot;user_group&quot;,
+      &quot;id&quot;: &quot;{Group_ID}&quot;
+    }
+  }
+]
+</code></pre>
+<p>Confirm the <code>id</code> values match the user or user group IDs you added in Step 3.</p>
+          </article>
+        </div>
+      </div>
+
+      <aside class="jc-guide-toc" aria-label="On this page">
+        <div class="jc-guide-toc-inner">
+          <h2 class="jc-guide-toc-heading">In this article</h2>
+          
+          <nav>
+            <ul class="jc-guide-toc-list">
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#step-1-discover-application-templates-saml"
+                >Step 1: Discover application templates (SAML)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#overview"
+                >Overview</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#requirements"
+                >Requirements</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#endpoint"
+                >Endpoint</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#request"
+                >Request</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#successful-response"
+                >Successful response</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#step-2-create-a-saml-application-v1"
+                >Step 2: Create a SAML application (v1)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#overview_1"
+                >Overview</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#requirements_1"
+                >Requirements</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#endpoint_1"
+                >Endpoint</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#request_1"
+                >Request</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#successful-response_1"
+                >Successful response</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#step-3-control-user-and-group-access"
+                >Step 3: Control user and group access</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#overview_2"
+                >Overview</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#requirements_2"
+                >Requirements</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#endpoint_2"
+                >Endpoint</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#request-grant-group-access"
+                >Request (grant group access)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#request-grant-individual-user-access"
+                >Request (grant individual user access)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#successful-response_2"
+                >Successful response</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#step-4-verify-user-and-group-bindings"
+                >Step 4: Verify user and group bindings</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#overview_3"
+                >Overview</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#requirements_3"
+                >Requirements</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#endpoint_3"
+                >Endpoint</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#request-list-group-bindings"
+                >Request (list group bindings)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#request-list-individual-user-bindings"
+                >Request (list individual user bindings)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#successful-response_3"
+                >Successful response</a>
+              </li>
+              
+            </ul>
+          </nav>
+          
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="jc-landing-footer jc-circuit-landing-footer jc-docs-chrome-light">
+  <nav class="jc-circuit-footer-nav" aria-label="Footer">
+    <a href="https://jumpcloud.com" target="_blank" rel="noopener noreferrer">
+      Go to JumpCloud.com
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <a href="https://jumpcloud.com/support/contact-jumpcloud-support" target="_blank" rel="noopener noreferrer">
+      JumpCloud Support
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <span class="jc-circuit-footer-copy">Copyright © 2026 JumpCloud.</span>
+  </nav>
+</footer>
+
+    <script>
+    (function () {
+      function syncDocsChromeOffset() {
+        var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+        if (!nav) {
+          return;
+        }
+        document.documentElement.style.setProperty(
+          "--jc-docs-chrome-offset",
+          nav.offsetHeight + "px"
+        );
+        var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+        if (footer) {
+          document.documentElement.style.setProperty(
+            "--jc-scalar-footer-height",
+            footer.offsetHeight + "px"
+          );
+        }
+        if (window.JumpCloudDocs && typeof JumpCloudDocs.syncScalarViewportHeight === "function") {
+          JumpCloudDocs.syncScalarViewportHeight();
+        }
+      }
+
+      function init() {
+        syncDocsChromeOffset();
+        if (typeof ResizeObserver !== "undefined") {
+          var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+          if (nav) {
+            new ResizeObserver(syncDocsChromeOffset).observe(nav);
+          }
+          var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+          if (footer) {
+            new ResizeObserver(syncDocsChromeOffset).observe(footer);
+          }
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+      window.addEventListener("resize", syncDocsChromeOffset);
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof hljs !== "undefined") {
+        hljs.highlightAll();
+      }
+    });
+  </script>
+</body>
+
+</html>

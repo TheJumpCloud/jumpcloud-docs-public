@@ -1,0 +1,38 @@
+schema_version: 1
+host: api.jumpcloud.com/insights/directory
+operations:
+  - method: post
+    host_root_path: /v1/events
+    base_path: /insights/directory/v1
+    legacy_operation_id: directoryInsights_eventsPost
+    standardized_operation_id: postInsightsDirectoryV1Events
+  - method: post
+    host_root_path: /v1/events/count
+    base_path: /insights/directory/v1
+    legacy_operation_id: directoryInsights_eventsCountPost
+    standardized_operation_id: postInsightsDirectoryV1EventsCount
+  - method: post
+    host_root_path: /v1/events/distinct
+    base_path: /insights/directory/v1
+    legacy_operation_id: directoryInsights_eventsDistinctPost
+    standardized_operation_id: postInsightsDirectoryV1EventsDistinct
+  - method: post
+    host_root_path: /v1/events/interval
+    base_path: /insights/directory/v1
+    legacy_operation_id: directoryInsights_eventsIntervalPost
+    standardized_operation_id: postInsightsDirectoryV1EventsInterval
+  - method: get
+    host_root_path: /v1/reports
+    base_path: /insights/directory/v1
+    legacy_operation_id: directoryInsights_reportsListGet
+    standardized_operation_id: getInsightsDirectoryV1Reports
+  - method: get
+    host_root_path: /v1/reports/{report_id}/artifacts/{artifact_id}/content
+    base_path: /insights/directory/v1
+    legacy_operation_id: directoryInsights_reportsArtifactContentGet
+    standardized_operation_id: getInsightsDirectoryV1ReportsByReportIdArtifactsByArtifactIdContent
+  - method: post
+    host_root_path: /v1/reports/{report_type}
+    base_path: /insights/directory/v1
+    legacy_operation_id: directoryInsights_reportsCreate
+    standardized_operation_id: postInsightsDirectoryV1ReportsByReportType

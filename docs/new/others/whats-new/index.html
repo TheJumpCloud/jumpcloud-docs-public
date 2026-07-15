@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What’s New? | JumpCloud API Docs</title>
+  <meta http-equiv="strict-transport-security" content="max-age=31536000">
+  <meta http-equiv="x-content-type-options" content="nosniff">
+  <meta http-equiv="referrer-policy" content="strict-origin-when-cross-origin">
+  
+  <link rel="shortcut icon" type="image/png" href="/images/API Docs Favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/atom-one-dark.min.css">
+  <link rel="stylesheet" href="../../jc_docs_chrome.css?v=1784124910">
+  
+<!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
+<script>
+  (function (h, o, u, d) {
+    var agent = (h[d] = h[d] || {
+      q: [],
+      onReady: function (callback) {
+        agent.q.push(callback);
+      },
+    });
+    var script = o.createElement(u);
+    script.async = 1;
+    script.src = "https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js";
+    var first = o.getElementsByTagName(u)[0];
+    if (first && first.parentNode) {
+      first.parentNode.insertBefore(script, first);
+    } else {
+      o.head.appendChild(script);
+    }
+  })(window, document, "script", "DD_RUM");
+  window.DD_RUM.onReady(function () {
+    window.DD_RUM.init({
+      clientToken: "pub4df04d743394daeb846048dc7d655830",
+      applicationId: "2d2cb82d-0d76-4ed9-b4bc-02999f2a342c",
+      site: "datadoghq.com",
+      service: "jumpcloud-docs",
+      env: "production",
+      sessionSampleRate: 100,
+      trackResources: true,
+      trackLongTasks: true,
+      trackUserInteractions: true,
+      defaultPrivacyLevel: "mask-user-input",
+    });
+  });
+</script>
+
+</head>
+
+<body class="jc-docs-landing jc-circuit-landing jc-guide-page jc-guide-page--no-sidebar">
+  <a href="#main-content" class="jc-skip-link">Skip to main content</a>
+
+  <nav class="sticky-top" aria-label="Site">
+    
+        <header class="jc-docs-top-bar jc-docs-chrome-light" aria-label="API Docs">
+      <div class="jc-docs-top-bar-inner">
+        <div class="jc-docs-top-bar-brand-group">
+          <a class="jc-docs-top-bar-brand" href="../../index.html">
+            <img src="../../jumpcloud-brand-logo.svg" alt="JumpCloud" width="108" height="18" class="jc-docs-top-bar-logo" />
+          </a>
+          <span class="jc-docs-top-bar-divider" aria-hidden="true"></span>
+          <span class="jc-docs-top-bar-label">API Docs</span>
+        </div>
+        
+      </div>
+    </header>
+    
+  </nav>
+
+  <main id="main-content" class="jc-circuit-main jc-guide-main" tabindex="-1">
+    <div class="jc-guide-shell">
+      
+
+      <div class="jc-guide-center">
+        <div class="jc-guide-center-inner">
+          <nav class="jc-guide-breadcrumb" aria-label="Breadcrumb">
+            <a href="../../index.html">API Docs</a>
+            
+            <span aria-hidden="true">›</span>
+            <span class="jc-guide-breadcrumb-current" aria-current="page">What’s New?</span>
+          </nav>
+
+          <header class="jc-guide-header">
+            <h1 class="jc-guide-title">What’s New?</h1>
+            
+          </header>
+
+          <article class="jc-guide-prose">
+            <blockquote>
+<p><strong>Important</strong></p>
+<p>This is a preview release. We are preparing to migrate our primary API reference resources to a newly designed page. Customers are requested to plan accordingly as we'll be deprecating the old page in future.</p>
+<ul>
+<li>Old page: <a href="https://docs.jumpcloud.com">docs.jumpcloud.com</a></li>
+<li>New page: <a href="https://docs.jumpcloud.com/new">docs.jumpcloud.com/new</a></li>
+</ul>
+<p>We will notify you via official channels before the new page goes live.</p>
+</blockquote>
+<h2 id="new-unified-api-pages"><strong>New Unified API Pages</strong><a class="jc-guide-heading-anchor" href="#new-unified-api-pages" aria-label="Link to this section">#</a></h2>
+<p>We have simplified our API documentation. Instead of separating everything by version numbers onto different pages, we have combined them. For example, you can now find all Console endpoints (V1 and V2) on a single page (<a href="https://docs.jumpcloud.com/new">https://docs.jumpcloud.com/new</a>). This keeps all related tools together so you don't have to jump back and forth between different links.</p>
+<p>If you download OpenAPI specs directly (for example, in CI pipelines or client generators), the YAML URLs change when you switch to the new docs. Console API V1 and V2 are now a single combined spec. Directory Insights no longer uses a version segment in the path. Use the table below to update bookmarks and automation.</p>
+<table>
+<thead>
+<tr>
+<th>Previous direct download URL</th>
+<th>New direct download URL (during the preview)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.jumpcloud.com/api/1.0/index.yaml">https://docs.jumpcloud.com/api/1.0/index.yaml</a></td>
+<td><a href="https://docs.jumpcloud.com/new/console/index.yaml">https://docs.jumpcloud.com/new/console/index.yaml</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.jumpcloud.com/api/2.0/index.yaml">https://docs.jumpcloud.com/api/2.0/index.yaml</a></td>
+<td><a href="https://docs.jumpcloud.com/new/console/index.yaml">https://docs.jumpcloud.com/new/console/index.yaml</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.jumpcloud.com/api/insights/directory/1.0/index.yaml">https://docs.jumpcloud.com/api/insights/directory/1.0/index.yaml</a></td>
+<td><a href="https://docs.jumpcloud.com/new/api/insights/directory/index.yaml">https://docs.jumpcloud.com/new/api/insights/directory/index.yaml</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>NOTE</strong>: Our legacy documentation (<a href="https://docs.jumpcloud.com/">https://docs.jumpcloud.com</a>) will continue to serve the older upstream IDs until the official final cutover date, giving your engineering teams ample time to test and adapt.</p>
+</blockquote>
+<h2 id="standardized-operationid-generation"><strong>Standardized operationId Generation</strong><a class="jc-guide-heading-anchor" href="#standardized-operationid-generation" aria-label="Link to this section">#</a></h2>
+<p>We’re updating the naming convention for operation IDs in our OpenAPI specs. The new format is: <strong>HTTP Method  Host-Root Path</strong>.</p>
+<ul>
+<li><strong>What’s changing:</strong> We are replacing older operation IDs (e.g., <code>groups_system_list</code>) with a new, standardized format (e.g., <code>getApiV2Systemgroups</code>) in our new spec bundles.  </li>
+<li><strong>How this affects you:</strong> If you generate API clients or SDKs using these operation IDs, your generated method names will change.  </li>
+<li><strong>Migration support:</strong> To help you migrate your downstream SDKs and software development lifecycles, our CI/CD pipeline now publishes a machine-readable sidecar mapping file alongside each aggregated documentation bundle. The mapping files are published here:</li>
+<li><a href="../../console/operation-id-mapping.yaml">JumpCloud Console APIs</a></li>
+<li><a href="../../api/insights/directory/operation-id-mapping.yaml">Directory Insights APIs</a></li>
+<li>These files list the old and new operation IDs alongside their method and path details to help you prepare for the change.  </li>
+<li>We have removed the <code>x-tagGroups</code> attribute from the API specifications. You won’t see duplicate endpoints/operations in the documentation.</li>
+<li>See the <a href="../migrating-to-standardized-operation-ids/index.html">Migrating to standardized operation IDs</a> article for more details on migration support.</li>
+</ul>
+<h2 id="when-the-new-docs-go-live"><strong>When the new docs go live</strong><a class="jc-guide-heading-anchor" href="#when-the-new-docs-go-live" aria-label="Link to this section">#</a></h2>
+<p>Today’s preview uses the <code>/new</code> path prefix. When we cut over to the redesigned docs as the primary experience:</p>
+<ul>
+<li><strong>New docs (default):</strong> <a href="https://docs.jumpcloud.com/">https://docs.jumpcloud.com/</a> — the <code>/new</code> prefix goes away</li>
+<li><strong>Legacy docs:</strong> <a href="https://docs.jumpcloud.com/legacy/">https://docs.jumpcloud.com/legacy/</a> — today’s docs pages move here for a transition period</li>
+</ul>
+<p>Legacy versioned YAML files remain available under <code>/legacy/</code> until we announce their retirement.</p>
+          </article>
+        </div>
+      </div>
+
+      <aside class="jc-guide-toc" aria-label="On this page">
+        <div class="jc-guide-toc-inner">
+          <h2 class="jc-guide-toc-heading">In this article</h2>
+          
+          <nav>
+            <ul class="jc-guide-toc-list">
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#new-unified-api-pages"
+                >New Unified API Pages</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#standardized-operationid-generation"
+                >Standardized operationId Generation</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#when-the-new-docs-go-live"
+                >When the new docs go live</a>
+              </li>
+              
+            </ul>
+          </nav>
+          
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="jc-landing-footer jc-circuit-landing-footer jc-docs-chrome-light">
+  <nav class="jc-circuit-footer-nav" aria-label="Footer">
+    <a href="https://jumpcloud.com" target="_blank" rel="noopener noreferrer">
+      Go to JumpCloud.com
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <a href="https://jumpcloud.com/support/contact-jumpcloud-support" target="_blank" rel="noopener noreferrer">
+      JumpCloud Support
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <span class="jc-circuit-footer-copy">Copyright © 2026 JumpCloud.</span>
+  </nav>
+</footer>
+
+    <script>
+    (function () {
+      function syncDocsChromeOffset() {
+        var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+        if (!nav) {
+          return;
+        }
+        document.documentElement.style.setProperty(
+          "--jc-docs-chrome-offset",
+          nav.offsetHeight + "px"
+        );
+        var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+        if (footer) {
+          document.documentElement.style.setProperty(
+            "--jc-scalar-footer-height",
+            footer.offsetHeight + "px"
+          );
+        }
+        if (window.JumpCloudDocs && typeof JumpCloudDocs.syncScalarViewportHeight === "function") {
+          JumpCloudDocs.syncScalarViewportHeight();
+        }
+      }
+
+      function init() {
+        syncDocsChromeOffset();
+        if (typeof ResizeObserver !== "undefined") {
+          var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+          if (nav) {
+            new ResizeObserver(syncDocsChromeOffset).observe(nav);
+          }
+          var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+          if (footer) {
+            new ResizeObserver(syncDocsChromeOffset).observe(footer);
+          }
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+      window.addEventListener("resize", syncDocsChromeOffset);
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof hljs !== "undefined") {
+        hljs.highlightAll();
+      }
+    });
+  </script>
+</body>
+
+</html>
