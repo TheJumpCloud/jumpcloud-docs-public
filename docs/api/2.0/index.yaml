@@ -65599,6 +65599,10 @@ components:
         - not_in_case_sensitive
         - member_of
         - not_member_of
+        - not_contains_with_null
+        - not_contains_case_sensitive_with_null
+        - not_in_with_null
+        - not_in_case_sensitive_with_null
       default: operation_unknown
       description: |-
         Filter operation to be applied:
@@ -65629,6 +65633,10 @@ components:
         not_contains_case_sensitive - Checks if `field` does not have the static `value` as its substring. Case sensitive. Only works for string types.
         in_case_sensitive - Checks if `field` is in the static `value` array. Works with strings (case sensitive), numbers, and datetime types.
         not_in_case_sensitive - Checks if `field` is not in the static `value` array. Works with strings (case sensitive), numbers, and datetime types.
+        not_contains_with_null - Like not_contains but also matches rows where `field` IS NULL (v1 search API compatibility).
+        not_contains_case_sensitive_with_null - Like not_contains_case_sensitive but also matches rows where `field` IS NULL (v1 search API compatibility).
+        not_in_with_null - Like not_in but also matches rows where `field` IS NULL (v1 search API compatibility).
+        not_in_case_sensitive_with_null - Like not_in_case_sensitive but also matches rows where `field` IS NULL (v1 search API compatibility).
         member_of - Array column overlaps with the given list. Only for array-typed fields. Value must be list_value.
         not_member_of - Array column does not overlap with the given list. Only for array-typed fields. Value must be list_value.
     jumpcloud.search.SearchRequestSort:
