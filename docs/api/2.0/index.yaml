@@ -18627,88 +18627,6 @@ paths:
           type: string
     x-functionalities-tags:
       - radius-groups
-  /radiusservers/{radiusserver_id}/systemgroups:
-    get:
-      description: |-
-        This endpoint will return all System Groups bound to a RADIUS Server, either directly or indirectly, essentially traversing the JumpCloud Graph for your Organization.
-
-        Each element will contain the group's type, id, attributes and paths.
-
-        The `attributes` object is a key/value hash of compiled graph attributes for all paths followed.
-
-        The `paths` array enumerates each path from this RADIUS server instance to the corresponding System Group; this array represents all grouping and/or associations that would have to be removed to deprovision the System Group from this RADIUS server instance.
-
-        See `/members` and `/associations` endpoints to manage those collections.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/radiusservers/{RADIUS_ID}/systemgroups \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: graph_radiusServerTraverseSystemGroup
-      parameters:
-        - $ref: '#/components/parameters/trait_limit_limit'
-        - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
-        - $ref: '#/components/parameters/trait_skip_skip'
-        - $ref: '#/components/parameters/trait_filter_filter'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/GraphObjectWithPaths'
-                type: array
-      security:
-        - x-api-key: []
-      summary: List the System Groups bound to a RADIUS Server
-      tags:
-        - Graph
-        - RADIUS Servers
-      x-scopes:
-        - groups
-        - groups.readonly
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/radiusservers/{radiusserver_id}/systemgroups?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE' \
-              --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --header 'x-org-id: SOME_STRING_VALUE'
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/radiusservers/{radiusserver_id}/systemgroups"
-
-            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","filter":"SOME_ARRAY_VALUE"}
-
-            headers = {
-                "x-org-id": "SOME_STRING_VALUE",
-                "x-api-key": "REPLACE_KEY_VALUE"
-            }
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            print(response.text)
-        - lang: Powershell
-          source: |-
-            $headers=@{}
-            $headers.Add("x-org-id", "SOME_STRING_VALUE")
-            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/radiusservers/{radiusserver_id}/systemgroups?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
-    parameters:
-      - description: ObjectID of the Radius Server.
-        in: path
-        name: radiusserver_id
-        required: true
-        schema:
-          type: string
-    x-functionalities-tags:
-      - radius-groups
   /radiusservers/{radiusserver_id}/users:
     get:
       description: |-
@@ -60539,7 +60457,6 @@ components:
               enum:
                 - user
                 - user_group
-                - system_group
               type: string
           required:
             - type
@@ -60626,7 +60543,6 @@ components:
                 - command
                 - policy
                 - policy_group
-                - radius_server
                 - user
                 - user_group
               type: string
@@ -76348,7 +76264,6 @@ components:
           enum:
             - user
             - user_group
-            - system_group
           type: string
     trait_graphTargetsRule_targets:
       name: targets
@@ -76423,7 +76338,6 @@ components:
             - command
             - policy
             - policy_group
-            - radius_server
             - user
             - user_group
           type: string
