@@ -1467,6 +1467,11 @@ operations:
     legacy_operation_id: graph_radiusServerTraverseUserGroup
     standardized_operation_id: getApiV2RadiusserversByRadiusserverIdUsergroups
   - method: get
+    host_root_path: /api/v2/radiusservers/{radiusserver_id}/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_radiusServerTraverseSystemGroup
+    standardized_operation_id: getApiV2RadiusserversByRadiusserverIdSystemgroups
+  - method: get
     host_root_path: /api/v2/radiusservers/{radiusserver_id}/users
     base_path: /api/v2
     legacy_operation_id: graph_radiusServerTraverseUser
@@ -3266,6 +3271,21 @@ operations:
     base_path: /api/v2
     legacy_operation_id: NotificationsChannelsService_TestSlack
     standardized_operation_id: postApiV2NotificationsSlackTest
+  - method: post
+    host_root_path: /api/v2/privileged-access/activate
+    base_path: /api/v2
+    legacy_operation_id: PrivilegedAccessService_Activate
+    standardized_operation_id: postApiV2PrivilegedAccessActivate
+  - method: get
+    host_root_path: /api/v2/privileged-access/status
+    base_path: /api/v2
+    legacy_operation_id: PrivilegedAccessService_GetPasswordVaultStatus
+    standardized_operation_id: getApiV2PrivilegedAccessStatus
+  - method: put
+    host_root_path: /api/v2/privileged-access/tenant-settings
+    base_path: /api/v2
+    legacy_operation_id: PrivilegedAccessService_UpdateTenantSettings
+    standardized_operation_id: putApiV2PrivilegedAccessTenantSettings
   - method: get
     host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockconfig
     base_path: /api/v2
@@ -3411,6 +3431,356 @@ operations:
     base_path: /api/v2
     legacy_operation_id: Reports_GetSavedReport
     standardized_operation_id: getApiV2ReportsSavedReportsById
+  - method: post
+    host_root_path: /api/v2/password-vault/credentials/excel/extract-columns
+    base_path: /api/v2
+    legacy_operation_id: credentialImports_extractExcelColumns
+    standardized_operation_id: postApiV2PasswordVaultCredentialsExcelExtractColumns
+  - method: post
+    host_root_path: /api/v2/password-vault/credentials/excel/import-custom
+    base_path: /api/v2
+    legacy_operation_id: credentialImports_importCustomExcel
+    standardized_operation_id: postApiV2PasswordVaultCredentialsExcelImportCustom
+  - method: post
+    host_root_path: /api/v2/password-vault/credentials/excel/import
+    base_path: /api/v2
+    legacy_operation_id: credentialImports_importExcel
+    standardized_operation_id: postApiV2PasswordVaultCredentialsExcelImport
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_List
+    standardized_operation_id: getApiV2PasswordVaultCredentials
+  - method: put
+    host_root_path: /api/v2/password-vault/credentials
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_Upsert
+    standardized_operation_id: putApiV2PasswordVaultCredentials
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials/{id}
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_Get
+    standardized_operation_id: getApiV2PasswordVaultCredentialsById
+  - method: delete
+    host_root_path: /api/v2/password-vault/credentials/{id}
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_Delete
+    standardized_operation_id: deleteApiV2PasswordVaultCredentialsById
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials/{id}/activities
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_GetActivities
+    standardized_operation_id: getApiV2PasswordVaultCredentialsByIdActivities
+  - method: post
+    host_root_path: /api/v2/password-vault/credentials/{id}/admin-takeovers
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_TakeoverByAdmin
+    standardized_operation_id: postApiV2PasswordVaultCredentialsByIdAdminTakeovers
+  - method: post
+    host_root_path: /api/v2/password-vault/credentials/{id}/clones
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_Duplicate
+    standardized_operation_id: postApiV2PasswordVaultCredentialsByIdClones
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_GetHistory
+    standardized_operation_id: getApiV2PasswordVaultCredentialsByIdHistory
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials/{id}/mfa-code
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_GetMfaCode
+    standardized_operation_id: getApiV2PasswordVaultCredentialsByIdMfaCode
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials/{id}/secret
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_GetSecret
+    standardized_operation_id: getApiV2PasswordVaultCredentialsByIdSecret
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials/{id}/with-secret
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_GetWithSecret
+    standardized_operation_id: getApiV2PasswordVaultCredentialsByIdWithSecret
+  - method: post
+    host_root_path: /api/v2/password-vault/credentials/archive
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_Archive
+    standardized_operation_id: postApiV2PasswordVaultCredentialsArchive
+  - method: delete
+    host_root_path: /api/v2/password-vault/credentials/bulk-delete
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_DeleteSelected
+    standardized_operation_id: deleteApiV2PasswordVaultCredentialsBulkDelete
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials/excel/columns
+    base_path: /api/v2
+    legacy_operation_id: CredentialImportsService_GetExcelColumns
+    standardized_operation_id: getApiV2PasswordVaultCredentialsExcelColumns
+  - method: post
+    host_root_path: /api/v2/password-vault/credentials/excel/exports
+    base_path: /api/v2
+    legacy_operation_id: CredentialImportsService_ExportExcel
+    standardized_operation_id: postApiV2PasswordVaultCredentialsExcelExports
+  - method: post
+    host_root_path: /api/v2/password-vault/credentials/unarchive
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_Unarchive
+    standardized_operation_id: postApiV2PasswordVaultCredentialsUnarchive
+  - method: get
+    host_root_path: /api/v2/password-vault/dashboard-overview
+    base_path: /api/v2
+    legacy_operation_id: DashboardOverviewService_GetDashboardOverview
+    standardized_operation_id: getApiV2PasswordVaultDashboardOverview
+  - method: get
+    host_root_path: /api/v2/password-vault/folders
+    base_path: /api/v2
+    legacy_operation_id: FolderService_GetAll
+    standardized_operation_id: getApiV2PasswordVaultFolders
+  - method: post
+    host_root_path: /api/v2/password-vault/folders
+    base_path: /api/v2
+    legacy_operation_id: FolderService_CreateOrEdit
+    standardized_operation_id: postApiV2PasswordVaultFolders
+  - method: get
+    host_root_path: /api/v2/password-vault/folders/{id}
+    base_path: /api/v2
+    legacy_operation_id: FolderService_GetForView
+    standardized_operation_id: getApiV2PasswordVaultFoldersById
+  - method: delete
+    host_root_path: /api/v2/password-vault/folders/{id}
+    base_path: /api/v2
+    legacy_operation_id: FolderService_Delete
+    standardized_operation_id: deleteApiV2PasswordVaultFoldersById
+  - method: get
+    host_root_path: /api/v2/password-vault/folders/{id}/edit
+    base_path: /api/v2
+    legacy_operation_id: FolderService_GetForEdit
+    standardized_operation_id: getApiV2PasswordVaultFoldersByIdEdit
+  - method: get
+    host_root_path: /api/v2/password-vault/folders/{id}/items
+    base_path: /api/v2
+    legacy_operation_id: FolderService_GetItems
+    standardized_operation_id: getApiV2PasswordVaultFoldersByIdItems
+  - method: post
+    host_root_path: /api/v2/password-vault/folders/{id}/items
+    base_path: /api/v2
+    legacy_operation_id: FolderService_BulkAddItems
+    standardized_operation_id: postApiV2PasswordVaultFoldersByIdItems
+  - method: delete
+    host_root_path: /api/v2/password-vault/folders/{id}/items
+    base_path: /api/v2
+    legacy_operation_id: FolderService_BulkRemoveItems
+    standardized_operation_id: deleteApiV2PasswordVaultFoldersByIdItems
+  - method: post
+    host_root_path: /api/v2/password-vault/folders/{id}/items/move
+    base_path: /api/v2
+    legacy_operation_id: FolderService_BulkMoveItemsTo
+    standardized_operation_id: postApiV2PasswordVaultFoldersByIdItemsMove
+  - method: post
+    host_root_path: /api/v2/password-vault/folders/{id}/items/move-to-default
+    base_path: /api/v2
+    legacy_operation_id: FolderService_BulkMoveItemsToDefault
+    standardized_operation_id: postApiV2PasswordVaultFoldersByIdItemsMoveToDefault
+  - method: get
+    host_root_path: /api/v2/password-vault/folders/{id}/managers
+    base_path: /api/v2
+    legacy_operation_id: FolderService_ListManagers
+    standardized_operation_id: getApiV2PasswordVaultFoldersByIdManagers
+  - method: put
+    host_root_path: /api/v2/password-vault/folders/{id}/policies
+    base_path: /api/v2
+    legacy_operation_id: FolderService_UpdateFolderPolicies
+    standardized_operation_id: putApiV2PasswordVaultFoldersByIdPolicies
+  - method: put
+    host_root_path: /api/v2/password-vault/folders/{id}/properties
+    base_path: /api/v2
+    legacy_operation_id: FolderService_UpdateFolderProperties
+    standardized_operation_id: putApiV2PasswordVaultFoldersByIdProperties
+  - method: get
+    host_root_path: /api/v2/password-vault/groups
+    base_path: /api/v2
+    legacy_operation_id: GroupsService_ListPaged
+    standardized_operation_id: getApiV2PasswordVaultGroups
+  - method: get
+    host_root_path: /api/v2/password-vault/groups/{idGroup}/assignable-resources
+    base_path: /api/v2
+    legacy_operation_id: GroupsService_ListAssignableResources
+    standardized_operation_id: getApiV2PasswordVaultGroupsByIdgroupAssignableResources
+  - method: get
+    host_root_path: /api/v2/password-vault/groups/{idGroup}/members
+    base_path: /api/v2
+    legacy_operation_id: GroupsService_ListMembers
+    standardized_operation_id: getApiV2PasswordVaultGroupsByIdgroupMembers
+  - method: get
+    host_root_path: /api/v2/password-vault/groups/{idGroup}/resources
+    base_path: /api/v2
+    legacy_operation_id: GroupsService_ListResources
+    standardized_operation_id: getApiV2PasswordVaultGroupsByIdgroupResources
+  - method: put
+    host_root_path: /api/v2/password-vault/groups/{idGroup}/resources
+    base_path: /api/v2
+    legacy_operation_id: GroupsService_ManageResources
+    standardized_operation_id: putApiV2PasswordVaultGroupsByIdgroupResources
+  - method: get
+    host_root_path: /api/v2/password-vault/groups/all
+    base_path: /api/v2
+    legacy_operation_id: GroupsService_List
+    standardized_operation_id: getApiV2PasswordVaultGroupsAll
+  - method: get
+    host_root_path: /api/v2/password-vault/tags
+    base_path: /api/v2
+    legacy_operation_id: TagsService_List
+    standardized_operation_id: getApiV2PasswordVaultTags
+  - method: get
+    host_root_path: /api/v2/password-vault/tenant-settings
+    base_path: /api/v2
+    legacy_operation_id: TenantSettingsService_GetTenantSettings
+    standardized_operation_id: getApiV2PasswordVaultTenantSettings
+  - method: put
+    host_root_path: /api/v2/password-vault/tenant-settings
+    base_path: /api/v2
+    legacy_operation_id: TenantSettingsService_UpdateTenantSettings
+    standardized_operation_id: putApiV2PasswordVaultTenantSettings
+  - method: get
+    host_root_path: /api/v2/password-vault/tenant-settings/default-permissions
+    base_path: /api/v2
+    legacy_operation_id: TenantSettingsService_GetDefaultPermissions
+    standardized_operation_id: getApiV2PasswordVaultTenantSettingsDefaultPermissions
+  - method: get
+    host_root_path: /api/v2/password-vault/users
+    base_path: /api/v2
+    legacy_operation_id: UsersService_Find
+    standardized_operation_id: getApiV2PasswordVaultUsers
+  - method: get
+    host_root_path: /api/v2/password-vault/users/active-pwm-tenants
+    base_path: /api/v2
+    legacy_operation_id: UsersService_ListActivePwmTenants
+    standardized_operation_id: getApiV2PasswordVaultUsersActivePwmTenants
+  - method: get
+    host_root_path: /api/v2/password-vault/users/self
+    base_path: /api/v2
+    legacy_operation_id: UsersService_GetUser
+    standardized_operation_id: getApiV2PasswordVaultUsersSelf
+  - method: get
+    host_root_path: /api/v2/password-vault/users/self/jc-user
+    base_path: /api/v2
+    legacy_operation_id: UsersService_IsJCUser
+    standardized_operation_id: getApiV2PasswordVaultUsersSelfJcUser
+  - method: get
+    host_root_path: /api/v2/password-vault/websites
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_List
+    standardized_operation_id: getApiV2PasswordVaultWebsites
+  - method: post
+    host_root_path: /api/v2/password-vault/websites
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_Upsert
+    standardized_operation_id: postApiV2PasswordVaultWebsites
+  - method: get
+    host_root_path: /api/v2/password-vault/websites/{id}
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_Get
+    standardized_operation_id: getApiV2PasswordVaultWebsitesById
+  - method: delete
+    host_root_path: /api/v2/password-vault/websites/{id}
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_Delete
+    standardized_operation_id: deleteApiV2PasswordVaultWebsitesById
+  - method: get
+    host_root_path: /api/v2/password-vault/websites/{id}/activities
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_GetActivities
+    standardized_operation_id: getApiV2PasswordVaultWebsitesByIdActivities
+  - method: post
+    host_root_path: /api/v2/password-vault/websites/{id}/admin-takeovers
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_TakeoverByAdmin
+    standardized_operation_id: postApiV2PasswordVaultWebsitesByIdAdminTakeovers
+  - method: post
+    host_root_path: /api/v2/password-vault/websites/{id}/archive
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_Archive
+    standardized_operation_id: postApiV2PasswordVaultWebsitesByIdArchive
+  - method: post
+    host_root_path: /api/v2/password-vault/websites/{id}/clones
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_Duplicate
+    standardized_operation_id: postApiV2PasswordVaultWebsitesByIdClones
+  - method: get
+    host_root_path: /api/v2/password-vault/websites/{id}/connect-links
+    base_path: /api/v2
+    legacy_operation_id: LinksService_GetLinksForConnect
+    standardized_operation_id: getApiV2PasswordVaultWebsitesByIdConnectLinks
+  - method: get
+    host_root_path: /api/v2/password-vault/websites/{id}/edit
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_GetForEdit
+    standardized_operation_id: getApiV2PasswordVaultWebsitesByIdEdit
+  - method: post
+    host_root_path: /api/v2/password-vault/websites/{id}/links
+    base_path: /api/v2
+    legacy_operation_id: LinksService_CreateLink
+    standardized_operation_id: postApiV2PasswordVaultWebsitesByIdLinks
+  - method: post
+    host_root_path: /api/v2/password-vault/websites/{id}/links/{linkId}/confirmations
+    base_path: /api/v2
+    legacy_operation_id: LinksService_ConfirmConnection
+    standardized_operation_id: postApiV2PasswordVaultWebsitesByIdLinksByLinkidConfirmations
+  - method: get
+    host_root_path: /api/v2/password-vault/websites/{id}/parameters-extension
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_GetParametersExtension
+    standardized_operation_id: getApiV2PasswordVaultWebsitesByIdParametersExtension
+  - method: post
+    host_root_path: /api/v2/password-vault/websites/{id}/unarchive
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_Unarchive
+    standardized_operation_id: postApiV2PasswordVaultWebsitesByIdUnarchive
+  - method: get
+    host_root_path: /api/v2/password-vault/websites/excel/columns
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_GetExcelColumns
+    standardized_operation_id: getApiV2PasswordVaultWebsitesExcelColumns
+  - method: post
+    host_root_path: /api/v2/password-vault/websites/excel/exports
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_ExportExcel
+    standardized_operation_id: postApiV2PasswordVaultWebsitesExcelExports
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials/{id}/secret/v2
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_GetSecretV2
+    standardized_operation_id: getApiV2PasswordVaultCredentialsByIdSecretV2
+  - method: post
+    host_root_path: /api/v2/password-vault/groups/{id}/deactivate
+    base_path: /api/v2
+    legacy_operation_id: GroupsService_DeactivateGroup
+    standardized_operation_id: postApiV2PasswordVaultGroupsByIdDeactivate
+  - method: post
+    host_root_path: /api/v2/password-vault/folders/{id}/admin-takeovers
+    base_path: /api/v2
+    legacy_operation_id: FolderService_TakeoverByAdmin
+    standardized_operation_id: postApiV2PasswordVaultFoldersByIdAdminTakeovers
+  - method: post
+    host_root_path: /api/v2/password-vault/events
+    base_path: /api/v2
+    legacy_operation_id: EventsService_LogEvent
+    standardized_operation_id: postApiV2PasswordVaultEvents
+  - method: post
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockauto
+    base_path: /api/v2
+    legacy_operation_id: Devices_DeviceLockAuto
+    standardized_operation_id: postApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockauto
+  - method: get
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockpin
+    base_path: /api/v2
+    legacy_operation_id: Devices_GetDeviceLockPin
+    standardized_operation_id: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockpin
+  - method: get
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockstate
+    base_path: /api/v2
+    legacy_operation_id: Devices_GetDeviceLockState
+    standardized_operation_id: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockstate
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2

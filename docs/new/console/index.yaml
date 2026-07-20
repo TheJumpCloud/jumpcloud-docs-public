@@ -15153,6 +15153,59 @@ paths:
           type: string
     x-functionalities-tags:
       - radius-groups
+  /api/v2/radiusservers/{radiusserver_id}/systemgroups:
+    get:
+      description: |-
+        This endpoint will return all System Groups bound to a RADIUS Server, either directly or indirectly, essentially traversing the JumpCloud Graph for your Organization.
+
+        Each element will contain the group's type, id, attributes and paths.
+
+        The `attributes` object is a key/value hash of compiled graph attributes for all paths followed.
+
+        The `paths` array enumerates each path from this RADIUS server instance to the corresponding System Group; this array represents all grouping and/or associations that would have to be removed to deprovision the System Group from this RADIUS server instance.
+
+        See `/members` and `/associations` endpoints to manage those collections.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/radiusservers/{RADIUS_ID}/systemgroups \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}'
+        ```
+      operationId: getApiV2RadiusserversByRadiusserverIdSystemgroups
+      parameters:
+        - $ref: "#/components/parameters/trait_limit_limit"
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
+        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/GraphObjectWithPaths"
+                type: array
+      security:
+        - x-api-key: []
+      summary: List the System Groups bound to a RADIUS Server
+      tags:
+        - Graph
+        - RADIUS Servers
+      x-scopes:
+        - groups
+        - groups.readonly
+    parameters:
+      - description: ObjectID of the Radius Server.
+        in: path
+        name: radiusserver_id
+        required: true
+        schema:
+          type: string
+    x-functionalities-tags:
+      - radius-groups
   /api/v2/radiusservers/{radiusserver_id}/users:
     get:
       description: |-
@@ -32008,6 +32061,74 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - notifications.channels
+  /api/v2/privileged-access/activate:
+    post:
+      description: Activate tenant and create integration token via password vault backend
+      operationId: postApiV2PrivilegedAccessActivate
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ActivateResponse"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.ActivateRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/privileged-access/status:
+    get:
+      description: Get password vault status for an organization
+      operationId: getApiV2PrivilegedAccessStatus
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetPasswordVaultStatusResponse"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/privileged-access/tenant-settings:
+    put:
+      description: Update tenant settings including SCIM client credentials
+      operationId: putApiV2PrivilegedAccessTenantSettings
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpdateTenantSettingsRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
   /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockconfig:
     get:
       summary: Get Recovery Lock Configuration
@@ -33524,6 +33645,2238 @@ paths:
       x-scopes:
         - reports
         - reports.readonly
+  /api/v2/password-vault/credentials/excel/extract-columns:
+    post:
+      description: |-
+        Extract column headers from an uploaded Excel file for credential import mapping.
+        Send `Content-Type: application/octet-stream` with a JSON init line
+        (`ExtractExcelColumnsInit`, excluding organizationObjectId) terminated by newline,
+        followed by the raw Excel file bytes streamed as chunk payloads.
+      operationId: postApiV2PasswordVaultCredentialsExcelExtractColumns
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ExtractExcelColumnsReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/excel/import-custom:
+    post:
+      description: |-
+        Import credentials from a custom-mapped Excel file.
+        For inline uploads send `Content-Type: application/octet-stream` with a JSON init line
+        (`ImportCustomExcelInit`, excluding organizationObjectId) terminated by newline,
+        followed by raw Excel bytes. For previously uploaded files send
+        `Content-Type: application/json` with an `ImportCustomExcelInit` body and no chunks.
+      operationId: postApiV2PasswordVaultCredentialsExcelImportCustom
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.ImportCustomExcelInit"
+          application/octet-stream: {}
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/excel/import:
+    post:
+      description: |-
+        Import credentials from a standard Excel template.
+        Send `Content-Type: application/octet-stream` with a JSON init line
+        (`ImportExcelInit`, excluding organizationObjectId) terminated by newline,
+        followed by the raw Excel file bytes streamed as chunk payloads.
+      operationId: postApiV2PasswordVaultCredentialsExcelImport
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials:
+    get:
+      description: List password vault credentials.
+      operationId: getApiV2PasswordVaultCredentials
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListCredentialsReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    put:
+      description: Create or update a password vault credential.
+      operationId: putApiV2PasswordVaultCredentials
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertCredentialReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertCredentialRequest"
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/{id}:
+    get:
+      description: Get password vault credential metadata.
+      operationId: getApiV2PasswordVaultCredentialsById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    delete:
+      description: Delete a password vault credential.
+      operationId: deleteApiV2PasswordVaultCredentialsById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/{id}/activities:
+    get:
+      description: Get password vault credential activity details.
+      operationId: getApiV2PasswordVaultCredentialsByIdActivities
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialActivitiesReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/credentials/{id}/admin-takeovers:
+    post:
+      description: Admin takeover of a password vault credential session.
+      operationId: postApiV2PasswordVaultCredentialsByIdAdminTakeovers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/{id}/clones:
+    post:
+      description: Duplicate a password vault credential.
+      operationId: postApiV2PasswordVaultCredentialsByIdClones
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.DuplicateCredentialReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_DuplicateBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/{id}/history:
+    get:
+      description: Get password vault credential history.
+      operationId: getApiV2PasswordVaultCredentialsByIdHistory
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialHistoryReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: continuationToken
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/credentials/{id}/mfa-code:
+    get:
+      description: Get password vault credential MFA code.
+      operationId: getApiV2PasswordVaultCredentialsByIdMfaCode
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetMfaCodeReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: domain
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/credentials/{id}/secret:
+    get:
+      description: Get password vault credential secret.
+      operationId: getApiV2PasswordVaultCredentialsByIdSecret
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialSecretReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: resourceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: credentialVersion
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: domain
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/credentials/{id}/with-secret:
+    get:
+      description: Get password vault credential metadata with secret value.
+      operationId: getApiV2PasswordVaultCredentialsByIdWithSecret
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialWithSecretReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/credentials/archive:
+    post:
+      description: Archive selected password vault credentials.
+      operationId: postApiV2PasswordVaultCredentialsArchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ArchiveCredentialsRequest"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/bulk-delete:
+    delete:
+      description: Delete selected password vault credentials.
+      operationId: deleteApiV2PasswordVaultCredentialsBulkDelete
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.DeleteSelectedCredentialsRequest"
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/excel/columns:
+    get:
+      description: Returns export column dictionary for credential Excel import/export.
+      operationId: getApiV2PasswordVaultCredentialsExcelColumns
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetExcelColumnsReply"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/excel/exports:
+    post:
+      description: Enqueue a background job to export filtered credentials to Excel.
+      operationId: postApiV2PasswordVaultCredentialsExcelExports
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ExportExcelRequest"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/unarchive:
+    post:
+      description: Unarchive selected password vault credentials.
+      operationId: postApiV2PasswordVaultCredentialsUnarchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ArchiveCredentialsRequest"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/dashboard-overview:
+    get:
+      description: Password vault dashboard overview (tenant stats, credential widgets, most-accessed).
+      operationId: getApiV2PasswordVaultDashboardOverview
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetDashboardOverviewReply"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/folders:
+    get:
+      description: List password vault folders.
+      operationId: getApiV2PasswordVaultFolders
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetAllFoldersReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    post:
+      description: Create or update a password vault folder.
+      operationId: postApiV2PasswordVaultFolders
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertFolderReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertFolderRequest"
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/folders/{id}:
+    get:
+      description: Get password vault folder metadata for viewing.
+      operationId: getApiV2PasswordVaultFoldersById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetFolderForViewReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    delete:
+      description: Delete a password vault folder.
+      operationId: deleteApiV2PasswordVaultFoldersById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/folders/{id}/edit:
+    get:
+      description: Get password vault folder for editing.
+      operationId: getApiV2PasswordVaultFoldersByIdEdit
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetFolderForEditReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/folders/{id}/items:
+    get:
+      description: List items in a password vault folder.
+      operationId: getApiV2PasswordVaultFoldersByIdItems
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetFolderItemsReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    post:
+      description: Add resources and credentials to a password vault folder in bulk.
+      operationId: postApiV2PasswordVaultFoldersByIdItems
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/FolderService_BulkRemoveItemsBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+    delete:
+      description: Remove resources and credentials from a password vault folder in bulk.
+      operationId: deleteApiV2PasswordVaultFoldersByIdItems
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/FolderService_BulkRemoveItemsBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/folders/{id}/items/move:
+    post:
+      description: Move resources and credentials to another password vault folder in bulk.
+      operationId: postApiV2PasswordVaultFoldersByIdItemsMove
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/FolderService_BulkMoveItemsToBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/folders/{id}/items/move-to-default:
+    post:
+      description: Move resources and credentials to the default folder in bulk.
+      operationId: postApiV2PasswordVaultFoldersByIdItemsMoveToDefault
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/FolderService_BulkMoveItemsToBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/folders/{id}/managers:
+    get:
+      description: List managers of a password vault folder.
+      operationId: getApiV2PasswordVaultFoldersByIdManagers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListFolderManagersReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/folders/{id}/policies:
+    put:
+      description: Update password vault folder access policies.
+      operationId: putApiV2PasswordVaultFoldersByIdPolicies
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessPolicies:
+                  $ref: "#/components/schemas/jumpcloud.privileged_access.FolderAccessPolicies"
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/folders/{id}/properties:
+    put:
+      description: Update password vault folder name and description.
+      operationId: putApiV2PasswordVaultFoldersByIdProperties
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/groups:
+    get:
+      description: List password vault groups.
+      operationId: getApiV2PasswordVaultGroups
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListGroupsPagedReply"
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: parentId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/groups/{idGroup}/assignable-resources:
+    get:
+      description: List resources that can be assigned to a password vault group.
+      operationId: getApiV2PasswordVaultGroupsByIdgroupAssignableResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListAssignableResourcesReply"
+      parameters:
+        - name: idGroup
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/groups/{idGroup}/members:
+    get:
+      description: List members of a password vault group.
+      operationId: getApiV2PasswordVaultGroupsByIdgroupMembers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListGroupMembersReply"
+      parameters:
+        - name: idGroup
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/groups/{idGroup}/resources:
+    get:
+      description: List resources assigned to a password vault group.
+      operationId: getApiV2PasswordVaultGroupsByIdgroupResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListGroupResourcesReply"
+      parameters:
+        - name: idGroup
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    put:
+      description: Assign or remove resources on a password vault group.
+      operationId: putApiV2PasswordVaultGroupsByIdgroupResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: idGroup
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                group:
+                  $ref: "#/components/schemas/jumpcloud.privileged_access.GroupResourceAccess"
+                isDeleting:
+                  type: boolean
+                resourceIds:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/groups/all:
+    get:
+      description: List all password vault groups (non-paged).
+      operationId: getApiV2PasswordVaultGroupsAll
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListGroupsReply"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/tags:
+    get:
+      description: List password vault tags.
+      operationId: getApiV2PasswordVaultTags
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListTagsReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/tenant-settings:
+    get:
+      description: Get password vault trusted tenant settings (9 integration flags).
+      operationId: getApiV2PasswordVaultTenantSettings
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetTenantSettingsReply"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    put:
+      description: Patch password vault trusted tenant settings (9 integration flags).
+      operationId: putApiV2PasswordVaultTenantSettings
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpdatePasswordVaultTenantSettingsRequest"
+        description: Named to avoid clashing with PrivilegedAccessService.UpdateTenantSettingsRequest (SCIM/OpenID).
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/tenant-settings/default-permissions:
+    get:
+      description: Get password vault default permission JSON blobs for the tenant.
+      operationId: getApiV2PasswordVaultTenantSettingsDefaultPermissions
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetDefaultPermissionsReply"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/users:
+    get:
+      description: Find password vault users.
+      operationId: getApiV2PasswordVaultUsers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.FindUsersReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/users/active-pwm-tenants:
+    get:
+      description: List external tenant ids for every active PWM edition tenant.
+      operationId: getApiV2PasswordVaultUsersActivePwmTenants
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListActivePwmTenantsReply"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/users/self:
+    get:
+      description: Returns the tenant user identified by request actor metadata (user_id / eventContext).
+      operationId: getApiV2PasswordVaultUsersSelf
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetUserReply"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/users/self/jc-user:
+    get:
+      description: Returns whether the caller (user_id actor metadata) is a JC-managed user in the password vault tenant.
+      operationId: getApiV2PasswordVaultUsersSelfJcUser
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.IsJCUserReply"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/websites:
+    get:
+      description: List password vault websites.
+      operationId: getApiV2PasswordVaultWebsites
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListWebsitesReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    post:
+      description: Create or update a password vault website.
+      operationId: postApiV2PasswordVaultWebsites
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteRequest"
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/websites/{id}:
+    get:
+      description: Get password vault website metadata for viewing.
+      operationId: getApiV2PasswordVaultWebsitesById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetWebsiteForViewReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    delete:
+      description: Delete a password vault website.
+      operationId: deleteApiV2PasswordVaultWebsitesById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deleteCredentialsLinked
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/websites/{id}/activities:
+    get:
+      description: Get password vault website activity audit trail.
+      operationId: getApiV2PasswordVaultWebsitesByIdActivities
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetWebsiteActivitiesReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/websites/{id}/admin-takeovers:
+    post:
+      description: Admin takeover of a password vault website.
+      operationId: postApiV2PasswordVaultWebsitesByIdAdminTakeovers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/websites/{id}/archive:
+    post:
+      description: Archive a password vault website.
+      operationId: postApiV2PasswordVaultWebsitesByIdArchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/websites/{id}/clones:
+    post:
+      description: Duplicate a password vault website.
+      operationId: postApiV2PasswordVaultWebsitesByIdClones
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.DuplicateWebsiteReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_DuplicateBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/websites/{id}/connect-links:
+    get:
+      description: List credential links available for connecting to a website resource.
+      operationId: getApiV2PasswordVaultWebsitesByIdConnectLinks
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetLinksForConnectReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/websites/{id}/edit:
+    get:
+      description: Get password vault website for editing.
+      operationId: getApiV2PasswordVaultWebsitesByIdEdit
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetWebsiteForEditReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/websites/{id}/links:
+    post:
+      description: Create a credential link for a website resource.
+      operationId: postApiV2PasswordVaultWebsitesByIdLinks
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.CreateLinkReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                credentialId:
+                  type: string
+                  format: byte
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/websites/{id}/links/{linkId}/confirmations:
+    post:
+      description: Confirm a website connection after link selection.
+      operationId: postApiV2PasswordVaultWebsitesByIdLinksByLinkidConfirmations
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: linkId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connectorEdition:
+                  type: string
+                sessionId:
+                  type: string
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/websites/{id}/parameters-extension:
+    get:
+      description: Get password vault website parameters extension for autofill configuration.
+      operationId: getApiV2PasswordVaultWebsitesByIdParametersExtension
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetParametersExtensionReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/websites/{id}/unarchive:
+    post:
+      description: Unarchive a password vault website.
+      operationId: postApiV2PasswordVaultWebsitesByIdUnarchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/websites/excel/columns:
+    get:
+      description: Returns export column dictionary for website Excel import/export.
+      operationId: getApiV2PasswordVaultWebsitesExcelColumns
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetExcelColumnsReply"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/websites/excel/exports:
+    post:
+      description: Enqueue a background job to export filtered websites to Excel.
+      operationId: postApiV2PasswordVaultWebsitesExcelExports
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ExportExcelReply"
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ExportExcelRequest"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/credentials/{id}/secret/v2:
+    get:
+      description: Get password vault credential secret (V2 payload).
+      operationId: getApiV2PasswordVaultCredentialsByIdSecretV2
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialSecretV2Reply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: resourceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: credentialVersion
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: domain
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/groups/{id}/deactivate:
+    post:
+      description: Deactivate a password vault group.
+      operationId: postApiV2PasswordVaultGroupsByIdDeactivate
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/folders/{id}/admin-takeovers:
+    post:
+      description: Admin takeover of a password vault folder session.
+      operationId: postApiV2PasswordVaultFoldersByIdAdminTakeovers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/events:
+    post:
+      description: Log a password vault client-side audit event.
+      operationId: postApiV2PasswordVaultEvents
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.LogEventRequest"
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockauto:
+    post:
+      summary: Device Lock Auto
+      description: This endpoint locks a macOS device with an auto-generated PIN and optionally displays a message and phone number on the lock screen.
+      operationId: postApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockauto
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.apple_mdm.CommandResponse"
+        "204":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: deviceManagerObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deviceObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                organizationObjectId:
+                  type: string
+                  format: byte
+                phoneNumber:
+                  type: string
+        required: true
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+  /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockpin:
+    get:
+      summary: Get Device Lock PIN
+      description: This endpoint retrieves the decrypted device lock PIN when the device is locked.
+      operationId: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockpin
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: deviceManagerObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deviceObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+  /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockstate:
+    get:
+      summary: Get Device Lock State
+      description: This endpoint retrieves the derived device lock state for a specified macOS device.
+      operationId: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockstate
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: deviceManagerObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deviceObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -43011,6 +45364,7 @@ components:
               enum:
                 - user
                 - user_group
+                - system_group
               type: string
           required:
             - type
@@ -43097,6 +45451,7 @@ components:
                 - command
                 - policy
                 - policy_group
+                - radius_server
                 - user
                 - user_group
               type: string
@@ -54674,6 +57029,37 @@ components:
         - TTL_CONFIG_MULTI_SELECT_DURATIONS
         - TTL_CONFIG_FIXED_DURATION
       default: TTL_CONFIG_UNSPECIFIED
+    jumpcloud.privileged_access.ActivateRequest:
+      type: object
+    jumpcloud.privileged_access.ActivateResponse:
+      type: object
+      properties:
+        scimBaseUrl:
+          type: string
+        scimToken:
+          type: string
+        ssoLoginUrl:
+          type: string
+        ssoRedirectUrl:
+          type: string
+    jumpcloud.privileged_access.GetPasswordVaultStatusResponse:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+        jumpcloudSsoApplicationId:
+          type: string
+        vaultoneConsoleUrl:
+          type: string
+    jumpcloud.privileged_access.UpdateTenantSettingsRequest:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        ssoApplicationId:
+          type: string
     jumpcloud.google_emm.EnterpriseType:
       type: string
       enum:
@@ -55172,6 +57558,1645 @@ components:
       properties:
         savedReport:
           $ref: "#/components/schemas/jumpcloud.insights.SavedReport"
+    jumpcloud.privileged_access.AccessPolicies:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.GroupAccess"
+        isPrivate:
+          type: boolean
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.UserAccess"
+    jumpcloud.privileged_access.AccessRequestValidationStatusCode:
+      type: string
+      enum:
+        - APPROVED
+        - PENDING
+        - NEED_REQUEST
+        - INVALID_APPROVER
+        - EXPIRED
+        - OUT_OF_ACCESS_WINDOW
+      default: APPROVED
+      description: Access-request validation codes (same numeric wire values as password vault).
+    jumpcloud.privileged_access.ArchiveCredentialsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            format: byte
+    jumpcloud.privileged_access.AssignableResource:
+      type: object
+      properties:
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        websiteUrl:
+          type: string
+    jumpcloud.privileged_access.CredentialActivity:
+      type: object
+      properties:
+        createTime:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialActivityEvent"
+        lastModifiedBy:
+          type: string
+        lastModifiedTime:
+          type: string
+          format: date-time
+        resourceName:
+          type: string
+    jumpcloud.privileged_access.CredentialActivityEvent:
+      type: object
+      properties:
+        action:
+          type: string
+        auditTime:
+          type: string
+          format: date-time
+        user:
+          type: string
+    jumpcloud.privileged_access.CredentialHistoryEntry:
+      type: object
+      properties:
+        creationDate:
+          type: string
+        version:
+          type: string
+    jumpcloud.privileged_access.CredentialListItem:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        archived:
+          type: boolean
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        domain:
+          type: string
+        expirationDate:
+          type: string
+        folderId:
+          type: string
+          format: byte
+        folderName:
+          type: string
+        id:
+          type: string
+          format: byte
+        isFavorite:
+          type: boolean
+        last4Digits:
+          type: string
+        lastTimeUsed:
+          type: string
+        mfaRegistered:
+          type: boolean
+        name:
+          type: string
+        needsRotationValidation:
+          type: boolean
+        permissions:
+          type: array
+          items:
+            type: string
+        rotationEnabled:
+          type: boolean
+        tags:
+          type: string
+        username:
+          type: string
+    jumpcloud.privileged_access.CredentialMetadata:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        archived:
+          type: boolean
+        creationDate:
+          type: string
+        credentialRotationId:
+          type: string
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        creditCard:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CreditCardMetadata"
+        domain:
+          type: string
+        editDate:
+          type: string
+        expirationDate:
+          type: string
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        idCard:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.IdCardMetadata"
+        identity:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.IdentityMetadata"
+        last4Digits:
+          type: string
+        lastTimeUsed:
+          type: string
+        lastUserUsed:
+          type: integer
+          format: int32
+        mfaRegistered:
+          type: boolean
+        name:
+          type: string
+        notes:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        tags:
+          type: string
+        username:
+          type: string
+        viewSecretCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.CredentialPreview:
+      type: object
+      properties:
+        credentialType:
+          type: integer
+          format: int32
+        expirationTimeRfc3339:
+          type: string
+        id:
+          type: string
+        lastTimeUsedRfc3339:
+          type: string
+        name:
+          type: string
+    jumpcloud.privileged_access.CredentialSummaryPayload:
+      type: object
+      properties:
+        credentialTypeCount:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.SummaryCountEntry"
+        totalCredential:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.CredentialType:
+      type: string
+      enum:
+        - UNDEFINED
+        - PASSWORD
+        - KEY
+        - CONNECTION_STRING
+        - SECURE_NOTE
+        - TWO_FA
+        - CREDIT_CARD
+        - ID_CARD
+        - IDENTITY
+      default: UNDEFINED
+    jumpcloud.privileged_access.CredentialsReportPayload:
+      type: object
+      properties:
+        credentials:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialPreview"
+        title:
+          type: string
+        total:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.CreditCardMetadata:
+      type: object
+      properties:
+        cardholderName:
+          type: string
+        expiryMonth:
+          type: string
+        expiryYear:
+          type: string
+        last4Digits:
+          type: string
+    jumpcloud.privileged_access.CreditCardSecret:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+        cvv:
+          type: string
+    jumpcloud.privileged_access.CreditCardSection:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CreditCardMetadata"
+        secret:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CreditCardSecret"
+    jumpcloud.privileged_access.DeleteSelectedCredentialsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            format: byte
+    jumpcloud.privileged_access.DuplicateCredentialReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.DuplicateWebsiteReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.FindUsersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.UserListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.FolderAccessPolicies:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.FolderGroupAccess"
+        isPrivate:
+          type: boolean
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.FolderUserAccess"
+    jumpcloud.privileged_access.FolderGroupAccess:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+    jumpcloud.privileged_access.FolderItemListEntry:
+      type: object
+      properties:
+        category:
+          type: string
+        contentType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        uri:
+          type: string
+        username:
+          type: string
+    jumpcloud.privileged_access.FolderListItem:
+      type: object
+      properties:
+        description:
+          type: string
+        id:
+          type: string
+          format: byte
+        isPrivate:
+          type: boolean
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        stats:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.FolderStatsMetadata"
+    jumpcloud.privileged_access.FolderMetadata:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.FolderAccessPolicies"
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        editDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.FolderUserAccess:
+      type: object
+      properties:
+        email:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+    jumpcloud.privileged_access.GetAllFoldersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.FolderListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.GetCredentialActivitiesReply:
+      type: object
+      properties:
+        activity:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialActivity"
+    jumpcloud.privileged_access.GetCredentialHistoryReply:
+      type: object
+      properties:
+        continuationToken:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialHistoryEntry"
+    jumpcloud.privileged_access.GetCredentialReply:
+      type: object
+      properties:
+        credential:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialMetadata"
+    jumpcloud.privileged_access.GetCredentialSecretReply:
+      type: object
+      properties:
+        secret:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.SecretValuePayload"
+    jumpcloud.privileged_access.GetCredentialWithSecretReply:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        approverIds:
+          type: array
+          items:
+            type: string
+        approverRequiresJustification:
+          type: boolean
+        approvers:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.UserApprover"
+        credential:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialMetadata"
+        passwordStrength:
+          type: integer
+          format: int64
+        requiredApprovers:
+          type: boolean
+        secret:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.SecretValuePayload"
+        sequentialApprovers:
+          type: boolean
+    jumpcloud.privileged_access.GetDashboardOverviewReply:
+      type: object
+      properties:
+        credentialSummary:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialSummaryPayload"
+        credentialsNotUsed:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialsReportPayload"
+        expiredCredentials:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialsReportPayload"
+        expiringCredentials:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialsReportPayload"
+        mostAccessedResources:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.MostAccessedResourcesPayload"
+        resourceSummary:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ResourceSummaryPayload"
+        tenantPasswordHealth:
+          type: integer
+          format: int32
+          description: Org-wide non-private passwords, floored 0–100. Populated only for admin dashboard callers.
+        tenantStats:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.TenantStatsPayload"
+        userPasswordHealth:
+          type: integer
+          format: int32
+          description: Acting user's owned + shared passwords, floored 0–100. Always populated.
+        weakCredentials:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialsReportPayload"
+    jumpcloud.privileged_access.GetDefaultPermissionsReply:
+      type: object
+      properties:
+        defaultPermissions:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.TenantDefaultPermissions"
+    jumpcloud.privileged_access.GetFolderForEditReply:
+      type: object
+      properties:
+        folder:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertFolderInput"
+    jumpcloud.privileged_access.GetFolderForViewReply:
+      type: object
+      properties:
+        folder:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.FolderMetadata"
+    jumpcloud.privileged_access.GetFolderItemsReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.FolderItemListEntry"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.GetLinksForConnectReply:
+      type: object
+      properties:
+        continuationToken:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkForConnectionItem"
+    jumpcloud.privileged_access.GetMfaCodeReply:
+      type: object
+      properties:
+        code:
+          type: string
+        issuer:
+          type: string
+        remainingSeconds:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.GetTenantSettingsReply:
+      type: object
+      properties:
+        values:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.TrustedTenantSettingsValues"
+    jumpcloud.privileged_access.GetWebsiteActivitiesReply:
+      type: object
+      properties:
+        activity:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.WebsiteActivity"
+    jumpcloud.privileged_access.GetWebsiteForEditReply:
+      type: object
+      properties:
+        connectorDescription:
+          type: string
+        credentials:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedCredentialSummary"
+        website:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteInput"
+    jumpcloud.privileged_access.GetWebsiteForViewReply:
+      type: object
+      properties:
+        connectorDescription:
+          type: string
+        website:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.WebsiteForView"
+    jumpcloud.privileged_access.Group:
+      type: object
+      properties:
+        code:
+          type: string
+        creationTime:
+          type: string
+        credentialCount:
+          type: integer
+          format: int32
+        displayName:
+          type: string
+        externalId:
+          type: string
+          format: byte
+        id:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        isScim:
+          type: boolean
+        memberCount:
+          type: integer
+          format: int32
+        parentId:
+          type: integer
+          format: int32
+        roleCount:
+          type: integer
+          format: int32
+        websitesCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.GroupAccess:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.GroupMember:
+      type: object
+      properties:
+        addedTime:
+          type: string
+        emailAddress:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        profilePictureId:
+          type: string
+        surname:
+          type: string
+        userName:
+          type: string
+    jumpcloud.privileged_access.GroupResource:
+      type: object
+      properties:
+        category:
+          type: string
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        websiteUrl:
+          type: string
+    jumpcloud.privileged_access.GroupResourceAccess:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.IdCardMetadata:
+      type: object
+      properties:
+        country:
+          type: string
+        idCardExpirationDate:
+          type: string
+        idType:
+          type: string
+        issuanceDate:
+          type: string
+        nameOnId:
+          type: string
+    jumpcloud.privileged_access.IdCardSecret:
+      type: object
+      properties:
+        idNumber:
+          type: string
+    jumpcloud.privileged_access.IdCardSection:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.IdCardMetadata"
+        secret:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.IdCardSecret"
+    jumpcloud.privileged_access.IdentityMetadata:
+      type: object
+      properties:
+        city:
+          type: string
+        country:
+          type: string
+        email:
+          type: string
+        firstAddressLine:
+          type: string
+        firstName:
+          type: string
+        gender:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        phone:
+          type: string
+        secondAddressLine:
+          type: string
+        title:
+          type: string
+        zipCode:
+          type: string
+    jumpcloud.privileged_access.IsJCUserReply:
+      type: object
+      properties:
+        isJcUser:
+          type: boolean
+    jumpcloud.privileged_access.KeySection:
+      type: object
+      properties:
+        passphrase:
+          type: string
+        privateKey:
+          type: string
+        publicKey:
+          type: string
+    jumpcloud.privileged_access.LinkForConnectionItem:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        accessRequest:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessRequestValidationStatusCode"
+        approvedEndTime:
+          type: string
+        approvedStartTime:
+          type: string
+        approverRequiresJustification:
+          type: boolean
+        credentialId:
+          type: string
+          format: byte
+        credentialName:
+          type: string
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        credentialUsername:
+          type: string
+        id:
+          type: string
+          format: byte
+        mfaRegistered:
+          type: boolean
+        permissions:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.LinkedCredentialSummary:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        username:
+          type: string
+    jumpcloud.privileged_access.ListAssignableResourcesReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.AssignableResource"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListCredentialsReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListGroupMembersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.GroupMember"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListGroupResourcesReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.GroupResource"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListGroupsReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.Group"
+    jumpcloud.privileged_access.ListTagsReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.ListWebsitesReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.WebsiteListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.MostAccessedResource:
+      type: object
+      properties:
+        canConnect:
+          type: boolean
+        category:
+          type: string
+        count:
+          type: integer
+          format: int32
+        id:
+          type: string
+        name:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.MostAccessedResourcesPayload:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.MostAccessedResource"
+    jumpcloud.privileged_access.ParametersExtension:
+      type: object
+      properties:
+        fillMoreOne:
+          type: boolean
+        makeAutoSubmit:
+          type: boolean
+        selectorNextButton:
+          type: string
+        selectorPassword:
+          type: string
+        selectorSubmitButton:
+          type: string
+        selectorUsername:
+          type: string
+        selectorsToHide:
+          type: string
+        timeWaitAfterNextClick:
+          type: integer
+          format: int32
+        waitBeforeFill:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.RemoteBrowserIsolationSettings:
+      type: object
+      properties:
+        blacklistUri:
+          type: array
+          items:
+            type: string
+        blockAllUri:
+          type: boolean
+        chromiumPolicy:
+          type: string
+        disableBrowserHeader:
+          type: boolean
+        disableClipboard:
+          type: boolean
+        disableFileTransfer:
+          type: boolean
+        enableDevTools:
+          type: boolean
+        recordVideo:
+          type: boolean
+        vncSettings:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.VncSettings"
+        whitelistUri:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.ResourceSummaryPayload:
+      type: object
+      properties:
+        resourceTypeCount:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.SummaryCountEntry"
+        totalResource:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.SecretValuePayload:
+      type: object
+      properties:
+        connectionString:
+          type: string
+        creditCard:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CreditCardSecret"
+        idCard:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.IdCardSecret"
+        mfaKey:
+          type: string
+        passphrase:
+          type: string
+        password:
+          type: string
+        privateKey:
+          type: string
+        publicKey:
+          type: string
+        secureNote:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.SecureNote"
+        twoFa:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.TwoFa"
+    jumpcloud.privileged_access.SecureNote:
+      type: object
+      properties:
+        note:
+          type: string
+    jumpcloud.privileged_access.SummaryCountEntry:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.TenantDefaultPermissions:
+      type: object
+      properties:
+        cloudServiceDefaultSettings:
+          type: string
+        computerDefaultSettings:
+          type: string
+        credentialDefaultSettings:
+          type: string
+        databaseDefaultSettings:
+          type: string
+        deviceDefaultSettings:
+          type: string
+        prohibitUserRemoveDefaultPermissions:
+          type: boolean
+        socialNetworkDefaultSettings:
+          type: string
+        websiteDefaultSettings:
+          type: string
+    jumpcloud.privileged_access.TenantStatsPayload:
+      type: object
+      properties:
+        connectors:
+          type: integer
+          format: int32
+        connectorsDifferenceRate:
+          type: number
+          format: double
+        databases:
+          type: integer
+          format: int32
+        databasesWebshield:
+          type: integer
+          format: int32
+        expiredSecrets:
+          type: integer
+          format: int32
+        folders:
+          type: integer
+          format: int32
+        groups:
+          type: integer
+          format: int32
+        keys:
+          type: integer
+          format: int32
+        passwords:
+          type: integer
+          format: int32
+        resources:
+          type: integer
+          format: int32
+        resourcesArchived:
+          type: integer
+          format: int32
+        resourcesDifferenceRate:
+          type: number
+          format: double
+        secrets:
+          type: integer
+          format: int32
+        secretsArchived:
+          type: integer
+          format: int32
+        secretsDifferenceRate:
+          type: number
+          format: double
+        servers:
+          type: integer
+          format: int32
+        serversRecording:
+          type: integer
+          format: int32
+        users:
+          type: integer
+          format: int32
+        usersActive:
+          type: integer
+          format: int32
+        usersDifferenceRate:
+          type: number
+          format: double
+        usersInactive:
+          type: integer
+          format: int32
+        weakCredentials:
+          type: integer
+          format: int32
+        websites:
+          type: integer
+          format: int32
+        websitesWebshield:
+          type: integer
+          format: int32
+        websitesWebshieldRecording:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.TrustedTenantSettingsUpdate:
+      type: object
+      properties:
+        allowCredentialExport:
+          type: boolean
+        allowUsersToStorePrivateSecrets:
+          type: boolean
+        allowWebsiteExport:
+          type: boolean
+        browserExtensionManagementEnabled:
+          type: boolean
+        createPrivateSecretsByDefault:
+          type: boolean
+        credentialExpiredMustBeBlocked:
+          type: boolean
+        mobileAppAccessEnabled:
+          type: boolean
+        securityAlertEmailNotification:
+          type: boolean
+        securityAlertPushNotification:
+          type: boolean
+    jumpcloud.privileged_access.TrustedTenantSettingsValues:
+      type: object
+      properties:
+        allowCredentialExport:
+          type: boolean
+        allowUsersToStorePrivateSecrets:
+          type: boolean
+        allowWebsiteExport:
+          type: boolean
+        browserExtensionManagementEnabled:
+          type: boolean
+        createPrivateSecretsByDefault:
+          type: boolean
+        credentialExpiredMustBeBlocked:
+          type: boolean
+        mobileAppAccessEnabled:
+          type: boolean
+        securityAlertEmailNotification:
+          type: boolean
+        securityAlertPushNotification:
+          type: boolean
+    jumpcloud.privileged_access.TwoFa:
+      type: object
+      properties:
+        twoFaSecret:
+          type: string
+    jumpcloud.privileged_access.UpdatePasswordVaultTenantSettingsRequest:
+      type: object
+      properties:
+        update:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.TrustedTenantSettingsUpdate"
+      description: Named to avoid clashing with PrivilegedAccessService.UpdateTenantSettingsRequest (SCIM/OpenID).
+    jumpcloud.privileged_access.UpsertCredentialReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertCredentialRequest:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        approverRequiresJustification:
+          type: boolean
+        approvers:
+          type: array
+          items:
+            type: string
+        connectionString:
+          type: string
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        creditCard:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CreditCardSection"
+        domain:
+          type: string
+        expirationDate:
+          type: string
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        idCard:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.IdCardSection"
+        identity:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.IdentityMetadata"
+        key:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.KeySection"
+        mfaEnabled:
+          type: boolean
+        mfaKey:
+          type: string
+        name:
+          type: string
+        notes:
+          type: string
+        password:
+          type: string
+        passwordStrength:
+          type: integer
+          format: int64
+        requiredApprovers:
+          type: boolean
+        secureNote:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.SecureNote"
+        sequentialApprovers:
+          type: boolean
+        tags:
+          type: string
+        twoFa:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.TwoFa"
+        username:
+          type: string
+    jumpcloud.privileged_access.UpsertFolderInput:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.FolderAccessPolicies"
+        credentialIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        description:
+          type: string
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        resourceIds:
+          type: array
+          items:
+            type: string
+            format: byte
+    jumpcloud.privileged_access.UpsertFolderReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertWebsiteInput:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        connector:
+          type: string
+        credentialIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        linkedCredentialsAccessPolicies:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedCredentialAccessPolicy"
+        name:
+          type: string
+        notes:
+          type: string
+        parametersExtension:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ParametersExtension"
+        rbiSettings:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.RemoteBrowserIsolationSettings"
+        reverseProxy:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+        useRemoteBrowserIsolation:
+          type: boolean
+    jumpcloud.privileged_access.UpsertWebsiteReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertWebsiteRequest:
+      type: object
+      properties:
+        website:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteInput"
+    jumpcloud.privileged_access.UserAccess:
+      type: object
+      properties:
+        email:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.UserApprover:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+    jumpcloud.privileged_access.UserListItem:
+      type: object
+      properties:
+        emailAddress:
+          type: string
+        externalId:
+          type: string
+        id:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        isDeleted:
+          type: boolean
+        isScim:
+          type: boolean
+        name:
+          type: string
+        surname:
+          type: string
+        userName:
+          type: string
+    jumpcloud.privileged_access.VncSettings:
+      type: object
+      properties:
+        colorDepth:
+          type: integer
+          format: int32
+        compressionLevel:
+          type: integer
+          format: int32
+        disableScreenResize:
+          type: boolean
+        disableServerInput:
+          type: boolean
+        forceLossless:
+          type: boolean
+        qualityLevel:
+          type: integer
+          format: int32
+        swapRedBlue:
+          type: boolean
+        viewOnly:
+          type: boolean
+    jumpcloud.privileged_access.WebsiteActivity:
+      type: object
+      properties:
+        createTime:
+          type: string
+        createdBy:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.WebsiteActivityEvent"
+        lastModifiedBy:
+          type: string
+        lastModifiedTime:
+          type: string
+        resourceName:
+          type: string
+    jumpcloud.privileged_access.WebsiteActivityEvent:
+      type: object
+      properties:
+        action:
+          type: string
+        auditTime:
+          type: string
+        user:
+          type: string
+    jumpcloud.privileged_access.WebsiteForView:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        archived:
+          type: boolean
+        connector:
+          type: string
+        creationDate:
+          type: string
+        editDate:
+          type: string
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        notes:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        recordEnabled:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+        useRemoteBrowserIsolation:
+          type: boolean
+    jumpcloud.privileged_access.WebsiteListItem:
+      type: object
+      properties:
+        archived:
+          type: boolean
+        connector:
+          type: string
+        connectorId:
+          type: string
+          format: byte
+        folderId:
+          type: string
+          format: byte
+        folderName:
+          type: string
+        id:
+          type: string
+          format: byte
+        isFavorite:
+          type: boolean
+        isInUse:
+          type: boolean
+        lastConnect:
+          type: string
+        linkedCredentialUsername:
+          type: string
+        linkedCredentialsCount:
+          type: integer
+          format: int32
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        recordEnabled:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+        webShieldEnabled:
+          type: boolean
+    jumpcloud.privileged_access.GetUserReply:
+      type: object
+      properties:
+        adminExternalId:
+          type: string
+        emailAddress:
+          type: string
+        externalId:
+          type: string
+        id:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        isDeleted:
+          type: boolean
+        isScim:
+          type: boolean
+        name:
+          type: string
+        surname:
+          type: string
+        userName:
+          type: string
+    jumpcloud.privileged_access.LinkedCredentialAccessPolicy:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        credentialId:
+          type: string
+          format: byte
+      description: Repeated (not map) so dynamic gateway Swagger validation and grpc-node serialization agree.
+    jumpcloud.privileged_access.ListGroupsPagedReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.Group"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ExportExcelReply:
+      type: object
+      properties:
+        jobId:
+          type: string
+    jumpcloud.privileged_access.ExportExcelRequest:
+      type: object
+      properties:
+        filter:
+          type: array
+          items:
+            type: string
+        search:
+          type: string
+        selectedColumns:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.ExtractExcelColumnsReply:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            type: string
+        fileToken:
+          type: string
+    jumpcloud.privileged_access.ImportCustomExcelInit:
+      type: object
+      properties:
+        columnMapping:
+          type: object
+        createSingleWebsitePerUrl:
+          type: boolean
+        credentialTypeOverride:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        defaultAccessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        fileName:
+          type: string
+        fileToken:
+          type: string
+        folderId:
+          type: string
+          format: byte
+        websiteAccessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+    jumpcloud.privileged_access.GetExcelColumnsReply:
+      type: object
+      properties:
+        columns:
+          type: object
+    jumpcloud.privileged_access.ListActivePwmTenantsReply:
+      type: object
+      properties:
+        externalTenantIds:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.UpsertFolderRequest:
+      type: object
+      properties:
+        folder:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertFolderInput"
+    jumpcloud.privileged_access.FolderManagerListItem:
+      type: object
+      properties:
+        firstName:
+          type: string
+        id:
+          type: integer
+          format: int32
+        lastName:
+          type: string
+        username:
+          type: string
+    jumpcloud.privileged_access.ListFolderManagersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.FolderManagerListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.CreateLinkReply:
+      type: object
+      properties:
+        credentialId:
+          type: string
+          format: byte
+        credentialName:
+          type: string
+        id:
+          type: string
+          format: byte
+        resourceId:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.FolderStatsMetadata:
+      type: object
+      properties:
+        resourcesCount:
+          type: integer
+          format: int32
+        secretsCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.GetParametersExtensionReply:
+      type: object
+      properties:
+        parametersExtension:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ParametersExtension"
+    jumpcloud.privileged_access.GetCredentialSecretV2Reply:
+      type: object
+      properties:
+        result:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialSecretV2Result"
+    jumpcloud.privileged_access.GetCredentialSecretV2Result:
+      type: object
+      properties:
+        accessRequest:
+          type: integer
+          format: int32
+        approverRequirestJustification:
+          type: boolean
+        canView:
+          type: boolean
+        cardNumber:
+          type: string
+        cardholderName:
+          type: string
+          description: CreditCard display fields.
+        city:
+          type: string
+        connectionExpireDate:
+          type: string
+        connectionStartDate:
+          type: string
+        connectionStringValue:
+          type: string
+        country:
+          type: string
+        email:
+          type: string
+        expirationDate:
+          type: string
+        expiryMonth:
+          type: integer
+          format: int32
+        expiryYear:
+          type: integer
+          format: int32
+        firstAddressLine:
+          type: string
+        firstName:
+          type: string
+          description: Identity fields.
+        gender:
+          type: string
+        idNumber:
+          type: string
+        idType:
+          type: string
+          description: IdCard fields.
+        identityCountry:
+          type: string
+        issuanceDate:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        nameOnId:
+          type: string
+        notes:
+          type: string
+        pass:
+          type: string
+        passphrase:
+          type: string
+        passwordLastUpdateDays:
+          type: integer
+          format: int32
+        phone:
+          type: string
+        privateKey:
+          type: string
+        publicKey:
+          type: string
+        secondAddressLine:
+          type: string
+        secureNoteContent:
+          type: string
+        securityCode:
+          type: string
+        sessionId:
+          type: string
+        title:
+          type: string
+        twoFaSecret:
+          type: string
+        username:
+          type: string
+        zipCode:
+          type: string
     jumpcloud.alerts.AddAlertNoteResponse:
       type: object
       properties:
@@ -55244,6 +59269,32 @@ components:
       title: contains the configuration parameters required for the creation of an API key
       required:
         - lifetime
+    jumpcloud.privileged_access.LogEventRequest:
+      type: object
+      properties:
+        eventType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.LogEventType"
+        resource:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.LogEventResource"
+    jumpcloud.privileged_access.LogEventResource:
+      type: object
+      properties:
+        displayName:
+          type: string
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        type:
+          type: string
+    jumpcloud.privileged_access.LogEventType:
+      type: string
+      enum:
+        - LOG_EVENT_TYPE_UNSPECIFIED
+        - PASSWORDVAULT_CREDENTIAL_COPY
+        - PASSWORDVAULT_CREDENTIAL_REVEAL
+      default: LOG_EVENT_TYPE_UNSPECIFIED
     devices.WindowsCustomInstallerConfig:
       type: object
       properties:
@@ -57250,6 +61301,7 @@ components:
           enum:
             - user
             - user_group
+            - system_group
           type: string
     trait_graphTargetsRule_targets:
       name: targets
@@ -57324,6 +61376,7 @@ components:
             - command
             - policy
             - policy_group
+            - radius_server
             - user
             - user_group
           type: string
@@ -57633,6 +61686,26 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/AuthnPolicy"
+    FolderService_BulkMoveItemsToBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              credentialIds:
+                type: array
+                items:
+                  type: string
+                  format: byte
+              resourceIds:
+                type: array
+                items:
+                  type: string
+                  format: byte
+              targetFolderId:
+                type: string
+                format: byte
+      required: true
     active-directory:
       content:
         application/json:
@@ -57680,11 +61753,55 @@ components:
                 type: string
                 format: byte
       required: true
+    CredentialsService_DuplicateBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              newName:
+                type: string
+      required: true
+    jumpcloud.privileged_access.ArchiveCredentialsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ArchiveCredentialsRequest"
+      required: true
+    jumpcloud.privileged_access.ExportExcelRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ExportExcelRequest"
+      required: true
     Devices_EraseDeviceBody:
       content:
         application/json:
           schema:
             type: object
+      required: true
+    CredentialsService_TakeoverByAdminBody:
+      content:
+        application/json:
+          schema:
+            type: object
+      required: true
+    FolderService_BulkRemoveItemsBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              credentialIds:
+                type: array
+                items:
+                  type: string
+                  format: byte
+              resourceIds:
+                type: array
+                items:
+                  type: string
+                  format: byte
       required: true
     jumpcloud.http.assets.CreateAssetHistoryNoteRequest:
       content:
@@ -57781,6 +61898,7 @@ tags:
   - name: Password Manager
   - name: Password Policy
   - name: Password Reset
+  - name: Password Vault
   - name: PasswordManagerItem
   - name: PayNow
   - name: Plan
@@ -57901,6 +62019,7 @@ x-tagGroups:
       - Organizations
       - Password Manager
       - Password Policy
+      - Password Vault
       - PasswordManagerItem
       - Policies
       - Policy Group Associations
@@ -57908,6 +62027,7 @@ x-tagGroups:
       - Policy Group Templates
       - Policy Groups
       - Policytemplates
+      - Privileged Access
       - Providers
       - Push Verification
       - RADIUS Servers
