@@ -38856,7 +38856,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertFrequencySettings":{"countPerResource":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -38864,6 +38864,14 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules"
 
             payload = {"rule": {
+                    "alertFrequencySettings": {
+                        "countPerResource": True,
+                        "eventThresholdCount": 0,
+                        "monitoringWindow": {
+                            "unit": "string",
+                            "value": 0
+                        }
+                    },
                     "alertsEnabled": True,
                     "category": "RULE_CATEGORY_UNSPECIFIED",
                     "conditions": [
@@ -38925,7 +38933,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertFrequencySettings":{"countPerResource":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules/{id}:
     get:
       summary: This endpoint is used for getting a health monitoring rule.
@@ -39067,7 +39075,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertFrequencySettings":{"countPerResource":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -39075,6 +39083,14 @@ paths:
             url = "https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}"
 
             payload = {"rule": {
+                    "alertFrequencySettings": {
+                        "countPerResource": True,
+                        "eventThresholdCount": 0,
+                        "monitoringWindow": {
+                            "unit": "string",
+                            "value": 0
+                        }
+                    },
                     "alertsEnabled": True,
                     "category": "RULE_CATEGORY_UNSPECIFIED",
                     "conditions": [
@@ -39136,7 +39152,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertFrequencySettings":{"countPerResource":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/ruletemplates:
     get:
       summary: This endpoint is used for listing the rules of health monitoring.
@@ -69341,6 +69357,8 @@ components:
     jumpcloud.healthmonitoring.Rule:
       type: object
       properties:
+        alertFrequencySettings:
+          $ref: '#/components/schemas/jumpcloud.healthmonitoring.AlertFrequencySettings'
         alertsEnabled:
           type: boolean
           title: Presence-aware flags to decouple alert from notification delivery
@@ -75598,6 +75616,33 @@ components:
           items:
             type: integer
             format: int32
+    jumpcloud.healthmonitoring.AlertFrequencySettings:
+      type: object
+      properties:
+        countPerResource:
+          type: boolean
+          description: When true, count events per resource grouping key; false = org-wide default.
+        eventThresholdCount:
+          type: integer
+          format: int32
+          description: Minimum matching events (N) before alert fires. Unset or 1 = fire on first match.
+        monitoringWindow:
+          $ref: '#/components/schemas/jumpcloud.healthmonitoring.MonitoringWindow'
+      description: |-
+        AlertFrequencySettings configures N-in-T alert frequency for a rule.
+        monitoring_window is required when event_threshold_count > 1.
+    jumpcloud.healthmonitoring.MonitoringWindow:
+      type: object
+      properties:
+        unit:
+          type: string
+          description: 'Supported units: minutes, hours, days.'
+        value:
+          type: integer
+          format: int64
+      description: |-
+        MonitoringWindow is the rolling window duration for N-in-T alert frequency.
+        Required when event_threshold_count > 1. Normalized to seconds server-side; min 300s; max configurable.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
