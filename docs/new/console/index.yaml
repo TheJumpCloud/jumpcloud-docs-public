@@ -33145,6 +33145,476 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement
+  /api/v2/identityrisk/access-geolocations:
+    get:
+      summary: Get identity risk geo distribution
+      description: |-
+        This endpoint gets the geographic distribution for identity risk detections in an organization.
+
+        **Example request:**
+        ```
+        GET /api/v2/identityrisk/access-geolocations?start_time=2024-01-01T00:00:00Z&end_time=2024-01-31T23:59:59Z
+        ```
+      operationId: getApiV2IdentityriskAccessGeolocations
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.GetRiskyAccessGeolocationResponse"
+      parameters:
+        - name: startTime
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
+  /api/v2/identityrisk/events:
+    get:
+      summary: List identity risk events
+      description: |-
+        This endpoint lists all identity risk events for an organization.
+
+        **Example request:**
+        ```
+        GET /api/v2/identityrisk/events?filter=level:eq:RISK_LEVEL_MEDIUM&limit=10&skip=0&sort=-lastOccurrenceAt
+        ```
+
+        **Example request with multiple filters:**
+        ```
+        GET /api/v2/identityrisk/events?filter=level:eq:RISK_LEVEL_MEDIUM&filter=resolutionStatus:eq:RISK_RESOLUTION_STATUS_OPEN&limit=25&skip=0
+        ```
+      operationId: getApiV2IdentityriskEvents
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.ListRiskEventsResponse"
+      parameters:
+        - name: filter
+          description: |
+            A filter to apply to the query.
+
+              **Filter structure**: `<field>:<operator>:<value>`.
+
+              **field** = A supported collection field name (camelCase): identityObjectId, identityType, identityIdentifier, score, occurrenceCount, level, resolutionStatus, resolutionState, firstOccurrenceAt, lastOccurrenceAt, loginResource, loginStatus, countryCode, city, riskFactorCode.
+
+              **operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.
+
+              **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+              **Example** `GET /api/v2/identityrisk/events?filter=level:eq:RISK_LEVEL_MEDIUM`
+              **Example for users** `GET /api/v2/identityrisk/events?filter=identityIdentifier:in:user1,user2`
+              **Example for score** `GET /api/v2/identityrisk/events?filter=score:gt:50`
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: fields
+          description: The fields on the items listed to return.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: "0"
+        - name: sort
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: limit
+          description: |-
+            The number of records to return at once.
+            If the number returned is less than `limit` there are no more records to fetch.
+            If the number returned equals `limit` there may be more records. Increment `skip` by `limit` to get the next set.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: "100"
+        - name: searchTerm
+          description: |-
+            A free-text search term matched against all string filter fields (case-insensitive substring) and object-id fields objectId and identityObjectId (exact hex match). A match on any field is sufficient (logical OR), and searchTerm is combined with `filter` using logical AND.
+
+              **Example** `GET /api/v2/identityrisk/events?searchTerm=john.doe`
+              **Combined with filters** `GET /api/v2/identityrisk/events?searchTerm=john&filter=resolutionStatus:eq:RISK_RESOLUTION_STATUS_OPEN`
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
+  /api/v2/identityrisk/events/{objectId}:
+    get:
+      summary: Get an identity risk event by object_id.
+      description: |-
+        This endpoint allows you to get an identity risk event using its id.
+
+        **Example request:**
+        ```
+        GET /api/v2/identityrisk/events/{object_id}
+        ```
+      operationId: getApiV2IdentityriskEventsByObjectid
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.RiskEvent"
+      parameters:
+        - name: objectId
+          description: object_id is the bson Object id of the risk event.
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
+  /api/v2/identityrisk/events/{objectId}/resolve:
+    patch:
+      summary: Resolve an identity risk event.
+      description: |-
+        This endpoint allows you to resolve an identity risk event using its id.
+
+        **Example request:**
+        ```
+        PATCH /api/v2/identityrisk/events/{object_id}/resolve
+        Content-Type: application/json
+
+        {
+          "resolution_status": "RISK_RESOLUTION_STATUS_RESOLVED",
+          "resolution_state": "RISK_RESOLUTION_STATE_SAFE",
+          "resolution_notes": "Verified with the user — login was legitimate."
+        }
+        ```
+      operationId: patchApiV2IdentityriskEventsByObjectidResolve
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.RiskEvent"
+      parameters:
+        - name: objectId
+          description: object_id is the bson Object id of the risk event.
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resolutionNotes:
+                  type: string
+                resolutionState:
+                  $ref: "#/components/schemas/jumpcloud.identity_risk.RiskResolutionState"
+                resolutionStatus:
+                  $ref: "#/components/schemas/jumpcloud.identity_risk.RiskResolutionStatus"
+        required: true
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+  /api/v2/identityrisk/factors-timeline:
+    post:
+      summary: Query identity risk detections timeline
+      description: |-
+        This endpoint gets the identity risk detections timeline (counts over time) for an organization.
+
+        **Example request:**
+        ```
+        POST /api/v2/identityrisk/factors-timeline
+        {
+          "interval": "day",
+          "start_time": "2024-01-01T00:00:00Z",
+          "end_time": "2024-01-31T23:59:59Z"
+        }
+        ```
+
+        **Example request filtered by risk factor:**
+        ```
+        POST /api/v2/identityrisk/factors-timeline
+        {
+          "interval": "day",
+          "start_time": "2024-01-01T00:00:00Z",
+          "end_time": "2024-01-31T23:59:59Z",
+          "risk_factor_types": ["IMPOSSIBLE_TRAVEL"]
+        }
+        ```
+      operationId: postApiV2IdentityriskFactorsTimeline
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.RiskTimelineResponse"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.identity_risk.GetTimelineRequest"
+        required: true
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
+  /api/v2/identityrisk/identities:
+    get:
+      summary: Get identities by identity risk
+      description: |-
+        This endpoint gets the identities by identity risk count for an organization.
+
+        **Example request:**
+        ```
+        GET /api/v2/identityrisk/identities?start_time=2024-01-01T00:00:00Z&end_time=2024-01-31T23:59:59Z&limit=10
+        ```
+      operationId: getApiV2IdentityriskIdentities
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.GetRiskyIdentitiesResponse"
+      parameters:
+        - name: startTime
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          description: The maximum number of identities to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+            default: "10"
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
+  /api/v2/identityrisk/identities/{objectId}:
+    get:
+      summary: Get identity profile by object_id.
+      description: |-
+        This endpoint returns the risk profile (typical behavior baseline) for a specific identity.
+
+        **Example request:**
+        ```
+        GET /api/v2/identityrisk/identities/{object_id}
+        ```
+      operationId: getApiV2IdentityriskIdentitiesByObjectid
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.Profile"
+      parameters:
+        - name: objectId
+          description: object_id is the bson Object id of the identity.
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
+  /api/v2/identityrisk/identities/{objectId}/trend:
+    get:
+      summary: Get identity risk trend by object_id.
+      description: |-
+        This endpoint returns the risk trend for a specific identity over a given period.
+
+        **Example request:**
+        ```
+        GET /api/v2/identityrisk/identities/{object_id}/trend?period=7d
+        ```
+      operationId: getApiV2IdentityriskIdentitiesByObjectidTrend
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.Trend"
+      parameters:
+        - name: objectId
+          description: object_id is the bson Object id of the identity.
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: period
+          description: The time window for the trend calculation (e.g. "7d", "30d").
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
+  /api/v2/identityrisk/login-types:
+    get:
+      summary: Get identity risk login type distribution
+      description: |-
+        This endpoint gets the login type distribution for identity risk detections in an organization.
+
+        **Example request:**
+        ```
+        GET /api/v2/identityrisk/logintypes?start_time=2024-01-01T00:00:00Z&end_time=2024-01-31T23:59:59Z
+        ```
+      operationId: getApiV2IdentityriskLoginTypes
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.LoginTypeDistribution"
+      parameters:
+        - name: startTime
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
+  /api/v2/identityrisk/stats:
+    get:
+      summary: Get identity risk Stats
+      description: |-
+        This endpoint gets the identity risk Stats (dashboard metrics) for an organization.
+
+        **Example request:**
+        ```
+        GET /api/v2/identityrisk/stats?start_time=2024-01-01T00:00:00Z&end_time=2024-01-31T23:59:59Z
+        ```
+      operationId: getApiV2IdentityriskStats
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.identity_risk.IdentityRiskStats"
+      parameters:
+        - name: startTime
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Identity Risk
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
   /api/v2/password-manager:
     get:
       description: Get Password Manager Organization
@@ -57302,6 +57772,363 @@ components:
       type: object
     jumpcloud.ingresso.StartSessionResponse:
       type: object
+    jumpcloud.identity_risk.Browser:
+      type: object
+      properties:
+        isPrimary:
+          type: boolean
+        name:
+          type: string
+    jumpcloud.identity_risk.Device:
+      type: object
+      properties:
+        isPrimary:
+          type: boolean
+        name:
+          type: string
+        operatingSystem:
+          type: string
+        osVersion:
+          type: string
+    jumpcloud.identity_risk.GeoItem:
+      type: object
+      properties:
+        city:
+          type: string
+        count:
+          type: integer
+          format: int32
+        countryCode:
+          type: string
+        countryName:
+          type: string
+    jumpcloud.identity_risk.GetRiskyAccessGeolocationResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.GeoItem"
+    jumpcloud.identity_risk.GetRiskyIdentitiesResponse:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.IdentityItem"
+        totalIdentitiesWithRisk:
+          type: integer
+          format: int32
+          description: total_identities_with_risk is the total number of identities with at least one open risk event.
+        trendsCount:
+          type: integer
+          format: int32
+    jumpcloud.identity_risk.GetTimelineRequest:
+      type: object
+      properties:
+        endTime:
+          type: string
+        intervalType:
+          type: string
+        intervalValue:
+          type: string
+        riskFactorTypes:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: string
+    jumpcloud.identity_risk.IdentityItem:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        displayName:
+          type: string
+        identifier:
+          type: string
+        identityObjectId:
+          type: string
+          format: byte
+    jumpcloud.identity_risk.IdentityRiskStats:
+      type: object
+      properties:
+        adminResolved:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskStatCount"
+        autoResolvedByMfa:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskStatCount"
+        criticalRisk:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskStatCount"
+        mfaFailed:
+          type: integer
+          format: int32
+        normalIdentities:
+          type: integer
+          format: int32
+        openDetections:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskStatCount"
+        overallDetections:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskStatCount"
+        privilegedIdentities:
+          type: integer
+          format: int32
+        totalResolved:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskStatCount"
+    jumpcloud.identity_risk.IdentityType:
+      type: string
+      enum:
+        - IDENTITY_TYPE_UNSPECIFIED
+        - IDENTITY_TYPE_ADMIN
+        - IDENTITY_TYPE_USER
+      default: IDENTITY_TYPE_UNSPECIFIED
+    jumpcloud.identity_risk.LoginLocation:
+      type: object
+      properties:
+        city:
+          type: string
+        countryName:
+          type: string
+        isPrimary:
+          type: boolean
+        percentage:
+          type: string
+    jumpcloud.identity_risk.LoginTypeDistribution:
+      type: object
+      properties:
+        loginTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.LoginTypeItem"
+    jumpcloud.identity_risk.LoginTypeItem:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        loginResource:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.TargetResourceType"
+    jumpcloud.identity_risk.Network:
+      type: object
+      properties:
+        isPrimary:
+          type: boolean
+        network:
+          type: string
+        networkType:
+          type: string
+    jumpcloud.identity_risk.RiskEvent:
+      type: object
+      properties:
+        applicationDisplayName:
+          type: string
+        applicationName:
+          type: string
+        city:
+          type: string
+        clientIp:
+          type: string
+          description: client_ip is the client IP from the Directory Insights login event for the latest occurrence.
+        countryCode:
+          type: string
+        createdAt:
+          type:
+            - string
+            - "null"
+          format: date-time
+        description:
+          type: string
+          description: |-
+            description is a human readable description of the risk event.
+            not populated when a list of risk events is retrieved.
+        diEvent:
+          type: object
+          description: |-
+            di_event is the full Directory Insights event for the latest occurrence (JSON-compatible).
+            Populated when a specific risk event is retrieved via GetRiskEvent.
+        firstOccurrenceAt:
+          type:
+            - string
+            - "null"
+          format: date-time
+        identityDisplayName:
+          type: string
+        identityIdentifier:
+          type: string
+        identityObjectId:
+          type: string
+          format: byte
+        identityType:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.IdentityType"
+        lastOccurrenceAt:
+          type:
+            - string
+            - "null"
+          format: date-time
+        level:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskLevel"
+        location:
+          type: string
+          description: location is "city, country code" format.
+        loginResource:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.TargetResourceType"
+        loginStatus:
+          type: boolean
+        mfaStatus:
+          type: boolean
+        objectId:
+          type: string
+          format: byte
+        occurrenceCount:
+          type: integer
+          format: int32
+        regionName:
+          type: string
+        resolutionNotes:
+          type: string
+        resolutionState:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskResolutionState"
+        resolutionStatus:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskResolutionStatus"
+        resolvedAt:
+          type:
+            - string
+            - "null"
+          format: date-time
+        resolvedBy:
+          type:
+            - string
+            - "null"
+          format: byte
+        resolvedByEmail:
+          type: string
+        riskFactorTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.RiskFactorType"
+          description: |-
+            risk_factor_types is a list of risk factor types that contributed to this risk event.
+            populated when a list of risk events is retrieved. Risk factor types are the codes of the risk factors.
+        riskFactors:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.RiskFactor"
+          description: |-
+            risk_factors is a list of risk factors that contributed to this risk event.
+            populated when a specific risk event is retrieved.
+        score:
+          type: integer
+          format: int32
+        sourceEventObjectId:
+          type: string
+          format: byte
+          description: Source DI context for the last occurrence of this risk event (flattened).
+        sourceEventTimestamp:
+          type:
+            - string
+            - "null"
+          format: date-time
+        sourceEventType:
+          type: string
+        updatedAt:
+          type:
+            - string
+            - "null"
+          format: date-time
+    jumpcloud.identity_risk.RiskFactor:
+      type: object
+      properties:
+        description:
+          type: string
+        metadata:
+          type: object
+        severity:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskFactorSeverity"
+        type:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.RiskFactorType"
+        weight:
+          type: integer
+          format: int64
+      description: |-
+        RiskFactor represents one contributing risk factor (e.g. NEW_DEVICE_LOGIN, UNUSUAL_GEOLOCATION).
+        Metadata is generic for now; can be evolved to typed oneof per factor type later.
+    jumpcloud.identity_risk.RiskFactorSeverity:
+      type: string
+      enum:
+        - RISK_FACTOR_SEVERITY_UNSPECIFIED
+        - RISK_FACTOR_SEVERITY_LOW
+        - RISK_FACTOR_SEVERITY_MEDIUM
+        - RISK_FACTOR_SEVERITY_HIGH
+        - RISK_FACTOR_SEVERITY_CRITICAL
+      default: RISK_FACTOR_SEVERITY_UNSPECIFIED
+    jumpcloud.identity_risk.RiskFactorType:
+      type: string
+      enum:
+        - RISK_FACTOR_TYPE_UNSPECIFIED
+        - RISK_FACTOR_TYPE_NEW_DEVICE_LOGIN
+        - RISK_FACTOR_TYPE_UNUSUAL_GEOLOCATION
+        - RISK_FACTOR_TYPE_UNUSUAL_LOGIN_TIME
+        - RISK_FACTOR_TYPE_UNUSUAL_USER_AGENT
+        - RISK_FACTOR_TYPE_IMPOSSIBLE_TRAVEL
+        - RISK_FACTOR_TYPE_DORMANT_ACCOUNT_LOGIN
+        - RISK_FACTOR_TYPE_NEW_ASN
+        - RISK_FACTOR_TYPE_EXCESSIVE_FAILED_LOGIN_ATTEMPTS
+        - RISK_FACTOR_TYPE_HIGH_VOLUME_LOGIN_ATTEMPTS
+        - RISK_FACTOR_TYPE_UNUSUAL_APPLICATION_LOGIN
+      default: RISK_FACTOR_TYPE_UNSPECIFIED
+      description: RiskFactorType identifies the kind of risk factor contributing to the score.
+    jumpcloud.identity_risk.RiskLevel:
+      type: string
+      enum:
+        - RISK_LEVEL_NONE
+        - RISK_LEVEL_LOW
+        - RISK_LEVEL_MEDIUM
+        - RISK_LEVEL_HIGH
+        - RISK_LEVEL_CRITICAL
+      default: RISK_LEVEL_NONE
+    jumpcloud.identity_risk.RiskResolutionState:
+      type: string
+      enum:
+        - RISK_RESOLUTION_STATE_UNSPECIFIED
+        - RISK_RESOLUTION_STATE_SAFE
+        - RISK_RESOLUTION_STATE_UNSAFE
+      default: RISK_RESOLUTION_STATE_UNSPECIFIED
+    jumpcloud.identity_risk.RiskResolutionStatus:
+      type: string
+      enum:
+        - RISK_RESOLUTION_STATUS_UNSPECIFIED
+        - RISK_RESOLUTION_STATUS_OPEN
+        - RISK_RESOLUTION_STATUS_RESOLVED
+        - RISK_RESOLUTION_STATUS_MFA_RESOLVED
+      default: RISK_RESOLUTION_STATUS_UNSPECIFIED
+    jumpcloud.identity_risk.RiskStatCount:
+      type: object
+      properties:
+        currentCount:
+          type: integer
+          format: int32
+        previousCount:
+          type: integer
+          format: int32
+      description: RiskStatCount holds the current and previous count values for a risk statistic.
+    jumpcloud.identity_risk.RiskTimelineResponse:
+      type: object
+      properties:
+        timelineData:
+          type: object
+      description: |-
+        since we are using google.protobuf.Struct for timeline_data.
+        This allows arbitrary JSON structures (like dynamic maps).
+    jumpcloud.identity_risk.TargetResourceType:
+      type: string
+      enum:
+        - TARGET_RESOURCE_TYPE_UNSPECIFIED
+        - TARGET_RESOURCE_TYPE_USER_PORTAL
+        - TARGET_RESOURCE_TYPE_ADMIN_PORTAL
+        - TARGET_RESOURCE_TYPE_APPLICATION
+        - TARGET_RESOURCE_TYPE_DEVICE
+      default: TARGET_RESOURCE_TYPE_UNSPECIFIED
+      description: TargetResourceType is the type of resource targeted by the event (e.g. Device for login_attempt).
     jumpcloud.healthmonitoring.PollRuleCondition:
       type: object
       properties:
@@ -57321,6 +58148,78 @@ components:
           type: boolean
         orgPublicKey:
           type: string
+    jumpcloud.identity_risk.ListRiskEventsResponse:
+      type: object
+      properties:
+        riskEvents:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.RiskEvent"
+        totalCount:
+          type: integer
+          format: int64
+          description: total_count is the total number of risk events matching the query (before pagination).
+    jumpcloud.identity_risk.Profile:
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            type: string
+        avgLoginSessionCountPerDay:
+          type: integer
+          format: int32
+        deviceIds:
+          type: array
+          items:
+            type: string
+        devices:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.Device"
+        objectId:
+          type: string
+          format: byte
+        profileData:
+          type: object
+          description: |-
+            profile_data is the full stored identity profile document (JSON-compatible).
+            Populated when a specific identity profile is retrieved via GetProfile.
+        typicalBrowsers:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.Browser"
+        typicalLoginDays:
+          type: array
+          items:
+            type: string
+        typicalLoginHours:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.TypicalLoginHour"
+        typicalLoginHoursEnd:
+          type: string
+        typicalLoginHoursStart:
+          type: string
+        typicalLoginLocations:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.LoginLocation"
+        typicalNetworks:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.identity_risk.Network"
+    jumpcloud.identity_risk.Trend:
+      type: object
+      properties:
+        comparisonPeriod:
+          type: string
+        currentDetectionCount:
+          type: integer
+          format: int32
+        previousDetectionCount:
+          type: integer
+          format: int32
     devices.SoftwareApp.Setting.AppDeliveryMethod:
       type: string
       enum:
@@ -57503,6 +58402,14 @@ components:
       properties:
         savedReport:
           $ref: "#/components/schemas/jumpcloud.insights.SavedReport"
+    jumpcloud.identity_risk.TypicalLoginHour:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        hour:
+          type: string
     jumpcloud.privileged_access.AccessPolicies:
       type: object
       properties:
@@ -61948,6 +62855,7 @@ x-tagGroups:
       - Groups
       - IP Lists
       - Identity Providers
+      - Identity Risk
       - Image
       - LDAP Servers
       - Logos
@@ -62060,6 +62968,8 @@ x-scopes:
   - healthmonitoring.alerts.readonly
   - healthmonitoring.rules
   - healthmonitoring.rules.readonly
+  - identityrisk
+  - identityrisk.readonly
   - mdm
   - mdm.readonly
   - mfa

@@ -3377,6 +3377,56 @@ operations:
     legacy_operation_id: WorkflowAccessRequestApi_RevokeElevatedPermissions
     standardized_operation_id: postApiV2SudoactivesessionsRevoke
   - method: get
+    host_root_path: /api/v2/identityrisk/access-geolocations
+    base_path: /api/v2
+    legacy_operation_id: RiskStatsService_GetRiskyAccessGeolocation
+    standardized_operation_id: getApiV2IdentityriskAccessGeolocations
+  - method: get
+    host_root_path: /api/v2/identityrisk/events
+    base_path: /api/v2
+    legacy_operation_id: RiskEventsService_ListRiskEvents
+    standardized_operation_id: getApiV2IdentityriskEvents
+  - method: get
+    host_root_path: /api/v2/identityrisk/events/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: RiskEventsService_GetRiskEvent
+    standardized_operation_id: getApiV2IdentityriskEventsByObjectid
+  - method: patch
+    host_root_path: /api/v2/identityrisk/events/{objectId}/resolve
+    base_path: /api/v2
+    legacy_operation_id: RiskEventsService_ResolveRiskEvent
+    standardized_operation_id: patchApiV2IdentityriskEventsByObjectidResolve
+  - method: post
+    host_root_path: /api/v2/identityrisk/factors-timeline
+    base_path: /api/v2
+    legacy_operation_id: RiskStatsService_GetTimeline
+    standardized_operation_id: postApiV2IdentityriskFactorsTimeline
+  - method: get
+    host_root_path: /api/v2/identityrisk/identities
+    base_path: /api/v2
+    legacy_operation_id: RiskStatsService_GetRiskyIdentities
+    standardized_operation_id: getApiV2IdentityriskIdentities
+  - method: get
+    host_root_path: /api/v2/identityrisk/identities/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: RiskProfileService_GetProfile
+    standardized_operation_id: getApiV2IdentityriskIdentitiesByObjectid
+  - method: get
+    host_root_path: /api/v2/identityrisk/identities/{objectId}/trend
+    base_path: /api/v2
+    legacy_operation_id: RiskProfileService_GetTrend
+    standardized_operation_id: getApiV2IdentityriskIdentitiesByObjectidTrend
+  - method: get
+    host_root_path: /api/v2/identityrisk/login-types
+    base_path: /api/v2
+    legacy_operation_id: RiskStatsService_GetLoginTypeDistribution
+    standardized_operation_id: getApiV2IdentityriskLoginTypes
+  - method: get
+    host_root_path: /api/v2/identityrisk/stats
+    base_path: /api/v2
+    legacy_operation_id: RiskStatsService_GetStats
+    standardized_operation_id: getApiV2IdentityriskStats
+  - method: get
     host_root_path: /api/v2/password-manager
     base_path: /api/v2
     legacy_operation_id: Config_Get
