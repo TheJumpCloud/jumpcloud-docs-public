@@ -3832,6 +3832,21 @@ operations:
     legacy_operation_id: PrivilegedAccessService_FinalizeActivation
     standardized_operation_id: postApiV2PrivilegedAccessPamActivationFinalize
   - method: get
+    host_root_path: /api/v2/gcep/configuration
+    base_path: /api/v2
+    legacy_operation_id: GoogleChromeEnterprisePremiumService_GetConfiguration
+    standardized_operation_id: getApiV2GcepConfiguration
+  - method: put
+    host_root_path: /api/v2/gcep/configuration
+    base_path: /api/v2
+    legacy_operation_id: GoogleChromeEnterprisePremiumService_SetConfiguration
+    standardized_operation_id: putApiV2GcepConfiguration
+  - method: delete
+    host_root_path: /api/v2/gcep/configuration
+    base_path: /api/v2
+    legacy_operation_id: GoogleChromeEnterprisePremiumService_DeleteConfiguration
+    standardized_operation_id: deleteApiV2GcepConfiguration
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations

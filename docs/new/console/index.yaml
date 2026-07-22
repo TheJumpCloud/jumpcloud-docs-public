@@ -36319,6 +36319,137 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - passwordmanager
+  /api/v2/gcep/configuration:
+    get:
+      description: Returns the GCEP integration configuration for an organization
+      operationId: getApiV2GcepConfiguration
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.partners.GetConfigurationResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.ErrorDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      tags:
+        - GCEP
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - partners
+        - partners.readonly
+    put:
+      description: Creates or updates the GCEP integration configuration for an organization
+      operationId: putApiV2GcepConfiguration
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.partners.CommandResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.ErrorDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.partners.SetConfigurationRequest"
+        required: true
+      tags:
+        - GCEP
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - partners
+    delete:
+      description: Deletes the GCEP integration configuration for an organization
+      operationId: deleteApiV2GcepConfiguration
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.partners.CommandResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.ErrorDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      tags:
+        - GCEP
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - partners
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -60226,6 +60357,46 @@ components:
         Required when event_threshold_count > 1. Normalized to seconds server-side; min 300s; max configurable.
     jumpcloud.privileged_access.FinalizeActivationRequest:
       type: object
+    jumpcloud.partners.CommandResponse:
+      type: object
+    jumpcloud.partners.GetConfigurationResponse:
+      type: object
+      properties:
+        applicableOsFamilies:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.partners.OSFamily"
+        customerId:
+          type: string
+        enabled:
+          type: boolean
+        googleUserEmail:
+          type: string
+          description: PII or sensitive data; do not log.
+        organizationObjectId:
+          type: string
+          format: byte
+    jumpcloud.partners.OSFamily:
+      type: string
+      enum:
+        - UNSPECIFIED
+        - MAC_OS
+        - WINDOWS
+      default: UNSPECIFIED
+    jumpcloud.partners.SetConfigurationRequest:
+      type: object
+      properties:
+        applicableOsFamilies:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.partners.OSFamily"
+        customerId:
+          type: string
+        enabled:
+          type: boolean
+        googleUserEmail:
+          type: string
+          description: PII or sensitive data; do not log.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
@@ -62784,6 +62955,7 @@ tags:
   - name: FulltextSearch
   - name: G Suite
   - name: G Suite Import
+  - name: GCEP
   - name: Go
   - name: Google EMM
   - name: Graph
@@ -62921,6 +63093,7 @@ x-tagGroups:
       - FeatureTrials
       - G Suite
       - G Suite Import
+      - GCEP
       - Google EMM
       - Graph
       - Groups
@@ -63050,6 +63223,8 @@ x-scopes:
   - organizations
   - organizations.billing
   - organizations.readonly
+  - partners
+  - partners.readonly
   - passwordmanager
   - passwordmanager.readonly
   - protect
