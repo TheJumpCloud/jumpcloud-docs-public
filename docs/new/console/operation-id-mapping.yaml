@@ -3826,6 +3826,11 @@ operations:
     base_path: /api/v2
     legacy_operation_id: Devices_GetDeviceLockState
     standardized_operation_id: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockstate
+  - method: post
+    host_root_path: /api/v2/privileged-access/pam/activation/finalize
+    base_path: /api/v2
+    legacy_operation_id: PrivilegedAccessService_FinalizeActivation
+    standardized_operation_id: postApiV2PrivilegedAccessPamActivationFinalize
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2

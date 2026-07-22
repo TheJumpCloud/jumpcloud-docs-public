@@ -46516,14 +46516,14 @@ paths:
               --url https://console.jumpcloud.com/api/v2/privileged-access/activate \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{}'
+              --data '{"editionType":"string"}'
         - lang: Python
           source: |-
             import requests
 
             url = "https://console.jumpcloud.com/api/v2/privileged-access/activate"
 
-            payload = {}
+            payload = {"editionType": "string"}
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
                 "content-type": "application/json"
@@ -46537,7 +46537,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/activate' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/activate' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"editionType":"string"}'
   /privileged-access/status:
     get:
       description: Get password vault status for an organization
@@ -54067,6 +54067,60 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockstate?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /privileged-access/pam/activation/finalize:
+    post:
+      description: Finalize PAM activation by activating the tenant in VaultOne
+      operationId: PrivilegedAccessService_FinalizeActivation
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.privileged_access.FinalizeActivationRequest'
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/pam/activation/finalize \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/pam/activation/finalize"
+
+            payload = {}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/pam/activation/finalize' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /assets/field-configurations:
     get:
       tags:
@@ -72907,6 +72961,10 @@ components:
       default: TTL_CONFIG_UNSPECIFIED
     jumpcloud.privileged_access.ActivateRequest:
       type: object
+      properties:
+        editionType:
+          type: string
+          description: Edition to provision. Empty or "pwm" (default) = Password Vault; "pam" = Privileged Access.
     jumpcloud.privileged_access.ActivateResponse:
       type: object
       properties:
@@ -73958,12 +74016,20 @@ components:
           $ref: '#/components/schemas/jumpcloud.privileged_access.AccessPolicies'
         archived:
           type: boolean
+        cardholderName:
+          type: string
+          description: 'Payment Card: cardholder name shown as the list subtitle / description column.'
         credentialType:
           $ref: '#/components/schemas/jumpcloud.privileged_access.CredentialType'
         domain:
           type: string
         expirationDate:
           type: string
+        firstName:
+          type: string
+          description: |-
+            Identity: first name shown as the list subtitle / description column.
+            Secure Note and 2FA have no subtitle field (name only).
         folderId:
           type: string
           format: byte
@@ -73972,6 +74038,9 @@ components:
         id:
           type: string
           format: byte
+        idType:
+          type: string
+          description: 'ID Card: id type shown as the list subtitle / description column.'
         isFavorite:
           type: boolean
         last4Digits:
@@ -75643,6 +75712,8 @@ components:
       description: |-
         MonitoringWindow is the rolling window duration for N-in-T alert frequency.
         Required when event_threshold_count > 1. Normalized to seconds server-side; min 300s; max configurable.
+    jumpcloud.privileged_access.FinalizeActivationRequest:
+      type: object
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

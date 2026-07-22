@@ -36294,6 +36294,31 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/privileged-access/pam/activation/finalize:
+    post:
+      description: Finalize PAM activation by activating the tenant in VaultOne
+      operationId: postApiV2PrivilegedAccessPamActivationFinalize
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.FinalizeActivationRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -57448,6 +57473,10 @@ components:
       default: TTL_CONFIG_UNSPECIFIED
     jumpcloud.privileged_access.ActivateRequest:
       type: object
+      properties:
+        editionType:
+          type: string
+          description: Edition to provision. Empty or "pwm" (default) = Password Vault; "pam" = Privileged Access.
     jumpcloud.privileged_access.ActivateResponse:
       type: object
       properties:
@@ -58499,12 +58528,20 @@ components:
           $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
         archived:
           type: boolean
+        cardholderName:
+          type: string
+          description: "Payment Card: cardholder name shown as the list subtitle / description column."
         credentialType:
           $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
         domain:
           type: string
         expirationDate:
           type: string
+        firstName:
+          type: string
+          description: |-
+            Identity: first name shown as the list subtitle / description column.
+            Secure Note and 2FA have no subtitle field (name only).
         folderId:
           type: string
           format: byte
@@ -58513,6 +58550,9 @@ components:
         id:
           type: string
           format: byte
+        idType:
+          type: string
+          description: "ID Card: id type shown as the list subtitle / description column."
         isFavorite:
           type: boolean
         last4Digits:
@@ -60184,6 +60224,8 @@ components:
       description: |-
         MonitoringWindow is the rolling window duration for N-in-T alert frequency.
         Required when event_threshold_count > 1. Normalized to seconds server-side; min 300s; max configurable.
+    jumpcloud.privileged_access.FinalizeActivationRequest:
+      type: object
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
