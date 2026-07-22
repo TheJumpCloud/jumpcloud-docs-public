@@ -1467,6 +1467,11 @@ operations:
     legacy_operation_id: graph_radiusServerTraverseUserGroup
     standardized_operation_id: getApiV2RadiusserversByRadiusserverIdUsergroups
   - method: get
+    host_root_path: /api/v2/radiusservers/{radiusserver_id}/systemgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_radiusServerTraverseSystemGroup
+    standardized_operation_id: getApiV2RadiusserversByRadiusserverIdSystemgroups
+  - method: get
     host_root_path: /api/v2/radiusservers/{radiusserver_id}/users
     base_path: /api/v2
     legacy_operation_id: graph_radiusServerTraverseUser
