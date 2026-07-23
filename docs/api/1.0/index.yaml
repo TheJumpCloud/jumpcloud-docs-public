@@ -9782,6 +9782,8 @@ components:
             experimentStates:
               type: object
               additionalProperties: true
+        isEnterprise:
+          type: boolean
         lastWhatsNewChecked:
           type: string
           format: date-time
