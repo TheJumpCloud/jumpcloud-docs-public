@@ -3816,11 +3816,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: EventsService_LogEvent
     standardized_operation_id: postApiV2PasswordVaultEvents
-  - method: post
-    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockauto
-    base_path: /api/v2
-    legacy_operation_id: Devices_DeviceLockAuto
-    standardized_operation_id: postApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockauto
   - method: get
     host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockpin
     base_path: /api/v2
@@ -3851,6 +3846,11 @@ operations:
     base_path: /api/v2
     legacy_operation_id: GoogleChromeEnterprisePremiumService_DeleteConfiguration
     standardized_operation_id: deleteApiV2GcepConfiguration
+  - method: post
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockwithgeneratedpin
+    base_path: /api/v2
+    legacy_operation_id: Devices_DeviceLockWithGeneratedPin
+    standardized_operation_id: postApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockwithgeneratedpin
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
