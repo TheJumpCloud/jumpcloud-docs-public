@@ -1557,6 +1557,8 @@ info:
      passwordvault_credential_viewdetail               | View credential detail.                                     |
      passwordvault_credential_archive                  | Archive credential.                                         |
      passwordvault_credential_copy                     | Copy credential.                                            |
+     passwordvault_credential_reveal                   | Reveal credential.                                          |
+     passwordvault_credential_duplicate                | Duplicate credential.                                       |
      passwordvault_credential_autofill                 | Autofill credential.                                        |
      passwordvault_credential_export                   | Export credentials.                                         |
      passwordvault_credential_import                   | Import credentials.                                         |
@@ -1570,55 +1572,33 @@ info:
      passwordvault_website_connect                     | Connect website.                                            |
      passwordvault_website_viewdetails                 | View website details.                                       |
      passwordvault_website_archive                     | Archive website.                                            |
+     passwordvault_website_copy                        | Copy website.                                               |
+     passwordvault_website_duplicate                   | Duplicate website.                                          |
      passwordvault_websites_export                     | Export websites.                                            |
      passwordvault_sharedfolder_create                 | Create shared folder.                                       |
      passwordvault_sharedfolder_delete                 | Delete shared folder.                                       |
      passwordvault_sharedfolder_user_add               | Add user to shared folder.                                  |
+     passwordvault_sharedfolder_group_add              | Add group to shared folder.                                 |
      passwordvault_sharedfolder_user_update            | Update user in shared folder.                               |
      passwordvault_sharedfolder_user_remove            | Remove user from shared folder.                             |
-     passwordvault_sharedfolder_credential_add         | Add credential to a shared folder.                          |
-     passwordvault_sharedfolder_website_add            | Add website to a shared folder.                             |
-     passwordvault_sharedfolder_credential_update      | Update credential in a shared folder.                       |
-     passwordvault_sharedfolder_website_update         | Update website in a shared folder.                          |
-     passwordvault_sharedfolder_credential_remove      | Remove credential from a shared folder.                     |
-     passwordvault_sharedfolder_website_remove         | Remove website from a shared folder.                        |
+     passwordvault_sharedfolder_credential_add         | Add credential to shared folder.                            |
+     passwordvault_sharedfolder_website_add            | Add website to shared folder.                               |
+     passwordvault_sharedfolder_credential_update      | Update credential in shared folder.                         |
+     passwordvault_sharedfolder_website_update         | Update website in shared folder.                            |
+     passwordvault_sharedfolder_credential_remove      | Remove credential from shared folder.                       |
+     passwordvault_sharedfolder_website_remove         | Remove website from shared folder.                          |
      passwordvault_personalfolder_create               | Create personal folder.                                     |
      passwordvault_personalfolder_delete               | Delete personal folder.                                     |
-     passwordvault_personalfolder_credential_add       | Add credential to a personal folder.                        |
-     passwordvault_personalfolder_website_add          | Add website to a personal folder.                           |
-     passwordvault_personalfolder_credential_update    | Update credential in a personal folder.                     |
-     passwordvault_personalfolder_website_update       | Update website in a personal folder.                        |
-     passwordvault_personalfolder_credential_remove    | Remove credential from a personal folder.                   |
-     passwordvault_personalfolder_website_remove       | Remove website from a personal folder.                      |
-     passwordvault_sharedfolders_policy_group_add      | Add permission for a specific group to share folders.       |
-     passwordvault_sharedfolders_policy_user_add       | Add permission for a specific user to share folders.        |
-     passwordvault_sharedfolders_policy_group_remove   | Delete group permission to share folders.                   |
-     passwordvault_sharedfolders_policy_user_remove    | Delete user permission to share folders.                    |
-     passwordvault_sharedfolders_policy_update         | Update shared folders policy.                               |
-     passwordvault_user_remove                         | Delete user from JumpCloud.                                 |
-     passwordvault_folder_group_add                    | Add group to a shared folder.                               |
-     passwordvault_folder_group_update                 | Update the group role inside a shared folder.               |
-     passwordvault_folder_group_remove                 | Remove group access to a shared folder.                     |
-     passwordvault_folder_update                       | Update folder details.                                      |
-     passwordvault_viewsecret                          | View secret.                                                |
-     passwordvault_extension_settin_update             | Update browser extension settings.                          |
-     passwordvault_extension_site_exclusion            | Exclude site from browser extension.                        |
-     passwordvault_mobile_access_enable                | Enable Password Vault mobile access for organization.       |
-     passwordvault_mobile_access_disable               | Disable Password Vault mobile access for organization.      |
-     passwordvault_browserextension_enable             | Enable Password Vault capabilities in JumpCloud Go.         |
-     passwordvault_browserextension_disable            | Disable Password Vault capabilities in JumpCloud Go.        |
-     passwordvault_exportcredentials_enable            | Enable export of Password Vault credentials.                |
-     passwordvault_exportcredentials_disable           | Disable export of Password Vault credentials.               |
-     passwordvault_exportwebsites_enable               | Enable export of Password Vault websites.                   |
-     passwordvault_exportwebsites_disable              | Disable export of Password Vault websites.                  |
-     passwordvault_defaultprivatecredentials_enable    | Enable private credentials by default.                      |
-     passwordvault_defaultprivatecredentials_disable   | Disable private credentials by default.                     |
-     passwordvault_privatecredentials_enable           | Enable private credentials.                                 |
-     passwordvault_privatecredentials_disable          | Disable private credentials.                                |
-     passwordvault_expiredcredentials_block            | Block expired credentials.                                  |
-     passwordvault_expiredcredentials_unblock          | Unblock expired credentials.                                |
-     passwordvault_emailsecurityalerts_enable          | Enable email security alerts.                               |
-     passwordvault_emailsecurityalerts_Disable         | Disable email security alerts.                              |
+     passwordvault_personalfolder_user_add             | Add user to personal folder.                                |
+     passwordvault_personalfolder_group_add            | Add group to personal folder.                               |
+     passwordvault_personalfolder_user_update          | Update user in personal folder.                             |
+     passwordvault_personalfolder_user_remove          | Remove user from personal folder.                           |
+     passwordvault_personalfolder_credential_add       | Add credential to personal folder.                          |
+     passwordvault_personalfolder_website_add          | Add website to personal folder.                             |
+     passwordvault_personalfolder_credential_update    | Update credential in personal folder.                       |
+     passwordvault_personalfolder_website_update       | Update website in personal folder.                          |
+     passwordvault_personalfolder_credential_remove    | Remove credential from personal folder.                     |
+     passwordvault_personalfolder_website_remove       | Remove website from personal folder.                        |
 
     ## Software Events
 
