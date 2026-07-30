@@ -41173,6 +41173,22 @@ components:
           type: string
         accessRestriction:
           type: string
+        accountType:
+          type: string
+          description: Salesforce Account Type (`Account_Type__c`) written back to the org via BSS sync. Returned only when requested via the `fields` query parameter.
+          enum:
+            - Alliance
+            - Distributor
+            - MSP
+            - VAR
+            - Direct
+            - Indirect
+            - Tenant
+            - Deleted Organization
+            - Partner
+            - Customer
+            - Prospective Customer
+            - Prospective Partner
         logoUrl:
           type:
             - string
