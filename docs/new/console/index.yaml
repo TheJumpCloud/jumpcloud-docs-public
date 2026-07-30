@@ -7029,9 +7029,20 @@ paths:
           -H 'content-type: application/json' \
           -H 'x-api-key: {API_KEY}'
         ```
+
+        #### Filter by organizationId
+        Supported filter field: `organizationId`. Supported operators: `eq`, `in`.
+
+        ```
+         curl -X GET 'https://console.jumpcloud.com/api/v2/directories?filter=organizationId:eq:{ORG_ID}' \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-api-key: {API_KEY}'
+        ```
       operationId: getApiV2Directories
       parameters:
         - $ref: "#/components/parameters/api_v2.trait_fields_fields"
+        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
         - $ref: "#/components/parameters/trait_limit_limit"
         - $ref: "#/components/parameters/api_v2.trait_sort_sort"
         - $ref: "#/components/parameters/api_v2.trait_skip_skip"
