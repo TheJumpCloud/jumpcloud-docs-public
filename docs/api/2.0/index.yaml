@@ -46646,6 +46646,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/jumpcloud.privileged_access.GetPasswordVaultStatusResponse'
+      parameters:
+        - name: editionType
+          description: |-
+            Optional edition to check for (bound from the `editionType` query param on GET /status).
+            Empty or "pwm" (default) = unchanged Password Vault semantics. "pam" = also report is_pam
+            so callers can tell a PWM-only org apart from a PAM org.
+          in: query
+          required: false
+          schema:
+            type: string
       tags:
         - Privileged Access
       security:
@@ -46658,7 +46668,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url https://console.jumpcloud.com/api/v2/privileged-access/status \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/status?editionType=SOME_STRING_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -46666,16 +46676,18 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/privileged-access/status"
 
+            querystring = {"editionType":"SOME_STRING_VALUE"}
+
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
-            response = requests.request("GET", url, headers=headers)
+            response = requests.request("GET", url, headers=headers, params=querystring)
 
             print(response.text)
         - lang: Powershell
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/status' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/status?editionType=SOME_STRING_VALUE' -Method GET -Headers $headers
   /privileged-access/tenant-settings:
     put:
       description: Update tenant settings including SCIM client credentials
@@ -52784,7 +52796,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/password-vault/websites \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"website":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+              --data '{"website":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
         - lang: Python
           source: |-
             import requests
@@ -52840,6 +52852,7 @@ paths:
                     "name": "string",
                     "notes": "string",
                     "parametersExtension": {
+                        "enablePasswordCapture": True,
                         "fillMoreOne": True,
                         "makeAutoSubmit": True,
                         "selectorNextButton": "string",
@@ -52889,7 +52902,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
   /password-vault/websites/{id}:
     get:
       description: Get password vault website metadata for viewing.
@@ -54427,6 +54440,54 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockwithgeneratedpin' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"message":"string","organizationObjectId":"string","phoneNumber":"string"}'
+  /password-vault/folders/{id}/users/self:
+    delete:
+      description: Remove the calling user's direct access from a shared password vault folder.
+      operationId: FolderService_RemoveMyAccess
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/users/self \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/users/self"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/users/self' -Method DELETE -Headers $headers
   /assets/field-configurations:
     get:
       tags:
@@ -73301,6 +73362,11 @@ components:
       properties:
         isActive:
           type: boolean
+        isPam:
+          type: boolean
+          description: |-
+            True when the tenant is a PAM-edition tenant. Only meaningful when edition_type = "pam";
+            false for the default PWM check so existing callers are unaffected.
         jumpcloudSsoApplicationId:
           type: string
         vaultoneConsoleUrl:
@@ -74367,12 +74433,23 @@ components:
           type: string
         lastTimeUsed:
           type: string
+        linkedWebsiteUris:
+          type: array
+          items:
+            type: string
+          description: Populated only when the request sets include_linked_website_uris. Distinct website URIs linked to the credential.
         mfaRegistered:
           type: boolean
         name:
           type: string
         needsRotationValidation:
           type: boolean
+        passwordStrength:
+          type: integer
+          format: int64
+          description: |-
+            zxcvbn score 0–4 for Password credentials (stored as Credential.PasswordStrenght).
+            Clients treat values < 3 as weak (same threshold as dashboard WeakCredentials).
         permissions:
           type: array
           items:
@@ -74613,12 +74690,16 @@ components:
           format: date-time
         description:
           type: string
+        directlyBound:
+          type: boolean
         editDate:
           type: string
           format: date-time
         id:
           type: string
           format: byte
+        indirectlyBound:
+          type: boolean
         name:
           type: string
         permissions:
@@ -75095,6 +75176,9 @@ components:
     jumpcloud.privileged_access.ParametersExtension:
       type: object
       properties:
+        enablePasswordCapture:
+          type: boolean
+          description: When true (default), browser extension may capture passwords / show save-update dialog for this website.
         fillMoreOne:
           type: boolean
         makeAutoSubmit:

@@ -3216,6 +3216,15 @@ paths:
   /api/notifications/grouped:
     x-functionalities-tags:
       - org-notifications
+  /api/organizations/{id}/consumptions:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    x-functionalities-tags:
+      - organizations
   /api/organizations/{id}/paymentdetails:
     parameters:
       - name: id
@@ -32047,6 +32056,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/jumpcloud.privileged_access.GetPasswordVaultStatusResponse"
+      parameters:
+        - name: editionType
+          description: |-
+            Optional edition to check for (bound from the `editionType` query param on GET /status).
+            Empty or "pwm" (default) = unchanged Password Vault semantics. "pam" = also report is_pam
+            so callers can tell a PWM-only org apart from a PAM org.
+          in: query
+          required: false
+          schema:
+            type: string
       tags:
         - Privileged Access
       security:
@@ -36454,6 +36473,32 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/password-vault/folders/{id}/users/self:
+    delete:
+      description: Remove the calling user's direct access from a shared password vault folder.
+      operationId: deleteApiV2PasswordVaultFoldersByIdUsersSelf
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -57660,6 +57705,11 @@ components:
       properties:
         isActive:
           type: boolean
+        isPam:
+          type: boolean
+          description: |-
+            True when the tenant is a PAM-edition tenant. Only meaningful when edition_type = "pam";
+            false for the default PWM check so existing callers are unaffected.
         jumpcloudSsoApplicationId:
           type: string
         vaultoneConsoleUrl:
@@ -58726,12 +58776,23 @@ components:
           type: string
         lastTimeUsed:
           type: string
+        linkedWebsiteUris:
+          type: array
+          items:
+            type: string
+          description: Populated only when the request sets include_linked_website_uris. Distinct website URIs linked to the credential.
         mfaRegistered:
           type: boolean
         name:
           type: string
         needsRotationValidation:
           type: boolean
+        passwordStrength:
+          type: integer
+          format: int64
+          description: |-
+            zxcvbn score 0–4 for Password credentials (stored as Credential.PasswordStrenght).
+            Clients treat values < 3 as weak (same threshold as dashboard WeakCredentials).
         permissions:
           type: array
           items:
@@ -58972,12 +59033,16 @@ components:
           format: date-time
         description:
           type: string
+        directlyBound:
+          type: boolean
         editDate:
           type: string
           format: date-time
         id:
           type: string
           format: byte
+        indirectlyBound:
+          type: boolean
         name:
           type: string
         permissions:
@@ -59454,6 +59519,9 @@ components:
     jumpcloud.privileged_access.ParametersExtension:
       type: object
       properties:
+        enablePasswordCapture:
+          type: boolean
+          description: When true (default), browser extension may capture passwords / show save-update dialog for this website.
         fillMoreOne:
           type: boolean
         makeAutoSubmit:

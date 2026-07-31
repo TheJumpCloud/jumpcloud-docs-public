@@ -5430,6 +5430,15 @@ paths:
   /notifications/grouped:
     x-functionalities-tags:
       - org-notifications
+  /organizations/{id}/consumptions:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    x-functionalities-tags:
+      - organizations
   /organizations/{id}/paymentdetails:
     parameters:
       - name: id

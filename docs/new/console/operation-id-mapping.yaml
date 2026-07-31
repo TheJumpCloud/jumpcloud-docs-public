@@ -3851,6 +3851,11 @@ operations:
     base_path: /api/v2
     legacy_operation_id: Devices_DeviceLockWithGeneratedPin
     standardized_operation_id: postApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockwithgeneratedpin
+  - method: delete
+    host_root_path: /api/v2/password-vault/folders/{id}/users/self
+    base_path: /api/v2
+    legacy_operation_id: FolderService_RemoveMyAccess
+    standardized_operation_id: deleteApiV2PasswordVaultFoldersByIdUsersSelf
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
