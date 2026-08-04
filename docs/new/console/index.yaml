@@ -48010,6 +48010,7 @@ components:
             - systemInsights
             - userLifecycle
             - zeroTrust
+            - workflows
     gsuite:
       properties:
         id:
