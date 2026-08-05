@@ -54634,8 +54634,6 @@ components:
           type: string
           format: date-time
           description: occurred_at is the timestamp from the initiator of the occurrence.
-        trigger:
-          $ref: "#/components/schemas/jumpcloud.alerts.Trigger"
         updatedAt:
           type: string
           format: date-time
@@ -60514,61 +60512,6 @@ components:
         googleUserEmail:
           type: string
           description: PII or sensitive data; do not log.
-    jumpcloud.alerts.MonitoringWindow:
-      type: object
-      properties:
-        unit:
-          type: string
-          description: "Supported units: minutes, hours, days."
-        value:
-          type: integer
-          format: int64
-      description: MonitoringWindow is the rolling window duration for N-in-T alert frequency.
-    jumpcloud.alerts.ThresholdConfig:
-      type: object
-      properties:
-        groupBy:
-          type: string
-          description: Per-resource grouping value from event-config source ID when scope is per resource.
-        scope:
-          $ref: "#/components/schemas/jumpcloud.alerts.ThresholdScope"
-        threshold:
-          type: integer
-          format: uint64
-          description: "N: minimum matching events required to trigger."
-        window:
-          $ref: "#/components/schemas/jumpcloud.alerts.MonitoringWindow"
-      description: ThresholdConfig is a snapshot of the configured threshold parameters at alert time.
-    jumpcloud.alerts.ThresholdResult:
-      type: object
-      properties:
-        config:
-          $ref: "#/components/schemas/jumpcloud.alerts.ThresholdConfig"
-        observedCount:
-          type: integer
-          format: uint64
-        windowEnd:
-          type: string
-          format: date-time
-        windowStart:
-          type: string
-          format: date-time
-      description: ThresholdResult is the observed threshold evaluation state when the alert occurred.
-    jumpcloud.alerts.ThresholdScope:
-      type: string
-      enum:
-        - THRESHOLD_SCOPE_ORG_WIDE
-        - THRESHOLD_SCOPE_PER_RESOURCE
-      default: THRESHOLD_SCOPE_ORG_WIDE
-      description: |-
-        ThresholdScope describes whether threshold evaluation applies org-wide
-        or per resource.
-    jumpcloud.alerts.Trigger:
-      type: object
-      properties:
-        threshold:
-          $ref: "#/components/schemas/jumpcloud.alerts.ThresholdResult"
-      description: Trigger is a typed "why did this fire?" payload. The kind is extensible.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
