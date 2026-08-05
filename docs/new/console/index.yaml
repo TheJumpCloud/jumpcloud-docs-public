@@ -40249,6 +40249,9 @@ components:
           type: string
         parentApp:
           type: string
+        aiReady:
+          type: boolean
+          description: Admin opt-in that this application instance should appear as AI Ready in the User Portal. Informational only — does not grant access. Setting to true requires at least one configured MCP connection. Gated by feature flag DC-4194-app-ai-ready.
       required:
         - config
         - name
@@ -62020,6 +62023,9 @@ components:
           type:
             - string
             - "null"
+        aiReady:
+          type: boolean
+          description: Admin opt-in that this application instance should appear as AI Ready in the User Portal. Informational only — does not grant access. Filterable via `filter=aiReady:eq:true|false`.
       title: Application
       type: object
     api_v2.Error:

@@ -59383,6 +59383,9 @@ components:
           type:
             - string
             - 'null'
+        aiReady:
+          type: boolean
+          description: Admin opt-in that this application instance should appear as AI Ready in the User Portal. Informational only — does not grant access. Filterable via `filter=aiReady:eq:true|false`.
       title: Application
       type: object
     ApplicationAssociationRequest:
