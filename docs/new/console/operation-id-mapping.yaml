@@ -527,6 +527,16 @@ operations:
     legacy_operation_id: applications_deleteLogo
     standardized_operation_id: deleteApiV2ApplicationsByApplicationIdLogo
   - method: get
+    host_root_path: /api/v2/applications/{application_id}/agentgroups
+    base_path: /api/v2
+    legacy_operation_id: graph_applicationTraverseAgentGroup
+    standardized_operation_id: getApiV2ApplicationsByApplicationIdAgentgroups
+  - method: get
+    host_root_path: /api/v2/applications/{application_id}/agents
+    base_path: /api/v2
+    legacy_operation_id: graph_applicationTraverseAgent
+    standardized_operation_id: getApiV2ApplicationsByApplicationIdAgents
+  - method: get
     host_root_path: /api/v2/applications/{application_id}/usergroups
     base_path: /api/v2
     legacy_operation_id: graph_applicationTraverseUserGroup
@@ -961,6 +971,71 @@ operations:
     base_path: /api/v2
     legacy_operation_id: graph_policyTraverseSystem
     standardized_operation_id: getApiV2PoliciesByPolicyIdSystems
+  - method: get
+    host_root_path: /api/v2/agentgroups
+    base_path: /api/v2
+    legacy_operation_id: groups_agent_list
+    standardized_operation_id: getApiV2Agentgroups
+  - method: post
+    host_root_path: /api/v2/agentgroups
+    base_path: /api/v2
+    legacy_operation_id: groups_agent_post
+    standardized_operation_id: postApiV2Agentgroups
+  - method: get
+    host_root_path: /api/v2/agentgroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_agentGroupAssociationsList
+    standardized_operation_id: getApiV2AgentgroupsByGroupIdAssociations
+  - method: post
+    host_root_path: /api/v2/agentgroups/{group_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: graph_agentGroupAssociationsPost
+    standardized_operation_id: postApiV2AgentgroupsByGroupIdAssociations
+  - method: get
+    host_root_path: /api/v2/agentgroups/{group_id}/applications
+    base_path: /api/v2
+    legacy_operation_id: graph_agentGroupTraverseApplication
+    standardized_operation_id: getApiV2AgentgroupsByGroupIdApplications
+  - method: get
+    host_root_path: /api/v2/agentgroups/{group_id}/members
+    base_path: /api/v2
+    legacy_operation_id: graph_agentGroupMembersList
+    standardized_operation_id: getApiV2AgentgroupsByGroupIdMembers
+  - method: post
+    host_root_path: /api/v2/agentgroups/{group_id}/members
+    base_path: /api/v2
+    legacy_operation_id: graph_agentGroupMembersPost
+    standardized_operation_id: postApiV2AgentgroupsByGroupIdMembers
+  - method: get
+    host_root_path: /api/v2/agentgroups/{group_id}/membership
+    base_path: /api/v2
+    legacy_operation_id: graph_agentGroupMembership
+    standardized_operation_id: getApiV2AgentgroupsByGroupIdMembership
+  - method: get
+    host_root_path: /api/v2/agentgroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_agent_get
+    standardized_operation_id: getApiV2AgentgroupsById
+  - method: patch
+    host_root_path: /api/v2/agentgroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_agent_patch
+    standardized_operation_id: patchApiV2AgentgroupsById
+  - method: delete
+    host_root_path: /api/v2/agentgroups/{id}
+    base_path: /api/v2
+    legacy_operation_id: groups_agent_delete
+    standardized_operation_id: deleteApiV2AgentgroupsById
+  - method: get
+    host_root_path: /api/v2/agents/{agent_id}/applications
+    base_path: /api/v2
+    legacy_operation_id: graph_agentTraverseApplication
+    standardized_operation_id: getApiV2AgentsByAgentIdApplications
+  - method: get
+    host_root_path: /api/v2/agents/{agent_id}/memberof
+    base_path: /api/v2
+    legacy_operation_id: graph_agentMemberOf
+    standardized_operation_id: getApiV2AgentsByAgentIdMemberof
   - method: get
     host_root_path: /api/v2/policygroups
     base_path: /api/v2
