@@ -38371,6 +38371,7 @@ paths:
       description: Retrieve a paginated list of catalog applications. Supports filtering by name and batch retrieval by IDs.
       operationId: getApiV2SaasManagementApplicationCatalog
       x-scopes:
+        - saas
         - saas.readonly
       security:
         - x-api-key: []
@@ -38460,6 +38461,7 @@ paths:
       description: Retrieve a specific catalog application by ID. Supports both custom (org-specific) and managed (global) catalog application IDs.
       operationId: getApiV2SaasManagementApplicationCatalogByCatalogApplicationId
       x-scopes:
+        - saas
         - saas.readonly
       security:
         - x-api-key: []
@@ -38522,6 +38524,7 @@ paths:
       description: Retrieve a paginated list of applications for the organization
       operationId: getApiV2SaasManagementApplications
       x-scopes:
+        - saas
         - saas.readonly
       security:
         - x-api-key: []
@@ -38668,6 +38671,7 @@ paths:
       description: Retrieve a specific application by ID
       operationId: getApiV2SaasManagementApplicationsByApplicationId
       x-scopes:
+        - saas
         - saas.readonly
       security:
         - x-api-key: []
@@ -38867,6 +38871,7 @@ paths:
       description: Retrieve a specific application usage by application ID
       operationId: getApiV2SaasManagementApplicationsByApplicationIdUsage
       x-scopes:
+        - saas
         - saas.readonly
       security:
         - x-api-key: []
@@ -38935,6 +38940,7 @@ paths:
       description: Retrieve a paginated list of licenses for an organization
       operationId: getApiV2SaasManagementApplicationLicenses
       x-scopes:
+        - saas
         - saas.readonly
       security:
         - x-api-key: []
@@ -39008,6 +39014,7 @@ paths:
       description: Retrieve a paginated list of licenses for a specific application
       operationId: getApiV2SaasManagementApplicationLicensesByApplicationId
       x-scopes:
+        - saas
         - saas.readonly
       security:
         - x-api-key: []
@@ -39070,6 +39077,7 @@ paths:
       description: Retrieve accounts for a specific application
       operationId: getApiV2SaasManagementApplicationsByApplicationIdAccounts
       x-scopes:
+        - saas
         - saas.readonly
       security:
         - x-api-key: []
@@ -39143,6 +39151,7 @@ paths:
       description: Retrieve a specific account by ID
       operationId: getApiV2SaasManagementApplicationsByApplicationIdAccountsByAccountId
       x-scopes:
+        - saas
         - saas.readonly
       security:
         - x-api-key: []
