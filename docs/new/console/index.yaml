@@ -43195,6 +43195,9 @@ components:
         primarySystemUser.costCenter:
           maxLength: 1024
           type: string
+        primarySystemUser.delegatedAuthority.id:
+          type: string
+          description: ObjectId of the primary user's Active Directory delegated authority connection
         primarySystemUser.department:
           maxLength: 1024
           type: string
@@ -43967,6 +43970,19 @@ components:
           type: string
         created:
           type: string
+        delegatedAuthority:
+          type:
+            - object
+            - "null"
+          description: Used by auth to determine password delegation authority
+          properties:
+            name:
+              type: string
+              description: Authority name
+              const: ActiveDirectory
+            id:
+              type: string
+              description: ObjectId of the target Active Directory connection
         department:
           maxLength: 1024
           type: string
