@@ -55613,6 +55613,116 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/users/self' -Method DELETE -Headers $headers
+  /privileged-access/tags:
+    get:
+      description: 'List privileged access tags. Privileged Access counterpart of List, exposed under the privileged-access namespace and PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team. Use `source` to choose the tag store: RESOURCES (default) reads resource tags, BLOCKING_RULES aggregates tags used on blocking rules, ALL merges both. Omitting `source` keeps the original resource-tags behaviour. There is no search or pagination, so the full de-duplicated list is returned and callers filter client-side.'
+      operationId: TagsService_ListPrivilegedAccessTags
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessTagsReply'
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: source
+          description: |2-
+             - PRIVILEGED_ACCESS_TAG_SOURCE_UNSPECIFIED: Defaults to RESOURCES, preserving the behaviour of callers that omit it.
+             - PRIVILEGED_ACCESS_TAG_SOURCE_RESOURCES: Tags on privileged resources (databases, servers, websites).
+             - PRIVILEGED_ACCESS_TAG_SOURCE_BLOCKING_RULES: Tags used on blocking rules.
+             - PRIVILEGED_ACCESS_TAG_SOURCE_ALL: Both of the above, merged and de-duplicated.
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - PRIVILEGED_ACCESS_TAG_SOURCE_UNSPECIFIED
+              - PRIVILEGED_ACCESS_TAG_SOURCE_RESOURCES
+              - PRIVILEGED_ACCESS_TAG_SOURCE_BLOCKING_RULES
+              - PRIVILEGED_ACCESS_TAG_SOURCE_ALL
+            default: PRIVILEGED_ACCESS_TAG_SOURCE_UNSPECIFIED
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/tags?filter=SOME_ARRAY_VALUE&source=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/tags"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","source":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/tags?filter=SOME_ARRAY_VALUE&source=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /privileged-access/users/self:
+    get:
+      description: 'Returns the tenant user identified by request actor metadata (user_id / eventContext). Privileged Access counterpart of GetUser: the same tenant user, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team.'
+      operationId: UsersService_GetSelfUser
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetSelfUserReply'
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/users/self \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/users/self"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/users/self' -Method GET -Headers $headers
   /assets/field-configurations:
     get:
       tags:
@@ -75126,6 +75236,12 @@ components:
           description: |-
             risk_factors is a list of risk factors that contributed to this risk event.
             populated when a specific risk event is retrieved.
+        riskPolicyId:
+          type:
+            - string
+            - 'null'
+          format: byte
+          description: risk_policy_id is the applied identity risk policy object_id at scoring time.
         score:
           type: integer
           format: int32
@@ -75210,6 +75326,7 @@ components:
         - RISK_RESOLUTION_STATUS_OPEN
         - RISK_RESOLUTION_STATUS_RESOLVED
         - RISK_RESOLUTION_STATUS_MFA_RESOLVED
+        - RISK_RESOLUTION_STATUS_DISMISSED
       default: RISK_RESOLUTION_STATUS_UNSPECIFIED
     jumpcloud.identity_risk.RiskStatCount:
       type: object
@@ -77363,6 +77480,44 @@ components:
         googleUserEmail:
           type: string
           description: PII or sensitive data; do not log.
+    jumpcloud.privileged_access.GetSelfUserReply:
+      type: object
+      properties:
+        adminExternalId:
+          type: string
+        emailAddress:
+          type: string
+        externalId:
+          type: string
+        id:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        isDeleted:
+          type: boolean
+        isScim:
+          type: boolean
+        name:
+          type: string
+        surname:
+          type: string
+        userName:
+          type: string
+      description: |-
+        GetSelfUserReply mirrors GetUserReply. Kept as a distinct message so the two
+        surfaces can diverge without one team's change breaking the other.
+    jumpcloud.privileged_access.ListPrivilegedAccessTagsReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: string
+      description: |-
+        ListPrivilegedAccessTagsReply mirrors ListTagsReply. Kept as a distinct
+        message so the two surfaces can diverge without one team's change breaking
+        the other.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

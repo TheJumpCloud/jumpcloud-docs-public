@@ -3932,6 +3932,16 @@ operations:
     legacy_operation_id: FolderService_RemoveMyAccess
     standardized_operation_id: deleteApiV2PasswordVaultFoldersByIdUsersSelf
   - method: get
+    host_root_path: /api/v2/privileged-access/tags
+    base_path: /api/v2
+    legacy_operation_id: TagsService_ListPrivilegedAccessTags
+    standardized_operation_id: getApiV2PrivilegedAccessTags
+  - method: get
+    host_root_path: /api/v2/privileged-access/users/self
+    base_path: /api/v2
+    legacy_operation_id: UsersService_GetSelfUser
+    standardized_operation_id: getApiV2PrivilegedAccessUsersSelf
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations
