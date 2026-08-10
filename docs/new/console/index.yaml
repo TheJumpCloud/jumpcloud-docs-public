@@ -37227,6 +37227,56 @@ paths:
       x-scopes:
         - passwordmanager
         - passwordmanager.readonly
+  /api/v2/password-vault/credentials/{id}/managers:
+    get:
+      description: List managers of a password vault credential.
+      operationId: getApiV2PasswordVaultCredentialsByIdManagers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialManagersReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -59947,6 +59997,10 @@ components:
             $ref: "#/components/schemas/jumpcloud.privileged_access.UserApprover"
         credential:
           $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialMetadata"
+        linkedWebsites:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedWebsite"
         passwordStrength:
           type: integer
           format: int64
@@ -60635,6 +60689,10 @@ components:
           $ref: "#/components/schemas/jumpcloud.privileged_access.IdentityMetadata"
         key:
           $ref: "#/components/schemas/jumpcloud.privileged_access.KeySection"
+        linkedWebsites:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedWebsite"
         mfaEnabled:
           type: boolean
         mfaKey:
@@ -61370,6 +61428,42 @@ components:
         ListPrivilegedAccessTagsReply mirrors ListTagsReply. Kept as a distinct
         message so the two surfaces can diverge without one team's change breaking
         the other.
+    jumpcloud.privileged_access.CredentialManagerListItem:
+      type: object
+      properties:
+        firstName:
+          type: string
+        id:
+          type: integer
+          format: int32
+        lastName:
+          type: string
+        username:
+          type: string
+    jumpcloud.privileged_access.GetCredentialManagersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialManagerListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.LinkedWebsite:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        uri:
+          type: string
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

@@ -3942,6 +3942,11 @@ operations:
     legacy_operation_id: UsersService_GetSelfUser
     standardized_operation_id: getApiV2PrivilegedAccessUsersSelf
   - method: get
+    host_root_path: /api/v2/password-vault/credentials/{id}/managers
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_GetCredentialManagers
+    standardized_operation_id: getApiV2PasswordVaultCredentialsByIdManagers
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations
