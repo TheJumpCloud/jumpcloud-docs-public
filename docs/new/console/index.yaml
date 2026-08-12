@@ -6046,49 +6046,6 @@ paths:
     x-functionalities-tags:
       - user-portal-applications
   /api/v2/applications/{application_id}/agentgroups:
-    get:
-      description: |-
-        This endpoint will return all Agent Groups bound to an Application, either directly or indirectly, essentially traversing the JumpCloud Graph for your Organization.
-
-        Each element will contain the group's type, id, attributes and paths.
-
-        The `attributes` object is a key/value hash of compiled graph attributes for all paths followed.
-
-        The `paths` array enumerates each path from this Application to the corresponding Agent Group; this array represents all grouping and/or associations that would have to be removed to deprovision the Agent Group from this Application.
-
-        See `/members` and `/associations` endpoints to manage those collections.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/applications/{Application_ID}/agentgroups \
-          -H 'accept: application/json' \
-          -H 'content-type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2ApplicationsByApplicationIdAgentgroups
-      parameters:
-        - $ref: "#/components/parameters/trait_limit_limit"
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
-        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/GraphObjectWithPaths"
-                type: array
-      security:
-        - x-api-key: []
-      summary: List the Agent Groups bound to an Application
-      tags:
-        - Graph
-        - Applications
-      x-scopes:
-        - groups
-        - groups.readonly
     parameters:
       - description: ObjectID of the Application.
         in: path
@@ -6100,49 +6057,6 @@ paths:
       - user-portal-applications
       - agent-groups
   /api/v2/applications/{application_id}/agents:
-    get:
-      description: |-
-        This endpoint will return all Agents bound to an Application, either directly or indirectly (through an Agent Group), essentially traversing the JumpCloud Graph for your Organization.
-
-        Each element will contain the type, id, attributes and paths.
-
-        The `attributes` object is a key/value hash of compiled graph attributes for all paths followed.
-
-        The `paths` array enumerates each path from this Application to the corresponding Agent; this array represents all grouping and/or associations that would have to be removed to deprovision the Agent from this Application.
-
-        See `/members` and `/associations` endpoints to manage those collections.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/applications/{Application_ID}/agents \
-          -H 'accept: application/json' \
-          -H 'content-type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2ApplicationsByApplicationIdAgents
-      parameters:
-        - $ref: "#/components/parameters/trait_limit_limit"
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
-        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/GraphObjectWithPaths"
-                type: array
-      security:
-        - x-api-key: []
-      summary: List the Agents bound to an Application
-      tags:
-        - Graph
-        - Applications
-      x-scopes:
-        - agenticidentities
-        - agenticidentities.readonly
     parameters:
       - description: ObjectID of the Application.
         in: path
@@ -10505,128 +10419,9 @@ paths:
       - devices-linux-policy-crud
       - devices-ios-policy-crud
   /api/v2/agentgroups:
-    get:
-      description: |-
-        This endpoint returns all Agent Groups.
-
-        Available filter fields:
-          - `name`
-          - `type`
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/agentgroups \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2Agentgroups
-      parameters:
-        - $ref: "#/components/parameters/api_v2.trait_fields_fields"
-        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
-        - $ref: "#/components/parameters/trait_limit_limit"
-        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
-        - $ref: "#/components/parameters/api_v2.trait_sort_sort"
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/AgentGroup"
-                type: array
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-      security:
-        - x-api-key: []
-      summary: List all Agent Groups
-      tags:
-        - Agent Groups
-      x-scopes:
-        - groups
-        - groups.readonly
-    post:
-      description: |-
-        This endpoint allows you to create a new Agent Group.
-
-        #### Sample Request
-        ```
-        curl -X POST https://console.jumpcloud.com/api/v2/agentgroups \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{
-            "name": "{Group_Name}"
-          }'
-        ```
-      operationId: postApiV2Agentgroups
-      parameters:
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      requestBody:
-        $ref: "#/components/requestBodies/AgentGroupData"
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AgentGroup"
-      security:
-        - x-api-key: []
-      summary: Create a new Agent Group
-      tags:
-        - Agent Groups
-      x-scopes:
-        - groups
     x-functionalities-tags:
       - agent-groups
   /api/v2/agentgroups/{group_id}/associations:
-    get:
-      description: |-
-        This endpoint returns the _direct_ associations of this Agent Group.
-
-        A direct association can be a non-homogeneous relationship between 2 different objects, for example Agent Groups and Applications.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/agentgroups/{GroupID}/associations?targets=application \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2AgentgroupsByGroupIdAssociations
-      parameters:
-        - $ref: "#/components/parameters/trait_graphTargetsAgentGroup_targets"
-        - $ref: "#/components/parameters/trait_limit_limit"
-        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/GraphConnection"
-                type: array
-      security:
-        - x-api-key: []
-      summary: List the associations of an Agent Group.
-      tags:
-        - Graph
-        - Agent Group Associations
-        - Agent Groups
-      x-scopes:
-        - associations.groups
-        - associations.groups.readonly
-        - associations
-        - associations.readonly
     parameters:
       - description: ObjectID of the Agent Group.
         in: path
@@ -10634,93 +10429,10 @@ paths:
         required: true
         schema:
           type: string
-    post:
-      description: |-
-        This endpoint manages the _direct_ associations of this Agent Group.
-
-        A direct association can be a non-homogeneous relationship between 2 different objects, for example Agent Groups and Applications.
-
-        #### Sample Request
-        ```
-        curl -X POST https://console.jumpcloud.com/api/v2/agentgroups/{GroupID}/associations \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{
-            "op": "add",
-            "type": "application",
-            "id": "{ApplicationID}"
-          }'
-        ```
-      operationId: postApiV2AgentgroupsByGroupIdAssociations
-      parameters:
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/GraphOperation-AgentGroup"
-      responses:
-        "204":
-          description: OK
-      security:
-        - x-api-key: []
-      summary: Manage the associations of an Agent Group
-      tags:
-        - Graph
-        - Agent Group Associations
-        - Agent Groups
-      x-scopes:
-        - associations.groups
-        - associations
     x-functionalities-tags:
       - agent-groups
       - agent-associations
   /api/v2/agentgroups/{group_id}/applications:
-    get:
-      description: |-
-        This endpoint will return all Applications bound to an Agent Group, either directly or indirectly, essentially traversing the JumpCloud Graph for your Organization.
-
-        Each element will contain the type, id, attributes and paths.
-
-        The `attributes` object is a key/value hash of compiled graph attributes for all paths followed.
-
-        The `paths` array enumerates each path from this Agent Group to the corresponding Application; this array represents all grouping and/or associations that would have to be removed to deprovision the Application from this Agent Group.
-
-        See `/members` and `/associations` endpoints to manage those collections.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/agentgroups/{GroupID}/applications \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2AgentgroupsByGroupIdApplications
-      parameters:
-        - $ref: "#/components/parameters/trait_limit_limit"
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
-        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/GraphObjectWithPaths"
-                type: array
-      security:
-        - x-api-key: []
-      summary: List the Applications bound to an Agent Group
-      tags:
-        - Graph
-        - Agent Group Associations
-        - Agent Groups
-      x-scopes:
-        - applications
-        - applications.readonly
     parameters:
       - description: ObjectID of the Agent Group.
         in: path
@@ -10731,41 +10443,6 @@ paths:
     x-functionalities-tags:
       - agent-groups
   /api/v2/agentgroups/{group_id}/members:
-    get:
-      description: |-
-        This endpoint returns the Agent members of an Agent Group.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/agentgroups/{GroupID}/members \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2AgentgroupsByGroupIdMembers
-      parameters:
-        - $ref: "#/components/parameters/trait_limit_limit"
-        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/GraphConnection"
-                type: array
-      security:
-        - x-api-key: []
-      summary: List the members of an Agent Group
-      tags:
-        - Graph
-        - Agent Group Members & Membership
-        - Agent Groups
-      x-scopes:
-        - agenticidentities
-        - agenticidentities.readonly
     parameters:
       - description: ObjectID of the Agent Group.
         in: path
@@ -10773,83 +10450,10 @@ paths:
         required: true
         schema:
           type: string
-    post:
-      description: |-
-        This endpoint allows you to manage the Agent members of an Agent Group.
-
-        #### Sample Request
-        ```
-        curl -X POST https://console.jumpcloud.com/api/v2/agentgroups/{GroupID}/members \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{
-            "op": "add",
-            "type": "agent",
-            "id": "{Agent_ID}"
-          }'
-        ```
-      operationId: postApiV2AgentgroupsByGroupIdMembers
-      parameters:
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/GraphOperation-AgentGroup-Member"
-      responses:
-        "204":
-          description: OK
-      security:
-        - x-api-key: []
-      summary: Manage the members of an Agent Group
-      tags:
-        - Graph
-        - Agent Group Members & Membership
-        - Agent Groups
-      x-scopes:
-        - groups
     x-functionalities-tags:
       - agent-groups
       - agent-members
   /api/v2/agentgroups/{group_id}/membership:
-    get:
-      description: |-
-        This endpoint returns all Agent members that are a member of this Agent Group.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/agentgroups/{GroupID}/membership \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2AgentgroupsByGroupIdMembership
-      parameters:
-        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
-        - $ref: "#/components/parameters/trait_limit_limit"
-        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
-        - $ref: "#/components/parameters/api_v2.trait_sort_sort"
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/GraphObjectWithPaths"
-                type: array
-      security:
-        - x-api-key: []
-      summary: List the Agent Group's membership
-      tags:
-        - Graph
-        - Agent Group Members & Membership
-        - Agent Groups
-      x-scopes:
-        - agenticidentities
-        - agenticidentities.readonly
     parameters:
       - description: ObjectID of the Agent Group.
         in: path
@@ -10861,66 +10465,6 @@ paths:
       - agent-groups
       - agent-members
   /api/v2/agentgroups/{id}:
-    delete:
-      description: |-
-        This endpoint allows you to delete an Agent Group.
-
-        #### Sample Request
-        ```
-        curl -X DELETE https://console.jumpcloud.com/api/v2/agentgroups/{GroupID} \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-
-        ```
-      operationId: deleteApiV2AgentgroupsById
-      parameters:
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AgentGroup"
-        "204":
-          description: No Content
-      security:
-        - x-api-key: []
-      summary: Delete an Agent Group
-      tags:
-        - Agent Groups
-      x-scopes:
-        - groups
-    get:
-      description: |-
-        This endpoint returns the details of an Agent Group.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/agentgroups/{GroupID} \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2AgentgroupsById
-      parameters:
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AgentGroup"
-      security:
-        - x-api-key: []
-      summary: View an individual Agent Group details
-      tags:
-        - Agent Groups
-      x-scopes:
-        - groups
-        - groups.readonly
     parameters:
       - description: ObjectID of the Agent Group.
         in: path
@@ -10928,83 +10472,9 @@ paths:
         required: true
         schema:
           type: string
-    patch:
-      description: |-
-        This endpoint allows you to do a partial update of an Agent Group.
-
-        #### Sample Request
-        ```
-        curl -X PATCH https://console.jumpcloud.com/api/v2/agentgroups/{GroupID} \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{
-            "name": "{Group_Name}"
-          }'
-        ```
-      operationId: patchApiV2AgentgroupsById
-      parameters:
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      requestBody:
-        $ref: "#/components/requestBodies/AgentGroupData"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AgentGroup"
-      security:
-        - x-api-key: []
-      summary: Partial update an Agent Group
-      tags:
-        - Agent Groups
-      x-scopes:
-        - groups
     x-functionalities-tags:
       - agent-groups
   /api/v2/agents/{agent_id}/applications:
-    get:
-      description: |-
-        This endpoint will return all Applications bound to an Agent through its Agent Group memberships, essentially traversing the JumpCloud Graph for your Organization. Applications cannot be bound to an Agent directly -- only through the Agent Groups it belongs to.
-
-        Each element will contain the type, id, attributes and paths.
-
-        The `attributes` object is a key/value hash of compiled graph attributes for all paths followed.
-
-        The `paths` array enumerates each path from this Agent to the corresponding Application; this array represents all grouping that would have to be removed to deprovision the Application from this Agent.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/agents/{AgentID}/applications \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2AgentsByAgentIdApplications
-      parameters:
-        - $ref: "#/components/parameters/trait_limit_limit"
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
-        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/GraphObjectWithPaths"
-                type: array
-      security:
-        - x-api-key: []
-      summary: List the Applications bound to an Agent
-      tags:
-        - Graph
-        - Agents
-      x-scopes:
-        - applications
-        - applications.readonly
     parameters:
       - description: ObjectID of the Agent.
         in: path
@@ -11015,42 +10485,6 @@ paths:
     x-functionalities-tags:
       - agents-associations
   /api/v2/agents/{agent_id}/memberof:
-    get:
-      description: |-
-        This endpoint returns all Agent Groups an Agent is a member of.
-
-        #### Sample Request
-        ```
-        curl -X GET https://console.jumpcloud.com/api/v2/agents/{AgentID}/memberof \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}'
-        ```
-      operationId: getApiV2AgentsByAgentIdMemberof
-      parameters:
-        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
-        - $ref: "#/components/parameters/trait_limit_limit"
-        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
-        - $ref: "#/components/parameters/api_v2.trait_sort_sort"
-        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/GraphObjectWithPaths"
-                type: array
-      security:
-        - x-api-key: []
-      summary: List the parent Agent Groups of an Agent
-      tags:
-        - Graph
-        - Agents
-      x-scopes:
-        - groups
-        - groups.readonly
     parameters:
       - description: ObjectID of the Agent.
         in: path
@@ -36135,6 +35569,20 @@ paths:
           schema:
             type: string
           allowReserved: true
+        - name: roleFilter
+          description: |2-
+             - FIND_USERS_ROLE_FILTER_UNSPECIFIED: no role filter (backward compatible)
+             - FIND_USERS_ROLE_FILTER_USER: has static User role
+             - FIND_USERS_ROLE_FILTER_ADMIN: has any direct non-User role
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - FIND_USERS_ROLE_FILTER_UNSPECIFIED
+              - FIND_USERS_ROLE_FILTER_USER
+              - FIND_USERS_ROLE_FILTER_ADMIN
+            default: FIND_USERS_ROLE_FILTER_UNSPECIFIED
       tags:
         - Password Vault
       security:
@@ -37271,6 +36719,230 @@ paths:
             format: int32
       tags:
         - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/privileged-access/groups/{idGroup}/assignable-resources:
+    get:
+      description: List resources that can be assigned to a privileged access group. Privileged Access counterpart of ListAssignableResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
+      operationId: getApiV2PrivilegedAccessGroupsByIdgroupAssignableResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessAssignableResourcesReply"
+      parameters:
+        - name: idGroup
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/privileged-access/groups/{idGroup}/members:
+    get:
+      description: List members of a privileged access group. Privileged Access counterpart of ListMembers, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
+      operationId: getApiV2PrivilegedAccessGroupsByIdgroupMembers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupMembersReply"
+      parameters:
+        - name: idGroup
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/privileged-access/groups/{idGroup}/resources:
+    get:
+      description: List resources assigned to a privileged access group. Privileged Access counterpart of ListResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
+      operationId: getApiV2PrivilegedAccessGroupsByIdgroupResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupResourcesReply"
+      parameters:
+        - name: idGroup
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    put:
+      description: Assign or remove resources on a privileged access group. Privileged Access counterpart of ManageResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
+      operationId: putApiV2PrivilegedAccessGroupsByIdgroupResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: idGroup
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                group:
+                  $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupResourceAccess"
+                isDeleting:
+                  type: boolean
+                resourceIds:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/privileged-access/groups/all:
+    get:
+      description: "List all privileged access groups (non-paged). Privileged Access counterpart of List: the same groups, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team."
+      operationId: getApiV2PrivilegedAccessGroupsAll
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupsReply"
+      tags:
+        - Privileged Access
       security:
         - x-api-key: []
       x-dynamic-gateway: true
@@ -46670,34 +46342,6 @@ components:
             - type
       title: GraphOperation (Application)
       type: object
-    GraphOperation-AgentGroup:
-      allOf:
-        - $ref: "#/components/schemas/GraphOperation"
-        - properties:
-            attributes:
-              $ref: "#/components/schemas/GraphAttributes"
-            type:
-              description: Targets which an "agent_group" can be associated to.
-              const: application
-              type: string
-          required:
-            - type
-      title: GraphOperation (AgentGroup)
-      type: object
-    GraphOperation-AgentGroup-Member:
-      allOf:
-        - $ref: "#/components/schemas/GraphOperation"
-        - properties:
-            attributes:
-              $ref: "#/components/schemas/GraphAttributes"
-            type:
-              description: The member type.
-              const: agent
-              type: string
-          required:
-            - type
-      title: GraphOperation (AgentGroup-Member)
-      type: object
     GraphOperation-Command:
       allOf:
         - $ref: "#/components/schemas/GraphOperation"
@@ -47522,44 +47166,6 @@ components:
         template:
           $ref: "#/components/schemas/PolicyTemplate"
       title: Policy
-      type: object
-    AgentGroup:
-      properties:
-        attributes:
-          $ref: "#/components/schemas/GraphAttributes"
-        description:
-          description: Description of an Agent Group
-          type: string
-        id:
-          description: ObjectId uniquely identifying an Agent Group.
-          type: string
-        name:
-          description: Display name of an Agent Group.
-          type: string
-        organizationObjectId:
-          description: id of the organization owning this group
-          type:
-            - string
-            - "null"
-        type:
-          description: The type of the group; always 'agent_group' for an Agent Group.
-          const: agent_group
-          type: string
-      title: AgentGroup
-      type: object
-    AgentGroupData:
-      properties:
-        attributes:
-          $ref: "#/components/schemas/GraphAttributes"
-        description:
-          description: Description of an Agent Group
-          type: string
-        name:
-          description: Display name of an Agent Group.
-          type: string
-      required:
-        - name
-      title: AgentGroupData
       type: object
     PolicyGroup:
       properties:
@@ -48511,6 +48117,11 @@ components:
           type:
             - string
             - "null"
+        hostType:
+          description: Host role reported by the agent (DOMAIN_CONTROLLER or MEMBER_SERVER).
+          type:
+            - string
+            - "null"
         id:
           description: ObjectID of this Active Directory Agent.
           type: string
@@ -48553,6 +48164,11 @@ components:
             - string
             - "null"
         hostname:
+          type:
+            - string
+            - "null"
+        hostType:
+          description: Host role reported by the agent (DOMAIN_CONTROLLER or MEMBER_SERVER).
           type:
             - string
             - "null"
@@ -61464,6 +61080,158 @@ components:
             type: string
         uri:
           type: string
+    jumpcloud.privileged_access.ListPrivilegedAccessAssignableResourcesReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessAssignableResource"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListPrivilegedAccessGroupMembersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupMember"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListPrivilegedAccessGroupResourcesReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupResource"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListPrivilegedAccessGroupsReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroup"
+    jumpcloud.privileged_access.PrivilegedAccessAssignableResource:
+      type: object
+      properties:
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        websiteUrl:
+          type: string
+      description: Mirrors AssignableResource.
+    jumpcloud.privileged_access.PrivilegedAccessGroup:
+      type: object
+      properties:
+        code:
+          type: string
+        creationTime:
+          type: string
+        credentialCount:
+          type: integer
+          format: int32
+        databasesCount:
+          type: integer
+          format: int32
+        displayName:
+          type: string
+        externalId:
+          type: string
+          format: byte
+        id:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        isScim:
+          type: boolean
+        memberCount:
+          type: integer
+          format: int32
+        pamActivated:
+          type: boolean
+          description: |-
+            Product enrollment flags. A group may be enrolled in either product
+            independently, so both are reported; ListPrivilegedAccessGroups returns only
+            groups with pam_activated set.
+        parentId:
+          type: integer
+          format: int32
+        pwmActivated:
+          type: boolean
+        roleCount:
+          type: integer
+          format: int32
+        serversCount:
+          type: integer
+          format: int32
+        websitesCount:
+          type: integer
+          format: int32
+      description: |-
+        Mirrors Group, plus the product enrollment flags and per-kind resource counts
+        that VaultOne exposes but the Password Vault surface does not map.
+    jumpcloud.privileged_access.PrivilegedAccessGroupMember:
+      type: object
+      properties:
+        addedTime:
+          type: string
+        emailAddress:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        profilePictureId:
+          type: string
+        surname:
+          type: string
+        userName:
+          type: string
+      description: Mirrors GroupMember.
+    jumpcloud.privileged_access.PrivilegedAccessGroupResource:
+      type: object
+      properties:
+        category:
+          type: string
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        websiteUrl:
+          type: string
+      description: Mirrors GroupResource.
+    jumpcloud.privileged_access.PrivilegedAccessGroupResourceAccess:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+      description: Mirrors GroupResourceAccess.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
@@ -63334,18 +63102,6 @@ components:
             - user
             - user_group
           type: string
-    trait_graphTargetsAgentGroup_targets:
-      name: targets
-      description: Targets which an "agent_group" can be associated to.
-      in: query
-      required: true
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          const: application
-          type: string
     trait_graphTargetsApplication_targets:
       name: targets
       description: Targets which a "application" can be associated to.
@@ -63843,11 +63599,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/IPListRequest"
-    AgentGroupData:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/AgentGroupData"
     ManageAssociations-Group:
       content:
         application/json:
@@ -64170,10 +63921,6 @@ x-tagGroups:
       - Access Requests
       - Active Directory
       - Administrators
-      - Agent Group Associations
-      - Agent Group Members & Membership
-      - Agent Groups
-      - Agents
       - Aggregated Policy Stats
       - App Catalog
       - Apple MDM
@@ -64265,8 +64012,6 @@ x-scopes:
   - accessrequest.readonly
   - administrators
   - administrators.readonly
-  - agenticidentities
-  - agenticidentities.readonly
   - anonymous
   - applications
   - applications.create
