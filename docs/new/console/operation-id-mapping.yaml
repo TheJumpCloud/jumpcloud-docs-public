@@ -3897,6 +3897,11 @@ operations:
     legacy_operation_id: GroupsService_ListPrivilegedAccessGroups
     standardized_operation_id: getApiV2PrivilegedAccessGroupsAll
   - method: get
+    host_root_path: /api/v2/password-vault/websites/{id}/managers
+    base_path: /api/v2
+    legacy_operation_id: WebsitesService_GetWebsiteManagers
+    standardized_operation_id: getApiV2PasswordVaultWebsitesByIdManagers
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations
