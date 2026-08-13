@@ -6992,6 +6992,8 @@ components:
               type: boolean
             groups_supported:
               type: boolean
+            agents_supported:
+              type: boolean
           type:
             - object
             - 'null'
