@@ -59591,9 +59591,17 @@ components:
       properties:
         credential:
           $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialMetadata"
+        linkedWebsites:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedWebsite"
     jumpcloud.privileged_access.GetCredentialSecretReply:
       type: object
       properties:
+        linkedWebsites:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedWebsite"
         secret:
           $ref: "#/components/schemas/jumpcloud.privileged_access.SecretValuePayload"
     jumpcloud.privileged_access.GetCredentialWithSecretReply:
@@ -60796,6 +60804,10 @@ components:
           type: string
         lastName:
           type: string
+        linkedWebsites:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedWebsite"
         middleName:
           type: string
         nameOnId:
