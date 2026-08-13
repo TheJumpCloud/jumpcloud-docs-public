@@ -55601,6 +55601,8 @@ components:
           type: string
         contentRating:
           type: string
+        disabled:
+          type: boolean
         displayMode:
           type: string
         distributionChannel:
@@ -55609,6 +55611,9 @@ components:
           type: string
         iconUrl:
           type: string
+        installPriority:
+          type: integer
+          format: int32
         installType:
           $ref: "#/components/schemas/devices.SoftwareAppInstallType"
         managedConfigurationTemplateId:
