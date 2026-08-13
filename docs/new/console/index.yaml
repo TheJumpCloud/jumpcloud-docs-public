@@ -36949,32 +36949,6 @@ paths:
       x-scopes:
         - passwordmanager
         - passwordmanager.readonly
-  /api/v2/password-vault/websites/{id}/managers:
-    get:
-      description: List managers of a password vault website.
-      operationId: getApiV2PasswordVaultWebsitesByIdManagers
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.privileged_access.GetWebsiteManagersReply"
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: byte
-      tags:
-        - Password Vault
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -55627,8 +55601,6 @@ components:
           type: string
         contentRating:
           type: string
-        disabled:
-          type: boolean
         displayMode:
           type: string
         distributionChannel:
@@ -55637,9 +55609,6 @@ components:
           type: string
         iconUrl:
           type: string
-        installPriority:
-          type: integer
-          format: int32
         installType:
           $ref: "#/components/schemas/devices.SoftwareAppInstallType"
         managedConfigurationTemplateId:
@@ -61277,16 +61246,6 @@ components:
           items:
             type: string
       description: Mirrors GroupResourceAccess.
-    jumpcloud.privileged_access.GetWebsiteManagersReply:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialManagerListItem"
-        totalCount:
-          type: integer
-          format: int32
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
