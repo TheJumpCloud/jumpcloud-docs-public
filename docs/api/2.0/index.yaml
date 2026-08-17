@@ -20519,6 +20519,7 @@ paths:
       operationId: groups_system_post
       parameters:
         - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
+        - $ref: '#/components/parameters/trait_queryDsl_x-query-dsl'
       requestBody:
         content:
           application/json:
@@ -20546,6 +20547,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
+              --header 'x-query-dsl: SOME_STRING_VALUE' \
               --data '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}]}'
         - lang: Python
           source: |-
@@ -20574,6 +20576,7 @@ paths:
             }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
+                "x-query-dsl": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE",
                 "content-type": "application/json"
             }
@@ -20585,6 +20588,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-query-dsl", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}]}'
@@ -21560,6 +21564,7 @@ paths:
       operationId: groups_system_put
       parameters:
         - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
+        - $ref: '#/components/parameters/trait_queryDsl_x-query-dsl'
       requestBody:
         $ref: '#/components/requestBodies/SystemGroupPut'
       responses:
@@ -21590,6 +21595,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
+              --header 'x-query-dsl: SOME_STRING_VALUE' \
               --data '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}]}'
         - lang: Python
           source: |-
@@ -21618,6 +21624,7 @@ paths:
             }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
+                "x-query-dsl": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE",
                 "content-type": "application/json"
             }
@@ -21629,6 +21636,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-query-dsl", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}]}'
@@ -26300,6 +26308,7 @@ paths:
       operationId: groups_user_post
       parameters:
         - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
+        - $ref: '#/components/parameters/trait_queryDsl_x-query-dsl'
       requestBody:
         $ref: '#/components/requestBodies/UserGroupPost'
       responses:
@@ -26324,6 +26333,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
+              --header 'x-query-dsl: SOME_STRING_VALUE' \
               --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
@@ -26371,6 +26381,7 @@ paths:
             }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
+                "x-query-dsl": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE",
                 "content-type": "application/json"
             }
@@ -26382,6 +26393,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-query-dsl", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
@@ -28153,6 +28165,7 @@ paths:
       operationId: groups_user_put
       parameters:
         - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
+        - $ref: '#/components/parameters/trait_queryDsl_x-query-dsl'
       requestBody:
         content:
           application/json:
@@ -28180,6 +28193,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
+              --header 'x-query-dsl: SOME_STRING_VALUE' \
               --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
@@ -28227,6 +28241,7 @@ paths:
             }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
+                "x-query-dsl": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE",
                 "content-type": "application/json"
             }
@@ -28238,6 +28253,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-query-dsl", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
@@ -63586,8 +63602,6 @@ components:
       title: ProviderAdminReq
       type: object
     Query:
-      discriminator:
-        propertyName: queryType
       properties:
         queryType:
           type: string
@@ -63595,10 +63609,9 @@ components:
             - Filter
             - FilterQuery
             - Search
-      required:
-        - queryType
+          description: 'Required for v1 member queries (default when the x-query-dsl header is omitted or set to v1). Omit for v2 member queries (x-query-dsl: v2).'
       title: Query
-      description: Basic query.
+      description: 'Basic query. For v1 dynamic groups, queryType is required and selects the filter format. For v2 (x-query-dsl: v2), omit queryType and supply filters only.'
       x-examples:
         example-1:
           queryType: FilterQuery
@@ -63616,10 +63629,10 @@ components:
           type:
             - object
             - 'null'
-      description: Query using a sequence of field filters.
+      description: 'Dynamic group member query. v1 (default): include queryType (FilterQuery, Filter, or Search). v2 (x-query-dsl: v2): omit queryType; filters use field, operation, and value.'
       x-examples:
-        example-1:
-          queryType: MemberQuery
+        v1-filter-query:
+          queryType: FilterQuery
           filters:
             - field: string
               operator: eq
@@ -78676,6 +78689,16 @@ components:
       name: x-org-id
       schema:
         type: string
+    trait_queryDsl_x-query-dsl:
+      description: Indicates the query DSL version of the memberQuery payload. When set to "v2", the backend interprets memberQuery using the v2 Search API filter format (filters with field, operation, and value; queryType must be omitted) and routes GenerateForGroup to the v2 dynamic groups RPCs. When omitted or set to "v1", memberQuery.queryType is required (FilterQuery, Filter, or Search).
+      in: header
+      name: x-query-dsl
+      required: false
+      schema:
+        type: string
+        enum:
+          - v1
+          - v2
     trait_o365_ConsistencyLevel:
       description: Defines the consistency header for O365 requests. See https://docs.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0&tabs=http#request-headers
       in: header

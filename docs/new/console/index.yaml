@@ -16239,6 +16239,7 @@ paths:
       operationId: postApiV2Systemgroups
       parameters:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+        - $ref: "#/components/parameters/trait_queryDsl_x-query-dsl"
       requestBody:
         content:
           application/json:
@@ -16864,6 +16865,7 @@ paths:
       operationId: putApiV2SystemgroupsById
       parameters:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+        - $ref: "#/components/parameters/trait_queryDsl_x-query-dsl"
       requestBody:
         $ref: "#/components/requestBodies/SystemGroupPut"
       responses:
@@ -19461,6 +19463,7 @@ paths:
       operationId: postApiV2Usergroups
       parameters:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+        - $ref: "#/components/parameters/trait_queryDsl_x-query-dsl"
       requestBody:
         $ref: "#/components/requestBodies/UserGroupPost"
       responses:
@@ -20589,6 +20592,7 @@ paths:
       operationId: putApiV2UsergroupsById
       parameters:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+        - $ref: "#/components/parameters/trait_queryDsl_x-query-dsl"
       requestBody:
         content:
           application/json:
@@ -47756,8 +47760,6 @@ components:
       title: ProviderAdminReq
       type: object
     Query:
-      discriminator:
-        propertyName: queryType
       properties:
         queryType:
           type: string
@@ -47765,10 +47767,9 @@ components:
             - Filter
             - FilterQuery
             - Search
-      required:
-        - queryType
+          description: "Required for v1 member queries (default when the x-query-dsl header is omitted or set to v1). Omit for v2 member queries (x-query-dsl: v2)."
       title: Query
-      description: Basic query.
+      description: "Basic query. For v1 dynamic groups, queryType is required and selects the filter format. For v2 (x-query-dsl: v2), omit queryType and supply filters only."
       x-examples:
         example-1:
           queryType: FilterQuery
@@ -47786,10 +47787,10 @@ components:
           type:
             - object
             - "null"
-      description: Query using a sequence of field filters.
+      description: "Dynamic group member query. v1 (default): include queryType (FilterQuery, Filter, or Search). v2 (x-query-dsl: v2): omit queryType; filters use field, operation, and value."
       x-examples:
-        example-1:
-          queryType: MemberQuery
+        v1-filter-query:
+          queryType: FilterQuery
           filters:
             - field: string
               operator: eq
@@ -63031,6 +63032,16 @@ components:
       name: x-unfiltered-total-count
       schema:
         type: integer
+    trait_queryDsl_x-query-dsl:
+      description: Indicates the query DSL version of the memberQuery payload. When set to "v2", the backend interprets memberQuery using the v2 Search API filter format (filters with field, operation, and value; queryType must be omitted) and routes GenerateForGroup to the v2 dynamic groups RPCs. When omitted or set to "v1", memberQuery.queryType is required (FilterQuery, Filter, or Search).
+      in: header
+      name: x-query-dsl
+      required: false
+      schema:
+        type: string
+        enum:
+          - v1
+          - v2
     trait_o365_ConsistencyLevel:
       description: Defines the consistency header for O365 requests. See https://docs.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0&tabs=http#request-headers
       in: header
