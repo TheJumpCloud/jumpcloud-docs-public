@@ -36971,6 +36971,30 @@ paths:
           schema:
             type: string
             format: byte
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
       tags:
         - Password Vault
       security:
