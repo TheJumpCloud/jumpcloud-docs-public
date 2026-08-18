@@ -3901,21 +3901,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: WebsitesService_GetWebsiteManagers
     standardized_operation_id: getApiV2PasswordVaultWebsitesByIdManagers
-  - method: post
-    host_root_path: /api/v2/password-vault/activate
-    base_path: /api/v2
-    legacy_operation_id: PasswordVaultService_Activate
-    standardized_operation_id: postApiV2PasswordVaultActivate
-  - method: put
-    host_root_path: /api/v2/password-vault/sso-tenant-settings
-    base_path: /api/v2
-    legacy_operation_id: PasswordVaultService_UpdateSSOTenantSettings
-    standardized_operation_id: putApiV2PasswordVaultSsoTenantSettings
-  - method: get
-    host_root_path: /api/v2/password-vault/status
-    base_path: /api/v2
-    legacy_operation_id: PasswordVaultService_GetTenantStatus
-    standardized_operation_id: getApiV2PasswordVaultStatus
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
