@@ -32135,11 +32135,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/jumpcloud.privileged_access.ActivateResponse"
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/jumpcloud.privileged_access.ActivateRequest"
-        required: true
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ActivateRequest"
       tags:
         - Privileged Access
       security:
@@ -32189,11 +32185,7 @@ paths:
                 type: object
                 properties: {}
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/jumpcloud.privileged_access.UpdateTenantSettingsRequest"
-        required: true
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.UpdateTenantSettingsRequest"
       tags:
         - Privileged Access
       security:
@@ -36995,6 +36987,77 @@ paths:
           schema:
             type: integer
             format: int32
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/password-vault/activate:
+    post:
+      description: Activate tenant and create integration token via password vault backend
+      operationId: postApiV2PasswordVaultActivate
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ActivateResponse"
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ActivateRequest"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/sso-tenant-settings:
+    put:
+      summary: Distinct from TenantSettingsService PUT /password-vault/tenant-settings (trusted-integration flags).
+      description: Update password vault tenant SSO/SCIM client credentials and SSO application id
+      operationId: putApiV2PasswordVaultSsoTenantSettings
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.UpdateTenantSettingsRequest"
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/password-vault/status:
+    get:
+      description: Get password vault status for an organization
+      operationId: getApiV2PasswordVaultStatus
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetPasswordVaultStatusResponse"
+      parameters:
+        - name: editionType
+          description: |-
+            Optional edition to check for (bound from the `editionType` query param on GET /status).
+            Empty or "pwm" (default) = unchanged Password Vault semantics. "pam" = also report is_pam
+            so callers can tell a PWM-only org apart from a PAM org.
+          in: query
+          required: false
+          schema:
+            type: string
       tags:
         - Password Vault
       security:
@@ -63782,6 +63845,18 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/CustomEmail"
+    jumpcloud.privileged_access.ActivateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ActivateRequest"
+      required: true
+    jumpcloud.privileged_access.UpdateTenantSettingsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.UpdateTenantSettingsRequest"
+      required: true
     WorkflowAccessRequestApi_CancelWorkflowAccessRequestBody:
       content:
         application/json:
