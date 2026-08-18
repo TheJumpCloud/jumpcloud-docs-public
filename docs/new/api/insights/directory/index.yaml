@@ -1759,6 +1759,7 @@ info:
      ----------------------------------------------------- | ------------------------------------------------------------------------ |
      risk_event_created                                    | A new access risk event is created.                                      |
      risk_event_resolved                                   | An access risk event is resolved by an administrator.                    |
+     risk_events_bulk_resolved                             | Access risk events are bulk-resolved or bulk-dismissed by an administrator. |
      ca_created                                            | Root CA is created.                                                      |
      cert_issued_manual                                    | A certificate is manually issued.                                        |
      cert_revoked                                          | A certificate is revoked.                                                |
