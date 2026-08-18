@@ -20548,7 +20548,7 @@ paths:
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
               --header 'x-query-dsl: SOME_STRING_VALUE' \
-              --data '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}]}'
+              --data '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"id":"string","organizationId":"string","type":"string"}]}'
         - lang: Python
           source: |-
             import requests
@@ -20568,8 +20568,8 @@ paths:
                 "memberSuggestionsNotify": True,
                 "memberQueryExemptions": [
                     {
-                        "attributes": {},
                         "id": "string",
+                        "organizationId": "string",
                         "type": "string"
                     }
                 ]
@@ -20591,7 +20591,7 @@ paths:
             $headers.Add("x-query-dsl", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"id":"string","organizationId":"string","type":"string"}]}'
     x-functionalities-tags:
       - systemgroups
   /systemgroups/{group_id}/associations:
@@ -21596,7 +21596,7 @@ paths:
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
               --header 'x-query-dsl: SOME_STRING_VALUE' \
-              --data '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}]}'
+              --data '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"id":"string","organizationId":"string","type":"string"}]}'
         - lang: Python
           source: |-
             import requests
@@ -21616,8 +21616,8 @@ paths:
                 "memberSuggestionsNotify": True,
                 "memberQueryExemptions": [
                     {
-                        "attributes": {},
                         "id": "string",
+                        "organizationId": "string",
                         "type": "string"
                     }
                 ]
@@ -21639,7 +21639,7 @@ paths:
             $headers.Add("x-query-dsl", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systemgroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"email":"string","description":"string","name":"string","memberQuery":{"queryType":"Filter","filters":[null]},"membershipMethod":"NOTSET","memberSuggestionsNotify":true,"memberQueryExemptions":[{"id":"string","organizationId":"string","type":"string"}]}'
     x-functionalities-tags:
       - systemgroups
   /systeminsights/alf:
@@ -26334,7 +26334,7 @@ paths:
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
               --header 'x-query-dsl: SOME_STRING_VALUE' \
-              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"id":"string","organizationId":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -26370,8 +26370,8 @@ paths:
                 },
                 "memberQueryExemptions": [
                     {
-                        "attributes": {},
                         "id": "string",
+                        "organizationId": "string",
                         "type": "string"
                     }
                 ],
@@ -26396,7 +26396,7 @@ paths:
             $headers.Add("x-query-dsl", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"id":"string","organizationId":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - systems
   /usergroups/{group_id}/activedirectories:
@@ -28194,7 +28194,7 @@ paths:
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
               --header 'x-query-dsl: SOME_STRING_VALUE' \
-              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+              --data '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"id":"string","organizationId":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -28230,8 +28230,8 @@ paths:
                 },
                 "memberQueryExemptions": [
                     {
-                        "attributes": {},
                         "id": "string",
+                        "organizationId": "string",
                         "type": "string"
                     }
                 ],
@@ -28256,7 +28256,7 @@ paths:
             $headers.Add("x-query-dsl", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"attributes":{},"id":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/usergroups/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"attributes":{"sudo":{"enabled":true,"withoutPassword":true},"ldapGroups":[{"name":"string"}],"posixGroups":[{"id":0,"name":"string"}],"radius":{"reply":[{"name":"string","value":"string"}]},"sambaEnabled":true},"email":"string","description":"string","memberQuery":{"queryType":"Filter","filters":[null]},"memberQueryExemptions":[{"id":"string","organizationId":"string","type":"string"}],"memberSuggestionsNotify":true,"membershipMethod":"NOTSET","name":"string"}'
     x-functionalities-tags:
       - groups
   /users/{user_id}/activedirectories:
@@ -62590,6 +62590,22 @@ components:
         - id
       title: GraphObject
       type: object
+    MemberQueryExemption:
+      properties:
+        id:
+          description: The ObjectID of the exempted graph object.
+          type: string
+        organizationId:
+          description: The organization that owns the exempted object, when known.
+          type: string
+        type:
+          description: The type of graph object.
+          type: string
+      required:
+        - type
+        - id
+      title: MemberQueryExemption
+      type: object
     GraphObjectWithPaths:
       properties:
         compiledAttributes:
@@ -63822,7 +63838,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: '#/components/schemas/GraphObject'
+            $ref: '#/components/schemas/MemberQueryExemption'
         membershipMethod:
           $ref: '#/components/schemas/GroupMembershipMethodType'
         memberSuggestionsNotify:
@@ -63866,7 +63882,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: '#/components/schemas/GraphObject'
+            $ref: '#/components/schemas/MemberQueryExemption'
       required:
         - name
       title: SystemGroupPost
@@ -63895,7 +63911,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: '#/components/schemas/GraphObject'
+            $ref: '#/components/schemas/MemberQueryExemption'
       required:
         - name
       title: SystemGroupPut
@@ -63919,7 +63935,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: '#/components/schemas/GraphObject'
+            $ref: '#/components/schemas/MemberQueryExemption'
         memberSuggestionsNotify:
           description: True if notification emails are to be sent for membership suggestions.
           type: boolean
@@ -63959,7 +63975,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: '#/components/schemas/GraphObject'
+            $ref: '#/components/schemas/MemberQueryExemption'
         memberSuggestionsNotify:
           description: True if notification emails are to be sent for membership suggestions.
           type: boolean
@@ -63988,7 +64004,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: '#/components/schemas/GraphObject'
+            $ref: '#/components/schemas/MemberQueryExemption'
         memberSuggestionsNotify:
           description: True if notification emails are to be sent for membership suggestions.
           type: boolean

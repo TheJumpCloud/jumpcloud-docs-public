@@ -46746,6 +46746,22 @@ components:
         - id
       title: GraphObject
       type: object
+    MemberQueryExemption:
+      properties:
+        id:
+          description: The ObjectID of the exempted graph object.
+          type: string
+        organizationId:
+          description: The organization that owns the exempted object, when known.
+          type: string
+        type:
+          description: The type of graph object.
+          type: string
+      required:
+        - type
+        - id
+      title: MemberQueryExemption
+      type: object
     GraphObjectWithPaths:
       properties:
         compiledAttributes:
@@ -47978,7 +47994,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: "#/components/schemas/GraphObject"
+            $ref: "#/components/schemas/MemberQueryExemption"
         membershipMethod:
           $ref: "#/components/schemas/GroupMembershipMethodType"
         memberSuggestionsNotify:
@@ -48022,7 +48038,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: "#/components/schemas/GraphObject"
+            $ref: "#/components/schemas/MemberQueryExemption"
       required:
         - name
       title: SystemGroupPost
@@ -48051,7 +48067,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: "#/components/schemas/GraphObject"
+            $ref: "#/components/schemas/MemberQueryExemption"
       required:
         - name
       title: SystemGroupPut
@@ -48075,7 +48091,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: "#/components/schemas/GraphObject"
+            $ref: "#/components/schemas/MemberQueryExemption"
         memberSuggestionsNotify:
           description: True if notification emails are to be sent for membership suggestions.
           type: boolean
@@ -48115,7 +48131,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: "#/components/schemas/GraphObject"
+            $ref: "#/components/schemas/MemberQueryExemption"
         memberSuggestionsNotify:
           description: True if notification emails are to be sent for membership suggestions.
           type: boolean
@@ -48144,7 +48160,7 @@ components:
           description: Array of GraphObjects exempted from the query
           type: array
           items:
-            $ref: "#/components/schemas/GraphObject"
+            $ref: "#/components/schemas/MemberQueryExemption"
         memberSuggestionsNotify:
           description: True if notification emails are to be sent for membership suggestions.
           type: boolean
