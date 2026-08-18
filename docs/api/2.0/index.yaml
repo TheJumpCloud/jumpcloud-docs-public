@@ -46708,11 +46708,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/jumpcloud.privileged_access.ActivateResponse'
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.privileged_access.ActivateRequest'
-        required: true
+        $ref: '#/components/requestBodies/jumpcloud.privileged_access.ActivateRequest'
       tags:
         - Privileged Access
       security:
@@ -46815,11 +46811,7 @@ paths:
                 type: object
                 properties: {}
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.privileged_access.UpdateTenantSettingsRequest'
-        required: true
+        $ref: '#/components/requestBodies/jumpcloud.privileged_access.UpdateTenantSettingsRequest'
       tags:
         - Privileged Access
       security:
@@ -55238,6 +55230,163 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/managers?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
+  /password-vault/activate:
+    post:
+      description: Activate tenant and create integration token via password vault backend
+      operationId: PasswordVaultService_Activate
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ActivateResponse'
+      requestBody:
+        $ref: '#/components/requestBodies/jumpcloud.privileged_access.ActivateRequest'
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/password-vault/activate \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"editionType":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/password-vault/activate"
+
+            payload = {"editionType": "string"}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/activate' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"editionType":"string"}'
+  /password-vault/sso-tenant-settings:
+    put:
+      summary: Distinct from TenantSettingsService PUT /password-vault/tenant-settings (trusted-integration flags).
+      description: Update password vault tenant SSO/SCIM client credentials and SSO application id
+      operationId: PasswordVaultService_UpdateSSOTenantSettings
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: '#/components/requestBodies/jumpcloud.privileged_access.UpdateTenantSettingsRequest'
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/password-vault/sso-tenant-settings \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"clientId":"string","clientSecret":"string","ssoApplicationId":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/password-vault/sso-tenant-settings"
+
+            payload = {
+                "clientId": "string",
+                "clientSecret": "string",
+                "ssoApplicationId": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/sso-tenant-settings' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"clientId":"string","clientSecret":"string","ssoApplicationId":"string"}'
+  /password-vault/status:
+    get:
+      description: Get password vault status for an organization
+      operationId: PasswordVaultService_GetTenantStatus
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetPasswordVaultStatusResponse'
+      parameters:
+        - name: editionType
+          description: |-
+            Optional edition to check for (bound from the `editionType` query param on GET /status).
+            Empty or "pwm" (default) = unchanged Password Vault semantics. "pam" = also report is_pam
+            so callers can tell a PWM-only org apart from a PAM org.
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/password-vault/status?editionType=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/password-vault/status"
+
+            querystring = {"editionType":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/status?editionType=SOME_STRING_VALUE' -Method GET -Headers $headers
   /assets/field-configurations:
     get:
       tags:
@@ -79364,6 +79513,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CustomEmail'
+    jumpcloud.privileged_access.ActivateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.ActivateRequest'
+      required: true
+    jumpcloud.privileged_access.UpdateTenantSettingsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.UpdateTenantSettingsRequest'
+      required: true
     WorkflowAccessRequestApi_CancelWorkflowAccessRequestBody:
       content:
         application/json:
