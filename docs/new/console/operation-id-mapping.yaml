@@ -3917,6 +3917,16 @@ operations:
     legacy_operation_id: PasswordVaultService_GetTenantStatus
     standardized_operation_id: getApiV2PasswordVaultStatus
   - method: get
+    host_root_path: /api/v2/privileged-access/backup-key
+    base_path: /api/v2
+    legacy_operation_id: TenantSettingsService_GetPrivilegedAccessBackupKey
+    standardized_operation_id: getApiV2PrivilegedAccessBackupKey
+  - method: post
+    host_root_path: /api/v2/privileged-access/backup-key
+    base_path: /api/v2
+    legacy_operation_id: TenantSettingsService_GeneratePrivilegedAccessBackupKey
+    standardized_operation_id: postApiV2PrivilegedAccessBackupKey
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations

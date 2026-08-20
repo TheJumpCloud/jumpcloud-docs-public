@@ -37066,6 +37066,48 @@ paths:
       x-scopes:
         - passwordmanager
         - passwordmanager.readonly
+  /api/v2/privileged-access/backup-key:
+    get:
+      description: "Get the Jump Server backup key state for the tenant. Returns `keyId` only: an empty `keyId` means no key has been generated yet and encrypted Jump Server backups are not being produced. The key itself and its version are returned exactly once, by GeneratePrivilegedAccessBackupKey, and are never readable afterwards. Requires the PAM Backup permission."
+      operationId: getApiV2PrivilegedAccessBackupKey
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetPrivilegedAccessBackupKeyReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    post:
+      description: Generate or rotate the Jump Server backup key and return it once. This is the only response that ever contains the plaintext key, so the caller must surface it immediately. Rotation keeps `keyId` stable and stores a new key version; each backup file records the version it was encrypted with, so backups taken before a rotation still require their earlier key. Not idempotent. Requires the PAM Backup permission.
+      operationId: postApiV2PrivilegedAccessBackupKey
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GeneratePrivilegedAccessBackupKeyReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.GeneratePrivilegedAccessBackupKeyRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -61391,6 +61433,22 @@ components:
         totalCount:
           type: integer
           format: int32
+    jumpcloud.privileged_access.GeneratePrivilegedAccessBackupKeyReply:
+      type: object
+      properties:
+        key:
+          type: string
+        keyId:
+          type: string
+        version:
+          type: string
+    jumpcloud.privileged_access.GeneratePrivilegedAccessBackupKeyRequest:
+      type: object
+    jumpcloud.privileged_access.GetPrivilegedAccessBackupKeyReply:
+      type: object
+      properties:
+        keyId:
+          type: string
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

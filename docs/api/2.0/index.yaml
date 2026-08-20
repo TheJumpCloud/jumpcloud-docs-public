@@ -55387,6 +55387,99 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/status?editionType=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /privileged-access/backup-key:
+    get:
+      description: 'Get the Jump Server backup key state for the tenant. Returns `keyId` only: an empty `keyId` means no key has been generated yet and encrypted Jump Server backups are not being produced. The key itself and its version are returned exactly once, by GeneratePrivilegedAccessBackupKey, and are never readable afterwards. Requires the PAM Backup permission.'
+      operationId: TenantSettingsService_GetPrivilegedAccessBackupKey
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetPrivilegedAccessBackupKeyReply'
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/backup-key \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/backup-key"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/backup-key' -Method GET -Headers $headers
+    post:
+      description: Generate or rotate the Jump Server backup key and return it once. This is the only response that ever contains the plaintext key, so the caller must surface it immediately. Rotation keeps `keyId` stable and stores a new key version; each backup file records the version it was encrypted with, so backups taken before a rotation still require their earlier key. Not idempotent. Requires the PAM Backup permission.
+      operationId: TenantSettingsService_GeneratePrivilegedAccessBackupKey
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GeneratePrivilegedAccessBackupKeyReply'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.privileged_access.GeneratePrivilegedAccessBackupKeyRequest'
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/backup-key \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/backup-key"
+
+            payload = {}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/backup-key' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /assets/field-configurations:
     get:
       tags:
@@ -77366,6 +77459,22 @@ components:
         totalCount:
           type: integer
           format: int32
+    jumpcloud.privileged_access.GeneratePrivilegedAccessBackupKeyReply:
+      type: object
+      properties:
+        key:
+          type: string
+        keyId:
+          type: string
+        version:
+          type: string
+    jumpcloud.privileged_access.GeneratePrivilegedAccessBackupKeyRequest:
+      type: object
+    jumpcloud.privileged_access.GetPrivilegedAccessBackupKeyReply:
+      type: object
+      properties:
+        keyId:
+          type: string
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
