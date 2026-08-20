@@ -34315,11 +34315,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertCredentialReply"
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertCredentialRequest"
-        required: true
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.UpsertCredentialRequest"
       tags:
         - Password Vault
       security:
@@ -34625,11 +34621,7 @@ paths:
                 type: object
                 properties: {}
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/jumpcloud.privileged_access.DeleteSelectedCredentialsRequest"
-        required: true
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.DeleteSelectedCredentialsRequest"
       tags:
         - Password Vault
       security:
@@ -35707,11 +35699,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteReply"
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteRequest"
-        required: true
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.UpsertWebsiteRequest"
       tags:
         - Password Vault
       security:
@@ -60478,6 +60466,8 @@ components:
           $ref: "#/components/schemas/jumpcloud.privileged_access.CreditCardSection"
         domain:
           type: string
+        editLinkedWebsites:
+          type: boolean
         expirationDate:
           type: string
         folderId:
@@ -63825,6 +63815,18 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/search"
+    jumpcloud.privileged_access.DeleteSelectedCredentialsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.DeleteSelectedCredentialsRequest"
+      required: true
+    jumpcloud.privileged_access.UpsertWebsiteRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteRequest"
+      required: true
     IPListRequest:
       content:
         application/json:
@@ -63928,6 +63930,12 @@ components:
               organizationObjectId:
                 type: string
                 format: byte
+      required: true
+    jumpcloud.privileged_access.UpsertCredentialRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertCredentialRequest"
       required: true
     CredentialsService_DuplicateBody:
       content:

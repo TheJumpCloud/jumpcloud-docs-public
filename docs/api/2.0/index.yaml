@@ -50234,11 +50234,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertCredentialReply'
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertCredentialRequest'
-        required: true
+        $ref: '#/components/requestBodies/jumpcloud.privileged_access.UpsertCredentialRequest'
       tags:
         - Password Vault
       security:
@@ -50253,7 +50249,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/password-vault/credentials \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
+              --data '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","editLinkedWebsites":true,"expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -50296,6 +50292,7 @@ paths:
                     }
                 },
                 "domain": "string",
+                "editLinkedWebsites": True,
                 "expirationDate": "string",
                 "folderId": "string",
                 "id": "string",
@@ -50362,7 +50359,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","editLinkedWebsites":true,"expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
   /password-vault/credentials/{id}:
     get:
       description: Get password vault credential metadata.
@@ -50908,11 +50905,7 @@ paths:
                 type: object
                 properties: {}
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.privileged_access.DeleteSelectedCredentialsRequest'
-        required: true
+        $ref: '#/components/requestBodies/jumpcloud.privileged_access.DeleteSelectedCredentialsRequest'
       tags:
         - Password Vault
       security:
@@ -52905,11 +52898,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteReply'
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteRequest'
-        required: true
+        $ref: '#/components/requestBodies/jumpcloud.privileged_access.UpsertWebsiteRequest'
       tags:
         - Password Vault
       security:
@@ -76504,6 +76493,8 @@ components:
           $ref: '#/components/schemas/jumpcloud.privileged_access.CreditCardSection'
         domain:
           type: string
+        editLinkedWebsites:
+          type: boolean
         expirationDate:
           type: string
         folderId:
@@ -79540,6 +79531,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   requestBodies:
+    jumpcloud.privileged_access.DeleteSelectedCredentialsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.DeleteSelectedCredentialsRequest'
+      required: true
+    jumpcloud.privileged_access.UpsertWebsiteRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteRequest'
+      required: true
     IPListRequest:
       content:
         application/json:
@@ -79643,6 +79646,12 @@ components:
               organizationObjectId:
                 type: string
                 format: byte
+      required: true
+    jumpcloud.privileged_access.UpsertCredentialRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertCredentialRequest'
       required: true
     CredentialsService_DuplicateBody:
       content:
