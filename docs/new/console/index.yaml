@@ -61593,14 +61593,14 @@ components:
             $ref: "#/components/schemas/jumpcloud.partners.OSFamily"
         customerId:
           type: string
-        enabled:
-          type: boolean
         googleUserEmail:
           type: string
           description: PII or sensitive data; do not log.
         organizationObjectId:
           type: string
           format: byte
+        state:
+          $ref: "#/components/schemas/jumpcloud.partners.ConfigurationState"
     jumpcloud.partners.OSFamily:
       type: string
       enum:
@@ -61617,11 +61617,11 @@ components:
             $ref: "#/components/schemas/jumpcloud.partners.OSFamily"
         customerId:
           type: string
-        enabled:
-          type: boolean
         googleUserEmail:
           type: string
           description: PII or sensitive data; do not log.
+        state:
+          $ref: "#/components/schemas/jumpcloud.partners.ConfigurationState"
     jumpcloud.privileged_access.GetSelfUserReply:
       type: object
       properties:
@@ -61968,6 +61968,14 @@ components:
         totalCount:
           type: integer
           format: int32
+    jumpcloud.partners.ConfigurationState:
+      type: string
+      enum:
+        - CONFIGURATION_STATE_UNSPECIFIED
+        - CONFIGURATION_STATE_ENABLED
+        - CONFIGURATION_STATE_DISABLED
+        - CONFIGURATION_STATE_PENDING_DELETE
+      default: CONFIGURATION_STATE_UNSPECIFIED
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

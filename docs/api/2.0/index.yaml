@@ -54421,7 +54421,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/gcep/configuration \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"applicableOsFamilies":["UNSPECIFIED"],"customerId":"string","enabled":true,"googleUserEmail":"string"}'
+              --data '{"applicableOsFamilies":["UNSPECIFIED"],"customerId":"string","googleUserEmail":"string","state":"CONFIGURATION_STATE_UNSPECIFIED"}'
         - lang: Python
           source: |-
             import requests
@@ -54431,8 +54431,8 @@ paths:
             payload = {
                 "applicableOsFamilies": ["UNSPECIFIED"],
                 "customerId": "string",
-                "enabled": True,
-                "googleUserEmail": "string"
+                "googleUserEmail": "string",
+                "state": "CONFIGURATION_STATE_UNSPECIFIED"
             }
             headers = {
                 "x-api-key": "REPLACE_KEY_VALUE",
@@ -54447,7 +54447,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gcep/configuration' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"applicableOsFamilies":["UNSPECIFIED"],"customerId":"string","enabled":true,"googleUserEmail":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gcep/configuration' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"applicableOsFamilies":["UNSPECIFIED"],"customerId":"string","googleUserEmail":"string","state":"CONFIGURATION_STATE_UNSPECIFIED"}'
     delete:
       description: Deletes the GCEP integration configuration for an organization
       operationId: GoogleChromeEnterprisePremiumService_DeleteConfiguration
@@ -77832,14 +77832,14 @@ components:
             $ref: '#/components/schemas/jumpcloud.partners.OSFamily'
         customerId:
           type: string
-        enabled:
-          type: boolean
         googleUserEmail:
           type: string
           description: PII or sensitive data; do not log.
         organizationObjectId:
           type: string
           format: byte
+        state:
+          $ref: '#/components/schemas/jumpcloud.partners.ConfigurationState'
     jumpcloud.partners.OSFamily:
       type: string
       enum:
@@ -77856,11 +77856,11 @@ components:
             $ref: '#/components/schemas/jumpcloud.partners.OSFamily'
         customerId:
           type: string
-        enabled:
-          type: boolean
         googleUserEmail:
           type: string
           description: PII or sensitive data; do not log.
+        state:
+          $ref: '#/components/schemas/jumpcloud.partners.ConfigurationState'
     jumpcloud.privileged_access.GetSelfUserReply:
       type: object
       properties:
@@ -78207,6 +78207,14 @@ components:
         totalCount:
           type: integer
           format: int32
+    jumpcloud.partners.ConfigurationState:
+      type: string
+      enum:
+        - CONFIGURATION_STATE_UNSPECIFIED
+        - CONFIGURATION_STATE_ENABLED
+        - CONFIGURATION_STATE_DISABLED
+        - CONFIGURATION_STATE_PENDING_DELETE
+      default: CONFIGURATION_STATE_UNSPECIFIED
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
