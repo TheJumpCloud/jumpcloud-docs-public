@@ -32125,6 +32125,7 @@ paths:
         - notifications.channels
   /api/v2/privileged-access/activate:
     post:
+      summary: Activate Privileged Access Tenant
       description: Activate tenant and create integration token via password vault backend
       operationId: postApiV2PrivilegedAccessActivate
       responses:
@@ -32145,6 +32146,7 @@ paths:
         - passwordmanager
   /api/v2/privileged-access/status:
     get:
+      summary: Get Privileged Access Status
       description: Get password vault status for an organization
       operationId: getApiV2PrivilegedAccessStatus
       responses:
@@ -32174,6 +32176,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/privileged-access/tenant-settings:
     put:
+      summary: Update Privileged Access Tenant Settings
       description: Update tenant settings including SCIM client credentials
       operationId: putApiV2PrivilegedAccessTenantSettings
       responses:
@@ -34253,6 +34256,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials:
     get:
+      summary: List Credentials
       description: List password vault credentials.
       operationId: getApiV2PasswordVaultCredentials
       responses:
@@ -34305,6 +34309,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     put:
+      summary: Update Credential
       description: Create or update a password vault credential.
       operationId: putApiV2PasswordVaultCredentials
       responses:
@@ -34325,6 +34330,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}:
     get:
+      summary: Get Credential
       description: Get password vault credential metadata.
       operationId: getApiV2PasswordVaultCredentialsById
       responses:
@@ -34350,6 +34356,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     delete:
+      summary: Delete Credential
       description: Delete a password vault credential.
       operationId: deleteApiV2PasswordVaultCredentialsById
       responses:
@@ -34376,6 +34383,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/activities:
     get:
+      summary: Get Credential Activities
       description: Get password vault credential activity details.
       operationId: getApiV2PasswordVaultCredentialsByIdActivities
       responses:
@@ -34402,6 +34410,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/admin-takeovers:
     post:
+      summary: Admin Takeover Credential Session
       description: Admin takeover of a password vault credential session.
       operationId: postApiV2PasswordVaultCredentialsByIdAdminTakeovers
       responses:
@@ -34430,6 +34439,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/clones:
     post:
+      summary: Duplicate Credential
       description: Duplicate a password vault credential.
       operationId: postApiV2PasswordVaultCredentialsByIdClones
       responses:
@@ -34457,6 +34467,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/history:
     get:
+      summary: Get Credential History
       description: Get password vault credential history.
       operationId: getApiV2PasswordVaultCredentialsByIdHistory
       responses:
@@ -34488,6 +34499,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/mfa-code:
     get:
+      summary: Get Credential MFA Code
       description: Get password vault credential MFA code.
       operationId: getApiV2PasswordVaultCredentialsByIdMfaCode
       responses:
@@ -34520,6 +34532,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/secret:
     get:
+      summary: Get Credential Secret
       description: Get password vault credential secret.
       operationId: getApiV2PasswordVaultCredentialsByIdSecret
       responses:
@@ -34563,6 +34576,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/with-secret:
     get:
+      summary: Get Credential With Secret
       description: Get password vault credential metadata with secret value.
       operationId: getApiV2PasswordVaultCredentialsByIdWithSecret
       responses:
@@ -34589,6 +34603,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/archive:
     post:
+      summary: Archive Selected Credentials
       description: Archive selected password vault credentials.
       operationId: postApiV2PasswordVaultCredentialsArchive
       responses:
@@ -34610,6 +34625,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/bulk-delete:
     delete:
+      summary: Delete Credentials in Bulk
       description: Delete selected password vault credentials.
       operationId: deleteApiV2PasswordVaultCredentialsBulkDelete
       responses:
@@ -34631,6 +34647,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/excel/columns:
     get:
+      summary: Get Credential Import Excel Columns
       description: Returns export column dictionary for credential Excel import/export.
       operationId: getApiV2PasswordVaultCredentialsExcelColumns
       responses:
@@ -34649,6 +34666,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/excel/exports:
     post:
+      summary: Export Credential Imports to Excel
       description: Enqueue a background job to export filtered credentials to Excel.
       operationId: postApiV2PasswordVaultCredentialsExcelExports
       responses:
@@ -34670,6 +34688,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/unarchive:
     post:
+      summary: Unarchive Selected Credentials
       description: Unarchive selected password vault credentials.
       operationId: postApiV2PasswordVaultCredentialsUnarchive
       responses:
@@ -34691,6 +34710,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/dashboard-overview:
     get:
+      summary: Get Password Vault Dashboard Overview
       description: Password vault dashboard overview (tenant stats, credential widgets, most-accessed).
       operationId: getApiV2PasswordVaultDashboardOverview
       responses:
@@ -34710,6 +34730,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/folders:
     get:
+      summary: List Folders
       description: List password vault folders.
       operationId: getApiV2PasswordVaultFolders
       responses:
@@ -34762,6 +34783,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     post:
+      summary: Update Folder
       description: Create or update a password vault folder.
       operationId: postApiV2PasswordVaultFolders
       responses:
@@ -34786,6 +34808,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}:
     get:
+      summary: Get Folder
       description: Get password vault folder metadata for viewing.
       operationId: getApiV2PasswordVaultFoldersById
       responses:
@@ -34811,6 +34834,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     delete:
+      summary: Delete Folder
       description: Delete a password vault folder.
       operationId: deleteApiV2PasswordVaultFoldersById
       responses:
@@ -34837,6 +34861,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}/edit:
     get:
+      summary: Get Folder for Edit
       description: Get password vault folder for editing.
       operationId: getApiV2PasswordVaultFoldersByIdEdit
       responses:
@@ -34863,6 +34888,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/folders/{id}/items:
     get:
+      summary: List Folder Items
       description: List items in a password vault folder.
       operationId: getApiV2PasswordVaultFoldersByIdItems
       responses:
@@ -34921,6 +34947,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     post:
+      summary: Add Folder Items in Bulk
       description: Add resources and credentials to a password vault folder in bulk.
       operationId: postApiV2PasswordVaultFoldersByIdItems
       responses:
@@ -34948,6 +34975,7 @@ paths:
       x-scopes:
         - passwordmanager
     delete:
+      summary: Remove Folder Items in Bulk
       description: Remove resources and credentials from a password vault folder in bulk.
       operationId: deleteApiV2PasswordVaultFoldersByIdItems
       responses:
@@ -34976,6 +35004,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}/items/move:
     post:
+      summary: Move Folder Items in Bulk
       description: Move resources and credentials to another password vault folder in bulk.
       operationId: postApiV2PasswordVaultFoldersByIdItemsMove
       responses:
@@ -35004,6 +35033,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}/items/move-to-default:
     post:
+      summary: Move Folder Items to Default Folder
       description: Move resources and credentials to the default folder in bulk.
       operationId: postApiV2PasswordVaultFoldersByIdItemsMoveToDefault
       responses:
@@ -35032,6 +35062,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}/managers:
     get:
+      summary: List Folder Managers
       description: List managers of a password vault folder.
       operationId: getApiV2PasswordVaultFoldersByIdManagers
       responses:
@@ -35082,6 +35113,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/folders/{id}/policies:
     put:
+      summary: Update Folder Policies
       description: Update password vault folder access policies.
       operationId: putApiV2PasswordVaultFoldersByIdPolicies
       responses:
@@ -35117,6 +35149,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}/properties:
     put:
+      summary: Update Folder Properties
       description: Update password vault folder name and description.
       operationId: putApiV2PasswordVaultFoldersByIdProperties
       responses:
@@ -35154,6 +35187,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/groups:
     get:
+      summary: List Groups
       description: List password vault groups.
       operationId: getApiV2PasswordVaultGroups
       responses:
@@ -35204,6 +35238,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/groups/{idGroup}/assignable-resources:
     get:
+      summary: List Assignable Group Resources
       description: List resources that can be assigned to a password vault group.
       operationId: getApiV2PasswordVaultGroupsByIdgroupAssignableResources
       responses:
@@ -35263,6 +35298,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/groups/{idGroup}/members:
     get:
+      summary: List Group Members
       description: List members of a password vault group.
       operationId: getApiV2PasswordVaultGroupsByIdgroupMembers
       responses:
@@ -35307,6 +35343,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/groups/{idGroup}/resources:
     get:
+      summary: List Group Resources
       description: List resources assigned to a password vault group.
       operationId: getApiV2PasswordVaultGroupsByIdgroupResources
       responses:
@@ -35365,6 +35402,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     put:
+      summary: Update Group Resources
       description: Assign or remove resources on a password vault group.
       operationId: putApiV2PasswordVaultGroupsByIdgroupResources
       responses:
@@ -35409,6 +35447,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/groups/all:
     get:
+      summary: List Groups in Full
       description: List all password vault groups (non-paged).
       operationId: getApiV2PasswordVaultGroupsAll
       responses:
@@ -35428,6 +35467,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/tags:
     get:
+      summary: List Tags
       description: List password vault tags.
       operationId: getApiV2PasswordVaultTags
       responses:
@@ -35457,6 +35497,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/tenant-settings:
     get:
+      summary: Get Tenant Settings
       description: Get password vault trusted tenant settings (9 integration flags).
       operationId: getApiV2PasswordVaultTenantSettings
       responses:
@@ -35475,6 +35516,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     put:
+      summary: Update Tenant Settings
       description: Patch password vault trusted tenant settings (9 integration flags).
       operationId: putApiV2PasswordVaultTenantSettings
       responses:
@@ -35501,6 +35543,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/tenant-settings/default-permissions:
     get:
+      summary: Get Default Tenant Permissions
       description: Get password vault default permission JSON blobs for the tenant.
       operationId: getApiV2PasswordVaultTenantSettingsDefaultPermissions
       responses:
@@ -35520,6 +35563,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/users:
     get:
+      summary: List Users
       description: Find password vault users.
       operationId: getApiV2PasswordVaultUsers
       responses:
@@ -35581,6 +35625,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/users/active-pwm-tenants:
     get:
+      summary: List Active PWM Tenant IDs
       description: List external tenant ids for every active PWM edition tenant.
       operationId: getApiV2PasswordVaultUsersActivePwmTenants
       responses:
@@ -35599,6 +35644,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/users/self:
     get:
+      summary: Get Current Tenant User
       description: Returns the tenant user identified by request actor metadata (user_id / eventContext).
       operationId: getApiV2PasswordVaultUsersSelf
       responses:
@@ -35618,6 +35664,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/users/self/jc-user:
     get:
+      summary: Get Current User JC-Managed Status
       description: Returns whether the caller (user_id actor metadata) is a JC-managed user in the password vault tenant.
       operationId: getApiV2PasswordVaultUsersSelfJcUser
       responses:
@@ -35637,6 +35684,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/websites:
     get:
+      summary: List Websites
       description: List password vault websites.
       operationId: getApiV2PasswordVaultWebsites
       responses:
@@ -35689,6 +35737,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     post:
+      summary: Update Website
       description: Create or update a password vault website.
       operationId: postApiV2PasswordVaultWebsites
       responses:
@@ -35709,6 +35758,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}:
     get:
+      summary: Get Website
       description: Get password vault website metadata for viewing.
       operationId: getApiV2PasswordVaultWebsitesById
       responses:
@@ -35734,6 +35784,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     delete:
+      summary: Delete Website
       description: Delete a password vault website.
       operationId: deleteApiV2PasswordVaultWebsitesById
       responses:
@@ -35765,6 +35816,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/activities:
     get:
+      summary: Get Website Activities
       description: Get password vault website activity audit trail.
       operationId: getApiV2PasswordVaultWebsitesByIdActivities
       responses:
@@ -35791,6 +35843,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/websites/{id}/admin-takeovers:
     post:
+      summary: Admin Takeover Website Session
       description: Admin takeover of a password vault website.
       operationId: postApiV2PasswordVaultWebsitesByIdAdminTakeovers
       responses:
@@ -35819,6 +35872,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/archive:
     post:
+      summary: Archive Website
       description: Archive a password vault website.
       operationId: postApiV2PasswordVaultWebsitesByIdArchive
       responses:
@@ -35847,6 +35901,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/clones:
     post:
+      summary: Duplicate Website
       description: Duplicate a password vault website.
       operationId: postApiV2PasswordVaultWebsitesByIdClones
       responses:
@@ -35874,6 +35929,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/connect-links:
     get:
+      summary: List Links for Connect
       description: List credential links available for connecting to a website resource.
       operationId: getApiV2PasswordVaultWebsitesByIdConnectLinks
       responses:
@@ -35909,6 +35965,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/websites/{id}/edit:
     get:
+      summary: Get Website for Edit
       description: Get password vault website for editing.
       operationId: getApiV2PasswordVaultWebsitesByIdEdit
       responses:
@@ -35935,6 +35992,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/websites/{id}/links:
     post:
+      summary: Create Link
       description: Create a credential link for a website resource.
       operationId: postApiV2PasswordVaultWebsitesByIdLinks
       responses:
@@ -35970,6 +36028,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/links/{linkId}/confirmations:
     post:
+      summary: Confirm Website Connection
       description: Confirm a website connection after link selection.
       operationId: postApiV2PasswordVaultWebsitesByIdLinksByLinkidConfirmations
       responses:
@@ -36013,6 +36072,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/parameters-extension:
     get:
+      summary: Get Website Parameters Extension
       description: Get password vault website parameters extension for autofill configuration.
       operationId: getApiV2PasswordVaultWebsitesByIdParametersExtension
       responses:
@@ -36039,6 +36099,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/websites/{id}/unarchive:
     post:
+      summary: Unarchive Website
       description: Unarchive a password vault website.
       operationId: postApiV2PasswordVaultWebsitesByIdUnarchive
       responses:
@@ -36067,6 +36128,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/excel/columns:
     get:
+      summary: Get Website Excel Columns
       description: Returns export column dictionary for website Excel import/export.
       operationId: getApiV2PasswordVaultWebsitesExcelColumns
       responses:
@@ -36085,6 +36147,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/excel/exports:
     post:
+      summary: Export Websites to Excel
       description: Enqueue a background job to export filtered websites to Excel.
       operationId: postApiV2PasswordVaultWebsitesExcelExports
       responses:
@@ -36105,6 +36168,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/secret/v2:
     get:
+      summary: Get Credential Secret V2
       description: Get password vault credential secret (V2 payload).
       operationId: getApiV2PasswordVaultCredentialsByIdSecretV2
       responses:
@@ -36148,6 +36212,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/groups/{id}/deactivate:
     post:
+      summary: Deactivate Group
       description: Deactivate a password vault group.
       operationId: postApiV2PasswordVaultGroupsByIdDeactivate
       responses:
@@ -36176,6 +36241,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}/admin-takeovers:
     post:
+      summary: Admin Takeover Folder Session
       description: Admin takeover of a password vault folder session.
       operationId: postApiV2PasswordVaultFoldersByIdAdminTakeovers
       responses:
@@ -36204,6 +36270,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/events:
     post:
+      summary: Log Client Audit Event
       description: Log a password vault client-side audit event.
       operationId: postApiV2PasswordVaultEvents
       responses:
@@ -36334,6 +36401,7 @@ paths:
         - mdm
   /api/v2/privileged-access/pam/activation/finalize:
     post:
+      summary: Finalize Privileged Access Activation
       description: Finalize PAM activation by activating the tenant in VaultOne
       operationId: postApiV2PrivilegedAccessPamActivationFinalize
       responses:
@@ -36571,6 +36639,7 @@ paths:
         - mdm
   /api/v2/password-vault/folders/{id}/users/self:
     delete:
+      summary: Remove My Folder Access
       description: Remove the calling user's direct access from a shared password vault folder.
       operationId: deleteApiV2PasswordVaultFoldersByIdUsersSelf
       responses:
@@ -36597,6 +36666,7 @@ paths:
         - passwordmanager
   /api/v2/privileged-access/tags:
     get:
+      summary: List Privileged Access Tags
       description: "List privileged access tags. Privileged Access counterpart of List, exposed under the privileged-access namespace and PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team. Use `source` to choose the tag store: RESOURCES (default) reads resource tags, BLOCKING_RULES aggregates tags used on blocking rules, ALL merges both. Omitting `source` keeps the original resource-tags behaviour. There is no search or pagination, so the full de-duplicated list is returned and callers filter client-side."
       operationId: getApiV2PrivilegedAccessTags
       responses:
@@ -36642,6 +36712,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/privileged-access/users/self:
     get:
+      summary: Get Current Privileged Access User
       description: "Returns the tenant user identified by request actor metadata (user_id / eventContext). Privileged Access counterpart of GetUser: the same tenant user, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team."
       operationId: getApiV2PrivilegedAccessUsersSelf
       responses:
@@ -36661,6 +36732,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/managers:
     get:
+      summary: List Credential Managers
       description: List managers of a password vault credential.
       operationId: getApiV2PasswordVaultCredentialsByIdManagers
       responses:
@@ -36711,6 +36783,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/privileged-access/groups/{idGroup}/assignable-resources:
     get:
+      summary: List Assignable Privileged Access Group Resources
       description: List resources that can be assigned to a privileged access group. Privileged Access counterpart of ListAssignableResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
       operationId: getApiV2PrivilegedAccessGroupsByIdgroupAssignableResources
       responses:
@@ -36770,6 +36843,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/privileged-access/groups/{idGroup}/members:
     get:
+      summary: List Privileged Access Group Members
       description: List members of a privileged access group. Privileged Access counterpart of ListMembers, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
       operationId: getApiV2PrivilegedAccessGroupsByIdgroupMembers
       responses:
@@ -36814,6 +36888,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/privileged-access/groups/{idGroup}/resources:
     get:
+      summary: List Privileged Access Group Resources
       description: List resources assigned to a privileged access group. Privileged Access counterpart of ListResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
       operationId: getApiV2PrivilegedAccessGroupsByIdgroupResources
       responses:
@@ -36872,6 +36947,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     put:
+      summary: Update Privileged Access Group Resources
       description: Assign or remove resources on a privileged access group. Privileged Access counterpart of ManageResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
       operationId: putApiV2PrivilegedAccessGroupsByIdgroupResources
       responses:
@@ -36916,6 +36992,7 @@ paths:
         - passwordmanager
   /api/v2/privileged-access/groups/all:
     get:
+      summary: List Privileged Access Groups in Full
       description: "List all privileged access groups (non-paged). Privileged Access counterpart of List: the same groups, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team."
       operationId: getApiV2PrivilegedAccessGroupsAll
       responses:
@@ -36935,6 +37012,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/websites/{id}/managers:
     get:
+      summary: List Website Managers
       description: List managers of a password vault website.
       operationId: getApiV2PasswordVaultWebsitesByIdManagers
       responses:
@@ -36985,6 +37063,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/activate:
     post:
+      summary: Activate Password Vault Tenant
       description: Activate tenant and create integration token via password vault backend
       operationId: postApiV2PasswordVaultActivate
       responses:
@@ -37005,7 +37084,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/sso-tenant-settings:
     put:
-      summary: Distinct from TenantSettingsService PUT /password-vault/tenant-settings (trusted-integration flags).
+      summary: Update Password Vault SSO Tenant Settings
       description: Update password vault tenant SSO/SCIM client credentials and SSO application id
       operationId: putApiV2PasswordVaultSsoTenantSettings
       responses:
@@ -37027,6 +37106,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/status:
     get:
+      summary: Get Password Vault Status
       description: Get password vault status for an organization
       operationId: getApiV2PasswordVaultStatus
       responses:
@@ -37056,6 +37136,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/privileged-access/backup-key:
     get:
+      summary: Get Jump Server Backup Key State
       description: "Get the Jump Server backup key state for the tenant. Returns `keyId` only: an empty `keyId` means no key has been generated yet and encrypted Jump Server backups are not being produced. The key itself and its version are returned exactly once, by GeneratePrivilegedAccessBackupKey, and are never readable afterwards. Requires the PAM Backup permission."
       operationId: getApiV2PrivilegedAccessBackupKey
       responses:
@@ -37074,6 +37155,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     post:
+      summary: Generate Jump Server Backup Key
       description: Generate or rotate the Jump Server backup key and return it once. This is the only response that ever contains the plaintext key, so the caller must surface it immediately. Rotation keeps `keyId` stable and stores a new key version; each backup file records the version it was encrypted with, so backups taken before a rotation still require their earlier key. Not idempotent. Requires the PAM Backup permission.
       operationId: postApiV2PrivilegedAccessBackupKey
       responses:
@@ -37096,6 +37178,356 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - passwordmanager
+  /api/v2/privileged-access/resource-managers:
+    get:
+      summary: List Resource Managers
+      description: List resource managers.
+      operationId: getApiV2PrivilegedAccessResourceManagers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListResourceManagersReply"
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    put:
+      summary: Update Resource Manager
+      description: Create or update a resource manager and sync members.
+      operationId: putApiV2PrivilegedAccessResourceManagers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertResourceManagerRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/privileged-access/resource-managers/{id}:
+    delete:
+      summary: Delete Resource Manager
+      description: Delete a resource manager.
+      operationId: deleteApiV2PrivilegedAccessResourceManagersById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/privileged-access/resource-managers/{id}/{category}/available:
+    get:
+      summary: List Assignable Resource Manager Resources
+      description: List privileged resources available to assign to a resource manager for a category.
+      operationId: getApiV2PrivilegedAccessResourceManagersByIdByCategoryAvailable
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListResourceManagerAvailableResourcesReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/privileged-access/resource-managers/{id}/{category}/resources:
+    get:
+      summary: List Resource Manager Resources
+      description: List privileged resources assigned to a resource manager for a category.
+      operationId: getApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListResourceManagerResourcesReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+    put:
+      summary: Update Resource Manager Resources
+      description: Add resources or update permissions on resources assigned to a resource manager.
+      operationId: putApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permissions:
+                  type: array
+                  items:
+                    type: string
+                resourceIds:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+    delete:
+      summary: Remove Resource Manager Resources
+      description: Remove resources from a resource manager for a category.
+      operationId: deleteApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resourceIds:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+  /api/v2/privileged-access/resource-managers/{id}/members:
+    get:
+      summary: List Resource Manager Members
+      description: List members of a resource manager.
+      operationId: getApiV2PrivilegedAccessResourceManagersByIdMembers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ViewResourceManagerMembersReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -61442,6 +61874,100 @@ components:
       properties:
         keyId:
           type: string
+    jumpcloud.privileged_access.ListResourceManagerAvailableResourcesReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ResourceManagerAvailableResource"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListResourceManagerResourcesReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ResourceManagerResource"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListResourceManagersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ResourceManagerListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ResourceManagerAvailableResource:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+    jumpcloud.privileged_access.ResourceManagerListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        memberCount:
+          type: integer
+          format: int32
+        name:
+          type: string
+    jumpcloud.privileged_access.ResourceManagerMember:
+      type: object
+      properties:
+        email:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+    jumpcloud.privileged_access.ResourceManagerResource:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.UpsertResourceManagerRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        memberIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        name:
+          type: string
+    jumpcloud.privileged_access.ViewResourceManagerMembersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ResourceManagerMember"
+        totalCount:
+          type: integer
+          format: int32
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

@@ -3927,6 +3927,46 @@ operations:
     legacy_operation_id: TenantSettingsService_GeneratePrivilegedAccessBackupKey
     standardized_operation_id: postApiV2PrivilegedAccessBackupKey
   - method: get
+    host_root_path: /api/v2/privileged-access/resource-managers
+    base_path: /api/v2
+    legacy_operation_id: ResourceManagersService_List
+    standardized_operation_id: getApiV2PrivilegedAccessResourceManagers
+  - method: put
+    host_root_path: /api/v2/privileged-access/resource-managers
+    base_path: /api/v2
+    legacy_operation_id: ResourceManagersService_Upsert
+    standardized_operation_id: putApiV2PrivilegedAccessResourceManagers
+  - method: delete
+    host_root_path: /api/v2/privileged-access/resource-managers/{id}
+    base_path: /api/v2
+    legacy_operation_id: ResourceManagersService_Delete
+    standardized_operation_id: deleteApiV2PrivilegedAccessResourceManagersById
+  - method: get
+    host_root_path: /api/v2/privileged-access/resource-managers/{id}/{category}/available
+    base_path: /api/v2
+    legacy_operation_id: ResourceManagersService_ListResourcesAvailable
+    standardized_operation_id: getApiV2PrivilegedAccessResourceManagersByIdByCategoryAvailable
+  - method: get
+    host_root_path: /api/v2/privileged-access/resource-managers/{id}/{category}/resources
+    base_path: /api/v2
+    legacy_operation_id: ResourceManagersService_ListResources
+    standardized_operation_id: getApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
+  - method: put
+    host_root_path: /api/v2/privileged-access/resource-managers/{id}/{category}/resources
+    base_path: /api/v2
+    legacy_operation_id: ResourceManagersService_UpsertResources
+    standardized_operation_id: putApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
+  - method: delete
+    host_root_path: /api/v2/privileged-access/resource-managers/{id}/{category}/resources
+    base_path: /api/v2
+    legacy_operation_id: ResourceManagersService_RemoveResources
+    standardized_operation_id: deleteApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
+  - method: get
+    host_root_path: /api/v2/privileged-access/resource-managers/{id}/members
+    base_path: /api/v2
+    legacy_operation_id: ResourceManagersService_ViewMembers
+    standardized_operation_id: getApiV2PrivilegedAccessResourceManagersByIdMembers
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations

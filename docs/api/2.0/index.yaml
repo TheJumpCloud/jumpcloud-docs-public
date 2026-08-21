@@ -46698,6 +46698,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/notifications/slack/test' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"organizationObjectId":"string","slackChannelId":"string","slackTeamId":"string"}'
   /privileged-access/activate:
     post:
+      summary: Activate Privileged Access Tenant
       description: Activate tenant and create integration token via password vault backend
       operationId: PrivilegedAccessService_Activate
       responses:
@@ -46747,6 +46748,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/activate' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"editionType":"string"}'
   /privileged-access/status:
     get:
+      summary: Get Privileged Access Status
       description: Get password vault status for an organization
       operationId: PrivilegedAccessService_GetPasswordVaultStatus
       responses:
@@ -46800,6 +46802,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/status?editionType=SOME_STRING_VALUE' -Method GET -Headers $headers
   /privileged-access/tenant-settings:
     put:
+      summary: Update Privileged Access Tenant Settings
       description: Update tenant settings including SCIM client credentials
       operationId: PrivilegedAccessService_UpdateTenantSettings
       responses:
@@ -50148,6 +50151,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/excel/import' -Method POST -Headers $headers
   /password-vault/credentials:
     get:
+      summary: List Credentials
       description: List password vault credentials.
       operationId: CredentialsService_List
       responses:
@@ -50224,6 +50228,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
     put:
+      summary: Update Credential
       description: Create or update a password vault credential.
       operationId: CredentialsService_Upsert
       responses:
@@ -50362,6 +50367,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","editLinkedWebsites":true,"expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
   /password-vault/credentials/{id}:
     get:
+      summary: Get Credential
       description: Get password vault credential metadata.
       operationId: CredentialsService_Get
       responses:
@@ -50409,6 +50415,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}' -Method GET -Headers $headers
     delete:
+      summary: Delete Credential
       description: Delete a password vault credential.
       operationId: CredentialsService_Delete
       responses:
@@ -50457,6 +50464,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}' -Method DELETE -Headers $headers
   /password-vault/credentials/{id}/activities:
     get:
+      summary: Get Credential Activities
       description: Get password vault credential activity details.
       operationId: CredentialsService_GetActivities
       responses:
@@ -50505,6 +50513,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/activities' -Method GET -Headers $headers
   /password-vault/credentials/{id}/admin-takeovers:
     post:
+      summary: Admin Takeover Credential Session
       description: Admin takeover of a password vault credential session.
       operationId: CredentialsService_TakeoverByAdmin
       responses:
@@ -50562,6 +50571,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/admin-takeovers' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /password-vault/credentials/{id}/clones:
     post:
+      summary: Duplicate Credential
       description: Duplicate a password vault credential.
       operationId: CredentialsService_Duplicate
       responses:
@@ -50618,6 +50628,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/clones' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"newName":"string"}'
   /password-vault/credentials/{id}/history:
     get:
+      summary: Get Credential History
       description: Get password vault credential history.
       operationId: CredentialsService_GetHistory
       responses:
@@ -50673,6 +50684,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/history?continuationToken=SOME_STRING_VALUE' -Method GET -Headers $headers
   /password-vault/credentials/{id}/mfa-code:
     get:
+      summary: Get Credential MFA Code
       description: Get password vault credential MFA code.
       operationId: CredentialsService_GetMfaCode
       responses:
@@ -50729,6 +50741,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/mfa-code?domain=SOME_STRING_VALUE' -Method GET -Headers $headers
   /password-vault/credentials/{id}/secret:
     get:
+      summary: Get Credential Secret
       description: Get password vault credential secret.
       operationId: CredentialsService_GetSecret
       responses:
@@ -50796,6 +50809,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/secret?resourceId=SOME_STRING_VALUE&credentialVersion=SOME_STRING_VALUE&domain=SOME_STRING_VALUE' -Method GET -Headers $headers
   /password-vault/credentials/{id}/with-secret:
     get:
+      summary: Get Credential With Secret
       description: Get password vault credential metadata with secret value.
       operationId: CredentialsService_GetWithSecret
       responses:
@@ -50844,6 +50858,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/with-secret' -Method GET -Headers $headers
   /password-vault/credentials/archive:
     post:
+      summary: Archive Selected Credentials
       description: Archive selected password vault credentials.
       operationId: CredentialsService_Archive
       responses:
@@ -50894,6 +50909,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/archive' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"ids":["string"]}'
   /password-vault/credentials/bulk-delete:
     delete:
+      summary: Delete Credentials in Bulk
       description: Delete selected password vault credentials.
       operationId: CredentialsService_DeleteSelected
       responses:
@@ -50944,6 +50960,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/bulk-delete' -Method DELETE -Headers $headers -ContentType 'application/json' -Body '{"ids":["string"]}'
   /password-vault/credentials/excel/columns:
     get:
+      summary: Get Credential Import Excel Columns
       description: Returns export column dictionary for credential Excel import/export.
       operationId: CredentialImportsService_GetExcelColumns
       responses:
@@ -50984,6 +51001,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/excel/columns' -Method GET -Headers $headers
   /password-vault/credentials/excel/exports:
     post:
+      summary: Export Credential Imports to Excel
       description: Enqueue a background job to export filtered credentials to Excel.
       operationId: CredentialImportsService_ExportExcel
       responses:
@@ -51038,6 +51056,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/excel/exports' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"filter":["string"],"search":"string","selectedColumns":["string"]}'
   /password-vault/credentials/unarchive:
     post:
+      summary: Unarchive Selected Credentials
       description: Unarchive selected password vault credentials.
       operationId: CredentialsService_Unarchive
       responses:
@@ -51088,6 +51107,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/unarchive' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"ids":["string"]}'
   /password-vault/dashboard-overview:
     get:
+      summary: Get Password Vault Dashboard Overview
       description: Password vault dashboard overview (tenant stats, credential widgets, most-accessed).
       operationId: DashboardOverviewService_GetDashboardOverview
       responses:
@@ -51129,6 +51149,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/dashboard-overview' -Method GET -Headers $headers
   /password-vault/folders:
     get:
+      summary: List Folders
       description: List password vault folders.
       operationId: FolderService_GetAll
       responses:
@@ -51205,6 +51226,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
     post:
+      summary: Update Folder
       description: Create or update a password vault folder.
       operationId: FolderService_CreateOrEdit
       responses:
@@ -51284,6 +51306,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"folder":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"],"type":"string"}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"],"type":"string"}]},"credentialIds":["string"],"description":"string","id":"string","name":"string","resourceIds":["string"]}}'
   /password-vault/folders/{id}:
     get:
+      summary: Get Folder
       description: Get password vault folder metadata for viewing.
       operationId: FolderService_GetForView
       responses:
@@ -51331,6 +51354,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}' -Method GET -Headers $headers
     delete:
+      summary: Delete Folder
       description: Delete a password vault folder.
       operationId: FolderService_Delete
       responses:
@@ -51379,6 +51403,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}' -Method DELETE -Headers $headers
   /password-vault/folders/{id}/edit:
     get:
+      summary: Get Folder for Edit
       description: Get password vault folder for editing.
       operationId: FolderService_GetForEdit
       responses:
@@ -51427,6 +51452,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/edit' -Method GET -Headers $headers
   /password-vault/folders/{id}/items:
     get:
+      summary: List Folder Items
       description: List items in a password vault folder.
       operationId: FolderService_GetItems
       responses:
@@ -51509,6 +51535,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/items?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
     post:
+      summary: Add Folder Items in Bulk
       description: Add resources and credentials to a password vault folder in bulk.
       operationId: FolderService_BulkAddItems
       responses:
@@ -51568,6 +51595,7 @@ paths:
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/items' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"credentialIds":["string"],"resourceIds":["string"]}'
     delete:
+      summary: Remove Folder Items in Bulk
       description: Remove resources and credentials from a password vault folder in bulk.
       operationId: FolderService_BulkRemoveItems
       responses:
@@ -51628,6 +51656,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/items' -Method DELETE -Headers $headers -ContentType 'application/json' -Body '{"credentialIds":["string"],"resourceIds":["string"]}'
   /password-vault/folders/{id}/items/move:
     post:
+      summary: Move Folder Items in Bulk
       description: Move resources and credentials to another password vault folder in bulk.
       operationId: FolderService_BulkMoveItemsTo
       responses:
@@ -51689,6 +51718,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/items/move' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"credentialIds":["string"],"resourceIds":["string"],"targetFolderId":"string"}'
   /password-vault/folders/{id}/items/move-to-default:
     post:
+      summary: Move Folder Items to Default Folder
       description: Move resources and credentials to the default folder in bulk.
       operationId: FolderService_BulkMoveItemsToDefault
       responses:
@@ -51750,6 +51780,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/items/move-to-default' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"credentialIds":["string"],"resourceIds":["string"],"targetFolderId":"string"}'
   /password-vault/folders/{id}/managers:
     get:
+      summary: List Folder Managers
       description: List managers of a password vault folder.
       operationId: FolderService_ListManagers
       responses:
@@ -51824,6 +51855,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/managers?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /password-vault/folders/{id}/policies:
     put:
+      summary: Update Folder Policies
       description: Update password vault folder access policies.
       operationId: FolderService_UpdateFolderPolicies
       responses:
@@ -51907,6 +51939,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/policies' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"],"type":"string"}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"],"type":"string"}]}}'
   /password-vault/folders/{id}/properties:
     put:
+      summary: Update Folder Properties
       description: Update password vault folder name and description.
       operationId: FolderService_UpdateFolderProperties
       responses:
@@ -51976,6 +52009,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/properties' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"description":"string","name":"string"}'
   /password-vault/groups:
     get:
+      summary: List Groups
       description: List password vault groups.
       operationId: GroupsService_ListPaged
       responses:
@@ -52050,6 +52084,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/groups?search=SOME_STRING_VALUE&parentId=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /password-vault/groups/{idGroup}/assignable-resources:
     get:
+      summary: List Assignable Group Resources
       description: List resources that can be assigned to a password vault group.
       operationId: GroupsService_ListAssignableResources
       responses:
@@ -52133,6 +52168,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/groups/{idGroup}/assignable-resources?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
   /password-vault/groups/{idGroup}/members:
     get:
+      summary: List Group Members
       description: List members of a password vault group.
       operationId: GroupsService_ListMembers
       responses:
@@ -52201,6 +52237,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/groups/{idGroup}/members?skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /password-vault/groups/{idGroup}/resources:
     get:
+      summary: List Group Resources
       description: List resources assigned to a password vault group.
       operationId: GroupsService_ListResources
       responses:
@@ -52283,6 +52320,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/groups/{idGroup}/resources?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
     put:
+      summary: Update Group Resources
       description: Assign or remove resources on a password vault group.
       operationId: GroupsService_ManageResources
       responses:
@@ -52365,6 +52403,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/groups/{idGroup}/resources' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"category":"string","group":{"id":0,"name":"string","permissions":["string"]},"isDeleting":true,"resourceIds":["string"]}'
   /password-vault/groups/all:
     get:
+      summary: List Groups in Full
       description: List all password vault groups (non-paged).
       operationId: GroupsService_List
       responses:
@@ -52406,6 +52445,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/groups/all' -Method GET -Headers $headers
   /password-vault/tags:
     get:
+      summary: List Tags
       description: List password vault tags.
       operationId: TagsService_List
       responses:
@@ -52459,6 +52499,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/tags?filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /password-vault/tenant-settings:
     get:
+      summary: Get Tenant Settings
       description: Get password vault trusted tenant settings (9 integration flags).
       operationId: TenantSettingsService_GetTenantSettings
       responses:
@@ -52499,6 +52540,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/tenant-settings' -Method GET -Headers $headers
     put:
+      summary: Update Tenant Settings
       description: Patch password vault trusted tenant settings (9 integration flags).
       operationId: TenantSettingsService_UpdateTenantSettings
       responses:
@@ -52564,6 +52606,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/tenant-settings' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"update":{"allowCredentialExport":true,"allowUsersToStorePrivateSecrets":true,"allowWebsiteExport":true,"browserExtensionManagementEnabled":true,"createPrivateSecretsByDefault":true,"credentialExpiredMustBeBlocked":true,"mobileAppAccessEnabled":true,"securityAlertEmailNotification":true,"securityAlertPushNotification":true}}'
   /password-vault/tenant-settings/default-permissions:
     get:
+      summary: Get Default Tenant Permissions
       description: Get password vault default permission JSON blobs for the tenant.
       operationId: TenantSettingsService_GetDefaultPermissions
       responses:
@@ -52605,6 +52648,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/tenant-settings/default-permissions' -Method GET -Headers $headers
   /password-vault/users:
     get:
+      summary: List Users
       description: Find password vault users.
       operationId: UsersService_Find
       responses:
@@ -52690,6 +52734,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/users?filter=SOME_ARRAY_VALUE&limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE&roleFilter=SOME_STRING_VALUE' -Method GET -Headers $headers
   /password-vault/users/active-pwm-tenants:
     get:
+      summary: List Active PWM Tenant IDs
       description: List external tenant ids for every active PWM edition tenant.
       operationId: UsersService_ListActivePwmTenants
       responses:
@@ -52730,6 +52775,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/users/active-pwm-tenants' -Method GET -Headers $headers
   /password-vault/users/self:
     get:
+      summary: Get Current Tenant User
       description: Returns the tenant user identified by request actor metadata (user_id / eventContext).
       operationId: UsersService_GetUser
       responses:
@@ -52771,6 +52817,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/users/self' -Method GET -Headers $headers
   /password-vault/users/self/jc-user:
     get:
+      summary: Get Current User JC-Managed Status
       description: Returns whether the caller (user_id actor metadata) is a JC-managed user in the password vault tenant.
       operationId: UsersService_IsJCUser
       responses:
@@ -52812,6 +52859,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/users/self/jc-user' -Method GET -Headers $headers
   /password-vault/websites:
     get:
+      summary: List Websites
       description: List password vault websites.
       operationId: WebsitesService_List
       responses:
@@ -52888,6 +52936,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
     post:
+      summary: Update Website
       description: Create or update a password vault website.
       operationId: WebsitesService_Upsert
       responses:
@@ -53022,6 +53071,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
   /password-vault/websites/{id}:
     get:
+      summary: Get Website
       description: Get password vault website metadata for viewing.
       operationId: WebsitesService_Get
       responses:
@@ -53069,6 +53119,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}' -Method GET -Headers $headers
     delete:
+      summary: Delete Website
       description: Delete a password vault website.
       operationId: WebsitesService_Delete
       responses:
@@ -53124,6 +53175,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}?deleteCredentialsLinked=SOME_BOOLEAN_VALUE' -Method DELETE -Headers $headers
   /password-vault/websites/{id}/activities:
     get:
+      summary: Get Website Activities
       description: Get password vault website activity audit trail.
       operationId: WebsitesService_GetActivities
       responses:
@@ -53172,6 +53224,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/activities' -Method GET -Headers $headers
   /password-vault/websites/{id}/admin-takeovers:
     post:
+      summary: Admin Takeover Website Session
       description: Admin takeover of a password vault website.
       operationId: WebsitesService_TakeoverByAdmin
       responses:
@@ -53229,6 +53282,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/admin-takeovers' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /password-vault/websites/{id}/archive:
     post:
+      summary: Archive Website
       description: Archive a password vault website.
       operationId: WebsitesService_Archive
       responses:
@@ -53286,6 +53340,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/archive' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /password-vault/websites/{id}/clones:
     post:
+      summary: Duplicate Website
       description: Duplicate a password vault website.
       operationId: WebsitesService_Duplicate
       responses:
@@ -53342,6 +53397,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/clones' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"newName":"string"}'
   /password-vault/websites/{id}/connect-links:
     get:
+      summary: List Links for Connect
       description: List credential links available for connecting to a website resource.
       operationId: LinksService_GetLinksForConnect
       responses:
@@ -53401,6 +53457,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/connect-links?filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /password-vault/websites/{id}/edit:
     get:
+      summary: Get Website for Edit
       description: Get password vault website for editing.
       operationId: WebsitesService_GetForEdit
       responses:
@@ -53449,6 +53506,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/edit' -Method GET -Headers $headers
   /password-vault/websites/{id}/links:
     post:
+      summary: Create Link
       description: Create a credential link for a website resource.
       operationId: LinksService_CreateLink
       responses:
@@ -53513,6 +53571,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/links' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"credentialId":"string"}'
   /password-vault/websites/{id}/links/{linkId}/confirmations:
     post:
+      summary: Confirm Website Connection
       description: Confirm a website connection after link selection.
       operationId: LinksService_ConfirmConnection
       responses:
@@ -53588,6 +53647,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/links/{linkId}/confirmations' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"connectorEdition":"string","sessionId":"string"}'
   /password-vault/websites/{id}/parameters-extension:
     get:
+      summary: Get Website Parameters Extension
       description: Get password vault website parameters extension for autofill configuration.
       operationId: WebsitesService_GetParametersExtension
       responses:
@@ -53636,6 +53696,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/parameters-extension' -Method GET -Headers $headers
   /password-vault/websites/{id}/unarchive:
     post:
+      summary: Unarchive Website
       description: Unarchive a password vault website.
       operationId: WebsitesService_Unarchive
       responses:
@@ -53693,6 +53754,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/unarchive' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /password-vault/websites/excel/columns:
     get:
+      summary: Get Website Excel Columns
       description: Returns export column dictionary for website Excel import/export.
       operationId: WebsitesService_GetExcelColumns
       responses:
@@ -53733,6 +53795,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/excel/columns' -Method GET -Headers $headers
   /password-vault/websites/excel/exports:
     post:
+      summary: Export Websites to Excel
       description: Enqueue a background job to export filtered websites to Excel.
       operationId: WebsitesService_ExportExcel
       responses:
@@ -53786,6 +53849,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/excel/exports' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"filter":["string"],"search":"string","selectedColumns":["string"]}'
   /password-vault/credentials/{id}/secret/v2:
     get:
+      summary: Get Credential Secret V2
       description: Get password vault credential secret (V2 payload).
       operationId: CredentialsService_GetSecretV2
       responses:
@@ -53853,6 +53917,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/secret/v2?resourceId=SOME_STRING_VALUE&credentialVersion=SOME_STRING_VALUE&domain=SOME_STRING_VALUE' -Method GET -Headers $headers
   /password-vault/groups/{id}/deactivate:
     post:
+      summary: Deactivate Group
       description: Deactivate a password vault group.
       operationId: GroupsService_DeactivateGroup
       responses:
@@ -53910,6 +53975,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/groups/{id}/deactivate' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /password-vault/folders/{id}/admin-takeovers:
     post:
+      summary: Admin Takeover Folder Session
       description: Admin takeover of a password vault folder session.
       operationId: FolderService_TakeoverByAdmin
       responses:
@@ -53967,6 +54033,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/admin-takeovers' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /password-vault/events:
     post:
+      summary: Log Client Audit Event
       description: Log a password vault client-side audit event.
       operationId: EventsService_LogEvent
       responses:
@@ -54182,6 +54249,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockstate?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
   /privileged-access/pam/activation/finalize:
     post:
+      summary: Finalize Privileged Access Activation
       description: Finalize PAM activation by activating the tenant in VaultOne
       operationId: PrivilegedAccessService_FinalizeActivation
       responses:
@@ -54559,6 +54627,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockwithgeneratedpin' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"message":"string","organizationObjectId":"string","phoneNumber":"string"}'
   /password-vault/folders/{id}/users/self:
     delete:
+      summary: Remove My Folder Access
       description: Remove the calling user's direct access from a shared password vault folder.
       operationId: FolderService_RemoveMyAccess
       responses:
@@ -54607,6 +54676,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folders/{id}/users/self' -Method DELETE -Headers $headers
   /privileged-access/tags:
     get:
+      summary: List Privileged Access Tags
       description: 'List privileged access tags. Privileged Access counterpart of List, exposed under the privileged-access namespace and PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team. Use `source` to choose the tag store: RESOURCES (default) reads resource tags, BLOCKING_RULES aggregates tags used on blocking rules, ALL merges both. Omitting `source` keeps the original resource-tags behaviour. There is no search or pagination, so the full de-duplicated list is returned and callers filter client-side.'
       operationId: TagsService_ListPrivilegedAccessTags
       responses:
@@ -54676,6 +54746,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/tags?filter=SOME_ARRAY_VALUE&source=SOME_STRING_VALUE' -Method GET -Headers $headers
   /privileged-access/users/self:
     get:
+      summary: Get Current Privileged Access User
       description: 'Returns the tenant user identified by request actor metadata (user_id / eventContext). Privileged Access counterpart of GetUser: the same tenant user, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team.'
       operationId: UsersService_GetSelfUser
       responses:
@@ -54717,6 +54788,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/users/self' -Method GET -Headers $headers
   /password-vault/credentials/{id}/managers:
     get:
+      summary: List Credential Managers
       description: List managers of a password vault credential.
       operationId: CredentialsService_GetCredentialManagers
       responses:
@@ -54791,6 +54863,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/managers?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /privileged-access/groups/{idGroup}/assignable-resources:
     get:
+      summary: List Assignable Privileged Access Group Resources
       description: List resources that can be assigned to a privileged access group. Privileged Access counterpart of ListAssignableResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
       operationId: GroupsService_ListPrivilegedAccessAssignableResources
       responses:
@@ -54874,6 +54947,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/{idGroup}/assignable-resources?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
   /privileged-access/groups/{idGroup}/members:
     get:
+      summary: List Privileged Access Group Members
       description: List members of a privileged access group. Privileged Access counterpart of ListMembers, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
       operationId: GroupsService_ListPrivilegedAccessGroupMembers
       responses:
@@ -54942,6 +55016,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/{idGroup}/members?skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /privileged-access/groups/{idGroup}/resources:
     get:
+      summary: List Privileged Access Group Resources
       description: List resources assigned to a privileged access group. Privileged Access counterpart of ListResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
       operationId: GroupsService_ListPrivilegedAccessGroupResources
       responses:
@@ -55024,6 +55099,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/{idGroup}/resources?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
     put:
+      summary: Update Privileged Access Group Resources
       description: Assign or remove resources on a privileged access group. Privileged Access counterpart of ManageResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
       operationId: GroupsService_ManagePrivilegedAccessGroupResources
       responses:
@@ -55106,6 +55182,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/{idGroup}/resources' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"category":"string","group":{"id":0,"name":"string","permissions":["string"]},"isDeleting":true,"resourceIds":["string"]}'
   /privileged-access/groups/all:
     get:
+      summary: List Privileged Access Groups in Full
       description: 'List all privileged access groups (non-paged). Privileged Access counterpart of List: the same groups, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team.'
       operationId: GroupsService_ListPrivilegedAccessGroups
       responses:
@@ -55147,6 +55224,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/all' -Method GET -Headers $headers
   /password-vault/websites/{id}/managers:
     get:
+      summary: List Website Managers
       description: List managers of a password vault website.
       operationId: WebsitesService_GetWebsiteManagers
       responses:
@@ -55221,6 +55299,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites/{id}/managers?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /password-vault/activate:
     post:
+      summary: Activate Password Vault Tenant
       description: Activate tenant and create integration token via password vault backend
       operationId: PasswordVaultService_Activate
       responses:
@@ -55270,7 +55349,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/activate' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"editionType":"string"}'
   /password-vault/sso-tenant-settings:
     put:
-      summary: Distinct from TenantSettingsService PUT /password-vault/tenant-settings (trusted-integration flags).
+      summary: Update Password Vault SSO Tenant Settings
       description: Update password vault tenant SSO/SCIM client credentials and SSO application id
       operationId: PasswordVaultService_UpdateSSOTenantSettings
       responses:
@@ -55325,6 +55404,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/sso-tenant-settings' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"clientId":"string","clientSecret":"string","ssoApplicationId":"string"}'
   /password-vault/status:
     get:
+      summary: Get Password Vault Status
       description: Get password vault status for an organization
       operationId: PasswordVaultService_GetTenantStatus
       responses:
@@ -55378,6 +55458,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/status?editionType=SOME_STRING_VALUE' -Method GET -Headers $headers
   /privileged-access/backup-key:
     get:
+      summary: Get Jump Server Backup Key State
       description: 'Get the Jump Server backup key state for the tenant. Returns `keyId` only: an empty `keyId` means no key has been generated yet and encrypted Jump Server backups are not being produced. The key itself and its version are returned exactly once, by GeneratePrivilegedAccessBackupKey, and are never readable afterwards. Requires the PAM Backup permission.'
       operationId: TenantSettingsService_GetPrivilegedAccessBackupKey
       responses:
@@ -55418,6 +55499,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/backup-key' -Method GET -Headers $headers
     post:
+      summary: Generate Jump Server Backup Key
       description: Generate or rotate the Jump Server backup key and return it once. This is the only response that ever contains the plaintext key, so the caller must surface it immediately. Rotation keeps `keyId` stable and stores a new key version; each backup file records the version it was encrypted with, so backups taken before a rotation still require their earlier key. Not idempotent. Requires the PAM Backup permission.
       operationId: TenantSettingsService_GeneratePrivilegedAccessBackupKey
       responses:
@@ -55469,6 +55551,568 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/backup-key' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+  /privileged-access/resource-managers:
+    get:
+      summary: List Resource Managers
+      description: List resource managers.
+      operationId: ResourceManagersService_List
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListResourceManagersReply'
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
+    put:
+      summary: Update Resource Manager
+      description: Create or update a resource manager and sync members.
+      operationId: ResourceManagersService_Upsert
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertResourceManagerRequest'
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"id":0,"memberIds":[0],"name":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers"
+
+            payload = {
+                "id": 0,
+                "memberIds": [0],
+                "name": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"id":0,"memberIds":[0],"name":"string"}'
+  /privileged-access/resource-managers/{id}:
+    delete:
+      summary: Delete Resource Manager
+      description: Delete a resource manager.
+      operationId: ResourceManagersService_Delete
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}' -Method DELETE -Headers $headers
+  /privileged-access/resource-managers/{id}/{category}/available:
+    get:
+      summary: List Assignable Resource Manager Resources
+      description: List privileged resources available to assign to a resource manager for a category.
+      operationId: ResourceManagersService_ListResourcesAvailable
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListResourceManagerAvailableResourcesReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/available?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/available"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/available?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
+  /privileged-access/resource-managers/{id}/{category}/resources:
+    get:
+      summary: List Resource Manager Resources
+      description: List privileged resources assigned to a resource manager for a category.
+      operationId: ResourceManagersService_ListResources
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListResourceManagerResourcesReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
+    put:
+      summary: Update Resource Manager Resources
+      description: Add resources or update permissions on resources assigned to a resource manager.
+      operationId: ResourceManagersService_UpsertResources
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permissions:
+                  type: array
+                  items:
+                    type: string
+                resourceIds:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"permissions":["string"],"resourceIds":["string"]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources"
+
+            payload = {
+                "permissions": ["string"],
+                "resourceIds": ["string"]
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"permissions":["string"],"resourceIds":["string"]}'
+    delete:
+      summary: Remove Resource Manager Resources
+      description: Remove resources from a resource manager for a category.
+      operationId: ResourceManagersService_RemoveResources
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resourceIds:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"resourceIds":["string"]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources"
+
+            payload = {"resourceIds": ["string"]}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("DELETE", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources' -Method DELETE -Headers $headers -ContentType 'application/json' -Body '{"resourceIds":["string"]}'
+  /privileged-access/resource-managers/{id}/members:
+    get:
+      summary: List Resource Manager Members
+      description: List members of a resource manager.
+      operationId: ResourceManagersService_ViewMembers
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ViewResourceManagerMembersReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/members"
+
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /assets/field-configurations:
     get:
       tags:
@@ -77469,6 +78113,100 @@ components:
       properties:
         keyId:
           type: string
+    jumpcloud.privileged_access.ListResourceManagerAvailableResourcesReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.ResourceManagerAvailableResource'
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListResourceManagerResourcesReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.ResourceManagerResource'
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListResourceManagersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.ResourceManagerListItem'
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ResourceManagerAvailableResource:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+    jumpcloud.privileged_access.ResourceManagerListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        memberCount:
+          type: integer
+          format: int32
+        name:
+          type: string
+    jumpcloud.privileged_access.ResourceManagerMember:
+      type: object
+      properties:
+        email:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+    jumpcloud.privileged_access.ResourceManagerResource:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.UpsertResourceManagerRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        memberIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+        name:
+          type: string
+    jumpcloud.privileged_access.ViewResourceManagerMembersReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.ResourceManagerMember'
+        totalCount:
+          type: integer
+          format: int32
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
