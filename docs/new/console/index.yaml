@@ -58927,6 +58927,9 @@ components:
             - "null"
           format: byte
           description: risk_policy_id is the applied identity risk policy object_id at scoring time.
+        riskPolicyName:
+          type: string
+          description: risk_policy_name is the display name of the policy referenced by risk_policy_id (when present).
         score:
           type: integer
           format: int32
