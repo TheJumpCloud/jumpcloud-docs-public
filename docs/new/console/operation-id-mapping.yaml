@@ -3267,6 +3267,11 @@ operations:
     legacy_operation_id: AccessWorkflowSettingsApi_UpdateAccessWorkflowSettings
     standardized_operation_id: putApiV2Approvalflowsettings
   - method: post
+    host_root_path: /api/v2/users/{user_id}/transfer
+    base_path: /api/v2
+    legacy_operation_id: users_transferSystemUser
+    standardized_operation_id: postApiV2UsersByUserIdTransfer
+  - method: post
     host_root_path: /api/v2/notifications/slack/test
     base_path: /api/v2
     legacy_operation_id: NotificationsChannelsService_TestSlack

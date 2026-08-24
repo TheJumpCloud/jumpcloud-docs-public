@@ -8439,6 +8439,14 @@ components:
                   type: string
             lostModeStatus:
               type: string
+            deviceLockStatus:
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                - 4
         builtInCommands:
           type: array
           items:
@@ -8720,6 +8728,14 @@ components:
                   type: string
             lostModeStatus:
               type: string
+            deviceLockStatus:
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                - 4
         builtInCommands:
           type: array
           items:

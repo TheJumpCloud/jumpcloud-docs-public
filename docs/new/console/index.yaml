@@ -32095,6 +32095,82 @@ paths:
       x-scopes:
         - accessmanagement
   /api/v2/users/{user_id}/transfer:
+    post:
+      tags:
+        - Graph
+        - Users
+      summary: Transfer user to target organization
+      description: Transfer a user to a target organization
+      operationId: postApiV2UsersByUserIdTransfer
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+        - name: x-org-id
+          description: Required header. Set to '-' to scope the request to all organizations under your account.
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - org_id
+              properties:
+                org_id:
+                  type: string
+                  description: Target organization ID
+        required: true
+      responses:
+        "200":
+          description: Successfully moved user to target organization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      x-scopes:
+        - transfer
+      security:
+        - x-api-key: []
     x-functionalities-tags:
       - mtp-account-overview
   /api/v2/notifications/slack/test:
@@ -33737,6 +33813,7 @@ paths:
         - identityrisk.readonly
   /api/v2/password-manager:
     get:
+      summary: Get Password Manager Organization
       description: Get Password Manager Organization
       operationId: getApiV2PasswordManager
       responses:
@@ -43207,6 +43284,14 @@ components:
                   type: string
             lostModeStatus:
               type: string
+            deviceLockStatus:
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                - 4
         builtInCommands:
           type: array
           items:
@@ -43488,6 +43573,14 @@ components:
                   type: string
             lostModeStatus:
               type: string
+            deviceLockStatus:
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                - 4
         builtInCommands:
           type: array
           items:
