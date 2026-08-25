@@ -3942,35 +3942,40 @@ operations:
     legacy_operation_id: ResourceManagersService_Upsert
     standardized_operation_id: putApiV2PrivilegedAccessResourceManagers
   - method: delete
-    host_root_path: /api/v2/privileged-access/resource-managers/{id}
+    host_root_path: /api/v2/privileged-access/resource-managers/{resourceManagerId}
     base_path: /api/v2
     legacy_operation_id: ResourceManagersService_Delete
-    standardized_operation_id: deleteApiV2PrivilegedAccessResourceManagersById
+    standardized_operation_id: deleteApiV2PrivilegedAccessResourceManagersByResourcemanagerid
   - method: get
-    host_root_path: /api/v2/privileged-access/resource-managers/{id}/{category}/available
+    host_root_path: /api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/available
     base_path: /api/v2
     legacy_operation_id: ResourceManagersService_ListResourcesAvailable
-    standardized_operation_id: getApiV2PrivilegedAccessResourceManagersByIdByCategoryAvailable
+    standardized_operation_id: getApiV2PrivilegedAccessResourceManagersByResourcemanageridByCategoryAvailable
   - method: get
-    host_root_path: /api/v2/privileged-access/resource-managers/{id}/{category}/resources
+    host_root_path: /api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources
     base_path: /api/v2
     legacy_operation_id: ResourceManagersService_ListResources
-    standardized_operation_id: getApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
+    standardized_operation_id: getApiV2PrivilegedAccessResourceManagersByResourcemanageridByCategoryResources
   - method: put
-    host_root_path: /api/v2/privileged-access/resource-managers/{id}/{category}/resources
+    host_root_path: /api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources
     base_path: /api/v2
     legacy_operation_id: ResourceManagersService_UpsertResources
-    standardized_operation_id: putApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
+    standardized_operation_id: putApiV2PrivilegedAccessResourceManagersByResourcemanageridByCategoryResources
   - method: delete
-    host_root_path: /api/v2/privileged-access/resource-managers/{id}/{category}/resources
+    host_root_path: /api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources
     base_path: /api/v2
     legacy_operation_id: ResourceManagersService_RemoveResources
-    standardized_operation_id: deleteApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
+    standardized_operation_id: deleteApiV2PrivilegedAccessResourceManagersByResourcemanageridByCategoryResources
   - method: get
-    host_root_path: /api/v2/privileged-access/resource-managers/{id}/members
+    host_root_path: /api/v2/privileged-access/resource-managers/{resourceManagerId}/members
     base_path: /api/v2
     legacy_operation_id: ResourceManagersService_ViewMembers
-    standardized_operation_id: getApiV2PrivilegedAccessResourceManagersByIdMembers
+    standardized_operation_id: getApiV2PrivilegedAccessResourceManagersByResourcemanageridMembers
+  - method: get
+    host_root_path: /api/v2/privileged-access/users
+    base_path: /api/v2
+    legacy_operation_id: UsersService_FindPrivilegedAccessUsers
+    standardized_operation_id: getApiV2PrivilegedAccessUsers
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
