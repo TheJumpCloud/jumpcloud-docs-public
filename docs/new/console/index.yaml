@@ -8699,11 +8699,6 @@ paths:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
         - $ref: "#/components/parameters/api_v2.trait_skip_skip"
         - $ref: "#/components/parameters/api_v2.trait_filter_filter"
-        - in: query
-          name: syncStatus
-          description: Include sync status for users
-          schema:
-            type: boolean
       responses:
         "200":
           description: OK
@@ -32224,7 +32219,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
   /api/v2/privileged-access/status:
     get:
       summary: Get Privileged Access Status
@@ -32253,8 +32248,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/privileged-access/tenant-settings:
     put:
       summary: Update Privileged Access Tenant Settings
@@ -32276,7 +32271,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
   /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockconfig:
     get:
       summary: Get Recovery Lock Configuration
@@ -36506,7 +36501,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
   /api/v2/gcep/configuration:
     get:
       description: Returns the GCEP integration configuration for an organization
@@ -36790,8 +36785,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/privileged-access/users/self:
     get:
       summary: Get Current Privileged Access User
@@ -36810,8 +36805,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/managers:
     get:
       summary: List Credential Managers
@@ -36921,8 +36916,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/privileged-access/groups/{idGroup}/members:
     get:
       summary: List Privileged Access Group Members
@@ -36966,8 +36961,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/privileged-access/groups/{idGroup}/resources:
     get:
       summary: List Privileged Access Group Resources
@@ -37026,8 +37021,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
     put:
       summary: Update Privileged Access Group Resources
       description: Assign or remove resources on a privileged access group. Privileged Access counterpart of ManageResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
@@ -37071,7 +37066,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
   /api/v2/privileged-access/groups/all:
     get:
       summary: List Privileged Access Groups in Full
@@ -37090,8 +37085,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/password-vault/websites/{id}/managers:
     get:
       summary: List Website Managers
@@ -37234,8 +37229,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
     post:
       summary: Generate Jump Server Backup Key
       description: Generate or rotate the Jump Server backup key and return it once. This is the only response that ever contains the plaintext key, so the caller must surface it immediately. Rotation keeps `keyId` stable and stores a new key version; each backup file records the version it was encrypted with, so backups taken before a rotation still require their earlier key. Not idempotent. Requires the PAM Backup permission.
@@ -37259,7 +37254,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
   /api/v2/privileged-access/resource-managers:
     get:
       summary: List Resource Managers
@@ -37303,8 +37298,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
     put:
       summary: Update Resource Manager
       description: Create or update a resource manager and sync members.
@@ -37329,12 +37324,12 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-  /api/v2/privileged-access/resource-managers/{resourceManagerId}:
+        - passwordmanager
+  /api/v2/privileged-access/resource-managers/{id}:
     delete:
       summary: Delete Resource Manager
       description: Delete a resource manager.
-      operationId: deleteApiV2PrivilegedAccessResourceManagersByResourcemanagerid
+      operationId: deleteApiV2PrivilegedAccessResourceManagersById
       responses:
         "200":
           description: A successful response.
@@ -37344,7 +37339,7 @@ paths:
                 type: object
                 properties: {}
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -37356,12 +37351,12 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-  /api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/available:
+        - passwordmanager
+  /api/v2/privileged-access/resource-managers/{id}/{category}/available:
     get:
       summary: List Assignable Resource Manager Resources
       description: List privileged resources available to assign to a resource manager for a category.
-      operationId: getApiV2PrivilegedAccessResourceManagersByResourcemanageridByCategoryAvailable
+      operationId: getApiV2PrivilegedAccessResourceManagersByIdByCategoryAvailable
       responses:
         "200":
           description: A successful response.
@@ -37370,7 +37365,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/jumpcloud.privileged_access.ListResourceManagerAvailableResourcesReply"
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -37411,13 +37406,13 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
-  /api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources:
+        - passwordmanager
+        - passwordmanager.readonly
+  /api/v2/privileged-access/resource-managers/{id}/{category}/resources:
     get:
       summary: List Resource Manager Resources
       description: List privileged resources assigned to a resource manager for a category.
-      operationId: getApiV2PrivilegedAccessResourceManagersByResourcemanageridByCategoryResources
+      operationId: getApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
       responses:
         "200":
           description: A successful response.
@@ -37426,7 +37421,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/jumpcloud.privileged_access.ListResourceManagerResourcesReply"
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -37467,12 +37462,12 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
     put:
       summary: Update Resource Manager Resources
       description: Add resources or update permissions on resources assigned to a resource manager.
-      operationId: putApiV2PrivilegedAccessResourceManagersByResourcemanageridByCategoryResources
+      operationId: putApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
       responses:
         "200":
           description: A successful response.
@@ -37482,7 +37477,7 @@ paths:
                 type: object
                 properties: {}
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -37515,11 +37510,11 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
     delete:
       summary: Remove Resource Manager Resources
       description: Remove resources from a resource manager for a category.
-      operationId: deleteApiV2PrivilegedAccessResourceManagersByResourcemanageridByCategoryResources
+      operationId: deleteApiV2PrivilegedAccessResourceManagersByIdByCategoryResources
       responses:
         "200":
           description: A successful response.
@@ -37529,7 +37524,7 @@ paths:
                 type: object
                 properties: {}
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -37558,12 +37553,12 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-  /api/v2/privileged-access/resource-managers/{resourceManagerId}/members:
+        - passwordmanager
+  /api/v2/privileged-access/resource-managers/{id}/members:
     get:
       summary: List Resource Manager Members
       description: List members of a resource manager.
-      operationId: getApiV2PrivilegedAccessResourceManagersByResourcemanageridMembers
+      operationId: getApiV2PrivilegedAccessResourceManagersByIdMembers
       responses:
         "200":
           description: A successful response.
@@ -37572,7 +37567,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/jumpcloud.privileged_access.ViewResourceManagerMembersReply"
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -37608,70 +37603,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
-  /api/v2/privileged-access/users:
-    get:
-      summary: List Privileged Access Users
-      description: "Lists tenant users, optionally filtered by role. Privileged Access counterpart of Find: the same VaultOne lookup, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team. Filtering on role_filter ADMIN returns the administrators that resource manager membership accepts, and each result carries the VaultOne integer user id those writes require."
-      operationId: getApiV2PrivilegedAccessUsers
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.privileged_access.FindPrivilegedAccessUsersReply"
-      parameters:
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: roleFilter
-          description: |2-
-             - FIND_USERS_ROLE_FILTER_UNSPECIFIED: no role filter (backward compatible)
-             - FIND_USERS_ROLE_FILTER_USER: has static User role
-             - FIND_USERS_ROLE_FILTER_ADMIN: has any direct non-User role
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - FIND_USERS_ROLE_FILTER_UNSPECIFIED
-              - FIND_USERS_ROLE_FILTER_USER
-              - FIND_USERS_ROLE_FILTER_ADMIN
-            default: FIND_USERS_ROLE_FILTER_UNSPECIFIED
-      tags:
-        - Privileged Access
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -62136,42 +62069,6 @@ components:
         - CONFIGURATION_STATE_DISABLED
         - CONFIGURATION_STATE_PENDING_DELETE
       default: CONFIGURATION_STATE_UNSPECIFIED
-    jumpcloud.privileged_access.FindPrivilegedAccessUsersReply:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessUserListItem"
-        totalCount:
-          type: integer
-          format: int32
-      description: FindPrivilegedAccessUsersReply mirrors FindUsersReply.
-    jumpcloud.privileged_access.PrivilegedAccessUserListItem:
-      type: object
-      properties:
-        emailAddress:
-          type: string
-        externalId:
-          type: string
-        id:
-          type: integer
-          format: int32
-        isActive:
-          type: boolean
-        isDeleted:
-          type: boolean
-        isScim:
-          type: boolean
-        name:
-          type: string
-        surname:
-          type: string
-        userName:
-          type: string
-      description: |-
-        PrivilegedAccessUserListItem mirrors UserListItem. `id` is the VaultOne
-        integer user id, which is what resource manager membership writes expect.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
@@ -65054,8 +64951,6 @@ x-scopes:
   - organizations
   - organizations.billing
   - organizations.readonly
-  - pam
-  - pam.readonly
   - partners
   - partners.readonly
   - passwordmanager

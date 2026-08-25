@@ -8298,11 +8298,6 @@ paths:
         - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
         - $ref: '#/components/parameters/trait_skip_skip'
         - $ref: '#/components/parameters/trait_filter_filter'
-        - in: query
-          name: syncStatus
-          description: Include sync status for users
-          schema:
-            type: boolean
       responses:
         '200':
           description: OK
@@ -8327,7 +8322,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/ldapservers/{ldapserver_id}/users?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE&syncStatus=SOME_BOOLEAN_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/ldapservers/{ldapserver_id}/users?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE'
         - lang: Python
@@ -8336,7 +8331,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/ldapservers/{ldapserver_id}/users"
 
-            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","filter":"SOME_ARRAY_VALUE","syncStatus":"SOME_BOOLEAN_VALUE"}
+            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","filter":"SOME_ARRAY_VALUE"}
 
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -8351,7 +8346,7 @@ paths:
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/ldapservers/{ldapserver_id}/users?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE&syncStatus=SOME_BOOLEAN_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/ldapservers/{ldapserver_id}/users?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
     parameters:
       - description: ObjectID of the LDAP Server.
         in: path
@@ -46829,7 +46824,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -46887,8 +46882,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -46934,7 +46929,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -54386,7 +54381,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -54832,8 +54827,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -54876,8 +54871,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55033,8 +55028,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55102,8 +55097,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55186,8 +55181,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55255,7 +55250,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55312,8 +55307,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55588,8 +55583,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55635,7 +55630,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55708,8 +55703,8 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55758,7 +55753,7 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55792,7 +55787,7 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"id":0,"memberIds":[0],"name":"string"}'
-  /privileged-access/resource-managers/{resourceManagerId}:
+  /privileged-access/resource-managers/{id}:
     delete:
       summary: Delete Resource Manager
       description: Delete a resource manager.
@@ -55806,7 +55801,7 @@ paths:
                 type: object
                 properties: {}
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -55818,18 +55813,18 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
       x-codeSamples:
         - lang: Shell
           source: |-
             curl --request DELETE \
-              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId} \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id} \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}"
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}"
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -55840,8 +55835,8 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}' -Method DELETE -Headers $headers
-  /privileged-access/resource-managers/{resourceManagerId}/{category}/available:
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}' -Method DELETE -Headers $headers
+  /privileged-access/resource-managers/{id}/{category}/available:
     get:
       summary: List Assignable Resource Manager Resources
       description: List privileged resources available to assign to a resource manager for a category.
@@ -55854,7 +55849,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/jumpcloud.privileged_access.ListResourceManagerAvailableResourcesReply'
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -55895,19 +55890,19 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/available?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/available?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/available"
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/available"
 
             querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
 
@@ -55920,8 +55915,8 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/available?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
-  /privileged-access/resource-managers/{resourceManagerId}/{category}/resources:
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/available?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
+  /privileged-access/resource-managers/{id}/{category}/resources:
     get:
       summary: List Resource Manager Resources
       description: List privileged resources assigned to a resource manager for a category.
@@ -55934,7 +55929,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/jumpcloud.privileged_access.ListResourceManagerResourcesReply'
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -55975,19 +55970,19 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources"
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources"
 
             querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
 
@@ -56000,7 +55995,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
     put:
       summary: Update Resource Manager Resources
       description: Add resources or update permissions on resources assigned to a resource manager.
@@ -56014,7 +56009,7 @@ paths:
                 type: object
                 properties: {}
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -56047,12 +56042,12 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
       x-codeSamples:
         - lang: Shell
           source: |-
             curl --request PUT \
-              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --data '{"permissions":["string"],"resourceIds":["string"]}'
@@ -56060,7 +56055,7 @@ paths:
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources"
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources"
 
             payload = {
                 "permissions": ["string"],
@@ -56079,7 +56074,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"permissions":["string"],"resourceIds":["string"]}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"permissions":["string"],"resourceIds":["string"]}'
     delete:
       summary: Remove Resource Manager Resources
       description: Remove resources from a resource manager for a category.
@@ -56093,7 +56088,7 @@ paths:
                 type: object
                 properties: {}
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -56122,12 +56117,12 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
+        - passwordmanager
       x-codeSamples:
         - lang: Shell
           source: |-
             curl --request DELETE \
-              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --data '{"resourceIds":["string"]}'
@@ -56135,7 +56130,7 @@ paths:
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources"
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources"
 
             payload = {"resourceIds": ["string"]}
             headers = {
@@ -56151,8 +56146,8 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources' -Method DELETE -Headers $headers -ContentType 'application/json' -Body '{"resourceIds":["string"]}'
-  /privileged-access/resource-managers/{resourceManagerId}/members:
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/{category}/resources' -Method DELETE -Headers $headers -ContentType 'application/json' -Body '{"resourceIds":["string"]}'
+  /privileged-access/resource-managers/{id}/members:
     get:
       summary: List Resource Manager Members
       description: List members of a resource manager.
@@ -56165,7 +56160,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/jumpcloud.privileged_access.ViewResourceManagerMembersReply'
       parameters:
-        - name: resourceManagerId
+        - name: id
           in: path
           required: true
           schema:
@@ -56201,19 +56196,19 @@ paths:
         - x-api-key: []
       x-dynamic-gateway: true
       x-scopes:
-        - pam
-        - pam.readonly
+        - passwordmanager
+        - passwordmanager.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/members"
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/members"
 
             querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
 
@@ -56226,93 +56221,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{resourceManagerId}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
-  /privileged-access/users:
-    get:
-      summary: List Privileged Access Users
-      description: 'Lists tenant users, optionally filtered by role. Privileged Access counterpart of Find: the same VaultOne lookup, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team. Filtering on role_filter ADMIN returns the administrators that resource manager membership accepts, and each result carries the VaultOne integer user id those writes require.'
-      operationId: UsersService_FindPrivilegedAccessUsers
-      responses:
-        '200':
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/jumpcloud.privileged_access.FindPrivilegedAccessUsersReply'
-      parameters:
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: roleFilter
-          description: |2-
-             - FIND_USERS_ROLE_FILTER_UNSPECIFIED: no role filter (backward compatible)
-             - FIND_USERS_ROLE_FILTER_USER: has static User role
-             - FIND_USERS_ROLE_FILTER_ADMIN: has any direct non-User role
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - FIND_USERS_ROLE_FILTER_UNSPECIFIED
-              - FIND_USERS_ROLE_FILTER_USER
-              - FIND_USERS_ROLE_FILTER_ADMIN
-            default: FIND_USERS_ROLE_FILTER_UNSPECIFIED
-      tags:
-        - Privileged Access
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - pam
-        - pam.readonly
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/privileged-access/users?filter=SOME_ARRAY_VALUE&limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE&roleFilter=SOME_STRING_VALUE' \
-              --header 'x-api-key: REPLACE_KEY_VALUE'
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/privileged-access/users"
-
-            querystring = {"filter":"SOME_ARRAY_VALUE","limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","search":"SOME_STRING_VALUE","roleFilter":"SOME_STRING_VALUE"}
-
-            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            print(response.text)
-        - lang: Powershell
-          source: |-
-            $headers=@{}
-            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/users?filter=SOME_ARRAY_VALUE&limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE&roleFilter=SOME_STRING_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/resource-managers/{id}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /assets/field-configurations:
     get:
       tags:
@@ -78415,42 +78324,6 @@ components:
         - CONFIGURATION_STATE_DISABLED
         - CONFIGURATION_STATE_PENDING_DELETE
       default: CONFIGURATION_STATE_UNSPECIFIED
-    jumpcloud.privileged_access.FindPrivilegedAccessUsersReply:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessUserListItem'
-        totalCount:
-          type: integer
-          format: int32
-      description: FindPrivilegedAccessUsersReply mirrors FindUsersReply.
-    jumpcloud.privileged_access.PrivilegedAccessUserListItem:
-      type: object
-      properties:
-        emailAddress:
-          type: string
-        externalId:
-          type: string
-        id:
-          type: integer
-          format: int32
-        isActive:
-          type: boolean
-        isDeleted:
-          type: boolean
-        isScim:
-          type: boolean
-        name:
-          type: string
-        surname:
-          type: string
-        userName:
-          type: string
-      description: |-
-        PrivilegedAccessUserListItem mirrors UserListItem. `id` is the VaultOne
-        integer user id, which is what resource manager membership writes expect.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
@@ -80993,8 +80866,6 @@ x-scopes:
   - organizations
   - organizations.billing
   - organizations.readonly
-  - pam
-  - pam.readonly
   - partners
   - partners.readonly
   - passwordmanager
