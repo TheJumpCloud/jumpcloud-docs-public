@@ -1764,7 +1764,7 @@ info:
      cert_issued_manual                                    | A certificate is manually issued.                                        |
      cert_revoked                                          | A certificate is revoked.                                                |
      cert_issued_self_service                              | A certificate is issued via self-service.                                |
-     cert_issued_scep                                      | A certificate is issued via SCEP.                                        |
+     scep_issued                                           | A certificate is issued via SCEP.                                        |
   title: Directory Insights API
   contact:
     url: https://jumpcloud.com/support/contact-jumpcloud-support
