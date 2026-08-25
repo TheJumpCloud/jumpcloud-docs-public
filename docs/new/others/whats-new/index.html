@@ -92,17 +92,72 @@
           </header>
 
           <article class="jc-guide-prose">
-            <blockquote>
-<p><strong>Important</strong></p>
-<p>This is a preview release. We are preparing to migrate our primary API reference resources to a newly designed page. Customers are requested to plan accordingly as we'll be deprecating the old page in future.</p>
+            <h2 id="august"><strong>August</strong><a class="jc-guide-heading-anchor" href="#august" aria-label="Link to this section">#</a></h2>
+<h3 id="august-24th-2026"><strong>August 24th, 2026</strong><a class="jc-guide-heading-anchor" href="#august-24th-2026" aria-label="Link to this section">#</a></h3>
+<h4 id="enhancement-user-transfer-endpoint-scope-restriction"><strong>Enhancement: User Transfer Endpoint Scope Restriction</strong></h4>
 <ul>
-<li>Old page: <a href="https://docs.jumpcloud.com">docs.jumpcloud.com</a></li>
-<li>New page: <a href="https://docs.jumpcloud.com/new">docs.jumpcloud.com/new</a></li>
+<li><strong>Endpoint:</strong> <code>POST /api/v2/users/{user_id}/transfer</code></li>
+<li><strong>Change type:</strong> Behavior update (scope restriction)</li>
+</ul>
+<h5 id="summary"><strong>Summary</strong></h5>
+<p>User transfer is now limited to Enterprise Portal (EP). Transfers involving MSP provider types are no longer supported and return a <code>403 Forbidden</code> response.</p>
+<h5 id="what-has-changed"><strong>What Has Changed</strong></h5>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Old behavior</th>
+<th>New behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eligible org types</td>
+<td>Standard, EP, MSP</td>
+<td>EP (OU providers)</td>
+</tr>
+<tr>
+<td>MSP transfers</td>
+<td>Allowed (with valid auth)</td>
+<td>Blocked, returns 403 Forbidden.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="new-error-response"><strong>New Error Response</strong></h5>
+<p>When a transfer is attempted for an MSP provider type:</p>
+<ul>
+<li>HTTP status: <code>403 Forbidden</code></li>
+<li>Message: <code>"This operation is only allowed for OU providers"</code></li>
+</ul>
+<h5 id="what-stays-the-same"><strong>What Stays the Same</strong></h5>
+<p>These requirements are unchanged:</p>
+<ul>
+<li>All involved organizations must belong to the same provider.</li>
+<li>The admin must have the user transfer role scope.</li>
+<li>The admin must have explicit permissions for both the source and destination organizations.</li>
+</ul>
+<h5 id="action-required"><strong>Action Required</strong></h5>
+<p>If you integrate with user transfer:</p>
+<ul>
+<li><strong>Review your usage</strong> — confirm transfers only target EP organizations.</li>
+<li><strong>Handle the new 403</strong> — treat <code>"This operation is only allowed for OU providers"</code> as an expected response for ineligible provider types.</li>
+<li><strong>Update user-facing messaging</strong> — if your UI allows MSP transfers, remove or disable that path and surface the restriction clearly.</li>
+</ul>
+<h2 id="july"><strong>July</strong><a class="jc-guide-heading-anchor" href="#july" aria-label="Link to this section">#</a></h2>
+<h3 id="july-16th-2026"><strong>July 16th, 2026</strong><a class="jc-guide-heading-anchor" href="#july-16th-2026" aria-label="Link to this section">#</a></h3>
+<h4 id="new-api-docs-and-operation-id-migration"><strong>New: API Docs and Operation ID Migration</strong></h4>
+<blockquote>
+<p><strong>NOTE</strong></p>
+<p>We are preparing to migrate our primary API reference resources to a newly designed page. Customers are requested to plan accordingly as we'll be deprecating the old page in future.</p>
+<ul>
+<li>Old page: <a href="https://docs.jumpcloud.com">https://docs.jumpcloud.com</a></li>
+<li>New page: <a href="https://docs.jumpcloud.com/new">https://docs.jumpcloud.com/new</a></li>
 </ul>
 <p>We will notify you via official channels before the new page goes live.</p>
 </blockquote>
-<h2 id="new-unified-api-pages"><strong>New Unified API Pages</strong><a class="jc-guide-heading-anchor" href="#new-unified-api-pages" aria-label="Link to this section">#</a></h2>
-<p>We have simplified our API documentation. Instead of separating everything by version numbers onto different pages, we have combined them. For example, you can now find all Console endpoints (V1 and V2) on a single page (<a href="https://docs.jumpcloud.com/new">https://docs.jumpcloud.com/new</a>). This keeps all related tools together so you don't have to jump back and forth between different links.</p>
+<p>Here is a <a href="https://fast.wistia.net/embed/iframe/r85ubvpphk?web_component=true&amp;seo=true">video</a> summarizing the changes.  </p>
+<h5 id="new-unified-api-pages"><strong>New Unified API Pages</strong></h5>
+<p>We have simplified our API documentation. Instead of separating everything by version numbers onto different pages, we have combined them. For example, you can now find all Console endpoints (V1 and V2) on a single page (<a href="https://docs.jumpcloud.com/new">https://docs.jumpcloud.com/new</a>). This keeps all related tools together so you don't have to jump back and forth between different links. JumpCloud is migrating the API documentation interface from ReDoc to Scalar to improve the user experience when you browse and use the API reference.</p>
 <p>If you download OpenAPI specs directly (for example, in CI pipelines or client generators), the YAML URLs change when you switch to the new docs. Console API V1 and V2 are now a single combined spec. Directory Insights no longer uses a version segment in the path. Use the table below to update bookmarks and automation.</p>
 <table>
 <thead>
@@ -129,8 +184,8 @@
 <blockquote>
 <p><strong>NOTE</strong>: Our legacy documentation (<a href="https://docs.jumpcloud.com/">https://docs.jumpcloud.com</a>) will continue to serve the older upstream IDs until the official final cutover date, giving your engineering teams ample time to test and adapt.</p>
 </blockquote>
-<h2 id="standardized-operationid-generation"><strong>Standardized operationId Generation</strong><a class="jc-guide-heading-anchor" href="#standardized-operationid-generation" aria-label="Link to this section">#</a></h2>
-<p>We’re updating the naming convention for operation IDs in our OpenAPI specs. The new format is: <strong>HTTP Method  Host-Root Path</strong>.</p>
+<h5 id="standardized-operationid-generation"><strong>Standardized operationId Generation</strong></h5>
+<p>We’re updating the naming convention for operation IDs in our OpenAPI specs. The new format is: <strong>HTTP Method + Host-Root Path</strong>.</p>
 <ul>
 <li><strong>What’s changing:</strong> We are replacing older operation IDs (e.g., <code>groups_system_list</code>) with a new, standardized format (e.g., <code>getApiV2Systemgroups</code>) in our new spec bundles.  </li>
 <li><strong>How this affects you:</strong> If you generate API clients or SDKs using these operation IDs, your generated method names will change.  </li>
@@ -141,7 +196,7 @@
 <li>We have removed the <code>x-tagGroups</code> attribute from the API specifications. You won’t see duplicate endpoints/operations in the documentation.</li>
 <li>See the <a href="../migrating-to-standardized-operation-ids/index.html">Migrating to standardized operation IDs</a> article for more details on migration support.</li>
 </ul>
-<h2 id="when-the-new-docs-go-live"><strong>When the new docs go live</strong><a class="jc-guide-heading-anchor" href="#when-the-new-docs-go-live" aria-label="Link to this section">#</a></h2>
+<h5 id="when-the-new-docs-go-live"><strong>When the new docs go live</strong></h5>
 <p>Today’s preview uses the <code>/new</code> path prefix. When we cut over to the redesigned docs as the primary experience:</p>
 <ul>
 <li><strong>New docs (default):</strong> <a href="https://docs.jumpcloud.com/">https://docs.jumpcloud.com/</a> — the <code>/new</code> prefix goes away</li>
@@ -162,22 +217,29 @@
               <li>
                 <a
                   class="jc-guide-toc-link"
-                  href="#new-unified-api-pages"
-                >New Unified API Pages</a>
+                  href="#august"
+                >August</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#august-24th-2026"
+                >August 24th, 2026</a>
               </li>
               
               <li>
                 <a
                   class="jc-guide-toc-link"
-                  href="#standardized-operationid-generation"
-                >Standardized operationId Generation</a>
+                  href="#july"
+                >July</a>
               </li>
               
               <li>
                 <a
-                  class="jc-guide-toc-link"
-                  href="#when-the-new-docs-go-live"
-                >When the new docs go live</a>
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#july-16th-2026"
+                >July 16th, 2026</a>
               </li>
               
             </ul>
