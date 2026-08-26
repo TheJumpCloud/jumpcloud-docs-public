@@ -50072,6 +50072,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/reports/saved-reports/{id}?reportType=SOME_STRING_VALUE' -Method GET -Headers $headers
   /password-vault/credentials/excel/extract-columns:
     post:
+      summary: Extract Credential Import Excel Columns
       description: |-
         Extract column headers from an uploaded Excel file for credential import mapping.
         Send `Content-Type: application/octet-stream` with a JSON init line
@@ -50115,6 +50116,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/excel/extract-columns' -Method POST -Headers $headers
   /password-vault/credentials/excel/import-custom:
     post:
+      summary: Import Credential Imports from Custom Excel
       description: |-
         Import credentials from a custom-mapped Excel file.
         For inline uploads send `Content-Type: application/octet-stream` with a JSON init line
@@ -50216,6 +50218,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/excel/import-custom' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"columnMapping":{},"createSingleWebsitePerUrl":true,"credentialTypeOverride":"UNDEFINED","defaultAccessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"fileName":"string","fileToken":"string","folderId":"string","websiteAccessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]}}'
   /password-vault/credentials/excel/import:
     post:
+      summary: Import Credential Imports from Excel
       description: |-
         Import credentials from a standard Excel template.
         Send `Content-Type: application/octet-stream` with a JSON init line

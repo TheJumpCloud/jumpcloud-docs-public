@@ -34261,6 +34261,7 @@ paths:
         - reports.readonly
   /api/v2/password-vault/credentials/excel/extract-columns:
     post:
+      summary: Extract Credential Import Excel Columns
       description: |-
         Extract column headers from an uploaded Excel file for credential import mapping.
         Send `Content-Type: application/octet-stream` with a JSON init line
@@ -34282,6 +34283,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/excel/import-custom:
     post:
+      summary: Import Credential Imports from Custom Excel
       description: |-
         Import credentials from a custom-mapped Excel file.
         For inline uploads send `Content-Type: application/octet-stream` with a JSON init line
@@ -34311,6 +34313,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/excel/import:
     post:
+      summary: Import Credential Imports from Excel
       description: |-
         Import credentials from a standard Excel template.
         Send `Content-Type: application/octet-stream` with a JSON init line
