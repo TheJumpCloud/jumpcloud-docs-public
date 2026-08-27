@@ -14846,6 +14846,29 @@ paths:
         Optional body field ``exclude_provider_activity`` (boolean): when true, excludes master
         provider-level activity and limits results to child-organization activity.
 
+
+        Optional body fields for multi-org filtering (Provider DI body org filter contract):
+
+        - ``organization_scope`` (string: ``all`` | ``explicit``): org filter mode. ``all``
+          expands to accessible live child orgs (+ deleted tombstones for Enterprise admins).
+          ``explicit`` uses ``organization_ids``. Omitted with ``organization_ids`` omitted
+          keeps legacy ``x-org-id`` behavior (live-only).
+        - ``organization_ids`` (array of strings): explicit org filter when
+          ``organization_scope`` is ``explicit`` (or omitted with this field present). Empty
+          array queries provider-pillar logs only. Do not use ``"-"`` here (use
+          ``organization_scope: "all"`` instead).
+
+        Invalid combinations return ``400`` with message ``invalid organization context``:
+
+        - ``organization_scope: "all"`` together with ``organization_ids`` present
+        - ``organization_scope: "explicit"`` without ``organization_ids``
+        - ``organization_scope`` not ``all`` or ``explicit``
+        - ``organization_ids`` present but not an array
+        - ``"-"`` inside ``organization_ids``
+
+        Full live/deleted org resolution of valid filters is handled by SI in a follow-up;
+        until then valid body filter fields are forwarded unchanged.
+
         #### Sample Request
         ```
         curl -X POST 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events' \
@@ -14911,6 +14934,29 @@ paths:
         Optional body field ``exclude_provider_activity`` (boolean): when true, excludes master
         provider-level activity and limits results to child-organization activity.
 
+
+        Optional body fields for multi-org filtering (Provider DI body org filter contract):
+
+        - ``organization_scope`` (string: ``all`` | ``explicit``): org filter mode. ``all``
+          expands to accessible live child orgs (+ deleted tombstones for Enterprise admins).
+          ``explicit`` uses ``organization_ids``. Omitted with ``organization_ids`` omitted
+          keeps legacy ``x-org-id`` behavior (live-only).
+        - ``organization_ids`` (array of strings): explicit org filter when
+          ``organization_scope`` is ``explicit`` (or omitted with this field present). Empty
+          array queries provider-pillar logs only. Do not use ``"-"`` here (use
+          ``organization_scope: "all"`` instead).
+
+        Invalid combinations return ``400`` with message ``invalid organization context``:
+
+        - ``organization_scope: "all"`` together with ``organization_ids`` present
+        - ``organization_scope: "explicit"`` without ``organization_ids``
+        - ``organization_scope`` not ``all`` or ``explicit``
+        - ``organization_ids`` present but not an array
+        - ``"-"`` inside ``organization_ids``
+
+        Full live/deleted org resolution of valid filters is handled by SI in a follow-up;
+        until then valid body filter fields are forwarded unchanged.
+
         #### Sample Request
         ```
         curl -X POST 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events/distinct' \
@@ -14975,6 +15021,29 @@ paths:
         provider-level activity and limits results to child-organization activity (requires org scope;
         insights-internal returns 400 if org scope is missing).
 
+
+        Optional body fields for multi-org filtering (Provider DI body org filter contract):
+
+        - ``organization_scope`` (string: ``all`` | ``explicit``): org filter mode. ``all``
+          expands to accessible live child orgs (+ deleted tombstones for Enterprise admins).
+          ``explicit`` uses ``organization_ids``. Omitted with ``organization_ids`` omitted
+          keeps legacy ``x-org-id`` behavior (live-only).
+        - ``organization_ids`` (array of strings): explicit org filter when
+          ``organization_scope`` is ``explicit`` (or omitted with this field present). Empty
+          array queries provider-pillar logs only. Do not use ``"-"`` here (use
+          ``organization_scope: "all"`` instead).
+
+        Invalid combinations return ``400`` with message ``invalid organization context``:
+
+        - ``organization_scope: "all"`` together with ``organization_ids`` present
+        - ``organization_scope: "explicit"`` without ``organization_ids``
+        - ``organization_scope`` not ``all`` or ``explicit``
+        - ``organization_ids`` present but not an array
+        - ``"-"`` inside ``organization_ids``
+
+        Full live/deleted org resolution of valid filters is handled by SI in a follow-up;
+        until then valid body filter fields are forwarded unchanged.
+
         #### Sample Request
         ```
         curl -X POST 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/directoryinsights/events/count' \
@@ -15038,6 +15107,29 @@ paths:
         Optional body field ``exclude_provider_activity`` (boolean): when true, excludes master
         provider-level activity and limits results to child-organization activity (requires org scope;
         insights-internal returns 400 if org scope is missing).
+
+
+        Optional body fields for multi-org filtering (Provider DI body org filter contract):
+
+        - ``organization_scope`` (string: ``all`` | ``explicit``): org filter mode. ``all``
+          expands to accessible live child orgs (+ deleted tombstones for Enterprise admins).
+          ``explicit`` uses ``organization_ids``. Omitted with ``organization_ids`` omitted
+          keeps legacy ``x-org-id`` behavior (live-only).
+        - ``organization_ids`` (array of strings): explicit org filter when
+          ``organization_scope`` is ``explicit`` (or omitted with this field present). Empty
+          array queries provider-pillar logs only. Do not use ``"-"`` here (use
+          ``organization_scope: "all"`` instead).
+
+        Invalid combinations return ``400`` with message ``invalid organization context``:
+
+        - ``organization_scope: "all"`` together with ``organization_ids`` present
+        - ``organization_scope: "explicit"`` without ``organization_ids``
+        - ``organization_scope`` not ``all`` or ``explicit``
+        - ``organization_ids`` present but not an array
+        - ``"-"`` inside ``organization_ids``
+
+        Full live/deleted org resolution of valid filters is handled by SI in a follow-up;
+        until then valid body filter fields are forwarded unchanged.
 
         #### Sample Request
         ```
@@ -64577,15 +64669,6 @@ components:
           schema:
             $ref: "#/components/schemas/ManageAssociations-Group"
       required: true
-    providers_directoryInsightsEventsPostBody:
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              exclude_provider_activity:
-                type: boolean
-                description: When true, excludes provider-level (master MSP) activity and limits results to child-organization activity.
     AuthnPolicy:
       content:
         application/json:
@@ -64633,6 +64716,26 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/PolicyGroupData"
+    providers_directoryInsightsEventsPostBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              exclude_provider_activity:
+                type: boolean
+                description: When true, excludes provider-level (master MSP) activity and limits results to child-organization activity.
+              organization_scope:
+                type: string
+                enum:
+                  - all
+                  - explicit
+                description: Org filter mode. all expands to accessible live child orgs (+ deleted tombstones for Enterprise admins). explicit uses organization_ids. Omitted with organization_ids omitted keeps legacy x-org-id behavior. Invalid combinations return 400 invalid organization context.
+              organization_ids:
+                type: array
+                items:
+                  type: string
+                description: Explicit org filter when organization_scope is explicit (or omitted with this field present). Empty array queries provider-pillar logs only. Do not use "-" here (returns 400 invalid organization context).
     SystemGroupPut:
       content:
         application/json:
