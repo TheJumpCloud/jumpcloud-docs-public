@@ -1002,6 +1002,15 @@ info:
      resource         		| object            | `{"id": "5ce434e77128503e528e747c", "type": "system"}`                                                                                                                | Object that describes the software resource.                                                                 |
      app_management_source	| string            | JumpCloud App Catalog                                                                                                                                                 | The JumpCloud method of configuring and installing the application.										   |
      @version         		| integer           | 1                                                                                                                                                                     | The schema version for the document object.                                                                  |
+     initiated_by    		| object            | `{"type": "admin", "id": "5c86b6cf9fdce00001d3800b", "email": "admin@example.com"}`                                                                                   | (Windows patch events only) Object that describes who initiated the request.                                 |
+     client_ip        		| string            | 10.1.2.3                                                                                                                                                              | (Windows patch events only) IP address the request came from.                                                |
+     patch_count      		| integer           | 142                                                                                                                                                                   | (windows_patch_export only) Number of KB patch records exported.                                             |
+     format           		| string            | csv                                                                                                                                                                   | (windows_patch_export only) Export format: csv or json.                                                      |
+     device_count     		| integer           | 5                                                                                                                                                                     | (windows_patch_install only) Number of devices targeted by the install request.                              |
+     directive_count  		| integer           | 5                                                                                                                                                                     | (windows_patch_install only) Number of install directives created.                                           |
+     target_type      		| string            | TARGET_TYPE_DEVICES                                                                                                                                                   | (windows_patch_install only) Whether the install targeted individual devices or device groups.               |
+     install_type     		| string            | PATCH_INSTALL_TYPE_IMMEDIATE                                                                                                                                          | (windows_patch_install only) Whether the install was immediate or policy-scheduled.                          |
+     retry_status     		| string            | pending                                                                                                                                                               | (windows_patch_install only) Status filter applied to the install request: pending, failed, or empty for all.|
 
     ## LDAP Attributes
 
@@ -1610,6 +1619,8 @@ info:
      software_add_request      | Event when a software is added from Admin Portal.                                                                                    |
      software_change_request   | Event when a software is changed from Admin Portal.                                                                                  |
      software_remove_request   | Event when a software is removed from Admin Portal.                                                                                  |
+     windows_patch_export      | Admin exported a list of Windows KB patches.                                                                                         |
+     windows_patch_install     | Admin initiated a Windows KB patch installation on devices.                                                                          |
 
     ## LDAP Events
 
