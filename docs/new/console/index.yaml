@@ -61153,6 +61153,17 @@ components:
             type: string
         connectionString:
           type: string
+        credentialRotationId:
+          type: string
+          description: |-
+            Resource id of the linked server that performs automated password rotation
+            for this credential, or empty to disable rotation.
+
+            This is the *resource* id (LinkedServer.resource_id), not the link id --
+            VaultOne compares it against Link.ResourceMetaId. RotationEnabled is derived
+            from whether this is set, so there is no separate enable flag: clearing it
+            is what turns rotation off. Only servers already linked to the credential
+            are valid; list them with ListLinkedServers.
         credentialType:
           $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
         creditCard:

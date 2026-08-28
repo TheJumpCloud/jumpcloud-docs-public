@@ -50474,7 +50474,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/password-vault/credentials \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","editLinkedWebsites":true,"expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
+              --data '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialRotationId":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","editLinkedWebsites":true,"expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -50503,6 +50503,7 @@ paths:
                 "approverRequiresJustification": True,
                 "approvers": ["string"],
                 "connectionString": "string",
+                "credentialRotationId": "string",
                 "credentialType": "UNDEFINED",
                 "creditCard": {
                     "metadata": {
@@ -50584,7 +50585,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","editLinkedWebsites":true,"expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialRotationId":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","editLinkedWebsites":true,"expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
   /password-vault/credentials/{id}:
     get:
       summary: Get Credential
@@ -77448,6 +77449,17 @@ components:
             type: string
         connectionString:
           type: string
+        credentialRotationId:
+          type: string
+          description: |-
+            Resource id of the linked server that performs automated password rotation
+            for this credential, or empty to disable rotation.
+
+            This is the *resource* id (LinkedServer.resource_id), not the link id --
+            VaultOne compares it against Link.ResourceMetaId. RotationEnabled is derived
+            from whether this is set, so there is no separate enable flag: clearing it
+            is what turns rotation off. Only servers already linked to the credential
+            are valid; list them with ListLinkedServers.
         credentialType:
           $ref: '#/components/schemas/jumpcloud.privileged_access.CredentialType'
         creditCard:
