@@ -3977,6 +3977,11 @@ operations:
     legacy_operation_id: UsersService_FindPrivilegedAccessUsers
     standardized_operation_id: getApiV2PrivilegedAccessUsers
   - method: get
+    host_root_path: /api/v2/gcep/systems/{systemObjectId}/device-state
+    base_path: /api/v2
+    legacy_operation_id: GoogleChromeEnterprisePremiumService_GetDeviceState
+    standardized_operation_id: getApiV2GcepSystemsBySystemobjectidDeviceState
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations

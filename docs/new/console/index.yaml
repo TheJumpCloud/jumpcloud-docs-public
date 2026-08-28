@@ -37762,6 +37762,63 @@ paths:
       x-scopes:
         - pam
         - pam.readonly
+  /api/v2/gcep/systems/{systemObjectId}/device-state:
+    get:
+      summary: Returns GCEP device trust state from the partners sync mirror for a system.
+      description: Returns GCEP device trust state from the partners sync mirror for a system
+      operationId: getApiV2GcepSystemsBySystemobjectidDeviceState
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.partners.GetDeviceStateResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.ErrorDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: systemObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - GCEP
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - partners
+        - partners.readonly
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -61860,6 +61917,17 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/jumpcloud.partners.OSFamily"
+        configuredByEmail:
+          type: string
+          description: PII or sensitive data; do not log.
+        configuredByName:
+          type: string
+          description: PII or sensitive data; do not log.
+        configuredByUserId:
+          type: string
+          format: byte
+        connectedState:
+          $ref: "#/components/schemas/jumpcloud.partners.ConnectedState"
         customerId:
           type: string
         googleUserEmail:
@@ -61868,15 +61936,18 @@ components:
         organizationObjectId:
           type: string
           format: byte
+        registeredAt:
+          type: string
+          format: date-time
         state:
           $ref: "#/components/schemas/jumpcloud.partners.ConfigurationState"
     jumpcloud.partners.OSFamily:
       type: string
       enum:
-        - UNSPECIFIED
-        - MAC_OS
-        - WINDOWS
-      default: UNSPECIFIED
+        - unspecified
+        - mac_os
+        - windows
+      default: unspecified
     jumpcloud.partners.SetConfigurationRequest:
       type: object
       properties:
@@ -62240,11 +62311,11 @@ components:
     jumpcloud.partners.ConfigurationState:
       type: string
       enum:
-        - CONFIGURATION_STATE_UNSPECIFIED
-        - CONFIGURATION_STATE_ENABLED
-        - CONFIGURATION_STATE_DISABLED
-        - CONFIGURATION_STATE_PENDING_DELETE
-      default: CONFIGURATION_STATE_UNSPECIFIED
+        - configuration_state_unspecified
+        - configuration_state_enabled
+        - configuration_state_disabled
+        - configuration_state_pending_delete
+      default: configuration_state_unspecified
     jumpcloud.privileged_access.FindPrivilegedAccessUsersReply:
       type: object
       properties:
@@ -62281,6 +62352,52 @@ components:
       description: |-
         PrivilegedAccessUserListItem mirrors UserListItem. `id` is the VaultOne
         integer user id, which is what resource manager membership writes expect.
+    jumpcloud.partners.ConnectedState:
+      type: string
+      enum:
+        - connected_state_unspecified
+        - connected_state_disconnected
+        - connected_state_connected
+      default: connected_state_unspecified
+    jumpcloud.partners.DeviceUser:
+      type: object
+      properties:
+        deviceUserId:
+          type: string
+          description: Direct read of the google_chrome_ep_device_user mirror column.
+        googleEmail:
+          type: string
+          description: PII or sensitive data; do not log.
+        lastSuccessfulReportedTime:
+          type: string
+          format: date-time
+        localDeviceUsername:
+          type: string
+    jumpcloud.partners.GetDeviceStateResponse:
+      type: object
+      properties:
+        deviceUsers:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.partners.DeviceUser"
+          description: Active google_chrome_ep_device_user rows only.
+        managementStatus:
+          $ref: "#/components/schemas/jumpcloud.partners.ManagementStatus"
+        registrationStatus:
+          $ref: "#/components/schemas/jumpcloud.partners.RegistrationStatus"
+    jumpcloud.partners.ManagementStatus:
+      type: string
+      enum:
+        - managed_unspecified
+        - managed
+        - not_managed
+      default: managed_unspecified
+    jumpcloud.partners.RegistrationStatus:
+      type: string
+      enum:
+        - not_registered
+        - registered
+      default: not_registered
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
