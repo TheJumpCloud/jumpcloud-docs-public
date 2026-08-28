@@ -80084,7 +80084,7 @@ components:
       schema:
         type: string
     trait_queryDsl_x-query-dsl:
-      description: Indicates the query DSL version of the memberQuery payload. When set to "v2", the backend interprets memberQuery using the v2 Search API filter format (filters with field, operation, and value; queryType must be omitted) and routes GenerateForGroup to the v2 dynamic groups RPCs. When omitted or set to "v1", memberQuery.queryType is required (FilterQuery, Filter, or Search).
+      description: 'Optional header. Specifies the query DSL version for memberQuery. Allowed values: "v1", "v2". Defaults to "v1". When set to "v2", memberQuery expects the updated structured filter format without queryType.'
       in: header
       name: x-query-dsl
       required: false
