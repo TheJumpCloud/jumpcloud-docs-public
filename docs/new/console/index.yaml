@@ -37821,6 +37821,63 @@ paths:
       x-scopes:
         - partners
         - partners.readonly
+  /api/v2/passwordpolicies/custombanned:
+    get:
+      summary: Get Custom Banned Password Keywords
+      description: Get the organization custom banned password keyword list.
+      operationId: getApiV2PasswordpoliciesCustombanned
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.password.CustomBannedKeywordsResponse"
+      parameters:
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Policy
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
+    put:
+      summary: Update Custom Banned Password Keywords
+      description: Replace the organization custom banned password keyword list.
+      operationId: putApiV2PasswordpoliciesCustombanned
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.password.CustomBannedKeywordsResponse"
+      parameters:
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.password.PutCustomBannedKeywordsRequest"
+        required: true
+      tags:
+        - Password Policy
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - groups
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -42698,6 +42755,8 @@ components:
               type: integer
             disallowCommonlyUsedPasswords:
               type: boolean
+            disallowCustomBannedPasswords:
+              type: boolean
             disallowSequentialOrRepetitiveChars:
               type: boolean
             displayComplexityOnResetScreen:
@@ -42898,6 +42957,8 @@ components:
               minimum: 1
               type: integer
             disallowCommonlyUsedPasswords:
+              type: boolean
+            disallowCustomBannedPasswords:
               type: boolean
             disallowSequentialOrRepetitiveChars:
               type: boolean
@@ -57838,6 +57899,8 @@ components:
           type: string
         disallowCommonlyUsedPasswords:
           type: boolean
+        disallowCustomBannedPasswords:
+          type: boolean
         disallowSequentialOrRepetitiveChars:
           type: boolean
         displayComplexityOnResetScreen:
@@ -62400,6 +62463,29 @@ components:
         - not_registered
         - registered
       default: not_registered
+    jumpcloud.password.CustomBannedKeywordsResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        keywords:
+          type: array
+          items:
+            type: string
+        max:
+          type: integer
+          format: int32
+    jumpcloud.password.PutCustomBannedKeywordsRequest:
+      type: object
+      properties:
+        keywords:
+          type: array
+          items:
+            type: string
+        organizationObjectId:
+          type: string
+          format: byte
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

@@ -3982,6 +3982,16 @@ operations:
     legacy_operation_id: GoogleChromeEnterprisePremiumService_GetDeviceState
     standardized_operation_id: getApiV2GcepSystemsBySystemobjectidDeviceState
   - method: get
+    host_root_path: /api/v2/passwordpolicies/custombanned
+    base_path: /api/v2
+    legacy_operation_id: Policy_GetCustomBannedKeywords
+    standardized_operation_id: getApiV2PasswordpoliciesCustombanned
+  - method: put
+    host_root_path: /api/v2/passwordpolicies/custombanned
+    base_path: /api/v2
+    legacy_operation_id: Policy_PutCustomBannedKeywords
+    standardized_operation_id: putApiV2PasswordpoliciesCustombanned
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations
