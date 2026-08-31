@@ -2131,6 +2131,8 @@ paths:
             default: 0
         - description: |
             The space separated fields used to sort the collection.
+            User-entered text fields such as lastname, firstname, and jobTitle are sorted ignoring case.
+            Email, status, and category fields use stored ordering.
             Default sort is ascending, prefix with `-` to sort descending.
           in: query
           name: sort
