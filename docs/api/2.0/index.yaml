@@ -63218,6 +63218,12 @@ components:
           description: ObjectID of the organization that owns this directory.
           type: string
           readOnly: true
+        associatedOrganizationIds:
+          description: Organization object ids (hex) where this G Suite integration is associated among the caller's authorized organizations.
+          readOnly: true
+          type: array
+          items:
+            type: string
       required:
         - id
         - name
@@ -65551,6 +65557,12 @@ components:
           description: ObjectID of the organization that owns this Active Directory instance.
           readOnly: true
           type: string
+        associatedOrganizationIds:
+          description: Organization object ids (hex) where this Active Directory integration is associated among the caller's authorized organizations.
+          readOnly: true
+          type: array
+          items:
+            type: string
       title: Active Directory
       type: object
     apple-mdm-patch:
