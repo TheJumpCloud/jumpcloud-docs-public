@@ -1062,6 +1062,8 @@ info:
      error_chain              | object            | `[{"error_code": INT, "error_domain": STRING, "localized_description": STRING, "us_english_description": STRING}]`                                                          | Raw error details as reported by the MDM device.                       |
      success                  | boolean           | true or false                                                                                                      						                                 | Reports whether the mdm operation succeeded or not.                    |
      result                   | string			   | "successful enrollment of device"																					                                                         | Description of the end result of the event                             |
+     update_count             | integer           | 87                                                                                                                                                                          | (apple_patch_export only) Number of OS update records exported.        |
+     format                   | string            | csv                                                                                                                                                                         | (apple_patch_export only) Export format: csv or json.                  |
      geoip                    | object            | `{"country_code": "US", "timezone": "America/New_York", "latitude": 33.6992, "continent_code": "NA", "region_name": "Georgia", "region_code": "GA", "longitude": -84.7478}` | Geo IP information for the IP address that made the request.           |
      @version                 | integer           | 1                                                                                                                                                                           | The schema version for the document object.                            |
      service                  | string            | mdm                                                                                                                                                                         | Service the event originated from.                                     |
@@ -1631,11 +1633,12 @@ info:
 
     ## MDM Events
 
-     Event                       | Description                                |
-     --------------------------- | ------------------------------------------ |
-     mdm_command_result          | MDM command result.                        |
-     device_enrollment           | Microsoft MDM successful enrollment.       |
-     configuration_file_download | Microsoft MDM configuration file download. |
+     Event                       | Description                                                                |
+     --------------------------- | -------------------------------------------------------------------------- |
+     mdm_command_result          | MDM command result.                                                        |
+     device_enrollment           | Microsoft MDM successful enrollment.                                       |
+     configuration_file_download | Microsoft MDM configuration file download.                                 |
+     apple_patch_export          | Event when an admin exports the list of macOS/iOS/iPadOS software updates. |
 
     ## Notification Channel Events
 
