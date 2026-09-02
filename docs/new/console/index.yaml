@@ -37182,6 +37182,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupsReply"
+      parameters:
+        - name: productFilter
+          description: |-
+            Which product's enrolled groups to return. UNSPECIFIED keeps the original
+            PAM-only behaviour, so existing callers are unaffected; Password Manager
+            can reuse this route by sending GROUP_PRODUCT_PWM, with no change here.
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - GROUP_PRODUCT_UNSPECIFIED
+              - GROUP_PRODUCT_PAM
+              - GROUP_PRODUCT_PWM
+            default: GROUP_PRODUCT_UNSPECIFIED
       tags:
         - Privileged Access
       security:
@@ -37884,6 +37899,40 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - groups
+  /api/v2/privileged-access/groups/enrollment-status:
+    get:
+      description: List the product enrollment state of every group known to the vault, unfiltered. Clients join this against the JumpCloud user group catalogue to tell apart groups that are already enrolled, enrolled in the other product only, or not enrolled at all. Returns both product flags rather than filtering, so either product can consume it unchanged.
+      operationId: getApiV2PrivilegedAccessGroupsEnrollmentStatus
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply"
+      parameters:
+        - name: externalIds
+          description: |-
+            The JumpCloud group ids to report on — typically the page of the user group
+            catalogue the caller is rendering. Sending an empty list returns an empty
+            reply rather than every group, so a caller that fails to build the list
+            shows nothing instead of silently fetching the whole tenant.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -41643,6 +41692,21 @@ components:
           type: string
         parentApp:
           type: string
+        referenceApplications:
+          type: array
+          description: Organization-specific copies of this shared SSO application chain. Returned only for all-organizations list requests (x-org-id '-').
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Application id for the copy in that organization.
+              orgId:
+                type: string
+                description: Organization id for the copy.
+            required:
+              - id
+              - orgId
         aiReady:
           type: boolean
           description: Admin opt-in that this application instance should appear as AI Ready in the User Portal. Informational only — does not grant access. Setting to true requires at least one configured MCP connection. Gated by feature flag DC-4194-app-ai-ready.
@@ -62504,6 +62568,33 @@ components:
         organizationObjectId:
           type: string
           format: byte
+    jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus"
+    jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus:
+      type: object
+      properties:
+        displayName:
+          type: string
+        externalId:
+          type: string
+          format: byte
+          description: |-
+            JumpCloud object id: the join key against the user group catalogue. Groups
+            with no external id are omitted from the reply, since they cannot be joined.
+        pamActivated:
+          type: boolean
+        pwmActivated:
+          type: boolean
+      description: |-
+        The minimum needed to join the vault's view of a group against the JumpCloud
+        user group catalogue. Deliberately reports both product flags instead of
+        filtering on one, so a caller can tell "enrolled in the other product" apart
+        from "not enrolled at all" — and so either product can use this unchanged.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

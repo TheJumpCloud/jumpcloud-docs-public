@@ -55415,6 +55415,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupsReply'
+      parameters:
+        - name: productFilter
+          description: |-
+            Which product's enrolled groups to return. UNSPECIFIED keeps the original
+            PAM-only behaviour, so existing callers are unaffected; Password Manager
+            can reuse this route by sending GROUP_PRODUCT_PWM, with no change here.
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - GROUP_PRODUCT_UNSPECIFIED
+              - GROUP_PRODUCT_PAM
+              - GROUP_PRODUCT_PWM
+            default: GROUP_PRODUCT_UNSPECIFIED
       tags:
         - Privileged Access
       security:
@@ -55427,7 +55442,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url https://console.jumpcloud.com/api/v2/privileged-access/groups/all \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/groups/all?productFilter=SOME_STRING_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -55435,16 +55450,18 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/privileged-access/groups/all"
 
+            querystring = {"productFilter":"SOME_STRING_VALUE"}
+
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
-            response = requests.request("GET", url, headers=headers)
+            response = requests.request("GET", url, headers=headers, params=querystring)
 
             print(response.text)
         - lang: Powershell
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/all' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/all?productFilter=SOME_STRING_VALUE' -Method GET -Headers $headers
   /password-vault/websites/{id}/managers:
     get:
       summary: List Website Managers
@@ -56616,6 +56633,64 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/custombanned?organizationObjectId=SOME_STRING_VALUE' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"keywords":["string"],"organizationObjectId":"string"}'
+  /privileged-access/groups/enrollment-status:
+    get:
+      description: List the product enrollment state of every group known to the vault, unfiltered. Clients join this against the JumpCloud user group catalogue to tell apart groups that are already enrolled, enrolled in the other product only, or not enrolled at all. Returns both product flags rather than filtering, so either product can consume it unchanged.
+      operationId: GroupsService_ListPrivilegedAccessGroupEnrollmentStatus
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply'
+      parameters:
+        - name: externalIds
+          description: |-
+            The JumpCloud group ids to report on — typically the page of the user group
+            catalogue the caller is rendering. Sending an empty list returns an empty
+            reply rather than every group, so a caller that fails to build the list
+            shows nothing instead of silently fetching the whole tenant.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status?externalIds=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status"
+
+            querystring = {"externalIds":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status?externalIds=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /assets/field-configurations:
     get:
       tags:
@@ -78870,6 +78945,33 @@ components:
         organizationObjectId:
           type: string
           format: byte
+    jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus'
+    jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus:
+      type: object
+      properties:
+        displayName:
+          type: string
+        externalId:
+          type: string
+          format: byte
+          description: |-
+            JumpCloud object id: the join key against the user group catalogue. Groups
+            with no external id are omitted from the reply, since they cannot be joined.
+        pamActivated:
+          type: boolean
+        pwmActivated:
+          type: boolean
+      description: |-
+        The minimum needed to join the vault's view of a group against the JumpCloud
+        user group catalogue. Deliberately reports both product flags instead of
+        filtering on one, so a caller can tell "enrolled in the other product" apart
+        from "not enrolled at all" — and so either product can use this unchanged.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

@@ -3992,6 +3992,11 @@ operations:
     legacy_operation_id: Policy_PutCustomBannedKeywords
     standardized_operation_id: putApiV2PasswordpoliciesCustombanned
   - method: get
+    host_root_path: /api/v2/privileged-access/groups/enrollment-status
+    base_path: /api/v2
+    legacy_operation_id: GroupsService_ListPrivilegedAccessGroupEnrollmentStatus
+    standardized_operation_id: getApiV2PrivilegedAccessGroupsEnrollmentStatus
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations
