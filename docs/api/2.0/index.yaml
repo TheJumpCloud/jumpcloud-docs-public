@@ -56691,6 +56691,365 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status?externalIds=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  /applemdms/{deviceManagerObjectId}/ade_tokens:
+    post:
+      summary: Create ADE Token
+      description: |-
+        Upload an encrypted Apple Business Manager server token for the given device manager.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/v2/applemdms/{device_manager_object_id}/ade_tokens \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}' \
+          -d '{"encrypted_server_token":"..."}'
+        ```
+      operationId: ADETokens_CreateADEToken
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+        - name: deviceManagerObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: '#/components/requestBodies/ADETokens_CreateADETokenBody'
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/ade_tokens \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"encryptedServerToken":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/ade_tokens"
+
+            payload = {"encryptedServerToken": "string"}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/ade_tokens' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"encryptedServerToken":"string"}'
+  /applemdms/ade_tokens:
+    get:
+      summary: List ADE Tokens
+      description: |-
+        List ADE tokens visible to the calling organization(s).
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: ADETokens_ListADETokens
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+        - name: organizationObjectIds.value
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+          allowReserved: true
+        - name: queryParameters.limit
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+        - name: queryParameters.skip
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+        - name: queryParameters.fields
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens?organizationObjectIds.value=SOME_ARRAY_VALUE&queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/ade_tokens"
+
+            querystring = {"organizationObjectIds.value":"SOME_ARRAY_VALUE","queryParameters.limit":"SOME_STRING_VALUE","queryParameters.skip":"SOME_STRING_VALUE","queryParameters.fields":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens?organizationObjectIds.value=SOME_ARRAY_VALUE&queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  /applemdms/ade_tokens/{objectId}:
+    get:
+      summary: Get ADE Token
+      description: |-
+        Get metadata for a single ADE token.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: ADETokens_GetADEToken
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/applemdms/ade_tokens/{objectId} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/ade_tokens/{objectId}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens/{objectId}' -Method GET -Headers $headers
+    patch:
+      summary: Update ADE Token
+      description: |-
+        Renew or update an encrypted Apple Business Manager server token for an existing ADE token.
+
+        #### Sample Request
+        ```
+        curl -X PATCH https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}' \
+          -d '{"encrypted_server_token":"..."}'
+        ```
+      operationId: ADETokens_UpdateADEToken
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: '#/components/requestBodies/ADETokens_CreateADETokenBody'
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/applemdms/ade_tokens/{objectId} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"encryptedServerToken":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/ade_tokens/{objectId}"
+
+            payload = {"encryptedServerToken": "string"}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens/{objectId}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"encryptedServerToken":"string"}'
   /assets/field-configurations:
     get:
       tags:
@@ -81190,6 +81549,15 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/jumpcloud.privileged_access.ExportExcelRequest'
+      required: true
+    ADETokens_CreateADETokenBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              encryptedServerToken:
+                type: string
       required: true
     Devices_EraseDeviceBody:
       content:

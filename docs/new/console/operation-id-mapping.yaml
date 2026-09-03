@@ -3996,6 +3996,26 @@ operations:
     base_path: /api/v2
     legacy_operation_id: GroupsService_ListPrivilegedAccessGroupEnrollmentStatus
     standardized_operation_id: getApiV2PrivilegedAccessGroupsEnrollmentStatus
+  - method: post
+    host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/ade_tokens
+    base_path: /api/v2
+    legacy_operation_id: ADETokens_CreateADEToken
+    standardized_operation_id: postApiV2ApplemdmsByDevicemanagerobjectidAdeTokens
+  - method: get
+    host_root_path: /api/v2/applemdms/ade_tokens
+    base_path: /api/v2
+    legacy_operation_id: ADETokens_ListADETokens
+    standardized_operation_id: getApiV2ApplemdmsAdeTokens
+  - method: get
+    host_root_path: /api/v2/applemdms/ade_tokens/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: ADETokens_GetADEToken
+    standardized_operation_id: getApiV2ApplemdmsAdeTokensByObjectid
+  - method: patch
+    host_root_path: /api/v2/applemdms/ade_tokens/{objectId}
+    base_path: /api/v2
+    legacy_operation_id: ADETokens_UpdateADEToken
+    standardized_operation_id: patchApiV2ApplemdmsAdeTokensByObjectid
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2

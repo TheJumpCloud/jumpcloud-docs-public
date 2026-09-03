@@ -37933,6 +37933,261 @@ paths:
       x-scopes:
         - passwordmanager
         - passwordmanager.readonly
+  /api/v2/applemdms/{deviceManagerObjectId}/ade_tokens:
+    post:
+      summary: Create ADE Token
+      description: |-
+        Upload an encrypted Apple Business Manager server token for the given device manager.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/v2/applemdms/{device_manager_object_id}/ade_tokens \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}' \
+          -d '{"encrypted_server_token":"..."}'
+        ```
+      operationId: postApiV2ApplemdmsByDevicemanagerobjectidAdeTokens
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: deviceManagerObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/ADETokens_CreateADETokenBody"
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+  /api/v2/applemdms/ade_tokens:
+    get:
+      summary: List ADE Tokens
+      description: |-
+        List ADE tokens visible to the calling organization(s).
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: getApiV2ApplemdmsAdeTokens
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: organizationObjectIds.value
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+          allowReserved: true
+        - name: queryParameters.limit
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+        - name: queryParameters.skip
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+        - name: queryParameters.fields
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+  /api/v2/applemdms/ade_tokens/{objectId}:
+    get:
+      summary: Get ADE Token
+      description: |-
+        Get metadata for a single ADE token.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: getApiV2ApplemdmsAdeTokensByObjectid
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+    patch:
+      summary: Update ADE Token
+      description: |-
+        Renew or update an encrypted Apple Business Manager server token for an existing ADE token.
+
+        #### Sample Request
+        ```
+        curl -X PATCH https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}' \
+          -d '{"encrypted_server_token":"..."}'
+        ```
+      operationId: patchApiV2ApplemdmsAdeTokensByObjectid
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/ADETokens_CreateADETokenBody"
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -65124,6 +65379,15 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/jumpcloud.privileged_access.ExportExcelRequest"
+      required: true
+    ADETokens_CreateADETokenBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              encryptedServerToken:
+                type: string
       required: true
     Devices_EraseDeviceBody:
       content:
