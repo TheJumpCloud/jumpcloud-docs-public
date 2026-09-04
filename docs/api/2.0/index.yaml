@@ -76509,6 +76509,13 @@ components:
           $ref: '#/components/schemas/jumpcloud.identity_risk.TargetResourceType'
         loginStatus:
           type: boolean
+        mfaMethod:
+          type: string
+          description: |-
+            mfa_method is the MFA method enum name (mfa_method_type), derived from auth_context.auth_methods keys.
+            Supported values: MFA_METHOD_JUMPCLOUD_GO, MFA_METHOD_JUMPCLOUD_GO_UV, MFA_METHOD_WEBAUTHN,
+            MFA_METHOD_PUSH, MFA_METHOD_JC_PROTECT_PUSH, MFA_METHOD_DUO, MFA_METHOD_TOTP, MFA_METHOD_SMS.
+            Returns MFA_METHOD_UNSPECIFIED when no matching key is found.
         mfaStatus:
           type: boolean
         objectId:
