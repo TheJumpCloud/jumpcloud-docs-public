@@ -14848,34 +14848,46 @@ paths:
         Proxies to insights-internal ``POST /v1/providers/events``.
 
         The ``provider_id`` in the path must match the authenticated provider (see ``providerTenancy``).
-        ``x-org-id`` is optional: when omitted, insights-internal may query provider-level logs only; when
-        provided (comma-separated org IDs), child-org scope is included per backend logic.
+        ``x-org-id`` is optional. When ``SP-9645-EP-DI-EVENTS`` is disabled, organization scope is
+        derived only from legacy ``x-org-id`` when present; otherwise the request remains provider-pillar
+        scoped. When the flag is enabled, valid body org filters take precedence.
 
-        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes master
-        provider-level activity and limits results to child-organization activity.
+        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes provider-pillar
+        events only; it does not exclude primary-organization events included in resolved organization IDs.
+        When ``SP-9645-EP-DI-EVENTS`` is enabled, this requires an organization scope.
 
 
         Optional body fields for multi-org filtering (Provider DI body org filter contract):
 
-        - ``organization_scope`` (string: ``all`` | ``explicit``): org filter mode. ``all``
-          expands to accessible live child orgs (+ deleted tombstones for Enterprise admins).
-          ``explicit`` uses ``organization_ids``. Omitted with ``organization_ids`` omitted
-          keeps legacy ``x-org-id`` behavior (live-only).
+        - ``organization_scope`` (string: ``all`` | ``explicit``): when SP-9645-EP-DI-EVENTS is enabled,
+          ``all`` expands to all accessible live organizations under the provider, including the primary
+          organization when accessible. OU tombstones may be included only with primary-organization access;
+          MSP tombstones are excluded. When the flag is disabled, SI does not interpret valid body filter
+          fields in the Provider DI handler: legacy ``x-org-id`` behavior and provider-pillar
+          behavior when ``x-org-id`` is absent are preserved. Valid body fields may still be forwarded
+          downstream as part of the legacy passthrough body. Schema-level validation may still reject
+          malformed shapes before the handler runs, such as unsupported scope enum values or non-array
+          ``organization_ids``.
         - ``organization_ids`` (array of strings): explicit org filter when
-          ``organization_scope`` is ``explicit`` (or omitted with this field present). Empty
-          array queries provider-pillar logs only. Do not use ``"-"`` here (use
+          ``organization_scope`` is ``explicit`` (or omitted with this field present). When the flag is
+          enabled, an empty array queries provider-pillar logs only, provided
+          ``exclude_provider_activity`` is not true. Do not use ``"-"`` here (use
           ``organization_scope: "all"`` instead).
 
-        Invalid combinations return ``400`` with message ``invalid organization context``:
+        When SP-9645-EP-DI-EVENTS is enabled and the request reaches the Provider DI handler, the
+        following invalid combinations return ``400`` with message ``invalid organization context``:
 
         - ``organization_scope: "all"`` together with ``organization_ids`` present
         - ``organization_scope: "explicit"`` without ``organization_ids``
-        - ``organization_scope`` not ``all`` or ``explicit``
-        - ``organization_ids`` present but not an array
         - ``"-"`` inside ``organization_ids``
+        - an empty ``organization_ids`` array with ``exclude_provider_activity: true``
+        - no organization scope with ``exclude_provider_activity: true``
+        - a malformed ObjectId in ``organization_ids``
 
-        Full live/deleted org resolution of valid filters is handled by SI in a follow-up;
-        until then valid body filter fields are forwarded unchanged.
+        When enabled, valid filters are resolved by SI and forwarded as ``x-validated-org-id``. Unauthorized
+        or wrong-provider IDs are pruned; if none remain, SI returns an empty organization-scoped result
+        without calling insights-internal. When enabled, ``organization_ids: []`` is the provider-pillar
+        sentinel when ``exclude_provider_activity`` is false or omitted.
 
         #### Sample Request
         ```
@@ -14884,7 +14896,7 @@ paths:
           -H 'content-type: application/json' \
           -H 'x-api-key: {API_KEY}' \
           -H 'x-org-id: {OPTIONAL_COMMA_SEPARATED_ORG_IDS}' \
-          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z", "exclude_provider_activity": true }'
+          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z" }'
         ```
       operationId: postApiV2ProvidersByProviderIdDirectoryinsightsEvents
       parameters:
@@ -14936,34 +14948,47 @@ paths:
         Proxies to insights-internal ``POST /v1/providers/events/distinct``.
 
         The ``provider_id`` in the path must match the authenticated provider (see ``providerTenancy``).
-        ``x-org-id`` is optional: when omitted, insights-internal may query provider-level logs only; when
-        provided (comma-separated org IDs), child-org scope is included per backend logic.
+        ``x-org-id`` is optional. When ``SP-9645-EP-DI-EVENTS`` is disabled, organization scope is
+        derived only from legacy ``x-org-id`` when present; otherwise the request remains provider-pillar
+        scoped. When the flag is enabled, valid body org filters take precedence.
 
-        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes master
-        provider-level activity and limits results to child-organization activity.
+        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes provider-pillar
+        events only; it does not exclude primary-organization events included in resolved organization IDs.
+        When ``SP-9645-EP-DI-EVENTS`` is enabled, this requires an organization scope.
 
 
         Optional body fields for multi-org filtering (Provider DI body org filter contract):
 
-        - ``organization_scope`` (string: ``all`` | ``explicit``): org filter mode. ``all``
-          expands to accessible live child orgs (+ deleted tombstones for Enterprise admins).
-          ``explicit`` uses ``organization_ids``. Omitted with ``organization_ids`` omitted
-          keeps legacy ``x-org-id`` behavior (live-only).
+        - ``organization_scope`` (string: ``all`` | ``explicit``): when SP-9645-EP-DI-EVENTS is enabled,
+          ``all`` expands to all accessible live organizations under the provider, including the primary
+          organization when accessible. OU tombstones may be included only with primary-organization access;
+          MSP tombstones are excluded. When the flag is disabled, SI does not interpret valid body filter
+          fields in the Provider DI handler: legacy ``x-org-id`` behavior and provider-pillar
+          behavior when ``x-org-id`` is absent are preserved. Valid body fields may still be forwarded
+          downstream as part of the legacy passthrough body. Schema-level validation may still reject
+          malformed shapes before the handler runs, such as unsupported scope enum values or non-array
+          ``organization_ids``.
         - ``organization_ids`` (array of strings): explicit org filter when
-          ``organization_scope`` is ``explicit`` (or omitted with this field present). Empty
-          array queries provider-pillar logs only. Do not use ``"-"`` here (use
+          ``organization_scope`` is ``explicit`` (or omitted with this field present). When the flag is
+          enabled, an empty array queries provider-pillar logs only, provided
+          ``exclude_provider_activity`` is not true. Do not use ``"-"`` here (use
           ``organization_scope: "all"`` instead).
 
-        Invalid combinations return ``400`` with message ``invalid organization context``:
+        When SP-9645-EP-DI-EVENTS is enabled and the request reaches the Provider DI handler, the
+        following invalid combinations return ``400`` with
+        message ``invalid organization context``:
 
         - ``organization_scope: "all"`` together with ``organization_ids`` present
         - ``organization_scope: "explicit"`` without ``organization_ids``
-        - ``organization_scope`` not ``all`` or ``explicit``
-        - ``organization_ids`` present but not an array
         - ``"-"`` inside ``organization_ids``
+        - an empty ``organization_ids`` array with ``exclude_provider_activity: true``
+        - no organization scope with ``exclude_provider_activity: true``
+        - a malformed ObjectId in ``organization_ids``
 
-        Full live/deleted org resolution of valid filters is handled by SI in a follow-up;
-        until then valid body filter fields are forwarded unchanged.
+        When enabled, valid filters are resolved by SI and forwarded as ``x-validated-org-id``. Unauthorized
+        or wrong-provider IDs are pruned; if none remain, SI returns an empty organization-scoped result
+        without calling insights-internal. When enabled, ``organization_ids: []`` is the provider-pillar
+        sentinel when ``exclude_provider_activity`` is false or omitted.
 
         #### Sample Request
         ```
@@ -14972,7 +14997,7 @@ paths:
           -H 'content-type: application/json' \
           -H 'x-api-key: {API_KEY}' \
           -H 'x-org-id: {OPTIONAL_COMMA_SEPARATED_ORG_IDS}' \
-          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z", "field": "client_ip", "exclude_provider_activity": true }'
+          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z", "field": "client_ip" }'
         ```
       operationId: postApiV2ProvidersByProviderIdDirectoryinsightsEventsDistinct
       parameters:
@@ -15022,35 +15047,47 @@ paths:
         Proxies to insights-internal ``POST /v1/providers/events/count``.
 
         The ``provider_id`` in the path must match the authenticated provider (see ``providerTenancy``).
-        ``x-org-id`` is optional: when omitted, insights-internal may query provider-level logs only; when
-        provided (comma-separated org IDs), child-org scope is included per backend logic.
+        ``x-org-id`` is optional. When ``SP-9645-EP-DI-EVENTS`` is disabled, organization scope is
+        derived only from legacy ``x-org-id`` when present; otherwise the request remains provider-pillar
+        scoped. When the flag is enabled, valid body org filters take precedence.
 
-        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes master
-        provider-level activity and limits results to child-organization activity (requires org scope;
-        insights-internal returns 400 if org scope is missing).
+        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes provider-pillar
+        events only; it does not exclude primary-organization events included in resolved organization IDs.
+        When ``SP-9645-EP-DI-EVENTS`` is enabled, this requires an organization scope.
 
 
         Optional body fields for multi-org filtering (Provider DI body org filter contract):
 
-        - ``organization_scope`` (string: ``all`` | ``explicit``): org filter mode. ``all``
-          expands to accessible live child orgs (+ deleted tombstones for Enterprise admins).
-          ``explicit`` uses ``organization_ids``. Omitted with ``organization_ids`` omitted
-          keeps legacy ``x-org-id`` behavior (live-only).
+        - ``organization_scope`` (string: ``all`` | ``explicit``): when SP-9645-EP-DI-EVENTS is enabled,
+          ``all`` expands to all accessible live organizations under the provider, including the primary
+          organization when accessible. OU tombstones may be included only with primary-organization access;
+          MSP tombstones are excluded. When the flag is disabled, SI does not interpret valid body filter
+          fields in the Provider DI handler: legacy ``x-org-id`` behavior and provider-pillar
+          behavior when ``x-org-id`` is absent are preserved. Valid body fields may still be forwarded
+          downstream as part of the legacy passthrough body. Schema-level validation may still reject
+          malformed shapes before the handler runs, such as unsupported scope enum values or non-array
+          ``organization_ids``.
         - ``organization_ids`` (array of strings): explicit org filter when
-          ``organization_scope`` is ``explicit`` (or omitted with this field present). Empty
-          array queries provider-pillar logs only. Do not use ``"-"`` here (use
+          ``organization_scope`` is ``explicit`` (or omitted with this field present). When the flag is
+          enabled, an empty array queries provider-pillar logs only, provided
+          ``exclude_provider_activity`` is not true. Do not use ``"-"`` here (use
           ``organization_scope: "all"`` instead).
 
-        Invalid combinations return ``400`` with message ``invalid organization context``:
+        When SP-9645-EP-DI-EVENTS is enabled and the request reaches the Provider DI handler, the
+        following invalid combinations return ``400`` with
+        message ``invalid organization context``:
 
         - ``organization_scope: "all"`` together with ``organization_ids`` present
         - ``organization_scope: "explicit"`` without ``organization_ids``
-        - ``organization_scope`` not ``all`` or ``explicit``
-        - ``organization_ids`` present but not an array
         - ``"-"`` inside ``organization_ids``
+        - an empty ``organization_ids`` array with ``exclude_provider_activity: true``
+        - no organization scope with ``exclude_provider_activity: true``
+        - a malformed ObjectId in ``organization_ids``
 
-        Full live/deleted org resolution of valid filters is handled by SI in a follow-up;
-        until then valid body filter fields are forwarded unchanged.
+        When enabled, valid filters are resolved by SI and forwarded as ``x-validated-org-id``. Unauthorized
+        or wrong-provider IDs are pruned; if none remain, SI returns an empty organization-scoped result
+        without calling insights-internal. When enabled, ``organization_ids: []`` is the provider-pillar
+        sentinel when ``exclude_provider_activity`` is false or omitted.
 
         #### Sample Request
         ```
@@ -15059,7 +15096,7 @@ paths:
           -H 'content-type: application/json' \
           -H 'x-api-key: {API_KEY}' \
           -H 'x-org-id: {OPTIONAL_COMMA_SEPARATED_ORG_IDS}' \
-          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z", "exclude_provider_activity": true }'
+          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z" }'
         ```
       operationId: postApiV2ProvidersByProviderIdDirectoryinsightsEventsCount
       parameters:
@@ -15109,35 +15146,47 @@ paths:
         Proxies to insights-internal ``POST /v1/providers/events/interval``.
 
         The ``provider_id`` in the path must match the authenticated provider (see ``providerTenancy``).
-        ``x-org-id`` is optional: when omitted, insights-internal may query provider-level logs only; when
-        provided (comma-separated org IDs), child-org scope is included per backend logic.
+        ``x-org-id`` is optional. When ``SP-9645-EP-DI-EVENTS`` is disabled, organization scope is
+        derived only from legacy ``x-org-id`` when present; otherwise the request remains provider-pillar
+        scoped. When the flag is enabled, valid body org filters take precedence.
 
-        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes master
-        provider-level activity and limits results to child-organization activity (requires org scope;
-        insights-internal returns 400 if org scope is missing).
+        Optional body field ``exclude_provider_activity`` (boolean): when true, excludes provider-pillar
+        events only; it does not exclude primary-organization events included in resolved organization IDs.
+        When ``SP-9645-EP-DI-EVENTS`` is enabled, this requires an organization scope.
 
 
         Optional body fields for multi-org filtering (Provider DI body org filter contract):
 
-        - ``organization_scope`` (string: ``all`` | ``explicit``): org filter mode. ``all``
-          expands to accessible live child orgs (+ deleted tombstones for Enterprise admins).
-          ``explicit`` uses ``organization_ids``. Omitted with ``organization_ids`` omitted
-          keeps legacy ``x-org-id`` behavior (live-only).
+        - ``organization_scope`` (string: ``all`` | ``explicit``): when SP-9645-EP-DI-EVENTS is enabled,
+          ``all`` expands to all accessible live organizations under the provider, including the primary
+          organization when accessible. OU tombstones may be included only with primary-organization access;
+          MSP tombstones are excluded. When the flag is disabled, SI does not interpret valid body filter
+          fields in the Provider DI handler: legacy ``x-org-id`` behavior and provider-pillar
+          behavior when ``x-org-id`` is absent are preserved. Valid body fields may still be forwarded
+          downstream as part of the legacy passthrough body. Schema-level validation may still reject
+          malformed shapes before the handler runs, such as unsupported scope enum values or non-array
+          ``organization_ids``.
         - ``organization_ids`` (array of strings): explicit org filter when
-          ``organization_scope`` is ``explicit`` (or omitted with this field present). Empty
-          array queries provider-pillar logs only. Do not use ``"-"`` here (use
+          ``organization_scope`` is ``explicit`` (or omitted with this field present). When the flag is
+          enabled, an empty array queries provider-pillar logs only, provided
+          ``exclude_provider_activity`` is not true. Do not use ``"-"`` here (use
           ``organization_scope: "all"`` instead).
 
-        Invalid combinations return ``400`` with message ``invalid organization context``:
+        When SP-9645-EP-DI-EVENTS is enabled and the request reaches the Provider DI handler, the
+        following invalid combinations return ``400`` with
+        message ``invalid organization context``:
 
         - ``organization_scope: "all"`` together with ``organization_ids`` present
         - ``organization_scope: "explicit"`` without ``organization_ids``
-        - ``organization_scope`` not ``all`` or ``explicit``
-        - ``organization_ids`` present but not an array
         - ``"-"`` inside ``organization_ids``
+        - an empty ``organization_ids`` array with ``exclude_provider_activity: true``
+        - no organization scope with ``exclude_provider_activity: true``
+        - a malformed ObjectId in ``organization_ids``
 
-        Full live/deleted org resolution of valid filters is handled by SI in a follow-up;
-        until then valid body filter fields are forwarded unchanged.
+        When enabled, valid filters are resolved by SI and forwarded as ``x-validated-org-id``. Unauthorized
+        or wrong-provider IDs are pruned; if none remain, SI returns an empty organization-scoped result
+        without calling insights-internal. When enabled, ``organization_ids: []`` is the provider-pillar
+        sentinel when ``exclude_provider_activity`` is false or omitted.
 
         #### Sample Request
         ```
@@ -15146,7 +15195,7 @@ paths:
           -H 'content-type: application/json' \
           -H 'x-api-key: {API_KEY}' \
           -H 'x-org-id: {OPTIONAL_COMMA_SEPARATED_ORG_IDS}' \
-          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z", "interval_unit": "d", "exclude_provider_activity": true }'
+          -d '{"service": ["radius"], "start_time": "2019-01-12T20:00:00Z", "interval_unit": "d" }'
         ```
       operationId: postApiV2ProvidersByProviderIdDirectoryinsightsEventsInterval
       parameters:
@@ -65250,6 +65299,26 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/IPListRequest"
+    providers_directoryInsightsEventsPostBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              exclude_provider_activity:
+                type: boolean
+                description: When SP-9645-EP-DI-EVENTS is enabled, this excludes provider-pillar events only and requires an organization scope. It does not exclude primary-organization events when the primary organization ID is included in the resolved organization IDs. When the flag is disabled, the field is forwarded using legacy behavior.
+              organization_scope:
+                type: string
+                enum:
+                  - all
+                  - explicit
+                description: Org filter mode. When SP-9645-EP-DI-EVENTS is enabled, all expands to all accessible live organizations under the provider, including the primary organization when accessible; OU deleted tombstones may also be included for users with access to the provider primary organization. MSP deleted tombstones are not included. explicit uses organization_ids. all cannot be combined with organization_ids, and explicit requires organization_ids. When the flag is disabled, these fields are ignored and legacy x-org-id behavior is preserved.
+              organization_ids:
+                type: array
+                items:
+                  type: string
+                description: Explicit org filter when organization_scope is explicit (or omitted with this field present). When the flag is enabled, an empty array queries provider-pillar logs only, except that an empty array with exclude_provider_activity true is invalid; malformed IDs and "-" are invalid handler-level filters. Schema validation may reject malformed request shapes, such as non-array values, before the flag-gated handler runs. When the flag is disabled, this field is ignored and legacy behavior is preserved.
     ManageAssociations-Group:
       content:
         application/json:
@@ -65303,26 +65372,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/PolicyGroupData"
-    providers_directoryInsightsEventsPostBody:
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              exclude_provider_activity:
-                type: boolean
-                description: When true, excludes provider-level (master MSP) activity and limits results to child-organization activity.
-              organization_scope:
-                type: string
-                enum:
-                  - all
-                  - explicit
-                description: Org filter mode. all expands to accessible live child orgs (+ deleted tombstones for Enterprise admins). explicit uses organization_ids. Omitted with organization_ids omitted keeps legacy x-org-id behavior. Invalid combinations return 400 invalid organization context.
-              organization_ids:
-                type: array
-                items:
-                  type: string
-                description: Explicit org filter when organization_scope is explicit (or omitted with this field present). Empty array queries provider-pillar logs only. Do not use "-" here (returns 400 invalid organization context).
     SystemGroupPut:
       content:
         application/json:
