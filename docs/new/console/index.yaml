@@ -54223,6 +54223,13 @@ components:
           type: array
           items:
             type: string
+        managedBy:
+          type: string
+          description: IP list ownership.
+          readOnly: true
+          enum:
+            - ORGANIZATION
+            - ENTERPRISE
     IPListRequest:
       title: IPListRequest
       type: object
