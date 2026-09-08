@@ -63846,6 +63846,7 @@ components:
         * `osShowcase` - Skips the OS Showcase pane.
         * `webContentFiltering` - Skips the Web Content Filtering pane.
         * `safetyAndHandling` - Skips the Safety and Handling pane.
+        * `liquidGlass` - Skips the Liquid Glass pane.
       enum:
         - accessibility
         - actionButton
@@ -63890,6 +63891,7 @@ components:
         - osShowcase
         - webContentFiltering
         - safetyAndHandling
+        - liquidGlass
       title: Setup Assistant Option
       type: string
     DEPSetupAssistantOption:
