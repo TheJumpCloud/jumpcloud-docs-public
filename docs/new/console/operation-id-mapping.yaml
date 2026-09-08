@@ -3996,6 +3996,16 @@ operations:
     base_path: /api/v2
     legacy_operation_id: GroupsService_ListPrivilegedAccessGroupEnrollmentStatus
     standardized_operation_id: getApiV2PrivilegedAccessGroupsEnrollmentStatus
+  - method: get
+    host_root_path: /api/v2/access-risk-settings
+    base_path: /api/v2
+    legacy_operation_id: AccessRiskSettingsService_List
+    standardized_operation_id: getApiV2AccessRiskSettings
+  - method: put
+    host_root_path: /api/v2/access-risk-settings/{setting_name}
+    base_path: /api/v2
+    legacy_operation_id: AccessRiskSettingsService_Update
+    standardized_operation_id: putApiV2AccessRiskSettingsBySettingName
   - method: post
     host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/ade_tokens
     base_path: /api/v2
