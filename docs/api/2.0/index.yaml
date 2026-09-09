@@ -80374,6 +80374,7 @@ components:
             - ACTOR_TYPE_USER
             - ACTOR_TYPE_SYSTEM
             - ACTOR_TYPE_SERVICE_ACCOUNT
+            - ACTOR_TYPE_SYSTEM_USER
           description: The type of actor
           examples:
             - ACTOR_TYPE_USER
