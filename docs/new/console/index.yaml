@@ -38431,6 +38431,85 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/notifications/channels/slack/{slackTeamId}:
+    delete:
+      summary: This endpoint is used to delete slack channels.
+      description: This endpoint allows you to delete a notification channel.
+      operationId: deleteApiV2NotificationsChannelsSlackBySlackteamid
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        "204":
+          description: No Content
+          content:
+            application/json:
+              schema: {}
+      parameters:
+        - name: slackTeamId
+          description: represents the slack team identifier.
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Notifications Channels
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - notifications.channels
+  /api/v2/notifications/subscriptions/email:
+    get:
+      summary: List the caller's email subscription preferences.
+      description: This endpoint lists the authenticated administrator's email subscription preferences.
+      operationId: getApiV2NotificationsSubscriptionsEmail
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.notifications.ListEmailSubscriptionsResponse"
+      tags:
+        - Email Subscriptions
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - notifications.subscriptions
+        - notifications.subscriptions.readonly
+    put:
+      summary: Update the caller's email subscription preferences.
+      description: This endpoint updates the authenticated administrator's email subscription preferences. category and title are catalog metadata and are ignored on update.
+      operationId: putApiV2NotificationsSubscriptionsEmail
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.notifications.UpdateEmailSubscriptionsResponse"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.notifications.UpdateEmailSubscriptionsRequest"
+        description: |-
+          UpdateEmailSubscriptionsRequest updates the authenticated admin's
+          preferences. admin identity comes from auth context only.
+        required: true
+      tags:
+        - Email Subscriptions
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - notifications.subscriptions
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -63110,6 +63189,65 @@ components:
         user group catalogue. Deliberately reports both product flags instead of
         filtering on one, so a caller can tell "enrolled in the other product" apart
         from "not enrolled at all" — and so either product can use this unchanged.
+    jumpcloud.notifications.EmailSubscription:
+      type: object
+      properties:
+        category:
+          type: string
+          description: category is catalog metadata grouping this email type (e.g. user_security).
+          readOnly: true
+        emailKey:
+          type: string
+          description: |-
+            email_key is the catalog identifier for the email type (maps to scope_key
+            when scope_type is email_key). Example: lockout-notice-admin.
+        subscribed:
+          type: boolean
+          description: |-
+            subscribed indicates whether the admin is opted in to this email type.
+            NOTE: proto3 bool defaults to false when omitted. Service layer MUST treat
+            a missing EmailSubscription item as "no change", not as "unsubscribe".
+            Clients SHOULD always populate this field explicitly. See GIR-3659.
+        title:
+          type: string
+          description: title is the catalog display title for this email type.
+          readOnly: true
+      description: |-
+        EmailSubscription is the API representation of one catalog email type and the
+        caller's preference for it. Storage identity and scope columns are not part of
+        this contract.
+    jumpcloud.notifications.ListEmailSubscriptionsResponse:
+      type: object
+      properties:
+        subscriptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.notifications.EmailSubscription"
+      description: ListEmailSubscriptionsResponse holds the caller's catalog-backed preferences.
+    jumpcloud.notifications.UpdateEmailSubscriptionsRequest:
+      type: object
+      properties:
+        subscriptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.notifications.EmailSubscription"
+          description: |-
+            Upsert semantics: each item is matched by email_key and its subscribed
+            preference is updated. Keys absent from this list are NOT modified.
+            Service layer owns this logic. See GIR-3659.
+      description: |-
+        UpdateEmailSubscriptionsRequest updates the authenticated admin's
+        preferences. admin identity comes from auth context only.
+    jumpcloud.notifications.UpdateEmailSubscriptionsResponse:
+      type: object
+      properties:
+        subscriptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.notifications.EmailSubscription"
+      description: |-
+        UpdateEmailSubscriptionsResponse returns the caller's catalog-backed
+        preferences after the update.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
@@ -65746,6 +65884,7 @@ tags:
   - name: Directory Insights
   - name: Duo
   - name: Durt
+  - name: Email Subscriptions
   - name: ExportService
   - name: FeatureFlags
   - name: FeatureTrials
@@ -65765,6 +65904,7 @@ tags:
   - name: Image
   - name: ImportConsumer
   - name: ImportService
+  - name: Island Device Trust
   - name: Knowledge
   - name: LDAP Servers
   - name: Logos
@@ -65890,6 +66030,7 @@ x-tagGroups:
       - Directories
       - Directory Insights
       - Duo
+      - Email Subscriptions
       - FeatureTrials
       - G Suite
       - G Suite Import
@@ -66020,6 +66161,8 @@ x-scopes:
   - mfa.readonly
   - notifications.channels
   - notifications.channels.readonly
+  - notifications.subscriptions
+  - notifications.subscriptions.readonly
   - organizations
   - organizations.billing
   - organizations.readonly

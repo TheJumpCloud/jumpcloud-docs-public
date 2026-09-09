@@ -4026,6 +4026,21 @@ operations:
     base_path: /api/v2
     legacy_operation_id: ADETokens_UpdateADEToken
     standardized_operation_id: patchApiV2ApplemdmsAdeTokensByObjectid
+  - method: delete
+    host_root_path: /api/v2/notifications/channels/slack/{slackTeamId}
+    base_path: /api/v2
+    legacy_operation_id: NotificationsChannelsService_DeleteSlackChannel
+    standardized_operation_id: deleteApiV2NotificationsChannelsSlackBySlackteamid
+  - method: get
+    host_root_path: /api/v2/notifications/subscriptions/email
+    base_path: /api/v2
+    legacy_operation_id: EmailSubscriptionsService_ListEmailSubscriptions
+    standardized_operation_id: getApiV2NotificationsSubscriptionsEmail
+  - method: put
+    host_root_path: /api/v2/notifications/subscriptions/email
+    base_path: /api/v2
+    legacy_operation_id: EmailSubscriptionsService_UpdateEmailSubscriptions
+    standardized_operation_id: putApiV2NotificationsSubscriptionsEmail
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
