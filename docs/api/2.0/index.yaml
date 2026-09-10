@@ -1999,7 +1999,6 @@ paths:
         - Managed Service Provider
       x-scopes:
         - administrators
-        - administratorLinks
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -2068,7 +2067,6 @@ paths:
         - x-api-key: []
       x-scopes:
         - administrators
-        - administratorLinks
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -35053,29 +35051,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/jumpcloud.msp.GetDetailsResponse'
         '401':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/trait_standardErrors_401'
         '403':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/trait_standardErrors_403'
         '404':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/trait_standardErrors_404'
         '500':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/trait_standardErrors_500'
         default:
           description: An unexpected error response.
           content:
@@ -82392,7 +82374,6 @@ x-scopes:
   - accessmanagement.readonly
   - accessrequest
   - accessrequest.readonly
-  - administratorLinks
   - administrators
   - administrators.readonly
   - anonymous
