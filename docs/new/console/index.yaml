@@ -31606,13 +31606,7 @@ paths:
           schema:
             type: string
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                value: {}
-        required: true
+        $ref: "#/components/requestBodies/AccessRiskSettingsService_UpdateBody"
       tags:
         - Organization Feature Settings
       security:
