@@ -66008,6 +66008,7 @@ tags:
   - name: User Groups
   - name: User Portal
   - name: User Portal Custom Messages
+  - name: UserAssetsService
   - name: UserSync
   - name: Users
   - name: ValidateDomain
