@@ -4042,6 +4042,21 @@ operations:
     legacy_operation_id: EmailSubscriptionsService_UpdateEmailSubscriptions
     standardized_operation_id: putApiV2NotificationsSubscriptionsEmail
   - method: get
+    host_root_path: /api/v2/applemdms/ade_tokens/{adeTokenObjectId}/ade_settings
+    base_path: /api/v2
+    legacy_operation_id: ADESettings_ListADESettings
+    standardized_operation_id: getApiV2ApplemdmsAdeTokensByAdetokenobjectidAdeSettings
+  - method: get
+    host_root_path: /api/v2/applemdms/ade_tokens/{adeTokenObjectId}/ade_settings/{osFamily}
+    base_path: /api/v2
+    legacy_operation_id: ADESettings_GetADESetting
+    standardized_operation_id: getApiV2ApplemdmsAdeTokensByAdetokenobjectidAdeSettingsByOsfamily
+  - method: patch
+    host_root_path: /api/v2/applemdms/ade_tokens/{adeTokenObjectId}/ade_settings/{osFamily}
+    base_path: /api/v2
+    legacy_operation_id: ADESettings_PatchADESetting
+    standardized_operation_id: patchApiV2ApplemdmsAdeTokensByAdetokenobjectidAdeSettingsByOsfamily
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations

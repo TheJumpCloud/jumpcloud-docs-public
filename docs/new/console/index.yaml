@@ -38522,6 +38522,216 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - notifications.subscriptions
+  /api/v2/applemdms/ade_tokens/{adeTokenObjectId}/ade_settings:
+    get:
+      summary: List ADE Settings
+      description: |-
+        List ADE settings for an ADE token.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{ade_token_object_id}/ade_settings \
+          -H 'Accept: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: getApiV2ApplemdmsAdeTokensByAdetokenobjectidAdeSettings
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: adeTokenObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+  /api/v2/applemdms/ade_tokens/{adeTokenObjectId}/ade_settings/{osFamily}:
+    get:
+      summary: Get ADE Settings
+      description: |-
+        Get ADE settings for an ADE token and OS family.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
+          -H 'Accept: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: getApiV2ApplemdmsAdeTokensByAdetokenobjectidAdeSettingsByOsfamily
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: adeTokenObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: osFamily
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - UNKNOWN
+              - DARWIN
+              - IOS
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+    patch:
+      summary: Patch ADE Settings
+      description: |-
+        Create or update ADE settings for an ADE token and OS family. Send the full ADE settings payload on every request.
+
+        #### Sample Request
+        ```
+        curl -X PATCH https://console.jumpcloud.com/v2/applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}' \
+          -d '{"enable_zero_touch_enrollment":true,"welcome_screen":{"title":"Welcome","paragraph":"Set up your device","button":"Continue"},"setup_options":[],"default_device_group_object_ids":[]}'
+        ```
+      operationId: patchApiV2ApplemdmsAdeTokensByAdetokenobjectidAdeSettingsByOsfamily
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: adeTokenObjectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: osFamily
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - UNKNOWN
+              - DARWIN
+              - IOS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                defaultDeviceGroupObjectIds:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+                enableZeroTouchEnrollment:
+                  type: boolean
+                setupOptions:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/jumpcloud.apple_mdm.SetupAssistantOption"
+                welcomeScreen:
+                  $ref: "#/components/schemas/jumpcloud.apple_mdm.WelcomeScreen"
+        required: true
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -50601,6 +50811,15 @@ components:
           type: boolean
         unsafeUninstall:
           type: boolean
+        installerType:
+          type: string
+          description: Winget installer format (e.g. "msix"); empty means the default winget installer.
+        packageFamilyName:
+          type: string
+          description: MSIX package family name (DisplayName_PublisherId) used for machine-wide MSIX installs.
+        migrationSafe:
+          type: boolean
+          description: Whether migrating an existing install to the configured installer type has been validated as safe.
         appDeliveryMethod:
           type: string
         createdAt:
@@ -57127,6 +57346,9 @@ components:
           anyOf:
             - $ref: '#/components/schemas/devices.WindowsCustomInstallerConfig'
             - type: 'null'
+        installerType:
+          type: string
+          description: Winget installer format (e.g. "msix"); empty means the winget default installer.
         location:
           type: string
         locationObjectId:
@@ -57136,6 +57358,12 @@ components:
           $ref: "#/components/schemas/devices.MetadataPKG.ManagedInstallEligibilityStatus"
         microsoftStore:
           $ref: "#/components/schemas/devices.SoftwareAppMicrosoftStore"
+        migrationSafe:
+          type: boolean
+          description: JumpCloud has validated the MSI->MSIX (or equivalent) migration for this app is safe.
+        packageFamilyName:
+          type: string
+          description: MSIX package family name (DisplayName_PublisherId), used for machine-wide MSIX installs.
         packageId:
           type: string
         packageKind:
@@ -63260,6 +63488,64 @@ components:
       description: |-
         UpdateEmailSubscriptionsResponse returns the caller's catalog-backed
         preferences after the update.
+    jumpcloud.apple_mdm.SetupAssistantOption:
+      type: string
+      enum:
+        - UNKNOWN
+        - ACCESSIBILITY_SETUP
+        - ANALYTICS
+        - APPEARANCE_SETUP
+        - APPLE_ID_SIGN_IN
+        - APPLE_PAY_SETUP
+        - BACKUP_RESTORE
+        - DISPLAY_TONE
+        - FILEVAULT
+        - ICLOUD_ANALYTICS
+        - ICLOUD_DOCUMENTS_DESKTOP_SETUP
+        - LOCATION_SERVICES_SETUP
+        - PRIVACY_PANE
+        - SCREEN_TIME
+        - SIRI_SETUP
+        - TERMS_AND_CONDITIONS
+        - TOUCH_ID_SETUP
+        - APP_STORE
+        - DISPLAY_ZOOM
+        - DEVICE_TO_DEVICE_MIGRATION
+        - HOME_BUTTON
+        - IMESSAGE_AND_FACETIME
+        - MESSAGING_ACTIVATION_USING_PHONE_NUMBER
+        - MOVE_FROM_ANDROID
+        - PASSCODE
+        - RESTORE_COMPLETE
+        - SET_UP_CELLULAR
+        - SOFTWARE_UPDATE
+        - UPDATE_COMPLETE
+        - UNLOCK_WITH_WATCH
+        - WATCH_MIGRATION
+        - WELCOME
+        - ACTION_BUTTON
+        - ENABLE_LOCKDOWN_MODE
+        - INTELLIGENCE
+        - SAFETY
+        - TERMS_OF_ADDRESS
+        - WALLPAPER
+        - CAMERA_BUTTON
+        - ADDITIONAL_PRIVACY_SETTINGS
+        - MULTITASKING
+        - OS_SHOWCASE
+        - WEB_CONTENT_FILTERING
+        - SAFETY_AND_HANDLING
+        - LIQUID_GLASS
+      default: UNKNOWN
+    jumpcloud.apple_mdm.WelcomeScreen:
+      type: object
+      properties:
+        button:
+          type: string
+        paragraph:
+          type: string
+        title:
+          type: string
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
