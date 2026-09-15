@@ -30661,11 +30661,24 @@ paths:
         - $ref: "#/components/parameters/api_v2.trait_skip_skip"
         - $ref: "#/components/parameters/api_v2.trait_filter_filter"
         - $ref: "#/components/parameters/api_v2.trait_sort_sort"
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+        - $ref: "#/components/parameters/trait_multiTenantRequestHeaders_x-provider-id"
       description: |-
         Retrieve scope groups for custom role creation.
 
-        **Note**: Scope groups are global resources shared across all organizations.
-        No organization context (x-org-id) is required or used.
+        Scope groups are global catalog resources.
+
+        Catalog visibility may depend on authenticated organization/provider context.
+
+        Direct/OU context can influence contextual catalog visibility.
+
+        Route availability is context-dependent: MSP provider-authoring requests
+        (authenticated MSP provider without organization context) require
+        SP-10009-custom-role-mtp; all other contexts require
+        na-1377-customroles-api.
+
+        When MSP Custom Roles is enabled, authenticated MSP provider context may
+        request the provider-authoring catalog without x-org-id.
 
         By default, returns scope groups with displayToUsers: true. Supports
         JumpCloud standard pagination, sorting, and basic filtering.
@@ -38347,16 +38360,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/api_v2.Error"
       parameters:
-        - name: organizationObjectIds.value
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: byte
-          allowReserved: true
         - name: queryParameters.limit
           in: query
           required: false

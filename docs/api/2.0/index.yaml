@@ -44151,11 +44151,24 @@ paths:
         - $ref: '#/components/parameters/trait_skip_skip'
         - $ref: '#/components/parameters/trait_filter_filter'
         - $ref: '#/components/parameters/trait_sort_sort'
+        - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
+        - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-provider-id'
       description: |-
         Retrieve scope groups for custom role creation.
 
-        **Note**: Scope groups are global resources shared across all organizations.
-        No organization context (x-org-id) is required or used.
+        Scope groups are global catalog resources.
+
+        Catalog visibility may depend on authenticated organization/provider context.
+
+        Direct/OU context can influence contextual catalog visibility.
+
+        Route availability is context-dependent: MSP provider-authoring requests
+        (authenticated MSP provider without organization context) require
+        SP-10009-custom-role-mtp; all other contexts require
+        na-1377-customroles-api.
+
+        When MSP Custom Roles is enabled, authenticated MSP provider context may
+        request the provider-authoring catalog without x-org-id.
 
         By default, returns scope groups with displayToUsers: true. Supports
         JumpCloud standard pagination, sorting, and basic filtering.
@@ -44199,6 +44212,8 @@ paths:
             curl --request GET \
               --url 'https://console.jumpcloud.com/api/v2/scope-groups?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE&sort=SOME_ARRAY_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --header 'x-provider-id: SOME_STRING_VALUE' \
               --header 'x-total-count: SOME_INTEGER_VALUE'
         - lang: Python
           source: |-
@@ -44210,6 +44225,8 @@ paths:
 
             headers = {
                 "x-total-count": "SOME_INTEGER_VALUE",
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-provider-id": "SOME_STRING_VALUE",
                 "x-api-key": "REPLACE_KEY_VALUE"
             }
 
@@ -44220,6 +44237,8 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-total-count", "SOME_INTEGER_VALUE")
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-provider-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/scope-groups?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE&sort=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /roles:
@@ -57206,16 +57225,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       parameters:
-        - name: organizationObjectIds.value
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: byte
-          allowReserved: true
         - name: queryParameters.limit
           in: query
           required: false
@@ -57247,7 +57256,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens?organizationObjectIds.value=SOME_ARRAY_VALUE&queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens?queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -57255,7 +57264,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/applemdms/ade_tokens"
 
-            querystring = {"organizationObjectIds.value":"SOME_ARRAY_VALUE","queryParameters.limit":"SOME_STRING_VALUE","queryParameters.skip":"SOME_STRING_VALUE","queryParameters.fields":"SOME_ARRAY_VALUE"}
+            querystring = {"queryParameters.limit":"SOME_STRING_VALUE","queryParameters.skip":"SOME_STRING_VALUE","queryParameters.fields":"SOME_ARRAY_VALUE"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -57266,7 +57275,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens?organizationObjectIds.value=SOME_ARRAY_VALUE&queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens?queryParameters.limit=SOME_STRING_VALUE&queryParameters.skip=SOME_STRING_VALUE&queryParameters.fields=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /applemdms/ade_tokens/{objectId}:
     get:
       summary: Get ADE Token
