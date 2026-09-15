@@ -14843,6 +14843,65 @@ paths:
           type: string
     x-functionalities-tags:
       - mtp-update-org
+  /api/v2/providers/{provider_id}/directoryinsights/organizations:
+    get:
+      description: |-
+        Lists organizations for the Provider Directory Insights org filter picker.
+
+        Returns accessible live child organizations under the path provider. Deleted
+        organization tombstones from ``organizations_deleted`` are included only when the
+        caller has OU provider primary-organization access (Enterprise DI deleted-org gate).
+        MSP deleted tombstones are not included.
+
+        Wrong-provider tombstones are never returned. Legacy tombstones missing ``provider``
+        are excluded by the provider-scoped query. Tombstones (or live orgs) missing a display
+        name return ``name: null``; Portal should fall back to ``id``.
+
+        Pagination and search:
+
+        - ``skip`` / ``limit`` (default limit 10, max 100) apply after merge, optional search,
+          and case-insensitive name sort.
+        - ``search`` is an optional case-insensitive substring match on display name. Rows with
+          a null name are omitted from search matches.
+      operationId: getApiV2ProvidersByProviderIdDirectoryinsightsOrganizations
+      parameters:
+        - $ref: "#/components/parameters/trait_limitMax100_limit"
+        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
+        - $ref: "#/components/parameters/api_v2.trait_search_search"
+      responses:
+        "200":
+          description: Accessible live orgs (+ authorized deleted tombstones).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProviderDirectoryInsightsOrganizationsResponse"
+        "400":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_400"
+        "401":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_401"
+        "403":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_403"
+        "404":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_404"
+        "500":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_500"
+      summary: List Provider Directory Insights organizations (org picker)
+      tags:
+        - Providers
+        - Directory Insights
+      security:
+        - x-api-key: []
+      x-scopes:
+        - directoryinsights.readonly
+        - providers.readonly
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        schema:
+          type: string
+    x-functionalities-tags:
+      - di-events
   /api/v2/providers/{provider_id}/directoryinsights/events:
     post:
       description: |-
@@ -48706,6 +48765,57 @@ components:
             $ref: "#/components/schemas/Integration"
         totalCount:
           type: integer
+    ProviderDirectoryInsightsOrganization:
+      description: |-
+        Slim organization row for the Provider Directory Insights org picker (SP-8689).
+        ``status`` is ``active`` for accessible live child orgs, or ``deleted`` for
+        ``organizations_deleted`` tombstones (returned only for callers with OU provider
+        primary-organization access). MSP deleted tombstones are not included.
+        Legacy tombstones missing ``provider`` are excluded. Missing ``name`` is returned as null;
+        Portal should fall back to ``id`` for display.
+      title: ProviderDirectoryInsightsOrganization
+      type: object
+      required:
+        - id
+        - status
+      properties:
+        id:
+          type: string
+          description: Organization id (live org ``_id`` or tombstone ``_id``).
+        name:
+          description: Display name (live ``settings.name`` / tombstone ``name``). Null when unknown.
+          type:
+            - string
+            - "null"
+        status:
+          type: string
+          enum:
+            - active
+            - deleted
+        deleted:
+          type: string
+          description: Deletion timestamp (ISO string) when status is deleted.
+        deleteType:
+          type: string
+          description: Tombstone delete_type (e.g. internal, auto) when status is deleted.
+        initiatedBy:
+          type: string
+          description: Who initiated the delete when status is deleted.
+    ProviderDirectoryInsightsOrganizationsResponse:
+      description: Paginated list of Provider DI picker organizations (live + authorized deleted).
+      title: ProviderDirectoryInsightsOrganizationsResponse
+      type: object
+      required:
+        - totalCount
+        - results
+      properties:
+        totalCount:
+          type: integer
+          description: Total matching rows before skip/limit pagination.
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProviderDirectoryInsightsOrganization"
     LdapServerAction:
       enum:
         - disable

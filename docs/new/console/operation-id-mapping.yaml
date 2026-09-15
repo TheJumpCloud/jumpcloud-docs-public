@@ -1431,6 +1431,11 @@ operations:
     base_path: /api/v2
     legacy_operation_id: providerOrganizations_updateOrg
     standardized_operation_id: putApiV2ProvidersByProviderIdOrganizationsById
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/directoryinsights/organizations
+    base_path: /api/v2
+    legacy_operation_id: providers_directoryInsightsOrganizationsGet
+    standardized_operation_id: getApiV2ProvidersByProviderIdDirectoryinsightsOrganizations
   - method: post
     host_root_path: /api/v2/providers/{provider_id}/directoryinsights/events
     base_path: /api/v2
