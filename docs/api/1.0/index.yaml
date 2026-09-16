@@ -2145,7 +2145,7 @@ paths:
               --url https://console.jumpcloud.com/api/organizations/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"settings":{"contactEmail":"string","contactName":"string","disableLdap":true,"disableUM":true,"duplicateLDAPGroups":true,"emailDisclaimer":"string","enableManagedUID":true,"features":{"directoryInsightsPremium":{"enabled":true,"createdAt":"string","updatedAt":"string"},"systemInsights":{"enableNewDarwin":true,"enableNewLinux":true,"enableNewWindows":true,"enabled":true,"createdAt":"string","updatedAt":"string"},"directoryInsights":{"enabled":true}},"growthData":{},"logo":"string","name":"string","newSystemUserStateDefaults":{"applicationImport":"ACTIVATED","csvImport":"ACTIVATED","manualEntry":"ACTIVATED"},"passwordCompliance":"custom","passwordPolicy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":1,"disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"string","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"gracePeriodDate":"string","lockoutTimeInSeconds":0,"maxHistory":1,"maxLoginAttempts":1,"minChangePeriodInDays":0,"minLength":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":1},"showIntro":true,"systemUserDefaults":{"restrictedFields":[{"field":"addresses","type":"active_directory","id":"string"}]},"systemUserPasswordExpirationInDays":0,"systemUsersCanEdit":true,"disableGoogleLogin":true,"userPortal":{"idleSessionDurationMinutes":1,"cookieExpirationType":"session"},"deviceIdentificationEnabled":true,"trustedAppConfig":{"trustedApps":[{"name":"Application 1","path":"/someuser/Applications/application1.app","teamid":"FakeTeamID"}]},"maxSystemUsers":0}}'
+              --data '{"settings":{"contactEmail":"string","contactName":"string","disableLdap":true,"disableUM":true,"duplicateLDAPGroups":true,"emailDisclaimer":"string","enableManagedUID":true,"features":{"directoryInsightsPremium":{"enabled":true,"createdAt":"string","updatedAt":"string"},"systemInsights":{"enableNewDarwin":true,"enableNewLinux":true,"enableNewWindows":true,"enabled":true,"createdAt":"string","updatedAt":"string"},"directoryInsights":{"enabled":true}},"growthData":{},"logo":"string","name":"string","newSystemUserStateDefaults":{"applicationImport":"ACTIVATED","csvImport":"ACTIVATED","manualEntry":"ACTIVATED"},"passwordCompliance":"custom","passwordPolicy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":1,"disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"string","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"gracePeriodDate":"string","lockoutTimeInSeconds":0,"maxHistory":1,"maxLoginAttempts":1,"minChangePeriodInDays":0,"minLength":0,"nameConsecutiveChars":2,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":1},"showIntro":true,"systemUserDefaults":{"restrictedFields":[{"field":"addresses","type":"active_directory","id":"string"}]},"systemUserPasswordExpirationInDays":0,"systemUsersCanEdit":true,"disableGoogleLogin":true,"userPortal":{"idleSessionDurationMinutes":1,"cookieExpirationType":"session"},"deviceIdentificationEnabled":true,"trustedAppConfig":{"trustedApps":[{"name":"Application 1","path":"/someuser/Applications/application1.app","teamid":"FakeTeamID"}]},"maxSystemUsers":0}}'
         - lang: Python
           source: |-
             import requests
@@ -2192,6 +2192,7 @@ paths:
                         "daysBeforeExpirationToForceReset": 1,
                         "disallowCommonlyUsedPasswords": True,
                         "disallowCustomBannedPasswords": True,
+                        "disallowNameSubstring": True,
                         "disallowSequentialOrRepetitiveChars": True,
                         "displayComplexityOnResetScreen": True,
                         "effectiveDate": "string",
@@ -2202,6 +2203,7 @@ paths:
                         "enableMaxLoginAttempts": True,
                         "enableMinChangePeriodInDays": True,
                         "enableMinLength": True,
+                        "enableNameConsecutiveChars": True,
                         "enablePasswordExpirationInDays": True,
                         "gracePeriodDate": "string",
                         "lockoutTimeInSeconds": 0,
@@ -2209,6 +2211,7 @@ paths:
                         "maxLoginAttempts": 1,
                         "minChangePeriodInDays": 0,
                         "minLength": 0,
+                        "nameConsecutiveChars": 2,
                         "needsLowercase": True,
                         "needsNumeric": True,
                         "needsSymbolic": True,
@@ -2253,7 +2256,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/organizations/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"settings":{"contactEmail":"string","contactName":"string","disableLdap":true,"disableUM":true,"duplicateLDAPGroups":true,"emailDisclaimer":"string","enableManagedUID":true,"features":{"directoryInsightsPremium":{"enabled":true,"createdAt":"string","updatedAt":"string"},"systemInsights":{"enableNewDarwin":true,"enableNewLinux":true,"enableNewWindows":true,"enabled":true,"createdAt":"string","updatedAt":"string"},"directoryInsights":{"enabled":true}},"growthData":{},"logo":"string","name":"string","newSystemUserStateDefaults":{"applicationImport":"ACTIVATED","csvImport":"ACTIVATED","manualEntry":"ACTIVATED"},"passwordCompliance":"custom","passwordPolicy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":1,"disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"string","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"gracePeriodDate":"string","lockoutTimeInSeconds":0,"maxHistory":1,"maxLoginAttempts":1,"minChangePeriodInDays":0,"minLength":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":1},"showIntro":true,"systemUserDefaults":{"restrictedFields":[{"field":"addresses","type":"active_directory","id":"string"}]},"systemUserPasswordExpirationInDays":0,"systemUsersCanEdit":true,"disableGoogleLogin":true,"userPortal":{"idleSessionDurationMinutes":1,"cookieExpirationType":"session"},"deviceIdentificationEnabled":true,"trustedAppConfig":{"trustedApps":[{"name":"Application 1","path":"/someuser/Applications/application1.app","teamid":"FakeTeamID"}]},"maxSystemUsers":0}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/organizations/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"settings":{"contactEmail":"string","contactName":"string","disableLdap":true,"disableUM":true,"duplicateLDAPGroups":true,"emailDisclaimer":"string","enableManagedUID":true,"features":{"directoryInsightsPremium":{"enabled":true,"createdAt":"string","updatedAt":"string"},"systemInsights":{"enableNewDarwin":true,"enableNewLinux":true,"enableNewWindows":true,"enabled":true,"createdAt":"string","updatedAt":"string"},"directoryInsights":{"enabled":true}},"growthData":{},"logo":"string","name":"string","newSystemUserStateDefaults":{"applicationImport":"ACTIVATED","csvImport":"ACTIVATED","manualEntry":"ACTIVATED"},"passwordCompliance":"custom","passwordPolicy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":1,"disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"string","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"gracePeriodDate":"string","lockoutTimeInSeconds":0,"maxHistory":1,"maxLoginAttempts":1,"minChangePeriodInDays":0,"minLength":0,"nameConsecutiveChars":2,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":1},"showIntro":true,"systemUserDefaults":{"restrictedFields":[{"field":"addresses","type":"active_directory","id":"string"}]},"systemUserPasswordExpirationInDays":0,"systemUsersCanEdit":true,"disableGoogleLogin":true,"userPortal":{"idleSessionDurationMinutes":1,"cookieExpirationType":"session"},"deviceIdentificationEnabled":true,"trustedAppConfig":{"trustedApps":[{"name":"Application 1","path":"/someuser/Applications/application1.app","teamid":"FakeTeamID"}]},"maxSystemUsers":0}}'
     x-functionalities-tags:
       - organizations
   /radiusservers:
@@ -7667,6 +7670,8 @@ components:
               type: boolean
             disallowCustomBannedPasswords:
               type: boolean
+            disallowNameSubstring:
+              type: boolean
             disallowSequentialOrRepetitiveChars:
               type: boolean
             displayComplexityOnResetScreen:
@@ -7687,6 +7692,8 @@ components:
               type: boolean
             enableMinLength:
               type: boolean
+            enableNameConsecutiveChars:
+              type: boolean
             enablePasswordExpirationInDays:
               type: boolean
             gracePeriodDate:
@@ -7705,6 +7712,10 @@ components:
             minChangePeriodInDays:
               type: integer
             minLength:
+              type: integer
+            nameConsecutiveChars:
+              maximum: 10
+              minimum: 2
               type: integer
             needsLowercase:
               type: boolean
@@ -7870,6 +7881,8 @@ components:
               type: boolean
             disallowCustomBannedPasswords:
               type: boolean
+            disallowNameSubstring:
+              type: boolean
             disallowSequentialOrRepetitiveChars:
               type: boolean
             displayComplexityOnResetScreen:
@@ -7890,6 +7903,8 @@ components:
               type: boolean
             enableMinLength:
               type: boolean
+            enableNameConsecutiveChars:
+              type: boolean
             enablePasswordExpirationInDays:
               type: boolean
             gracePeriodDate:
@@ -7906,6 +7921,10 @@ components:
             minChangePeriodInDays:
               type: integer
             minLength:
+              type: integer
+            nameConsecutiveChars:
+              maximum: 10
+              minimum: 2
               type: integer
             needsLowercase:
               type: boolean

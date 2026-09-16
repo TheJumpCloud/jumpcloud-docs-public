@@ -31419,7 +31419,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"name":"string","description":"string","disabled":true,"monitorOnly":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
+              --data '{"name":"string","description":"string","disabled":true,"monitorOnly":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true,"interval":{"preset":"string","custom":{"value":0,"unit":"string"}}},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
         - lang: Python
           source: |-
             import requests
@@ -31434,7 +31434,16 @@ paths:
                 "effect": {
                     "action": "allow",
                     "obligations": {
-                        "mfa": {"required": True},
+                        "mfa": {
+                            "required": True,
+                            "interval": {
+                                "preset": "string",
+                                "custom": {
+                                    "value": 0,
+                                    "unit": "string"
+                                }
+                            }
+                        },
                         "userVerification": {"requirement": "none"},
                         "mfaFactors": [{"type": "DURT"}]
                     },
@@ -31499,7 +31508,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","description":"string","disabled":true,"monitorOnly":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","description":"string","disabled":true,"monitorOnly":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true,"interval":{"preset":"string","custom":{"value":0,"unit":"string"}}},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
     x-functionalities-tags:
       - policies
   /authn/policies/{id}:
@@ -31696,7 +31705,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"name":"string","description":"string","disabled":true,"monitorOnly":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
+              --data '{"name":"string","description":"string","disabled":true,"monitorOnly":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true,"interval":{"preset":"string","custom":{"value":0,"unit":"string"}}},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
         - lang: Python
           source: |-
             import requests
@@ -31711,7 +31720,16 @@ paths:
                 "effect": {
                     "action": "allow",
                     "obligations": {
-                        "mfa": {"required": True},
+                        "mfa": {
+                            "required": True,
+                            "interval": {
+                                "preset": "string",
+                                "custom": {
+                                    "value": 0,
+                                    "unit": "string"
+                                }
+                            }
+                        },
                         "userVerification": {"requirement": "none"},
                         "mfaFactors": [{"type": "DURT"}]
                     },
@@ -31776,7 +31794,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"name":"string","description":"string","disabled":true,"monitorOnly":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/authn/policies/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"name":"string","description":"string","disabled":true,"monitorOnly":true,"effect":{"action":"allow","obligations":{"mfa":{"required":true,"interval":{"preset":"string","custom":{"value":0,"unit":"string"}}},"userVerification":{"requirement":"none"},"mfaFactors":[{"type":"DURT"}]},"custom_error_message":{"message":"string","enabled":true,"primary_help":{"text":"string","url":"string"},"secondary_help":{"text":"string","url":"string"}}},"targets":{"excludedApplications":["string"],"resources":[{"type":"admin_portal","id":"string"}],"userAttributes":{"exclusions":[{"field":"string","operator":"EQ","value":null}],"inclusions":[{"field":"string","operator":"EQ","value":null}]},"userGroups":{"inclusions":["string"],"exclusions":["string"]},"users":{"inclusions":["string"]}},"type":"user_portal","conditions":{}}'
     x-functionalities-tags:
       - policies
   /iplists/{id}:
@@ -43345,7 +43363,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/passwordpolicies \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
         - lang: Python
           source: |-
             import requests
@@ -43364,6 +43382,7 @@ paths:
                     "description": "string",
                     "disallowCommonlyUsedPasswords": True,
                     "disallowCustomBannedPasswords": True,
+                    "disallowNameSubstring": True,
                     "disallowSequentialOrRepetitiveChars": True,
                     "displayComplexityOnResetScreen": True,
                     "effectiveDate": "2019-08-24T14:15:22Z",
@@ -43374,6 +43393,7 @@ paths:
                     "enableMaxLoginAttempts": True,
                     "enableMinChangePeriodInDays": True,
                     "enableMinLength": True,
+                    "enableNameConsecutiveChars": True,
                     "enablePasswordExpirationInDays": True,
                     "enableRecoveryEmail": True,
                     "enableResetLockoutCounter": True,
@@ -43383,6 +43403,7 @@ paths:
                     "minChangePeriodInDays": 0,
                     "minLength": 0,
                     "name": "string",
+                    "nameConsecutiveChars": 0,
                     "needsLowercase": True,
                     "needsNumeric": True,
                     "needsSymbolic": True,
@@ -43405,7 +43426,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
     delete:
       summary: Batch Delete Password Policy
       description: Delete password policies for an organization.
@@ -43569,7 +43590,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
         - lang: Python
           source: |-
             import requests
@@ -43588,6 +43609,7 @@ paths:
                     "description": "string",
                     "disallowCommonlyUsedPasswords": True,
                     "disallowCustomBannedPasswords": True,
+                    "disallowNameSubstring": True,
                     "disallowSequentialOrRepetitiveChars": True,
                     "displayComplexityOnResetScreen": True,
                     "effectiveDate": "2019-08-24T14:15:22Z",
@@ -43598,6 +43620,7 @@ paths:
                     "enableMaxLoginAttempts": True,
                     "enableMinChangePeriodInDays": True,
                     "enableMinLength": True,
+                    "enableNameConsecutiveChars": True,
                     "enablePasswordExpirationInDays": True,
                     "enableRecoveryEmail": True,
                     "enableResetLockoutCounter": True,
@@ -43607,6 +43630,7 @@ paths:
                     "minChangePeriodInDays": 0,
                     "minLength": 0,
                     "name": "string",
+                    "nameConsecutiveChars": 0,
                     "needsLowercase": True,
                     "needsNumeric": True,
                     "needsSymbolic": True,
@@ -43629,7 +43653,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
     delete:
       summary: Delete Password Policy
       description: Delete a password policy for an organization.
@@ -71213,6 +71237,21 @@ components:
           properties:
             required:
               type: boolean
+            interval:
+              type: object
+              description: Optional MFA sign-in interval. Absent means every access.
+              properties:
+                preset:
+                  type: string
+                  description: 1h | 4h | 8h | 12h | 24h. Omit interval for every access.
+                custom:
+                  type: object
+                  properties:
+                    value:
+                      type: integer
+                    unit:
+                      type: string
+                      description: hours | days
         userVerification:
           type: object
           properties:
@@ -75644,6 +75683,8 @@ components:
           type: boolean
         disallowCustomBannedPasswords:
           type: boolean
+        disallowNameSubstring:
+          type: boolean
         disallowSequentialOrRepetitiveChars:
           type: boolean
         displayComplexityOnResetScreen:
@@ -75664,6 +75705,8 @@ components:
         enableMinChangePeriodInDays:
           type: boolean
         enableMinLength:
+          type: boolean
+        enableNameConsecutiveChars:
           type: boolean
         enablePasswordExpirationInDays:
           type: boolean
@@ -75688,6 +75731,9 @@ components:
           format: int32
         name:
           type: string
+        nameConsecutiveChars:
+          type: integer
+          format: int32
         needsLowercase:
           type: boolean
         needsNumeric:
