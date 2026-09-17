@@ -38715,7 +38715,7 @@ paths:
     patch:
       summary: Patch ADE Settings
       description: |-
-        Create or update ADE settings for an ADE token and OS family. Send the full ADE settings payload on every request.
+        Create or update ADE settings for an ADE token and OS family. patch_mask is required; only fields listed in patch_mask.fields are updated. Include setup_options or default_device_group_object_ids in fields to clear them.
 
         #### Sample Request
         ```
@@ -38723,7 +38723,7 @@ paths:
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}' \
-          -d '{"enable_zero_touch_enrollment":true,"welcome_screen":{"title":"Welcome","paragraph":"Set up your device","button":"Continue"},"setup_options":[],"default_device_group_object_ids":[]}'
+          -d '{"enableZeroTouchEnrollment":true,"welcomeScreen":{"title":"Welcome","paragraph":"Set up your device","button":"Continue"},"patchMask":{"fields":["enable_zero_touch_enrollment","welcome_screen.title","welcome_screen.paragraph","welcome_screen.button"]}}'
         ```
       operationId: patchApiV2ApplemdmsAdeTokensByAdetokenobjectidAdeSettingsByOsfamily
       responses:
@@ -38785,6 +38785,8 @@ paths:
                     format: byte
                 enableZeroTouchEnrollment:
                   type: boolean
+                patchMask:
+                  $ref: "#/components/schemas/jumpcloud.apple_mdm.ADESettingPatchMask"
                 setupOptions:
                   type: array
                   items:
@@ -38792,6 +38794,51 @@ paths:
                 welcomeScreen:
                   $ref: "#/components/schemas/jumpcloud.apple_mdm.WelcomeScreen"
         required: true
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+  /api/v2/applemdms/ade_token_org_names:
+    get:
+      summary: List ADE Token Org Names
+      description: |-
+        List unique ADE token org names visible to the calling organization(s).
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_token_org_names \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: getApiV2ApplemdmsAdeTokenOrgNames
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
       tags:
         - mdm
       security:
@@ -63702,6 +63749,14 @@ components:
           type: string
         title:
           type: string
+    jumpcloud.apple_mdm.ADESettingPatchMask:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            type: string
+      description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
