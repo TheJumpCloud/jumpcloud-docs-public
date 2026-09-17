@@ -8709,6 +8709,11 @@ paths:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
         - $ref: "#/components/parameters/api_v2.trait_skip_skip"
         - $ref: "#/components/parameters/api_v2.trait_filter_filter"
+        - description: Include sync status for users
+          in: query
+          name: syncStatus
+          schema:
+            type: boolean
       responses:
         "200":
           description: OK
