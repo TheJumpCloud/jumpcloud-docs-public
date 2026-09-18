@@ -76353,6 +76353,11 @@ components:
         isCustom:
           type: boolean
           description: Indicates if this is a custom role (true) or a system role (false)
+        ownerType:
+          type: string
+          description: Owner of the custom role. Set to `provider` for provider-owned (MSP) custom roles; omitted for organization-owned roles.
+          const: provider
+          readOnly: true
       required:
         - name
         - scopes
