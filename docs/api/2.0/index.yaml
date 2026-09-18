@@ -79897,7 +79897,9 @@ components:
           type: string
           format: byte
         registeredAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
         state:
           $ref: '#/components/schemas/jumpcloud.partners.ConfigurationState'
@@ -80329,7 +80331,9 @@ components:
           type: string
           description: PII or sensitive data; do not log.
         lastSuccessfulReportedTime:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
         localDeviceUsername:
           type: string
