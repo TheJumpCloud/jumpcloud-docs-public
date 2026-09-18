@@ -38365,19 +38365,27 @@ paths:
               schema:
                 $ref: "#/components/schemas/api_v2.Error"
       parameters:
-        - name: queryParameters.limit
+        - name: skip
+          description: The offset into the records to return.
           in: query
           required: false
           schema:
             type: string
             format: int64
-        - name: queryParameters.skip
+        - name: limit
+          description: |-
+            The number of resources to return at once.
+            If the number of resources returned is less than `limit` there are no more resources to fetch.
+            If the number of resources returned is equal to limit there may be more resources to fetch. Increment `skip` by `limit` to get the next set of resources.
           in: query
           required: false
           schema:
             type: string
             format: int64
-        - name: queryParameters.fields
+        - name: sort
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
           in: query
           required: false
           explode: true
@@ -38385,6 +38393,28 @@ paths:
             type: array
             items:
               type: string
+          allowReserved: true
+        - name: filter
+          description: |
+            A filter to apply to the query.
+
+            	**Filter structure**: `<field>:<operator>:<value>`.
+
+            	**field** = Populate with a valid field from an endpoint response.
+
+            	**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.
+
+            	**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+            	**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
       tags:
         - mdm
       security:
