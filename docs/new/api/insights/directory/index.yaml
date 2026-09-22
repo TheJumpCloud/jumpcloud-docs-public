@@ -20,6 +20,7 @@ info:
     + __Software Events__: Logs software or plugins detected on the local device.
     + __Password Manager Events__: Logs activity related to JumpCloud password manager.
     + __Password Vault Events__: Logs activity related to JumpCloud password vault.
+    + __PAM Events__: Logs activity related to JumpCloud Privileged Access Management (PAM).
     + __Object Storage Events__: Logs activity related to object storage.
     + __Access Management Events__: Logs activity related to access management.
     + __Reports Events__: Logs activity related to reports.
@@ -132,6 +133,7 @@ info:
     + __notifications__: Logs activities related to notifications.
     + __password_manager__: Logs activity related to JumpCloud password manager.
     + __password_vault__: Logs activity related to JumpCloud password vault.
+    + __pam__: Logs activity related to JumpCloud Privileged Access Management (PAM).
     + __object_storage__: Logs activity related to object storage.
     + __radius__: Logs user authentications to RADIUS, used for Wi-Fi and VPNs.
     + __reports__: Logs activity related to reports.
@@ -898,6 +900,28 @@ info:
      error_message | string            | This user can't be updated because it's the last folder admin                                                                                                                           | Error details.                                                                                                                               |
      @version      | string            | 1                                                                                                                                                                                       | The schema version for the document object.                                                                                                  |
 
+
+    ## PAM Attributes
+
+     Field         | Type              | Example                                                                                                                                                                                 | Description                                                                                                                                  |
+     ------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+     id            | uuid              | 30b03bc3-be76-4919-b341-f9b271a5777a                                                                                                                                                    | Unique id for the event.                                                                                                                     |
+     event_type    | string            | pam_add                                                                                                                                                                     | Event type.                                                                                                                                  |
+     timestamp     | RFC3339 Timestamp | 2019-03-04T18:08:26Z                                                                                                                                                                    | Timestamp of when the event occurred (UTC).                                                                                                  |
+     service       | string            | pam                                                                                                                                                                                     | Service that the event originated from.                                                                                                      |
+     organization  | keyword           | 5a2af2a82cf2b0010053ea41                                                                                                                                                                | Organization that the user belongs to.                                                                                                       |
+     changes       | Nested objects    | `[{"field": "status", "from": "offline", "to": "online"}]`                                                                                                                              | List of changes made in the request. You cannot search on the contents of this field.                                                        |
+     initiated_by  | object            | `{"id": "60d4d8f72c6b9226e875781a", "type": "admin", "email": "exampleuser@example.com", "source": "system"}`                                                               | Object that describes who initiated the request.                                                                                             |
+     association   | object            | `{"type": "admin", "id": "5c86b6cf9fdce00001d3800c", "email": "user1@domain.com"}`                                                                                                      | Object that describes a change in association, such as adding a user to a group.                                                             |
+     client_ip     | string            | 10.1.2.3                                                                                                                                                                                | IP address the request came from.                                                                                                            |
+     user_agent    | object            | `{"patch": "4638", "os": "Mac OS X", "major": "95", "minor": "0", "build": "", "os_minor": "15", "os_major": "10", "name": "Chrome", "os_name": "Mac OS X", "device": "Other"}`         | User agent information for the browser that submitted the request.                                                                           |
+     success       | boolean           | TRUE                                                                                                                                                                                    | Denotes whether the event was successful or failed.                                                                                          |
+     geoip         | object            | `{"country_code": "US", "timezone": "America/New_York", "latitude": 33.6992, "continent_code": "NA", "region_name": "Georgia", "region_code": "GA", "longitude": -84.7478}`             | Geo IP information for the IP address that made the request.                                                                                 |
+     provider      | uuid              | 5c86b6cf9fdce00001d3800c                                                                                                                                                                | The org ID of the provider, if the org is a provider org.                                                                                    |
+     error_message | string            | Session could not be started                                                                                                                                                            | Error details.                                                                                                                               |
+     @version      | string            | 1                                                                                                                                                                                       | The schema version for the document object.                                                                                                  |
+
+
     ## MTP/MSP Events
 
      Field        | Type              | Example                                                                                                                                                                                        | Description                                                                                                                                                                                                                                                                |
@@ -1624,6 +1648,102 @@ info:
      passwordvault_personalfolder_credential_remove    | Remove credential from personal folder.                     |
      passwordvault_personalfolder_website_remove       | Remove website from personal folder.                        |
 
+
+    ## PAM Events
+
+    PAM Directory Insights events use the `pam` event_type prefix and `service: pam`.
+
+     Event                                                | Description                                                 |
+     ---------------------------------------------------- | ----------------------------------------------------------- |
+     pam_archive                                          | Archive.                                                    |
+     pam_bulk_archive                                     | Bulk archive.                                               |
+     pam_bulk_delete                                      | Bulk delete.                                                |
+     pam_bulk_unarchive                                   | Bulk unarchive.                                             |
+     pam_connect_through_bastion                          | Connect through bastion.                                    |
+     pam_add                                              | Add.                                                        |
+     pam_update                                           | Update.                                                     |
+     pam_delete                                           | Delete.                                                     |
+     pam_duplicate                                        | Duplicate.                                                  |
+     pam_find_best_match_server_bastion_connection        | Find best match server bastion connection.                  |
+     pam_get_server_detail                                | Get server detail.                                          |
+     pam_get_server_for_view                              | Get server for view.                                        |
+     pam_get_servers_to_excel                             | Get servers to excel.                                       |
+     pam_server_takeover_by_admin                         | Server takeover by admin.                                   |
+     pam_takeover_by_admin                                | Takeover by admin.                                          |
+     pam_unarchive                                        | Unarchive.                                                  |
+     pam_archive_database                                 | Archive database.                                           |
+     pam_authenticate_from_connector                      | Authenticate from connector.                                |
+     pam_database_takeover_by_admin                       | Database takeover by admin.                                 |
+     pam_get_all_for_connection                           | Get all for connection.                                     |
+     pam_get_connection_string_from_application           | Get connection string from application.                     |
+     pam_get_database_connect_detail                      | Get database connect detail.                                |
+     pam_get_database_for_view                            | Get database for view.                                      |
+     pam_get_databases_to_excel                           | Get databases to excel.                                     |
+     pam_get_test_connection_result                       | Get test connection result.                                 |
+     pam_init_connection                                  | Init connection.                                            |
+     pam_init_connection_web_shield                       | Init connection web shield.                                 |
+     pam_notify_blocking_rule_triggered                   | Notify blocking rule triggered.                             |
+     pam_open_connection                                  | Open connection.                                            |
+     pam_reopen_connection                                | Reopen connection.                                          |
+     pam_test_connection                                  | Test connection.                                            |
+     pam_test_connection_result                           | Test connection result.                                     |
+     pam_unarchive_database                               | Unarchive database.                                         |
+     pam_check_existing_password                          | Check existing password.                                    |
+     pam_create_rbi_room                                  | Create rbi room.                                            |
+     pam_get_website_for_view                             | Get website for view.                                       |
+     pam_get_websites_to_excel                            | Get websites to excel.                                      |
+     pam_archive_credentials                              | Archive credentials.                                        |
+     pam_create_credential_internal                       | Create credential internal.                                 |
+     pam_create_or_update_credential_for_migration_async  | Create or update credential for migration async.            |
+     pam_credential_takeover_by_admin                     | Credential takeover by admin.                               |
+     pam_delete_for_migration                             | Delete for migration.                                       |
+     pam_delete_selected_credentials                      | Delete selected credentials.                                |
+     pam_generate_secret_key                              | Generate secret key.                                        |
+     pam_generate_security_password                       | Generate security password.                                 |
+     pam_get_credential_for_view                          | Get credential for view.                                    |
+     pam_get_credential_from_database_client              | Get credential from database client.                        |
+     pam_get_credential_secret                            | Get credential secret.                                      |
+     pam_get_credential_secret_from_bastion               | Get credential secret from bastion.                         |
+     pam_get_credential_secret_from_connector             | Get credential secret from connector.                       |
+     pam_get_credential_secret_from_extension             | Get credential secret from extension.                       |
+     pam_get_credentials_to_delete                        | Get credentials to delete.                                  |
+     pam_get_credentials_to_excel                         | Get credentials to excel.                                   |
+     pam_get_history_credential                           | Get history credential.                                     |
+     pam_get_install_file_password_rotation               | Get install file password rotation.                         |
+     pam_get_mfa_code                                     | Get mfa code.                                               |
+     pam_get_mfa_code_from_extension                      | Get mfa code from extension.                                |
+     pam_get_mfa_secret_from_extension                    | Get mfa secret from extension.                              |
+     pam_list_mfa_linked_with_resource                    | List mfa linked with resource.                              |
+     pam_list_secrets_linked_with_resource                | List secrets linked with resource.                          |
+     pam_unarchived_credentials                           | Unarchived credentials.                                     |
+     pam_update_credential_internal                       | Update credential internal.                                 |
+     pam_update_credential_value                          | Update credential value.                                    |
+     pam_upsert_from_extension                            | Upsert from extension.                                      |
+     pam_validate_security_password                       | Validate security password.                                 |
+     pam_close_connection                                 | Close connection.                                           |
+     pam_close_resource_connection_async                  | Close resource connection async.                            |
+     pam_confirm_connection                               | Confirm connection.                                         |
+     pam_create_connection                                | Create connection.                                          |
+     pam_force_close_connection                           | Force close connection.                                     |
+     pam_get_connection_status                            | Get connection status.                                      |
+     pam_get_connections                                  | Get connections.                                            |
+     pam_get_connections_to_excel                         | Get connections to excel.                                   |
+     pam_get_download_video_informations                  | Get download video informations.                            |
+     pam_get_files                                        | Get files.                                                  |
+     pam_get_typings_url                                  | Get typings url.                                            |
+     pam_get_upload_confirmation                          | Get upload confirmation.                                    |
+     pam_get_video_url                                    | Get video url.                                              |
+     pam_has_connections_available_for_connector          | Has connections available for connector.                    |
+     pam_open_connection_guacamole                        | Open connection guacamole.                                  |
+     pam_request_recording                                | Request recording.                                          |
+     pam_validate_has_connections_available_for_connector | Validate has connections available for connector.           |
+     pam_watch_session                                    | Watch session.                                              |
+     pam_create_connector                                 | Create connector.                                           |
+     pam_delete_connector                                 | Delete connector.                                           |
+     pam_get_install_file                                 | Get install file.                                           |
+     pam_migrate_resources                                | Migrate resources.                                          |
+     pam_update_connector                                 | Update connector.                                           |
+     pam_update_backup_key                                | Update backup key.                                          |
     ## Software Events
 
      Event                     | Description                                                                                                                          |
@@ -1751,6 +1871,10 @@ info:
      asset_management_asset_create 					    | Asset Management asset created. 										   |
      asset_management_asset_update            				| Asset Management asset updated.                             			   |
      asset_management_asset_delete                    		| Asset Management asset deleted.                                          |
+     asset_acknowledgement_requested                   		| Asset acknowledgement requested.                                         |
+     asset_acknowledgement_acknowledged                 		| Asset acknowledgement completed.                                         |
+     asset_acknowledgement_denied                        		| Asset acknowledgement denied.                                            |
+     asset_acknowledgement_reset                         		| Asset acknowledgement reset.                                             |
 
     ## Genai Events
 
@@ -2504,6 +2628,7 @@ components:
               - object_storage
               - password_manager
               - password_vault
+              - pam
               - radius
               - reports
               - saas_app_management
