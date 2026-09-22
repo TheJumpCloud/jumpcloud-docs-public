@@ -4067,6 +4067,16 @@ operations:
     legacy_operation_id: ADETokens_ListADETokenOrgNames
     standardized_operation_id: getApiV2ApplemdmsAdeTokenOrgNames
   - method: get
+    host_root_path: /api/v2/applemdms/abm_devices
+    base_path: /api/v2
+    legacy_operation_id: ABMDevices_ListABMDevices
+    standardized_operation_id: getApiV2ApplemdmsAbmDevices
+  - method: post
+    host_root_path: /api/v2/applemdms/ade_tokens/{objectId}/refresh_abm_devices
+    base_path: /api/v2
+    legacy_operation_id: ADETokens_RefreshABMDevices
+    standardized_operation_id: postApiV2ApplemdmsAdeTokensByObjectidRefreshAbmDevices
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations

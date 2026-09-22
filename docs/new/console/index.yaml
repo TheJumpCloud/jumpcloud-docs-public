@@ -31764,11 +31764,7 @@ paths:
             type: string
             format: byte
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-        required: true
+        $ref: "#/components/requestBodies/EnrollmentProfiles_UpdateServiceDiscoveryURLBody"
       tags:
         - mdm
       security:
@@ -38868,6 +38864,169 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/api_v2.Error"
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+  /api/v2/applemdms/abm_devices:
+    get:
+      summary: List ABM Devices
+      description: |-
+        List ABM devices visible to the calling organization(s).
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/v2/applemdms/abm_devices \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: getApiV2ApplemdmsAbmDevices
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: skip
+          description: The offset into the records to return.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+        - name: limit
+          description: |-
+            The number of resources to return at once.
+            If the number of resources returned is less than `limit` there are no more resources to fetch.
+            If the number of resources returned is equal to limit there may be more resources to fetch. Increment `skip` by `limit` to get the next set of resources.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: int64
+        - name: sort
+          description: |-
+            An optional comma separated field names used to sort the collection.
+            Default sort is ascending, prefix with `-` to sort descending.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: filter
+          description: |
+            A filter to apply to the query.
+
+            	**Filter structure**: `<field>:<operator>:<value>`.
+
+            	**field** = Populate with a valid field from an endpoint response.
+
+            	**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, between, search, in.
+
+            	**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+            	**Example** `GET /api/v2/groups?filter=name:eq:Test+Group`
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+  /api/v2/applemdms/ade_tokens/{objectId}/refresh_abm_devices:
+    post:
+      summary: Refresh ABM Devices for ADE Token
+      description: |-
+        Sync Apple Business Manager devices for a single ADE server token. Uses the token's ABM sync cursor and only affects devices associated with this token.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id}/refresh_abm_devices \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}' \
+          -d '{}'
+        ```
+      operationId: postApiV2ApplemdmsAdeTokensByObjectidRefreshAbmDevices
+      responses:
+        "200":
+          description: ABM sync completed for the ADE token.
+          content:
+            application/json:
+              schema: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "412":
+          description: Precondition failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/EnrollmentProfiles_UpdateServiceDiscoveryURLBody"
       tags:
         - mdm
       security:
@@ -63798,7 +63957,7 @@ components:
           type: array
           items:
             type: string
-      description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply.
+      description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply. Required. Only fields listed in patch_mask.fields are updated (include setup_options or default_device_group_object_ids to clear them).
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
@@ -66338,6 +66497,12 @@ components:
             properties:
               encryptedServerToken:
                 type: string
+      required: true
+    EnrollmentProfiles_UpdateServiceDiscoveryURLBody:
+      content:
+        application/json:
+          schema:
+            type: object
       required: true
     Devices_EraseDeviceBody:
       content:
