@@ -44193,8 +44193,7 @@ paths:
 
         Route availability is context-dependent: MSP provider-authoring requests
         (authenticated MSP provider without organization context) require
-        SP-10009-custom-role-mtp; all other contexts require
-        na-1377-customroles-api.
+        SP-10009-custom-role-mtp. Organization contexts are always available.
 
         When MSP Custom Roles is enabled, authenticated MSP provider context may
         request the provider-authoring catalog without x-org-id.
@@ -74944,6 +74943,8 @@ components:
         - not_contains_case_sensitive_with_null
         - not_in_with_null
         - not_in_case_sensitive_with_null
+        - not_starts_with
+        - not_ends_with
       default: operation_unknown
       description: |-
         Filter operation to be applied:
@@ -74958,6 +74959,8 @@ components:
         less_than - Checks if `field` is less than static `value` (non-inclusive).  Works for numbers and datetime types.
         starts_with - Checks if `field` starts with static `value`.  Case insensitive.  Only works for string types.
         ends_with - Checks if `field` ends with static `value`.  Case insensitive.  Only works for string types.
+        not_starts_with - Checks if `field` does not start with static `value`.  Case insensitive.  Only works for string types.
+        not_ends_with - Checks if `field` does not end with static `value`.  Case insensitive.  Only works for string types.
         contains - Checks if `field` has the static `value` as its substring. Case insensitive. Only works for string types.
         not_contains - Checks if `field` does not have the static `value` as its substring. Case insensitive. Only works for string types.
         in - Checks if `field` is in the static `value` array. Works with strings (case insensitive), numbers, and datetime types.
