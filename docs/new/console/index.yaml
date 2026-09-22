@@ -23678,771 +23678,6 @@ paths:
   /api/v2/recommendations:
     x-functionalities-tags:
       - recommendations
-  /api/v2/passwordmanager:
-    delete:
-      summary: Deactivate Password Manager
-      description: This will delete the tenant in the Pwm infra
-      operationId: deleteApiV2Passwordmanager
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-  /api/v2/passwordmanager/appversions:
-    get:
-      summary: List App Versions
-      description: Returns pwm app versions list with the users count of each version.
-      operationId: getApiV2PasswordmanagerAppversions
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetAppVersionsListResponse"
-      parameters:
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/items:
-    get:
-      summary: Get Items Metadata
-      description: Returns all items metadata
-      operationId: getApiV2PasswordmanagerItems
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetMetadataResponse"
-      parameters:
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/overview:
-    get:
-      summary: Get Overview Stats
-      description: Returns pwm overview stats
-      operationId: getApiV2PasswordmanagerOverview
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.MainOverviewResponse"
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/sharedfolders:
-    get:
-      summary: Get Shared Folders
-      description: Get All Shared Folders
-      operationId: getApiV2PasswordmanagerSharedfolders
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetSharedFoldersResponse"
-      parameters:
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-    post:
-      summary: Create Shared Folder
-      description: Create Shared Folder
-      operationId: postApiV2PasswordmanagerSharedfolders
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.SharedFolder"
-      parameters:
-        - name: name
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: description
-          in: query
-          required: false
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-    delete:
-      summary: Delete Shared Folder
-      description: Deletes shared folder.
-      operationId: deleteApiV2PasswordmanagerSharedfolders
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/jumpcloud.pwm.BatchDeleteSharedFoldersRequest"
-        required: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-  /api/v2/passwordmanager/sharedfolders/{folderId}:
-    get:
-      summary: Get Shared Folder Details
-      description: Get Shared Folder details
-      operationId: getApiV2PasswordmanagerSharedfoldersByFolderid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.Folder"
-      parameters:
-        - name: folderId
-          in: path
-          required: true
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-    put:
-      summary: Update Shared Folder
-      description: Update Shared Folder
-      operationId: putApiV2PasswordmanagerSharedfoldersByFolderid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      parameters:
-        - name: folderId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: name
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: description
-          in: query
-          required: false
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-  /api/v2/passwordmanager/sharedfolders/{folderId}/groups:
-    get:
-      summary: Get Shared Folder Groups
-      description: Returns shared folder groups
-      operationId: getApiV2PasswordmanagerSharedfoldersByFolderidGroups
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetSharedFolderGroupsResponse"
-      parameters:
-        - name: folderId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}:
-    put:
-      summary: Update Shared Folder Group Access Level
-      description: Update Shared Folder group access level
-      operationId: putApiV2PasswordmanagerSharedfoldersByFolderidGroupsByGroupid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.FolderGroup"
-      parameters:
-        - name: folderId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accessLevel
-          in: query
-          required: false
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-    delete:
-      summary: Delete Shared Folder Group
-      description: Deletes shared folder group.
-      operationId: deleteApiV2PasswordmanagerSharedfoldersByFolderidGroupsByGroupid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      parameters:
-        - name: folderId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-  /api/v2/passwordmanager/sharedfolders/{folderId}/users:
-    get:
-      summary: Get Shared Folder Users
-      description: Get Shared Folder users
-      operationId: getApiV2PasswordmanagerSharedfoldersByFolderidUsers
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetSharedFolderUsersResponse"
-      parameters:
-        - name: folderId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}:
-    put:
-      summary: Update Shared Folder User Access Level
-      description: Update Shared Folder user access level
-      operationId: putApiV2PasswordmanagerSharedfoldersByFolderidUsersByUserid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      parameters:
-        - name: folderId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accessLevel
-          in: query
-          required: false
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-    delete:
-      summary: Delete Shared Folder User
-      description: Deletes shared folder user.
-      operationId: deleteApiV2PasswordmanagerSharedfoldersByFolderidUsersByUserid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      parameters:
-        - name: folderId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-  /api/v2/passwordmanager/sharedfolders/accessLevels:
-    get:
-      summary: Get Shared Folder Access Levels
-      description: Returns shared folder access levels
-      operationId: getApiV2PasswordmanagerSharedfoldersAccesslevels
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetRolesResponse"
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/users:
-    get:
-      summary: Get users
-      description: Returns all pwm users
-      operationId: getApiV2PasswordmanagerUsers
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetAllUsersResponse"
-      parameters:
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/users/{userId}:
-    get:
-      summary: Get User details
-      description: Get User details
-      operationId: getApiV2PasswordmanagerUsersByUserid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetUserDetailsByIdResponse"
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/users/{userId}/items:
-    get:
-      summary: Get User Items
-      description: Returns user items
-      operationId: getApiV2PasswordmanagerUsersByUseridItems
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetMetadataResponse"
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/users/{userId}/sharedFolders:
-    get:
-      summary: Get User Shared Folders
-      description: Get User shared folders
-      operationId: getApiV2PasswordmanagerUsersByUseridSharedfolders
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.GetSharedFoldersPerUserResponse"
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/users/reinvite:
-    post:
-      summary: Resend User Invite
-      description: This endpoint will send an email to the specified users that are still pending activation. If a user is not pending activation, an email will not be sent.
-      operationId: postApiV2PasswordmanagerUsersReinvite
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      parameters:
-        - name: userIds
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
   /api/v2/google-emm/devices/{deviceId}:
     get:
       summary: Get device
@@ -24990,599 +24225,6 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
-  /api/v2/passwordmanager/backup/keys:
-    get:
-      summary: List Cloud Backup Keys
-      description: List Cloud Backup Keys
-      operationId: getApiV2PasswordmanagerBackupKeys
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.ListBackupKeysResponse"
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-    post:
-      summary: Create Cloud Backup Keys
-      description: Create Cloud Backup Keys
-      operationId: postApiV2PasswordmanagerBackupKeys
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.BackupKey"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/jumpcloud.pwm.BackupKey"
-        required: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-  /api/v2/passwordmanager/backup/keys/{UUID}:
-    get:
-      summary: Get Cloud Backup Key
-      description: Get a Cloud Backup Key
-      operationId: getApiV2PasswordmanagerBackupKeysByUuid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.BackupKey"
-      parameters:
-        - name: UUID
-          in: path
-          required: true
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-    delete:
-      summary: Delete Cloud Backup Key
-      description: Delete a Cloud Backup Key
-      operationId: deleteApiV2PasswordmanagerBackupKeysByUuid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      parameters:
-        - name: UUID
-          in: path
-          required: true
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-    put:
-      summary: Update Cloud Backup Key
-      description: Update a Cloud Backup Key
-      operationId: putApiV2PasswordmanagerBackupKeysByUuid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.BackupKey"
-      parameters:
-        - name: UUID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: active
-          in: query
-          required: false
-          schema:
-            type: boolean
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-  /api/v2/passwordmanager/backup/restores:
-    get:
-      summary: List Cloud Backup Restore Requests
-      description: List Cloud Backup Restores
-      operationId: getApiV2PasswordmanagerBackupRestores
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.ListBackupRestoresResponse"
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/backup/restores/{UUID}:
-    put:
-      summary: Update Cloud Backup Restore Request
-      description: Update a Cloud Backup Restore
-      operationId: putApiV2PasswordmanagerBackupRestoresByUuid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.BackupRestore"
-      parameters:
-        - name: UUID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: status
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - STATUS_UNSPECIFIED
-              - REQUESTED
-              - APPROVED
-              - REJECTED
-              - CANCELLED
-              - RESTORED
-            default: STATUS_UNSPECIFIED
-        - name: encryptionKey
-          description: Backup's encryption key encrypted using the Device's publicKey
-          in: query
-          required: false
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-  /api/v2/passwordmanager/backups:
-    get:
-      summary: List Cloud Backups
-      description: List Cloud Backups
-      operationId: getApiV2PasswordmanagerBackups
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.ListBackupsResponse"
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/backups/{UUID}:
-    get:
-      summary: Get Cloud Backup
-      description: Get a Cloud Backup
-      operationId: getApiV2PasswordmanagerBackupsByUuid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.Backup"
-      parameters:
-        - name: UUID
-          in: path
-          required: true
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/devices:
-    get:
-      summary: List Devices
-      description: List Devices
-      operationId: getApiV2PasswordmanagerDevices
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.ListDevicesResponse"
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/devices/{UUID}:
-    get:
-      summary: Get Device
-      description: Get Device
-      operationId: getApiV2PasswordmanagerDevicesByUuid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.Device"
-      parameters:
-        - name: UUID
-          in: path
-          required: true
-          schema:
-            type: string
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/policy/sharedfolders:
-    get:
-      summary: Get Shared Folders Policy
-      description: Get shared folders policy
-      operationId: getApiV2PasswordmanagerPolicySharedfolders
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.FoldersPolicyResponse"
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/policy/sharedfolders/{UUID}:
-    put:
-      summary: Update Shared Folders Policy
-      description: Update shared folders policy
-      operationId: putApiV2PasswordmanagerPolicySharedfoldersByUuid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.FoldersPolicyResponse"
-      parameters:
-        - name: UUID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: shareFolders
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - UNSPECIFIED
-              - AllUsers
-              - Specific
-              - AllExcept
-            default: UNSPECIFIED
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/policy/sharedfolders/groups:
-    get:
-      summary: List Groups with Permission to Share Folders
-      description: List groups with permission to share folders
-      operationId: getApiV2PasswordmanagerPolicySharedfoldersGroups
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.ListSelectedGroupsResponse"
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/policy/sharedfolders/users:
-    get:
-      summary: List Users with Permission to Share Folders
-      description: List users with permission to share folders
-      operationId: getApiV2PasswordmanagerPolicySharedfoldersUsers
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.ListSelectedUsersResponse"
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: skip
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - name: sort
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: fields
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-        - name: filter
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
   /api/v2/office365s/{office365_id}/domains:
     get:
       summary: List all domains configured for an Office 365 instance
@@ -28226,57 +26868,6 @@ paths:
       x-scopes:
         - healthmonitoring.alerts
         - healthmonitoring.alerts.readonly
-  /api/v2/passwordmanager/company/policies:
-    get:
-      summary: Get Organization Policies
-      description: Get organization policies
-      operationId: getApiV2PasswordmanagerCompanyPolicies
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.PoliciesResponse"
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-  /api/v2/passwordmanager/company/policies/{UUID}:
-    put:
-      summary: Update Organization Policies
-      description: Update organization policies
-      operationId: putApiV2PasswordmanagerCompanyPoliciesByUuid
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.pwm.PoliciesResponse"
-      parameters:
-        - name: UUID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: disableExport
-          in: query
-          required: false
-          schema:
-            type: boolean
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
   /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode:
     post:
       summary: Lost Mode
@@ -29944,43 +28535,6 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - notifications.channels
-  /api/v2/passwordmanager/sharedfolders/{folderId}/manage:
-    post:
-      summary: Manage Shared Folder Permission
-      description: Manage shared folder members and user groups
-      operationId: postApiV2PasswordmanagerSharedfoldersByFolderidManage
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      parameters:
-        - name: folderId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                userGroups:
-                  $ref: "#/components/schemas/jumpcloud.pwm.SharedFolderPermission"
-                users:
-                  $ref: "#/components/schemas/jumpcloud.pwm.SharedFolderPermission"
-        required: true
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
   /api/v2/saved-views:
     get:
       summary: List the Items stored in SavedViews
@@ -30251,7 +28805,7 @@ paths:
       x-scopes:
         - groups
     delete:
-      summary: Batch Delete Password Policy
+      summary: Delete Password Policies
       description: Delete password policies for an organization.
       operationId: deleteApiV2Passwordpolicies
       responses:
@@ -32459,7 +31013,7 @@ paths:
         - pam
   /api/v2/privileged-access/status:
     get:
-      summary: Get Privileged Access Status
+      summary: List Privileged Access Status
       description: Get password vault status for an organization
       operationId: getApiV2PrivilegedAccessStatus
       responses:
@@ -34048,32 +32602,6 @@ paths:
       x-scopes:
         - identityrisk
         - identityrisk.readonly
-  /api/v2/password-manager:
-    get:
-      summary: Get Password Manager Organization
-      description: Get Password Manager Organization
-      operationId: getApiV2PasswordManager
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.password_manager.GetConfigResponse"
-      parameters:
-        - name: organizationObjectId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: byte
-      tags:
-        - Password Manager
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
   /api/v2/alerts/{alertObjectId}/notes:
     get:
       summary: This endpoint provides all notes for an alert.
@@ -34700,7 +33228,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/activities:
     get:
-      summary: Get Credential Activities
+      summary: List Credential Activities
       description: Get password vault credential activity details.
       operationId: getApiV2PasswordVaultCredentialsByIdActivities
       responses:
@@ -34784,7 +33312,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/history:
     get:
-      summary: Get Credential History
+      summary: List Credential History
       description: Get password vault credential history.
       operationId: getApiV2PasswordVaultCredentialsByIdHistory
       responses:
@@ -34816,7 +33344,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/mfa-code:
     get:
-      summary: Get Credential MFA Code
+      summary: List Credential MFA Code
       description: Get password vault credential MFA code.
       operationId: getApiV2PasswordVaultCredentialsByIdMfaCode
       responses:
@@ -34849,7 +33377,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/secret:
     get:
-      summary: Get Credential Secret
+      summary: List Credential Secret
       description: Get password vault credential secret.
       operationId: getApiV2PasswordVaultCredentialsByIdSecret
       responses:
@@ -34893,7 +33421,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/with-secret:
     get:
-      summary: Get Credential With Secret
+      summary: List Credential With Secret
       description: Get password vault credential metadata with secret value.
       operationId: getApiV2PasswordVaultCredentialsByIdWithSecret
       responses:
@@ -34964,7 +33492,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/excel/columns:
     get:
-      summary: Get Credential Import Excel Columns
+      summary: List Credential Import Excel Columns
       description: Returns export column dictionary for credential Excel import/export.
       operationId: getApiV2PasswordVaultCredentialsExcelColumns
       responses:
@@ -35027,7 +33555,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/dashboard-overview:
     get:
-      summary: Get Password Vault Dashboard Overview
+      summary: List Password Vault Dashboard Overview
       description: Password vault dashboard overview (tenant stats, credential widgets, most-accessed).
       operationId: getApiV2PasswordVaultDashboardOverview
       responses:
@@ -35178,7 +33706,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}/edit:
     get:
-      summary: Get Folder for Edit
+      summary: List Folder for Edit
       description: Get password vault folder for editing.
       operationId: getApiV2PasswordVaultFoldersByIdEdit
       responses:
@@ -35814,7 +34342,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/tenant-settings:
     get:
-      summary: Get Tenant Settings
+      summary: List Tenant Settings
       description: Get password vault trusted tenant settings (9 integration flags).
       operationId: getApiV2PasswordVaultTenantSettings
       responses:
@@ -35860,7 +34388,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/tenant-settings/default-permissions:
     get:
-      summary: Get Default Tenant Permissions
+      summary: List Default Tenant Permissions
       description: Get password vault default permission JSON blobs for the tenant.
       operationId: getApiV2PasswordVaultTenantSettingsDefaultPermissions
       responses:
@@ -35961,7 +34489,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/users/self:
     get:
-      summary: Get Current Tenant User
+      summary: List Current Tenant User
       description: Returns the tenant user identified by request actor metadata (user_id / eventContext).
       operationId: getApiV2PasswordVaultUsersSelf
       responses:
@@ -35981,7 +34509,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/users/self/jc-user:
     get:
-      summary: Get Current User JC-Managed Status
+      summary: List Current User JC-Managed Status
       description: Returns whether the caller (user_id actor metadata) is a JC-managed user in the password vault tenant.
       operationId: getApiV2PasswordVaultUsersSelfJcUser
       responses:
@@ -36133,7 +34661,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/activities:
     get:
-      summary: Get Website Activities
+      summary: List Website Activities
       description: Get password vault website activity audit trail.
       operationId: getApiV2PasswordVaultWebsitesByIdActivities
       responses:
@@ -36282,7 +34810,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/websites/{id}/edit:
     get:
-      summary: Get Website for Edit
+      summary: List Website for Edit
       description: Get password vault website for editing.
       operationId: getApiV2PasswordVaultWebsitesByIdEdit
       responses:
@@ -36389,7 +34917,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/parameters-extension:
     get:
-      summary: Get Website Parameters Extension
+      summary: List Website Parameters Extension
       description: Get password vault website parameters extension for autofill configuration.
       operationId: getApiV2PasswordVaultWebsitesByIdParametersExtension
       responses:
@@ -36445,7 +34973,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/excel/columns:
     get:
-      summary: Get Website Excel Columns
+      summary: List Website Excel Columns
       description: Returns export column dictionary for website Excel import/export.
       operationId: getApiV2PasswordVaultWebsitesExcelColumns
       responses:
@@ -36485,7 +35013,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/secret/v2:
     get:
-      summary: Get Credential Secret V2
+      summary: List Credential Secret V2
       description: Get password vault credential secret (V2 payload).
       operationId: getApiV2PasswordVaultCredentialsByIdSecretV2
       responses:
@@ -37029,7 +35557,7 @@ paths:
         - pam.readonly
   /api/v2/privileged-access/users/self:
     get:
-      summary: Get Current Privileged Access User
+      summary: List Current Privileged Access User
       description: "Returns the tenant user identified by request actor metadata (user_id / eventContext). Privileged Access counterpart of GetUser: the same tenant user, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team."
       operationId: getApiV2PrivilegedAccessUsersSelf
       responses:
@@ -37438,7 +35966,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/status:
     get:
-      summary: Get Password Vault Status
+      summary: List Password Vault Status
       description: Get password vault status for an organization
       operationId: getApiV2PasswordVaultStatus
       responses:
@@ -37468,7 +35996,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/privileged-access/backup-key:
     get:
-      summary: Get Jump Server Backup Key State
+      summary: List Jump Server Backup Key State
       description: "Get the Jump Server backup key state for the tenant. Returns `keyId` only: an empty `keyId` means no key has been generated yet and encrypted Jump Server backups are not being produced. The key itself and its version are returned exactly once, by GeneratePrivilegedAccessBackupKey, and are never readable afterwards. Requires the PAM Backup permission."
       operationId: getApiV2PrivilegedAccessBackupKey
       responses:
@@ -37981,7 +36509,7 @@ paths:
         - partners.readonly
   /api/v2/passwordpolicies/custombanned:
     get:
-      summary: Get Custom Banned Password Keywords
+      summary: List Custom Banned Password Keywords
       description: Get the organization custom banned password keyword list.
       operationId: getApiV2PasswordpoliciesCustombanned
       responses:
@@ -38016,13 +36544,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/jumpcloud.password.CustomBannedKeywordsResponse"
-      parameters:
-        - name: organizationObjectId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: byte
       requestBody:
         content:
           application/json:
@@ -38038,6 +36559,7 @@ paths:
         - groups
   /api/v2/privileged-access/groups/enrollment-status:
     get:
+      summary: List Privileged Access Group Enrollment Status
       description: List the product enrollment state of every group known to the vault, unfiltered. Clients join this against the JumpCloud user group catalogue to tell apart groups that are already enrolled, enrolled in the other product only, or not enrolled at all. Returns both product flags rather than filtering, so either product can consume it unchanged.
       operationId: getApiV2PrivilegedAccessGroupsEnrollmentStatus
       responses:
@@ -39034,6 +37556,32 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/password-manager:
+    get:
+      summary: List Password Manager Organization
+      description: Get Password Manager Organization
+      operationId: getApiV2PasswordManager
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.password_manager.GetConfigResponse"
+      parameters:
+        - name: organizationObjectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Manager
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -55925,651 +54473,6 @@ components:
         organizationObjectId:
           type: string
           format: byte
-    jumpcloud.pwm.App:
-      type: object
-      properties:
-        appVersion:
-          type: string
-        osId:
-          type: integer
-          format: int32
-    jumpcloud.pwm.AppFolder:
-      type: object
-      properties:
-        appVersion:
-          type: string
-        osId:
-          type: integer
-          format: int32
-    jumpcloud.pwm.AppVersion:
-      type: object
-      properties:
-        usersCount:
-          type: integer
-          format: int32
-        version:
-          type: string
-    jumpcloud.pwm.Backup:
-      type: object
-      properties:
-        backupKeyUuid:
-          type: string
-        createdAt:
-          type: string
-        encryptionKey:
-          type: string
-          title: Base64 encoded
-        formatVersion:
-          type: string
-        id:
-          type: string
-        keyHash:
-          type: string
-        totalCount:
-          type: integer
-          format: int32
-        updatedAt:
-          type: string
-        userUuid:
-          type: string
-    jumpcloud.pwm.BackupKey:
-      type: object
-      properties:
-        active:
-          type: boolean
-        companyId:
-          type: string
-          title: "TODO(gateway): what do we want to call this in the API?"
-        createdAt:
-          type: string
-        createdBy:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        publicKey:
-          type: string
-        updatedAt:
-          type: string
-    jumpcloud.pwm.BackupRestore:
-      type: object
-      properties:
-        backupUuid:
-          type: string
-        createdAt:
-          type: string
-        deviceUuid:
-          type: string
-        id:
-          type: string
-        status:
-          $ref: "#/components/schemas/jumpcloud.pwm.Status"
-        updatedAt:
-          type: string
-    jumpcloud.pwm.CloudBackupRestore:
-      type: object
-      properties:
-        approved:
-          type: integer
-          format: int32
-        requested:
-          type: integer
-          format: int32
-    jumpcloud.pwm.Device:
-      type: object
-      properties:
-        appVersion:
-          type: string
-        createdAt:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        osName:
-          type: string
-        publicKey:
-          type: string
-        updatedAt:
-          type: string
-        userUuid:
-          type: string
-    jumpcloud.pwm.Folder:
-      type: object
-      properties:
-        compromisedPasswords:
-          type: integer
-          format: int32
-        createdAt:
-          type: string
-        description:
-          type: string
-        itemsInFolder:
-          type: integer
-          format: int32
-        maxLastSync:
-          type: string
-        name:
-          type: string
-        oldPasswords:
-          type: integer
-          format: int32
-        passwordsCount:
-          type: integer
-          format: int32
-        passwordsScore:
-          type: number
-          format: double
-        reusedPasswords:
-          type: integer
-          format: int32
-        scoreUpdatedAt:
-          type: string
-        usersWithAccess:
-          type: integer
-          format: int32
-        uuid:
-          type: string
-        weakPasswords:
-          type: integer
-          format: int32
-    jumpcloud.pwm.FolderGroup:
-      type: object
-      properties:
-        accessLevelId:
-          type: string
-        accessLevelName:
-          type: string
-        description:
-          type: string
-        externalId:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        usersCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.FolderInList:
-      type: object
-      properties:
-        createdAt:
-          type: string
-        itemsInFolder:
-          type: integer
-          format: int32
-        name:
-          type: string
-        passwordsCount:
-          type: integer
-          format: int32
-        passwordsScore:
-          type: number
-          format: double
-        scoreUpdatedAt:
-          type: string
-        usersWithAccess:
-          type: integer
-          format: int32
-        uuid:
-          type: string
-    jumpcloud.pwm.FolderUser:
-      type: object
-      properties:
-        accessLevelId:
-          type: string
-        accessLevelName:
-          type: string
-        apps:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.AppFolder"
-        email:
-          type: string
-        employeeUuid:
-          type: string
-        externalId:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        source:
-          $ref: "#/components/schemas/jumpcloud.pwm.Source"
-        status:
-          type: string
-        username:
-          type: string
-    jumpcloud.pwm.FoldersPolicyResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        shareFolders:
-          $ref: "#/components/schemas/jumpcloud.pwm.ShareFolders"
-        updatedAt:
-          type: string
-        updatedBy:
-          type: string
-    jumpcloud.pwm.GetAllUsersResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.UserInfo"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.GetAppVersionsListResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.AppVersion"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.GetMetadataResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.Items"
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.ItemMetadata"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.GetRolesResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.Role"
-    jumpcloud.pwm.GetSharedFolderGroupsResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.FolderGroup"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.GetSharedFolderUsersResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.FolderUser"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.GetSharedFoldersPerUserResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.UsersFolder"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.GetSharedFoldersResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.FolderInList"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.GetUserDetailsByIdResponse:
-      type: object
-      properties:
-        apps:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.App"
-        cloudBackupRestores:
-          $ref: "#/components/schemas/jumpcloud.pwm.CloudBackupRestore"
-        compromisedPasswords:
-          type: integer
-          format: int32
-        createdAt:
-          type: string
-        email:
-          type: string
-        employeeUuid:
-          type: string
-        externalId:
-          type: string
-        groups:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.Group"
-        id:
-          type: string
-        itemsCount:
-          type: integer
-          format: int32
-        name:
-          type: string
-        oldPasswords:
-          type: integer
-          format: int32
-        passwordsCount:
-          type: integer
-          format: int32
-        passwordsScore:
-          type: number
-          format: double
-        reusedPasswords:
-          type: integer
-          format: int32
-        scoreUpdatedAt:
-          type: string
-        status:
-          type: string
-        username:
-          type: string
-        weakPasswords:
-          type: integer
-          format: int32
-    jumpcloud.pwm.Group:
-      type: object
-      properties:
-        createdAt:
-          type: string
-        displayName:
-          type: string
-        externalId:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        updatedAt:
-          type: string
-        uuid:
-          type: string
-    jumpcloud.pwm.GroupSource:
-      type: object
-      properties:
-        externalId:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-    jumpcloud.pwm.ItemMetadata:
-      type: object
-      properties:
-        dateCreated:
-          type: string
-        dateUpdated:
-          type: string
-        field1:
-          type: string
-        field2:
-          type: string
-        folderUuid:
-          type: string
-        id:
-          type: string
-        itemUuid:
-          type: string
-        nickname:
-          type: string
-        type:
-          type: integer
-          format: int32
-    jumpcloud.pwm.Items:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int32
-        type:
-          type: integer
-          format: int32
-    jumpcloud.pwm.ListBackupKeysResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.BackupKey"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.ListBackupRestoresResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.BackupRestore"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.ListBackupsResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.Backup"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.ListDevicesResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.Device"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.ListSelectedGroupsResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.SelectedGroup"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.ListSelectedUsersResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.SelectedUser"
-        totalCount:
-          type: integer
-          format: int32
-    jumpcloud.pwm.MainOverviewResponse:
-      type: object
-      properties:
-        compromisedPasswords:
-          type: integer
-          format: int32
-        devices:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.OverviewDevice"
-        enrolledGroups:
-          type: integer
-          format: int32
-        oldPasswords:
-          type: integer
-          format: int32
-        passwordsCount:
-          type: integer
-          format: int32
-        passwordsScore:
-          type: number
-          format: double
-        pendingInvites:
-          type: integer
-          format: int32
-        sharedFolders:
-          type: integer
-          format: int32
-        totalUsers:
-          type: integer
-          format: int32
-        weakPasswords:
-          type: integer
-          format: int32
-    jumpcloud.pwm.OverviewDevice:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int32
-        id:
-          type: integer
-          format: int32
-        name:
-          type: string
-    jumpcloud.pwm.Role:
-      type: object
-      properties:
-        description:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-    jumpcloud.pwm.SelectedGroup:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-    jumpcloud.pwm.SelectedUser:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        username:
-          type: string
-    jumpcloud.pwm.ShareFolders:
-      type: string
-      enum:
-        - UNSPECIFIED
-        - AllUsers
-        - Specific
-        - AllExcept
-      default: UNSPECIFIED
-    jumpcloud.pwm.Source:
-      type: object
-      properties:
-        direct:
-          type: boolean
-        groups:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.GroupSource"
-    jumpcloud.pwm.Status:
-      type: string
-      enum:
-        - STATUS_UNSPECIFIED
-        - REQUESTED
-        - APPROVED
-        - REJECTED
-        - CANCELLED
-        - RESTORED
-      default: STATUS_UNSPECIFIED
-    jumpcloud.pwm.UserInfo:
-      type: object
-      properties:
-        apps:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.App"
-        cloudBackupRestores:
-          $ref: "#/components/schemas/jumpcloud.pwm.CloudBackupRestore"
-        email:
-          type: string
-        employeeUuid:
-          type: string
-        externalId:
-          type: string
-        groups:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.Group"
-        id:
-          type: string
-        itemsCount:
-          type: integer
-          format: int32
-        name:
-          type: string
-        oldPasswords:
-          type: integer
-          format: int32
-        passwordsCount:
-          type: integer
-          format: int32
-        passwordsScore:
-          type: number
-          format: double
-        scoreUpdatedAt:
-          type: string
-        status:
-          type: string
-        username:
-          type: string
-        weakPasswords:
-          type: integer
-          format: int32
-    jumpcloud.pwm.UsersFolder:
-      type: object
-      properties:
-        accessLevelId:
-          type: string
-        accessLevelName:
-          type: string
-        createdAt:
-          type: string
-        id:
-          type: string
-        itemsInFolder:
-          type: integer
-          format: int32
-        name:
-          type: string
-        passwordsScore:
-          type: number
-          format: double
-        scoreUpdatedAt:
-          type: string
-        source:
-          $ref: "#/components/schemas/jumpcloud.pwm.Source"
-        usersWithAccess:
-          type: integer
-          format: int32
     jumpcloud.auth.PushVerification:
       type: object
       properties:
@@ -57465,13 +55368,6 @@ components:
       properties:
         scheduledJob:
           $ref: "#/components/schemas/jumpcloud.gapps.ScheduledImport"
-    jumpcloud.pwm.PoliciesResponse:
-      type: object
-      properties:
-        disableExport:
-          type: boolean
-        id:
-          type: string
     jumpcloud.apple_mdm.CommandResponse:
       type: object
     jumpcloud.apple_mdm.DisableLostMode:
@@ -59032,33 +56928,6 @@ components:
         channel:
           $ref: "#/components/schemas/jumpcloud.notifications.Channel"
       description: UpdateChannelResponse represents the response for updating a channel.
-    jumpcloud.pwm.PermissionAccess:
-      type: object
-      properties:
-        accessLevelId:
-          type: string
-        id:
-          type: string
-    jumpcloud.pwm.SharedFolder:
-      type: object
-      properties:
-        folderId:
-          type: string
-    jumpcloud.pwm.SharedFolderPermission:
-      type: object
-      properties:
-        addition:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.PermissionAccess"
-        deletion:
-          type: array
-          items:
-            type: string
-        update:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.pwm.PermissionAccess"
     jumpcloud.organization_settings.Configuration:
       type: object
       properties:
@@ -59160,13 +57029,6 @@ components:
           type: boolean
         source:
           type: string
-    jumpcloud.pwm.BatchDeleteSharedFoldersRequest:
-      type: object
-      properties:
-        folderIds:
-          type: array
-          items:
-            type: string
     jumpcloud.organization_settings.SavedViewsResponse:
       type: object
       properties:
@@ -61184,13 +59046,6 @@ components:
           type: integer
           format: int32
       description: PollRuleCondition holds a single threshold condition for a poll-based rule.
-    jumpcloud.password_manager.GetConfigResponse:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        orgPublicKey:
-          type: string
     jumpcloud.identity_risk.ListRiskEventsResponse:
       type: object
       properties:
@@ -63958,6 +61813,13 @@ components:
           items:
             type: string
       description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply. Required. Only fields listed in patch_mask.fields are updated (include setup_options or default_device_group_object_ids to clear them).
+    jumpcloud.password_manager.GetConfigResponse:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        orgPublicKey:
+          type: string
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

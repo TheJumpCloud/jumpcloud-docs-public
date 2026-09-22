@@ -2396,111 +2396,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: featureTrials_getFeatureTrials
     standardized_operation_id: getApiV2FeaturetrialsByFeatureCode
-  - method: delete
-    host_root_path: /api/v2/passwordmanager
-    base_path: /api/v2
-    legacy_operation_id: CompanyService_DeleteCompany
-    standardized_operation_id: deleteApiV2Passwordmanager
-  - method: get
-    host_root_path: /api/v2/passwordmanager/appversions
-    base_path: /api/v2
-    legacy_operation_id: OverviewService_GetAppVersionsList
-    standardized_operation_id: getApiV2PasswordmanagerAppversions
-  - method: get
-    host_root_path: /api/v2/passwordmanager/items
-    base_path: /api/v2
-    legacy_operation_id: ItemMetadataService_GetMetadata
-    standardized_operation_id: getApiV2PasswordmanagerItems
-  - method: get
-    host_root_path: /api/v2/passwordmanager/overview
-    base_path: /api/v2
-    legacy_operation_id: OverviewService_MainOverview
-    standardized_operation_id: getApiV2PasswordmanagerOverview
-  - method: get
-    host_root_path: /api/v2/passwordmanager/sharedfolders
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_GetSharedFolders
-    standardized_operation_id: getApiV2PasswordmanagerSharedfolders
-  - method: post
-    host_root_path: /api/v2/passwordmanager/sharedfolders
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_CreateSharedFolder
-    standardized_operation_id: postApiV2PasswordmanagerSharedfolders
-  - method: delete
-    host_root_path: /api/v2/passwordmanager/sharedfolders
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_BatchDeleteSharedFolders
-    standardized_operation_id: deleteApiV2PasswordmanagerSharedfolders
-  - method: get
-    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_GetSharedFolder
-    standardized_operation_id: getApiV2PasswordmanagerSharedfoldersByFolderid
-  - method: put
-    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_UpdateSharedFolder
-    standardized_operation_id: putApiV2PasswordmanagerSharedfoldersByFolderid
-  - method: get
-    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/groups
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_GetSharedFolderGroups
-    standardized_operation_id: getApiV2PasswordmanagerSharedfoldersByFolderidGroups
-  - method: put
-    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_UpdateGroupPermission
-    standardized_operation_id: putApiV2PasswordmanagerSharedfoldersByFolderidGroupsByGroupid
-  - method: delete
-    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_RevokeGroupAccess
-    standardized_operation_id: deleteApiV2PasswordmanagerSharedfoldersByFolderidGroupsByGroupid
-  - method: get
-    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/users
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_GetSharedFolderUsers
-    standardized_operation_id: getApiV2PasswordmanagerSharedfoldersByFolderidUsers
-  - method: put
-    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_UpdateUserPermission
-    standardized_operation_id: putApiV2PasswordmanagerSharedfoldersByFolderidUsersByUserid
-  - method: delete
-    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_RevokeUserAccess
-    standardized_operation_id: deleteApiV2PasswordmanagerSharedfoldersByFolderidUsersByUserid
-  - method: get
-    host_root_path: /api/v2/passwordmanager/sharedfolders/accessLevels
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_GetRoles
-    standardized_operation_id: getApiV2PasswordmanagerSharedfoldersAccesslevels
-  - method: get
-    host_root_path: /api/v2/passwordmanager/users
-    base_path: /api/v2
-    legacy_operation_id: UserService_GetAllUsers
-    standardized_operation_id: getApiV2PasswordmanagerUsers
-  - method: get
-    host_root_path: /api/v2/passwordmanager/users/{userId}
-    base_path: /api/v2
-    legacy_operation_id: UserService_GetUserDetailsById
-    standardized_operation_id: getApiV2PasswordmanagerUsersByUserid
-  - method: get
-    host_root_path: /api/v2/passwordmanager/users/{userId}/items
-    base_path: /api/v2
-    legacy_operation_id: ItemMetadataService_GetMetadataPerUser
-    standardized_operation_id: getApiV2PasswordmanagerUsersByUseridItems
-  - method: get
-    host_root_path: /api/v2/passwordmanager/users/{userId}/sharedFolders
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_GetSharedFoldersPerUser
-    standardized_operation_id: getApiV2PasswordmanagerUsersByUseridSharedfolders
-  - method: post
-    host_root_path: /api/v2/passwordmanager/users/reinvite
-    base_path: /api/v2
-    legacy_operation_id: UserService_ResendUserInvite
-    standardized_operation_id: postApiV2PasswordmanagerUsersReinvite
   - method: get
     host_root_path: /api/v2/google-emm/devices/{deviceId}
     base_path: /api/v2
@@ -2566,81 +2461,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: Devices_EraseDevice
     standardized_operation_id: postApiV2GoogleEmmDevicesByDeviceidEraseDevice
-  - method: get
-    host_root_path: /api/v2/passwordmanager/backup/keys
-    base_path: /api/v2
-    legacy_operation_id: BackupKeyService_ListBackupKeys
-    standardized_operation_id: getApiV2PasswordmanagerBackupKeys
-  - method: post
-    host_root_path: /api/v2/passwordmanager/backup/keys
-    base_path: /api/v2
-    legacy_operation_id: BackupKeyService_CreateBackupKey
-    standardized_operation_id: postApiV2PasswordmanagerBackupKeys
-  - method: get
-    host_root_path: /api/v2/passwordmanager/backup/keys/{UUID}
-    base_path: /api/v2
-    legacy_operation_id: BackupKeyService_GetBackupKey
-    standardized_operation_id: getApiV2PasswordmanagerBackupKeysByUuid
-  - method: put
-    host_root_path: /api/v2/passwordmanager/backup/keys/{UUID}
-    base_path: /api/v2
-    legacy_operation_id: BackupKeyService_UpdateBackupKey
-    standardized_operation_id: putApiV2PasswordmanagerBackupKeysByUuid
-  - method: delete
-    host_root_path: /api/v2/passwordmanager/backup/keys/{UUID}
-    base_path: /api/v2
-    legacy_operation_id: BackupKeyService_DeleteBackupKey
-    standardized_operation_id: deleteApiV2PasswordmanagerBackupKeysByUuid
-  - method: get
-    host_root_path: /api/v2/passwordmanager/backup/restores
-    base_path: /api/v2
-    legacy_operation_id: BackupRestoreService_ListBackupRestores
-    standardized_operation_id: getApiV2PasswordmanagerBackupRestores
-  - method: put
-    host_root_path: /api/v2/passwordmanager/backup/restores/{UUID}
-    base_path: /api/v2
-    legacy_operation_id: BackupRestoreService_UpdateBackupRestore
-    standardized_operation_id: putApiV2PasswordmanagerBackupRestoresByUuid
-  - method: get
-    host_root_path: /api/v2/passwordmanager/backups
-    base_path: /api/v2
-    legacy_operation_id: BackupService_ListBackups
-    standardized_operation_id: getApiV2PasswordmanagerBackups
-  - method: get
-    host_root_path: /api/v2/passwordmanager/backups/{UUID}
-    base_path: /api/v2
-    legacy_operation_id: BackupService_GetBackup
-    standardized_operation_id: getApiV2PasswordmanagerBackupsByUuid
-  - method: get
-    host_root_path: /api/v2/passwordmanager/devices
-    base_path: /api/v2
-    legacy_operation_id: DeviceService_ListDevices
-    standardized_operation_id: getApiV2PasswordmanagerDevices
-  - method: get
-    host_root_path: /api/v2/passwordmanager/devices/{UUID}
-    base_path: /api/v2
-    legacy_operation_id: DeviceService_GetDevice
-    standardized_operation_id: getApiV2PasswordmanagerDevicesByUuid
-  - method: get
-    host_root_path: /api/v2/passwordmanager/policy/sharedfolders
-    base_path: /api/v2
-    legacy_operation_id: FoldersPolicyService_GetFoldersPolicy
-    standardized_operation_id: getApiV2PasswordmanagerPolicySharedfolders
-  - method: put
-    host_root_path: /api/v2/passwordmanager/policy/sharedfolders/{UUID}
-    base_path: /api/v2
-    legacy_operation_id: FoldersPolicyService_UpdateFoldersPolicy
-    standardized_operation_id: putApiV2PasswordmanagerPolicySharedfoldersByUuid
-  - method: get
-    host_root_path: /api/v2/passwordmanager/policy/sharedfolders/groups
-    base_path: /api/v2
-    legacy_operation_id: FoldersPolicyService_ListSelectedGroups
-    standardized_operation_id: getApiV2PasswordmanagerPolicySharedfoldersGroups
-  - method: get
-    host_root_path: /api/v2/passwordmanager/policy/sharedfolders/users
-    base_path: /api/v2
-    legacy_operation_id: FoldersPolicyService_ListSelectedUsers
-    standardized_operation_id: getApiV2PasswordmanagerPolicySharedfoldersUsers
   - method: get
     host_root_path: /api/v2/office365s/{office365_id}/domains
     base_path: /api/v2
@@ -2881,16 +2701,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: AlertsService_GetAlertStats
     standardized_operation_id: getApiV2AlertsStats
-  - method: get
-    host_root_path: /api/v2/passwordmanager/company/policies
-    base_path: /api/v2
-    legacy_operation_id: CompanyService_GetPolicies
-    standardized_operation_id: getApiV2PasswordmanagerCompanyPolicies
-  - method: put
-    host_root_path: /api/v2/passwordmanager/company/policies/{UUID}
-    base_path: /api/v2
-    legacy_operation_id: CompanyService_UpdatePolicies
-    standardized_operation_id: putApiV2PasswordmanagerCompanyPoliciesByUuid
   - method: post
     host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lostmode
     base_path: /api/v2
@@ -3026,11 +2836,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: NotificationsChannelsService_DeleteChannel
     standardized_operation_id: deleteApiV2NotificationsChannelsById
-  - method: post
-    host_root_path: /api/v2/passwordmanager/sharedfolders/{folderId}/manage
-    base_path: /api/v2
-    legacy_operation_id: SharedFolderService_ManageSharedFolderPermission
-    standardized_operation_id: postApiV2PasswordmanagerSharedfoldersByFolderidManage
   - method: get
     host_root_path: /api/v2/saved-views
     base_path: /api/v2
@@ -3441,11 +3246,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: RiskStatsService_GetStats
     standardized_operation_id: getApiV2IdentityriskStats
-  - method: get
-    host_root_path: /api/v2/password-manager
-    base_path: /api/v2
-    legacy_operation_id: Config_Get
-    standardized_operation_id: getApiV2PasswordManager
   - method: get
     host_root_path: /api/v2/alerts/{alertObjectId}/notes
     base_path: /api/v2
@@ -4076,6 +3876,11 @@ operations:
     base_path: /api/v2
     legacy_operation_id: ADETokens_RefreshABMDevices
     standardized_operation_id: postApiV2ApplemdmsAdeTokensByObjectidRefreshAbmDevices
+  - method: get
+    host_root_path: /api/v2/password-manager
+    base_path: /api/v2
+    legacy_operation_id: Config_Get
+    standardized_operation_id: getApiV2PasswordManager
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
