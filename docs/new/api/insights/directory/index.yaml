@@ -1813,6 +1813,7 @@ info:
      saas_management_application_update                    | SaaS Management application updated.                                     |
      saas_management_application_access_restriction_update | SaaS Management application access restriction configuration is updated. |
      saas_management_application_license_update            | SaaS Management application license updated.                             |
+     saas_management_application_license_delete            | SaaS Management application license deleted.                             |
      saas_management_application_delete                    | SaaS Management application deleted.                                     |
      saas_management_connector_create                      | SaaS Management connector created.                                       |
      saas_management_connector_update                      | SaaS Management connector updated.                                       |
@@ -2638,6 +2639,7 @@ components:
               - access_management
               - asset_management
               - workflows
+              - access_certification
               - genai
               - aigw
               - ai_admin
