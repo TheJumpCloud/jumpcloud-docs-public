@@ -1566,6 +1566,16 @@ paths:
       description: |-
         This endpoint allows you to create a new command.
 
+        In an OU provider context with enterprise command sharing enabled, create
+        has two outcomes. `commandTarget: enterprise` (Enterprise Admin in Enterprise
+        or View All context) stores the canonical command in the primary organization
+        with `managedBy=enterprise` and grants every current child org. `commandTarget:
+        organization` with `targetOrganizationId` creates a local command in that org
+        (`managedBy=organization`, no grants). A pinned child `x-org-id` always creates
+        a local command. Org Admin cannot create Enterprise commands (403). Child-console
+        create is unchanged. Partial Directory grant failures are returned as
+        `grantPropagationErrors` on the response.
+
         NOTE: the system property in the command is not used. Use a POST to /api/v2/commands/{id}/associations to bind a command to a system.
 
         #### Sample Request
@@ -1605,7 +1615,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"command":"string","commandRunners":["string"],"commandType":"linux","files":["string"],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","sudo":true,"systems":["string"],"template":"string","timeout":"string","trigger":"string","user":"string","shell":"string","timeToLiveSeconds":0,"scheduleYear":0,"filesS3":[{"objectStorageId":"string","name":"string","destination":"string","sha256":"string"}],"description":"string","aiGenerated":true,"templatingRequired":true}'
+              --data '{"command":"string","commandRunners":["string"],"commandTarget":"enterprise","targetOrganizationId":"string","commandType":"linux","files":["string"],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","sudo":true,"systems":["string"],"template":"string","timeout":"string","trigger":"string","user":"string","shell":"string","timeToLiveSeconds":0,"scheduleYear":0,"filesS3":[{"objectStorageId":"string","name":"string","destination":"string","sha256":"string"}],"description":"string","aiGenerated":true,"templatingRequired":true,"managedBy":"enterprise"}'
         - lang: Python
           source: |-
             import requests
@@ -1615,6 +1625,8 @@ paths:
             payload = {
                 "command": "string",
                 "commandRunners": ["string"],
+                "commandTarget": "enterprise",
+                "targetOrganizationId": "string",
                 "commandType": "linux",
                 "files": ["string"],
                 "launchType": "string",
@@ -1642,7 +1654,8 @@ paths:
                 ],
                 "description": "string",
                 "aiGenerated": True,
-                "templatingRequired": True
+                "templatingRequired": True,
+                "managedBy": "enterprise"
             }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -1659,7 +1672,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandRunners":["string"],"commandType":"linux","files":["string"],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","sudo":true,"systems":["string"],"template":"string","timeout":"string","trigger":"string","user":"string","shell":"string","timeToLiveSeconds":0,"scheduleYear":0,"filesS3":[{"objectStorageId":"string","name":"string","destination":"string","sha256":"string"}],"description":"string","aiGenerated":true,"templatingRequired":true}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandRunners":["string"],"commandTarget":"enterprise","targetOrganizationId":"string","commandType":"linux","files":["string"],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","sudo":true,"systems":["string"],"template":"string","timeout":"string","trigger":"string","user":"string","shell":"string","timeToLiveSeconds":0,"scheduleYear":0,"filesS3":[{"objectStorageId":"string","name":"string","destination":"string","sha256":"string"}],"description":"string","aiGenerated":true,"templatingRequired":true,"managedBy":"enterprise"}'
   /commands/{id}:
     delete:
       description: |-
@@ -1822,7 +1835,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"command":"string","commandRunners":["string"],"commandType":"linux","files":["string"],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","sudo":true,"systems":["string"],"template":"string","timeout":"string","trigger":"string","user":"string","shell":"string","timeToLiveSeconds":0,"scheduleYear":0,"filesS3":[{"objectStorageId":"string","name":"string","destination":"string","sha256":"string"}],"description":"string","aiGenerated":true,"templatingRequired":true}'
+              --data '{"command":"string","commandRunners":["string"],"commandTarget":"enterprise","targetOrganizationId":"string","commandType":"linux","files":["string"],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","sudo":true,"systems":["string"],"template":"string","timeout":"string","trigger":"string","user":"string","shell":"string","timeToLiveSeconds":0,"scheduleYear":0,"filesS3":[{"objectStorageId":"string","name":"string","destination":"string","sha256":"string"}],"description":"string","aiGenerated":true,"templatingRequired":true,"managedBy":"enterprise"}'
         - lang: Python
           source: |-
             import requests
@@ -1832,6 +1845,8 @@ paths:
             payload = {
                 "command": "string",
                 "commandRunners": ["string"],
+                "commandTarget": "enterprise",
+                "targetOrganizationId": "string",
                 "commandType": "linux",
                 "files": ["string"],
                 "launchType": "string",
@@ -1859,7 +1874,8 @@ paths:
                 ],
                 "description": "string",
                 "aiGenerated": True,
-                "templatingRequired": True
+                "templatingRequired": True,
+                "managedBy": "enterprise"
             }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -1876,7 +1892,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandRunners":["string"],"commandType":"linux","files":["string"],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","sudo":true,"systems":["string"],"template":"string","timeout":"string","trigger":"string","user":"string","shell":"string","timeToLiveSeconds":0,"scheduleYear":0,"filesS3":[{"objectStorageId":"string","name":"string","destination":"string","sha256":"string"}],"description":"string","aiGenerated":true,"templatingRequired":true}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/commands/{id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"command":"string","commandRunners":["string"],"commandTarget":"enterprise","targetOrganizationId":"string","commandType":"linux","files":["string"],"launchType":"string","listensTo":"string","name":"string","organization":"string","schedule":"string","scheduleRepeatType":"string","sudo":true,"systems":["string"],"template":"string","timeout":"string","trigger":"string","user":"string","shell":"string","timeToLiveSeconds":0,"scheduleYear":0,"filesS3":[{"objectStorageId":"string","name":"string","destination":"string","sha256":"string"}],"description":"string","aiGenerated":true,"templatingRequired":true,"managedBy":"enterprise"}'
   /files/command/{id}:
     get:
       description: |-
@@ -7064,6 +7080,22 @@ components:
           type: array
           items:
             type: string
+        commandTarget:
+          description: |
+            EP create target when enterprise command sharing is enabled. `enterprise`
+            creates a default-shared Enterprise command (grants all current child orgs).
+            `organization` creates a local command in `targetOrganizationId` (or the
+            pinned org). Ignored when sharing is disabled.
+          type: string
+          enum:
+            - enterprise
+            - organization
+        targetOrganizationId:
+          description: |
+            Child organization ID for a local command when `commandTarget` is
+            `organization` in Enterprise / View All context. Ignored for Enterprise
+            create and when sharing is disabled.
+          type: string
         commandType:
           default: linux
           description: The Command OS
@@ -7134,6 +7166,12 @@ components:
         templatingRequired:
           description: Whether this command requires templating before execution.
           type: boolean
+        managedBy:
+          description: Command owner type (`enterprise` or `organization`).
+          type: string
+          enum:
+            - enterprise
+            - organization
       required:
         - command
         - commandType
@@ -7177,6 +7215,15 @@ components:
           type: string
         organization:
           description: The ID of the organization.
+          type: string
+        managedBy:
+          description: Command owner type stamped at dispatch (`enterprise` or `organization`).
+          type: string
+          enum:
+            - enterprise
+            - organization
+        managedByLabel:
+          description: Display label for Managed By (`Enterprise` or the device organization name).
           type: string
         requestTime:
           description: The time that the command was sent.
@@ -7247,6 +7294,18 @@ components:
               name:
                 type: string
                 description: The name of the command.
+              organization:
+                type: string
+                description: Device organization ID for the command result.
+              managedBy:
+                type: string
+                description: Command owner type stamped at dispatch (`enterprise` or `organization`).
+                enum:
+                  - enterprise
+                  - organization
+              managedByLabel:
+                type: string
+                description: Display label for Managed By (`Enterprise` or the device organization name).
               requestTime:
                 description: The time (UTC) that the command was sent.
                 format: date-time
@@ -7335,6 +7394,12 @@ components:
               templatingRequired:
                 description: Whether this command requires templating before execution.
                 type: boolean
+              managedBy:
+                description: Command owner type (`enterprise` or `organization`).
+                type: string
+                enum:
+                  - enterprise
+                  - organization
             type: object
           type: array
         totalCount:
