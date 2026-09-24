@@ -23752,7 +23752,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/passwordmanager/items:
     get:
-      summary: Get Items Metadata
+      summary: List Items Metadata
       description: Returns all items metadata
       operationId: getApiV2PasswordmanagerItems
       responses:
@@ -23806,7 +23806,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/passwordmanager/overview:
     get:
-      summary: Get Overview Stats
+      summary: List Overview Stats
       description: Returns pwm overview stats
       operationId: getApiV2PasswordmanagerOverview
       responses:
@@ -23826,7 +23826,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/passwordmanager/sharedfolders:
     get:
-      summary: Get Shared Folders
+      summary: List Shared Folders
       description: Get All Shared Folders
       operationId: getApiV2PasswordmanagerSharedfolders
       responses:
@@ -23986,7 +23986,7 @@ paths:
         - passwordmanager
   /api/v2/passwordmanager/sharedfolders/{folderId}/groups:
     get:
-      summary: Get Shared Folder Groups
+      summary: List Shared Folder Groups
       description: Returns shared folder groups
       operationId: getApiV2PasswordmanagerSharedfoldersByFolderidGroups
       responses:
@@ -24101,7 +24101,7 @@ paths:
         - passwordmanager
   /api/v2/passwordmanager/sharedfolders/{folderId}/users:
     get:
-      summary: Get Shared Folder Users
+      summary: List Shared Folder Users
       description: Get Shared Folder users
       operationId: getApiV2PasswordmanagerSharedfoldersByFolderidUsers
       responses:
@@ -24217,7 +24217,7 @@ paths:
         - passwordmanager
   /api/v2/passwordmanager/sharedfolders/accessLevels:
     get:
-      summary: Get Shared Folder Access Levels
+      summary: List Shared Folder Access Levels
       description: Returns shared folder access levels
       operationId: getApiV2PasswordmanagerSharedfoldersAccesslevels
       responses:
@@ -24237,7 +24237,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/passwordmanager/users:
     get:
-      summary: Get users
+      summary: List Users
       description: Returns all pwm users
       operationId: getApiV2PasswordmanagerUsers
       responses:
@@ -24291,7 +24291,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/passwordmanager/users/{userId}:
     get:
-      summary: Get User details
+      summary: Get User Details
       description: Get User details
       operationId: getApiV2PasswordmanagerUsersByUserid
       responses:
@@ -24317,7 +24317,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/passwordmanager/users/{userId}/items:
     get:
-      summary: Get User Items
+      summary: List User Items
       description: Returns user items
       operationId: getApiV2PasswordmanagerUsersByUseridItems
       responses:
@@ -24376,7 +24376,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/passwordmanager/users/{userId}/sharedFolders:
     get:
-      summary: Get User Shared Folders
+      summary: List User Shared Folders
       description: Get User shared folders
       operationId: getApiV2PasswordmanagerUsersByUseridSharedfolders
       responses:
@@ -25426,7 +25426,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/passwordmanager/policy/sharedfolders:
     get:
-      summary: Get Shared Folders Policy
+      summary: List Shared Folders Policy
       description: Get shared folders policy
       operationId: getApiV2PasswordmanagerPolicySharedfolders
       responses:
@@ -28238,7 +28238,7 @@ paths:
         - healthmonitoring.alerts.readonly
   /api/v2/passwordmanager/company/policies:
     get:
-      summary: Get Organization Policies
+      summary: List Organization Policies
       description: Get organization policies
       operationId: getApiV2PasswordmanagerCompanyPolicies
       responses:
@@ -30261,7 +30261,7 @@ paths:
       x-scopes:
         - groups
     delete:
-      summary: Batch Delete Password Policy
+      summary: Delete Password Policies
       description: Delete password policies for an organization.
       operationId: deleteApiV2Passwordpolicies
       responses:
@@ -34060,7 +34060,7 @@ paths:
         - identityrisk.readonly
   /api/v2/password-manager:
     get:
-      summary: Get Password Manager Organization
+      summary: List Password Manager Organization
       description: Get Password Manager Organization
       operationId: getApiV2PasswordManager
       responses:
@@ -37991,7 +37991,7 @@ paths:
         - partners.readonly
   /api/v2/passwordpolicies/custombanned:
     get:
-      summary: Get Custom Banned Password Keywords
+      summary: List Custom Banned Password Keywords
       description: Get the organization custom banned password keyword list.
       operationId: getApiV2PasswordpoliciesCustombanned
       responses:
@@ -38026,13 +38026,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/jumpcloud.password.CustomBannedKeywordsResponse"
-      parameters:
-        - name: organizationObjectId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: byte
       requestBody:
         content:
           application/json:
@@ -38046,6 +38039,41 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - groups
+  /api/v2/privileged-access/groups/enrollment-status:
+    get:
+      summary: List Privileged Access Group Enrollment Status
+      description: List the product enrollment state of every group known to the vault, unfiltered. Clients join this against the JumpCloud user group catalogue to tell apart groups that are already enrolled, enrolled in the other product only, or not enrolled at all. Returns both product flags rather than filtering, so either product can consume it unchanged.
+      operationId: getApiV2PrivilegedAccessGroupsEnrollmentStatus
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply"
+      parameters:
+        - name: externalIds
+          description: |-
+            The JumpCloud group ids to report on — typically the page of the user group
+            catalogue the caller is rendering. Sending an empty list returns an empty
+            reply rather than every group, so a caller that fails to build the list
+            shows nothing instead of silently fetching the whole tenant.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/access-risk-settings:
     get:
       summary: Get Access Risk Settings
@@ -39010,41 +39038,6 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
-  /api/v2/privileged-access/groups/enrollment-status:
-    get:
-      summary: List Privileged Access Group Enrollment Status
-      description: List the product enrollment state of every group known to the vault, unfiltered. Clients join this against the JumpCloud user group catalogue to tell apart groups that are already enrolled, enrolled in the other product only, or not enrolled at all. Returns both product flags rather than filtering, so either product can consume it unchanged.
-      operationId: getApiV2PrivilegedAccessGroupsEnrollmentStatus
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply"
-      parameters:
-        - name: externalIds
-          description: |-
-            The JumpCloud group ids to report on — typically the page of the user group
-            catalogue the caller is rendering. Sending an empty list returns an empty
-            reply rather than every group, so a caller that fails to build the list
-            shows nothing instead of silently fetching the whole tenant.
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: byte
-      tags:
-        - Privileged Access
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -43874,6 +43867,7 @@ components:
           type: boolean
         contactEmail:
           type: string
+          format: email
         contactName:
           type: string
         disableCommandRunner:
@@ -44105,6 +44099,7 @@ components:
       properties:
         contactEmail:
           type: string
+          format: email
         contactName:
           type: string
         disableLdap:
@@ -62759,6 +62754,8 @@ components:
         id:
           type: string
           format: byte
+        jcGoSessionRecordingEnabled:
+          type: boolean
         linkedCredentialsAccessPolicies:
           type: array
           items:
@@ -62901,6 +62898,8 @@ components:
         id:
           type: string
           format: byte
+        jcGoSessionRecordingEnabled:
+          type: boolean
         name:
           type: string
         notes:
@@ -62938,6 +62937,8 @@ components:
         isFavorite:
           type: boolean
         isInUse:
+          type: boolean
+        jcGoSessionRecordingEnabled:
           type: boolean
         lastConnect:
           type: string
@@ -63866,6 +63867,33 @@ components:
         organizationObjectId:
           type: string
           format: byte
+    jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus"
+    jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus:
+      type: object
+      properties:
+        displayName:
+          type: string
+        externalId:
+          type: string
+          format: byte
+          description: |-
+            JumpCloud object id: the join key against the user group catalogue. Groups
+            with no external id are omitted from the reply, since they cannot be joined.
+        pamActivated:
+          type: boolean
+        pwmActivated:
+          type: boolean
+      description: |-
+        The minimum needed to join the vault's view of a group against the JumpCloud
+        user group catalogue. Deliberately reports both product flags instead of
+        filtering on one, so a caller can tell "enrolled in the other product" apart
+        from "not enrolled at all" — and so either product can use this unchanged.
     jumpcloud.notifications.EmailSubscription:
       type: object
       properties:
@@ -63991,33 +64019,6 @@ components:
           items:
             type: string
       description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply. Required. Only fields listed in patch_mask.fields are updated (include setup_options or default_device_group_object_ids to clear them).
-    jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus"
-    jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus:
-      type: object
-      properties:
-        displayName:
-          type: string
-        externalId:
-          type: string
-          format: byte
-          description: |-
-            JumpCloud object id: the join key against the user group catalogue. Groups
-            with no external id are omitted from the reply, since they cannot be joined.
-        pamActivated:
-          type: boolean
-        pwmActivated:
-          type: boolean
-      description: |-
-        The minimum needed to join the vault's view of a group against the JumpCloud
-        user group catalogue. Deliberately reports both product flags instead of
-        filtering on one, so a caller can tell "enrolled in the other product" apart
-        from "not enrolled at all" — and so either product can use this unchanged.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

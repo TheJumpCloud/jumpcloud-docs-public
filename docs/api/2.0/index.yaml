@@ -33254,7 +33254,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/appversions?skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /passwordmanager/items:
     get:
-      summary: Get Items Metadata
+      summary: List Items Metadata
       description: Returns all items metadata
       operationId: ItemMetadataService_GetMetadata
       responses:
@@ -33332,7 +33332,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/items?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /passwordmanager/overview:
     get:
-      summary: Get Overview Stats
+      summary: List Overview Stats
       description: Returns pwm overview stats
       operationId: OverviewService_MainOverview
       responses:
@@ -33374,7 +33374,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/overview' -Method GET -Headers $headers
   /passwordmanager/sharedfolders:
     get:
-      summary: Get Shared Folders
+      summary: List Shared Folders
       description: Get All Shared Folders
       operationId: SharedFolderService_GetSharedFolders
       responses:
@@ -33657,7 +33657,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}?name=SOME_STRING_VALUE&description=SOME_STRING_VALUE' -Method PUT -Headers $headers
   /passwordmanager/sharedfolders/{folderId}/groups:
     get:
-      summary: Get Shared Folder Groups
+      summary: List Shared Folder Groups
       description: Returns shared folder groups
       operationId: SharedFolderService_GetSharedFolderGroups
       responses:
@@ -33842,7 +33842,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/groups/{groupId}' -Method DELETE -Headers $headers
   /passwordmanager/sharedfolders/{folderId}/users:
     get:
-      summary: Get Shared Folder Users
+      summary: List Shared Folder Users
       description: Get Shared Folder users
       operationId: SharedFolderService_GetSharedFolderUsers
       responses:
@@ -34028,7 +34028,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/{folderId}/users/{userId}' -Method DELETE -Headers $headers
   /passwordmanager/sharedfolders/accessLevels:
     get:
-      summary: Get Shared Folder Access Levels
+      summary: List Shared Folder Access Levels
       description: Returns shared folder access levels
       operationId: SharedFolderService_GetRoles
       responses:
@@ -34070,7 +34070,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/sharedfolders/accessLevels' -Method GET -Headers $headers
   /passwordmanager/users:
     get:
-      summary: Get users
+      summary: List Users
       description: Returns all pwm users
       operationId: UserService_GetAllUsers
       responses:
@@ -34148,7 +34148,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/users?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /passwordmanager/users/{userId}:
     get:
-      summary: Get User details
+      summary: Get User Details
       description: Get User details
       operationId: UserService_GetUserDetailsById
       responses:
@@ -34196,7 +34196,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}' -Method GET -Headers $headers
   /passwordmanager/users/{userId}/items:
     get:
-      summary: Get User Items
+      summary: List User Items
       description: Returns user items
       operationId: ItemMetadataService_GetMetadataPerUser
       responses:
@@ -34279,7 +34279,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/users/{userId}/items?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&limit=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /passwordmanager/users/{userId}/sharedFolders:
     get:
-      summary: Get User Shared Folders
+      summary: List User Shared Folders
       description: Get User shared folders
       operationId: SharedFolderService_GetSharedFoldersPerUser
       responses:
@@ -35997,7 +35997,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordmanager/devices/{UUID}' -Method GET -Headers $headers
   /passwordmanager/policy/sharedfolders:
     get:
-      summary: Get Shared Folders Policy
+      summary: List Shared Folders Policy
       description: Get shared folders policy
       operationId: FoldersPolicyService_GetFoldersPolicy
       responses:
@@ -40218,7 +40218,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/alerts-stats?groupBy=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /passwordmanager/company/policies:
     get:
-      summary: Get Organization Policies
+      summary: List Organization Policies
       description: Get organization policies
       operationId: CompanyService_GetPolicies
       responses:
@@ -43433,7 +43433,7 @@ paths:
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
     delete:
-      summary: Batch Delete Password Policy
+      summary: Delete Password Policies
       description: Delete password policies for an organization.
       operationId: Policy_BatchDelete
       responses:
@@ -49584,7 +49584,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/identityrisk/stats?startTime=SOME_STRING_VALUE&endTime=SOME_STRING_VALUE' -Method GET -Headers $headers
   /password-manager:
     get:
-      summary: Get Password Manager Organization
+      summary: List Password Manager Organization
       description: Get Password Manager Organization
       operationId: Config_Get
       responses:
@@ -53382,7 +53382,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/password-vault/websites \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"website":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+              --data '{"website":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
         - lang: Python
           source: |-
             import requests
@@ -53412,6 +53412,7 @@ paths:
                     "credentialIds": ["string"],
                     "folderId": "string",
                     "id": "string",
+                    "jcGoSessionRecordingEnabled": True,
                     "linkedCredentialsAccessPolicies": [
                         {
                             "accessPolicies": {
@@ -53488,7 +53489,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
   /password-vault/websites/{id}:
     get:
       summary: Get Website
@@ -56717,7 +56718,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/gcep/systems/{systemObjectId}/device-state' -Method GET -Headers $headers
   /passwordpolicies/custombanned:
     get:
-      summary: Get Custom Banned Password Keywords
+      summary: List Custom Banned Password Keywords
       description: Get the organization custom banned password keyword list.
       operationId: Policy_GetCustomBannedKeywords
       responses:
@@ -56776,13 +56777,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/jumpcloud.password.CustomBannedKeywordsResponse'
-      parameters:
-        - name: organizationObjectId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: byte
       requestBody:
         content:
           application/json:
@@ -56800,7 +56794,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request PUT \
-              --url 'https://console.jumpcloud.com/api/v2/passwordpolicies/custombanned?organizationObjectId=SOME_STRING_VALUE' \
+              --url https://console.jumpcloud.com/api/v2/passwordpolicies/custombanned \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --data '{"keywords":["string"],"organizationObjectId":"string"}'
@@ -56809,8 +56803,6 @@ paths:
             import requests
 
             url = "https://console.jumpcloud.com/api/v2/passwordpolicies/custombanned"
-
-            querystring = {"organizationObjectId":"SOME_STRING_VALUE"}
 
             payload = {
                 "keywords": ["string"],
@@ -56821,7 +56813,7 @@ paths:
                 "content-type": "application/json"
             }
 
-            response = requests.request("PUT", url, json=payload, headers=headers, params=querystring)
+            response = requests.request("PUT", url, json=payload, headers=headers)
 
             print(response.text)
         - lang: Powershell
@@ -56829,7 +56821,66 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/custombanned?organizationObjectId=SOME_STRING_VALUE' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"keywords":["string"],"organizationObjectId":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/custombanned' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"keywords":["string"],"organizationObjectId":"string"}'
+  /privileged-access/groups/enrollment-status:
+    get:
+      summary: List Privileged Access Group Enrollment Status
+      description: List the product enrollment state of every group known to the vault, unfiltered. Clients join this against the JumpCloud user group catalogue to tell apart groups that are already enrolled, enrolled in the other product only, or not enrolled at all. Returns both product flags rather than filtering, so either product can consume it unchanged.
+      operationId: GroupsService_ListPrivilegedAccessGroupEnrollmentStatus
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply'
+      parameters:
+        - name: externalIds
+          description: |-
+            The JumpCloud group ids to report on — typically the page of the user group
+            catalogue the caller is rendering. Sending an empty list returns an empty
+            reply rather than every group, so a caller that fails to build the list
+            shows nothing instead of silently fetching the whole tenant.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status?externalIds=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status"
+
+            querystring = {"externalIds":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status?externalIds=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /access-risk-settings:
     get:
       summary: Get Access Risk Settings
@@ -58154,65 +58205,6 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens/{objectId}/refresh_abm_devices' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
-  /privileged-access/groups/enrollment-status:
-    get:
-      summary: List Privileged Access Group Enrollment Status
-      description: List the product enrollment state of every group known to the vault, unfiltered. Clients join this against the JumpCloud user group catalogue to tell apart groups that are already enrolled, enrolled in the other product only, or not enrolled at all. Returns both product flags rather than filtering, so either product can consume it unchanged.
-      operationId: GroupsService_ListPrivilegedAccessGroupEnrollmentStatus
-      responses:
-        '200':
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply'
-      parameters:
-        - name: externalIds
-          description: |-
-            The JumpCloud group ids to report on — typically the page of the user group
-            catalogue the caller is rendering. Sending an empty list returns an empty
-            reply rather than every group, so a caller that fails to build the list
-            shows nothing instead of silently fetching the whole tenant.
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: byte
-      tags:
-        - Privileged Access
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status?externalIds=SOME_ARRAY_VALUE' \
-              --header 'x-api-key: REPLACE_KEY_VALUE'
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status"
-
-            querystring = {"externalIds":"SOME_ARRAY_VALUE"}
-
-            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            print(response.text)
-        - lang: Powershell
-          source: |-
-            $headers=@{}
-            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/enrollment-status?externalIds=SOME_ARRAY_VALUE' -Method GET -Headers $headers
   /assets/field-configurations:
     get:
       tags:
@@ -79483,6 +79475,8 @@ components:
         id:
           type: string
           format: byte
+        jcGoSessionRecordingEnabled:
+          type: boolean
         linkedCredentialsAccessPolicies:
           type: array
           items:
@@ -79625,6 +79619,8 @@ components:
         id:
           type: string
           format: byte
+        jcGoSessionRecordingEnabled:
+          type: boolean
         name:
           type: string
         notes:
@@ -79662,6 +79658,8 @@ components:
         isFavorite:
           type: boolean
         isInUse:
+          type: boolean
+        jcGoSessionRecordingEnabled:
           type: boolean
         lastConnect:
           type: string
@@ -80590,6 +80588,33 @@ components:
         organizationObjectId:
           type: string
           format: byte
+    jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus'
+    jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus:
+      type: object
+      properties:
+        displayName:
+          type: string
+        externalId:
+          type: string
+          format: byte
+          description: |-
+            JumpCloud object id: the join key against the user group catalogue. Groups
+            with no external id are omitted from the reply, since they cannot be joined.
+        pamActivated:
+          type: boolean
+        pwmActivated:
+          type: boolean
+      description: |-
+        The minimum needed to join the vault's view of a group against the JumpCloud
+        user group catalogue. Deliberately reports both product flags instead of
+        filtering on one, so a caller can tell "enrolled in the other product" apart
+        from "not enrolled at all" — and so either product can use this unchanged.
     jumpcloud.notifications.EmailSubscription:
       type: object
       properties:
@@ -80715,33 +80740,6 @@ components:
           items:
             type: string
       description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply. Required. Only fields listed in patch_mask.fields are updated (include setup_options or default_device_group_object_ids to clear them).
-    jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus'
-    jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus:
-      type: object
-      properties:
-        displayName:
-          type: string
-        externalId:
-          type: string
-          format: byte
-          description: |-
-            JumpCloud object id: the join key against the user group catalogue. Groups
-            with no external id are omitted from the reply, since they cannot be joined.
-        pamActivated:
-          type: boolean
-        pwmActivated:
-          type: boolean
-      description: |-
-        The minimum needed to join the vault's view of a group against the JumpCloud
-        user group catalogue. Deliberately reports both product flags instead of
-        filtering on one, so a caller can tell "enrolled in the other product" apart
-        from "not enrolled at all" — and so either product can use this unchanged.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
