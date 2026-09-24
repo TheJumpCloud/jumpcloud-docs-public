@@ -32459,7 +32459,7 @@ paths:
         - pam
   /api/v2/privileged-access/status:
     get:
-      summary: Get Privileged Access Status
+      summary: List Privileged Access Status
       description: Get password vault status for an organization
       operationId: getApiV2PrivilegedAccessStatus
       responses:
@@ -34700,7 +34700,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/activities:
     get:
-      summary: Get Credential Activities
+      summary: List Credential Activities
       description: Get password vault credential activity details.
       operationId: getApiV2PasswordVaultCredentialsByIdActivities
       responses:
@@ -34784,7 +34784,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/history:
     get:
-      summary: Get Credential History
+      summary: List Credential History
       description: Get password vault credential history.
       operationId: getApiV2PasswordVaultCredentialsByIdHistory
       responses:
@@ -34816,7 +34816,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/mfa-code:
     get:
-      summary: Get Credential MFA Code
+      summary: List Credential MFA Code
       description: Get password vault credential MFA code.
       operationId: getApiV2PasswordVaultCredentialsByIdMfaCode
       responses:
@@ -34849,7 +34849,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/secret:
     get:
-      summary: Get Credential Secret
+      summary: List Credential Secret
       description: Get password vault credential secret.
       operationId: getApiV2PasswordVaultCredentialsByIdSecret
       responses:
@@ -34893,7 +34893,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/credentials/{id}/with-secret:
     get:
-      summary: Get Credential With Secret
+      summary: List Credential With Secret
       description: Get password vault credential metadata with secret value.
       operationId: getApiV2PasswordVaultCredentialsByIdWithSecret
       responses:
@@ -34964,7 +34964,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/excel/columns:
     get:
-      summary: Get Credential Import Excel Columns
+      summary: List Credential Import Excel Columns
       description: Returns export column dictionary for credential Excel import/export.
       operationId: getApiV2PasswordVaultCredentialsExcelColumns
       responses:
@@ -35027,7 +35027,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/dashboard-overview:
     get:
-      summary: Get Password Vault Dashboard Overview
+      summary: List Password Vault Dashboard Overview
       description: Password vault dashboard overview (tenant stats, credential widgets, most-accessed).
       operationId: getApiV2PasswordVaultDashboardOverview
       responses:
@@ -35178,7 +35178,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}/edit:
     get:
-      summary: Get Folder for Edit
+      summary: List Folder for Edit
       description: Get password vault folder for editing.
       operationId: getApiV2PasswordVaultFoldersByIdEdit
       responses:
@@ -35814,7 +35814,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/tenant-settings:
     get:
-      summary: Get Tenant Settings
+      summary: List Tenant Settings
       description: Get password vault trusted tenant settings (9 integration flags).
       operationId: getApiV2PasswordVaultTenantSettings
       responses:
@@ -35860,7 +35860,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/tenant-settings/default-permissions:
     get:
-      summary: Get Default Tenant Permissions
+      summary: List Default Tenant Permissions
       description: Get password vault default permission JSON blobs for the tenant.
       operationId: getApiV2PasswordVaultTenantSettingsDefaultPermissions
       responses:
@@ -35961,7 +35961,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/users/self:
     get:
-      summary: Get Current Tenant User
+      summary: List Current Tenant User
       description: Returns the tenant user identified by request actor metadata (user_id / eventContext).
       operationId: getApiV2PasswordVaultUsersSelf
       responses:
@@ -35981,7 +35981,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/users/self/jc-user:
     get:
-      summary: Get Current User JC-Managed Status
+      summary: List Current User JC-Managed Status
       description: Returns whether the caller (user_id actor metadata) is a JC-managed user in the password vault tenant.
       operationId: getApiV2PasswordVaultUsersSelfJcUser
       responses:
@@ -36133,7 +36133,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/activities:
     get:
-      summary: Get Website Activities
+      summary: List Website Activities
       description: Get password vault website activity audit trail.
       operationId: getApiV2PasswordVaultWebsitesByIdActivities
       responses:
@@ -36282,7 +36282,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/websites/{id}/edit:
     get:
-      summary: Get Website for Edit
+      summary: List Website for Edit
       description: Get password vault website for editing.
       operationId: getApiV2PasswordVaultWebsitesByIdEdit
       responses:
@@ -36389,7 +36389,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/{id}/parameters-extension:
     get:
-      summary: Get Website Parameters Extension
+      summary: List Website Parameters Extension
       description: Get password vault website parameters extension for autofill configuration.
       operationId: getApiV2PasswordVaultWebsitesByIdParametersExtension
       responses:
@@ -36445,7 +36445,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/websites/excel/columns:
     get:
-      summary: Get Website Excel Columns
+      summary: List Website Excel Columns
       description: Returns export column dictionary for website Excel import/export.
       operationId: getApiV2PasswordVaultWebsitesExcelColumns
       responses:
@@ -36485,7 +36485,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/credentials/{id}/secret/v2:
     get:
-      summary: Get Credential Secret V2
+      summary: List Credential Secret V2
       description: Get password vault credential secret (V2 payload).
       operationId: getApiV2PasswordVaultCredentialsByIdSecretV2
       responses:
@@ -37029,7 +37029,7 @@ paths:
         - pam.readonly
   /api/v2/privileged-access/users/self:
     get:
-      summary: Get Current Privileged Access User
+      summary: List Current Privileged Access User
       description: "Returns the tenant user identified by request actor metadata (user_id / eventContext). Privileged Access counterpart of GetUser: the same tenant user, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team."
       operationId: getApiV2PrivilegedAccessUsersSelf
       responses:
@@ -37438,7 +37438,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/status:
     get:
-      summary: Get Password Vault Status
+      summary: List Password Vault Status
       description: Get password vault status for an organization
       operationId: getApiV2PasswordVaultStatus
       responses:
@@ -37468,7 +37468,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/privileged-access/backup-key:
     get:
-      summary: Get Jump Server Backup Key State
+      summary: List Jump Server Backup Key State
       description: "Get the Jump Server backup key state for the tenant. Returns `keyId` only: an empty `keyId` means no key has been generated yet and encrypted Jump Server backups are not being produced. The key itself and its version are returned exactly once, by GeneratePrivilegedAccessBackupKey, and are never readable afterwards. Requires the PAM Backup permission."
       operationId: getApiV2PrivilegedAccessBackupKey
       responses:
@@ -38036,40 +38036,6 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - groups
-  /api/v2/privileged-access/groups/enrollment-status:
-    get:
-      description: List the product enrollment state of every group known to the vault, unfiltered. Clients join this against the JumpCloud user group catalogue to tell apart groups that are already enrolled, enrolled in the other product only, or not enrolled at all. Returns both product flags rather than filtering, so either product can consume it unchanged.
-      operationId: getApiV2PrivilegedAccessGroupsEnrollmentStatus
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply"
-      parameters:
-        - name: externalIds
-          description: |-
-            The JumpCloud group ids to report on — typically the page of the user group
-            catalogue the caller is rendering. Sending an empty list returns an empty
-            reply rather than every group, so a caller that fails to build the list
-            shows nothing instead of silently fetching the whole tenant.
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: byte
-      tags:
-        - Privileged Access
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
-        - passwordmanager.readonly
   /api/v2/access-risk-settings:
     get:
       summary: Get Access Risk Settings
@@ -39034,6 +39000,41 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/privileged-access/groups/enrollment-status:
+    get:
+      summary: List Privileged Access Group Enrollment Status
+      description: List the product enrollment state of every group known to the vault, unfiltered. Clients join this against the JumpCloud user group catalogue to tell apart groups that are already enrolled, enrolled in the other product only, or not enrolled at all. Returns both product flags rather than filtering, so either product can consume it unchanged.
+      operationId: getApiV2PrivilegedAccessGroupsEnrollmentStatus
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply"
+      parameters:
+        - name: externalIds
+          description: |-
+            The JumpCloud group ids to report on — typically the page of the user group
+            catalogue the caller is rendering. Sending an empty list returns an empty
+            reply rather than every group, so a caller that fails to build the list
+            shows nothing instead of silently fetching the whole tenant.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
   /api/v2/assets/field-configurations:
     get:
       tags:
@@ -63806,33 +63807,6 @@ components:
         organizationObjectId:
           type: string
           format: byte
-    jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus"
-    jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus:
-      type: object
-      properties:
-        displayName:
-          type: string
-        externalId:
-          type: string
-          format: byte
-          description: |-
-            JumpCloud object id: the join key against the user group catalogue. Groups
-            with no external id are omitted from the reply, since they cannot be joined.
-        pamActivated:
-          type: boolean
-        pwmActivated:
-          type: boolean
-      description: |-
-        The minimum needed to join the vault's view of a group against the JumpCloud
-        user group catalogue. Deliberately reports both product flags instead of
-        filtering on one, so a caller can tell "enrolled in the other product" apart
-        from "not enrolled at all" — and so either product can use this unchanged.
     jumpcloud.notifications.EmailSubscription:
       type: object
       properties:
@@ -63958,6 +63932,33 @@ components:
           items:
             type: string
       description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply. Required. Only fields listed in patch_mask.fields are updated (include setup_options or default_device_group_object_ids to clear them).
+    jumpcloud.privileged_access.ListPrivilegedAccessGroupEnrollmentStatusReply:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus"
+    jumpcloud.privileged_access.PrivilegedAccessGroupEnrollmentStatus:
+      type: object
+      properties:
+        displayName:
+          type: string
+        externalId:
+          type: string
+          format: byte
+          description: |-
+            JumpCloud object id: the join key against the user group catalogue. Groups
+            with no external id are omitted from the reply, since they cannot be joined.
+        pamActivated:
+          type: boolean
+        pwmActivated:
+          type: boolean
+      description: |-
+        The minimum needed to join the vault's view of a group against the JumpCloud
+        user group catalogue. Deliberately reports both product flags instead of
+        filtering on one, so a caller can tell "enrolled in the other product" apart
+        from "not enrolled at all" — and so either product can use this unchanged.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
