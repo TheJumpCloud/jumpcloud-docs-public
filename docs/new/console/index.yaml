@@ -30733,7 +30733,18 @@ paths:
   /api/v2/roles:
     get:
       summary: List all roles.
-      description: Returns a paginated list of all roles.
+      description: |-
+        Returns a paginated list of all roles.
+
+        Catalog visibility depends on authenticated organization/provider context.
+
+        Organization-scoped requests (Direct, OU, MSP customer org) return the
+        organization catalog. MSP provider-only requests return either the provider
+        management catalog or, when `purpose=assignment`, the provider assignment
+        catalog.
+
+        Route availability is context-dependent: MSP provider-only requests require
+        SP-10009-custom-role-mtp; all other contexts require na-1377-customroles-api.
       operationId: getApiV2Roles
       parameters:
         - $ref: "#/components/parameters/api_v2.trait_filter_filter"
@@ -30743,6 +30754,13 @@ paths:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
         - $ref: "#/components/parameters/trait_multiTenantRequestHeaders_x-provider-id"
         - $ref: "#/components/parameters/trait_listCount_x-total-count"
+        - name: purpose
+          in: query
+          required: false
+          description: When set to `assignment` in MSP provider context (authenticated MSP provider without organization context), returns the provider assignment catalog (system roles plus all provider-owned custom roles). Ignored for organization-scoped requests.
+          schema:
+            type: string
+            const: assignment
       responses:
         "200":
           description: Successfully retrieved roles.

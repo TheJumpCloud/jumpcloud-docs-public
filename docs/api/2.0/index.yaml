@@ -44272,7 +44272,18 @@ paths:
   /roles:
     get:
       summary: List all roles.
-      description: Returns a paginated list of all roles.
+      description: |-
+        Returns a paginated list of all roles.
+
+        Catalog visibility depends on authenticated organization/provider context.
+
+        Organization-scoped requests (Direct, OU, MSP customer org) return the
+        organization catalog. MSP provider-only requests return either the provider
+        management catalog or, when `purpose=assignment`, the provider assignment
+        catalog.
+
+        Route availability is context-dependent: MSP provider-only requests require
+        SP-10009-custom-role-mtp; all other contexts require na-1377-customroles-api.
       operationId: roles_list
       parameters:
         - $ref: '#/components/parameters/trait_filter_filter'
@@ -44282,6 +44293,13 @@ paths:
         - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-org-id'
         - $ref: '#/components/parameters/trait_multiTenantRequestHeaders_x-provider-id'
         - $ref: '#/components/parameters/trait_listCount_x-total-count'
+        - name: purpose
+          in: query
+          required: false
+          description: When set to `assignment` in MSP provider context (authenticated MSP provider without organization context), returns the provider assignment catalog (system roles plus all provider-owned custom roles). Ignored for organization-scoped requests.
+          schema:
+            type: string
+            const: assignment
       responses:
         '200':
           description: Successfully retrieved roles.
@@ -44308,7 +44326,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/roles?filter=SOME_ARRAY_VALUE&limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_ARRAY_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/roles?filter=SOME_ARRAY_VALUE&limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_ARRAY_VALUE&purpose=SOME_STRING_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
               --header 'x-provider-id: SOME_STRING_VALUE' \
@@ -44319,7 +44337,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/roles"
 
-            querystring = {"filter":"SOME_ARRAY_VALUE","limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_ARRAY_VALUE"}
+            querystring = {"filter":"SOME_ARRAY_VALUE","limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_ARRAY_VALUE","purpose":"SOME_STRING_VALUE"}
 
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -44338,7 +44356,7 @@ paths:
             $headers.Add("x-provider-id", "SOME_STRING_VALUE")
             $headers.Add("x-total-count", "SOME_INTEGER_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/roles?filter=SOME_ARRAY_VALUE&limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/roles?filter=SOME_ARRAY_VALUE&limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_ARRAY_VALUE&purpose=SOME_STRING_VALUE' -Method GET -Headers $headers
     post:
       summary: Create a new role.
       description: Creates a new role with the specified permissions.
