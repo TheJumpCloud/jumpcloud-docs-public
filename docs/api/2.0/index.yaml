@@ -72418,6 +72418,10 @@ components:
         - object
         - 'null'
       properties:
+        default:
+          type: boolean
+        domain:
+          type: string
         objectId:
           type: string
           format: byte
@@ -72425,10 +72429,6 @@ components:
           type: string
           format: byte
           description: ObjectID of the Office 365 suite.
-        domain:
-          type: string
-        default:
-          type: boolean
     o365.DomainResponse:
       type: object
       properties:
@@ -72437,13 +72437,13 @@ components:
     o365.DomainsListResponse:
       type: object
       properties:
-        totalCount:
-          type: integer
-          format: int64
         domains:
           type: array
           items:
             $ref: '#/components/schemas/o365.Domain'
+        totalCount:
+          type: integer
+          format: int64
     devices.GetSignInWithJumpCloudSettingsResponse:
       type: object
       properties:
