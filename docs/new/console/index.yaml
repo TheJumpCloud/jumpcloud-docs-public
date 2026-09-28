@@ -22483,6 +22483,7 @@ paths:
         - Authentication Policies
       x-scopes:
         - authn
+        - authn.readonly
   /api/v2/authn/policy-evaluations/options:
     post:
       summary: Get Policy Evaluations Filter Options
@@ -22534,6 +22535,7 @@ paths:
         - Authentication Policies
       x-scopes:
         - authn
+        - authn.readonly
   /api/v2/authn/policy-evaluations/details:
     post:
       summary: Get Policy Evaluations Details
@@ -22587,6 +22589,7 @@ paths:
         - Authentication Policies
       x-scopes:
         - authn
+        - authn.readonly
   /api/v2/authn/policies:
     get:
       summary: List Authentication Policies
@@ -51253,6 +51256,8 @@ components:
           type: boolean
         unsafeUninstall:
           type: boolean
+        autoUpdateNotificationsDisabled:
+          type: boolean
         installerType:
           type: string
           description: Winget installer format (e.g. "msix"); empty means the default winget installer.
@@ -57768,6 +57773,8 @@ components:
           items:
             type: string
         autoUpdate:
+          type: boolean
+        autoUpdateNotificationsDisabled:
           type: boolean
         bundleId:
           type: string
