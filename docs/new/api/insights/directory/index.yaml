@@ -29,6 +29,7 @@ info:
     + __Genai Events__: Logs activity related to genai.
     + __Aigw Events__: Logs activity related to aigw.
     + __AI Admin Events__: Logs activity related to ai-admin.
+    + __ADBridge Events__: Logs activity related to adbridge.
     + __Generic DI Events__: Logs activity related to generic di events
 
     ## Retrieving the MSP Admin API Key
@@ -144,6 +145,7 @@ info:
     + __genai__: Logs activity related to genai.
     + __aigw__: Logs activity related to aigw.
     + __ai_admin__: Logs activity related to ai-admin.
+    + __adbridge_user__: Logs activity related to adbridge user link events.
     + __generic_di__: Logs activity related to generic di events.
 
     If you specify an invalid or unknown value for "service", the system responds with the list of supported values.
@@ -1272,6 +1274,25 @@ info:
      provider      	| uuid              | 6720996c545f86b40964d6d1                                                                                                                                                                       | The org ID of the provider, if the org is a provider org.                                                                             |
      @version      	| string            | 1                                                                                                                                                                                              | The schema version for the document object.                                                                                           |
 
+    ## ADBridge Attributes
+
+     Field         	| Type              | Example                                                                                                                                                                                        | Description                                                                                                                           |
+     ----------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+     id            	| uuid              | 67dbe63e851d52dca50153b3                                                                                                                                                                       | Unique id for the event.                                                                                                              |
+     event_type    	| string            | activedirectory_user_link_create                                                                                                                                                                | Event type.                                                                                                                           |
+     timestamp     	| RFC3339 Timestamp | 2025-03-20T09:56:14.177Z                                                                                                                                                                           | Timestamp of when the event occurred (UTC).                                                                                           |
+     service       	| string            | adbridge_user                                                                                                                                                                                      | Service that the event originated from.                                                                                               |
+     organization		| keyword           | 6793762e18fe19fa27c4f658                                                                                                                                                                       | Organization that the user belongs to.                                                                                                |
+     changes       	| Nested objects    | `[{"field": "object_sid", "from": "S-1-5-21-old", "to": "S-1-5-21-new"}]`                                                                                                                       | List of changes made in the request. You cannot search on the contents of this field.                                                 |
+     resource      	| object            | `{"type": "activedirectory_user_link", "jumpcloud_user_id": "60d4d8f72c6b9226e875781a", "activedirectory_id": "5c86b7149fdce00001d38014"}`                                                                                                                 | Resource that the event originated on.                                                                    							 |
+     initiated_by  	| object            | `{"id": "60d4d8f72c6b9226e875781a", "type": "admin", "email": "exampleadmin@example.com"}`                                                                                                     | Object that describes who initiated the request.                                                                                      |
+     auth_method		| string            | session                                                                                                                                                                                        | Session == console and api-key == api-key.                                                                                            |
+     client_ip     	| string            | 10.1.2.3                                                                                                                                                                                       | IP address the request came from.                                                                                                     |
+     user_agent    	| object            | `{"patch": "4638", "os": "Mac OS X", "major": "95", "minor": "0", "build": "", "os_minor": "15", "os_major": "10", "name": "Chrome", "os_name": "Mac OS X", "device": "Other"}`                | User agent information for the browser that submitted the request.                                                                    |
+     geoip         	| object            | `{"country_code": "US", "timezone": "America/New_York", "latitude": 33.6992, "continent_code": "NA", "region_name": "Georgia", "region_code": "GA", "longitude": -84.7478}`                    | Geo IP information for the IP address that made the request.                                                                          |
+     provider      	| uuid              | 6720996c545f86b40964d6d1                                                                                                                                                                       | The org ID of the provider, if the org is a provider org.                                                                             |
+     @version      	| string            | 1                                                                                                                                                                                              | The schema version for the document object.                                                                                           |
+
     ## Generic DI Attributes
 
      Field                         | Type              | Example                                                                                                                                                                           | Description                                                                                                                           |
@@ -1904,6 +1925,14 @@ info:
      redirect_uri_create                                   | A redirect URI is created.                                               |
      redirect_uri_update                                   | A redirect URI is updated.                                               |
      redirect_uri_delete                                   | A redirect URI is deleted.                                               |
+
+    ## ADBridge Events
+
+     Event                                                 | Description                                                              |
+     ----------------------------------------------------- | ------------------------------------------------------------------------ |
+     activedirectory_user_link_create                      | AD user linkage row created with SID/GUID.                               |
+     activedirectory_user_link_update                      | AD user linkage SID/GUID updated.                                        |
+     activedirectory_user_link_delete                      | AD user linkage row removed.                                             |
 
     ## Generic DI Events
 
@@ -2643,6 +2672,7 @@ components:
               - genai
               - aigw
               - ai_admin
+              - adbridge_user
               - generic_di
         start_time:
           description: query start time, UTC in RFC3339 format
