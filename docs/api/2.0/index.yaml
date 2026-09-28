@@ -67474,6 +67474,7 @@ components:
             - userLifecycle
             - zeroTrust
             - workflows
+            - pam
     gsuite:
       properties:
         id:
