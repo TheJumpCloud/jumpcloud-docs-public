@@ -47199,9 +47199,8 @@ paths:
       parameters:
         - name: editionType
           description: |-
-            Optional edition to check for (bound from the `editionType` query param on GET /status).
-            Empty or "pwm" (default) = unchanged Password Vault semantics. "pam" = also report is_pam
-            so callers can tell a PWM-only org apart from a PAM org.
+            Deprecated: ignored by the password vault backend. Product activation is reported via
+            is_pam / is_pwm on the reply. Retained for wire compatibility (bound from `editionType`).
           in: query
           required: false
           schema:
@@ -55878,9 +55877,8 @@ paths:
       parameters:
         - name: editionType
           description: |-
-            Optional edition to check for (bound from the `editionType` query param on GET /status).
-            Empty or "pwm" (default) = unchanged Password Vault semantics. "pam" = also report is_pam
-            so callers can tell a PWM-only org apart from a PAM org.
+            Deprecated: ignored by the password vault backend. Product activation is reported via
+            is_pam / is_pwm on the reply. Retained for wire compatibility (bound from `editionType`).
           in: query
           required: false
           schema:
@@ -77289,9 +77287,10 @@ components:
           type: boolean
         isPam:
           type: boolean
-          description: |-
-            True when the tenant is a PAM-edition tenant. Only meaningful when edition_type = "pam";
-            false for the default PWM check so existing callers are unaffected.
+          description: True when the tenant has PAM activated.
+        isPwm:
+          type: boolean
+          description: True when the tenant has PWM (password vault) activated.
         jumpcloudSsoApplicationId:
           type: string
         vaultoneConsoleUrl:
@@ -79726,6 +79725,8 @@ components:
           type: boolean
         isDeleted:
           type: boolean
+        isPamActivated:
+          type: boolean
         isScim:
           type: boolean
         name:
@@ -80170,6 +80171,8 @@ components:
         isActive:
           type: boolean
         isDeleted:
+          type: boolean
+        isPamActivated:
           type: boolean
         isScim:
           type: boolean
