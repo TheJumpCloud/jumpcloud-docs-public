@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.57.5/dist/style.css"
-    integrity="sha384-Va788c5uqbNp8QGBHPx0gzDoF8TU0VhoTZ7ChD+Ja1CjhkKVoqjwalgbaoA0YDnw" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.59.0/dist/style.css"
+    integrity="sha384-cTRq1SymPR1xldTYuLtDfEu5bcyQMEfcFQGygxsYGcVJpiy+Dfgq4LesUU/tmfGj" crossorigin="anonymous">
   <link rel="stylesheet" href="../jc_docs_chrome.css">
   
 <!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
@@ -152,8 +152,8 @@
   <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.2.0/dist/js-yaml.min.js"
     integrity="sha384-hyhT0yrWXjngXhDa5wpJTU0pt/Djmlx4KtZECqqS6ZHf3ah4fWkFeW/2eWX9cX5J"
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.57.5/dist/browser/standalone.js"
-    integrity="sha384-t5h38o34qqR7GUJVk2SXZl4p7wXfwNuV04PZALl5ae4ih2PEwQtGRPLiAax9r7V8"
+  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.59.0/dist/browser/standalone.js"
+    integrity="sha384-fnn7TAyk/C4ckSgSR3v6x3mMfDRNj3PEvyzI0onzbsPOSrYxd9vU8Iq9jTCWG90/"
     crossorigin="anonymous"></script>
   <script src="../js/jc-spec-parse.js"></script>
   <script src="../js/jc-scalar-spec-prepare.js"></script>
@@ -167,6 +167,7 @@
       hideTestRequestButton: true,
       agent: { disabled: true },
       mcp: { disabled: true },
+      expandAllSchemaProperties: true,
       hiddenClients: {
         c: ['libcurl'],
         clojure: ['clj_http'],
