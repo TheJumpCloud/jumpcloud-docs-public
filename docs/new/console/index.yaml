@@ -37056,7 +37056,10 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.blocking-rules.readonly
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.readonly
+        - pam.privileged-websites.readonly
   /api/v2/privileged-access/users/self:
     get:
       summary: List Current Privileged Access User
@@ -37077,6 +37080,42 @@ paths:
       x-scopes:
         - pam
         - pam.readonly
+        - pam.privileged-websites.create
+        - pam.privileged-websites.update
+        - pam.privileged-websites.delete
+        - pam.privileged-websites.readonly
+        - pam.privileged-servers.create
+        - pam.privileged-servers.update
+        - pam.privileged-servers.delete
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.create
+        - pam.privileged-databases.update
+        - pam.privileged-databases.delete
+        - pam.privileged-databases.readonly
+        - pam.privileged-credentials.create
+        - pam.privileged-credentials.update
+        - pam.privileged-credentials.delete
+        - pam.privileged-credentials.readonly
+        - pam.resource-managers.create
+        - pam.resource-managers.update
+        - pam.resource-managers.delete
+        - pam.resource-managers.readonly
+        - pam.blocking-rules.create
+        - pam.blocking-rules.update
+        - pam.blocking-rules.delete
+        - pam.blocking-rules.readonly
+        - pam.jump-servers.create
+        - pam.jump-servers.update
+        - pam.jump-servers.delete
+        - pam.jump-servers.readonly
+        - pam.user-groups.create
+        - pam.user-groups.update
+        - pam.user-groups.delete
+        - pam.user-groups.readonly
+        - pam.overview
+        - pam.session-history
+        - pam.manage-all-privileged-resources
+        - pam.backup
   /api/v2/password-vault/credentials/{id}/managers:
     get:
       summary: List Credential Managers
@@ -37187,7 +37226,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.user-groups.readonly
   /api/v2/privileged-access/groups/{idGroup}/members:
     get:
       summary: List Privileged Access Group Members
@@ -37232,7 +37271,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.user-groups.readonly
   /api/v2/privileged-access/groups/{idGroup}/resources:
     get:
       summary: List Privileged Access Group Resources
@@ -37292,7 +37331,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.user-groups.readonly
     put:
       summary: Update Privileged Access Group Resources
       description: Assign or remove resources on a privileged access group. Privileged Access counterpart of ManageResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
@@ -37337,6 +37376,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.user-groups.update
   /api/v2/privileged-access/groups/all:
     get:
       summary: List Privileged Access Groups in Full
@@ -37372,6 +37412,14 @@ paths:
       x-scopes:
         - pam
         - pam.readonly
+        - pam.privileged-websites.readonly
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.readonly
+        - pam.privileged-credentials.readonly
+        - pam.resource-managers.readonly
+        - pam.blocking-rules.readonly
+        - pam.jump-servers.readonly
+        - pam.user-groups.readonly
   /api/v2/password-vault/websites/{id}/managers:
     get:
       summary: List Website Managers
@@ -37514,7 +37562,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.backup
     post:
       summary: Generate Jump Server Backup Key
       description: Generate or rotate the Jump Server backup key and return it once. This is the only response that ever contains the plaintext key, so the caller must surface it immediately. Rotation keeps `keyId` stable and stores a new key version; each backup file records the version it was encrypted with, so backups taken before a rotation still require their earlier key. Not idempotent. Requires the PAM Backup permission.
@@ -37539,6 +37587,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.backup
   /api/v2/privileged-access/resource-managers:
     get:
       summary: List Resource Managers
@@ -37583,7 +37632,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.resource-managers.readonly
     put:
       summary: Update Resource Manager
       description: Create or update a resource manager and sync members.
@@ -37609,6 +37658,8 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.resource-managers.create
+        - pam.resource-managers.update
   /api/v2/privileged-access/resource-managers/{resourceManagerId}:
     delete:
       summary: Delete Resource Manager
@@ -37636,6 +37687,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.resource-managers.delete
   /api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/available:
     get:
       summary: List Assignable Resource Manager Resources
@@ -37691,7 +37743,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.resource-managers.readonly
   /api/v2/privileged-access/resource-managers/{resourceManagerId}/{category}/resources:
     get:
       summary: List Resource Manager Resources
@@ -37747,7 +37799,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.resource-managers.readonly
     put:
       summary: Update Resource Manager Resources
       description: Add resources or update permissions on resources assigned to a resource manager.
@@ -37795,6 +37847,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.resource-managers.update
     delete:
       summary: Remove Resource Manager Resources
       description: Remove resources from a resource manager for a category.
@@ -37838,6 +37891,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.resource-managers.update
   /api/v2/privileged-access/resource-managers/{resourceManagerId}/members:
     get:
       summary: List Resource Manager Members
@@ -37888,7 +37942,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.resource-managers.readonly
   /api/v2/privileged-access/users:
     get:
       summary: List Privileged Access Users
@@ -37951,6 +38005,14 @@ paths:
       x-scopes:
         - pam
         - pam.readonly
+        - pam.privileged-websites.readonly
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.readonly
+        - pam.privileged-credentials.readonly
+        - pam.resource-managers.readonly
+        - pam.blocking-rules.readonly
+        - pam.jump-servers.readonly
+        - pam.user-groups.readonly
   /api/v2/gcep/systems/{systemObjectId}/device-state:
     get:
       summary: Returns GCEP device trust state from the partners sync mirror for a system.
@@ -59910,9 +59972,18 @@ components:
         description:
           type: string
           description: Description of the role and its purpose
-      required:
-        - name
-        - scopes
+        organizations:
+          type: object
+          description: Organization distribution delta for provider-owned custom roles.
+          properties:
+            add:
+              type: array
+              items:
+                type: string
+            remove:
+              type: array
+              items:
+                type: string
     jumpcloud.ingresso.ChannelEvent:
       type: object
       properties:
@@ -63354,6 +63425,9 @@ components:
         countPerResource:
           type: boolean
           description: When true, count events per resource grouping key; false = org-wide default.
+        enabled:
+          type: boolean
+          description: Master toggle for threshold-based alerting. When false or unset, the rule fires on every matching event. When true, N-in-T threshold logic applies.
         eventThresholdCount:
           type: integer
           format: int32
@@ -66979,7 +67053,43 @@ x-scopes:
   - organizations.billing
   - organizations.readonly
   - pam
+  - pam.backup
+  - pam.blocking-rules.create
+  - pam.blocking-rules.delete
+  - pam.blocking-rules.readonly
+  - pam.blocking-rules.update
+  - pam.jump-servers.create
+  - pam.jump-servers.delete
+  - pam.jump-servers.readonly
+  - pam.jump-servers.update
+  - pam.manage-all-privileged-resources
+  - pam.overview
+  - pam.privileged-credentials.create
+  - pam.privileged-credentials.delete
+  - pam.privileged-credentials.readonly
+  - pam.privileged-credentials.update
+  - pam.privileged-databases.create
+  - pam.privileged-databases.delete
+  - pam.privileged-databases.readonly
+  - pam.privileged-databases.update
+  - pam.privileged-servers.create
+  - pam.privileged-servers.delete
+  - pam.privileged-servers.readonly
+  - pam.privileged-servers.update
+  - pam.privileged-websites.create
+  - pam.privileged-websites.delete
+  - pam.privileged-websites.readonly
+  - pam.privileged-websites.update
   - pam.readonly
+  - pam.resource-managers.create
+  - pam.resource-managers.delete
+  - pam.resource-managers.readonly
+  - pam.resource-managers.update
+  - pam.session-history
+  - pam.user-groups.create
+  - pam.user-groups.delete
+  - pam.user-groups.readonly
+  - pam.user-groups.update
   - partners
   - partners.readonly
   - passwordmanager

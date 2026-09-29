@@ -39359,7 +39359,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertFrequencySettings":{"countPerResource":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertFrequencySettings":{"countPerResource":true,"enabled":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -39369,6 +39369,7 @@ paths:
             payload = {"rule": {
                     "alertFrequencySettings": {
                         "countPerResource": True,
+                        "enabled": True,
                         "eventThresholdCount": 0,
                         "monitoringWindow": {
                             "unit": "string",
@@ -39436,7 +39437,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertFrequencySettings":{"countPerResource":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertFrequencySettings":{"countPerResource":true,"enabled":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/rules/{id}:
     get:
       summary: This endpoint is used for getting a health monitoring rule.
@@ -39578,7 +39579,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"rule":{"alertFrequencySettings":{"countPerResource":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+              --data '{"rule":{"alertFrequencySettings":{"countPerResource":true,"enabled":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
         - lang: Python
           source: |-
             import requests
@@ -39588,6 +39589,7 @@ paths:
             payload = {"rule": {
                     "alertFrequencySettings": {
                         "countPerResource": True,
+                        "enabled": True,
                         "eventThresholdCount": 0,
                         "monitoringWindow": {
                             "unit": "string",
@@ -39655,7 +39657,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertFrequencySettings":{"countPerResource":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"rule":{"alertFrequencySettings":{"countPerResource":true,"enabled":true,"eventThresholdCount":0,"monitoringWindow":{"unit":"string","value":0}},"alertsEnabled":true,"category":"RULE_CATEGORY_UNSPECIFIED","conditions":[{"eventType":"string","filters":{},"objectId":"string"}],"conditionsRelation":"LOGICAL_OPERATOR_UNSPECIFIED","description":"string","detectPreExistingAnamolies":true,"eventFilters":[{"eventTypes":["string"],"filterSource":"FILTER_SOURCE_UNSPECIFIED","referenceFields":["string"],"resolutionCondition":"string","violationCondition":"string"}],"eventType":"string","excludeSuspendedUsers":true,"groupObjectIds":["string"],"labels":"RULE_LABEL_UNSPECIFIED","name":"string","notificationChannelObjectIds":["string"],"notifyOnAcknowledgement":true,"notifyOnResolution":true,"notifyOnViolation":true,"notifyPrimaryUserOfDevice":true,"osFamily":"RULE_OS_FAMILY_UNSPECIFIED","pollConditions":[{"enabled":true,"objectId":"string","thresholdValue":0}],"postExpiryEnabled":true,"ruleSubtype":"string","ruleType":"RULE_TYPE_UNSPECIFIED","scopeType":"string","selectedScopeValues":["string"],"severity":"RULE_SEVERITY_UNSPECIFIED","status":"RULE_STATUS_UNSPECIFIED","templateObjectId":"string"}}'
   /healthmonitoring/ruletemplates:
     get:
       summary: This endpoint is used for listing the rules of health monitoring.
@@ -44564,7 +44566,7 @@ paths:
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
               --header 'x-provider-id: SOME_STRING_VALUE' \
-              --data '{"name":"string","scopes":["string"],"providerId":"string","organizationIds":["string"],"description":"string"}'
+              --data '{"name":"string","scopes":["string"],"providerId":"string","organizationIds":["string"],"description":"string","organizations":{"add":["string"],"remove":["string"]}}'
         - lang: Python
           source: |-
             import requests
@@ -44576,7 +44578,11 @@ paths:
                 "scopes": ["string"],
                 "providerId": "string",
                 "organizationIds": ["string"],
-                "description": "string"
+                "description": "string",
+                "organizations": {
+                    "add": ["string"],
+                    "remove": ["string"]
+                }
             }
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -44595,7 +44601,7 @@ paths:
             $headers.Add("x-provider-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/roles/{role_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","scopes":["string"],"providerId":"string","organizationIds":["string"],"description":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/roles/{role_id}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"name":"string","scopes":["string"],"providerId":"string","organizationIds":["string"],"description":"string","organizations":{"add":["string"],"remove":["string"]}}'
     delete:
       summary: Delete a role.
       description: Deletes a role with the specified ID.
@@ -55162,7 +55168,10 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.blocking-rules.readonly
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.readonly
+        - pam.privileged-websites.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55207,6 +55216,42 @@ paths:
       x-scopes:
         - pam
         - pam.readonly
+        - pam.privileged-websites.create
+        - pam.privileged-websites.update
+        - pam.privileged-websites.delete
+        - pam.privileged-websites.readonly
+        - pam.privileged-servers.create
+        - pam.privileged-servers.update
+        - pam.privileged-servers.delete
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.create
+        - pam.privileged-databases.update
+        - pam.privileged-databases.delete
+        - pam.privileged-databases.readonly
+        - pam.privileged-credentials.create
+        - pam.privileged-credentials.update
+        - pam.privileged-credentials.delete
+        - pam.privileged-credentials.readonly
+        - pam.resource-managers.create
+        - pam.resource-managers.update
+        - pam.resource-managers.delete
+        - pam.resource-managers.readonly
+        - pam.blocking-rules.create
+        - pam.blocking-rules.update
+        - pam.blocking-rules.delete
+        - pam.blocking-rules.readonly
+        - pam.jump-servers.create
+        - pam.jump-servers.update
+        - pam.jump-servers.delete
+        - pam.jump-servers.readonly
+        - pam.user-groups.create
+        - pam.user-groups.update
+        - pam.user-groups.delete
+        - pam.user-groups.readonly
+        - pam.overview
+        - pam.session-history
+        - pam.manage-all-privileged-resources
+        - pam.backup
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55363,7 +55408,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.user-groups.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55432,7 +55477,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.user-groups.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55516,7 +55561,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.user-groups.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55585,6 +55630,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.user-groups.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55658,6 +55704,14 @@ paths:
       x-scopes:
         - pam
         - pam.readonly
+        - pam.privileged-websites.readonly
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.readonly
+        - pam.privileged-credentials.readonly
+        - pam.resource-managers.readonly
+        - pam.blocking-rules.readonly
+        - pam.jump-servers.readonly
+        - pam.user-groups.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55934,7 +55988,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.backup
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -55981,6 +56035,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.backup
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -56054,7 +56109,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.resource-managers.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -56104,6 +56159,8 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.resource-managers.create
+        - pam.resource-managers.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -56164,6 +56221,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.resource-managers.delete
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -56241,7 +56299,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.resource-managers.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -56321,7 +56379,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.resource-managers.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -56393,6 +56451,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.resource-managers.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -56468,6 +56527,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.resource-managers.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -56547,7 +56607,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.resource-managers.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -56634,6 +56694,14 @@ paths:
       x-scopes:
         - pam
         - pam.readonly
+        - pam.privileged-websites.readonly
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.readonly
+        - pam.privileged-credentials.readonly
+        - pam.resource-managers.readonly
+        - pam.blocking-rules.readonly
+        - pam.jump-servers.readonly
+        - pam.user-groups.readonly
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -76633,9 +76701,18 @@ components:
         description:
           type: string
           description: Description of the role and its purpose
-      required:
-        - name
-        - scopes
+        organizations:
+          type: object
+          description: Organization distribution delta for provider-owned custom roles.
+          properties:
+            add:
+              type: array
+              items:
+                type: string
+            remove:
+              type: array
+              items:
+                type: string
     jumpcloud.ingresso.ChannelEvent:
       type: object
       properties:
@@ -80077,6 +80154,9 @@ components:
         countPerResource:
           type: boolean
           description: When true, count events per resource grouping key; false = org-wide default.
+        enabled:
+          type: boolean
+          description: Master toggle for threshold-based alerting. When false or unset, the rule fires on every matching event. When true, N-in-T threshold logic applies.
         eventThresholdCount:
           type: integer
           format: int32
@@ -83362,7 +83442,43 @@ x-scopes:
   - organizations.billing
   - organizations.readonly
   - pam
+  - pam.backup
+  - pam.blocking-rules.create
+  - pam.blocking-rules.delete
+  - pam.blocking-rules.readonly
+  - pam.blocking-rules.update
+  - pam.jump-servers.create
+  - pam.jump-servers.delete
+  - pam.jump-servers.readonly
+  - pam.jump-servers.update
+  - pam.manage-all-privileged-resources
+  - pam.overview
+  - pam.privileged-credentials.create
+  - pam.privileged-credentials.delete
+  - pam.privileged-credentials.readonly
+  - pam.privileged-credentials.update
+  - pam.privileged-databases.create
+  - pam.privileged-databases.delete
+  - pam.privileged-databases.readonly
+  - pam.privileged-databases.update
+  - pam.privileged-servers.create
+  - pam.privileged-servers.delete
+  - pam.privileged-servers.readonly
+  - pam.privileged-servers.update
+  - pam.privileged-websites.create
+  - pam.privileged-websites.delete
+  - pam.privileged-websites.readonly
+  - pam.privileged-websites.update
   - pam.readonly
+  - pam.resource-managers.create
+  - pam.resource-managers.delete
+  - pam.resource-managers.readonly
+  - pam.resource-managers.update
+  - pam.session-history
+  - pam.user-groups.create
+  - pam.user-groups.delete
+  - pam.user-groups.readonly
+  - pam.user-groups.update
   - partners
   - partners.readonly
   - passwordmanager
