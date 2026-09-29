@@ -83059,6 +83059,8 @@ components:
 tags:
   - name: Access Requests
   - name: Access Risk Settings
+  - name: AccessCertification
+    description: Access certification campaign APIs
   - name: AccessorySync
   - name: AccountManagerCalendar
   - name: Active Directory
