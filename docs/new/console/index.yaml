@@ -35970,25 +35970,6 @@ paths:
       x-scopes:
         - passwordmanager
         - passwordmanager.readonly
-  /api/v2/password-vault/users/active-pwm-tenants:
-    get:
-      summary: List Active PWM Tenant IDs
-      description: List external tenant ids for every active PWM edition tenant.
-      operationId: getApiV2PasswordVaultUsersActivePwmTenants
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.privileged_access.ListActivePwmTenantsReply"
-      tags:
-        - Password Vault
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - passwordmanager
   /api/v2/password-vault/users/self:
     get:
       summary: List Current Tenant User
@@ -62222,6 +62203,9 @@ components:
         id:
           type: integer
           format: int32
+        isResourceManager:
+          type: boolean
+          description: Reply enrichment only — not persisted on upsert.
         name:
           type: string
         permissions:
@@ -62891,6 +62875,11 @@ components:
         id:
           type: integer
           format: int32
+        isAdmin:
+          type: boolean
+        isUser:
+          type: boolean
+          description: Reply enrichment only — not persisted on upsert.
         name:
           type: string
         permissions:
@@ -63154,13 +63143,6 @@ components:
       properties:
         columns:
           type: object
-    jumpcloud.privileged_access.ListActivePwmTenantsReply:
-      type: object
-      properties:
-        externalTenantIds:
-          type: array
-          items:
-            type: string
     jumpcloud.privileged_access.UpsertFolderRequest:
       type: object
       properties:
@@ -64121,7 +64103,7 @@ components:
           type: array
           items:
             type: string
-      description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply. Required. Only fields listed in patch_mask.fields are updated (include setup_options or default_device_group_object_ids to clear them).
+      description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply.
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong

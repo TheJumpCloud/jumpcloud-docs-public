@@ -3712,11 +3712,6 @@ operations:
     legacy_operation_id: UsersService_Find
     standardized_operation_id: getApiV2PasswordVaultUsers
   - method: get
-    host_root_path: /api/v2/password-vault/users/active-pwm-tenants
-    base_path: /api/v2
-    legacy_operation_id: UsersService_ListActivePwmTenants
-    standardized_operation_id: getApiV2PasswordVaultUsersActivePwmTenants
-  - method: get
     host_root_path: /api/v2/password-vault/users/self
     base_path: /api/v2
     legacy_operation_id: UsersService_GetUser
