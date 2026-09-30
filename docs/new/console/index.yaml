@@ -32517,6 +32517,42 @@ paths:
       x-scopes:
         - pam
         - pam.readonly
+        - pam.privileged-websites.create
+        - pam.privileged-websites.update
+        - pam.privileged-websites.delete
+        - pam.privileged-websites.readonly
+        - pam.privileged-servers.create
+        - pam.privileged-servers.update
+        - pam.privileged-servers.delete
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.create
+        - pam.privileged-databases.update
+        - pam.privileged-databases.delete
+        - pam.privileged-databases.readonly
+        - pam.privileged-credentials.create
+        - pam.privileged-credentials.update
+        - pam.privileged-credentials.delete
+        - pam.privileged-credentials.readonly
+        - pam.resource-managers.create
+        - pam.resource-managers.update
+        - pam.resource-managers.delete
+        - pam.resource-managers.readonly
+        - pam.blocking-rules.create
+        - pam.blocking-rules.update
+        - pam.blocking-rules.delete
+        - pam.blocking-rules.readonly
+        - pam.jump-servers.create
+        - pam.jump-servers.update
+        - pam.jump-servers.delete
+        - pam.jump-servers.readonly
+        - pam.user-groups.create
+        - pam.user-groups.update
+        - pam.user-groups.delete
+        - pam.user-groups.readonly
+        - pam.overview
+        - pam.session-history
+        - pam.manage-all-privileged-resources
+        - pam.backup
   /api/v2/privileged-access/tenant-settings:
     put:
       summary: Update Privileged Access Tenant Settings
@@ -35662,6 +35698,12 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
         - name: skip
           in: query
           required: false
@@ -37227,6 +37269,12 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
         - name: skip
           in: query
           required: false
@@ -63064,6 +63112,9 @@ components:
           type: boolean
         isPamActivated:
           type: boolean
+        isPwmActivated:
+          type: boolean
+          description: True when the user is enrolled for PWM (AbpUsers.PwmActivated).
         isScim:
           type: boolean
         name:
@@ -63507,6 +63558,9 @@ components:
           type: boolean
         isPamActivated:
           type: boolean
+        isPwmActivated:
+          type: boolean
+          description: True when the user is enrolled for PWM (AbpUsers.PwmActivated).
         isScim:
           type: boolean
         name:

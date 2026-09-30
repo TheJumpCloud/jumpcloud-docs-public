@@ -47219,6 +47219,42 @@ paths:
       x-scopes:
         - pam
         - pam.readonly
+        - pam.privileged-websites.create
+        - pam.privileged-websites.update
+        - pam.privileged-websites.delete
+        - pam.privileged-websites.readonly
+        - pam.privileged-servers.create
+        - pam.privileged-servers.update
+        - pam.privileged-servers.delete
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.create
+        - pam.privileged-databases.update
+        - pam.privileged-databases.delete
+        - pam.privileged-databases.readonly
+        - pam.privileged-credentials.create
+        - pam.privileged-credentials.update
+        - pam.privileged-credentials.delete
+        - pam.privileged-credentials.readonly
+        - pam.resource-managers.create
+        - pam.resource-managers.update
+        - pam.resource-managers.delete
+        - pam.resource-managers.readonly
+        - pam.blocking-rules.create
+        - pam.blocking-rules.update
+        - pam.blocking-rules.delete
+        - pam.blocking-rules.readonly
+        - pam.jump-servers.create
+        - pam.jump-servers.update
+        - pam.jump-servers.delete
+        - pam.jump-servers.readonly
+        - pam.user-groups.create
+        - pam.user-groups.update
+        - pam.user-groups.delete
+        - pam.user-groups.readonly
+        - pam.overview
+        - pam.session-history
+        - pam.manage-all-privileged-resources
+        - pam.backup
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -52642,6 +52678,12 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
         - name: skip
           in: query
           required: false
@@ -52672,7 +52714,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/password-vault/groups/{idGroup}/members?skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/password-vault/groups/{idGroup}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -52680,7 +52722,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/password-vault/groups/{idGroup}/members"
 
-            querystring = {"skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -52691,7 +52733,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/groups/{idGroup}/members?skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/groups/{idGroup}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /password-vault/groups/{idGroup}/resources:
     get:
       summary: List Group Resources
@@ -55426,6 +55468,12 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
         - name: skip
           in: query
           required: false
@@ -55456,7 +55504,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/privileged-access/groups/{idGroup}/members?skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/groups/{idGroup}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -55464,7 +55512,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/privileged-access/groups/{idGroup}/members"
 
-            querystring = {"skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
+            querystring = {"search":"SOME_STRING_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -55475,7 +55523,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/{idGroup}/members?skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/groups/{idGroup}/members?search=SOME_STRING_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE' -Method GET -Headers $headers
   /privileged-access/groups/{idGroup}/resources:
     get:
       summary: List Privileged Access Group Resources
@@ -79786,6 +79834,9 @@ components:
           type: boolean
         isPamActivated:
           type: boolean
+        isPwmActivated:
+          type: boolean
+          description: True when the user is enrolled for PWM (AbpUsers.PwmActivated).
         isScim:
           type: boolean
         name:
@@ -80229,6 +80280,9 @@ components:
           type: boolean
         isPamActivated:
           type: boolean
+        isPwmActivated:
+          type: boolean
+          description: True when the user is enrolled for PWM (AbpUsers.PwmActivated).
         isScim:
           type: boolean
         name:
