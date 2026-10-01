@@ -36,3 +36,13 @@ operations:
     base_path: /insights/directory/v1
     legacy_operation_id: directoryInsights_reportsCreate
     standardized_operation_id: postInsightsDirectoryV1ReportsByReportType
+  - method: get
+    host_root_path: /data-export/v2/events
+    base_path: /data-export
+    legacy_operation_id: getEventsPull
+    standardized_operation_id: getDataExportV2Events
+  - method: post
+    host_root_path: /data-export/v2/siem/connection-test
+    base_path: /data-export
+    legacy_operation_id: siemConnectionTest
+    standardized_operation_id: postDataExportV2SiemConnectionTest
