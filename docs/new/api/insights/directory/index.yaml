@@ -1972,17 +1972,17 @@ info:
     url: https://jumpcloud.com/support/contact-jumpcloud-support
   version: "1.0"
 servers:
-  - url: https://api.jumpcloud.com/insights/directory
+  - url: https://api.jumpcloud.com
     description: United States (US)
     x-jc-region: us
-  - url: https://api.eu.jumpcloud.com/insights/directory
+  - url: https://api.eu.jumpcloud.com
     description: European Union (EU)
     x-jc-region: eu
-  - url: https://api.in.jumpcloud.com/insights/directory
+  - url: https://api.in.jumpcloud.com
     description: India (IN)
     x-jc-region: in
 paths:
-  /v1/events:
+  /insights/directory/v1/events:
     post:
       security:
         - x-api-key: []
@@ -2035,7 +2035,7 @@ paths:
                 $ref: "#/components/schemas/ErrorMessage"
       x-scopes:
         - directoryinsights.readonly
-  /v1/events/count:
+  /insights/directory/v1/events/count:
     post:
       security:
         - x-api-key: []
@@ -2085,7 +2085,7 @@ paths:
                 $ref: "#/components/schemas/ErrorMessage"
       x-scopes:
         - directoryinsights.readonly
-  /v1/events/distinct:
+  /insights/directory/v1/events/distinct:
     post:
       security:
         - x-api-key: []
@@ -2154,7 +2154,7 @@ paths:
                 $ref: "#/components/schemas/ErrorMessage"
       x-scopes:
         - directoryinsights.readonly
-  /v1/events/interval:
+  /insights/directory/v1/events/interval:
     post:
       security:
         - x-api-key: []
@@ -2221,7 +2221,7 @@ paths:
                 $ref: "#/components/schemas/ErrorMessage"
       x-scopes:
         - directoryinsights.readonly
-  /v1/reports:
+  /insights/directory/v1/reports:
     get:
       security:
         - x-api-key: []
@@ -2339,7 +2339,7 @@ paths:
                 $ref: "#/components/schemas/ErrorMessage"
       x-scopes:
         - directoryinsights.readonly
-  /v1/reports/{report_id}/artifacts/{artifact_id}/content:
+  /insights/directory/v1/reports/{report_id}/artifacts/{artifact_id}/content:
     get:
       security:
         - x-api-key: []
@@ -2410,7 +2410,7 @@ paths:
                 $ref: "#/components/schemas/ErrorMessage"
       x-scopes:
         - directoryinsights.readonly
-  /v1/reports/{report_type}:
+  /insights/directory/v1/reports/{report_type}:
     post:
       security:
         - x-api-key: []
@@ -2716,11 +2716,23 @@ components:
       type: apiKey
       name: x-org-id
       in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
 tags:
+  - name: Bulk Export
+    description: Async bulk export job APIs
   - name: EventDistinctQuery
   - name: EventIntervalQuery
   - name: EventQuery
   - name: Reports
+  - name: SIEM Configuration
+    description: Organization SIEM and bulk export settings
+  - name: SIEM Events
+    description: Path 1 SIEM event pull APIs
+  - name: System
+    description: Service health endpoints
 x-tagGroups:
   - name: API Reference
     tags:
