@@ -65642,11 +65642,7 @@ components:
           description: Error message
         status:
           type: string
-          description: |
-            Stable machine-readable error code for validation and domain errors,
-            in lowerCamelCase when the error targets a JSON field (for example
-            `nullName`, `invalidName`, `invalidOwnerId`). Omitted on generic
-            errors such as `not found`.
+          description: HTTP status description
     api_v2.sso:
       properties:
         _id:
@@ -66753,8 +66749,12 @@ components:
       type: apiKey
       in: header
       name: x-api-key
-      description: API key for authentication
+      description: API key used to authenticate requests.
 tags:
+  - name: Access Posture Findings
+    description: List, retrieve, summary, and update Access Posture findings.
+  - name: Access Posture Settings
+    description: Organization posture monitoring, detection settings, and finding notifications.
   - name: Access Requests
   - name: Access Risk Settings
   - name: AccessCertification
