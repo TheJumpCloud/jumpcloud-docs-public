@@ -4072,6 +4072,16 @@ operations:
     legacy_operation_id: ADETokens_RefreshABMDevices
     standardized_operation_id: postApiV2ApplemdmsAdeTokensByObjectidRefreshAbmDevices
   - method: get
+    host_root_path: /api/v2/devices/settings/azureadusermanagement
+    base_path: /api/v2
+    legacy_operation_id: SystemsOrgSettings_GetAzureAdUserManagementSettings
+    standardized_operation_id: getApiV2DevicesSettingsAzureadusermanagement
+  - method: put
+    host_root_path: /api/v2/devices/settings/azureadusermanagement
+    base_path: /api/v2
+    legacy_operation_id: SystemsOrgSettings_SetAzureAdUserManagementSettings
+    standardized_operation_id: putApiV2DevicesSettingsAzureadusermanagement
+  - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2
     legacy_operation_id: listFieldConfigurations
