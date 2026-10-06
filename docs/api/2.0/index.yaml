@@ -83348,14 +83348,16 @@ components:
       name: x-api-key
       description: API key used to authenticate requests.
 tags:
+  - name: Access Certification
+    description: |-
+      Create and manage access certification campaigns, review user access, remediate revoked access,
+      and download compliance audit reports.
   - name: Access Posture Findings
     description: List, retrieve, summary, and update Access Posture findings.
   - name: Access Posture Settings
     description: Organization posture monitoring, detection settings, and finding notifications.
   - name: Access Requests
   - name: Access Risk Settings
-  - name: AccessCertification
-    description: Access certification campaign APIs
   - name: AccessorySync
   - name: AccountManagerCalendar
   - name: Active Directory
