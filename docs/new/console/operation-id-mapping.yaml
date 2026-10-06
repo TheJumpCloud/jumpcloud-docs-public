@@ -2696,6 +2696,11 @@ operations:
     base_path: /api/v2
     legacy_operation_id: Devices_ListDevices
     standardized_operation_id: getApiV2GoogleEmmEnterprisesByEnterpriseobjectidDevices
+  - method: post
+    host_root_path: /api/v2/office365s
+    base_path: /api/v2
+    legacy_operation_id: office365s_create_by_tenant_id
+    standardized_operation_id: postApiV2Office365s
   - method: get
     host_root_path: /api/v2/google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens
     base_path: /api/v2
@@ -4081,6 +4086,16 @@ operations:
     base_path: /api/v2
     legacy_operation_id: SystemsOrgSettings_SetAzureAdUserManagementSettings
     standardized_operation_id: putApiV2DevicesSettingsAzureadusermanagement
+  - method: put
+    host_root_path: /api/v2/office365s/{office365_id}/user/update
+    base_path: /api/v2
+    legacy_operation_id: office365s_user_update_external_id
+    standardized_operation_id: putApiV2Office365sByOffice365IdUserUpdate
+  - method: put
+    host_root_path: /api/v2/office365s/{office365_id}/users/external-id
+    base_path: /api/v2
+    legacy_operation_id: office365s_users_update_external_id_correlations
+    standardized_operation_id: putApiV2Office365sByOffice365IdUsersExternalId
   - method: get
     host_root_path: /api/v2/assets/field-configurations
     base_path: /api/v2

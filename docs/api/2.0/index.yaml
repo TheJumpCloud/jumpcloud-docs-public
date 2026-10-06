@@ -37270,6 +37270,89 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/enterprises/{enterpriseObjectId}/devices?limit=SOME_STRING_VALUE&skip=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  /office365s:
+    post:
+      summary: Create an Office 365 instance by tenant ID
+      description: Create a Microsoft 365 / Entra integration instance scoped to a tenant ID, without exchanging OAuth credentials.
+      operationId: office365s_create_by_tenant_id
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/o365.ResourceResponse'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/o365.ResourceResponse'
+        '400':
+          $ref: '#/components/responses/trait_standardErrors_400'
+        '401':
+          $ref: '#/components/responses/trait_standardErrors_401'
+        '403':
+          $ref: '#/components/responses/trait_standardErrors_403'
+        '409':
+          $ref: '#/components/responses/trait_standardErrors_409'
+        '500':
+          $ref: '#/components/responses/trait_standardErrors_500'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/o365.ResourcesInsertByTenantIDRequest'
+        required: true
+      tags:
+        - Office 365
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/office365s \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"groupExportType":"NOTSET","name":"string","objectId":"string","tenantId":"string","userLockoutAction":"UNSET","userPasswordExpirationAction":"UNSET"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/office365s"
+
+            payload = {
+                "groupExportType": "NOTSET",
+                "name": "string",
+                "objectId": "string",
+                "tenantId": "string",
+                "userLockoutAction": "UNSET",
+                "userPasswordExpirationAction": "UNSET"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"groupExportType":"NOTSET","name":"string","objectId":"string","tenantId":"string","userLockoutAction":"UNSET","userPasswordExpirationAction":"UNSET"}'
   /google-emm/enterprises/{enterpriseObjectId}/enrollment-tokens:
     get:
       summary: List enrollment tokens
@@ -58489,6 +58572,191 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/devices/settings/azureadusermanagement' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"enabled":true,"organizationObjectId":"string"}'
+  /office365s/{office365_id}/user/update:
+    put:
+      summary: Update the Entra external user ID for an Office 365-bound user
+      description: Sets or updates the stored Microsoft Entra external user ID (Entra Object ID) for a single JumpCloud user bound to this Office 365 integration instance. Mirrors the Active Directory `PUT /activedirectories/{activedirectory_id}/user/update` contract. No change is written back to Microsoft. All body fields are required.
+      operationId: office365s_user_update_external_id
+      responses:
+        '200':
+          description: User external ID updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/o365.UpdateExternalIDResponse'
+        '400':
+          $ref: '#/components/responses/trait_standardErrors_400'
+        '401':
+          $ref: '#/components/responses/trait_standardErrors_401'
+        '403':
+          $ref: '#/components/responses/trait_standardErrors_403'
+        '404':
+          $ref: '#/components/responses/trait_standardErrors_404'
+        '409':
+          $ref: '#/components/responses/trait_standardErrors_409'
+        '500':
+          $ref: '#/components/responses/trait_standardErrors_500'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
+      parameters:
+        - name: office365_id
+          description: Id for the specific M365/Azure AD directory sync integration instance.
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                external_user_id:
+                  type: string
+                  description: Microsoft Entra user Object ID (UUID). Required.
+                user_id:
+                  type: string
+                  format: byte
+                  description: ObjectID of the JumpCloud user (hex). Required.
+              description: |-
+                UpdateExternalIDRequest mirrors the Active Directory single-user update
+                contract (adbridge UpdateInternalUserRequest): one JumpCloud user per call,
+                identified by `user_id` in the body, scoped to the integration in the path.
+        required: true
+      tags:
+        - Office 365
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/office365s/{office365_id}/user/update \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"external_user_id":"string","user_id":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/office365s/{office365_id}/user/update"
+
+            payload = {
+                "external_user_id": "string",
+                "user_id": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s/{office365_id}/user/update' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"external_user_id":"string","user_id":"string"}'
+  /office365s/{office365_id}/users/external-id:
+    put:
+      summary: Set external identity correlations
+      description: Set or update Entra external user ID correlations for multiple JumpCloud users on an Office 365 integration resource.
+      operationId: office365s_users_update_external_id_correlations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/o365.UpdateExternalIDCorrelationsResponse'
+        '400':
+          $ref: '#/components/responses/trait_standardErrors_400'
+        '401':
+          $ref: '#/components/responses/trait_standardErrors_401'
+        '403':
+          $ref: '#/components/responses/trait_standardErrors_403'
+        '404':
+          $ref: '#/components/responses/trait_standardErrors_404'
+        '409':
+          $ref: '#/components/responses/trait_standardErrors_409'
+        '500':
+          $ref: '#/components/responses/trait_standardErrors_500'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
+      parameters:
+        - name: office365_id
+          description: Id for the specific M365/Azure AD directory sync integration instance.
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                correlations:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/o365.ExternalIDCorrelation'
+        required: true
+      tags:
+        - Office 365
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - directories
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/office365s/{office365_id}/users/external-id \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"correlations":[{"externalUserId":"string","userObjectId":"string"}]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/office365s/{office365_id}/users/external-id"
+
+            payload = {"correlations": [
+                    {
+                        "externalUserId": "string",
+                        "userObjectId": "string"
+                    }
+                ]}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s/{office365_id}/users/external-id' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"correlations":[{"externalUserId":"string","userObjectId":"string"}]}'
   /assets/field-configurations:
     get:
       tags:
@@ -72873,6 +73141,44 @@ components:
         - SOFTWARE_MANAGEMENT
         - ZERO_TOUCH_CUSTOMER_MANAGEMENT
       default: SOFTWARE_MANAGEMENT
+    o365.GroupExportType:
+      type: string
+      enum:
+        - NOTSET
+        - NONE
+        - M365
+        - SECURITY
+      default: NOTSET
+    o365.Resource:
+      type: object
+      properties:
+        defaultDomain:
+          $ref: '#/components/schemas/o365.Domain'
+        groupExportType:
+          $ref: '#/components/schemas/o365.GroupExportType'
+        groupsEnabled:
+          type: boolean
+        id:
+          type: string
+          format: byte
+          description: Identifier of the Office 365 instance.
+        name:
+          type: string
+          description: Name of the Office 365 instance.
+        tenantId:
+          type: string
+          description: TenantID of the Office 365 instance.
+        userLockoutAction:
+          $ref: '#/components/schemas/o365.UserStateAction'
+        userPasswordExpirationAction:
+          $ref: '#/components/schemas/o365.UserStateAction'
+    o365.UserStateAction:
+      type: string
+      enum:
+        - UNSET
+        - MAINTAIN
+        - SUSPEND
+      default: UNSET
     jumpcloud.google_emm.EnrollmentToken:
       type: object
       properties:
@@ -81062,6 +81368,50 @@ components:
         organizationObjectId:
           type: string
           format: byte
+    o365.ExternalIDCorrelation:
+      type: object
+      properties:
+        externalUserId:
+          type: string
+        userObjectId:
+          type: string
+          format: byte
+    o365.ResourceResponse:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/o365.Resource'
+    o365.ResourcesInsertByTenantIDRequest:
+      type: object
+      properties:
+        groupExportType:
+          $ref: '#/components/schemas/o365.GroupExportType'
+        name:
+          type: string
+        objectId:
+          type: string
+          format: byte
+        tenantId:
+          type: string
+          description: Microsoft Entra tenant ID.
+        userLockoutAction:
+          $ref: '#/components/schemas/o365.UserStateAction'
+        userPasswordExpirationAction:
+          $ref: '#/components/schemas/o365.UserStateAction'
+    o365.UpdateExternalIDCorrelationsResponse:
+      type: object
+      properties:
+        resourceObjectId:
+          type: string
+          format: byte
+        updatedCount:
+          type: integer
+          format: int32
+    o365.UpdateExternalIDResponse:
+      type: object
+      description: |-
+        UpdateExternalIDResponse is intentionally empty, matching the Active
+        Directory update contract (adbridge UpdateInternalUserResponse).
     jumpcloud.http.assets.error:
       type: object
       description: Error response containing details about what went wrong
