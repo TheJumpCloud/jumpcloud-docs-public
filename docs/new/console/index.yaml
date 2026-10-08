@@ -6077,8 +6077,39 @@ paths:
       - user-portal-applications
       - agent-groups
   /api/v2/applications/{application_id}/agents:
+    get:
+      description: Retrieves a list of all agents assigned to an application in your organization.
+      operationId: getApiV2ApplicationsByApplicationIdAgents
+      parameters:
+        - $ref: "#/components/parameters/trait_limit_limit"
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
+        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
+        - in: query
+          name: syncStatus
+          description: When `true`, includes each agent's provisioning sync status for this application in the `syncStatus` and `externalId` fields.
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/GraphObjectWithPaths"
+                type: array
+      security:
+        - x-api-key: []
+      summary: List an application's assigned agents
+      tags:
+        - Graph
+        - Applications
+      x-scopes:
+        - agents
+        - agents.readonly
     parameters:
-      - description: ObjectID of the Application.
+      - description: Application ID (24-character hexadecimal string).
         in: path
         name: application_id
         required: true
@@ -10444,22 +10475,126 @@ paths:
       - devices-linux-policy-crud
       - devices-ios-policy-crud
   /api/v2/agentgroups:
+    get:
+      description: Retrieves a paginated list of agent groups in your organization.
+      operationId: getApiV2Agentgroups
+      parameters:
+        - $ref: "#/components/parameters/api_v2.trait_fields_fields"
+        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
+        - $ref: "#/components/parameters/trait_limit_limit"
+        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
+        - $ref: "#/components/parameters/api_v2.trait_sort_sort"
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/AgentGroup"
+                type: array
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      security:
+        - x-api-key: []
+      summary: List agent groups
+      tags:
+        - Agent Groups
+      x-scopes:
+        - groups
+        - groups.readonly
+    post:
+      description: Creates a new agent group in your organization.
+      operationId: postApiV2Agentgroups
+      parameters:
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      requestBody:
+        $ref: "#/components/requestBodies/AgentGroupData"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentGroup"
+      security:
+        - x-api-key: []
+      summary: Create an agent group
+      tags:
+        - Agent Groups
+      x-scopes:
+        - groups
     x-functionalities-tags:
       - agent-groups
   /api/v2/agentgroups/{group_id}/associations:
+    get:
+      description: Retrieves a list of all applications assigned to an agent group in your organization.
+      operationId: getApiV2AgentgroupsByGroupIdAssociations
+      parameters:
+        - $ref: "#/components/parameters/trait_graphTargetsAgentGroup_targets"
+        - $ref: "#/components/parameters/trait_limit_limit"
+        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/GraphConnection"
+                type: array
+      security:
+        - x-api-key: []
+      summary: List an agent group's assigned applications
+      tags:
+        - Graph
+        - Agent Groups
+      x-scopes:
+        - associations.groups
+        - associations.groups.readonly
+        - associations
+        - associations.readonly
     parameters:
-      - description: ObjectID of the Agent Group.
+      - description: Agent group ID (24-character hexadecimal string).
         in: path
         name: group_id
         required: true
         schema:
           type: string
+    post:
+      description: Add or remove application assignments for an agent group in your organization.
+      operationId: postApiV2AgentgroupsByGroupIdAssociations
+      parameters:
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GraphOperation-AgentGroup"
+      responses:
+        "204":
+          description: OK
+      security:
+        - x-api-key: []
+      summary: Manage an agent group's assigned applications
+      tags:
+        - Graph
+        - Agent Groups
+      x-scopes:
+        - associations.groups
+        - associations
     x-functionalities-tags:
       - agent-groups
       - agent-associations
   /api/v2/agentgroups/{group_id}/applications:
     parameters:
-      - description: ObjectID of the Agent Group.
+      - description: Agent group ID (24-character hexadecimal string).
         in: path
         name: group_id
         required: true
@@ -10468,19 +10603,65 @@ paths:
     x-functionalities-tags:
       - agent-groups
   /api/v2/agentgroups/{group_id}/members:
+    get:
+      description: Retrieves agents directly assigned to an agent group.
+      operationId: getApiV2AgentgroupsByGroupIdMembers
+      parameters:
+        - $ref: "#/components/parameters/trait_limit_limit"
+        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/GraphConnection"
+                type: array
+      security:
+        - x-api-key: []
+      summary: List the members of an agent group
+      tags:
+        - Graph
+        - Agent Groups
+      x-scopes:
+        - agents
+        - agents.readonly
     parameters:
-      - description: ObjectID of the Agent Group.
+      - description: Agent group ID (24-character hexadecimal string).
         in: path
         name: group_id
         required: true
         schema:
           type: string
+    post:
+      description: Add or remove agents from an agent group in your organization.
+      operationId: postApiV2AgentgroupsByGroupIdMembers
+      parameters:
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GraphOperation-AgentGroup-Member"
+      responses:
+        "204":
+          description: OK
+      security:
+        - x-api-key: []
+      summary: Manage the members of an agent group
+      tags:
+        - Graph
+        - Agent Groups
+      x-scopes:
+        - groups
     x-functionalities-tags:
       - agent-groups
       - agent-members
   /api/v2/agentgroups/{group_id}/membership:
     parameters:
-      - description: ObjectID of the Agent Group.
+      - description: Agent group ID (24-character hexadecimal string).
         in: path
         name: group_id
         required: true
@@ -10490,18 +10671,109 @@ paths:
       - agent-groups
       - agent-members
   /api/v2/agentgroups/{id}:
+    delete:
+      description: Permanently deletes an agent group.
+      operationId: deleteApiV2AgentgroupsById
+      parameters:
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentGroup"
+      security:
+        - x-api-key: []
+      summary: Delete an agent group
+      tags:
+        - Agent Groups
+      x-scopes:
+        - groups
+    get:
+      description: Retrieves an agent group in your organization.
+      operationId: getApiV2AgentgroupsById
+      parameters:
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentGroup"
+      security:
+        - x-api-key: []
+      summary: Retrieve an agent group
+      tags:
+        - Agent Groups
+      x-scopes:
+        - groups
+        - groups.readonly
     parameters:
-      - description: ObjectID of the Agent Group.
+      - description: Agent group ID (24-character hexadecimal string).
         in: path
         name: id
         required: true
         schema:
           type: string
+    patch:
+      description: Updates an agent group. Omitted fields are left unchanged.
+      operationId: patchApiV2AgentgroupsById
+      parameters:
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      requestBody:
+        $ref: "#/components/requestBodies/AgentGroupData"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentGroup"
+      security:
+        - x-api-key: []
+      summary: Update an agent group
+      tags:
+        - Agent Groups
+      x-scopes:
+        - groups
     x-functionalities-tags:
       - agent-groups
   /api/v2/agents/{agent_id}/applications:
+    get:
+      description: Retrieves a list of all applications assigned to an agent in your organization.
+      operationId: getApiV2AgentsByAgentIdApplications
+      parameters:
+        - $ref: "#/components/parameters/trait_limit_limit"
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
+        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
+        - in: query
+          name: syncStatus
+          description: When `true`, includes each application's provisioning sync status for this agent in the `syncStatus` and `externalId` fields.
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/GraphObjectWithPaths"
+                type: array
+      security:
+        - x-api-key: []
+      summary: List an agent's assigned applications
+      tags:
+        - Graph
+        - Agents
+      x-scopes:
+        - applications
+        - applications.readonly
     parameters:
-      - description: ObjectID of the Agent.
+      - description: Agent ID (24-character hexadecimal string).
         in: path
         name: agent_id
         required: true
@@ -10510,8 +10782,35 @@ paths:
     x-functionalities-tags:
       - agents-associations
   /api/v2/agents/{agent_id}/memberof:
+    get:
+      description: Retrieves the agent groups to which an agent belongs.
+      operationId: getApiV2AgentsByAgentIdMemberof
+      parameters:
+        - $ref: "#/components/parameters/api_v2.trait_filter_filter"
+        - $ref: "#/components/parameters/trait_limit_limit"
+        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
+        - $ref: "#/components/parameters/api_v2.trait_sort_sort"
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/GraphObjectWithPaths"
+                type: array
+      security:
+        - x-api-key: []
+      summary: List an agent's groups
+      tags:
+        - Graph
+        - Agents
+      x-scopes:
+        - groups
+        - groups.readonly
     parameters:
-      - description: ObjectID of the Agent.
+      - description: Agent ID (24-character hexadecimal string).
         in: path
         name: agent_id
         required: true
@@ -49390,6 +49689,30 @@ components:
             - type
       title: GraphOperation (Application)
       type: object
+    GraphOperation-AgentGroup:
+      allOf:
+        - $ref: "#/components/schemas/GraphOperation"
+        - properties:
+            type:
+              description: Targets which an "agent_group" can be associated to. The only supported value is `application`.
+              const: application
+              type: string
+          required:
+            - type
+      title: GraphOperation (AgentGroup)
+      type: object
+    GraphOperation-AgentGroup-Member:
+      allOf:
+        - $ref: "#/components/schemas/GraphOperation"
+        - properties:
+            type:
+              description: The member type. The only supported value is `agent`.
+              const: agent
+              type: string
+          required:
+            - type
+      title: GraphOperation (AgentGroup-Member)
+      type: object
     GraphOperation-Command:
       allOf:
         - $ref: "#/components/schemas/GraphOperation"
@@ -49762,7 +50085,7 @@ components:
           description: Object ID of this graph object.
           type: string
         paths:
-          description: A path through the graph between two graph objects.
+          description: Every path through the graph from the requested object to this object. Each path lists the groupings and associations it follows; all of them would have to be removed to remove this object from the requested object.
           items:
             items:
               $ref: "#/components/schemas/GraphConnection"
@@ -50281,6 +50604,44 @@ components:
         template:
           $ref: "#/components/schemas/PolicyTemplate"
       title: Policy
+      type: object
+    AgentGroup:
+      properties:
+        attributes:
+          $ref: "#/components/schemas/GraphAttributes"
+        description:
+          description: Description of the agent group.
+          type: string
+        id:
+          description: Agent group ID (24-character hexadecimal string).
+          type: string
+        name:
+          description: Display name of the agent group. Can be used in the `filter` query parameter when listing agent groups.
+          type: string
+        organizationObjectId:
+          description: ID of the organization that owns the agent group (24-character hexadecimal string).
+          type:
+            - string
+            - "null"
+        type:
+          description: The type of the group; always `agent_group` for an agent group.
+          const: agent_group
+          type: string
+      title: AgentGroup
+      type: object
+    AgentGroupData:
+      properties:
+        attributes:
+          $ref: "#/components/schemas/GraphAttributes"
+        description:
+          description: Description of the agent group.
+          type: string
+        name:
+          description: Display name of the agent group.
+          type: string
+      required:
+        - name
+      title: AgentGroupData
       type: object
     PolicyGroup:
       properties:
@@ -67155,6 +67516,18 @@ components:
             - user
             - user_group
           type: string
+    trait_graphTargetsAgentGroup_targets:
+      name: targets
+      description: Targets which an "agent_group" can be associated to. The only supported value is `application`.
+      in: query
+      required: true
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          const: application
+          type: string
     trait_graphTargetsApplication_targets:
       name: targets
       description: Targets which a "application" can be associated to.
@@ -67822,6 +68195,11 @@ components:
                 items:
                   type: string
                 description: Explicit org filter when organization_scope is explicit (or omitted with this field present). When the flag is enabled, an empty array queries provider-pillar logs only, except that an empty array with exclude_provider_activity true is invalid; malformed IDs and "-" are invalid handler-level filters. Schema validation may reject malformed request shapes, such as non-array values, before the flag-gated handler runs. When the flag is disabled, this field is ignored and legacy behavior is preserved.
+    AgentGroupData:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AgentGroupData"
     ManageAssociations-Group:
       content:
         application/json:
@@ -68021,9 +68399,11 @@ tags:
   - name: AddOn
   - name: Admin Settings
   - name: Administrators
-  - name: Agent Group Associations
-  - name: Agent Group Members & Membership
   - name: Agent Groups
+    description: |-
+      Use the Agent Groups API to create and manage agent groups in your organization. Agent groups organize agents and provide a reusable way to assign applications to multiple agents.
+
+      Add or remove agents from a group, manage the group's application assignments, and retrieve the agents and applications assigned to the group. Agents receive access to applications assigned to their groups.
   - name: Agents
   - name: Aggregated Policy Stats
   - name: App Catalog
@@ -68192,6 +68572,7 @@ x-tagGroups:
       - Access Risk Settings
       - Active Directory
       - Administrators
+      - Agent Groups
       - Agents
       - Aggregated Policy Stats
       - App Catalog
