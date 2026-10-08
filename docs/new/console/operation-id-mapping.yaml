@@ -4346,3 +4346,58 @@ operations:
     base_path: /api/v2
     legacy_operation_id: getTemplate
     standardized_operation_id: getApiV2WorkflowsTemplatesByTemplateid
+  - method: get
+    host_root_path: /api/v2/agents
+    base_path: /api/v2
+    legacy_operation_id: getApiV2Agents
+    standardized_operation_id: getApiV2Agents
+  - method: post
+    host_root_path: /api/v2/agents
+    base_path: /api/v2
+    legacy_operation_id: postApiV2Agents
+    standardized_operation_id: postApiV2Agents
+  - method: get
+    host_root_path: /api/v2/agents/{agent_id}
+    base_path: /api/v2
+    legacy_operation_id: getApiV2AgentsById
+    standardized_operation_id: getApiV2AgentsByAgentId
+  - method: patch
+    host_root_path: /api/v2/agents/{agent_id}
+    base_path: /api/v2
+    legacy_operation_id: patchApiV2AgentsById
+    standardized_operation_id: patchApiV2AgentsByAgentId
+  - method: delete
+    host_root_path: /api/v2/agents/{agent_id}
+    base_path: /api/v2
+    legacy_operation_id: deleteApiV2AgentsById
+    standardized_operation_id: deleteApiV2AgentsByAgentId
+  - method: post
+    host_root_path: /api/v2/agents/{agent_id}/suspend
+    base_path: /api/v2
+    legacy_operation_id: postApiV2AgentsByIdSuspend
+    standardized_operation_id: postApiV2AgentsByAgentIdSuspend
+  - method: post
+    host_root_path: /api/v2/agents/{agent_id}/activate
+    base_path: /api/v2
+    legacy_operation_id: postApiV2AgentsByIdActivate
+    standardized_operation_id: postApiV2AgentsByAgentIdActivate
+  - method: get
+    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials
+    base_path: /api/v2
+    legacy_operation_id: getApiV2AgentsByIdCredentials
+    standardized_operation_id: getApiV2AgentsByAgentIdInboundCredentials
+  - method: post
+    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials
+    base_path: /api/v2
+    legacy_operation_id: postApiV2AgentsByIdCredentials
+    standardized_operation_id: postApiV2AgentsByAgentIdInboundCredentials
+  - method: patch
+    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials/{client_id}
+    base_path: /api/v2
+    legacy_operation_id: patchApiV2AgentsByIdCredentialsByClientId
+    standardized_operation_id: patchApiV2AgentsByAgentIdInboundCredentialsByClientId
+  - method: delete
+    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials/{client_id}
+    base_path: /api/v2
+    legacy_operation_id: deleteApiV2AgentsByIdCredentialsByClientId
+    standardized_operation_id: deleteApiV2AgentsByAgentIdInboundCredentialsByClientId

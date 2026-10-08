@@ -63436,6 +63436,791 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/workflows/templates/{templateId}' -Method GET -Headers $headers
+  /agents:
+    get:
+      tags:
+        - Agents
+      summary: List agents
+      description: Retrieves a paginated list of agents in your organization.
+      operationId: getApiV2Agents
+      x-scopes:
+        - agents
+        - agents.readonly
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+      responses:
+        '200':
+          description: Agents retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/agents?pageSize=SOME_INTEGER_VALUE&pageToken=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE&sort=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents"
+
+            querystring = {"pageSize":"SOME_INTEGER_VALUE","pageToken":"SOME_STRING_VALUE","filter":"SOME_ARRAY_VALUE","sort":"SOME_ARRAY_VALUE","fields":"SOME_ARRAY_VALUE"}
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents?pageSize=SOME_INTEGER_VALUE&pageToken=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE&sort=SOME_ARRAY_VALUE&fields=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+    post:
+      tags:
+        - Agents
+      summary: Register an agent
+      description: Registers a new agent identity in your organization.
+      operationId: postApiV2Agents
+      x-scopes:
+        - agents
+        - agents.create
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentCreateRequest'
+      responses:
+        '201':
+          description: Agent created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '400':
+          description: |
+            Bad request. Including a read-only property from
+            [Agent](#componentschemasagent) returns HTTP 400. When the
+            organization has reached its agent limit, `status` is
+            `agentOrgCapExceeded`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          description: An agent with a conflicting attribute already exists (for example email)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/agents \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"name":"string","email":"user@example.com","description":"string","ownerId":"stringstringstringstring"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents"
+
+            payload = {
+                "name": "string",
+                "email": "user@example.com",
+                "description": "string",
+                "ownerId": "stringstringstringstring"
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"name":"string","email":"user@example.com","description":"string","ownerId":"stringstringstringstring"}'
+  /agents/{agent_id}:
+    get:
+      tags:
+        - Agents
+      summary: Retrieve an agent
+      description: Retrieves an agent in your organization.
+      operationId: getApiV2AgentsById
+      x-scopes:
+        - agents
+        - agents.readonly
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/agentId'
+      responses:
+        '200':
+          description: Agent retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/agents/{agent_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents/{agent_id}"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents/{agent_id}' -Method GET -Headers $headers
+    patch:
+      tags:
+        - Agents
+      summary: Update an agent
+      description: Updates an agent in your organization. Omitted fields are left unchanged.
+      operationId: patchApiV2AgentsById
+      x-scopes:
+        - agents
+        - agents.update
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/agentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentUpdateRequest'
+      responses:
+        '200':
+          description: Agent updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '400':
+          description: |
+            Bad request — validation failure. The `status` field carries a stable
+            machine code in lowerCamelCase (aligned with JSON field names);
+            `message` describes the failure for humans. Common codes include
+            `nullName`, `invalidName`, `invalidEmail`, `invalidOwnerId`,
+            `invalidOwner`, `stateNotUpdatable`, `ownerIdClearForbidden`, and
+            `emptyPatch`.
+            Including a read-only property from
+            [Agent](#componentschemasagent) also returns HTTP 400.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                nullName:
+                  summary: JSON null on name
+                  value:
+                    message: name cannot be null
+                    status: nullName
+                nullDescription:
+                  summary: JSON null on description
+                  value:
+                    message: description cannot be null
+                    status: nullDescription
+                emptyName:
+                  summary: Empty or whitespace-only name
+                  value:
+                    message: name cannot be empty or whitespace-only
+                    status: invalidName
+                invalidOwnerId:
+                  summary: Malformed ownerId
+                  value:
+                    message: ownerId must be a 24-character hexadecimal object id
+                    status: invalidOwnerId
+                invalidOwner:
+                  summary: Owner is not an activated human in org
+                  value:
+                    message: ownerId must be an activated SystemUser in this organization
+                    status: invalidOwner
+                stateNotUpdatable:
+                  summary: Lifecycle state in PATCH body
+                  value:
+                    message: state cannot be changed with PATCH; use suspend or activate
+                    status: stateNotUpdatable
+                emptyPatch:
+                  summary: No mutable fields in body
+                  value:
+                    message: patch body must include at least one mutable field
+                    status: emptyPatch
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: An agent with a conflicting attribute already exists (for example email)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                emailConflict:
+                  summary: Email already in use
+                  value:
+                    message: email is already in use
+                    status: emailConflict
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/agents/{agent_id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"name":"string","email":"user@example.com","description":"string","ownerId":"stringstringstringstring"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents/{agent_id}"
+
+            payload = {
+                "name": "string",
+                "email": "user@example.com",
+                "description": "string",
+                "ownerId": "stringstringstringstring"
+            }
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents/{agent_id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"name":"string","email":"user@example.com","description":"string","ownerId":"stringstringstringstring"}'
+    delete:
+      tags:
+        - Agents
+      summary: Delete an agent
+      description: Permanently deletes an agent in your organization.
+      operationId: deleteApiV2AgentsById
+      x-scopes:
+        - agents
+        - agents.delete
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/agentId'
+      responses:
+        '204':
+          description: Agent deleted successfully. Already-issued gateway access tokens stay valid until they expire or are revoked.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/agents/{agent_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents/{agent_id}"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents/{agent_id}' -Method DELETE -Headers $headers
+  /agents/{agent_id}/suspend:
+    post:
+      tags:
+        - Agents
+      summary: Suspend an agent
+      description: Suspends an agent in your organization. Suspended agents are blocked from accessing JumpCloud resources.
+      operationId: postApiV2AgentsByIdSuspend
+      x-scopes:
+        - agents
+        - agents.state
+        - agents.state.suspend
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/agentId'
+      responses:
+        '200':
+          description: Agent suspended successfully. Already-issued gateway access tokens stay valid until they expire or are revoked.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+              examples:
+                suspended:
+                  summary: Suspended agent
+                  value:
+                    id: 507f1f77bcf86cd799439011
+                    organizationId: 507f191e810c19729de860ea
+                    name: example-agent
+                    description: Example agent
+                    email: example-agent@example.com
+                    ownerId: 507f1f77bcf86cd799439012
+                    state: suspended
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/agents/{agent_id}/suspend \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents/{agent_id}/suspend"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("POST", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents/{agent_id}/suspend' -Method POST -Headers $headers
+  /agents/{agent_id}/activate:
+    post:
+      tags:
+        - Agents
+      summary: Activate an agent
+      description: Activates a previously suspended agent in your organization.
+      operationId: postApiV2AgentsByIdActivate
+      x-scopes:
+        - agents
+        - agents.state
+        - agents.state.activate
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/agentId'
+      responses:
+        '200':
+          description: Agent activated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+              examples:
+                active:
+                  summary: Active agent
+                  value:
+                    id: 507f1f77bcf86cd799439011
+                    organizationId: 507f191e810c19729de860ea
+                    name: example-agent
+                    description: Example agent
+                    email: example-agent@example.com
+                    ownerId: 507f1f77bcf86cd799439012
+                    state: active
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/agents/{agent_id}/activate \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents/{agent_id}/activate"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("POST", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents/{agent_id}/activate' -Method POST -Headers $headers
+  /agents/{agent_id}/inbound-credentials:
+    get:
+      tags:
+        - Agents
+      summary: List agent's credentials
+      description: Retrieves a list of credentials for the agent. Credential secrets are never returned.
+      operationId: getApiV2AgentsByIdCredentials
+      x-scopes:
+        - agents
+        - agents.credentials.readonly
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/agentId'
+      responses:
+        '200':
+          description: Credentials retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentInboundCredentialList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials' -Method GET -Headers $headers
+    post:
+      tags:
+        - Agents
+      summary: Create an agent credential
+      description: Creates the OAuth 2.0 credential for an agent in your organization.
+      operationId: postApiV2AgentsByIdCredentials
+      x-scopes:
+        - agents
+        - agents.credentials.update
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/agentId'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentInboundCredentialCreateRequest'
+      responses:
+        '201':
+          description: Credential created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentInboundCredentialWithSecret'
+        '400':
+          description: |
+            Bad request — validation failure. Common codes include
+            `invalidLifetimeDays` and `invalid json`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                invalidLifetimeDays:
+                  summary: Unsupported lifetimeDays integer
+                  value:
+                    message: 'lifetimeDays must be one of: 0, 30, 60, 90, 365'
+                    status: invalidLifetimeDays
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: |
+            The request conflicts with the agent's current state. The agent
+            already has an active credential, or the agent is suspended.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"lifetimeDays":0}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials"
+
+            payload = {"lifetimeDays": 0}
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"lifetimeDays":0}'
+  /agents/{agent_id}/inbound-credentials/{client_id}:
+    patch:
+      tags:
+        - Agents
+      summary: Update an agent credential
+      description: Update the OAuth 2.0 credential for an agent in your organization.
+      operationId: patchApiV2AgentsByIdCredentialsByClientId
+      x-scopes:
+        - agents
+        - agents.credentials.update
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/agentId'
+        - $ref: '#/components/parameters/credentialClientId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentInboundCredentialPatchRequest'
+      responses:
+        '200':
+          description: Credential updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentInboundCredential'
+        '400':
+          description: |
+            Bad request — validation failure. Common codes include
+            `invalidTokenEndpointAuthMethod` and `invalid json`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PATCH \
+              --url https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials/{client_id} \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE' \
+              --data '{"tokenEndpointAuthMethod":"client_secret_basic"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials/{client_id}"
+
+            payload = {"tokenEndpointAuthMethod": "client_secret_basic"}
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PATCH", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials/{client_id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"tokenEndpointAuthMethod":"client_secret_basic"}'
+    delete:
+      tags:
+        - Agents
+      summary: Delete an agent's credential
+      description: Deletes the OAuth 2.0 credential for an agent.
+      operationId: deleteApiV2AgentsByIdCredentialsByClientId
+      x-scopes:
+        - agents
+        - agents.credentials.delete
+      security:
+        - x-api-key: []
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/agentId'
+        - $ref: '#/components/parameters/credentialClientId'
+      responses:
+        '204':
+          description: Credential deleted successfully. Already-issued gateway access tokens stay valid until they expire or are revoked.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Error'
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials/{client_id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --header 'x-org-id: SOME_STRING_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials/{client_id}"
+
+            headers = {
+                "x-org-id": "SOME_STRING_VALUE",
+                "x-api-key": "REPLACE_KEY_VALUE"
+            }
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-org-id", "SOME_STRING_VALUE")
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agents/{agent_id}/inbound-credentials/{client_id}' -Method DELETE -Headers $headers
 components:
   schemas:
     User:
@@ -82804,6 +83589,288 @@ components:
           description: List of templates
           items:
             $ref: '#/components/schemas/jumpcloud.http.workflows.WorkflowTemplateResponse'
+    AgentList:
+      type: object
+      description: List of agents.
+      required:
+        - agents
+      properties:
+        agents:
+          type: array
+          description: Agents matching the request.
+          items:
+            $ref: '#/components/schemas/Agent'
+        totalSize:
+          type: integer
+          format: int32
+          description: |
+            Total number of agents matching the request after filters are
+            applied.
+        nextPageToken:
+          type: string
+          description: |
+            Opaque cursor for the next page. Omitted when there is no
+            subsequent page.
+    Agent:
+      type: object
+      description: |
+        An agent — a non-human identity that can access applications assigned
+        to it. Properties marked read-only are returned on read responses and
+        must not be sent on create or update.
+      required:
+        - id
+        - organizationId
+        - name
+        - email
+        - state
+      properties:
+        id:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+          description: Agent ID (24-character hexadecimal string).
+          readOnly: true
+        organizationId:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+          description: Organization ID (24-character hexadecimal string).
+          readOnly: true
+        name:
+          type: string
+          minLength: 1
+          maxLength: 256
+          description: Agent name
+        description:
+          type: string
+          maxLength: 256
+          description: Free-text description of this agent
+        email:
+          type: string
+          format: email
+          maxLength: 256
+          description: Company email address for this agent
+        ownerId:
+          type: string
+          nullable: true
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+          description: |
+            ID of the human user who owns this agent. Required at
+            creation; becomes null only if the owning user is later deleted.
+        state:
+          type: string
+          description: Lifecycle state (`active` or `suspended`).
+          enum:
+            - active
+            - suspended
+          readOnly: true
+    AgentCreateRequest:
+      type: object
+      description: Fields for registering an agent.
+      required:
+        - name
+        - email
+        - ownerId
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 256
+          description: Agent name
+        email:
+          type: string
+          format: email
+          maxLength: 256
+          description: Company email address for this agent
+        description:
+          type: string
+          maxLength: 256
+          description: Free-text description of this agent
+        ownerId:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+          description: |
+            ID of the human user who will own this agent. Must be in
+            the same organization.
+    AgentUpdateRequest:
+      type: object
+      description: |
+        Fields for updating an agent. Include at least one recognized field;
+        omitted fields are left unchanged. An empty object fails schema
+        validation (`minProperties`) and returns HTTP 400. JSON `null` on a
+        string field fails type validation and returns HTTP 400. Empty
+        `name`, `email`, or `ownerId` values are not accepted
+        (HTTP 400). Set `description` to an empty string to clear it.
+        Unrecognized properties are ignored; a body with no recognized
+        mutable fields returns HTTP 400. Submitted `name`, `description`,
+        and `email` values are trimmed of leading and trailing whitespace
+        before apply.
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 256
+          description: Agent name
+        email:
+          type: string
+          format: email
+          maxLength: 256
+          description: Company email address for this agent
+        description:
+          type: string
+          maxLength: 256
+          description: Free-text description of this agent
+        ownerId:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+          description: |
+            ID of the human user who will own this agent. Must be in
+            the same organization. Must be a non-null ID when present.
+    TokenEndpointAuthMethod:
+      type: string
+      description: |
+        OAuth token endpoint client authentication method for this credential.
+        Legacy rows with a NULL stored value are returned as
+        `client_secret_basic`.
+      enum:
+        - client_secret_basic
+        - client_secret_post
+      readOnly: true
+    AgentInboundCredentialPatchRequest:
+      type: object
+      description: |
+        Mutable fields for an inbound OAuth credential update. Only the token
+        endpoint authentication method can be changed through this operation.
+      required:
+        - tokenEndpointAuthMethod
+      properties:
+        tokenEndpointAuthMethod:
+          type: string
+          description: OAuth token endpoint client authentication method.
+          enum:
+            - client_secret_basic
+            - client_secret_post
+    NullableDateTime:
+      description: ISO 8601 date-time (UTC) or JSON null.
+      oneOf:
+        - type: string
+          format: date-time
+        - type: 'null'
+    AgentInboundCredentialCreateRequest:
+      type: object
+      description: |
+        Optional fields for inbound credential creation. Omit the request body
+        or omit `lifetimeDays` to default to 365 days. Set `lifetimeDays` to
+        `0` for a credential that never expires (`expiresAt` is null in the
+        response). Responses do not include `lifetimeDays`; clients derive
+        lifetime from `expiresAt` and `createdAt` when needed.
+      properties:
+        lifetimeDays:
+          description: |
+            Credential lifetime in days. When the key is absent, defaults to
+            365. `0` means the credential never expires. Accepted values are
+            0, 30, 60, 90, and 365.
+          type: integer
+          enum:
+            - 0
+            - 30
+            - 60
+            - 90
+            - 365
+    AgentInboundCredentialWithSecret:
+      type: object
+      description: |
+        A newly created inbound OAuth credential. `clientSecret` is returned
+        only in this response — store it now, since it cannot be retrieved
+        again.
+      required:
+        - clientId
+        - clientSecret
+        - expiresAt
+        - tokenEndpointAuthMethod
+      properties:
+        clientId:
+          type: string
+          description: Hydra OAuth client ID for this credential.
+        clientSecret:
+          type: string
+          description: One-time client secret.
+        tokenEndpointAuthMethod:
+          $ref: '#/components/schemas/TokenEndpointAuthMethod'
+        expiresAt:
+          $ref: '#/components/schemas/NullableDateTime'
+          description: |
+            When the credential expires (UTC). Null when the credential never
+            expires.
+    AgentInboundCredentialList:
+      type: object
+      description: An agent's inbound OAuth credential records.
+      required:
+        - credentials
+      properties:
+        credentials:
+          type: array
+          description: Credential records for this agent.
+          items:
+            $ref: '#/components/schemas/AgentInboundCredential'
+    AgentInboundCredential:
+      type: object
+      description: |
+        An inbound OAuth credential record. Never includes the credential
+        secret.
+      required:
+        - clientId
+        - authType
+        - status
+        - tokenEndpointAuthMethod
+        - createdAt
+        - updatedAt
+        - expiresAt
+      properties:
+        clientId:
+          type: string
+          description: OAuth client ID for this credential.
+          readOnly: true
+        authType:
+          type: string
+          description: Client authentication method.
+          enum:
+            - client_credentials
+            - client_jwt_assertion
+          readOnly: true
+        tokenEndpointAuthMethod:
+          $ref: '#/components/schemas/TokenEndpointAuthMethod'
+        status:
+          type: string
+          description: Credential lifecycle status.
+          enum:
+            - active
+            - retiring
+            - expired
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        expiresAt:
+          $ref: '#/components/schemas/NullableDateTime'
+          description: |
+            When the credential expires (UTC). Null when the credential never
+            expires.
+          readOnly: true
   parameters:
     trait_fields_fields:
       description: |
@@ -83440,6 +84507,114 @@ components:
       required: false
       schema:
         type: string
+    organizationId:
+      name: x-org-id
+      in: header
+      required: false
+      description: Organization identifier that can be obtained from console settings.
+      schema:
+        type: string
+        minLength: 24
+        maxLength: 24
+        pattern: ^[0-9a-fA-F]{24}$
+    agentId:
+      name: agent_id
+      in: path
+      required: true
+      description: Agent object ID (24-character hexadecimal string).
+      schema:
+        type: string
+        minLength: 24
+        maxLength: 24
+        pattern: ^[0-9a-fA-F]{24}$
+    credentialClientId:
+      name: client_id
+      in: path
+      required: true
+      description: Inbound OAuth credential's client ID.
+      schema:
+        type: string
+        minLength: 1
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      description: |
+        Maximum number of records to return. When omitted or set to 0, the
+        default page size (100) applies. Values above 100 are treated as 100.
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 100
+        default: 100
+    pageToken:
+      name: pageToken
+      in: query
+      required: false
+      description: |
+        Opaque cursor from a previous response's nextPageToken. Must be used
+        with the same pageSize. When omitted, results start at the beginning
+        of the collection.
+      schema:
+        type: string
+    filter:
+      name: filter
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: |
+        A filter to apply to the query. Repeat the `filter` parameter for
+        multiple clauses. Each value is one clause of the form
+        `<field>:<operator>:<value>`.
+
+        For the `in` operator, join values with commas. Percent-encode those
+        commas as `%2C` when constructing the query string so they remain
+        part of one clause.
+
+        Supported fields include `state`, `name`, and `email`. Supported
+        operators include `eq`, `ne`, `search`, and `in`.
+
+        **EX:** `filter=state:eq:suspended`
+
+        **EX:** `filter=email:in:alpha@example.com%2Cbeta@example.com`
+
+        **EX:** `filter=state:eq:active&filter=name:search:bot`
+      schema:
+        type: array
+        items:
+          type: string
+        default: []
+    sort:
+      name: sort
+      in: query
+      required: false
+      style: form
+      explode: false
+      description: |
+        The comma separated fields used to sort the collection. Default sort
+        is ascending; prefix with `-` to sort descending. Supported fields
+        include `name`, `email`, and `state`.
+      schema:
+        type: array
+        items:
+          type: string
+        default: []
+    fields:
+      name: fields
+      in: query
+      required: false
+      style: form
+      explode: false
+      description: |
+        The comma separated fields included in the returned records. If
+        omitted, the default list of fields is returned.
+      schema:
+        type: array
+        items:
+          type: string
+        default: []
   responses:
     trait_standardErrors_400:
       description: Bad Request
@@ -83473,6 +84648,36 @@ components:
             $ref: '#/components/schemas/Error'
     trait_standardErrors_500:
       description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Error:
+      description: Unexpected error
       content:
         application/json:
           schema:
@@ -83867,6 +85072,7 @@ x-tagGroups:
       - Access Risk Settings
       - Active Directory
       - Administrators
+      - Agents
       - Aggregated Policy Stats
       - App Catalog
       - Apple MDM
@@ -83954,6 +85160,17 @@ x-scopes:
   - administratorLinks
   - administrators
   - administrators.readonly
+  - agents
+  - agents.create
+  - agents.credentials.delete
+  - agents.credentials.readonly
+  - agents.credentials.update
+  - agents.delete
+  - agents.readonly
+  - agents.state
+  - agents.state.activate
+  - agents.state.suspend
+  - agents.update
   - anonymous
   - applications
   - applications.readonly
