@@ -62435,6 +62435,8 @@ components:
         - RISK_FACTOR_TYPE_EXCESSIVE_FAILED_LOGIN_ATTEMPTS
         - RISK_FACTOR_TYPE_HIGH_VOLUME_LOGIN_ATTEMPTS
         - RISK_FACTOR_TYPE_UNUSUAL_APPLICATION_LOGIN
+        - RISK_FACTOR_TYPE_UNUSUAL_BROWSER_ID
+        - RISK_FACTOR_TYPE_BROWSER_ENVIRONMENT_MISMATCH
       default: RISK_FACTOR_TYPE_UNSPECIFIED
       description: RiskFactorType identifies the kind of risk factor contributing to the score.
     jumpcloud.identity_risk.RiskLevel:
