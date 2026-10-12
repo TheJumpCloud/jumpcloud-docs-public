@@ -307,6 +307,311 @@ operations:
     legacy_operation_id: systems_commandBuiltinShutdown
     standardized_operation_id: postApiSystemsBySystemIdCommandBuiltinShutdown
   - method: get
+    host_root_path: /api/v2/agents
+    base_path: /api/v2
+    legacy_operation_id: getApiV2Agents
+    standardized_operation_id: getApiV2Agents
+  - method: post
+    host_root_path: /api/v2/agents
+    base_path: /api/v2
+    legacy_operation_id: postApiV2Agents
+    standardized_operation_id: postApiV2Agents
+  - method: get
+    host_root_path: /api/v2/agents/{agent_id}
+    base_path: /api/v2
+    legacy_operation_id: getApiV2AgentsById
+    standardized_operation_id: getApiV2AgentsByAgentId
+  - method: patch
+    host_root_path: /api/v2/agents/{agent_id}
+    base_path: /api/v2
+    legacy_operation_id: patchApiV2AgentsById
+    standardized_operation_id: patchApiV2AgentsByAgentId
+  - method: delete
+    host_root_path: /api/v2/agents/{agent_id}
+    base_path: /api/v2
+    legacy_operation_id: deleteApiV2AgentsById
+    standardized_operation_id: deleteApiV2AgentsByAgentId
+  - method: post
+    host_root_path: /api/v2/agents/{agent_id}/suspend
+    base_path: /api/v2
+    legacy_operation_id: postApiV2AgentsByIdSuspend
+    standardized_operation_id: postApiV2AgentsByAgentIdSuspend
+  - method: post
+    host_root_path: /api/v2/agents/{agent_id}/activate
+    base_path: /api/v2
+    legacy_operation_id: postApiV2AgentsByIdActivate
+    standardized_operation_id: postApiV2AgentsByAgentIdActivate
+  - method: get
+    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials
+    base_path: /api/v2
+    legacy_operation_id: getApiV2AgentsByIdCredentials
+    standardized_operation_id: getApiV2AgentsByAgentIdInboundCredentials
+  - method: post
+    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials
+    base_path: /api/v2
+    legacy_operation_id: postApiV2AgentsByIdCredentials
+    standardized_operation_id: postApiV2AgentsByAgentIdInboundCredentials
+  - method: patch
+    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials/{client_id}
+    base_path: /api/v2
+    legacy_operation_id: patchApiV2AgentsByIdCredentialsByClientId
+    standardized_operation_id: patchApiV2AgentsByAgentIdInboundCredentialsByClientId
+  - method: delete
+    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials/{client_id}
+    base_path: /api/v2
+    legacy_operation_id: deleteApiV2AgentsByIdCredentialsByClientId
+    standardized_operation_id: deleteApiV2AgentsByAgentIdInboundCredentialsByClientId
+  - method: get
+    host_root_path: /api/v2/assets/field-configurations
+    base_path: /api/v2
+    legacy_operation_id: listFieldConfigurations
+    standardized_operation_id: getApiV2AssetsFieldConfigurations
+  - method: get
+    host_root_path: /api/v2/assets/field-configurations/{id}/select-options
+    base_path: /api/v2
+    legacy_operation_id: getFieldConfigSelectOptions
+    standardized_operation_id: getApiV2AssetsFieldConfigurationsByIdSelectOptions
+  - method: get
+    host_root_path: /api/v2/assets/devices/{id}
+    base_path: /api/v2
+    legacy_operation_id: getDeviceAsset
+    standardized_operation_id: getApiV2AssetsDevicesById
+  - method: put
+    host_root_path: /api/v2/assets/devices/{id}
+    base_path: /api/v2
+    legacy_operation_id: updateDeviceAsset
+    standardized_operation_id: putApiV2AssetsDevicesById
+  - method: delete
+    host_root_path: /api/v2/assets/devices/{id}
+    base_path: /api/v2
+    legacy_operation_id: deleteDeviceAsset
+    standardized_operation_id: deleteApiV2AssetsDevicesById
+  - method: get
+    host_root_path: /api/v2/assets/devices
+    base_path: /api/v2
+    legacy_operation_id: listDeviceAssets
+    standardized_operation_id: getApiV2AssetsDevices
+  - method: post
+    host_root_path: /api/v2/assets/devices
+    base_path: /api/v2
+    legacy_operation_id: createDeviceAsset
+    standardized_operation_id: postApiV2AssetsDevices
+  - method: patch
+    host_root_path: /api/v2/assets/devices/batch
+    base_path: /api/v2
+    legacy_operation_id: batchUpdateDeviceAssets
+    standardized_operation_id: patchApiV2AssetsDevicesBatch
+  - method: get
+    host_root_path: /api/v2/assets/devices/jc-system/{jcSystemId}
+    base_path: /api/v2
+    legacy_operation_id: getDeviceAssetByJCSystemID
+    standardized_operation_id: getApiV2AssetsDevicesJcSystemByJcsystemid
+  - method: get
+    host_root_path: /api/v2/assets/accessories/{id}
+    base_path: /api/v2
+    legacy_operation_id: getAccessoryAsset
+    standardized_operation_id: getApiV2AssetsAccessoriesById
+  - method: put
+    host_root_path: /api/v2/assets/accessories/{id}
+    base_path: /api/v2
+    legacy_operation_id: updateAccessoryAsset
+    standardized_operation_id: putApiV2AssetsAccessoriesById
+  - method: delete
+    host_root_path: /api/v2/assets/accessories/{id}
+    base_path: /api/v2
+    legacy_operation_id: deleteAccessoryAsset
+    standardized_operation_id: deleteApiV2AssetsAccessoriesById
+  - method: get
+    host_root_path: /api/v2/assets/accessories
+    base_path: /api/v2
+    legacy_operation_id: listAccessoryAssets
+    standardized_operation_id: getApiV2AssetsAccessories
+  - method: post
+    host_root_path: /api/v2/assets/accessories
+    base_path: /api/v2
+    legacy_operation_id: createAccessoryAsset
+    standardized_operation_id: postApiV2AssetsAccessories
+  - method: patch
+    host_root_path: /api/v2/assets/accessories/batch
+    base_path: /api/v2
+    legacy_operation_id: batchUpdateAccessoryAssets
+    standardized_operation_id: patchApiV2AssetsAccessoriesBatch
+  - method: get
+    host_root_path: /api/v2/assets/locations/{id}
+    base_path: /api/v2
+    legacy_operation_id: getLocationAsset
+    standardized_operation_id: getApiV2AssetsLocationsById
+  - method: put
+    host_root_path: /api/v2/assets/locations/{id}
+    base_path: /api/v2
+    legacy_operation_id: updateLocationAsset
+    standardized_operation_id: putApiV2AssetsLocationsById
+  - method: delete
+    host_root_path: /api/v2/assets/locations/{id}
+    base_path: /api/v2
+    legacy_operation_id: deleteLocationAsset
+    standardized_operation_id: deleteApiV2AssetsLocationsById
+  - method: get
+    host_root_path: /api/v2/assets/locations
+    base_path: /api/v2
+    legacy_operation_id: listLocationAssets
+    standardized_operation_id: getApiV2AssetsLocations
+  - method: post
+    host_root_path: /api/v2/assets/locations
+    base_path: /api/v2
+    legacy_operation_id: createLocationAsset
+    standardized_operation_id: postApiV2AssetsLocations
+  - method: patch
+    host_root_path: /api/v2/assets/locations/batch
+    base_path: /api/v2
+    legacy_operation_id: batchUpdateLocationAssets
+    standardized_operation_id: patchApiV2AssetsLocationsBatch
+  - method: get
+    host_root_path: /api/v2/assets/devices/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: listDeviceAssetHistory
+    standardized_operation_id: getApiV2AssetsDevicesByIdHistory
+  - method: post
+    host_root_path: /api/v2/assets/devices/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: createDeviceAssetHistoryNote
+    standardized_operation_id: postApiV2AssetsDevicesByIdHistory
+  - method: get
+    host_root_path: /api/v2/assets/accessories/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: listAccessoryAssetHistory
+    standardized_operation_id: getApiV2AssetsAccessoriesByIdHistory
+  - method: post
+    host_root_path: /api/v2/assets/accessories/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: createAccessoryAssetHistoryNote
+    standardized_operation_id: postApiV2AssetsAccessoriesByIdHistory
+  - method: get
+    host_root_path: /api/v2/assets/locations/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: listLocationAssetHistory
+    standardized_operation_id: getApiV2AssetsLocationsByIdHistory
+  - method: post
+    host_root_path: /api/v2/assets/locations/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: createLocationAssetHistoryNote
+    standardized_operation_id: postApiV2AssetsLocationsByIdHistory
+  - method: get
+    host_root_path: /api/v2/workflows
+    base_path: /api/v2
+    legacy_operation_id: listWorkflows
+    standardized_operation_id: getApiV2Workflows
+  - method: post
+    host_root_path: /api/v2/workflows
+    base_path: /api/v2
+    legacy_operation_id: createWorkflow
+    standardized_operation_id: postApiV2Workflows
+  - method: get
+    host_root_path: /api/v2/workflows/{id}
+    base_path: /api/v2
+    legacy_operation_id: getWorkflow
+    standardized_operation_id: getApiV2WorkflowsById
+  - method: put
+    host_root_path: /api/v2/workflows/{id}
+    base_path: /api/v2
+    legacy_operation_id: updateWorkflow
+    standardized_operation_id: putApiV2WorkflowsById
+  - method: delete
+    host_root_path: /api/v2/workflows/{id}
+    base_path: /api/v2
+    legacy_operation_id: deleteWorkflow
+    standardized_operation_id: deleteApiV2WorkflowsById
+  - method: post
+    host_root_path: /api/v2/workflows/{id}/runs
+    base_path: /api/v2
+    legacy_operation_id: triggerWorkflow
+    standardized_operation_id: postApiV2WorkflowsByIdRuns
+  - method: get
+    host_root_path: /api/v2/workflows/runs
+    base_path: /api/v2
+    legacy_operation_id: listWorkflowRuns
+    standardized_operation_id: getApiV2WorkflowsRuns
+  - method: get
+    host_root_path: /api/v2/workflows/runs/{runId}
+    base_path: /api/v2
+    legacy_operation_id: getWorkflowRun
+    standardized_operation_id: getApiV2WorkflowsRunsByRunid
+  - method: get
+    host_root_path: /api/v2/workflows/templates
+    base_path: /api/v2
+    legacy_operation_id: listTemplates
+    standardized_operation_id: getApiV2WorkflowsTemplates
+  - method: get
+    host_root_path: /api/v2/workflows/templates/{templateId}
+    base_path: /api/v2
+    legacy_operation_id: getTemplate
+    standardized_operation_id: getApiV2WorkflowsTemplatesByTemplateid
+  - method: get
+    host_root_path: /api/v2/saas-management/application-catalog
+    base_path: /api/v2
+    legacy_operation_id: listCatalogApplications
+    standardized_operation_id: getApiV2SaasManagementApplicationCatalog
+  - method: get
+    host_root_path: /api/v2/saas-management/application-catalog/{catalog_application_id}
+    base_path: /api/v2
+    legacy_operation_id: getCatalogApplication
+    standardized_operation_id: getApiV2SaasManagementApplicationCatalogByCatalogApplicationId
+  - method: get
+    host_root_path: /api/v2/saas-management/applications
+    base_path: /api/v2
+    legacy_operation_id: listApplications
+    standardized_operation_id: getApiV2SaasManagementApplications
+  - method: post
+    host_root_path: /api/v2/saas-management/applications
+    base_path: /api/v2
+    legacy_operation_id: createApplication
+    standardized_operation_id: postApiV2SaasManagementApplications
+  - method: get
+    host_root_path: /api/v2/saas-management/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: getApplication
+    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationId
+  - method: put
+    host_root_path: /api/v2/saas-management/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: updateApplication
+    standardized_operation_id: putApiV2SaasManagementApplicationsByApplicationId
+  - method: delete
+    host_root_path: /api/v2/saas-management/applications/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: deleteApplication
+    standardized_operation_id: deleteApiV2SaasManagementApplicationsByApplicationId
+  - method: get
+    host_root_path: /api/v2/saas-management/applications/{application_id}/usage
+    base_path: /api/v2
+    legacy_operation_id: getApplicationUsage
+    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationIdUsage
+  - method: get
+    host_root_path: /api/v2/saas-management/application-licenses
+    base_path: /api/v2
+    legacy_operation_id: listLicenses
+    standardized_operation_id: getApiV2SaasManagementApplicationLicenses
+  - method: get
+    host_root_path: /api/v2/saas-management/application-licenses/{application_id}
+    base_path: /api/v2
+    legacy_operation_id: listApplicationLicenses
+    standardized_operation_id: getApiV2SaasManagementApplicationLicensesByApplicationId
+  - method: get
+    host_root_path: /api/v2/saas-management/applications/{application_id}/accounts
+    base_path: /api/v2
+    legacy_operation_id: listApplicationAccounts
+    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationIdAccounts
+  - method: get
+    host_root_path: /api/v2/saas-management/applications/{application_id}/accounts/{account_id}
+    base_path: /api/v2
+    legacy_operation_id: getAccount
+    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationIdAccountsByAccountId
+  - method: delete
+    host_root_path: /api/v2/saas-management/applications/{application_id}/accounts/{account_id}
+    base_path: /api/v2
+    legacy_operation_id: deleteAccount
+    standardized_operation_id: deleteApiV2SaasManagementApplicationsByApplicationIdAccountsByAccountId
+  - method: get
     host_root_path: /api/v2/activedirectories
     base_path: /api/v2
     legacy_operation_id: activedirectories_list
@@ -4156,308 +4461,3 @@ operations:
     base_path: /api/v2
     legacy_operation_id: office365s_users_update_external_id_correlations
     standardized_operation_id: putApiV2Office365sByOffice365IdUsersExternalId
-  - method: get
-    host_root_path: /api/v2/assets/field-configurations
-    base_path: /api/v2
-    legacy_operation_id: listFieldConfigurations
-    standardized_operation_id: getApiV2AssetsFieldConfigurations
-  - method: get
-    host_root_path: /api/v2/assets/field-configurations/{id}/select-options
-    base_path: /api/v2
-    legacy_operation_id: getFieldConfigSelectOptions
-    standardized_operation_id: getApiV2AssetsFieldConfigurationsByIdSelectOptions
-  - method: get
-    host_root_path: /api/v2/assets/devices/{id}
-    base_path: /api/v2
-    legacy_operation_id: getDeviceAsset
-    standardized_operation_id: getApiV2AssetsDevicesById
-  - method: put
-    host_root_path: /api/v2/assets/devices/{id}
-    base_path: /api/v2
-    legacy_operation_id: updateDeviceAsset
-    standardized_operation_id: putApiV2AssetsDevicesById
-  - method: delete
-    host_root_path: /api/v2/assets/devices/{id}
-    base_path: /api/v2
-    legacy_operation_id: deleteDeviceAsset
-    standardized_operation_id: deleteApiV2AssetsDevicesById
-  - method: get
-    host_root_path: /api/v2/assets/devices
-    base_path: /api/v2
-    legacy_operation_id: listDeviceAssets
-    standardized_operation_id: getApiV2AssetsDevices
-  - method: post
-    host_root_path: /api/v2/assets/devices
-    base_path: /api/v2
-    legacy_operation_id: createDeviceAsset
-    standardized_operation_id: postApiV2AssetsDevices
-  - method: patch
-    host_root_path: /api/v2/assets/devices/batch
-    base_path: /api/v2
-    legacy_operation_id: batchUpdateDeviceAssets
-    standardized_operation_id: patchApiV2AssetsDevicesBatch
-  - method: get
-    host_root_path: /api/v2/assets/devices/jc-system/{jcSystemId}
-    base_path: /api/v2
-    legacy_operation_id: getDeviceAssetByJCSystemID
-    standardized_operation_id: getApiV2AssetsDevicesJcSystemByJcsystemid
-  - method: get
-    host_root_path: /api/v2/assets/accessories/{id}
-    base_path: /api/v2
-    legacy_operation_id: getAccessoryAsset
-    standardized_operation_id: getApiV2AssetsAccessoriesById
-  - method: put
-    host_root_path: /api/v2/assets/accessories/{id}
-    base_path: /api/v2
-    legacy_operation_id: updateAccessoryAsset
-    standardized_operation_id: putApiV2AssetsAccessoriesById
-  - method: delete
-    host_root_path: /api/v2/assets/accessories/{id}
-    base_path: /api/v2
-    legacy_operation_id: deleteAccessoryAsset
-    standardized_operation_id: deleteApiV2AssetsAccessoriesById
-  - method: get
-    host_root_path: /api/v2/assets/accessories
-    base_path: /api/v2
-    legacy_operation_id: listAccessoryAssets
-    standardized_operation_id: getApiV2AssetsAccessories
-  - method: post
-    host_root_path: /api/v2/assets/accessories
-    base_path: /api/v2
-    legacy_operation_id: createAccessoryAsset
-    standardized_operation_id: postApiV2AssetsAccessories
-  - method: patch
-    host_root_path: /api/v2/assets/accessories/batch
-    base_path: /api/v2
-    legacy_operation_id: batchUpdateAccessoryAssets
-    standardized_operation_id: patchApiV2AssetsAccessoriesBatch
-  - method: get
-    host_root_path: /api/v2/assets/locations/{id}
-    base_path: /api/v2
-    legacy_operation_id: getLocationAsset
-    standardized_operation_id: getApiV2AssetsLocationsById
-  - method: put
-    host_root_path: /api/v2/assets/locations/{id}
-    base_path: /api/v2
-    legacy_operation_id: updateLocationAsset
-    standardized_operation_id: putApiV2AssetsLocationsById
-  - method: delete
-    host_root_path: /api/v2/assets/locations/{id}
-    base_path: /api/v2
-    legacy_operation_id: deleteLocationAsset
-    standardized_operation_id: deleteApiV2AssetsLocationsById
-  - method: get
-    host_root_path: /api/v2/assets/locations
-    base_path: /api/v2
-    legacy_operation_id: listLocationAssets
-    standardized_operation_id: getApiV2AssetsLocations
-  - method: post
-    host_root_path: /api/v2/assets/locations
-    base_path: /api/v2
-    legacy_operation_id: createLocationAsset
-    standardized_operation_id: postApiV2AssetsLocations
-  - method: patch
-    host_root_path: /api/v2/assets/locations/batch
-    base_path: /api/v2
-    legacy_operation_id: batchUpdateLocationAssets
-    standardized_operation_id: patchApiV2AssetsLocationsBatch
-  - method: get
-    host_root_path: /api/v2/assets/devices/{id}/history
-    base_path: /api/v2
-    legacy_operation_id: listDeviceAssetHistory
-    standardized_operation_id: getApiV2AssetsDevicesByIdHistory
-  - method: post
-    host_root_path: /api/v2/assets/devices/{id}/history
-    base_path: /api/v2
-    legacy_operation_id: createDeviceAssetHistoryNote
-    standardized_operation_id: postApiV2AssetsDevicesByIdHistory
-  - method: get
-    host_root_path: /api/v2/assets/accessories/{id}/history
-    base_path: /api/v2
-    legacy_operation_id: listAccessoryAssetHistory
-    standardized_operation_id: getApiV2AssetsAccessoriesByIdHistory
-  - method: post
-    host_root_path: /api/v2/assets/accessories/{id}/history
-    base_path: /api/v2
-    legacy_operation_id: createAccessoryAssetHistoryNote
-    standardized_operation_id: postApiV2AssetsAccessoriesByIdHistory
-  - method: get
-    host_root_path: /api/v2/assets/locations/{id}/history
-    base_path: /api/v2
-    legacy_operation_id: listLocationAssetHistory
-    standardized_operation_id: getApiV2AssetsLocationsByIdHistory
-  - method: post
-    host_root_path: /api/v2/assets/locations/{id}/history
-    base_path: /api/v2
-    legacy_operation_id: createLocationAssetHistoryNote
-    standardized_operation_id: postApiV2AssetsLocationsByIdHistory
-  - method: get
-    host_root_path: /api/v2/saas-management/application-catalog
-    base_path: /api/v2
-    legacy_operation_id: listCatalogApplications
-    standardized_operation_id: getApiV2SaasManagementApplicationCatalog
-  - method: get
-    host_root_path: /api/v2/saas-management/application-catalog/{catalog_application_id}
-    base_path: /api/v2
-    legacy_operation_id: getCatalogApplication
-    standardized_operation_id: getApiV2SaasManagementApplicationCatalogByCatalogApplicationId
-  - method: get
-    host_root_path: /api/v2/saas-management/applications
-    base_path: /api/v2
-    legacy_operation_id: listApplications
-    standardized_operation_id: getApiV2SaasManagementApplications
-  - method: post
-    host_root_path: /api/v2/saas-management/applications
-    base_path: /api/v2
-    legacy_operation_id: createApplication
-    standardized_operation_id: postApiV2SaasManagementApplications
-  - method: get
-    host_root_path: /api/v2/saas-management/applications/{application_id}
-    base_path: /api/v2
-    legacy_operation_id: getApplication
-    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationId
-  - method: put
-    host_root_path: /api/v2/saas-management/applications/{application_id}
-    base_path: /api/v2
-    legacy_operation_id: updateApplication
-    standardized_operation_id: putApiV2SaasManagementApplicationsByApplicationId
-  - method: delete
-    host_root_path: /api/v2/saas-management/applications/{application_id}
-    base_path: /api/v2
-    legacy_operation_id: deleteApplication
-    standardized_operation_id: deleteApiV2SaasManagementApplicationsByApplicationId
-  - method: get
-    host_root_path: /api/v2/saas-management/applications/{application_id}/usage
-    base_path: /api/v2
-    legacy_operation_id: getApplicationUsage
-    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationIdUsage
-  - method: get
-    host_root_path: /api/v2/saas-management/application-licenses
-    base_path: /api/v2
-    legacy_operation_id: listLicenses
-    standardized_operation_id: getApiV2SaasManagementApplicationLicenses
-  - method: get
-    host_root_path: /api/v2/saas-management/application-licenses/{application_id}
-    base_path: /api/v2
-    legacy_operation_id: listApplicationLicenses
-    standardized_operation_id: getApiV2SaasManagementApplicationLicensesByApplicationId
-  - method: get
-    host_root_path: /api/v2/saas-management/applications/{application_id}/accounts
-    base_path: /api/v2
-    legacy_operation_id: listApplicationAccounts
-    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationIdAccounts
-  - method: get
-    host_root_path: /api/v2/saas-management/applications/{application_id}/accounts/{account_id}
-    base_path: /api/v2
-    legacy_operation_id: getAccount
-    standardized_operation_id: getApiV2SaasManagementApplicationsByApplicationIdAccountsByAccountId
-  - method: delete
-    host_root_path: /api/v2/saas-management/applications/{application_id}/accounts/{account_id}
-    base_path: /api/v2
-    legacy_operation_id: deleteAccount
-    standardized_operation_id: deleteApiV2SaasManagementApplicationsByApplicationIdAccountsByAccountId
-  - method: get
-    host_root_path: /api/v2/workflows
-    base_path: /api/v2
-    legacy_operation_id: listWorkflows
-    standardized_operation_id: getApiV2Workflows
-  - method: post
-    host_root_path: /api/v2/workflows
-    base_path: /api/v2
-    legacy_operation_id: createWorkflow
-    standardized_operation_id: postApiV2Workflows
-  - method: get
-    host_root_path: /api/v2/workflows/{id}
-    base_path: /api/v2
-    legacy_operation_id: getWorkflow
-    standardized_operation_id: getApiV2WorkflowsById
-  - method: put
-    host_root_path: /api/v2/workflows/{id}
-    base_path: /api/v2
-    legacy_operation_id: updateWorkflow
-    standardized_operation_id: putApiV2WorkflowsById
-  - method: delete
-    host_root_path: /api/v2/workflows/{id}
-    base_path: /api/v2
-    legacy_operation_id: deleteWorkflow
-    standardized_operation_id: deleteApiV2WorkflowsById
-  - method: post
-    host_root_path: /api/v2/workflows/{id}/runs
-    base_path: /api/v2
-    legacy_operation_id: triggerWorkflow
-    standardized_operation_id: postApiV2WorkflowsByIdRuns
-  - method: get
-    host_root_path: /api/v2/workflows/runs
-    base_path: /api/v2
-    legacy_operation_id: listWorkflowRuns
-    standardized_operation_id: getApiV2WorkflowsRuns
-  - method: get
-    host_root_path: /api/v2/workflows/runs/{runId}
-    base_path: /api/v2
-    legacy_operation_id: getWorkflowRun
-    standardized_operation_id: getApiV2WorkflowsRunsByRunid
-  - method: get
-    host_root_path: /api/v2/workflows/templates
-    base_path: /api/v2
-    legacy_operation_id: listTemplates
-    standardized_operation_id: getApiV2WorkflowsTemplates
-  - method: get
-    host_root_path: /api/v2/workflows/templates/{templateId}
-    base_path: /api/v2
-    legacy_operation_id: getTemplate
-    standardized_operation_id: getApiV2WorkflowsTemplatesByTemplateid
-  - method: get
-    host_root_path: /api/v2/agents
-    base_path: /api/v2
-    legacy_operation_id: getApiV2Agents
-    standardized_operation_id: getApiV2Agents
-  - method: post
-    host_root_path: /api/v2/agents
-    base_path: /api/v2
-    legacy_operation_id: postApiV2Agents
-    standardized_operation_id: postApiV2Agents
-  - method: get
-    host_root_path: /api/v2/agents/{agent_id}
-    base_path: /api/v2
-    legacy_operation_id: getApiV2AgentsById
-    standardized_operation_id: getApiV2AgentsByAgentId
-  - method: patch
-    host_root_path: /api/v2/agents/{agent_id}
-    base_path: /api/v2
-    legacy_operation_id: patchApiV2AgentsById
-    standardized_operation_id: patchApiV2AgentsByAgentId
-  - method: delete
-    host_root_path: /api/v2/agents/{agent_id}
-    base_path: /api/v2
-    legacy_operation_id: deleteApiV2AgentsById
-    standardized_operation_id: deleteApiV2AgentsByAgentId
-  - method: post
-    host_root_path: /api/v2/agents/{agent_id}/suspend
-    base_path: /api/v2
-    legacy_operation_id: postApiV2AgentsByIdSuspend
-    standardized_operation_id: postApiV2AgentsByAgentIdSuspend
-  - method: post
-    host_root_path: /api/v2/agents/{agent_id}/activate
-    base_path: /api/v2
-    legacy_operation_id: postApiV2AgentsByIdActivate
-    standardized_operation_id: postApiV2AgentsByAgentIdActivate
-  - method: get
-    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials
-    base_path: /api/v2
-    legacy_operation_id: getApiV2AgentsByIdCredentials
-    standardized_operation_id: getApiV2AgentsByAgentIdInboundCredentials
-  - method: post
-    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials
-    base_path: /api/v2
-    legacy_operation_id: postApiV2AgentsByIdCredentials
-    standardized_operation_id: postApiV2AgentsByAgentIdInboundCredentials
-  - method: patch
-    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials/{client_id}
-    base_path: /api/v2
-    legacy_operation_id: patchApiV2AgentsByIdCredentialsByClientId
-    standardized_operation_id: patchApiV2AgentsByAgentIdInboundCredentialsByClientId
-  - method: delete
-    host_root_path: /api/v2/agents/{agent_id}/inbound-credentials/{client_id}
-    base_path: /api/v2
-    legacy_operation_id: deleteApiV2AgentsByIdCredentialsByClientId
-    standardized_operation_id: deleteApiV2AgentsByAgentIdInboundCredentialsByClientId
