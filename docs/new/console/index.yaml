@@ -16028,6 +16028,23 @@ paths:
     x-functionalities-tags:
       - policies
       - associations
+  /api/v2/providers/{provider_id}/passwordpolicies/{resource_id}/associations:
+    parameters:
+      - name: provider_id
+        in: path
+        required: true
+        description: The ID of the provider
+        schema:
+          type: string
+      - name: resource_id
+        in: path
+        required: true
+        description: The ID of the password policy
+        schema:
+          type: string
+    x-functionalities-tags:
+      - password-policies
+      - associations
   /api/v2/providers/{provider_id}/activedirectories:
     get:
       description: |-
@@ -62288,6 +62305,9 @@ components:
           items:
             $ref: "#/components/schemas/jumpcloud.password.GroupResponse"
         objectId:
+          type: string
+          format: byte
+        organizationObjectId:
           type: string
           format: byte
         policy:
