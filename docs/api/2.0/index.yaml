@@ -50524,7 +50524,8 @@ paths:
           description: When set to `assignment` in MSP provider context (authenticated MSP provider without organization context), returns the provider assignment catalog (system roles plus all provider-owned custom roles). Ignored for organization-scoped requests.
           schema:
             type: string
-            const: assignment
+            enum:
+              - assignment
       responses:
         '200':
           description: Successfully retrieved roles.
@@ -68965,7 +68966,8 @@ components:
               $ref: '#/components/schemas/GraphAttributes'
             type:
               description: Targets which a "organization" can be associated to.
-              const: organization
+              enum:
+                - organization
               type: string
           required:
             - type
@@ -68979,7 +68981,8 @@ components:
               $ref: '#/components/schemas/GraphAttributes'
             type:
               description: Targets which a "organization" can be associated to.
-              const: organization
+              enum:
+                - organization
               type: string
           required:
             - type
@@ -68993,7 +68996,8 @@ components:
               $ref: '#/components/schemas/GraphAttributes'
             type:
               description: Targets which a "organization" can be associated to.
-              const: organization
+              enum:
+                - organization
               type: string
           required:
             - type
@@ -69022,7 +69026,8 @@ components:
         - properties:
             type:
               description: Targets which an "agent_group" can be associated to. The only supported value is `application`.
-              const: application
+              enum:
+                - application
               type: string
           required:
             - type
@@ -69034,7 +69039,8 @@ components:
         - properties:
             type:
               description: The member type. The only supported value is `agent`.
-              const: agent
+              enum:
+                - agent
               type: string
           required:
             - type
@@ -69166,7 +69172,8 @@ components:
               $ref: '#/components/schemas/GraphAttributes'
             type:
               description: The member type.
-              const: policy
+              enum:
+                - policy
               type: string
           required:
             - type
@@ -69340,7 +69347,8 @@ components:
               $ref: '#/components/schemas/GraphAttributes'
             type:
               description: The member type.
-              const: system
+              enum:
+                - system
               type: string
           required:
             - type
@@ -69354,7 +69362,8 @@ components:
               $ref: '#/components/schemas/GraphAttributes'
             type:
               description: The member type.
-              const: user
+              enum:
+                - user
               type: string
           required:
             - type
@@ -69725,7 +69734,8 @@ components:
       description: |
         Direction identify if a attribute is going to be exported or imported from Office365
         * `Export`- The data will exported from the user modal to Office365
-      const: export
+      enum:
+        - export
       title: Office 365 Direction translation
       type: string
       default: export
@@ -69952,7 +69962,8 @@ components:
             - 'null'
         type:
           description: The type of the group; always `agent_group` for an agent group.
-          const: agent_group
+          enum:
+            - agent_group
           type: string
       title: AgentGroup
       type: object
@@ -69993,7 +70004,8 @@ components:
             - 'null'
         type:
           description: The type of the group; always 'policy' for a Policy Group.
-          const: policy_group
+          enum:
+            - policy_group
           type: string
       title: PolicyGroup
       type: object
@@ -70741,7 +70753,8 @@ components:
             - 'null'
         type:
           description: The type of the group; always 'system' for a System Group.
-          const: system_group
+          enum:
+            - system_group
           type: string
       title: SystemGroup
       type: object
@@ -70842,7 +70855,8 @@ components:
           $ref: '#/components/schemas/SuggestionCounts'
         type:
           description: The type of the group.
-          const: user_group
+          enum:
+            - user_group
           type: string
       title: UserGroup
       type: object
@@ -75459,7 +75473,8 @@ components:
           description: The only field that is currently supported is ldap_binding_user
         operator:
           type: string
-          const: EQ
+          enum:
+            - EQ
         value:
           $ref: '#/components/schemas/AnyValue'
     AuthnPolicyUserAttributeTarget:
@@ -80336,7 +80351,8 @@ components:
         ownerType:
           type: string
           description: Owner of the custom role. Set to `provider` for provider-owned (MSP) custom roles; omitted for organization-owned roles.
-          const: provider
+          enum:
+            - provider
           readOnly: true
       required:
         - name
@@ -85041,7 +85057,8 @@ components:
       schema:
         type: array
         items:
-          const: application
+          enum:
+            - application
           type: string
     trait_graphTargetsApplication_targets:
       name: targets
@@ -85345,7 +85362,8 @@ components:
       name: details
       schema:
         type: string
-        const: v1
+        enum:
+          - v1
     trait_bulkJobQueryParameters_suppressEmail:
       description: |
         An option indicating whether to suppress the job results email that will
@@ -85650,6 +85668,7 @@ components:
       required: true
   securitySchemes:
     x-api-key:
+      description: API key used to authenticate requests.
       in: header
       name: x-api-key
       type: apiKey

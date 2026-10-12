@@ -8572,7 +8572,8 @@ components:
             properties:
               type:
                 type: string
-                const: security
+                enum:
+                  - security
               name:
                 type: string
                 enum:
@@ -8861,7 +8862,8 @@ components:
             properties:
               type:
                 type: string
-                const: security
+                enum:
+                  - security
               name:
                 type: string
                 enum:
@@ -9196,7 +9198,8 @@ components:
             name:
               type: string
               description: Authority name
-              const: ActiveDirectory
+              enum:
+                - ActiveDirectory
             id:
               type: string
               description: ObjectId of the target Active Directory connection
@@ -9366,7 +9369,8 @@ components:
             name:
               type: string
               description: Authority name
-              const: ActiveDirectory
+              enum:
+                - ActiveDirectory
             id:
               type: string
               description: ObjectId of the target Active Directory connection
@@ -9606,7 +9610,8 @@ components:
             name:
               type: string
               description: Authority name
-              const: ActiveDirectory
+              enum:
+                - ActiveDirectory
             id:
               type: string
               description: ObjectId of the target Active Directory connection
@@ -9712,7 +9717,8 @@ components:
             name:
               type: string
               description: Authority name
-              const: ActiveDirectory
+              enum:
+                - ActiveDirectory
             id:
               type: string
               description: ObjectId of the target Active Directory connection
@@ -10256,6 +10262,7 @@ components:
             $ref: '#/components/schemas/search'
   securitySchemes:
     x-api-key:
+      description: API key used to authenticate requests.
       in: header
       name: x-api-key
       type: apiKey
