@@ -3748,7 +3748,9 @@ paths:
             Bad request. Including a read-only property from
             [Agent](#componentschemasagent) returns HTTP 400. When the
             organization has reached its agent limit, `status` is
-            `agentOrgCapExceeded`.
+            `agentOrgCapExceeded`. An invalid `allowedAudiences` returns
+            `nullAllowedAudiences`, `tooManyAudiences`, `duplicateAudience`,
+            `invalidAudience`, or `reservedAudience`.
           content:
             application/json:
               schema:
@@ -3825,7 +3827,9 @@ paths:
             `message` describes the failure for humans. Common codes include
             `nullName`, `invalidName`, `invalidEmail`, `invalidOwnerId`,
             `invalidOwner`, `stateNotUpdatable`, `ownerIdClearForbidden`, and
-            `emptyPatch`.
+            `emptyPatch`. An invalid `allowedAudiences` returns
+            `nullAllowedAudiences`, `tooManyAudiences`, `duplicateAudience`,
+            `invalidAudience`, or `reservedAudience`.
             Including a read-only property from
             [Agent](#componentschemasagent) also returns HTTP 400.
           content:
@@ -47611,6 +47615,26 @@ components:
             - active
             - suspended
           readOnly: true
+        allowedAudiences:
+          $ref: "#/components/schemas/AllowedAudiences"
+          description: |
+            Unordered set. Returned by get, register and update (`[]` when
+            none); omitted by list, suspend and activate.
+    AllowedAudiences:
+      type: array
+      maxItems: 5
+      uniqueItems: true
+      description: |
+        Audiences this agent may request in an agent token. Each value
+        starts with `https://`, has no userinfo, backslash, encoded `/` or
+        `\` (`%2F`, `%5C`), `.` or `..` path segment, query, fragment,
+        whitespace or non-printable character, and has a canonical host (punycode for internationalized
+        names, no IP shorthand) that is not `jumpcloud.com` or a
+        subdomain. Values are stored exactly as sent, so letter case and a
+        trailing `/` are significant.
+      items:
+        type: string
+        maxLength: 256
     AgentCreateRequest:
       type: object
       description: Fields for registering an agent.
@@ -47641,6 +47665,9 @@ components:
           description: |
             ID of the human user who will own this agent. Must be in
             the same organization.
+        allowedAudiences:
+          $ref: "#/components/schemas/AllowedAudiences"
+          description: Explicit allowed audiences. Omitted stores `[]`.
     AgentUpdateRequest:
       type: object
       description: |
@@ -47678,6 +47705,11 @@ components:
           description: |
             ID of the human user who will own this agent. Must be in
             the same organization. Must be a non-null ID when present.
+        allowedAudiences:
+          $ref: "#/components/schemas/AllowedAudiences"
+          description: |
+            Replaces the whole set of allowed audiences; `[]` clears it.
+            Omitted leaves the set unchanged.
     TokenEndpointAuthMethod:
       type: string
       description: |
