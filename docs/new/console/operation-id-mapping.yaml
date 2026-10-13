@@ -4461,3 +4461,8 @@ operations:
     base_path: /api/v2
     legacy_operation_id: office365s_users_update_external_id_correlations
     standardized_operation_id: putApiV2Office365sByOffice365IdUsersExternalId
+  - method: get
+    host_root_path: /api/v2/applemdms/ade_tokens_stats
+    base_path: /api/v2
+    legacy_operation_id: ADETokens_GetADETokensStats
+    standardized_operation_id: getApiV2ApplemdmsAdeTokensStats

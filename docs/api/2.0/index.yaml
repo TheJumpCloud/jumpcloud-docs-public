@@ -64910,6 +64910,73 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s/{office365_id}/users/external-id' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"correlations":[{"externalUserId":"string","userObjectId":"string"}]}'
+  /applemdms/ade_tokens_stats:
+    get:
+      summary: Get ADE Tokens Stats
+      description: |-
+        Get aggregate counts of ADE tokens by expiry status for the calling organization(s).
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens_stats \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+      operationId: ADETokens_GetADETokensStats
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - mdm
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - mdm
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/applemdms/ade_tokens_stats \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/applemdms/ade_tokens_stats"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens_stats' -Method GET -Headers $headers
 components:
   schemas:
     Error:
@@ -84584,7 +84651,10 @@ components:
           type: array
           items:
             type: string
-      description: ADESettingPatchMask selects which PatchADESettingRequest fields to apply.
+      description: |-
+        ADESettingPatchMask selects which PatchADESettingRequest fields to apply.
+        Required on PatchADESettingRequest. Only fields listed in fields are updated
+        (include setup_options or default_device_group_object_ids in fields to clear them).
     devices.GetAzureAdUserManagementSettingsResponse:
       type: object
       properties:
