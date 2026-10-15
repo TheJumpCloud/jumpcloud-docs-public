@@ -14443,10 +14443,10 @@ paths:
     x-functionalities-tags:
       - agent-groups
       - agent-members
-  /api/v2/agentgroups/{id}:
+  /api/v2/agentgroups/{group_id}:
     delete:
       description: Permanently deletes an agent group.
-      operationId: deleteApiV2AgentgroupsById
+      operationId: deleteApiV2AgentgroupsByGroupId
       parameters:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
       responses:
@@ -14465,7 +14465,7 @@ paths:
         - groups
     get:
       description: Retrieves an agent group in your organization.
-      operationId: getApiV2AgentgroupsById
+      operationId: getApiV2AgentgroupsByGroupId
       parameters:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
       responses:
@@ -14486,13 +14486,13 @@ paths:
     parameters:
       - description: Agent group ID (24-character hexadecimal string).
         in: path
-        name: id
+        name: group_id
         required: true
         schema:
           type: string
     patch:
       description: Updates an agent group. Omitted fields are left unchanged.
-      operationId: patchApiV2AgentgroupsById
+      operationId: patchApiV2AgentgroupsByGroupId
       parameters:
         - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
       requestBody:

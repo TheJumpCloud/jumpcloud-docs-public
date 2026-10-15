@@ -1302,20 +1302,20 @@ operations:
     legacy_operation_id: graph_agentGroupMembersPost
     standardized_operation_id: postApiV2AgentgroupsByGroupIdMembers
   - method: get
-    host_root_path: /api/v2/agentgroups/{id}
+    host_root_path: /api/v2/agentgroups/{group_id}
     base_path: /api/v2
     legacy_operation_id: groups_agent_get
-    standardized_operation_id: getApiV2AgentgroupsById
+    standardized_operation_id: getApiV2AgentgroupsByGroupId
   - method: patch
-    host_root_path: /api/v2/agentgroups/{id}
+    host_root_path: /api/v2/agentgroups/{group_id}
     base_path: /api/v2
     legacy_operation_id: groups_agent_patch
-    standardized_operation_id: patchApiV2AgentgroupsById
+    standardized_operation_id: patchApiV2AgentgroupsByGroupId
   - method: delete
-    host_root_path: /api/v2/agentgroups/{id}
+    host_root_path: /api/v2/agentgroups/{group_id}
     base_path: /api/v2
     legacy_operation_id: groups_agent_delete
-    standardized_operation_id: deleteApiV2AgentgroupsById
+    standardized_operation_id: deleteApiV2AgentgroupsByGroupId
   - method: get
     host_root_path: /api/v2/agents/{agent_id}/applications
     base_path: /api/v2

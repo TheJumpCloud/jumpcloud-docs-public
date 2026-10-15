@@ -16961,7 +16961,7 @@ paths:
     x-functionalities-tags:
       - agent-groups
       - agent-members
-  /agentgroups/{id}:
+  /agentgroups/{group_id}:
     delete:
       description: Permanently deletes an agent group.
       operationId: groups_agent_delete
@@ -16985,14 +16985,14 @@ paths:
         - lang: Shell
           source: |-
             curl --request DELETE \
-              --url https://console.jumpcloud.com/api/v2/agentgroups/{id} \
+              --url https://console.jumpcloud.com/api/v2/agentgroups/{group_id} \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE'
         - lang: Python
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/agentgroups/{id}"
+            url = "https://console.jumpcloud.com/api/v2/agentgroups/{group_id}"
 
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -17007,7 +17007,7 @@ paths:
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agentgroups/{id}' -Method DELETE -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agentgroups/{group_id}' -Method DELETE -Headers $headers
     get:
       description: Retrieves an agent group in your organization.
       operationId: groups_agent_get
@@ -17032,14 +17032,14 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url https://console.jumpcloud.com/api/v2/agentgroups/{id} \
+              --url https://console.jumpcloud.com/api/v2/agentgroups/{group_id} \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE'
         - lang: Python
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/agentgroups/{id}"
+            url = "https://console.jumpcloud.com/api/v2/agentgroups/{group_id}"
 
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -17054,11 +17054,11 @@ paths:
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agentgroups/{id}' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agentgroups/{group_id}' -Method GET -Headers $headers
     parameters:
       - description: Agent group ID (24-character hexadecimal string).
         in: path
-        name: id
+        name: group_id
         required: true
         schema:
           type: string
@@ -17087,7 +17087,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request PATCH \
-              --url https://console.jumpcloud.com/api/v2/agentgroups/{id} \
+              --url https://console.jumpcloud.com/api/v2/agentgroups/{group_id} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
@@ -17096,7 +17096,7 @@ paths:
           source: |-
             import requests
 
-            url = "https://console.jumpcloud.com/api/v2/agentgroups/{id}"
+            url = "https://console.jumpcloud.com/api/v2/agentgroups/{group_id}"
 
             payload = {
                 "attributes": {},
@@ -17118,7 +17118,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agentgroups/{id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","name":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/agentgroups/{group_id}' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"attributes":{},"description":"string","name":"string"}'
     x-functionalities-tags:
       - agent-groups
   /agents/{agent_id}/applications:
