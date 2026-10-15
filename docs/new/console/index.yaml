@@ -57786,6 +57786,14 @@ components:
             - ORGANIZATION
             - ENTERPRISE
             - UNKNOWN
+        orgId:
+          type: string
+          description: Owning organization object id (hex). Populated on aggregate list rows.
+          readOnly: true
+        orgName:
+          type: string
+          description: Live owning organization display name from organization metadata. Populated on aggregate list rows when managedBy is ORGANIZATION.
+          readOnly: true
         effect:
           $ref: "#/components/schemas/AuthnPolicyEffect"
         targets:
