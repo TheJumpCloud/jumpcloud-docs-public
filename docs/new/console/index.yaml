@@ -43566,6 +43566,32 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/approvalflowrequest/max-approved-end-time:
+    post:
+      summary: Get Max Approved End Time
+      description: Returns the maximum (latest) approved end date across active approved access requests matching the user and any of the provided group IDs. found=false means no matching AR (not an access denial).
+      operationId: postApiV2ApprovalflowrequestMaxApprovedEndTime
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.ingresso.GetMaxApprovedEndTimeResponse"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.ingresso.GetMaxApprovedEndTimeRequest"
+        description: GetMaxApprovedEndTimeRequest looks up the latest approved AR end time for a user across group IDs.
+        required: true
+      tags:
+        - Access Requests
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - accessmanagement.readonly
 components:
   schemas:
     attribute:
@@ -67127,6 +67153,33 @@ components:
       description: |-
         UpdateExternalIDResponse is intentionally empty, matching the Active
         Directory update contract (adbridge UpdateInternalUserResponse).
+    jumpcloud.ingresso.GetMaxApprovedEndTimeRequest:
+      type: object
+      properties:
+        groupIds:
+          type: array
+          items:
+            type: string
+          description: Eligible JC user group IDs from Step 1 (union of resource + credential policies). Min 1.
+        organizationObjectId:
+          type: string
+          format: byte
+        userId:
+          type: string
+          description: JumpCloud user ID (requestor) — hex ObjectId string.
+      description: GetMaxApprovedEndTimeRequest looks up the latest approved AR end time for a user across group IDs.
+    jumpcloud.ingresso.GetMaxApprovedEndTimeResponse:
+      type: object
+      properties:
+        approvedEndTime:
+          type: string
+          description: RFC3339 timestamp of the maximum (latest) expiration_date across matching ARs.
+        approvedStartTime:
+          type: string
+          description: RFC3339 session_start_date from the AR that owns approved_end_time (empty if unset).
+        found:
+          type: boolean
+      description: GetMaxApprovedEndTimeResponse returns found=false when no matching active approved AR exists.
     api_v2.Error:
       title: Error
       type: object

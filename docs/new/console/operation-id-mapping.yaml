@@ -4466,3 +4466,8 @@ operations:
     base_path: /api/v2
     legacy_operation_id: ADETokens_GetADETokensStats
     standardized_operation_id: getApiV2ApplemdmsAdeTokensStats
+  - method: post
+    host_root_path: /api/v2/approvalflowrequest/max-approved-end-time
+    base_path: /api/v2
+    legacy_operation_id: WorkflowAccessRequestApi_GetMaxApprovedEndTime
+    standardized_operation_id: postApiV2ApprovalflowrequestMaxApprovedEndTime
