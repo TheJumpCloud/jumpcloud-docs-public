@@ -177,60 +177,6 @@
     waitForLayout();
   }
 
-  var DEFAULT_SUPPORT_URL = "https://jumpcloud.com/support/contact-jumpcloud-support";
-  var DEFAULT_SUPPORT_LABEL = "JumpCloud Support";
-
-  function getSupportLinkFromSpec(spec) {
-    var contact = spec && spec.info && spec.info.contact;
-    if (!contact || typeof contact !== "object") {
-      return {
-        url: DEFAULT_SUPPORT_URL,
-        label: DEFAULT_SUPPORT_LABEL,
-      };
-    }
-    var url = typeof contact.url === "string" ? contact.url.trim() : "";
-    var label = typeof contact.name === "string" ? contact.name.trim() : "";
-    return {
-      url: url || DEFAULT_SUPPORT_URL,
-      label: label || DEFAULT_SUPPORT_LABEL,
-    };
-  }
-
-  function replaceSidebarSupportLink(support) {
-    var host = document.querySelector(".jc-scalar-scroll-host");
-    if (!host) {
-      return false;
-    }
-    var link = host.querySelector('.darklight-reference a[href="https://www.scalar.com"]');
-    if (!link) {
-      return false;
-    }
-    link.setAttribute("href", support.url);
-    link.textContent = " " + support.label + " ";
-    link.setAttribute("target", "_blank");
-    link.setAttribute("rel", "noopener noreferrer");
-    link.setAttribute("aria-label", support.label);
-    link.classList.add("jc-scalar-support-link");
-    return true;
-  }
-
-  function scheduleSidebarSupportLink(support) {
-    replaceSidebarSupportLink(support);
-    requestAnimationFrame(function () {
-      replaceSidebarSupportLink(support);
-    });
-    var attempts = 0;
-    function waitForFooter() {
-      if (replaceSidebarSupportLink(support)) {
-        return;
-      }
-      if (attempts++ < 60) {
-        requestAnimationFrame(waitForFooter);
-      }
-    }
-    waitForFooter();
-  }
-
   JumpCloudDocs.destroyScalarApiReference = function () {
     if (scalarApp && typeof scalarApp.destroy === "function") {
       scalarApp.destroy();
@@ -253,8 +199,6 @@
     return copy;
   };
 
-  JumpCloudDocs.getSupportLinkFromSpec = getSupportLinkFromSpec;
-  JumpCloudDocs.scheduleSidebarSupportLink = scheduleSidebarSupportLink;
   JumpCloudDocs.syncScalarViewportHeight = syncScalarViewportHeight;
   JumpCloudDocs.scheduleScalarViewportSync = scheduleScalarViewportSync;
 

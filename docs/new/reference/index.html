@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.59.0/dist/style.css"
-    integrity="sha384-cTRq1SymPR1xldTYuLtDfEu5bcyQMEfcFQGygxsYGcVJpiy+Dfgq4LesUU/tmfGj" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.73.0/dist/style.css"
+    integrity="sha384-N6bVRT9V7iRMHQzi1/xTbjQtZvDd5GG9Rsu9/IMj483m29oyj8jOVoDZ7yGqMi1+" crossorigin="anonymous">
   <link rel="stylesheet" href="../jc_docs_chrome.css">
   
 <!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
@@ -152,8 +152,8 @@
   <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.2.0/dist/js-yaml.min.js"
     integrity="sha384-hyhT0yrWXjngXhDa5wpJTU0pt/Djmlx4KtZECqqS6ZHf3ah4fWkFeW/2eWX9cX5J"
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.59.0/dist/browser/standalone.js"
-    integrity="sha384-fnn7TAyk/C4ckSgSR3v6x3mMfDRNj3PEvyzI0onzbsPOSrYxd9vU8Iq9jTCWG90/"
+  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.73.0/dist/browser/standalone.js"
+    integrity="sha384-OKyMdsDX84ypSZEhVun8YElXk5c2GQaH3EXPOc6ItmVcLDUAvKHYwvDLvAgsqVtB"
     crossorigin="anonymous"></script>
   <script src="../js/jc-spec-parse.js"></script>
   <script src="../js/jc-scalar-spec-prepare.js"></script>
@@ -167,7 +167,9 @@
       hideTestRequestButton: true,
       agent: { disabled: true },
       mcp: { disabled: true },
-      expandAllSchemaProperties: true,
+      // Properties past 15 sit behind "Show N more properties". Don't add expandAllSchemaProperties:
+      // it also opens that overflow and every nested property.
+      maxVisibleRequestBodyProperties: 15,
       hiddenClients: {
         c: ['libcurl'],
         clojure: ['clj_http'],
@@ -207,7 +209,7 @@
           --scalar-sidebar-item-hover-color: #4373c7;
           --scalar-sidebar-item-hover-background: rgba(67, 115, 199, 0.12);
         }
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path:first-child {
+        p.jc-scalar-operation-path:first-child {
           font-family: var(--scalar-font-code);
           font-size: var(--scalar-heading-2);
           font-weight: var(--scalar-bold);
@@ -216,44 +218,44 @@
           line-height: 1.4;
           padding: 0;
         }
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-path {
+        p.jc-scalar-operation-path .jc-scalar-http-path {
           color: var(--scalar-color-2);
           font-weight: var(--scalar-regular);
         }
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-get {
+        p.jc-scalar-operation-path .jc-scalar-http-method-get {
           color: var(--scalar-color-blue);
         }
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-post {
+        p.jc-scalar-operation-path .jc-scalar-http-method-post {
           color: var(--scalar-color-green);
         }
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-put {
+        p.jc-scalar-operation-path .jc-scalar-http-method-put {
           color: var(--scalar-color-orange);
         }
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-patch {
+        p.jc-scalar-operation-path .jc-scalar-http-method-patch {
           color: var(--scalar-color-yellow);
         }
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-delete {
+        p.jc-scalar-operation-path .jc-scalar-http-method-delete {
           color: var(--scalar-color-red);
         }
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-options {
+        p.jc-scalar-operation-path .jc-scalar-http-method-options {
           color: var(--scalar-color-purple);
         }
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-head,
-        .operation-details [aria-label="Operation Description"] > p.jc-scalar-operation-path .jc-scalar-http-method-trace {
+        p.jc-scalar-operation-path .jc-scalar-http-method-head,
+        p.jc-scalar-operation-path .jc-scalar-http-method-trace {
           color: var(--scalar-color-2);
         }
         /*
-         * Sidebar footer: hide Scalar branding and support link; page footer has support.
+         * Sidebar footer: hide Scalar branding; page footer has support.
          */
-        .darklight-reference a[href="https://www.scalar.com"],
-        .darklight-reference a.jc-scalar-support-link {
+        .darklight-reference a[href*="scalar.com"] {
           display: none !important;
         }
         /*
          * Hide Scalar's info.contact chip in the intro; support lives in the sidebar footer.
          */
         .introduction-section .custom-scroll > .group:has(a[href^="mailto:"]),
-        .introduction-section .custom-scroll > .group:has(> span.rounded-lg.border) {
+        .introduction-section .custom-scroll > .group:has(> span.rounded-lg.border),
+        .introduction-section .custom-scroll > .group:has(> a[href]) {
           display: none !important;
         }
         .response-card .scalar-code-block pre {

@@ -903,8 +903,7 @@ a.jc-tools-tile:hover {
   color: var(--jc-landing-text-muted);
 }
 
-.darklight-reference a[href="https://www.scalar.com"],
-.darklight-reference a.jc-scalar-support-link {
+.darklight-reference a[href*="scalar.com"] {
   display: none !important;
 }
 
