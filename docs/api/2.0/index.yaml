@@ -76163,6 +76163,11 @@ components:
           type: string
         deviceBaseBandVersion:
           type: string
+        eid:
+          type: array
+          items:
+            type: string
+          description: Not logging as it contains sensitive information.
         hardware:
           type: string
         manufacturer:
@@ -76254,7 +76259,14 @@ components:
     jumpcloud.google_emm.TelephonyInfo:
       type: object
       properties:
+        activationState:
+          $ref: '#/components/schemas/jumpcloud.google_emm.ESIMActivationState'
         carrierName:
+          type: string
+          description: Not logging as it contains sensitive information.
+        configuredBy:
+          $ref: '#/components/schemas/jumpcloud.google_emm.SIMConfiguredBy'
+        iccid:
           type: string
           description: Not logging as it contains sensitive information.
         phoneNumber:
@@ -84806,6 +84818,22 @@ components:
         found:
           type: boolean
       description: GetMaxApprovedEndTimeResponse returns found=false when no matching active approved AR exists.
+    jumpcloud.google_emm.ESIMActivationState:
+      type: string
+      enum:
+        - ACTIVATION_STATE_UNSPECIFIED
+        - NOT_ACTIVATED
+        - ACTIVATED
+      default: ACTIVATION_STATE_UNSPECIFIED
+      description: Activation state of an eSIM. Maps to AMAPI TelephonyInfo.activationState.
+    jumpcloud.google_emm.SIMConfiguredBy:
+      type: string
+      enum:
+        - CONFIG_MODE_UNSPECIFIED
+        - ADMIN_CONFIGURED
+        - USER_CONFIGURED
+      default: CONFIG_MODE_UNSPECIFIED
+      description: Who configured the SIM. Maps to AMAPI TelephonyInfo.configMode.
   parameters:
     organizationId:
       name: x-org-id
