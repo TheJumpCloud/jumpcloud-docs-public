@@ -85985,7 +85985,6 @@ tags:
   - name: Monitoring and Alerting
   - name: Nli
   - name: Notifications Channels
-  - name: OAuthPermissions
   - name: Object Storage
   - name: Office 365
   - name: Office 365 Import
@@ -86024,7 +86023,6 @@ tags:
   - name: SSO
   - name: SaaS App Management
     description: Operations related to SaaS App Management
-  - name: SaaS License Management
   - name: Samba Domains
   - name: Sample Data
   - name: Saved Views
