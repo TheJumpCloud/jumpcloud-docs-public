@@ -57563,11 +57563,59 @@ components:
           type: string
         imei:
           type: string
+        meid:
+          type: string
+        eid:
+          type: string
+        phoneNumber:
+          type: string
+        currentCarrierNetwork:
+          type: string
+        currentMcc:
+          type: string
+        currentMnc:
+          type: string
+        carrierSettingsVersion:
+          type: string
+        isDataPreferred:
+          type: boolean
+        isRoaming:
+          type: boolean
+        isVoicePreferred:
+          type: boolean
+        subscriptionLabel:
+          type: string
+        subscriptionLabelId:
+          type: string
         subscriberCarrierNetwork:
           type: string
         secondIccid:
           type: string
         secondImei:
+          type: string
+        secondMeid:
+          type: string
+        secondEid:
+          type: string
+        secondPhoneNumber:
+          type: string
+        secondCurrentCarrierNetwork:
+          type: string
+        secondCurrentMcc:
+          type: string
+        secondCurrentMnc:
+          type: string
+        secondCarrierSettingsVersion:
+          type: string
+        secondIsDataPreferred:
+          type: boolean
+        secondIsRoaming:
+          type: boolean
+        secondIsVoicePreferred:
+          type: boolean
+        secondSubscriptionLabel:
+          type: string
+        secondSubscriptionLabelId:
           type: string
         secondSubscriberCarrierNetwork:
           type: string
