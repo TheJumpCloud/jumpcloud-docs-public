@@ -50962,7 +50962,7 @@ paths:
   /service-accounts:
     get:
       summary: Fetch all saved service accounts
-      description: Retrieves a list of service accounts with support for filtering, sorting, and pagination. Auth config is not included in the service accounts
+      description: 'Retrieves a list of service accounts with support for filtering, sorting, and pagination. Auth config is not included in the service accounts. Filters use field:operator:value clauses, ANDed together. Pass comma-separated clauses in a single filter value and/or repeated filter query parameters. Supported fields: role_id (eq, in), auth_type (eq, in — CLIENT_SECRET, API_KEY), status (eq, in — ACTIVE, EXPIRING, EXPIRED), expires_at (ge, lt — RFC3339 on the latest auth config). For in, join values with |. Example: filter=status:eq:ACTIVE,auth_type:in:CLIENT_SECRET|API_KEY&filter=expires_at:ge:2026-01-01T00:00:00Z'
       operationId: ServiceAccounts_ListServiceAccounts
       responses:
         '200':
@@ -51041,6 +51041,16 @@ paths:
           schema:
             type: string
           allowReserved: true
+        - name: filter
+          description: "A filter to apply to the query.\n\n\t**Filter structure**: `<field>:<operator>:<value>`.\n\n\t**Supported fields**: role_id (eq, in), auth_type (eq, in — CLIENT_SECRET, API_KEY), status (eq, in — ACTIVE, EXPIRING, EXPIRED), expires_at (ge, lt — RFC3339 on the latest auth config).\n\n\t**in values**: join with `|`.\n\n\t**Example**: `GET /api/v2/service-accounts?filter=status:eq:ACTIVE,auth_type:in:CLIENT_SECRET|API_KEY&filter=expires_at:ge:2026-01-01T00:00:00Z`\n"
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
         - name: x-org-id
           description: Organization identifier that can be obtained from console settings.
           in: header
@@ -51059,7 +51069,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://console.jumpcloud.com/api/v2/service-accounts?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&search.fields=SOME_ARRAY_VALUE&search.searchTerm=SOME_STRING_VALUE&sort=SOME_STRING_VALUE' \
+              --url 'https://console.jumpcloud.com/api/v2/service-accounts?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&search.fields=SOME_ARRAY_VALUE&search.searchTerm=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE'
         - lang: Python
@@ -51068,7 +51078,7 @@ paths:
 
             url = "https://console.jumpcloud.com/api/v2/service-accounts"
 
-            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","search.fields":"SOME_ARRAY_VALUE","search.searchTerm":"SOME_STRING_VALUE","sort":"SOME_STRING_VALUE"}
+            querystring = {"limit":"SOME_INTEGER_VALUE","skip":"SOME_INTEGER_VALUE","search.fields":"SOME_ARRAY_VALUE","search.searchTerm":"SOME_STRING_VALUE","sort":"SOME_STRING_VALUE","filter":"SOME_ARRAY_VALUE"}
 
             headers = {
                 "x-org-id": "SOME_STRING_VALUE",
@@ -51083,7 +51093,7 @@ paths:
             $headers=@{}
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&search.fields=SOME_ARRAY_VALUE&search.searchTerm=SOME_STRING_VALUE&sort=SOME_STRING_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts?limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&search.fields=SOME_ARRAY_VALUE&search.searchTerm=SOME_STRING_VALUE&sort=SOME_STRING_VALUE&filter=SOME_ARRAY_VALUE' -Method GET -Headers $headers
     post:
       summary: Create a new service account
       description: Creates a new service account.

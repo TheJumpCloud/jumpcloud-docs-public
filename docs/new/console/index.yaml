@@ -35121,7 +35121,7 @@ paths:
   /api/v2/service-accounts:
     get:
       summary: Fetch all saved service accounts
-      description: Retrieves a list of service accounts with support for filtering, sorting, and pagination. Auth config is not included in the service accounts
+      description: "Retrieves a list of service accounts with support for filtering, sorting, and pagination. Auth config is not included in the service accounts. Filters use field:operator:value clauses, ANDed together. Pass comma-separated clauses in a single filter value and/or repeated filter query parameters. Supported fields: role_id (eq, in), auth_type (eq, in — CLIENT_SECRET, API_KEY), status (eq, in — ACTIVE, EXPIRING, EXPIRED), expires_at (ge, lt — RFC3339 on the latest auth config). For in, join values with |. Example: filter=status:eq:ACTIVE,auth_type:in:CLIENT_SECRET|API_KEY&filter=expires_at:ge:2026-01-01T00:00:00Z"
       operationId: getApiV2ServiceAccounts
       responses:
         "200":
@@ -35199,6 +35199,25 @@ paths:
           required: false
           schema:
             type: string
+          allowReserved: true
+        - name: filter
+          description: |
+            A filter to apply to the query.
+
+            	**Filter structure**: `<field>:<operator>:<value>`.
+
+            	**Supported fields**: role_id (eq, in), auth_type (eq, in — CLIENT_SECRET, API_KEY), status (eq, in — ACTIVE, EXPIRING, EXPIRED), expires_at (ge, lt — RFC3339 on the latest auth config).
+
+            	**in values**: join with `|`.
+
+            	**Example**: `GET /api/v2/service-accounts?filter=status:eq:ACTIVE,auth_type:in:CLIENT_SECRET|API_KEY&filter=expires_at:ge:2026-01-01T00:00:00Z`
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
           allowReserved: true
         - name: x-org-id
           description: Organization identifier that can be obtained from console settings.
