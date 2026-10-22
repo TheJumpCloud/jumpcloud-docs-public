@@ -12,7 +12,7 @@ tags:
     description: |
       # Overview
 
-      > **[SIEM Event Types catalogue](../others/siem-event-types/index.html)** — Browse all OCSF-mapped event types with per-service **OCSF field mappings**. Use this when choosing `event_type` values for `GET /data-export/v2/events`.
+      > **[SIEM Event Types catalogue](../others/siem-event-types/index.html)** — Browse all OCSF-mapped event types with per-service **OCSF field mappings**. Use this when choosing `event_types` (or legacy `event_type`) for `GET /data-export/v2/events`. Up to **25** explicit types per request, or `event_types=all` for the full catalogue.
 
       SIEM Integration lets Directory Insights Premium customers pull JumpCloud identity events into an external SIEM using the **Events API**. This is a **pull** model: the customer configures their SIEM or collector to poll JumpCloud on a schedule. JumpCloud does not push events to the SIEM in v1.
 
@@ -215,11 +215,26 @@ paths:
             format: date-time
         - name: event_type
           in: query
-          required: true
-          description: Event type partition name (e.g. user_login)
+          required: false
+          deprecated: true
+          description: Legacy single event type partition name (e.g. user_login). Merged with `event_types` when both are sent.
           schema:
             type: string
             example: user_login
+        - name: event_types
+          in: query
+          required: false
+          description: |
+            One or more event type partition names. Pass multiple types as a comma-separated list in a single value (e.g. `event_types=user_login,admin_login_attempt`) or repeat the parameter. Use the literal value `all` alone to select the full export catalogue. At most 25 explicit slugs per request (no limit when using `all`).
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+          example:
+            - user_login
+            - admin_login_attempt
         - name: limit
           in: query
           required: false
@@ -274,7 +289,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://api.jumpcloud.com/data-export/v2/events?since=SOME_STRING_VALUE&until=SOME_STRING_VALUE&event_type=user_login&limit=SOME_INTEGER_VALUE&next_cursor=SOME_STRING_VALUE' \
+              --url 'https://api.jumpcloud.com/data-export/v2/events?since=SOME_STRING_VALUE&until=SOME_STRING_VALUE&event_type=user_login&event_types=user_login&event_types=admin_login_attempt&limit=SOME_INTEGER_VALUE&next_cursor=SOME_STRING_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -282,7 +297,7 @@ paths:
 
             url = "https://api.jumpcloud.com/data-export/v2/events"
 
-            querystring = {"since":"SOME_STRING_VALUE","until":"SOME_STRING_VALUE","event_type":"user_login","limit":"SOME_INTEGER_VALUE","next_cursor":"SOME_STRING_VALUE"}
+            querystring = {"since":"SOME_STRING_VALUE","until":"SOME_STRING_VALUE","event_type":"user_login","event_types":["user_login","admin_login_attempt"],"limit":"SOME_INTEGER_VALUE","next_cursor":"SOME_STRING_VALUE"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -293,7 +308,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/data-export/v2/events?since=SOME_STRING_VALUE&until=SOME_STRING_VALUE&event_type=user_login&limit=SOME_INTEGER_VALUE&next_cursor=SOME_STRING_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/data-export/v2/events?since=SOME_STRING_VALUE&until=SOME_STRING_VALUE&event_type=user_login&event_types=user_login&event_types=admin_login_attempt&limit=SOME_INTEGER_VALUE&next_cursor=SOME_STRING_VALUE' -Method GET -Headers $headers
   /v2/siem/connection-test:
     post:
       operationId: siemConnectionTest
