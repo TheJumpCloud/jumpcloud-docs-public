@@ -2557,6 +2557,9 @@ paths:
         Returns paginated inline JSON events for the authenticated org from materialized S3 partitions.
         Partition objects are newline-delimited JSON (NDJSON); each line is one event. Pagination
         cursors are opaque and may resume mid-object via object key and line offset.
+        Filter by `event_types` (comma-separated or repeated query values) or `event_types=all` for
+        the full export catalogue (at most 25 explicit slugs per request). Multiple types are
+        processed in ascending slug order within each page.
         The time window `(until - since)` must not exceed one hour. Requests with `until` beyond the
         writer freshness horizon (`now - 15 minutes`) return HTTP 422 with `available_until`.
         Send `Accept: application/json` for raw partitions or `Accept: application/ocsf+json` for OCSF.
@@ -2582,20 +2585,12 @@ paths:
           schema:
             type: string
             format: date-time
-        - name: event_type
-          in: query
-          required: false
-          deprecated: true
-          description: Legacy single event type partition name (e.g. user_login). Merged with `event_types` when both are sent.
-          schema:
-            type: string
-            example: user_login
         - name: event_types
           in: query
-          required: false
+          required: true
           description: >
             One or more event type partition names. Pass multiple types as a comma-separated list in a single value
-            (e.g. `event_types=user_login,admin_login_attempt`) or repeat the parameter. Use the literal value `all`
+            (e.g. `event_types=user_login_attempt,admin_login_attempt`) or repeat the parameter. Use the literal value `all`
             alone to select the full export catalogue. At most 25 explicit slugs per request (no limit when using `all`).
           schema:
             type: array
@@ -2604,7 +2599,7 @@ paths:
           style: form
           explode: true
           example:
-            - user_login
+            - user_login_attempt
             - admin_login_attempt
         - name: limit
           in: query
@@ -3001,7 +2996,7 @@ tags:
     description: |
       # Overview
 
-      > **[SIEM Event Types catalogue](../others/siem-event-types/index.html)** — Browse all OCSF-mapped event types with per-service **OCSF field mappings**. Use this when choosing `event_types` (or legacy `event_type`) for `GET /data-export/v2/events`. Up to **25** explicit types per request, or `event_types=all` for the full catalogue.
+      > **[SIEM Event Types catalogue](../others/siem-event-types/index.html)** — Browse all OCSF-mapped event types with per-service **OCSF field mappings**. Use this when choosing `event_types` for `GET /data-export/v2/events`. Up to **25** explicit types per request, or `event_types=all` for the full catalogue.
 
       SIEM Integration lets Directory Insights Premium customers pull JumpCloud identity events into an external SIEM using the **Events API**. This is a **pull** model: the customer configures their SIEM or collector to poll JumpCloud on a schedule. JumpCloud does not push events to the SIEM in v1.
 
@@ -3030,7 +3025,7 @@ tags:
       | Method | Path | Purpose |
       | --- | --- | --- |
       | `POST` | `/data-export/v2/siem/connection-test` | Validate API key, org binding, and partition reachability before scheduling pulls. Does not return event payloads. |
-      | `GET` | `/data-export/v2/events` | Pull paginated events for one event type within a time window. |
+      | `GET` | `/data-export/v2/events` | Pull paginated events for one or more event types within a time window. |
 
       ### Connection test
 
@@ -3057,22 +3052,42 @@ tags:
       | Header | Required | Values |
       | --- | --- | --- |
       | `x-api-key` | Yes | Your JumpCloud API key |
-      | `Accept` | No (defaults to raw) | `application/json` (raw) or `application/ocsf+json` (OCSF) |
+      | `Accept` | No | Raw JSON or OCSF (see **Schema selection** below) |
 
       **Query parameters**
 
       | Parameter | Required | Description |
       | --- | --- | --- |
-      | `since` | Yes | Window start, RFC3339 UTC (e.g. `2026-09-08T05:00:00Z`) |
+      | `since` | Yes | Window start, RFC3339 UTC |
       | `until` | Yes | Window end, RFC3339 UTC; must be after `since` |
-      | `event_type` | Yes | **Single** event type from the event catalog (e.g. `admin_login_attempt`) |
-      | `limit` | No | Max events per page (default **1000**, max **1000**) |
+      | `event_types` | Yes | One or more catalogue event type slugs (see **Event types** below) |
+      | `limit` | No | Max events per page (default 1000, max 1000) |
       | `next_cursor` | No | Opaque cursor from a previous response; omit on the first page |
 
-      **Example — raw events**
+      **Event types**
+
+      Choose slugs from the [SIEM Event Types catalogue](../others/siem-event-types/index.html).
+
+      - Pass multiple types as a **comma-separated** list in one query value, or **repeat** the `event_types` parameter.
+      - Example (comma-separated): `event_types=admin_login_attempt,user_login_attempt`
+      - Use the literal value **`all`** alone to request the full export catalogue. Do not combine `all` with any other type.
+      - At most **25** explicit slugs per request (no limit when using `all`).
+      - Types are deduplicated and processed in **ascending slug order**.
+
+      Timestamp examples: `since=2026-09-08T05:00:00Z`, `until=2026-09-08T06:00:00Z`.
+
+      **Example — raw events (single type)**
 
       ```http
-      GET https://api.jumpcloud.com/data-export/v2/events?since=2026-09-08T05:00:00Z&until=2026-09-08T06:00:00Z&event_type=admin_login_attempt&limit=1000
+      GET https://api.jumpcloud.com/data-export/v2/events?since=2026-09-08T05:00:00Z&until=2026-09-08T06:00:00Z&event_types=admin_login_attempt&limit=1000
+      x-api-key: <your-api-key>
+      Accept: application/json
+      ```
+
+      **Example — raw events (multiple types)**
+
+      ```http
+      GET https://api.jumpcloud.com/data-export/v2/events?since=2026-09-08T05:00:00Z&until=2026-09-08T06:00:00Z&event_types=admin_login_attempt,user_login_attempt&limit=1000
       x-api-key: <your-api-key>
       Accept: application/json
       ```
@@ -3080,7 +3095,7 @@ tags:
       **Example — OCSF events**
 
       ```http
-      GET https://api.jumpcloud.com/data-export/v2/events?since=2026-09-08T05:00:00Z&until=2026-09-08T06:00:00Z&event_type=admin_login_attempt
+      GET https://api.jumpcloud.com/data-export/v2/events?since=2026-09-08T05:00:00Z&until=2026-09-08T06:00:00Z&event_types=admin_login_attempt
       x-api-key: <your-api-key>
       Accept: application/ocsf+json
       ```
@@ -3108,13 +3123,13 @@ tags:
       ## Time windows and freshness
 
       - Each request covers **at most 1 hour**: `(until − since) ≤ 1 hour`. Wider windows return **HTTP 400**.
-      - Poll **one `event_type` per request**. To ingest multiple types, run separate poll streams.
       - `until` cannot exceed **approximately 15 minutes before current time** (writer materialization lag). If too recent, the API returns **HTTP 422** with `available_until`.
 
       ## Pagination and delivery semantics
 
       - Paginate using opaque **`next_cursor`** until it is absent.
       - **Do not** paginate by `event_time` or `event_id` — cursors are opaque.
+      - When you pass multiple types, the API walks types in **sorted slug order** and fills each page up to `limit`. A single hour window can require many pages when types or volume are large.
       - Use immutable **`event_id`** only for **deduplication**, not pagination.
       - Delivery is **at-least-once** within the requested window. Deduplicate in your SIEM on **`event_id`**.
 
@@ -3122,21 +3137,25 @@ tags:
 
       | Code | Meaning |
       | --- | --- |
-      | **200** | Success |
-      | **400** | Invalid request (e.g. window > 1 hour, invalid timestamps) |
-      | **401** | Missing or invalid API key |
-      | **402** | Organization lacks Directory Insights Premium |
-      | **403** | API key lacks required scope |
-      | **406** | Unsupported `Accept` header |
-      | **422** | Requested `until` beyond available writer data; response includes `available_until` |
-      | **500** | Server error |
+      | 200 | Success |
+      | 400 | Invalid request |
+      | 401 | Missing or invalid API key |
+      | 402 | Organization lacks Directory Insights Premium |
+      | 403 | API key lacks required scope |
+      | 406 | Unsupported Accept header |
+      | 422 | Requested until beyond available writer data |
+      | 500 | Server error |
+
+      **HTTP 400** includes invalid time window (wider than one hour or bad timestamps), unknown or disallowed event type slugs, more than 25 explicit `event_types`, or `event_types=all` combined with other types.
+
+      **HTTP 422** responses include `available_until` when `until` is too close to the current time (writer freshness).
 
       ## Recommended ingestion workflow
 
       1. Confirm Directory Insights Premium is enabled and your API key has `directoryinsights.readonly` scope.
       2. Run **`POST /data-export/v2/siem/connection-test`**.
       3. Choose event types from the [SIEM Event Types catalogue](../others/siem-event-types/index.html).
-      4. For each `event_type`, configure your collector to poll **`GET /data-export/v2/events`** on a schedule.
+      4. Configure your collector to poll **`GET /data-export/v2/events`** on a schedule with the desired `event_types` (or `event_types=all` to ingest the full catalogue).
       5. Request consecutive **≤1-hour windows**; keep `until` **≥ ~15 minutes behind now** for live tailing.
       6. Paginate with **`next_cursor`** until exhausted for each window.
       7. Select **raw** or **OCSF** via `Accept`.
@@ -3151,13 +3170,13 @@ tags:
       | **Authentication** | Use the Directory Insights API key (`x-api-key` header) |
       | **Connection test** | Call `POST /data-export/v2/siem/connection-test` before enabling scheduled pulls |
       | **Poll schedule** | Cron or interval (e.g. every 15–60 minutes). Respect 1-hour windows and ~15-minute freshness. |
-      | **Event types** | One or more from the event catalog; **one `event_type` per API call** |
-      | **Schema** | Raw (`application/json`) or OCSF (`application/ocsf+json`) |
-      | **Time windows** | Consecutive 1-hour slices per event type; advance checkpoint after each successful window |
-      | **Checkpoint / cursor state** | Persist `next_cursor` and last completed `until` per `event_type` for crash recovery |
+      | **Event types** | `event_types` slugs from the catalogue; comma-separated, repeated parameter, or `all` (max 25 explicit slugs) |
+      | **Schema** | Raw or OCSF via Accept header |
+      | **Time windows** | Consecutive 1-hour slices; advance checkpoint after each successful window |
+      | **Checkpoint / cursor state** | Persist `next_cursor` and last completed `until` per poll stream (same `event_types` set and `Accept` schema) for crash recovery |
       | **Deduplication** | SIEM-side dedup on immutable `event_id` |
 
-      Use the [SIEM Event Types catalogue](../others/siem-event-types/index.html) for valid `event_type` values grouped by Directory Insights service. Each service section includes **OCSF field mappings** (JumpCloud → OCSF paths, descriptions, and transforms) for building parsers and detections.
+      Use the [SIEM Event Types catalogue](../others/siem-event-types/index.html) for valid event type values grouped by Directory Insights service. Each service section includes **OCSF field mappings** (JumpCloud → OCSF paths, descriptions, and transforms) for building parsers and detections.
 x-tagGroups:
   - name: API Reference
     tags:
