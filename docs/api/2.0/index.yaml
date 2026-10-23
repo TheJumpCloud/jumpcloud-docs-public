@@ -85991,6 +85991,7 @@ tags:
   - name: Authentication Policies
   - name: Automation Variables
   - name: Bulk Job Requests
+  - name: Channels
   - name: Command Templates
   - name: Commands
   - name: Connector
