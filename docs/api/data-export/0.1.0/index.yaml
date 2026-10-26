@@ -86,8 +86,8 @@ tags:
 
       > **Note:** The singular query parameter `event_type` is deprecated and will be removed soon; use `event_types` instead.
 
-      - Pass multiple types as a **comma-separated** list in one query value, or **repeat** the `event_types` parameter.
-      - Example (comma-separated): `event_types=admin_login_attempt,user_login_attempt`
+      - Pass multiple types as a **comma-separated** list in one query value (recommended). Repeating the `event_types` parameter is also accepted.
+      - Example (recommended): `event_types=admin_login_attempt,user_login_attempt`
       - Use the literal value **`all`** alone to request the full export catalogue. Do not combine `all` with any other type.
       - At most **25** explicit slugs per request (no limit when using `all`).
       - Types are deduplicated and processed in **ascending slug order**.
@@ -146,10 +146,10 @@ tags:
       ## Pagination and delivery semantics
 
       - Paginate using opaque **`next_cursor`** until it is absent.
-      - **Do not** paginate by `event_time` or `event_id` — cursors are opaque.
+      - **Do not** paginate by event time or event identity fields — cursors are opaque.
       - When you pass multiple types, the API walks types in **sorted slug order** and fills each page up to `limit`. A single hour window can require many pages when types or volume are large.
-      - Use immutable **`event_id`** only for **deduplication**, not pagination.
-      - Delivery is **at-least-once** within the requested window. Deduplicate in your SIEM on **`event_id`**.
+      - Use the immutable event identity only for **deduplication**, not pagination: raw JSON **`event_id`**, OCSF **`metadata.uid`**.
+      - Delivery is **at-least-once** within the requested window. Deduplicate in your SIEM on that identity field.
 
       ## HTTP status codes
 
@@ -162,11 +162,14 @@ tags:
       | 403 | API key lacks required scope |
       | 406 | Unsupported Accept header |
       | 422 | Requested until beyond available writer data |
+      | 429 | Rate limit exceeded; honor `Retry-After` and back off |
       | 500 | Server error |
 
       **HTTP 400** includes invalid time window (wider than one hour or bad timestamps), unknown or disallowed event type slugs, more than 25 explicit `event_types`, or `event_types=all` combined with other types.
 
       **HTTP 422** responses include `available_until` when `until` is too close to the current time (writer freshness).
+
+      **HTTP 429** responses include a `Retry-After` header (seconds) when the per-org pull rate limit is exceeded.
 
       ## Recommended ingestion workflow
 
@@ -177,7 +180,7 @@ tags:
       5. Request consecutive **≤1-hour windows**; keep `until` **≥ ~15 minutes behind now** for live tailing.
       6. Paginate with **`next_cursor`** until exhausted for each window.
       7. Select **raw** or **OCSF** via `Accept`.
-      8. **Deduplicate on `event_id`** in your SIEM.
+      8. **Deduplicate** in your SIEM on raw **`event_id`** or OCSF **`metadata.uid`**.
       9. For multi-week or multi-month backfill, use **Historical DI Export** instead of API pull.
 
       ## Customer collector configuration
@@ -188,11 +191,11 @@ tags:
       | **Authentication** | Use the Directory Insights API key (`x-api-key` header) |
       | **Connection test** | Call `POST /data-export/v2/siem/connection-test` before enabling scheduled pulls |
       | **Poll schedule** | Cron or interval (e.g. every 15–60 minutes). Respect 1-hour windows and ~15-minute freshness. |
-      | **Event types** | `event_types` slugs from the catalogue; comma-separated, repeated parameter, or `all` (max 25 explicit slugs) |
+      | **Event types** | `event_types` slugs from the catalogue; comma-separated (recommended), repeated parameter, or `all` (max 25 explicit slugs) |
       | **Schema** | Raw or OCSF via Accept header |
       | **Time windows** | Consecutive 1-hour slices; advance checkpoint after each successful window |
       | **Checkpoint / cursor state** | Persist `next_cursor` and last completed `until` per poll stream (same `event_types` set and `Accept` schema) for crash recovery |
-      | **Deduplication** | SIEM-side dedup on immutable `event_id` |
+      | **Deduplication** | SIEM-side dedup on raw `event_id` or OCSF `metadata.uid` |
 
       Use the [SIEM Event Types catalogue](../others/siem-event-types/index.html) for valid event type values grouped by Directory Insights service. Each service section includes **OCSF field mappings** (JumpCloud → OCSF paths, descriptions, and transforms) for building parsers and detections.
 servers:
@@ -235,6 +238,7 @@ paths:
           schema:
             type: string
             format: date-time
+          example: 2026-09-08T05:00:00Z
         - name: until
           in: query
           required: true
@@ -242,17 +246,18 @@ paths:
           schema:
             type: string
             format: date-time
+          example: 2026-09-08T06:00:00Z
         - name: event_types
           in: query
           required: true
           description: |
-            One or more event type partition names. Pass multiple types as a comma-separated list in a single value (e.g. `event_types=user_login_attempt,admin_login_attempt`) or repeat the parameter. Use the literal value `all` alone to select the full export catalogue. At most 25 explicit slugs per request (no limit when using `all`).
+            One or more event type partition names. Pass multiple types as a comma-separated list in a single value (recommended; e.g. `event_types=user_login_attempt,admin_login_attempt`). Repeating the parameter is also accepted. Use the literal value `all` alone to select the full export catalogue. At most 25 explicit slugs per request (no limit when using `all`).
           schema:
             type: array
             items:
               type: string
           style: form
-          explode: true
+          explode: false
           example:
             - user_login_attempt
             - admin_login_attempt
@@ -310,7 +315,7 @@ paths:
         - lang: Shell
           source: |-
             curl --request GET \
-              --url 'https://api.jumpcloud.com/data-export/v2/events?since=SOME_STRING_VALUE&until=SOME_STRING_VALUE&event_types=user_login_attempt&event_types=admin_login_attempt&limit=SOME_INTEGER_VALUE&next_cursor=SOME_STRING_VALUE' \
+              --url 'https://api.jumpcloud.com/data-export/v2/events?since=2026-09-08T05%3A00%3A00Z&until=2026-09-08T06%3A00%3A00Z&event_types=user_login_attempt%2Cadmin_login_attempt&limit=SOME_INTEGER_VALUE&next_cursor=SOME_STRING_VALUE' \
               --header 'x-api-key: REPLACE_KEY_VALUE'
         - lang: Python
           source: |-
@@ -318,7 +323,7 @@ paths:
 
             url = "https://api.jumpcloud.com/data-export/v2/events"
 
-            querystring = {"since":"SOME_STRING_VALUE","until":"SOME_STRING_VALUE","event_types":["user_login_attempt","admin_login_attempt"],"limit":"SOME_INTEGER_VALUE","next_cursor":"SOME_STRING_VALUE"}
+            querystring = {"since":"2026-09-08T05:00:00Z","until":"2026-09-08T06:00:00Z","event_types":"user_login_attempt,admin_login_attempt","limit":"SOME_INTEGER_VALUE","next_cursor":"SOME_STRING_VALUE"}
 
             headers = {"x-api-key": "REPLACE_KEY_VALUE"}
 
@@ -329,7 +334,7 @@ paths:
           source: |-
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/data-export/v2/events?since=SOME_STRING_VALUE&until=SOME_STRING_VALUE&event_types=user_login_attempt&event_types=admin_login_attempt&limit=SOME_INTEGER_VALUE&next_cursor=SOME_STRING_VALUE' -Method GET -Headers $headers
+            $response = Invoke-RestMethod -Uri 'https://api.jumpcloud.com/data-export/v2/events?since=2026-09-08T05%3A00%3A00Z&until=2026-09-08T06%3A00%3A00Z&event_types=user_login_attempt%2Cadmin_login_attempt&limit=SOME_INTEGER_VALUE&next_cursor=SOME_STRING_VALUE' -Method GET -Headers $headers
   /v2/siem/connection-test:
     post:
       operationId: siemConnectionTest
@@ -466,13 +471,13 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     Unauthorized:
-      description: Missing or invalid Insights API token
+      description: Missing or invalid API key
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     Forbidden:
-      description: Token lacks required scope
+      description: API key lacks required scope
       content:
         application/json:
           schema:
@@ -484,7 +489,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     NotAcceptable:
-      description: Unsupported Accept header for GET /v2/events (ADR-3)
+      description: Unsupported Accept header for GET /v2/events
       content:
         application/json:
           schema:
