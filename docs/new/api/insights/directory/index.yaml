@@ -3068,6 +3068,8 @@ tags:
 
       Choose slugs from the [SIEM Event Types catalogue](../others/siem-event-types/index.html).
 
+      > **Note:** The singular query parameter `event_type` is deprecated and will be removed soon; use `event_types` instead.
+
       - Pass multiple types as a **comma-separated** list in one query value, or **repeat** the `event_types` parameter.
       - Example (comma-separated): `event_types=admin_login_attempt,user_login_attempt`
       - Use the literal value **`all`** alone to request the full export catalogue. Do not combine `all` with any other type.
