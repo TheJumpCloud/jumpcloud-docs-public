@@ -245,7 +245,40 @@
           color: var(--scalar-color-2);
         }
         /*
-         * Sidebar footer: hide Scalar branding; page footer has support.
+         * Operation header badges (SL-4794): spec x-badges on the left half, x-scopes on the right
+         * half with a "Scopes" label. Each side wraps within its half (scopes lists reach 38) and
+         * keeps clear of "Auth Required".
+         */
+        .section-content > .flex.flex-row.justify-between > .flex:has(> .badge) {
+          align-items: center;
+          margin-bottom: 0.5rem;
+          flex-wrap: wrap;
+          row-gap: 0.25rem;
+          min-width: 0;
+          max-width: 50%;
+          align-self: flex-start;
+        }
+        .section-content > .flex.flex-row.justify-between > .flex > .badge {
+          white-space: nowrap;
+        }
+        /* Spec badges sit at the bottom of the row, just above the operation title. */
+        .section-content > .flex.flex-row.justify-between > .flex:first-child:has(> .badge) {
+          justify-content: flex-start;
+          align-self: flex-end;
+        }
+        .section-content > .flex.flex-row.justify-between > .flex:last-child:has(> .badge) {
+          justify-content: flex-end;
+          margin-left: auto;
+        }
+        .section-content > .flex.flex-row.justify-between > .flex:last-child:has(> .badge)::before {
+          content: "Scopes";
+          color: var(--scalar-color-2);
+          font-size: var(--scalar-small);
+          font-weight: var(--scalar-semibold);
+          margin-right: 0.25rem;
+        }
+        /*
+         * Sidebar footer: hide Scalar branding and support link; page footer has support.
          */
         .darklight-reference a[href*="scalar.com"] {
           display: none !important;

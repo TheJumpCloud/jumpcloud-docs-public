@@ -90,6 +90,44 @@
     });
   }
 
+  // Spec x-badges always render on the left ("before"); x-scopes render as badges on the right
+  // ("after"), since Scalar 1.59 ignores x-scopes (SL-4794).
+  function arrangeOperationBadges(spec) {
+    var paths = spec && spec.paths;
+    if (!paths || typeof paths !== "object") {
+      return;
+    }
+    Object.keys(paths).forEach(function (path) {
+      var pathItem = paths[path];
+      if (!pathItem || typeof pathItem !== "object") {
+        return;
+      }
+      HTTP_METHODS.forEach(function (method) {
+        var operation = pathItem[method];
+        if (!operation || typeof operation !== "object") {
+          return;
+        }
+        var scopes = Array.isArray(operation["x-scopes"]) ? operation["x-scopes"] : [];
+        var specBadges = Array.isArray(operation["x-badges"]) ? operation["x-badges"] : [];
+        if (!scopes.length && !specBadges.length) {
+          return;
+        }
+        // Drop scope badges from an earlier pass so running twice doesn't flip them to the left.
+        var badges = specBadges
+          .filter(function (badge) {
+            return badge && !(badge.position === "after" && scopes.indexOf(badge.name) !== -1);
+          })
+          .map(function (badge) {
+            return Object.assign({}, badge, { position: "before" });
+          });
+        scopes.forEach(function (scope) {
+          badges.push({ name: scope, position: "after" });
+        });
+        operation["x-badges"] = badges;
+      });
+    });
+  }
+
   var scalarApp = null;
   var viewportResizeObserver = null;
   var viewportResizeListenerAttached = false;
@@ -188,6 +226,7 @@
   JumpCloudDocs.mountScalarApiReference = function (selector, spec) {
     removeXInternalTrue(spec);
     prependOperationPaths(spec);
+    arrangeOperationBadges(spec);
     scalarApp = global.Scalar.createApiReference(selector, buildScalarCreateOptions(spec));
     scheduleScalarViewportSync();
   };
@@ -196,6 +235,7 @@
     var copy = JSON.parse(JSON.stringify(spec));
     removeXInternalTrue(copy);
     prependOperationPaths(copy);
+    arrangeOperationBadges(copy);
     return copy;
   };
 
