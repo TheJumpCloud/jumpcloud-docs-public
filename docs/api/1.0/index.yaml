@@ -8565,6 +8565,11 @@ components:
                 - 2
                 - 3
                 - 4
+            enrollmentStatus:
+              type: integer
+              enum:
+                - 0
+                - 1
         builtInCommands:
           type: array
           items:
@@ -8855,6 +8860,11 @@ components:
                 - 2
                 - 3
                 - 4
+            enrollmentStatus:
+              type: integer
+              enum:
+                - 0
+                - 1
         builtInCommands:
           type: array
           items:
