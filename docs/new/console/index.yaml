@@ -65540,6 +65540,8 @@ components:
           type: boolean
         enableDevTools:
           type: boolean
+        allowInsecureWebsites:
+          type: boolean
         recordVideo:
           type: boolean
         vncSettings:
