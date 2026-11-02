@@ -8418,6 +8418,26 @@ components:
                 type: boolean
               name:
                 type: string
+        networkInfo:
+          type: object
+          properties:
+            imei:
+              type: string
+              description: PII data; do not log.
+            macAddress:
+              type: string
+              description: PII data; do not log.
+            simInfo:
+              type: array
+              items:
+                type: object
+                properties:
+                  phoneNumber:
+                    type: string
+                    description: PII data; do not log.
+                  iccid:
+                    type: string
+                    description: PII data; do not log.
         organization:
           type: string
         os:
@@ -8713,6 +8733,26 @@ components:
                 type: boolean
               name:
                 type: string
+        networkInfo:
+          type: object
+          properties:
+            imei:
+              type: string
+              description: PII data; do not log.
+            macAddress:
+              type: string
+              description: PII data; do not log.
+            simInfo:
+              type: array
+              items:
+                type: object
+                properties:
+                  phoneNumber:
+                    type: string
+                    description: PII data; do not log.
+                  iccid:
+                    type: string
+                    description: PII data; do not log.
         organization:
           type: string
         os:
