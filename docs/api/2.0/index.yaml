@@ -80145,6 +80145,7 @@ components:
         - GOLANG_TEMPLATE
         - CONSTANT
         - EXPR
+        - ENUMERATION
       default: PATH
       description: SourceType defines the type of the source field in attribute mapping.
     jumpcloud.idm.TranslationRule:
