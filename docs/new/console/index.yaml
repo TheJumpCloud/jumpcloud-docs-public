@@ -18860,7 +18860,9 @@ paths:
       x-functionalities-tags:
         - mtp-read-org
     post:
-      description: This endpoint creates a new organization under the provider
+      description: |-
+        This endpoint creates a new organization under the provider. To create an MSP trial child
+        organization, set trial to true and optionally trialDurationDays.
       operationId: postApiV2ProvidersByProviderIdOrganizations
       requestBody:
         content:
@@ -18886,19 +18888,27 @@ paths:
           description: |-
             A 'Bad Request' error will be returned in one of the following scenarios:
 
-            * The request payload contains fields that are not allowed (only 'name' and 'maxSystemUsers' are allowed).
+            * The request payload contains fields that are not allowed (only 'name', 'maxSystemUsers', 'trial', and 'trialDurationDays' are allowed).
             * The user creating the org specifies 'maxSystemUsers' in the request payload but does not have the organizations.billing scope.
             * The required field 'name' is missing from the request payload or is an empty string or a string that only contains whitespaces.
+            * trialDurationDays is sent without trial true, or trialDurationDays is invalid or not an allowed duration (errorCode INVALID_TRIAL_DURATION).
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/api_v2.Error"
+                $ref: "#/components/schemas/ErrorWithErrorCode"
         "403":
-          description: A 'Forbidden' error will be returned if organization creation is disabled for the provider.
+          description: |-
+            A 'Forbidden' error will be returned in one of the following scenarios:
+
+            * Organization creation is disabled for the provider.
+            * trial is true but MSP trial child org creation is not enabled for this provider (errorCode TRIAL_NOT_ENABLED).
+            * trial is true but the caller lacks organizations.billing scope, organization creation is disabled, the provider is not an MSP provider, or the caller is a service account (errorCode TRIAL_PERMISSION_DENIED).
+
+            MSP trial errors use the ErrorWithErrorCode schema with integer code (HTTP status), message, and errorCode.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/api_v2.Error"
+                $ref: "#/components/schemas/ErrorWithErrorCode"
         "500":
           $ref: "#/components/responses/api_v2.trait_standardErrors_500"
       x-functionalities-tags:
@@ -32923,7 +32933,7 @@ paths:
         - mdm
   /api/v2/applemdms/{organizationObjectId}/account-driven-service-discovery:
     get:
-      summary: ADUE Configuration
+      summary: List ADUE Redirect URL
       description: This endpoint provides Redirect URL for Account Driven Enrollment Configuration
       operationId: getApiV2ApplemdmsByOrganizationobjectidAccountDrivenServiceDiscovery
       responses:
@@ -32953,7 +32963,7 @@ paths:
         - mdm
   /api/v2/applemdms/{organizationObjectId}/account-driven-service-discovery/config:
     get:
-      summary: ADUE Configuration
+      summary: List ADUE Config JSON
       description: This endpoint provides JSON Configuration for Account Driven Enrollment Configuration
       operationId: getApiV2ApplemdmsByOrganizationobjectidAccountDrivenServiceDiscoveryConfig
       responses:
@@ -33779,13 +33789,13 @@ paths:
         - healthmonitoring.rules
   /api/v2/applemdms/{deviceManagerObjectId}/abm_devices:
     get:
-      summary: ABM Devices List
+      summary: List Device Manager ABM Devices
       description: |-
         This endpoint lists the abm devices for the given device manager.
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/{device_manager_object_id}/abm_devices \
+        curl -X GET /applemdms/{device_manager_object_id}/abm_devices \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -34601,7 +34611,7 @@ paths:
         - groups.readonly
   /api/v2/applemdms/{deviceObjectId}/background_tasks:
     get:
-      summary: Background Tasks List
+      summary: List Background Tasks
       description: This endpoint lists the background tasks for the given device.
       operationId: getApiV2ApplemdmsByDeviceobjectidBackgroundTasks
       responses:
@@ -35910,7 +35920,7 @@ paths:
         - accessmanagement.readonly
   /api/v2/applemdms/{deviceManagerObjectId}/service-discovery-url:
     post:
-      summary: ADUE
+      summary: Update Service Discovery URL
       description: This endpoint updates the service discovery url for the mdm server, This will be used in ADUE
       operationId: postApiV2ApplemdmsByDevicemanagerobjectidServiceDiscoveryUrl
       responses:
@@ -35960,7 +35970,7 @@ paths:
       x-scopes:
         - mdm
     delete:
-      summary: ADUE
+      summary: Delete Service Discovery URL
       description: This endpoint deletes the service discovery url for the mdm server, This will be used in ADUE
       operationId: deleteApiV2ApplemdmsByDevicemanagerobjectidServiceDiscoveryUrl
       responses:
@@ -36009,7 +36019,7 @@ paths:
         - mdm
   /api/v2/applemdms/{deviceManagerObjectId}/validate-service-discovery-url:
     get:
-      summary: ADUE
+      summary: List Service Discovery URL Validation
       description: This endpoint validates the service discovery url for the mdm server, This will be used in ADUE
       operationId: getApiV2ApplemdmsByDevicemanagerobjectidValidateServiceDiscoveryUrl
       responses:
@@ -36733,7 +36743,7 @@ paths:
         - pam
   /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockconfig:
     get:
-      summary: Get Recovery Lock Configuration
+      summary: List Recovery Lock Configuration
       description: This endpoint retrieves the current Recovery Lock configuration settings for a specified device.
       operationId: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidGetrecoverylockconfig
       responses:
@@ -36782,7 +36792,7 @@ paths:
         - mdm
   /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockpassword:
     get:
-      summary: Get Recovery Lock Password
+      summary: List Recovery Lock Password
       description: This endpoint retrieves the plaintext Recovery Lock password for a specified device.
       operationId: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidGetrecoverylockpassword
       responses:
@@ -40823,7 +40833,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockpin:
     get:
-      summary: Get Device Lock PIN
+      summary: List Device Lock PIN
       description: This endpoint retrieves the decrypted device lock PIN when the device is locked.
       operationId: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockpin
       responses:
@@ -40878,7 +40888,7 @@ paths:
         - mdm
   /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockstate:
     get:
-      summary: Get Device Lock State
+      summary: List Device Lock State
       description: This endpoint retrieves the derived device lock state for a specified macOS device.
       operationId: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockstate
       responses:
@@ -42503,7 +42513,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X POST https://console.jumpcloud.com/v2/applemdms/{device_manager_object_id}/ade_tokens \
+        curl -X POST /applemdms/{device_manager_object_id}/ade_tokens \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}' \
@@ -42564,7 +42574,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens \
+        curl -X GET /applemdms/ade_tokens \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -42660,7 +42670,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id} \
+        curl -X GET /applemdms/ade_tokens/{object_id} \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -42717,7 +42727,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X PATCH https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id} \
+        curl -X PATCH /applemdms/ade_tokens/{object_id} \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}' \
@@ -42857,7 +42867,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{ade_token_object_id}/ade_settings \
+        curl -X GET /applemdms/ade_tokens/{ade_token_object_id}/ade_settings \
           -H 'Accept: application/json' \
           -H 'x-api-key:{API_KEY}'
         ```
@@ -42914,7 +42924,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
+        curl -X GET /applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
           -H 'Accept: application/json' \
           -H 'x-api-key:{API_KEY}'
         ```
@@ -42973,13 +42983,13 @@ paths:
       x-scopes:
         - mdm
     patch:
-      summary: Patch ADE Settings
+      summary: Update ADE Settings
       description: |-
         Create or update ADE settings for an ADE token and OS family. patch_mask is required; only fields listed in patch_mask.fields are updated. Include setup_options or default_device_group_object_ids in fields to clear them.
 
         #### Sample Request
         ```
-        curl -X PATCH https://console.jumpcloud.com/v2/applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
+        curl -X PATCH /applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}' \
@@ -43069,7 +43079,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_token_org_names \
+        curl -X GET /applemdms/ade_token_org_names \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -43114,7 +43124,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/abm_devices \
+        curl -X GET /applemdms/abm_devices \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -43210,7 +43220,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X POST https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id}/refresh_abm_devices \
+        curl -X POST /applemdms/ade_tokens/{object_id}/refresh_abm_devices \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}' \
@@ -43507,13 +43517,13 @@ paths:
         - directories
   /api/v2/applemdms/ade_tokens_stats:
     get:
-      summary: Get ADE Tokens Stats
+      summary: List ADE Tokens Stats
       description: |-
         Get aggregate counts of ADE tokens by expiry status for the calling organization(s).
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens_stats \
+        curl -X GET /applemdms/ade_tokens_stats \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -51307,6 +51317,14 @@ components:
         - integrationKey
       title: DuoApplicationUpdateReq
       type: object
+    ErrorWithErrorCode:
+      allOf:
+        - $ref: "#/components/schemas/api_v2.Error"
+        - type: object
+          properties:
+            errorCode:
+              type: string
+              description: Optional stable machine-readable error identifier (for example MSP trial errors).
     GSuiteBuiltinTranslation:
       description: |
         Built-in translations for G Suite export:
@@ -52367,6 +52385,11 @@ components:
         maxSystemUsers:
           type: integer
           description: The maximum number of users allowed in this organization. Requires organizations.billing scope to modify.
+        trialEndDate:
+          type: string
+          description: |-
+            Present on create when trial was true: calendar end date (YYYY-MM-DD) computed at create time.
+            Also included on organization_create for downstream billing.
     CreateOrganization:
       examples:
         - name: Acme Inc
@@ -52379,6 +52402,18 @@ components:
         maxSystemUsers:
           type: integer
           description: The maximum number of users allowed in this organization. Requires organizations.billing scope to modify.
+        trial:
+          type: boolean
+          description: |-
+            When true, creates the child organization in an MSP time-based trial state (organization_create
+            event includes timeBasedTrial and trialEndDate). Requires organizations.billing scope, provider
+            organization creation to be enabled, and that MSP trial child organizations are enabled for the
+            provider. Omit or set false for a standard child organization create.
+        trialDurationDays:
+          type: integer
+          description: |-
+            Optional trial length in days. Only valid when trial is true. Must be one of the allowed trial
+            durations (currently 30). Defaults to 30 days when omitted.
     Case:
       title: Case
       type: object

@@ -24102,7 +24102,9 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/organizations?fields=SOME_ARRAY_VALUE&filter=SOME_ARRAY_VALUE&limit=SOME_INTEGER_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_ARRAY_VALUE&sortIgnoreCase=SOME_ARRAY_VALUE' -Method GET -Headers $headers
     post:
-      description: This endpoint creates a new organization under the provider
+      description: |-
+        This endpoint creates a new organization under the provider. To create an MSP trial child
+        organization, set trial to true and optionally trialDurationDays.
       operationId: providerOrganizations_createOrg
       requestBody:
         content:
@@ -24128,19 +24130,27 @@ paths:
           description: |-
             A 'Bad Request' error will be returned in one of the following scenarios:
 
-            * The request payload contains fields that are not allowed (only 'name' and 'maxSystemUsers' are allowed).
+            * The request payload contains fields that are not allowed (only 'name', 'maxSystemUsers', 'trial', and 'trialDurationDays' are allowed).
             * The user creating the org specifies 'maxSystemUsers' in the request payload but does not have the organizations.billing scope.
             * The required field 'name' is missing from the request payload or is an empty string or a string that only contains whitespaces.
+            * trialDurationDays is sent without trial true, or trialDurationDays is invalid or not an allowed duration (errorCode INVALID_TRIAL_DURATION).
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorWithErrorCode'
         '403':
-          description: A 'Forbidden' error will be returned if organization creation is disabled for the provider.
+          description: |-
+            A 'Forbidden' error will be returned in one of the following scenarios:
+
+            * Organization creation is disabled for the provider.
+            * trial is true but MSP trial child org creation is not enabled for this provider (errorCode TRIAL_NOT_ENABLED).
+            * trial is true but the caller lacks organizations.billing scope, organization creation is disabled, the provider is not an MSP provider, or the caller is a service account (errorCode TRIAL_PERMISSION_DENIED).
+
+            MSP trial errors use the ErrorWithErrorCode schema with integer code (HTTP status), message, and errorCode.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorWithErrorCode'
         '500':
           $ref: '#/components/responses/trait_standardErrors_500'
       x-functionalities-tags:
@@ -47239,7 +47249,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/google-emm/devices/{deviceId}/lostmode/stop' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
   /applemdms/{organizationObjectId}/account-driven-service-discovery:
     get:
-      summary: ADUE Configuration
+      summary: List ADUE Redirect URL
       description: This endpoint provides Redirect URL for Account Driven Enrollment Configuration
       operationId: EnrollmentProfiles_GetAdueRedirect
       responses:
@@ -47285,7 +47295,7 @@ paths:
           source: '$response = Invoke-RestMethod -Uri ''https://console.jumpcloud.com/api/v2/applemdms/{organizationObjectId}/account-driven-service-discovery'' -Method GET '
   /applemdms/{organizationObjectId}/account-driven-service-discovery/config:
     get:
-      summary: ADUE Configuration
+      summary: List ADUE Config JSON
       description: This endpoint provides JSON Configuration for Account Driven Enrollment Configuration
       operationId: EnrollmentProfiles_GetAdueConfig
       responses:
@@ -48569,8 +48579,8 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/healthmonitoring/rules/{id}/status' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{"status":"RULE_STATUS_UNSPECIFIED"}'
   /applemdms/{deviceManagerObjectId}/abm_devices:
     get:
-      summary: ABM Devices List
-      description: "This endpoint lists the abm devices for the given device manager.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/v2/applemdms/{device_manager_object_id}/abm_devices \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 Abm device Items in a single response."
+      summary: List Device Manager ABM Devices
+      description: "This endpoint lists the abm devices for the given device manager.\n\n#### Sample Request\n```\ncurl -X GET /applemdms/{device_manager_object_id}/abm_devices \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 Abm device Items in a single response."
       operationId: DeviceManagers_ListABMDevices
       responses:
         '200':
@@ -50087,7 +50097,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/user/{systemUserId}?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
   /applemdms/{deviceObjectId}/background_tasks:
     get:
-      summary: Background Tasks List
+      summary: List Background Tasks
       description: This endpoint lists the background tasks for the given device.
       operationId: BackgroundTasks_List
       responses:
@@ -52116,7 +52126,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/approversprogress/{id}?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
   /applemdms/{deviceManagerObjectId}/service-discovery-url:
     post:
-      summary: ADUE
+      summary: Update Service Discovery URL
       description: This endpoint updates the service discovery url for the mdm server, This will be used in ADUE
       operationId: EnrollmentProfiles_UpdateServiceDiscoveryURL
       responses:
@@ -52195,7 +52205,7 @@ paths:
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/service-discovery-url' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
     delete:
-      summary: ADUE
+      summary: Delete Service Discovery URL
       description: This endpoint deletes the service discovery url for the mdm server, This will be used in ADUE
       operationId: EnrollmentProfiles_DeleteServiceDiscoveryURL
       responses:
@@ -52266,7 +52276,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/service-discovery-url' -Method DELETE -Headers $headers
   /applemdms/{deviceManagerObjectId}/validate-service-discovery-url:
     get:
-      summary: ADUE
+      summary: List Service Discovery URL Validation
       description: This endpoint validates the service discovery url for the mdm server, This will be used in ADUE
       operationId: EnrollmentProfiles_ValidateServiceDiscoveryURL
       responses:
@@ -53582,7 +53592,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/tenant-settings' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"clientId":"string","clientSecret":"string","ssoApplicationId":"string"}'
   /applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockconfig:
     get:
-      summary: Get Recovery Lock Configuration
+      summary: List Recovery Lock Configuration
       description: This endpoint retrieves the current Recovery Lock configuration settings for a specified device.
       operationId: Devices_GetRecoveryLockConfig
       responses:
@@ -53655,7 +53665,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockconfig?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
   /applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockpassword:
     get:
-      summary: Get Recovery Lock Password
+      summary: List Recovery Lock Password
       description: This endpoint retrieves the plaintext Recovery Lock password for a specified device.
       operationId: Devices_GetRecoveryLockPassword
       responses:
@@ -60809,7 +60819,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/events' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"eventType":"LOG_EVENT_TYPE_UNSPECIFIED","resource":{"displayName":"string","id":"string","name":"string","type":"string"}}'
   /applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockpin:
     get:
-      summary: Get Device Lock PIN
+      summary: List Device Lock PIN
       description: This endpoint retrieves the decrypted device lock PIN when the device is locked.
       operationId: Devices_GetDeviceLockPin
       responses:
@@ -60888,7 +60898,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockpin?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
   /applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockstate:
     get:
-      summary: Get Device Lock State
+      summary: List Device Lock State
       description: This endpoint retrieves the derived device lock state for a specified macOS device.
       operationId: Devices_GetDeviceLockState
       responses:
@@ -63420,7 +63430,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X POST https://console.jumpcloud.com/v2/applemdms/{device_manager_object_id}/ade_tokens \
+        curl -X POST /applemdms/{device_manager_object_id}/ade_tokens \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}' \
@@ -63510,7 +63520,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens \
+        curl -X GET /applemdms/ade_tokens \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -63619,7 +63629,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id} \
+        curl -X GET /applemdms/ade_tokens/{object_id} \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -63698,7 +63708,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X PATCH https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id} \
+        curl -X PATCH /applemdms/ade_tokens/{object_id} \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}' \
@@ -63945,7 +63955,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{ade_token_object_id}/ade_settings \
+        curl -X GET /applemdms/ade_tokens/{ade_token_object_id}/ade_settings \
           -H 'Accept: application/json' \
           -H 'x-api-key:{API_KEY}'
         ```
@@ -64024,7 +64034,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
+        curl -X GET /applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
           -H 'Accept: application/json' \
           -H 'x-api-key:{API_KEY}'
         ```
@@ -64105,13 +64115,13 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/ade_tokens/{adeTokenObjectId}/ade_settings/{osFamily}' -Method GET -Headers $headers
     patch:
-      summary: Patch ADE Settings
+      summary: Update ADE Settings
       description: |-
         Create or update ADE settings for an ADE token and OS family. patch_mask is required; only fields listed in patch_mask.fields are updated. Include setup_options or default_device_group_object_ids in fields to clear them.
 
         #### Sample Request
         ```
-        curl -X PATCH https://console.jumpcloud.com/v2/applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
+        curl -X PATCH /applemdms/ade_tokens/{ade_token_object_id}/ade_settings/DARWIN \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}' \
@@ -64240,7 +64250,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_token_org_names \
+        curl -X GET /applemdms/ade_token_org_names \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -64307,7 +64317,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/abm_devices \
+        curl -X GET /applemdms/abm_devices \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -64416,7 +64426,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X POST https://console.jumpcloud.com/v2/applemdms/ade_tokens/{object_id}/refresh_abm_devices \
+        curl -X POST /applemdms/ade_tokens/{object_id}/refresh_abm_devices \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}' \
@@ -64864,13 +64874,13 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/office365s/{office365_id}/users/external-id' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"correlations":[{"externalUserId":"string","userObjectId":"string"}]}'
   /applemdms/ade_tokens_stats:
     get:
-      summary: Get ADE Tokens Stats
+      summary: List ADE Tokens Stats
       description: |-
         Get aggregate counts of ADE tokens by expiry status for the calling organization(s).
 
         #### Sample Request
         ```
-        curl -X GET https://console.jumpcloud.com/v2/applemdms/ade_tokens_stats \
+        curl -X GET /applemdms/ade_tokens_stats \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -68810,6 +68820,14 @@ components:
         - integrationKey
       title: DuoApplicationUpdateReq
       type: object
+    ErrorWithErrorCode:
+      allOf:
+        - $ref: '#/components/schemas/Error'
+        - type: object
+          properties:
+            errorCode:
+              type: string
+              description: Optional stable machine-readable error identifier (for example MSP trial errors).
     GSuiteBuiltinTranslation:
       description: |
         Built-in translations for G Suite export:
@@ -69870,6 +69888,11 @@ components:
         maxSystemUsers:
           type: integer
           description: The maximum number of users allowed in this organization. Requires organizations.billing scope to modify.
+        trialEndDate:
+          type: string
+          description: |-
+            Present on create when trial was true: calendar end date (YYYY-MM-DD) computed at create time.
+            Also included on organization_create for downstream billing.
     CreateOrganization:
       examples:
         - name: Acme Inc
@@ -69882,6 +69905,18 @@ components:
         maxSystemUsers:
           type: integer
           description: The maximum number of users allowed in this organization. Requires organizations.billing scope to modify.
+        trial:
+          type: boolean
+          description: |-
+            When true, creates the child organization in an MSP time-based trial state (organization_create
+            event includes timeBasedTrial and trialEndDate). Requires organizations.billing scope, provider
+            organization creation to be enabled, and that MSP trial child organizations are enabled for the
+            provider. Omit or set false for a standard child organization create.
+        trialDurationDays:
+          type: integer
+          description: |-
+            Optional trial length in days. Only valid when trial is true. Must be one of the allowed trial
+            durations (currently 30). Defaults to 30 days when omitted.
     Case:
       title: Case
       type: object
