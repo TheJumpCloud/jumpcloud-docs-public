@@ -65607,6 +65607,8 @@ components:
     jumpcloud.privileged_access.RemoteBrowserIsolationSettings:
       type: object
       properties:
+        allowInsecureWebsites:
+          type: boolean
         blacklistUri:
           type: array
           items:
@@ -65622,8 +65624,6 @@ components:
         disableFileTransfer:
           type: boolean
         enableDevTools:
-          type: boolean
-        allowInsecureWebsites:
           type: boolean
         recordVideo:
           type: boolean
