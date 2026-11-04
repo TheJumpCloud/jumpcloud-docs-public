@@ -307,6 +307,116 @@ operations:
     legacy_operation_id: systems_commandBuiltinShutdown
     standardized_operation_id: postApiSystemsBySystemIdCommandBuiltinShutdown
   - method: get
+    host_root_path: /api/v2/access-certification/healthcheck
+    base_path: /api/v2
+    legacy_operation_id: access-certificationHealthcheck
+    standardized_operation_id: getApiV2AccessCertificationHealthcheck
+  - method: get
+    host_root_path: /api/v2/access-certification/settings
+    base_path: /api/v2
+    legacy_operation_id: getSettings
+    standardized_operation_id: getApiV2AccessCertificationSettings
+  - method: put
+    host_root_path: /api/v2/access-certification/settings
+    base_path: /api/v2
+    legacy_operation_id: putSettings
+    standardized_operation_id: putApiV2AccessCertificationSettings
+  - method: get
+    host_root_path: /api/v2/access-certification/campaigns
+    base_path: /api/v2
+    legacy_operation_id: listCampaigns
+    standardized_operation_id: getApiV2AccessCertificationCampaigns
+  - method: post
+    host_root_path: /api/v2/access-certification/campaigns
+    base_path: /api/v2
+    legacy_operation_id: createCampaign
+    standardized_operation_id: postApiV2AccessCertificationCampaigns
+  - method: get
+    host_root_path: /api/v2/access-certification/campaign-runs
+    base_path: /api/v2
+    legacy_operation_id: listCampaignRuns
+    standardized_operation_id: getApiV2AccessCertificationCampaignRuns
+  - method: get
+    host_root_path: /api/v2/access-certification/campaign-runs/{runId}
+    base_path: /api/v2
+    legacy_operation_id: getCampaignRun
+    standardized_operation_id: getApiV2AccessCertificationCampaignRunsByRunid
+  - method: post
+    host_root_path: /api/v2/access-certification/campaign-runs/{runId}/extend
+    base_path: /api/v2
+    legacy_operation_id: extendCampaignRun
+    standardized_operation_id: postApiV2AccessCertificationCampaignRunsByRunidExtend
+  - method: post
+    host_root_path: /api/v2/access-certification/campaign-runs/{runId}/end-early
+    base_path: /api/v2
+    legacy_operation_id: endCampaignRunEarly
+    standardized_operation_id: postApiV2AccessCertificationCampaignRunsByRunidEndEarly
+  - method: post
+    host_root_path: /api/v2/access-certification/campaign-runs/{runId}/close
+    base_path: /api/v2
+    legacy_operation_id: closeCampaignRun
+    standardized_operation_id: postApiV2AccessCertificationCampaignRunsByRunidClose
+  - method: get
+    host_root_path: /api/v2/access-certification/campaign-runs/{runId}/review-items
+    base_path: /api/v2
+    legacy_operation_id: listCampaignRunReviewItems
+    standardized_operation_id: getApiV2AccessCertificationCampaignRunsByRunidReviewItems
+  - method: get
+    host_root_path: /api/v2/access-certification/campaign-runs/{runId}/audit-report
+    base_path: /api/v2
+    legacy_operation_id: getCampaignRunAuditReport
+    standardized_operation_id: getApiV2AccessCertificationCampaignRunsByRunidAuditReport
+  - method: post
+    host_root_path: /api/v2/access-certification/campaign-runs/{runId}/audit-report/sign-off
+    base_path: /api/v2
+    legacy_operation_id: signOffCampaignRunAuditReport
+    standardized_operation_id: postApiV2AccessCertificationCampaignRunsByRunidAuditReportSignOff
+  - method: get
+    host_root_path: /api/v2/access-certification/campaigns/{campaignId}
+    base_path: /api/v2
+    legacy_operation_id: getCampaign
+    standardized_operation_id: getApiV2AccessCertificationCampaignsByCampaignid
+  - method: put
+    host_root_path: /api/v2/access-certification/campaigns/{campaignId}
+    base_path: /api/v2
+    legacy_operation_id: updateCampaign
+    standardized_operation_id: putApiV2AccessCertificationCampaignsByCampaignid
+  - method: delete
+    host_root_path: /api/v2/access-certification/campaigns/{campaignId}
+    base_path: /api/v2
+    legacy_operation_id: deleteCampaign
+    standardized_operation_id: deleteApiV2AccessCertificationCampaignsByCampaignid
+  - method: post
+    host_root_path: /api/v2/access-certification/campaigns/{campaignId}/activate
+    base_path: /api/v2
+    legacy_operation_id: activateCampaign
+    standardized_operation_id: postApiV2AccessCertificationCampaignsByCampaignidActivate
+  - method: post
+    host_root_path: /api/v2/access-certification/review-items/{reviewItemId}/decisions
+    base_path: /api/v2
+    legacy_operation_id: recordReviewDecision
+    standardized_operation_id: postApiV2AccessCertificationReviewItemsByReviewitemidDecisions
+  - method: post
+    host_root_path: /api/v2/access-certification/review-items/bulk-decisions
+    base_path: /api/v2
+    legacy_operation_id: recordBulkReviewDecisions
+    standardized_operation_id: postApiV2AccessCertificationReviewItemsBulkDecisions
+  - method: post
+    host_root_path: /api/v2/access-certification/review-items/bulk-reassign
+    base_path: /api/v2
+    legacy_operation_id: bulkReassignReviewItems
+    standardized_operation_id: postApiV2AccessCertificationReviewItemsBulkReassign
+  - method: post
+    host_root_path: /api/v2/access-certification/review-items/{reviewItemId}/reassign
+    base_path: /api/v2
+    legacy_operation_id: reassignReviewItem
+    standardized_operation_id: postApiV2AccessCertificationReviewItemsByReviewitemidReassign
+  - method: get
+    host_root_path: /api/v2/access-certification/admin-queue
+    base_path: /api/v2
+    legacy_operation_id: listAdminQueue
+    standardized_operation_id: getApiV2AccessCertificationAdminQueue
+  - method: get
     host_root_path: /api/v2/agents
     base_path: /api/v2
     legacy_operation_id: getApiV2Agents
