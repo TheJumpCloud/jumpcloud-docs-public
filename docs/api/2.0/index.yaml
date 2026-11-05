@@ -51294,7 +51294,7 @@ paths:
   /saved-views:
     get:
       summary: List the Items stored in SavedViews
-      description: "List the shared saved views for an Organization having specific source.\n\n#### Sample Request\n```\ncurl -X GET https://console.jumpcloud.com/api/v2/saved-views \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 Saved Views in a single response."
+      description: "List the shared saved views for an Organization having specific source.\n\n#### Sample Request\n```\ncurl -X GET {baseUrl}/saved-views \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -H 'x-api-key:{API_KEY}'\n```\n\n\tNote: The `limit` maximum is 100 Saved Views in a single response."
       operationId: SavedViewsService_List
       responses:
         '200':
@@ -51390,7 +51390,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X POST https://console.jumpcloud.com/api/v2/views \
+        curl -X POST {baseUrl}/views \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key: {API_KEY}' \
@@ -53917,13 +53917,13 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/userapprovalrequest' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"approvedDuration":"string","id":"string","organizationObjectId":"string","remarks":"string","status":"string"}'
   /feature-settings:
     get:
-      summary: Get Organization Feature Settings
+      summary: List Organization Feature Settings
       description: |-
         Get organization feature settings using filters. Returns a list of features with their settings grouped by feature name.
 
         #### Sample Request
         ```
-        curl -X GET 'https://console.jumpcloud.com/api/v2/feature-settings?filter=feature.name:eq:mcp&filter=setting.name:eq:enabled' \
+        curl -X GET '{baseUrl}/feature-settings?filter=feature.name:eq:mcp&filter=setting.name:eq:enabled' \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -54039,7 +54039,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X PUT https://console.jumpcloud.com/api/v2/feature-settings/{feature_name}/{setting_name} \
+        curl -X PUT {baseUrl}/feature-settings/{feature_name}/{setting_name} \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key: {API_KEY}' \
@@ -65255,13 +65255,13 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/custombanned' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"keywords":["string"],"organizationObjectId":"string"}'
   /access-risk-settings:
     get:
-      summary: Get Access Risk Settings
+      summary: List Access Risk Settings
       description: |-
         Get Access Risk Detection organization settings for the current organization. Returns all settings from the `identity_risk_detection` feature, including the master `enabled` toggle. Optional filters can narrow results to a subset of settings.
 
         #### Sample Request
         ```
-        curl -X GET 'https://console.jumpcloud.com/api/v2/access-risk-settings' \
+        curl -X GET '{baseUrl}/access-risk-settings' \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -65269,7 +65269,7 @@ paths:
 
         #### Sample Request (filtered)
         ```
-        curl -X GET 'https://console.jumpcloud.com/api/v2/access-risk-settings?filter=setting.name:eq:trusted_ip_lists' \
+        curl -X GET '{baseUrl}/access-risk-settings?filter=setting.name:eq:trusted_ip_lists' \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key:{API_KEY}'
@@ -65387,7 +65387,7 @@ paths:
 
         #### Sample Request
         ```
-        curl -X PUT https://console.jumpcloud.com/api/v2/access-risk-settings/trusted_ip_lists \
+        curl -X PUT {baseUrl}/access-risk-settings/trusted_ip_lists \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key: {API_KEY}' \
@@ -65396,7 +65396,7 @@ paths:
 
         #### Sample Request (`enabled`)
         ```
-        curl -X PUT https://console.jumpcloud.com/api/v2/access-risk-settings/enabled \
+        curl -X PUT {baseUrl}/access-risk-settings/enabled \
           -H 'Accept: application/json' \
           -H 'Content-Type: application/json' \
           -H 'x-api-key: {API_KEY}' \
