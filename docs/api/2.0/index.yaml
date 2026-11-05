@@ -13997,7 +13997,6 @@ paths:
 
         #### Available filter fields:
           - `name`
-          - `disabled`
           - `type`
           - `memberQueryErrorFlags`
 
@@ -19327,7 +19326,6 @@ paths:
 
         Available filter fields:
           - `name`
-          - `disabled`
           - `type`
 
         #### Sample Request
@@ -28899,7 +28897,6 @@ paths:
 
         Available filter fields:
           - `name`
-          - `disabled`
           - `type`
           - `membershipMethod`
           - `memberQueryErrorFlags`
@@ -34692,7 +34689,6 @@ paths:
 
         Available filter fields:
           - `name`
-          - `disabled`
           - `type`
           - `membershipMethod`
           - `memberQueryErrorFlags`
