@@ -40676,7 +40676,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/folders:
     get:
-      summary: List Folders
+      summary: List Password Vault Folders
       description: List password vault folders.
       operationId: getApiV2PasswordVaultFolders
       responses:
@@ -40729,7 +40729,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     post:
-      summary: Update Folder
+      summary: Update Password Vault Folder
       description: Create or update a password vault folder.
       operationId: postApiV2PasswordVaultFolders
       responses:
@@ -40754,7 +40754,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/folders/{id}:
     get:
-      summary: Get Folder
+      summary: Get Password Vault Folder
       description: Get password vault folder metadata for viewing.
       operationId: getApiV2PasswordVaultFoldersById
       responses:
@@ -40780,7 +40780,7 @@ paths:
         - passwordmanager
         - passwordmanager.readonly
     delete:
-      summary: Delete Folder
+      summary: Delete Password Vault Folder
       description: Delete a password vault folder.
       operationId: deleteApiV2PasswordVaultFoldersById
       responses:
@@ -41133,7 +41133,7 @@ paths:
         - passwordmanager
   /api/v2/password-vault/groups:
     get:
-      summary: List Groups
+      summary: List Password Vault Groups
       description: List password vault groups.
       operationId: getApiV2PasswordVaultGroups
       responses:
@@ -41515,7 +41515,7 @@ paths:
         - passwordmanager.readonly
   /api/v2/password-vault/users:
     get:
-      summary: List Users
+      summary: List Password Vault Users
       description: Find password vault users.
       operationId: getApiV2PasswordVaultUsers
       responses:
@@ -66541,6 +66541,8 @@ components:
       type: object
       properties:
         isActive:
+          type: boolean
+        isExpired:
           type: boolean
         isPam:
           type: boolean
