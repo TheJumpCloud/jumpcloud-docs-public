@@ -313,47 +313,6 @@ info:
   title: JumpCloud API
   version: '2.0'
 paths:
-  /access-certification/healthcheck:
-    get:
-      tags:
-        - Access Certification
-      summary: Healthcheck
-      description: |-
-        Returns whether the Access Certification API is available. Use this endpoint for load-balancer
-        or monitoring health checks. No authentication is required.
-      operationId: access-certificationHealthcheck
-      x-scopes:
-        - anonymous
-      security: []
-      responses:
-        '200':
-          description: healthcheck response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/jumpcloud.http.accesscertification.Healthcheck'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/jumpcloud.http.accesscertification.error'
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request GET \
-              --url https://console.jumpcloud.com/api/v2/access-certification/healthcheck
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/access-certification/healthcheck"
-
-            response = requests.request("GET", url)
-
-            print(response.text)
-        - lang: Powershell
-          source: '$response = Invoke-RestMethod -Uri ''https://console.jumpcloud.com/api/v2/access-certification/healthcheck'' -Method GET '
   /access-certification/settings:
     get:
       tags:
@@ -67579,8 +67538,10 @@ components:
       type: object
       description: |-
         Summary row for one campaign run in a list response. Includes review window dates,
-        progress, and remediation status. The nested `scope` object provides display-ready
-        scope details; flat `scopeType` and `scopeTargetId` are retained for compatibility.
+        progress, and remediation status. Flat `scopeType` and `scopeTargetId` identify the
+        review scope. Optional nested `scope`, reviewer-chain flags, materialization fields,
+        and related properties may also be present depending on run status and the operation
+        (for example, single-run retrieval).
       required:
         - runId
         - campaignId
@@ -67650,6 +67611,18 @@ components:
         allowReassign:
           type: boolean
           description: Effective allow-reassign for this run's reviewer chain
+        auditReportStatus:
+          $ref: '#/components/schemas/jumpcloud.http.accesscertification.CampaignAuditReportStatus'
+          description: |-
+            Coarse audit export status for closed runs after remediation has settled.
+            Omitted for active runs and while remediation is still outstanding.
+    jumpcloud.http.accesscertification.CampaignAuditReportStatus:
+      type: string
+      description: Audit artifact status for campaign list and detail UIs (maps from audit_artifacts)
+      enum:
+        - generating
+        - exports_ready
+        - failed
     jumpcloud.http.accesscertification.GroupResourceCounts:
       type: object
       description: Resource counts for one scoped user group (ids in `counts` are Directory graph types).
@@ -68010,12 +67983,6 @@ components:
           type: string
           format: date-time
           description: Updated review window end after extension
-    jumpcloud.http.accesscertification.Healthcheck:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Current health status of the API
     jumpcloud.http.accesscertification.IdentityRemediationAction:
       type: string
       description: Remediation status for one identity after a Revoke decision

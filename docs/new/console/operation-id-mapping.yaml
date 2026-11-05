@@ -307,11 +307,6 @@ operations:
     legacy_operation_id: systems_commandBuiltinShutdown
     standardized_operation_id: postApiSystemsBySystemIdCommandBuiltinShutdown
   - method: get
-    host_root_path: /api/v2/access-certification/healthcheck
-    base_path: /api/v2
-    legacy_operation_id: access-certificationHealthcheck
-    standardized_operation_id: getApiV2AccessCertificationHealthcheck
-  - method: get
     host_root_path: /api/v2/access-certification/settings
     base_path: /api/v2
     legacy_operation_id: getSettings
