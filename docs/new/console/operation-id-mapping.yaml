@@ -3421,6 +3421,21 @@ operations:
     base_path: /api/v2
     legacy_operation_id: SavedViews_Create
     standardized_operation_id: postApiV2SystemsViews
+  - method: post
+    host_root_path: /api/v2/search/query
+    base_path: /api/v2
+    legacy_operation_id: Search_Search
+    standardized_operation_id: postApiV2SearchQuery
+  - method: get
+    host_root_path: /api/v2/search/query/schema
+    base_path: /api/v2
+    legacy_operation_id: Search_ListSchema
+    standardized_operation_id: getApiV2SearchQuerySchema
+  - method: get
+    host_root_path: /api/v2/search/query/schema/{objectName}
+    base_path: /api/v2
+    legacy_operation_id: Search_GetSchema
+    standardized_operation_id: getApiV2SearchQuerySchemaByObjectname
   - method: get
     host_root_path: /api/v2/reports/custom
     base_path: /api/v2
