@@ -52009,7 +52009,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/passwordpolicies \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowBreachedPasswords":false,"breachedPasswordMinCount":1,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
         - lang: Python
           source: |-
             import requests
@@ -52029,6 +52029,8 @@ paths:
                     "disallowCommonlyUsedPasswords": True,
                     "disallowCustomBannedPasswords": True,
                     "disallowNameSubstring": True,
+                    "disallowBreachedPasswords": False,
+                    "breachedPasswordMinCount": 1,
                     "disallowSequentialOrRepetitiveChars": True,
                     "displayComplexityOnResetScreen": True,
                     "effectiveDate": "2019-08-24T14:15:22Z",
@@ -52072,7 +52074,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowBreachedPasswords":false,"breachedPasswordMinCount":1,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
     delete:
       summary: Delete Password Policies
       description: Delete password policies for an organization.
@@ -52236,7 +52238,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowBreachedPasswords":false,"breachedPasswordMinCount":1,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
         - lang: Python
           source: |-
             import requests
@@ -52256,6 +52258,8 @@ paths:
                     "disallowCommonlyUsedPasswords": True,
                     "disallowCustomBannedPasswords": True,
                     "disallowNameSubstring": True,
+                    "disallowBreachedPasswords": False,
+                    "breachedPasswordMinCount": 1,
                     "disallowSequentialOrRepetitiveChars": True,
                     "displayComplexityOnResetScreen": True,
                     "effectiveDate": "2019-08-24T14:15:22Z",
@@ -52299,7 +52303,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowBreachedPasswords":false,"breachedPasswordMinCount":1,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
     delete:
       summary: Delete Password Policy
       description: Delete a password policy for an organization.
@@ -83932,6 +83936,14 @@ components:
           type: boolean
         disallowNameSubstring:
           type: boolean
+        disallowBreachedPasswords:
+          type: boolean
+          default: false
+        breachedPasswordMinCount:
+          type: integer
+          format: int32
+          minimum: 1
+          default: 1
         disallowSequentialOrRepetitiveChars:
           type: boolean
         displayComplexityOnResetScreen:

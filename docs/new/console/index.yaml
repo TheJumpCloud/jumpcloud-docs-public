@@ -46817,6 +46817,11 @@ components:
               type: boolean
             disallowNameSubstring:
               type: boolean
+            disallowBreachedPasswords:
+              type: boolean
+            breachedPasswordMinCount:
+              minimum: 1
+              type: integer
             disallowSequentialOrRepetitiveChars:
               type: boolean
             displayComplexityOnResetScreen:
@@ -47029,6 +47034,11 @@ components:
               type: boolean
             disallowNameSubstring:
               type: boolean
+            disallowBreachedPasswords:
+              type: boolean
+            breachedPasswordMinCount:
+              minimum: 1
+              type: integer
             disallowSequentialOrRepetitiveChars:
               type: boolean
             displayComplexityOnResetScreen:
@@ -65605,6 +65615,14 @@ components:
           type: boolean
         disallowNameSubstring:
           type: boolean
+        disallowBreachedPasswords:
+          type: boolean
+          default: false
+        breachedPasswordMinCount:
+          type: integer
+          format: int32
+          minimum: 1
+          default: 1
         disallowSequentialOrRepetitiveChars:
           type: boolean
         displayComplexityOnResetScreen:
