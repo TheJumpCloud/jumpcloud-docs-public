@@ -42539,6 +42539,567 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/privileged-access/connectors:
+    get:
+      summary: List Connectors
+      description: List password vault connectors.
+      operationId: getApiV2PrivilegedAccessConnectors
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListConnectorsReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: sorting
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxResultCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skipCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: descriptionFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ipFilter
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+    put:
+      summary: Update Connector
+      description: Create or update a password vault connector.
+      operationId: putApiV2PrivilegedAccessConnectors
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertConnectorReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertConnectorRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.create
+        - pam.jump-servers.update
+  /api/v2/privileged-access/connectors/{id}:
+    get:
+      summary: Get Connector
+      description: Get password vault connector metadata.
+      operationId: getApiV2PrivilegedAccessConnectorsById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetConnectorByIdReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+    delete:
+      summary: Delete Connector
+      description: Delete a password vault connector.
+      operationId: deleteApiV2PrivilegedAccessConnectorsById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.delete
+  /api/v2/privileged-access/databases:
+    get:
+      summary: List Databases
+      description: List password vault databases.
+      operationId: getApiV2PrivilegedAccessDatabases
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListDatabasesReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: sorting
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxResultCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skipCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: nameFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: uriFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: connectorFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: provider
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: databaseName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: archivedFilter
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: tags
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: minLastConnect
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxLastConnect
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: isInUse
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: recordEnabled
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: excludeIds
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+        - name: onlyWithAccessPolicies
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: dbShield
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.readonly
+    put:
+      summary: Update Database
+      description: Create or update a password vault database.
+      operationId: putApiV2PrivilegedAccessDatabases
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertDatabaseReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertDatabaseRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.create
+        - pam.privileged-databases.update
+  /api/v2/privileged-access/databases/{id}:
+    get:
+      summary: Get Database
+      description: Get password vault database metadata for viewing.
+      operationId: getApiV2PrivilegedAccessDatabasesById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetDatabaseForViewReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.readonly
+    delete:
+      summary: Delete Database
+      description: Delete a password vault database.
+      operationId: deleteApiV2PrivilegedAccessDatabasesById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deleteCredentialsLinked
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.delete
+  /api/v2/privileged-access/servers:
+    get:
+      summary: List Servers
+      description: List password vault servers.
+      operationId: getApiV2PrivilegedAccessServers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListServersReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: sorting
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxResultCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skipCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: nameFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ipFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: connectorFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: archivedFilter
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: tags
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: minLastConnect
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: maxLastConnect
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: isInUse
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: recordEnabled
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: fileTransferEnabled
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: clipboardEnabled
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: protocol
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: excludeIds
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+        - name: onlyWithAccessPolicies
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: permissions
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: operatingSystem
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.readonly
+    put:
+      summary: Update Server
+      description: Create or update a password vault server.
+      operationId: putApiV2PrivilegedAccessServers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertServerReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertServerRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.create
+        - pam.privileged-servers.update
+  /api/v2/privileged-access/servers/{id}:
+    get:
+      summary: Get Server
+      description: Get password vault server metadata for viewing.
+      operationId: getApiV2PrivilegedAccessServersById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetServerForViewReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.readonly
+    delete:
+      summary: Delete Server
+      description: Delete a password vault server.
+      operationId: deleteApiV2PrivilegedAccessServersById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deleteCredentialsLinked
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.delete
   /api/v2/privileged-access/pam/activation/finalize:
     post:
       summary: Finalize Privileged Access Activation
@@ -43387,6 +43948,271 @@ paths:
       x-scopes:
         - pam
         - pam.backup
+  /api/v2/privileged-access/credentials:
+    get:
+      summary: List Privileged Access Credentials
+      description: List password vault credentials.
+      operationId: getApiV2PrivilegedAccessCredentials
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListCredentialsReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+    put:
+      summary: Update Privileged Access Credential
+      description: Create or update a password vault credential.
+      operationId: putApiV2PrivilegedAccessCredentials
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertCredentialReply"
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.UpsertCredentialRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.create
+        - pam.privileged-credentials.update
+  /api/v2/privileged-access/credentials/{id}:
+    get:
+      summary: Get Privileged Access Credential
+      description: Get password vault credential metadata.
+      operationId: getApiV2PrivilegedAccessCredentialsById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+    delete:
+      summary: Delete Privileged Access Credential
+      description: Delete a password vault credential.
+      operationId: deleteApiV2PrivilegedAccessCredentialsById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.delete
+  /api/v2/privileged-access/websites:
+    get:
+      summary: List Privileged Access Websites
+      description: List password vault websites.
+      operationId: getApiV2PrivilegedAccessWebsites
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListWebsitesReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.readonly
+    post:
+      summary: Update Privileged Access Website
+      description: Create or update a password vault website.
+      operationId: postApiV2PrivilegedAccessWebsites
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteReply"
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.UpsertWebsiteRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.create
+        - pam.privileged-websites.update
+  /api/v2/privileged-access/websites/{id}:
+    get:
+      summary: Get Privileged Access Website
+      description: Get password vault website metadata for viewing.
+      operationId: getApiV2PrivilegedAccessWebsitesById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetWebsiteForViewReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.readonly
+    delete:
+      summary: Delete Privileged Access Website
+      description: Delete a password vault website.
+      operationId: deleteApiV2PrivilegedAccessWebsitesById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deleteCredentialsLinked
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.delete
   /api/v2/privileged-access/resource-managers:
     get:
       summary: List Resource Managers
@@ -69723,6 +70549,605 @@ components:
           items:
             type: integer
             format: int32
+    jumpcloud.privileged_access.BlockingRuleExceptions:
+      type:
+        - object
+        - "null"
+      properties:
+        groups:
+          type: array
+          items:
+            type: integer
+            format: int32
+        users:
+          type: array
+          items:
+            type: integer
+            format: int32
+    jumpcloud.privileged_access.BlockingRuleFormData:
+      type:
+        - object
+        - "null"
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        criteria:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.DatabaseCriteriaRule"
+        criteriaType:
+          type: integer
+          format: int32
+        exceptions:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleExceptions"
+        exclusiveToResource:
+          type: boolean
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        notes:
+          type: string
+        priority:
+          type: integer
+          format: int64
+        resourceIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        severity:
+          type: integer
+          format: int32
+        tags:
+          type: string
+    jumpcloud.privileged_access.BlockingRuleTimeFrame:
+      type:
+        - object
+        - "null"
+      properties:
+        daysOfWeek:
+          type: string
+          format: byte
+        from:
+          type: string
+        to:
+          type: string
+    jumpcloud.privileged_access.ConnectorCertificate:
+      type: object
+      properties:
+        expires:
+          type: string
+        lastChecked:
+          type: string
+        privateKeyChecksum:
+          type: string
+        publicKeyChecksum:
+          type: string
+    jumpcloud.privileged_access.ConnectorCertificateLevel:
+      type: string
+      enum:
+        - CONNECTOR_CERTIFICATE_LEVEL_SYSTEM
+        - CONNECTOR_CERTIFICATE_LEVEL_TENANT
+        - CONNECTOR_CERTIFICATE_LEVEL_CONNECTOR
+      default: CONNECTOR_CERTIFICATE_LEVEL_SYSTEM
+    jumpcloud.privileged_access.ConnectorDetail:
+      type: object
+      properties:
+        bandwidth:
+          type: integer
+          format: int32
+        bastionPort:
+          type: integer
+          format: int32
+        certificateLevel:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectorCertificateLevel"
+        description:
+          type: string
+        disabled:
+          type: boolean
+        dnsType:
+          type: string
+        edition:
+          type: string
+        id:
+          type: string
+          format: byte
+        installedCertificate:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectorCertificate"
+        ip:
+          type: string
+        isAdminAlerted:
+          type: boolean
+        isDefault:
+          type: boolean
+        lastAlert:
+          type: string
+        lastBackupFile:
+          type: string
+        lastPing:
+          type: string
+        name:
+          type: string
+        port:
+          type: integer
+          format: int32
+        recordVideo:
+          type: boolean
+        version:
+          type: string
+    jumpcloud.privileged_access.ConnectorEdition:
+      type: string
+      enum:
+        - CONNECTOR_EDITION_LEGACY
+        - CONNECTOR_EDITION_STANDARD
+        - CONNECTOR_EDITION_PREMIUM
+      default: CONNECTOR_EDITION_LEGACY
+    jumpcloud.privileged_access.ConnectorListItem:
+      type: object
+      properties:
+        bastionPort:
+          type: integer
+          format: int32
+        description:
+          type: string
+        domain:
+          type: string
+        edition:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectorEdition"
+        id:
+          type: string
+          format: byte
+        ip:
+          type: string
+        lastBackup:
+          type: string
+        lastPing:
+          type: string
+        online:
+          type: boolean
+        port:
+          type: integer
+          format: int32
+        version:
+          type: string
+    jumpcloud.privileged_access.CreateServerProtocolInput:
+      type: object
+      properties:
+        category:
+          type: string
+        communicationHttps:
+          type: boolean
+        container:
+          type: string
+        namespace:
+          type: string
+        nla:
+          type: boolean
+        pod:
+          type: string
+        port:
+          type: integer
+          format: int32
+        rdpSecurity:
+          type: string
+        remoteApp:
+          type: string
+        remoteAppArgs:
+          type: string
+        remoteAppDir:
+          type: string
+        standard:
+          type: boolean
+    jumpcloud.privileged_access.DatabaseCriteriaRule:
+      type: object
+      properties:
+        commands:
+          type: array
+          items:
+            type: string
+        replaceQuery:
+          type: string
+        sqlPattern:
+          type: string
+        tableName:
+          type: string
+        timeFrame:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleTimeFrame"
+        type:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.DatabaseForView:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        archived:
+          type: boolean
+        connectionString:
+          type: string
+        connector:
+          type: string
+        creationDate:
+          type: string
+        databaseName:
+          type: string
+        editDate:
+          type: string
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        isDefaultConnectionString:
+          type: boolean
+        name:
+          type: string
+        notes:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        port:
+          type: integer
+          format: int64
+        provider:
+          type: string
+        rbiSettings:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.RemoteBrowserIsolationSettings"
+        tags:
+          type: string
+        uri:
+          type: string
+        webShieldEnabled:
+          type: boolean
+    jumpcloud.privileged_access.DatabaseListItem:
+      type: object
+      properties:
+        archived:
+          type: boolean
+        connector:
+          type: string
+        connectorId:
+          type: string
+          format: byte
+        dbShield:
+          type: boolean
+        folderId:
+          type: string
+          format: byte
+        folderName:
+          type: string
+        id:
+          type: string
+          format: byte
+        isFavorite:
+          type: boolean
+        isInUse:
+          type: boolean
+        lastConnect:
+          type: string
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        provider:
+          type: string
+        recordEnabled:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.GetConnectorByIdReply:
+      type: object
+      properties:
+        connector:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectorDetail"
+    jumpcloud.privileged_access.GetDatabaseForViewReply:
+      type: object
+      properties:
+        connectorDescription:
+          type: string
+        database:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.DatabaseForView"
+    jumpcloud.privileged_access.GetServerForViewReply:
+      type: object
+      properties:
+        connectorDescription:
+          type: string
+        server:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ServerForView"
+    jumpcloud.privileged_access.ListConnectorsReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectorListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListDatabasesReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.DatabaseListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListServersReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ServerListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ServerForView:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        connector:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        disableClipboard:
+          type: boolean
+        disableFileTransfer:
+          type: boolean
+        editDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        notes:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        protocol:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ServerProtocol"
+        recordEnabled:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+        useSslTls:
+          type: boolean
+    jumpcloud.privileged_access.ServerListItem:
+      type: object
+      properties:
+        archived:
+          type: boolean
+        connector:
+          type: string
+        id:
+          type: string
+          format: byte
+        isFavorite:
+          type: boolean
+        isInUse:
+          type: boolean
+        lastConnect:
+          type: string
+          format: date-time
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        recordEnabled:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.ServerProtocol:
+      type: object
+      properties:
+        advancedParameters:
+          type: string
+        category:
+          type: string
+        communicationHttps:
+          type: boolean
+        container:
+          type: string
+        namespace:
+          type: string
+        nla:
+          type: boolean
+        pod:
+          type: string
+        port:
+          type: string
+        remoteApp:
+          type: string
+        remoteAppArgs:
+          type: string
+        remoteAppDir:
+          type: string
+        standard:
+          type: boolean
+    jumpcloud.privileged_access.UpsertConnectorInput:
+      type: object
+      properties:
+        bandwidth:
+          type: integer
+          format: int32
+        bastionPort:
+          type: integer
+          format: int32
+        description:
+          type: string
+        dnsType:
+          type: string
+        id:
+          type: string
+          format: byte
+        ip:
+          type: string
+        isDefault:
+          type: boolean
+        name:
+          type: string
+        port:
+          type: integer
+          format: int32
+        recordVideo:
+          type: boolean
+    jumpcloud.privileged_access.UpsertConnectorReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertConnectorRequest:
+      type: object
+      properties:
+        connector:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertConnectorInput"
+    jumpcloud.privileged_access.UpsertDatabaseInput:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        connectionString:
+          type: string
+        connector:
+          type: string
+        credentialIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        databaseName:
+          type: string
+        dbShield:
+          type: boolean
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        isDefaultConnectionString:
+          type: boolean
+        linkedCredentialsAccessPolicies:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedCredentialAccessPolicy"
+        name:
+          type: string
+        notes:
+          type: string
+        port:
+          type: integer
+          format: int64
+        provider:
+          type: string
+        rbiSettings:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.RemoteBrowserIsolationSettings"
+        rules:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertLinkedBlockingRule"
+        tags:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.UpsertDatabaseReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertDatabaseRequest:
+      type: object
+      properties:
+        database:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertDatabaseInput"
+    jumpcloud.privileged_access.UpsertLinkedBlockingRule:
+      type: object
+      properties:
+        exceptions:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleExceptions"
+        id:
+          type: string
+          format: byte
+        rule:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleFormData"
+    jumpcloud.privileged_access.UpsertServerInput:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        connector:
+          type: string
+        credentialIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        disableClipboard:
+          type: boolean
+        disableFileTransfer:
+          type: boolean
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        linkedCredentialsAccessPolicies:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedCredentialAccessPolicy"
+        name:
+          type: string
+        notes:
+          type: string
+        os:
+          type: string
+        protocol:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CreateServerProtocolInput"
+        recordVideo:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+        useRemoteApp:
+          type: boolean
+        useSslTls:
+          type: boolean
+    jumpcloud.privileged_access.UpsertServerReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertServerRequest:
+      type: object
+      properties:
+        server:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertServerInput"
     jumpcloud.healthmonitoring.AlertFrequencySettings:
       type: object
       properties:

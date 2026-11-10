@@ -63362,6 +63362,1090 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/lockstate?organizationObjectId=SOME_STRING_VALUE' -Method GET -Headers $headers
+  /privileged-access/connectors:
+    get:
+      summary: List Connectors
+      description: List password vault connectors.
+      operationId: ConnectorsService_List
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListConnectorsReply'
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: sorting
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxResultCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skipCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: descriptionFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ipFilter
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/connectors?filter=SOME_STRING_VALUE&sorting=SOME_STRING_VALUE&maxResultCount=SOME_INTEGER_VALUE&skipCount=SOME_INTEGER_VALUE&descriptionFilter=SOME_STRING_VALUE&ipFilter=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/connectors"
+
+            querystring = {"filter":"SOME_STRING_VALUE","sorting":"SOME_STRING_VALUE","maxResultCount":"SOME_INTEGER_VALUE","skipCount":"SOME_INTEGER_VALUE","descriptionFilter":"SOME_STRING_VALUE","ipFilter":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/connectors?filter=SOME_STRING_VALUE&sorting=SOME_STRING_VALUE&maxResultCount=SOME_INTEGER_VALUE&skipCount=SOME_INTEGER_VALUE&descriptionFilter=SOME_STRING_VALUE&ipFilter=SOME_STRING_VALUE' -Method GET -Headers $headers
+    put:
+      summary: Update Connector
+      description: Create or update a password vault connector.
+      operationId: ConnectorsService_Upsert
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertConnectorReply'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertConnectorRequest'
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.create
+        - pam.jump-servers.update
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/connectors \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"connector":{"bandwidth":0,"bastionPort":0,"description":"string","dnsType":"string","id":"string","ip":"string","isDefault":true,"name":"string","port":0,"recordVideo":true}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/connectors"
+
+            payload = {"connector": {
+                    "bandwidth": 0,
+                    "bastionPort": 0,
+                    "description": "string",
+                    "dnsType": "string",
+                    "id": "string",
+                    "ip": "string",
+                    "isDefault": True,
+                    "name": "string",
+                    "port": 0,
+                    "recordVideo": True
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/connectors' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"connector":{"bandwidth":0,"bastionPort":0,"description":"string","dnsType":"string","id":"string","ip":"string","isDefault":true,"name":"string","port":0,"recordVideo":true}}'
+  /privileged-access/connectors/{id}:
+    get:
+      summary: Get Connector
+      description: Get password vault connector metadata.
+      operationId: ConnectorsService_GetByID
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetConnectorByIdReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/connectors/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/connectors/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/connectors/{id}' -Method GET -Headers $headers
+    delete:
+      summary: Delete Connector
+      description: Delete a password vault connector.
+      operationId: ConnectorsService_Delete
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.delete
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/connectors/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/connectors/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/connectors/{id}' -Method DELETE -Headers $headers
+  /privileged-access/databases:
+    get:
+      summary: List Databases
+      description: List password vault databases.
+      operationId: DatabasesService_List
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListDatabasesReply'
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: sorting
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxResultCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skipCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: nameFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: uriFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: connectorFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: provider
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: databaseName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: archivedFilter
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: tags
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: minLastConnect
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxLastConnect
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: isInUse
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: recordEnabled
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: excludeIds
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+        - name: onlyWithAccessPolicies
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: dbShield
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/databases?filter=SOME_STRING_VALUE&sorting=SOME_STRING_VALUE&maxResultCount=SOME_INTEGER_VALUE&skipCount=SOME_INTEGER_VALUE&nameFilter=SOME_STRING_VALUE&uriFilter=SOME_STRING_VALUE&connectorFilter=SOME_STRING_VALUE&provider=SOME_STRING_VALUE&databaseName=SOME_STRING_VALUE&archivedFilter=SOME_BOOLEAN_VALUE&tags=SOME_ARRAY_VALUE&minLastConnect=SOME_STRING_VALUE&maxLastConnect=SOME_STRING_VALUE&isInUse=SOME_BOOLEAN_VALUE&recordEnabled=SOME_BOOLEAN_VALUE&excludeIds=SOME_ARRAY_VALUE&onlyWithAccessPolicies=SOME_BOOLEAN_VALUE&dbShield=SOME_BOOLEAN_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/databases"
+
+            querystring = {"filter":"SOME_STRING_VALUE","sorting":"SOME_STRING_VALUE","maxResultCount":"SOME_INTEGER_VALUE","skipCount":"SOME_INTEGER_VALUE","nameFilter":"SOME_STRING_VALUE","uriFilter":"SOME_STRING_VALUE","connectorFilter":"SOME_STRING_VALUE","provider":"SOME_STRING_VALUE","databaseName":"SOME_STRING_VALUE","archivedFilter":"SOME_BOOLEAN_VALUE","tags":"SOME_ARRAY_VALUE","minLastConnect":"SOME_STRING_VALUE","maxLastConnect":"SOME_STRING_VALUE","isInUse":"SOME_BOOLEAN_VALUE","recordEnabled":"SOME_BOOLEAN_VALUE","excludeIds":"SOME_ARRAY_VALUE","onlyWithAccessPolicies":"SOME_BOOLEAN_VALUE","dbShield":"SOME_BOOLEAN_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/databases?filter=SOME_STRING_VALUE&sorting=SOME_STRING_VALUE&maxResultCount=SOME_INTEGER_VALUE&skipCount=SOME_INTEGER_VALUE&nameFilter=SOME_STRING_VALUE&uriFilter=SOME_STRING_VALUE&connectorFilter=SOME_STRING_VALUE&provider=SOME_STRING_VALUE&databaseName=SOME_STRING_VALUE&archivedFilter=SOME_BOOLEAN_VALUE&tags=SOME_ARRAY_VALUE&minLastConnect=SOME_STRING_VALUE&maxLastConnect=SOME_STRING_VALUE&isInUse=SOME_BOOLEAN_VALUE&recordEnabled=SOME_BOOLEAN_VALUE&excludeIds=SOME_ARRAY_VALUE&onlyWithAccessPolicies=SOME_BOOLEAN_VALUE&dbShield=SOME_BOOLEAN_VALUE' -Method GET -Headers $headers
+    put:
+      summary: Update Database
+      description: Create or update a password vault database.
+      operationId: DatabasesService_Upsert
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertDatabaseReply'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertDatabaseRequest'
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.create
+        - pam.privileged-databases.update
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/databases \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"database":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connectionString":"string","connector":"string","credentialIds":["string"],"databaseName":"string","dbShield":true,"folderId":"string","id":"string","isDefaultConnectionString":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","port":0,"provider":"string","rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"rules":[{"exceptions":{"groups":[0],"users":[0]},"id":"string","rule":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"criteria":{"commands":["string"],"replaceQuery":"string","sqlPattern":"string","tableName":"string","timeFrame":{"daysOfWeek":"string","from":"string","to":"string"},"type":0},"criteriaType":0,"exceptions":{"groups":[0],"users":[0]},"exclusiveToResource":true,"id":"string","name":"string","notes":"string","priority":0,"resourceIds":["string"],"severity":0,"tags":"string"}}],"tags":"string","uri":"string"}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/databases"
+
+            payload = {"database": {
+                    "accessPolicies": {
+                        "groups": [
+                            {
+                                "id": 0,
+                                "isResourceManager": True,
+                                "name": "string",
+                                "permissions": ["string"]
+                            }
+                        ],
+                        "isPrivate": True,
+                        "users": [
+                            {
+                                "email": "string",
+                                "id": 0,
+                                "isAdmin": True,
+                                "isUser": True,
+                                "name": "string",
+                                "permissions": ["string"]
+                            }
+                        ]
+                    },
+                    "connectionString": "string",
+                    "connector": "string",
+                    "credentialIds": ["string"],
+                    "databaseName": "string",
+                    "dbShield": True,
+                    "folderId": "string",
+                    "id": "string",
+                    "isDefaultConnectionString": True,
+                    "linkedCredentialsAccessPolicies": [
+                        {
+                            "accessPolicies": {
+                                "groups": [
+                                    {
+                                        "id": 0,
+                                        "isResourceManager": True,
+                                        "name": "string",
+                                        "permissions": ["string"]
+                                    }
+                                ],
+                                "isPrivate": True,
+                                "users": [
+                                    {
+                                        "email": "string",
+                                        "id": 0,
+                                        "isAdmin": True,
+                                        "isUser": True,
+                                        "name": "string",
+                                        "permissions": ["string"]
+                                    }
+                                ]
+                            },
+                            "credentialId": "string"
+                        }
+                    ],
+                    "name": "string",
+                    "notes": "string",
+                    "port": 0,
+                    "provider": "string",
+                    "rbiSettings": {
+                        "allowInsecureWebsites": True,
+                        "blacklistUri": ["string"],
+                        "blockAllUri": True,
+                        "chromiumPolicy": "string",
+                        "disableBrowserHeader": True,
+                        "disableClipboard": True,
+                        "disableFileTransfer": True,
+                        "enableDevTools": True,
+                        "recordVideo": True,
+                        "vncSettings": {
+                            "colorDepth": 0,
+                            "compressionLevel": 0,
+                            "disableScreenResize": True,
+                            "disableServerInput": True,
+                            "forceLossless": True,
+                            "qualityLevel": 0,
+                            "swapRedBlue": True,
+                            "viewOnly": True
+                        },
+                        "whitelistUri": ["string"]
+                    },
+                    "rules": [
+                        {
+                            "exceptions": {
+                                "groups": [0],
+                                "users": [0]
+                            },
+                            "id": "string",
+                            "rule": {
+                                "accessPolicies": {
+                                    "groups": [
+                                        {
+                                            "id": 0,
+                                            "isResourceManager": True,
+                                            "name": "string",
+                                            "permissions": ["string"]
+                                        }
+                                    ],
+                                    "isPrivate": True,
+                                    "users": [
+                                        {
+                                            "email": "string",
+                                            "id": 0,
+                                            "isAdmin": True,
+                                            "isUser": True,
+                                            "name": "string",
+                                            "permissions": ["string"]
+                                        }
+                                    ]
+                                },
+                                "criteria": {
+                                    "commands": ["string"],
+                                    "replaceQuery": "string",
+                                    "sqlPattern": "string",
+                                    "tableName": "string",
+                                    "timeFrame": {
+                                        "daysOfWeek": "string",
+                                        "from": "string",
+                                        "to": "string"
+                                    },
+                                    "type": 0
+                                },
+                                "criteriaType": 0,
+                                "exceptions": {
+                                    "groups": [0],
+                                    "users": [0]
+                                },
+                                "exclusiveToResource": True,
+                                "id": "string",
+                                "name": "string",
+                                "notes": "string",
+                                "priority": 0,
+                                "resourceIds": ["string"],
+                                "severity": 0,
+                                "tags": "string"
+                            }
+                        }
+                    ],
+                    "tags": "string",
+                    "uri": "string"
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/databases' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"database":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connectionString":"string","connector":"string","credentialIds":["string"],"databaseName":"string","dbShield":true,"folderId":"string","id":"string","isDefaultConnectionString":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","port":0,"provider":"string","rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"rules":[{"exceptions":{"groups":[0],"users":[0]},"id":"string","rule":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"criteria":{"commands":["string"],"replaceQuery":"string","sqlPattern":"string","tableName":"string","timeFrame":{"daysOfWeek":"string","from":"string","to":"string"},"type":0},"criteriaType":0,"exceptions":{"groups":[0],"users":[0]},"exclusiveToResource":true,"id":"string","name":"string","notes":"string","priority":0,"resourceIds":["string"],"severity":0,"tags":"string"}}],"tags":"string","uri":"string"}}'
+  /privileged-access/databases/{id}:
+    get:
+      summary: Get Database
+      description: Get password vault database metadata for viewing.
+      operationId: DatabasesService_GetByID
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetDatabaseForViewReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/databases/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/databases/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/databases/{id}' -Method GET -Headers $headers
+    delete:
+      summary: Delete Database
+      description: Delete a password vault database.
+      operationId: DatabasesService_Delete
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deleteCredentialsLinked
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.delete
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/databases/{id}?deleteCredentialsLinked=SOME_BOOLEAN_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/databases/{id}"
+
+            querystring = {"deleteCredentialsLinked":"SOME_BOOLEAN_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/databases/{id}?deleteCredentialsLinked=SOME_BOOLEAN_VALUE' -Method DELETE -Headers $headers
+  /privileged-access/servers:
+    get:
+      summary: List Servers
+      description: List password vault servers.
+      operationId: ServersService_List
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListServersReply'
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: sorting
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxResultCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skipCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: nameFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ipFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: connectorFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: archivedFilter
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: tags
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: minLastConnect
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: maxLastConnect
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: isInUse
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: recordEnabled
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: fileTransferEnabled
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: clipboardEnabled
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: protocol
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: excludeIds
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: byte
+        - name: onlyWithAccessPolicies
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: permissions
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: operatingSystem
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/servers?filter=SOME_STRING_VALUE&sorting=SOME_STRING_VALUE&maxResultCount=SOME_INTEGER_VALUE&skipCount=SOME_INTEGER_VALUE&nameFilter=SOME_STRING_VALUE&ipFilter=SOME_STRING_VALUE&connectorFilter=SOME_STRING_VALUE&archivedFilter=SOME_BOOLEAN_VALUE&tags=SOME_ARRAY_VALUE&minLastConnect=SOME_STRING_VALUE&maxLastConnect=SOME_STRING_VALUE&isInUse=SOME_BOOLEAN_VALUE&recordEnabled=SOME_BOOLEAN_VALUE&fileTransferEnabled=SOME_BOOLEAN_VALUE&clipboardEnabled=SOME_BOOLEAN_VALUE&protocol=SOME_STRING_VALUE&excludeIds=SOME_ARRAY_VALUE&onlyWithAccessPolicies=SOME_BOOLEAN_VALUE&permissions=SOME_ARRAY_VALUE&operatingSystem=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/servers"
+
+            querystring = {"filter":"SOME_STRING_VALUE","sorting":"SOME_STRING_VALUE","maxResultCount":"SOME_INTEGER_VALUE","skipCount":"SOME_INTEGER_VALUE","nameFilter":"SOME_STRING_VALUE","ipFilter":"SOME_STRING_VALUE","connectorFilter":"SOME_STRING_VALUE","archivedFilter":"SOME_BOOLEAN_VALUE","tags":"SOME_ARRAY_VALUE","minLastConnect":"SOME_STRING_VALUE","maxLastConnect":"SOME_STRING_VALUE","isInUse":"SOME_BOOLEAN_VALUE","recordEnabled":"SOME_BOOLEAN_VALUE","fileTransferEnabled":"SOME_BOOLEAN_VALUE","clipboardEnabled":"SOME_BOOLEAN_VALUE","protocol":"SOME_STRING_VALUE","excludeIds":"SOME_ARRAY_VALUE","onlyWithAccessPolicies":"SOME_BOOLEAN_VALUE","permissions":"SOME_ARRAY_VALUE","operatingSystem":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/servers?filter=SOME_STRING_VALUE&sorting=SOME_STRING_VALUE&maxResultCount=SOME_INTEGER_VALUE&skipCount=SOME_INTEGER_VALUE&nameFilter=SOME_STRING_VALUE&ipFilter=SOME_STRING_VALUE&connectorFilter=SOME_STRING_VALUE&archivedFilter=SOME_BOOLEAN_VALUE&tags=SOME_ARRAY_VALUE&minLastConnect=SOME_STRING_VALUE&maxLastConnect=SOME_STRING_VALUE&isInUse=SOME_BOOLEAN_VALUE&recordEnabled=SOME_BOOLEAN_VALUE&fileTransferEnabled=SOME_BOOLEAN_VALUE&clipboardEnabled=SOME_BOOLEAN_VALUE&protocol=SOME_STRING_VALUE&excludeIds=SOME_ARRAY_VALUE&onlyWithAccessPolicies=SOME_BOOLEAN_VALUE&permissions=SOME_ARRAY_VALUE&operatingSystem=SOME_STRING_VALUE' -Method GET -Headers $headers
+    put:
+      summary: Update Server
+      description: Create or update a password vault server.
+      operationId: ServersService_Upsert
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertServerReply'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertServerRequest'
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.create
+        - pam.privileged-servers.update
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/servers \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"server":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"disableClipboard":true,"disableFileTransfer":true,"folderId":"string","id":"string","linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","os":"string","protocol":{"category":"string","communicationHttps":true,"container":"string","namespace":"string","nla":true,"pod":"string","port":0,"rdpSecurity":"string","remoteApp":"string","remoteAppArgs":"string","remoteAppDir":"string","standard":true},"recordVideo":true,"tags":"string","uri":"string","useRemoteApp":true,"useSslTls":true}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/servers"
+
+            payload = {"server": {
+                    "accessPolicies": {
+                        "groups": [
+                            {
+                                "id": 0,
+                                "isResourceManager": True,
+                                "name": "string",
+                                "permissions": ["string"]
+                            }
+                        ],
+                        "isPrivate": True,
+                        "users": [
+                            {
+                                "email": "string",
+                                "id": 0,
+                                "isAdmin": True,
+                                "isUser": True,
+                                "name": "string",
+                                "permissions": ["string"]
+                            }
+                        ]
+                    },
+                    "connector": "string",
+                    "credentialIds": ["string"],
+                    "disableClipboard": True,
+                    "disableFileTransfer": True,
+                    "folderId": "string",
+                    "id": "string",
+                    "linkedCredentialsAccessPolicies": [
+                        {
+                            "accessPolicies": {
+                                "groups": [
+                                    {
+                                        "id": 0,
+                                        "isResourceManager": True,
+                                        "name": "string",
+                                        "permissions": ["string"]
+                                    }
+                                ],
+                                "isPrivate": True,
+                                "users": [
+                                    {
+                                        "email": "string",
+                                        "id": 0,
+                                        "isAdmin": True,
+                                        "isUser": True,
+                                        "name": "string",
+                                        "permissions": ["string"]
+                                    }
+                                ]
+                            },
+                            "credentialId": "string"
+                        }
+                    ],
+                    "name": "string",
+                    "notes": "string",
+                    "os": "string",
+                    "protocol": {
+                        "category": "string",
+                        "communicationHttps": True,
+                        "container": "string",
+                        "namespace": "string",
+                        "nla": True,
+                        "pod": "string",
+                        "port": 0,
+                        "rdpSecurity": "string",
+                        "remoteApp": "string",
+                        "remoteAppArgs": "string",
+                        "remoteAppDir": "string",
+                        "standard": True
+                    },
+                    "recordVideo": True,
+                    "tags": "string",
+                    "uri": "string",
+                    "useRemoteApp": True,
+                    "useSslTls": True
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/servers' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"server":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"disableClipboard":true,"disableFileTransfer":true,"folderId":"string","id":"string","linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","os":"string","protocol":{"category":"string","communicationHttps":true,"container":"string","namespace":"string","nla":true,"pod":"string","port":0,"rdpSecurity":"string","remoteApp":"string","remoteAppArgs":"string","remoteAppDir":"string","standard":true},"recordVideo":true,"tags":"string","uri":"string","useRemoteApp":true,"useSslTls":true}}'
+  /privileged-access/servers/{id}:
+    get:
+      summary: Get Server
+      description: Get password vault server metadata for viewing.
+      operationId: ServersService_GetByID
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetServerForViewReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/servers/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/servers/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/servers/{id}' -Method GET -Headers $headers
+    delete:
+      summary: Delete Server
+      description: Delete a password vault server.
+      operationId: ServersService_Delete
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deleteCredentialsLinked
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.delete
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/servers/{id}?deleteCredentialsLinked=SOME_BOOLEAN_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/servers/{id}"
+
+            querystring = {"deleteCredentialsLinked":"SOME_BOOLEAN_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/servers/{id}?deleteCredentialsLinked=SOME_BOOLEAN_VALUE' -Method DELETE -Headers $headers
   /privileged-access/pam/activation/finalize:
     post:
       summary: Finalize Privileged Access Activation
@@ -64737,6 +65821,653 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/backup-key' -Method POST -Headers $headers -ContentType 'application/json' -Body '{}'
+  /privileged-access/credentials:
+    get:
+      summary: List Privileged Access Credentials
+      description: List password vault credentials.
+      operationId: PamCredentialsService_List
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListCredentialsReply'
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/credentials?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/credentials"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE","search":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/credentials?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
+    put:
+      summary: Update Privileged Access Credential
+      description: Create or update a password vault credential.
+      operationId: PamCredentialsService_Upsert
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertCredentialReply'
+      requestBody:
+        $ref: '#/components/requestBodies/jumpcloud.privileged_access.UpsertCredentialRequest'
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.create
+        - pam.privileged-credentials.update
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request PUT \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/credentials \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialRotationId":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","editLinkedWebsites":true,"expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/credentials"
+
+            payload = {
+                "accessPolicies": {
+                    "groups": [
+                        {
+                            "id": 0,
+                            "isResourceManager": True,
+                            "name": "string",
+                            "permissions": ["string"]
+                        }
+                    ],
+                    "isPrivate": True,
+                    "users": [
+                        {
+                            "email": "string",
+                            "id": 0,
+                            "isAdmin": True,
+                            "isUser": True,
+                            "name": "string",
+                            "permissions": ["string"]
+                        }
+                    ]
+                },
+                "approverRequiresJustification": True,
+                "approvers": ["string"],
+                "connectionString": "string",
+                "credentialRotationId": "string",
+                "credentialType": "UNDEFINED",
+                "creditCard": {
+                    "metadata": {
+                        "cardholderName": "string",
+                        "expiryMonth": "string",
+                        "expiryYear": "string",
+                        "last4Digits": "string"
+                    },
+                    "secret": {
+                        "cardNumber": "string",
+                        "cvv": "string"
+                    }
+                },
+                "domain": "string",
+                "editLinkedWebsites": True,
+                "expirationDate": "string",
+                "folderId": "string",
+                "id": "string",
+                "idCard": {
+                    "metadata": {
+                        "country": "string",
+                        "idCardExpirationDate": "string",
+                        "idType": "string",
+                        "issuanceDate": "string",
+                        "nameOnId": "string"
+                    },
+                    "secret": {"idNumber": "string"}
+                },
+                "identity": {
+                    "city": "string",
+                    "country": "string",
+                    "email": "string",
+                    "firstAddressLine": "string",
+                    "firstName": "string",
+                    "gender": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "phone": "string",
+                    "secondAddressLine": "string",
+                    "title": "string",
+                    "zipCode": "string"
+                },
+                "key": {
+                    "passphrase": "string",
+                    "privateKey": "string",
+                    "publicKey": "string"
+                },
+                "linkedWebsites": [
+                    {
+                        "id": "string",
+                        "name": "string",
+                        "permissions": ["string"],
+                        "uri": "string"
+                    }
+                ],
+                "mfaEnabled": True,
+                "mfaKey": "string",
+                "name": "string",
+                "notes": "string",
+                "password": "string",
+                "passwordStrength": 0,
+                "requiredApprovers": True,
+                "secureNote": {"note": "string"},
+                "sequentialApprovers": True,
+                "tags": "string",
+                "twoFa": {"twoFaSecret": "string"},
+                "username": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("PUT", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/credentials' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"approverRequiresJustification":true,"approvers":["string"],"connectionString":"string","credentialRotationId":"string","credentialType":"UNDEFINED","creditCard":{"metadata":{"cardholderName":"string","expiryMonth":"string","expiryYear":"string","last4Digits":"string"},"secret":{"cardNumber":"string","cvv":"string"}},"domain":"string","editLinkedWebsites":true,"expirationDate":"string","folderId":"string","id":"string","idCard":{"metadata":{"country":"string","idCardExpirationDate":"string","idType":"string","issuanceDate":"string","nameOnId":"string"},"secret":{"idNumber":"string"}},"identity":{"city":"string","country":"string","email":"string","firstAddressLine":"string","firstName":"string","gender":"string","lastName":"string","middleName":"string","phone":"string","secondAddressLine":"string","title":"string","zipCode":"string"},"key":{"passphrase":"string","privateKey":"string","publicKey":"string"},"linkedWebsites":[{"id":"string","name":"string","permissions":["string"],"uri":"string"}],"mfaEnabled":true,"mfaKey":"string","name":"string","notes":"string","password":"string","passwordStrength":0,"requiredApprovers":true,"secureNote":{"note":"string"},"sequentialApprovers":true,"tags":"string","twoFa":{"twoFaSecret":"string"},"username":"string"}'
+  /privileged-access/credentials/{id}:
+    get:
+      summary: Get Privileged Access Credential
+      description: Get password vault credential metadata.
+      operationId: PamCredentialsService_Get
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetCredentialReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}' -Method GET -Headers $headers
+    delete:
+      summary: Delete Privileged Access Credential
+      description: Delete a password vault credential.
+      operationId: PamCredentialsService_Delete
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.delete
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}' -Method DELETE -Headers $headers
+  /privileged-access/websites:
+    get:
+      summary: List Privileged Access Websites
+      description: List password vault websites.
+      operationId: PamWebsitesService_List
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListWebsitesReply'
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/websites?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/websites"
+
+            querystring = {"filter":"SOME_ARRAY_VALUE","skip":"SOME_INTEGER_VALUE","sort":"SOME_STRING_VALUE","limit":"SOME_INTEGER_VALUE","search":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/websites?filter=SOME_ARRAY_VALUE&skip=SOME_INTEGER_VALUE&sort=SOME_STRING_VALUE&limit=SOME_INTEGER_VALUE&search=SOME_STRING_VALUE' -Method GET -Headers $headers
+    post:
+      summary: Update Privileged Access Website
+      description: Create or update a password vault website.
+      operationId: PamWebsitesService_Upsert
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertWebsiteReply'
+      requestBody:
+        $ref: '#/components/requestBodies/jumpcloud.privileged_access.UpsertWebsiteRequest'
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.create
+        - pam.privileged-websites.update
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/websites \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/websites"
+
+            payload = {"website": {
+                    "accessPolicies": {
+                        "groups": [
+                            {
+                                "id": 0,
+                                "isResourceManager": True,
+                                "name": "string",
+                                "permissions": ["string"]
+                            }
+                        ],
+                        "isPrivate": True,
+                        "users": [
+                            {
+                                "email": "string",
+                                "id": 0,
+                                "isAdmin": True,
+                                "isUser": True,
+                                "name": "string",
+                                "permissions": ["string"]
+                            }
+                        ]
+                    },
+                    "connector": "string",
+                    "credentialIds": ["string"],
+                    "folderId": "string",
+                    "id": "string",
+                    "jcGoSessionRecordingEnabled": True,
+                    "linkedCredentialsAccessPolicies": [
+                        {
+                            "accessPolicies": {
+                                "groups": [
+                                    {
+                                        "id": 0,
+                                        "isResourceManager": True,
+                                        "name": "string",
+                                        "permissions": ["string"]
+                                    }
+                                ],
+                                "isPrivate": True,
+                                "users": [
+                                    {
+                                        "email": "string",
+                                        "id": 0,
+                                        "isAdmin": True,
+                                        "isUser": True,
+                                        "name": "string",
+                                        "permissions": ["string"]
+                                    }
+                                ]
+                            },
+                            "credentialId": "string"
+                        }
+                    ],
+                    "name": "string",
+                    "notes": "string",
+                    "parametersExtension": {
+                        "enablePasswordCapture": True,
+                        "fillMoreOne": True,
+                        "makeAutoSubmit": True,
+                        "selectorNextButton": "string",
+                        "selectorPassword": "string",
+                        "selectorSubmitButton": "string",
+                        "selectorUsername": "string",
+                        "selectorsToHide": "string",
+                        "timeWaitAfterNextClick": 0,
+                        "waitBeforeFill": 0
+                    },
+                    "rbiSettings": {
+                        "allowInsecureWebsites": True,
+                        "blacklistUri": ["string"],
+                        "blockAllUri": True,
+                        "chromiumPolicy": "string",
+                        "disableBrowserHeader": True,
+                        "disableClipboard": True,
+                        "disableFileTransfer": True,
+                        "enableDevTools": True,
+                        "recordVideo": True,
+                        "vncSettings": {
+                            "colorDepth": 0,
+                            "compressionLevel": 0,
+                            "disableScreenResize": True,
+                            "disableServerInput": True,
+                            "forceLossless": True,
+                            "qualityLevel": 0,
+                            "swapRedBlue": True,
+                            "viewOnly": True
+                        },
+                        "whitelistUri": ["string"]
+                    },
+                    "reverseProxy": True,
+                    "tags": "string",
+                    "uri": "string",
+                    "useRemoteBrowserIsolation": True
+                }}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+  /privileged-access/websites/{id}:
+    get:
+      summary: Get Privileged Access Website
+      description: Get password vault website metadata for viewing.
+      operationId: PamWebsitesService_Get
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetWebsiteForViewReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/websites/{id} \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/websites/{id}"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/websites/{id}' -Method GET -Headers $headers
+    delete:
+      summary: Delete Privileged Access Website
+      description: Delete a password vault website.
+      operationId: PamWebsitesService_Delete
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: deleteCredentialsLinked
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.delete
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request DELETE \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/websites/{id}?deleteCredentialsLinked=SOME_BOOLEAN_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/websites/{id}"
+
+            querystring = {"deleteCredentialsLinked":"SOME_BOOLEAN_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("DELETE", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/websites/{id}?deleteCredentialsLinked=SOME_BOOLEAN_VALUE' -Method DELETE -Headers $headers
   /privileged-access/resource-managers:
     get:
       summary: List Resource Managers
@@ -88044,6 +89775,605 @@ components:
           items:
             type: integer
             format: int32
+    jumpcloud.privileged_access.BlockingRuleExceptions:
+      type:
+        - object
+        - 'null'
+      properties:
+        groups:
+          type: array
+          items:
+            type: integer
+            format: int32
+        users:
+          type: array
+          items:
+            type: integer
+            format: int32
+    jumpcloud.privileged_access.BlockingRuleFormData:
+      type:
+        - object
+        - 'null'
+      properties:
+        accessPolicies:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.AccessPolicies'
+        criteria:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.DatabaseCriteriaRule'
+        criteriaType:
+          type: integer
+          format: int32
+        exceptions:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.BlockingRuleExceptions'
+        exclusiveToResource:
+          type: boolean
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        notes:
+          type: string
+        priority:
+          type: integer
+          format: int64
+        resourceIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        severity:
+          type: integer
+          format: int32
+        tags:
+          type: string
+    jumpcloud.privileged_access.BlockingRuleTimeFrame:
+      type:
+        - object
+        - 'null'
+      properties:
+        daysOfWeek:
+          type: string
+          format: byte
+        from:
+          type: string
+        to:
+          type: string
+    jumpcloud.privileged_access.ConnectorCertificate:
+      type: object
+      properties:
+        expires:
+          type: string
+        lastChecked:
+          type: string
+        privateKeyChecksum:
+          type: string
+        publicKeyChecksum:
+          type: string
+    jumpcloud.privileged_access.ConnectorCertificateLevel:
+      type: string
+      enum:
+        - CONNECTOR_CERTIFICATE_LEVEL_SYSTEM
+        - CONNECTOR_CERTIFICATE_LEVEL_TENANT
+        - CONNECTOR_CERTIFICATE_LEVEL_CONNECTOR
+      default: CONNECTOR_CERTIFICATE_LEVEL_SYSTEM
+    jumpcloud.privileged_access.ConnectorDetail:
+      type: object
+      properties:
+        bandwidth:
+          type: integer
+          format: int32
+        bastionPort:
+          type: integer
+          format: int32
+        certificateLevel:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.ConnectorCertificateLevel'
+        description:
+          type: string
+        disabled:
+          type: boolean
+        dnsType:
+          type: string
+        edition:
+          type: string
+        id:
+          type: string
+          format: byte
+        installedCertificate:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.ConnectorCertificate'
+        ip:
+          type: string
+        isAdminAlerted:
+          type: boolean
+        isDefault:
+          type: boolean
+        lastAlert:
+          type: string
+        lastBackupFile:
+          type: string
+        lastPing:
+          type: string
+        name:
+          type: string
+        port:
+          type: integer
+          format: int32
+        recordVideo:
+          type: boolean
+        version:
+          type: string
+    jumpcloud.privileged_access.ConnectorEdition:
+      type: string
+      enum:
+        - CONNECTOR_EDITION_LEGACY
+        - CONNECTOR_EDITION_STANDARD
+        - CONNECTOR_EDITION_PREMIUM
+      default: CONNECTOR_EDITION_LEGACY
+    jumpcloud.privileged_access.ConnectorListItem:
+      type: object
+      properties:
+        bastionPort:
+          type: integer
+          format: int32
+        description:
+          type: string
+        domain:
+          type: string
+        edition:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.ConnectorEdition'
+        id:
+          type: string
+          format: byte
+        ip:
+          type: string
+        lastBackup:
+          type: string
+        lastPing:
+          type: string
+        online:
+          type: boolean
+        port:
+          type: integer
+          format: int32
+        version:
+          type: string
+    jumpcloud.privileged_access.CreateServerProtocolInput:
+      type: object
+      properties:
+        category:
+          type: string
+        communicationHttps:
+          type: boolean
+        container:
+          type: string
+        namespace:
+          type: string
+        nla:
+          type: boolean
+        pod:
+          type: string
+        port:
+          type: integer
+          format: int32
+        rdpSecurity:
+          type: string
+        remoteApp:
+          type: string
+        remoteAppArgs:
+          type: string
+        remoteAppDir:
+          type: string
+        standard:
+          type: boolean
+    jumpcloud.privileged_access.DatabaseCriteriaRule:
+      type: object
+      properties:
+        commands:
+          type: array
+          items:
+            type: string
+        replaceQuery:
+          type: string
+        sqlPattern:
+          type: string
+        tableName:
+          type: string
+        timeFrame:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.BlockingRuleTimeFrame'
+        type:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.DatabaseForView:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.AccessPolicies'
+        archived:
+          type: boolean
+        connectionString:
+          type: string
+        connector:
+          type: string
+        creationDate:
+          type: string
+        databaseName:
+          type: string
+        editDate:
+          type: string
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        isDefaultConnectionString:
+          type: boolean
+        name:
+          type: string
+        notes:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        port:
+          type: integer
+          format: int64
+        provider:
+          type: string
+        rbiSettings:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.RemoteBrowserIsolationSettings'
+        tags:
+          type: string
+        uri:
+          type: string
+        webShieldEnabled:
+          type: boolean
+    jumpcloud.privileged_access.DatabaseListItem:
+      type: object
+      properties:
+        archived:
+          type: boolean
+        connector:
+          type: string
+        connectorId:
+          type: string
+          format: byte
+        dbShield:
+          type: boolean
+        folderId:
+          type: string
+          format: byte
+        folderName:
+          type: string
+        id:
+          type: string
+          format: byte
+        isFavorite:
+          type: boolean
+        isInUse:
+          type: boolean
+        lastConnect:
+          type: string
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        provider:
+          type: string
+        recordEnabled:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.GetConnectorByIdReply:
+      type: object
+      properties:
+        connector:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.ConnectorDetail'
+    jumpcloud.privileged_access.GetDatabaseForViewReply:
+      type: object
+      properties:
+        connectorDescription:
+          type: string
+        database:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.DatabaseForView'
+    jumpcloud.privileged_access.GetServerForViewReply:
+      type: object
+      properties:
+        connectorDescription:
+          type: string
+        server:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.ServerForView'
+    jumpcloud.privileged_access.ListConnectorsReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.ConnectorListItem'
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListDatabasesReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.DatabaseListItem'
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListServersReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.ServerListItem'
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ServerForView:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.AccessPolicies'
+        connector:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        disableClipboard:
+          type: boolean
+        disableFileTransfer:
+          type: boolean
+        editDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        notes:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        protocol:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.ServerProtocol'
+        recordEnabled:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+        useSslTls:
+          type: boolean
+    jumpcloud.privileged_access.ServerListItem:
+      type: object
+      properties:
+        archived:
+          type: boolean
+        connector:
+          type: string
+        id:
+          type: string
+          format: byte
+        isFavorite:
+          type: boolean
+        isInUse:
+          type: boolean
+        lastConnect:
+          type: string
+          format: date-time
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        recordEnabled:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.ServerProtocol:
+      type: object
+      properties:
+        advancedParameters:
+          type: string
+        category:
+          type: string
+        communicationHttps:
+          type: boolean
+        container:
+          type: string
+        namespace:
+          type: string
+        nla:
+          type: boolean
+        pod:
+          type: string
+        port:
+          type: string
+        remoteApp:
+          type: string
+        remoteAppArgs:
+          type: string
+        remoteAppDir:
+          type: string
+        standard:
+          type: boolean
+    jumpcloud.privileged_access.UpsertConnectorInput:
+      type: object
+      properties:
+        bandwidth:
+          type: integer
+          format: int32
+        bastionPort:
+          type: integer
+          format: int32
+        description:
+          type: string
+        dnsType:
+          type: string
+        id:
+          type: string
+          format: byte
+        ip:
+          type: string
+        isDefault:
+          type: boolean
+        name:
+          type: string
+        port:
+          type: integer
+          format: int32
+        recordVideo:
+          type: boolean
+    jumpcloud.privileged_access.UpsertConnectorReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertConnectorRequest:
+      type: object
+      properties:
+        connector:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertConnectorInput'
+    jumpcloud.privileged_access.UpsertDatabaseInput:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.AccessPolicies'
+        connectionString:
+          type: string
+        connector:
+          type: string
+        credentialIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        databaseName:
+          type: string
+        dbShield:
+          type: boolean
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        isDefaultConnectionString:
+          type: boolean
+        linkedCredentialsAccessPolicies:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.LinkedCredentialAccessPolicy'
+        name:
+          type: string
+        notes:
+          type: string
+        port:
+          type: integer
+          format: int64
+        provider:
+          type: string
+        rbiSettings:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.RemoteBrowserIsolationSettings'
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertLinkedBlockingRule'
+        tags:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.UpsertDatabaseReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertDatabaseRequest:
+      type: object
+      properties:
+        database:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertDatabaseInput'
+    jumpcloud.privileged_access.UpsertLinkedBlockingRule:
+      type: object
+      properties:
+        exceptions:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.BlockingRuleExceptions'
+        id:
+          type: string
+          format: byte
+        rule:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.BlockingRuleFormData'
+    jumpcloud.privileged_access.UpsertServerInput:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.AccessPolicies'
+        connector:
+          type: string
+        credentialIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        disableClipboard:
+          type: boolean
+        disableFileTransfer:
+          type: boolean
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        linkedCredentialsAccessPolicies:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.LinkedCredentialAccessPolicy'
+        name:
+          type: string
+        notes:
+          type: string
+        os:
+          type: string
+        protocol:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.CreateServerProtocolInput'
+        recordVideo:
+          type: boolean
+        tags:
+          type: string
+        uri:
+          type: string
+        useRemoteApp:
+          type: boolean
+        useSslTls:
+          type: boolean
+    jumpcloud.privileged_access.UpsertServerReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertServerRequest:
+      type: object
+      properties:
+        server:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.UpsertServerInput'
     jumpcloud.healthmonitoring.AlertFrequencySettings:
       type: object
       properties:

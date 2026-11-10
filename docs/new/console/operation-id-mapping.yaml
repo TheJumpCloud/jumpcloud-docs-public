@@ -4321,6 +4321,66 @@ operations:
     base_path: /api/v2
     legacy_operation_id: Devices_GetDeviceLockState
     standardized_operation_id: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockstate
+  - method: get
+    host_root_path: /api/v2/privileged-access/connectors
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_List
+    standardized_operation_id: getApiV2PrivilegedAccessConnectors
+  - method: put
+    host_root_path: /api/v2/privileged-access/connectors
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_Upsert
+    standardized_operation_id: putApiV2PrivilegedAccessConnectors
+  - method: get
+    host_root_path: /api/v2/privileged-access/connectors/{id}
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_GetByID
+    standardized_operation_id: getApiV2PrivilegedAccessConnectorsById
+  - method: delete
+    host_root_path: /api/v2/privileged-access/connectors/{id}
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_Delete
+    standardized_operation_id: deleteApiV2PrivilegedAccessConnectorsById
+  - method: get
+    host_root_path: /api/v2/privileged-access/databases
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_List
+    standardized_operation_id: getApiV2PrivilegedAccessDatabases
+  - method: put
+    host_root_path: /api/v2/privileged-access/databases
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_Upsert
+    standardized_operation_id: putApiV2PrivilegedAccessDatabases
+  - method: get
+    host_root_path: /api/v2/privileged-access/databases/{id}
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_GetByID
+    standardized_operation_id: getApiV2PrivilegedAccessDatabasesById
+  - method: delete
+    host_root_path: /api/v2/privileged-access/databases/{id}
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_Delete
+    standardized_operation_id: deleteApiV2PrivilegedAccessDatabasesById
+  - method: get
+    host_root_path: /api/v2/privileged-access/servers
+    base_path: /api/v2
+    legacy_operation_id: ServersService_List
+    standardized_operation_id: getApiV2PrivilegedAccessServers
+  - method: put
+    host_root_path: /api/v2/privileged-access/servers
+    base_path: /api/v2
+    legacy_operation_id: ServersService_Upsert
+    standardized_operation_id: putApiV2PrivilegedAccessServers
+  - method: get
+    host_root_path: /api/v2/privileged-access/servers/{id}
+    base_path: /api/v2
+    legacy_operation_id: ServersService_GetByID
+    standardized_operation_id: getApiV2PrivilegedAccessServersById
+  - method: delete
+    host_root_path: /api/v2/privileged-access/servers/{id}
+    base_path: /api/v2
+    legacy_operation_id: ServersService_Delete
+    standardized_operation_id: deleteApiV2PrivilegedAccessServersById
   - method: post
     host_root_path: /api/v2/privileged-access/pam/activation/finalize
     base_path: /api/v2
@@ -4421,6 +4481,46 @@ operations:
     base_path: /api/v2
     legacy_operation_id: TenantSettingsService_GeneratePrivilegedAccessBackupKey
     standardized_operation_id: postApiV2PrivilegedAccessBackupKey
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_List
+    standardized_operation_id: getApiV2PrivilegedAccessCredentials
+  - method: put
+    host_root_path: /api/v2/privileged-access/credentials
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_Upsert
+    standardized_operation_id: putApiV2PrivilegedAccessCredentials
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_Get
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsById
+  - method: delete
+    host_root_path: /api/v2/privileged-access/credentials/{id}
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_Delete
+    standardized_operation_id: deleteApiV2PrivilegedAccessCredentialsById
+  - method: get
+    host_root_path: /api/v2/privileged-access/websites
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_List
+    standardized_operation_id: getApiV2PrivilegedAccessWebsites
+  - method: post
+    host_root_path: /api/v2/privileged-access/websites
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_Upsert
+    standardized_operation_id: postApiV2PrivilegedAccessWebsites
+  - method: get
+    host_root_path: /api/v2/privileged-access/websites/{id}
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_Get
+    standardized_operation_id: getApiV2PrivilegedAccessWebsitesById
+  - method: delete
+    host_root_path: /api/v2/privileged-access/websites/{id}
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_Delete
+    standardized_operation_id: deleteApiV2PrivilegedAccessWebsitesById
   - method: get
     host_root_path: /api/v2/privileged-access/resource-managers
     base_path: /api/v2
