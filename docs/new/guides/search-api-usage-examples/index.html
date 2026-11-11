@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search API — Usage Examples | JumpCloud API Docs</title>
+  <meta http-equiv="strict-transport-security" content="max-age=31536000">
+  <meta http-equiv="x-content-type-options" content="nosniff">
+  <meta http-equiv="referrer-policy" content="strict-origin-when-cross-origin">
+  
+  <link rel="shortcut icon" type="image/png" href="/images/API Docs Favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/atom-one-dark.min.css">
+  <link rel="stylesheet" href="../../jc_docs_chrome.css">
+  
+<!-- Reference: https://docs.datadoghq.com/real_user_monitoring/application_monitoring/browser/setup/client/?tab=cdn-async -->
+<script>
+  (function (h, o, u, d) {
+    var agent = (h[d] = h[d] || {
+      q: [],
+      onReady: function (callback) {
+        agent.q.push(callback);
+      },
+    });
+    var script = o.createElement(u);
+    script.async = 1;
+    script.src = "https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js";
+    var first = o.getElementsByTagName(u)[0];
+    if (first && first.parentNode) {
+      first.parentNode.insertBefore(script, first);
+    } else {
+      o.head.appendChild(script);
+    }
+  })(window, document, "script", "DD_RUM");
+  window.DD_RUM.onReady(function () {
+    window.DD_RUM.init({
+      clientToken: "pub4df04d743394daeb846048dc7d655830",
+      applicationId: "2d2cb82d-0d76-4ed9-b4bc-02999f2a342c",
+      site: "datadoghq.com",
+      service: "jumpcloud-docs",
+      env: "production",
+      sessionSampleRate: 100,
+      trackResources: true,
+      trackLongTasks: true,
+      trackUserInteractions: true,
+      defaultPrivacyLevel: "mask-user-input",
+    });
+  });
+</script>
+
+</head>
+
+<body class="jc-docs-landing jc-circuit-landing jc-guide-page">
+  <a href="#main-content" class="jc-skip-link">Skip to main content</a>
+
+  <nav class="sticky-top" aria-label="Site">
+    
+        <header class="jc-docs-top-bar jc-docs-chrome-light" aria-label="API Docs">
+      <div class="jc-docs-top-bar-inner">
+        <div class="jc-docs-top-bar-brand-group">
+          <a class="jc-docs-top-bar-brand" href="../../index.html">
+            <img src="../../jumpcloud-brand-logo.svg" alt="JumpCloud" width="108" height="18" class="jc-docs-top-bar-logo" />
+          </a>
+          <span class="jc-docs-top-bar-divider" aria-hidden="true"></span>
+          <span class="jc-docs-top-bar-label">API Docs</span>
+        </div>
+        
+      </div>
+    </header>
+    
+  </nav>
+
+  <main id="main-content" class="jc-circuit-main jc-guide-main" tabindex="-1">
+    <div class="jc-guide-shell">
+      
+      <aside class="jc-guide-sidebar" aria-label="Guides">
+        <div class="jc-guide-sidebar-inner">
+          <h2 class="jc-guide-sidebar-heading">Guides</h2>
+          <ul class="jc-guide-sidebar-list">
+            
+            <li>
+              
+              <a class="jc-guide-sidebar-link" href="../sso-integrations/index.html">Build SSO integrations</a>
+              
+            </li>
+            
+            <li>
+              
+              <a class="jc-guide-sidebar-link" href="../user-provisioning-with-scim-and-hris/index.html">User onboarding</a>
+              
+            </li>
+            
+            <li>
+              
+              <span class="jc-guide-sidebar-link jc-guide-sidebar-link--active" aria-current="page">Search API</span>
+              
+            </li>
+            
+          </ul>
+        </div>
+      </aside>
+      
+
+      <div class="jc-guide-center">
+        <div class="jc-guide-center-inner">
+          <nav class="jc-guide-breadcrumb" aria-label="Breadcrumb">
+            <a href="../../index.html">API Docs</a>
+            
+            <span aria-hidden="true">›</span>
+            <span class="jc-guide-breadcrumb-muted">Guides</span>
+            
+            <span aria-hidden="true">›</span>
+            <span class="jc-guide-breadcrumb-current" aria-current="page">Search API — Usage Examples</span>
+          </nav>
+
+          <header class="jc-guide-header">
+            <h1 class="jc-guide-title">Search API — Usage Examples</h1>
+            
+          </header>
+
+          <article class="jc-guide-prose">
+            <hr>
+<h2 id="overview">Overview<a class="jc-guide-heading-anchor" href="#overview" aria-label="Link to this section">#</a></h2>
+<p>The Search Query API lets clients query JumpCloud data (users, devices, groups, and related objects) using a structured JSON filter DSL. Callers can:</p>
+<ul>
+<li>Select fields to return</li>
+<li>Apply nested filters (<code>AND</code> / <code>OR</code> and comparison operators)</li>
+<li>Join related objects by selecting fields from multiple objects in one request</li>
+<li>Sort and paginate results</li>
+<li>Optionally aggregate data (for example <code>COUNT</code>)</li>
+</ul>
+<p>Use <strong>Search Query</strong> when you need filtered, join-aware, report-style data.<br>
+Do <strong>not</strong> use it for free-text / keyword search across many fields at once.</p>
+<hr>
+<h2 id="authentication-and-headers">Authentication and headers<a class="jc-guide-heading-anchor" href="#authentication-and-headers" aria-label="Link to this section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x-api-key</code></td>
+<td>Yes</td>
+<td>JumpCloud API key</td>
+</tr>
+<tr>
+<td><code>x-org-id</code></td>
+<td>Yes</td>
+<td>Organization ID (from console settings)</td>
+</tr>
+<tr>
+<td><code>Content-Type</code></td>
+<td>Yes</td>
+<td><code>application/json</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Base path:</strong> <code>/api/v2/search/query</code></p>
+<hr>
+<h2 id="request-shape-quick-reference">Request shape (quick reference)<a class="jc-guide-heading-anchor" href="#request-shape-quick-reference" aria-label="Link to this section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fields.include</code></td>
+<td>string[]</td>
+<td>Fields to return, always as <code>&lt;object&gt;.&lt;field&gt;</code> (for example <code>user.email</code>)</td>
+</tr>
+<tr>
+<td><code>fields.exclude</code></td>
+<td>string[]</td>
+<td>Optional fields to exclude</td>
+</tr>
+<tr>
+<td><code>filters</code></td>
+<td>object[]</td>
+<td>Filter tree. Leaf filters need <code>operation</code>, <code>field</code>, and usually <code>value</code>. Nested <code>AND</code>/<code>OR</code> use a child <code>filters</code> array</td>
+</tr>
+<tr>
+<td><code>sort</code></td>
+<td>object[]</td>
+<td>Sort by field and order (<code>ASC</code> or <code>DESC</code>)</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>integer</td>
+<td>Max rows to return (legacy; still widely used)</td>
+</tr>
+<tr>
+<td><code>pagination.page_size</code></td>
+<td>integer</td>
+<td>Preferred page size when using pagination</td>
+</tr>
+<tr>
+<td><code>pagination.offset</code></td>
+<td>integer</td>
+<td>Zero-based offset into the result set</td>
+</tr>
+<tr>
+<td><code>aggregations</code></td>
+<td>object[]</td>
+<td>Optional aggregates such as <code>COUNT</code>, <code>AVG</code>, <code>MAX</code>, <code>MIN</code>, <code>SUM</code>, <code>COUNT_UNIQUE</code></td>
+</tr>
+<tr>
+<td><code>request_cache</code></td>
+<td>boolean</td>
+<td>Optional; when <code>true</code>, cache the full result set for later paginated reads</td>
+</tr>
+<tr>
+<td><code>cache_token</code></td>
+<td>string</td>
+<td>Optional; token from a previous cached query</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Field naming rule:</strong> Always use <code>&lt;objectName&gt;.&lt;fieldName&gt;</code> (case-insensitive; stored/compared as lowercase).</p>
+<p><strong>Discover fields:</strong> Call <code>GET /api/v2/search/query/schema</code> (or schema for a single object) before building queries.</p>
+<hr>
+<h2 id="example-1-simple-user-search-filter-sort-limit">Example 1 — Simple user search (filter + sort + limit)<a class="jc-guide-heading-anchor" href="#example-1-simple-user-search-filter-sort-limit" aria-label="Link to this section">#</a></h2>
+<p><strong>Goal:</strong> Return a small set of users whose email starts with a given prefix.</p>
+<pre><code class="language-bash">curl -X POST &quot;https://console.jumpcloud.com/api/v2/search/query&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;x-api-key: YOUR_API_KEY&quot; \
+  -H &quot;x-org-id: YOUR_ORG_ID&quot; \
+  -d '{
+    &quot;fields&quot;: {
+      &quot;include&quot;: [
+        &quot;user.id&quot;,
+        &quot;user.email&quot;,
+        &quot;user.username&quot;
+      ]
+    },
+    &quot;filters&quot;: [
+      {
+        &quot;operation&quot;: &quot;STARTS_WITH&quot;,
+        &quot;field&quot;: &quot;user.email&quot;,
+        &quot;value&quot;: &quot;admin&quot;
+      }
+    ],
+    &quot;sort&quot;: [
+      {
+        &quot;field&quot;: &quot;user.email&quot;,
+        &quot;order&quot;: &quot;ASC&quot;
+      }
+    ],
+    &quot;limit&quot;: 10
+  }'
+</code></pre>
+<h3 id="request-body-only">Request body only<a class="jc-guide-heading-anchor" href="#request-body-only" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-json">{
+  &quot;fields&quot;: {
+    &quot;include&quot;: [&quot;user.id&quot;, &quot;user.email&quot;, &quot;user.username&quot;]
+  },
+  &quot;filters&quot;: [
+    {
+      &quot;operation&quot;: &quot;STARTS_WITH&quot;,
+      &quot;field&quot;: &quot;user.email&quot;,
+      &quot;value&quot;: &quot;admin&quot;
+    }
+  ],
+  &quot;sort&quot;: [
+    {
+      &quot;field&quot;: &quot;user.email&quot;,
+      &quot;order&quot;: &quot;ASC&quot;
+    }
+  ],
+  &quot;limit&quot;: 10
+}
+</code></pre>
+<h3 id="what-this-demonstrates">What this demonstrates<a class="jc-guide-heading-anchor" href="#what-this-demonstrates" aria-label="Link to this section">#</a></h3>
+<ul>
+<li>Field selection with <code>fields.include</code></li>
+<li>Case-insensitive string filter (<code>STARTS_WITH</code>)</li>
+<li>Ascending sort</li>
+<li>Row cap via <code>limit</code></li>
+</ul>
+<h3 id="sample-response-shape">Sample response shape<a class="jc-guide-heading-anchor" href="#sample-response-shape" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-json">{
+  &quot;results&quot;: [
+    {
+      &quot;fields&quot;: {
+        &quot;user.id&quot;: &quot;64f1a2b3c4d5e6f7a8b9c0d1&quot;,
+        &quot;user.email&quot;: &quot;admin.jane@example.com&quot;,
+        &quot;user.username&quot;: &quot;jane.admin&quot;
+      }
+    }
+  ],
+  &quot;totalCount&quot;: 1
+}
+</code></pre>
+<blockquote>
+<p>Note: Exact response envelope field names may vary by gateway/version.</p>
+</blockquote>
+<hr>
+<h2 id="example-2-join-related-objects-nested-or-filter">Example 2 — Join related objects + nested OR filter<a class="jc-guide-heading-anchor" href="#example-2-join-related-objects-nested-or-filter" aria-label="Link to this section">#</a></h2>
+<p><strong>Goal:</strong> List users with their user-group memberships, and keep rows where the user is activated <strong>or</strong> the group name contains <code>"admins"</code>.</p>
+<p>Selecting fields from more than one object in a single request causes Search to join those related objects automatically (when the join is valid in schema metadata).</p>
+<pre><code class="language-bash">curl -X POST &quot;https://console.jumpcloud.com/api/v2/search/query&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;x-api-key: YOUR_API_KEY&quot; \
+  -H &quot;x-org-id: YOUR_ORG_ID&quot; \
+  -d '{
+    &quot;fields&quot;: {
+      &quot;include&quot;: [
+        &quot;user.id&quot;,
+        &quot;user.username&quot;,
+        &quot;user.email&quot;,
+        &quot;user_group.id&quot;,
+        &quot;user_group.name&quot;
+      ]
+    },
+    &quot;filters&quot;: [
+      {
+        &quot;operation&quot;: &quot;OR&quot;,
+        &quot;filters&quot;: [
+          {
+            &quot;operation&quot;: &quot;EQUALS&quot;,
+            &quot;field&quot;: &quot;user.user_state&quot;,
+            &quot;value&quot;: &quot;ACTIVATED&quot;
+          },
+          {
+            &quot;operation&quot;: &quot;CONTAINS&quot;,
+            &quot;field&quot;: &quot;user_group.name&quot;,
+            &quot;value&quot;: &quot;admins&quot;
+          }
+        ]
+      }
+    ],
+    &quot;sort&quot;: [
+      {
+        &quot;field&quot;: &quot;user.username&quot;,
+        &quot;order&quot;: &quot;ASC&quot;
+      }
+    ],
+    &quot;limit&quot;: 25
+  }'
+</code></pre>
+<h3 id="request-body-only_1">Request body only<a class="jc-guide-heading-anchor" href="#request-body-only_1" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-json">{
+  &quot;fields&quot;: {
+    &quot;include&quot;: [
+      &quot;user.id&quot;,
+      &quot;user.username&quot;,
+      &quot;user.email&quot;,
+      &quot;user_group.id&quot;,
+      &quot;user_group.name&quot;
+    ]
+  },
+  &quot;filters&quot;: [
+    {
+      &quot;operation&quot;: &quot;OR&quot;,
+      &quot;filters&quot;: [
+        {
+          &quot;operation&quot;: &quot;EQUALS&quot;,
+          &quot;field&quot;: &quot;user.user_state&quot;,
+          &quot;value&quot;: &quot;ACTIVATED&quot;
+        },
+        {
+          &quot;operation&quot;: &quot;CONTAINS&quot;,
+          &quot;field&quot;: &quot;user_group.name&quot;,
+          &quot;value&quot;: &quot;admins&quot;
+        }
+      ]
+    }
+  ],
+  &quot;sort&quot;: [
+    {
+      &quot;field&quot;: &quot;user.username&quot;,
+      &quot;order&quot;: &quot;ASC&quot;
+    }
+  ],
+  &quot;limit&quot;: 25
+}
+</code></pre>
+<h3 id="what-this-demonstrates_1">What this demonstrates<a class="jc-guide-heading-anchor" href="#what-this-demonstrates_1" aria-label="Link to this section">#</a></h3>
+<ul>
+<li>Multi-object field selection → implicit join (<code>user</code> + <code>user_group</code>)</li>
+<li>Nested boolean filter tree (<code>OR</code> with child filters)</li>
+<li>Mixing filter operators (<code>EQUALS</code>, <code>CONTAINS</code>)</li>
+</ul>
+<hr>
+<h2 id="example-3-device-inventory-join-aggregation-pagination">Example 3 — Device inventory join + aggregation + pagination<a class="jc-guide-heading-anchor" href="#example-3-device-inventory-join-aggregation-pagination" aria-label="Link to this section">#</a></h2>
+<p><strong>Goal:</strong> Build a device inventory-style query that:</p>
+<ol>
+<li>Joins device core fields with system/disk detail fields</li>
+<li>Filters to macOS devices that contacted JumpCloud recently</li>
+<li>Counts matching devices (<code>COUNT</code>)</li>
+<li>Returns the first page of results with explicit pagination</li>
+</ol>
+<pre><code class="language-bash">curl -X POST &quot;https://console.jumpcloud.com/api/v2/search/query&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;x-api-key: YOUR_API_KEY&quot; \
+  -H &quot;x-org-id: YOUR_ORG_ID&quot; \
+  -d '{
+    &quot;fields&quot;: {
+      &quot;include&quot;: [
+        &quot;device.display_name&quot;,
+        &quot;device.hostname&quot;,
+        &quot;device.os&quot;,
+        &quot;device.os_version&quot;,
+        &quot;device.last_contact&quot;,
+        &quot;device.serial_number&quot;,
+        &quot;device_system_detail.memory&quot;,
+        &quot;device_system_detail.cpu_brand&quot;,
+        &quot;device_disk_detail.disk_size&quot;,
+        &quot;device_disk_detail.storage_available&quot;
+      ]
+    },
+    &quot;filters&quot;: [
+      {
+        &quot;operation&quot;: &quot;AND&quot;,
+        &quot;filters&quot;: [
+          {
+            &quot;operation&quot;: &quot;EQUALS&quot;,
+            &quot;field&quot;: &quot;device.os&quot;,
+            &quot;value&quot;: &quot;Mac OS X&quot;
+          },
+          {
+            &quot;operation&quot;: &quot;GREATER_THAN_OR_EQUALS&quot;,
+            &quot;field&quot;: &quot;device.last_contact&quot;,
+            &quot;value&quot;: &quot;2026-01-01T00:00:00Z&quot;
+          }
+        ]
+      }
+    ],
+    &quot;aggregations&quot;: [
+      {
+        &quot;field&quot;: [&quot;device.display_name&quot;],
+        &quot;function&quot;: &quot;COUNT&quot;,
+        &quot;name&quot;: &quot;device_count&quot;
+      }
+    ],
+    &quot;sort&quot;: [
+      {
+        &quot;field&quot;: &quot;device.display_name&quot;,
+        &quot;order&quot;: &quot;ASC&quot;
+      }
+    ],
+    &quot;pagination&quot;: {
+      &quot;page_size&quot;: 50,
+      &quot;offset&quot;: 0
+    },
+    &quot;request_cache&quot;: true
+  }'
+</code></pre>
+<h3 id="request-body-only_2">Request body only<a class="jc-guide-heading-anchor" href="#request-body-only_2" aria-label="Link to this section">#</a></h3>
+<pre><code class="language-json">{
+  &quot;fields&quot;: {
+    &quot;include&quot;: [
+      &quot;device.display_name&quot;,
+      &quot;device.hostname&quot;,
+      &quot;device.os&quot;,
+      &quot;device.os_version&quot;,
+      &quot;device.last_contact&quot;,
+      &quot;device.serial_number&quot;,
+      &quot;device_system_detail.memory&quot;,
+      &quot;device_system_detail.cpu_brand&quot;,
+      &quot;device_disk_detail.disk_size&quot;,
+      &quot;device_disk_detail.storage_available&quot;
+    ]
+  },
+  &quot;filters&quot;: [
+    {
+      &quot;operation&quot;: &quot;AND&quot;,
+      &quot;filters&quot;: [
+        {
+          &quot;operation&quot;: &quot;EQUALS&quot;,
+          &quot;field&quot;: &quot;device.os&quot;,
+          &quot;value&quot;: &quot;Mac OS X&quot;
+        },
+        {
+          &quot;operation&quot;: &quot;GREATER_THAN_OR_EQUALS&quot;,
+          &quot;field&quot;: &quot;device.last_contact&quot;,
+          &quot;value&quot;: &quot;2026-01-01T00:00:00Z&quot;
+        }
+      ]
+    }
+  ],
+  &quot;aggregations&quot;: [
+    {
+      &quot;field&quot;: [&quot;device.display_name&quot;],
+      &quot;function&quot;: &quot;COUNT&quot;,
+      &quot;name&quot;: &quot;device_count&quot;
+    }
+  ],
+  &quot;sort&quot;: [
+    {
+      &quot;field&quot;: &quot;device.display_name&quot;,
+      &quot;order&quot;: &quot;ASC&quot;
+    }
+  ],
+  &quot;pagination&quot;: {
+    &quot;page_size&quot;: 50,
+    &quot;offset&quot;: 0
+  },
+  &quot;request_cache&quot;: true
+}
+</code></pre>
+<h3 id="what-this-demonstrates_2">What this demonstrates<a class="jc-guide-heading-anchor" href="#what-this-demonstrates_2" aria-label="Link to this section">#</a></h3>
+<ul>
+<li>Device inventory-style multi-object join (<code>device</code>, <code>device_system_detail</code>, <code>device_disk_detail</code>)</li>
+<li>Nested <code>AND</code> filter combining string and datetime comparisons</li>
+<li>Aggregation (<code>COUNT</code>) with a named result field (<code>device_count</code>)</li>
+<li>Pagination via <code>pagination.page_size</code> / <code>pagination.offset</code></li>
+<li>Optional result caching (<code>request_cache: true</code>) for follow-up page requests</li>
+</ul>
+<h3 id="pagination-follow-up-page-2">Pagination follow-up (page 2)<a class="jc-guide-heading-anchor" href="#pagination-follow-up-page-2" aria-label="Link to this section">#</a></h3>
+<p>After the first response returns a cache token (when caching is enabled), subsequent pages can reuse it:</p>
+<pre><code class="language-json">{
+  &quot;cache_token&quot;: &quot;TOKEN_FROM_PREVIOUS_RESPONSE&quot;,
+  &quot;pagination&quot;: {
+    &quot;page_size&quot;: 50,
+    &quot;offset&quot;: 50
+  }
+}
+</code></pre>
+<blockquote>
+<p>Confirm the exact response field that carries the cache token against current OpenAPI before publishing.</p>
+</blockquote>
+<hr>
+<h2 id="common-filter-operations-subset">Common filter operations (subset)<a class="jc-guide-heading-anchor" href="#common-filter-operations-subset" aria-label="Link to this section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EQUALS</code> / <code>NOT_EQUALS</code></td>
+<td>Exact match (case-insensitive for strings)</td>
+</tr>
+<tr>
+<td><code>STARTS_WITH</code> / <code>ENDS_WITH</code> / <code>CONTAINS</code></td>
+<td>String pattern matching (case-insensitive)</td>
+</tr>
+<tr>
+<td><code>IN</code> / <code>NOT_IN</code></td>
+<td>Match against a list of values</td>
+</tr>
+<tr>
+<td><code>GREATER_THAN</code> / <code>LESS_THAN</code> / <code>*_OR_EQUALS</code></td>
+<td>Numbers and datetimes</td>
+</tr>
+<tr>
+<td><code>IS_NULL</code></td>
+<td>Null check; <code>value</code> is boolean (<code>true</code> = is null)</td>
+</tr>
+<tr>
+<td><code>IS_EMPTY</code></td>
+<td>Null or empty string; string fields only; <code>value</code> is boolean</td>
+</tr>
+<tr>
+<td><code>AND</code> / <code>OR</code></td>
+<td>Nest child filters in <code>filters[]</code></td>
+</tr>
+</tbody>
+</table>
+<p>Datetime values should be ISO-8601 strings in UTC (no offset), for example <code>"2026-01-01T00:00:00Z"</code>.</p>
+<p>Case-sensitive variants also exist (for example <code>EQUALS_CASE_SENSITIVE</code>, <code>CONTAINS_CASE_SENSITIVE</code>) and apply only to string fields.</p>
+<hr>
+<h2 id="aggregation-functions">Aggregation functions<a class="jc-guide-heading-anchor" href="#aggregation-functions" aria-label="Link to this section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COUNT</code></td>
+<td>Count rows / values</td>
+</tr>
+<tr>
+<td><code>COUNT_UNIQUE</code></td>
+<td>Count distinct values</td>
+</tr>
+<tr>
+<td><code>AVG</code></td>
+<td>Average</td>
+</tr>
+<tr>
+<td><code>MAX</code></td>
+<td>Maximum</td>
+</tr>
+<tr>
+<td><code>MIN</code></td>
+<td>Minimum</td>
+</tr>
+<tr>
+<td><code>SUM</code></td>
+<td>Sum</td>
+</tr>
+</tbody>
+</table>
+<p>Each aggregation needs:</p>
+<ul>
+<li><code>function</code> — one of the values above  </li>
+<li><code>field</code> — array of <code>&lt;object&gt;.&lt;field&gt;</code> paths to aggregate  </li>
+<li><code>name</code> — alias returned in the response</li>
+</ul>
+<hr>
+<h2 id="related-endpoints-optional-callouts">Related endpoints (optional callouts)<a class="jc-guide-heading-anchor" href="#related-endpoints-optional-callouts" aria-label="Link to this section">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/v2/search/query/schema</code></td>
+<td>List searchable objects, fields, join targets, and capabilities</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/v2/search/query/schema/{object_name}</code></td>
+<td>Schema for a single object</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/v2/search/query</code></td>
+<td>Run a structured search query (this document)</td>
+</tr>
+</tbody>
+</table>
+          </article>
+        </div>
+      </div>
+
+      <aside class="jc-guide-toc" aria-label="On this page">
+        <div class="jc-guide-toc-inner">
+          <h2 class="jc-guide-toc-heading">In this article</h2>
+          
+          <nav>
+            <ul class="jc-guide-toc-list">
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#overview"
+                >Overview</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#authentication-and-headers"
+                >Authentication and headers</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#request-shape-quick-reference"
+                >Request shape (quick reference)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#example-1-simple-user-search-filter-sort-limit"
+                >Example 1 — Simple user search (filter + sort + limit)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#request-body-only"
+                >Request body only</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#what-this-demonstrates"
+                >What this demonstrates</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#sample-response-shape"
+                >Sample response shape</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#example-2-join-related-objects-nested-or-filter"
+                >Example 2 — Join related objects + nested OR filter</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#request-body-only_1"
+                >Request body only</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#what-this-demonstrates_1"
+                >What this demonstrates</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#example-3-device-inventory-join-aggregation-pagination"
+                >Example 3 — Device inventory join + aggregation + pagination</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#request-body-only_2"
+                >Request body only</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#what-this-demonstrates_2"
+                >What this demonstrates</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link jc-guide-toc-link--nested"
+                  href="#pagination-follow-up-page-2"
+                >Pagination follow-up (page 2)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#common-filter-operations-subset"
+                >Common filter operations (subset)</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#aggregation-functions"
+                >Aggregation functions</a>
+              </li>
+              
+              <li>
+                <a
+                  class="jc-guide-toc-link"
+                  href="#related-endpoints-optional-callouts"
+                >Related endpoints (optional callouts)</a>
+              </li>
+              
+            </ul>
+          </nav>
+          
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="jc-landing-footer jc-circuit-landing-footer jc-docs-chrome-light">
+  <nav class="jc-circuit-footer-nav" aria-label="Footer">
+    <a href="https://jumpcloud.com" target="_blank" rel="noopener noreferrer">
+      Go to JumpCloud.com
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <a href="https://jumpcloud.com/support/contact-jumpcloud-support" target="_blank" rel="noopener noreferrer">
+      JumpCloud Support
+      <span class="jc-sr-only"> (opens in new tab)</span>
+    </a>
+    <span class="jc-circuit-footer-separator" aria-hidden="true">·</span>
+    <span class="jc-circuit-footer-copy">Copyright © 2026 JumpCloud.</span>
+  </nav>
+</footer>
+
+    <script>
+    (function () {
+      function syncDocsChromeOffset() {
+        var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+        if (!nav) {
+          return;
+        }
+        document.documentElement.style.setProperty(
+          "--jc-docs-chrome-offset",
+          nav.offsetHeight + "px"
+        );
+        var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+        if (footer) {
+          document.documentElement.style.setProperty(
+            "--jc-scalar-footer-height",
+            footer.offsetHeight + "px"
+          );
+        }
+        if (window.JumpCloudDocs && typeof JumpCloudDocs.syncScalarViewportHeight === "function") {
+          JumpCloudDocs.syncScalarViewportHeight();
+        }
+      }
+
+      function init() {
+        syncDocsChromeOffset();
+        if (typeof ResizeObserver !== "undefined") {
+          var nav = document.querySelector("body.jc-docs-landing > nav.sticky-top");
+          if (nav) {
+            new ResizeObserver(syncDocsChromeOffset).observe(nav);
+          }
+          var footer = document.querySelector("body.jc-scalar-docs-body .jc-circuit-landing-footer");
+          if (footer) {
+            new ResizeObserver(syncDocsChromeOffset).observe(footer);
+          }
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+      window.addEventListener("resize", syncDocsChromeOffset);
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof hljs !== "undefined") {
+        hljs.highlightAll();
+      }
+    });
+  </script>
+</body>
+
+</html>
