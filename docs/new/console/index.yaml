@@ -12759,6 +12759,7 @@ paths:
 
         #### Available filter fields:
           - `name`
+          - `disabled`
           - `type`
           - `memberQueryErrorFlags`
 
@@ -15998,6 +15999,7 @@ paths:
 
         Available filter fields:
           - `name`
+          - `disabled`
           - `type`
 
         #### Sample Request
@@ -21891,6 +21893,7 @@ paths:
 
         Available filter fields:
           - `name`
+          - `disabled`
           - `type`
           - `membershipMethod`
           - `memberQueryErrorFlags`
@@ -25118,6 +25121,7 @@ paths:
 
         Available filter fields:
           - `name`
+          - `disabled`
           - `type`
           - `membershipMethod`
           - `memberQueryErrorFlags`
@@ -39481,15 +39485,17 @@ paths:
 
               **Filter structure**: `<field>:<operator>:<value>`.
 
-              **field** = A supported collection field name (camelCase): identityObjectId, identityType, identityIdentifier, score, occurrenceCount, level, resolutionStatus, resolutionState, firstOccurrenceAt, lastOccurrenceAt, loginResource, loginStatus, countryCode, city, riskFactorCode.
+              **field** = A supported collection field name (camelCase): identityObjectId, identityType, identityIdentifier, actorType, score, occurrenceCount, level, resolutionStatus, resolutionState, firstOccurrenceAt, lastOccurrenceAt, loginResource, loginStatus, countryCode, city, riskFactorCode.
 
-              **operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.
+              **operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in. For **actorType**, supported operators are **eq** and **in** only.
 
               **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
 
               **Example** `GET /api/v2/identityrisk/events?filter=level:eq:RISK_LEVEL_MEDIUM`
               **Example for users** `GET /api/v2/identityrisk/events?filter=identityIdentifier:in:user1,user2`
               **Example for score** `GET /api/v2/identityrisk/events?filter=score:gt:50`
+              **Example for actor type** `GET /api/v2/identityrisk/events?filter=actorType:eq:ACTOR_TYPE_HUMAN`
+              **Example for actor types** `GET /api/v2/identityrisk/events?filter=actorType:in:ACTOR_TYPE_HUMAN,ACTOR_TYPE_ADMIN_API_KEY`
           in: query
           required: false
           explode: true
@@ -68212,6 +68218,8 @@ components:
     jumpcloud.identity_risk.RiskEvent:
       type: object
       properties:
+        actorType:
+          $ref: "#/components/schemas/jumpcloud.identity_risk.ActorType"
         applicationDisplayName:
           type: string
         applicationName:
@@ -71930,6 +71938,16 @@ components:
         - USER_CONFIGURED
       default: CONFIG_MODE_UNSPECIFIED
       description: Who configured the SIM. Maps to AMAPI TelephonyInfo.configMode.
+    jumpcloud.identity_risk.ActorType:
+      type: string
+      enum:
+        - ACTOR_TYPE_UNSPECIFIED
+        - ACTOR_TYPE_HUMAN
+        - ACTOR_TYPE_ADMIN_API_KEY
+        - ACTOR_TYPE_SERVICE_ACCOUNT
+        - ACTOR_TYPE_MCP_AGENT
+      default: ACTOR_TYPE_UNSPECIFIED
+      description: ActorType classifies the credential or principal class behind a risk event (human vs NHI).
     api_v2.Error:
       title: Error
       type: object
