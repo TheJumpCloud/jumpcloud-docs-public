@@ -38244,7 +38244,7 @@ paths:
   /api/v2/privileged-access/activate:
     post:
       summary: Activate Privileged Access Tenant
-      description: Activate tenant and create integration token via password vault backend
+      description: Activate Privileged Access for your organization and create its integration token.
       operationId: postApiV2PrivilegedAccessActivate
       responses:
         "200":
@@ -38265,7 +38265,7 @@ paths:
   /api/v2/privileged-access/status:
     get:
       summary: List Privileged Access Status
-      description: Get password vault status for an organization
+      description: Get the Privileged Access status for your organization.
       operationId: getApiV2PrivilegedAccessStatus
       responses:
         "200":
@@ -38277,8 +38277,8 @@ paths:
       parameters:
         - name: editionType
           description: |-
-            Deprecated: ignored by the password vault backend. Product activation is reported via
-            is_pam / is_pwm on the reply. Retained for wire compatibility (bound from `editionType`).
+            Deprecated and ignored. Product activation is reported by isPam and isPwm on the reply.
+            Kept for compatibility.
           in: query
           required: false
           schema:
@@ -38327,28 +38327,6 @@ paths:
         - pam.session-history
         - pam.manage-all-privileged-resources
         - pam.backup
-  /api/v2/privileged-access/tenant-settings:
-    put:
-      summary: Update Privileged Access Tenant Settings
-      description: Update tenant settings including SCIM client credentials
-      operationId: putApiV2PrivilegedAccessTenantSettings
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      requestBody:
-        $ref: "#/components/requestBodies/jumpcloud.privileged_access.UpdateTenantSettingsRequest"
-      tags:
-        - Privileged Access
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - pam
   /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockconfig:
     get:
       summary: List Recovery Lock Configuration
@@ -41768,9 +41746,9 @@ paths:
           allowReserved: true
         - name: roleFilter
           description: |2-
-             - FIND_USERS_ROLE_FILTER_UNSPECIFIED: no role filter (backward compatible)
-             - FIND_USERS_ROLE_FILTER_USER: has static User role
-             - FIND_USERS_ROLE_FILTER_ADMIN: has any direct non-User role
+             - FIND_USERS_ROLE_FILTER_UNSPECIFIED: No role filter.
+             - FIND_USERS_ROLE_FILTER_USER: Users with the User role.
+             - FIND_USERS_ROLE_FILTER_ADMIN: Users with any role other than User (administrators).
           in: query
           required: false
           schema:
@@ -42545,10 +42523,527 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/privileged-access/blocking-rules:
+    get:
+      summary: List Blocking Rules
+      description: List the blocking rules in your organization.
+      operationId: getApiV2PrivilegedAccessBlockingRules
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListBlockingRulesReply"
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: sorting
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxResultCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skipCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: nameFilter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: severityFilter
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - SIEM_SEVERITY_UNSPECIFIED
+              - SIEM_SEVERITY_EMERGENCY
+              - SIEM_SEVERITY_CRITICAL
+              - SIEM_SEVERITY_ALERT
+              - SIEM_SEVERITY_WARNING
+              - SIEM_SEVERITY_NOTICE
+            default: SIEM_SEVERITY_UNSPECIFIED
+        - name: criteriaTypeFilter
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - BLOCKING_RULE_CRITERIA_TYPE_DATABASE
+              - BLOCKING_RULE_CRITERIA_TYPE_SERVER
+              - BLOCKING_RULE_CRITERIA_TYPE_WEBSITE
+            default: BLOCKING_RULE_CRITERIA_TYPE_DATABASE
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.blocking-rules.readonly
+    put:
+      summary: Update or Create Blocking Rule
+      description: Create a blocking rule, or update it when `blockingRule.id` is set. An update replaces the rule fields, but keeps its access policies and linked databases when you leave them out, so an empty `resourceIds` does not unlink databases.
+      operationId: putApiV2PrivilegedAccessBlockingRules
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertBlockingRuleReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertBlockingRuleRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.blocking-rules.create
+        - pam.blocking-rules.update
+  /api/v2/privileged-access/blocking-rules/{id}:
+    delete:
+      summary: Delete Blocking Rule
+      description: Delete a blocking rule.
+      operationId: deleteApiV2PrivilegedAccessBlockingRulesById
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.blocking-rules.delete
+  /api/v2/privileged-access/blocking-rules/{id}/edit:
+    get:
+      summary: List Blocking Rule Fields for Edit
+      description: Get the editable values of a blocking rule, in the same shape as the Update or Create Blocking Rule request body. Read them before an update so that fields you do not change are sent back unchanged.
+      operationId: getApiV2PrivilegedAccessBlockingRulesByIdEdit
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetBlockingRuleForEditReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: criteriaType
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.blocking-rules.readonly
+  /api/v2/privileged-access/connections:
+    get:
+      summary: List Sessions
+      description: List the privileged sessions in your organization (Session History).
+      operationId: getApiV2PrivilegedAccessConnections
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListConnectionsReply"
+      parameters:
+        - name: sorting
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: maxResultCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skipCount
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: connectionDate
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: endConnectionDate
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: resourceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: connector
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: userIds
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+        - name: resourceCategory
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: resourceName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: sessionId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: minExecutionDuration
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: maxExecutionDuration
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sessionHasRecording
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: userEmail
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
+  /api/v2/privileged-access/connections/{connectionId}/force-closes:
+    post:
+      summary: Force Close Session
+      description: End an active session immediately.
+      operationId: postApiV2PrivilegedAccessConnectionsByConnectionidForceCloses
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  $ref: "#/components/schemas/jumpcloud.privileged_access.CloseConnectionAction"
+                extras:
+                  type: object
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
+  /api/v2/privileged-access/connections/{connectionId}/watch-session:
+    get:
+      summary: List Session Watch URL
+      description: Get a URL to watch an active session live.
+      operationId: getApiV2PrivilegedAccessConnectionsByConnectionidWatchSession
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.WatchSessionReply"
+      parameters:
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
+  /api/v2/privileged-access/connections/excel/exports:
+    post:
+      summary: Export Sessions to Excel
+      description: Start a background job that exports the filtered sessions to an Excel file and emails the caller a download link.
+      operationId: postApiV2PrivilegedAccessConnectionsExcelExports
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.GetConnectionsToExcelRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
+  /api/v2/privileged-access/connections/files:
+    get:
+      summary: List Session Recording Files
+      description: List the recording files of a session.
+      operationId: getApiV2PrivilegedAccessConnectionsFiles
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetFilesReply"
+      parameters:
+        - name: sessionId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: resourceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
+  /api/v2/privileged-access/connections/files/download-video-informations:
+    post:
+      summary: Get Session Video Download Information
+      description: Get the download information for the video files of a session recording.
+      operationId: postApiV2PrivilegedAccessConnectionsFilesDownloadVideoInformations
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetDownloadVideoInformationsReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.GetDownloadVideoInformationsRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
+  /api/v2/privileged-access/connections/files/typings-url:
+    get:
+      summary: List Session Keystroke Log URL
+      description: Get a download URL for the keystroke log of a session recording.
+      operationId: getApiV2PrivilegedAccessConnectionsFilesTypingsUrl
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetTypingsUrlReply"
+      parameters:
+        - name: file.resourceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: file.connectionId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: file.fileName
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
+  /api/v2/privileged-access/connections/files/video-url:
+    get:
+      summary: List Session Video URL
+      description: Get a download URL for the video of a session recording.
+      operationId: getApiV2PrivilegedAccessConnectionsFilesVideoUrl
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetVideoUrlReply"
+      parameters:
+        - name: file.resourceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: file.connectionId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: file.fileName
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
+  /api/v2/privileged-access/connections/status/by-resource/{resourceId}:
+    get:
+      summary: Get Resource Session Status
+      description: Get the session status of a privileged resource.
+      operationId: getApiV2PrivilegedAccessConnectionsStatusByResourceByResourceid
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetConnectionStatusReply"
+      parameters:
+        - name: resourceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
   /api/v2/privileged-access/connectors:
     get:
-      summary: List Connectors
-      description: List password vault connectors.
+      summary: List Jump Servers
+      description: List the Jump Servers in your organization.
       operationId: getApiV2PrivilegedAccessConnectors
       responses:
         "200":
@@ -42600,8 +43095,8 @@ paths:
         - pam
         - pam.jump-servers.readonly
     put:
-      summary: Update Connector
-      description: Create or update a password vault connector.
+      summary: Update or Create Jump Server
+      description: Create a Jump Server, or update it when `connector.id` is set. An update replaces every editable field, so start from List Jump Server Fields for Edit and change only what you need.
       operationId: putApiV2PrivilegedAccessConnectors
       responses:
         "200":
@@ -42625,10 +43120,199 @@ paths:
         - pam
         - pam.jump-servers.create
         - pam.jump-servers.update
+  /api/v2/privileged-access/connectors/{connectorId}/connections/online:
+    get:
+      summary: List Jump Server Active Sessions
+      description: List the sessions currently open through a Jump Server.
+      operationId: getApiV2PrivilegedAccessConnectorsByConnectoridConnectionsOnline
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetConnectionsOnlineReply"
+      parameters:
+        - name: connectorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+  /api/v2/privileged-access/connectors/{connectorId}/health-checks:
+    get:
+      summary: List Jump Server Health Checks
+      description: List the health check records of a Jump Server for a date range.
+      operationId: getApiV2PrivilegedAccessConnectorsByConnectoridHealthChecks
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetHealthCheckConnectorReply"
+      parameters:
+        - name: connectorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: start
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: end
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+  /api/v2/privileged-access/connectors/{connectorId}/health-checks/available-dates:
+    get:
+      summary: List Jump Server Health Check Dates
+      description: List the dates that have health check records for a Jump Server.
+      operationId: getApiV2PrivilegedAccessConnectorsByConnectoridHealthChecksAvailableDates
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetHealthCheckDatesAvailableReply"
+      parameters:
+        - name: connectorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+  /api/v2/privileged-access/connectors/{connectorId}/install-files:
+    get:
+      summary: List Jump Server Install Files
+      description: Get the install file for a Jump Server. Download it with Download Temporary File.
+      operationId: getApiV2PrivilegedAccessConnectorsByConnectoridInstallFiles
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetInstallFileReply"
+      parameters:
+        - name: connectorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: version
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: engine
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.create
+        - pam.jump-servers.update
+  /api/v2/privileged-access/connectors/{connectorId}/resources:
+    get:
+      summary: List Jump Server Resources
+      description: List the privileged resources that use a Jump Server.
+      operationId: getApiV2PrivilegedAccessConnectorsByConnectoridResources
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetResourcesReply"
+      parameters:
+        - name: connectorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: filterName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filterCategory
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: sortColumn
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
   /api/v2/privileged-access/connectors/{id}:
     get:
-      summary: Get Connector
-      description: Get password vault connector metadata.
+      summary: Get Jump Server
+      description: Get a Jump Server by ID.
       operationId: getApiV2PrivilegedAccessConnectorsById
       responses:
         "200":
@@ -42653,8 +43337,8 @@ paths:
         - pam
         - pam.jump-servers.readonly
     delete:
-      summary: Delete Connector
-      description: Delete a password vault connector.
+      summary: Delete Jump Server
+      description: Delete a Jump Server.
       operationId: deleteApiV2PrivilegedAccessConnectorsById
       responses:
         "200":
@@ -42679,10 +43363,90 @@ paths:
       x-scopes:
         - pam
         - pam.jump-servers.delete
+  /api/v2/privileged-access/connectors/{id}/edit:
+    get:
+      summary: List Jump Server Fields for Edit
+      description: Get the editable values of a Jump Server, in the same shape as the Update or Create Jump Server request body. Read them before an update so that fields you do not change are sent back unchanged.
+      operationId: getApiV2PrivilegedAccessConnectorsByIdEdit
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetConnectorForEditReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+  /api/v2/privileged-access/connectors/resource-migrations:
+    post:
+      summary: Migrate Jump Server Resources
+      description: Move privileged resources from their current Jump Server to a target Jump Server.
+      operationId: postApiV2PrivilegedAccessConnectorsResourceMigrations
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.MigrateResourcesRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+  /api/v2/privileged-access/connectors/versions:
+    get:
+      summary: List Jump Server Versions
+      description: List the Jump Server versions available to install.
+      operationId: getApiV2PrivilegedAccessConnectorsVersions
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetConnectorVersionsReply"
+      parameters:
+        - name: columnName
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
   /api/v2/privileged-access/databases:
     get:
-      summary: List Databases
-      description: List password vault databases.
+      summary: List Privileged Databases
+      description: List the privileged databases in your organization.
       operationId: getApiV2PrivilegedAccessDatabases
       responses:
         "200":
@@ -42801,8 +43565,8 @@ paths:
         - pam
         - pam.privileged-databases.readonly
     put:
-      summary: Update Database
-      description: Create or update a password vault database.
+      summary: Update or Create Privileged Database
+      description: Create a privileged database, or update it when `database.id` is set. An update replaces every editable field, so start from List Privileged Database Fields for Edit and change only what you need.
       operationId: putApiV2PrivilegedAccessDatabases
       responses:
         "200":
@@ -42828,8 +43592,8 @@ paths:
         - pam.privileged-databases.update
   /api/v2/privileged-access/databases/{id}:
     get:
-      summary: Get Database
-      description: Get password vault database metadata for viewing.
+      summary: Get Privileged Database
+      description: Get a privileged database by ID.
       operationId: getApiV2PrivilegedAccessDatabasesById
       responses:
         "200":
@@ -42854,8 +43618,8 @@ paths:
         - pam
         - pam.privileged-databases.readonly
     delete:
-      summary: Delete Database
-      description: Delete a password vault database.
+      summary: Delete Privileged Database
+      description: Delete a privileged database. Its linked credentials are unlinked, not deleted.
       operationId: deleteApiV2PrivilegedAccessDatabasesById
       responses:
         "200":
@@ -42873,6 +43637,7 @@ paths:
             type: string
             format: byte
         - name: deleteCredentialsLinked
+          description: Ignored. Linked credentials are always unlinked, never deleted.
           in: query
           required: false
           schema:
@@ -42885,10 +43650,218 @@ paths:
       x-scopes:
         - pam
         - pam.privileged-databases.delete
+  /api/v2/privileged-access/databases/{id}/archive:
+    post:
+      summary: Archive Privileged Database
+      description: Archive a privileged database.
+      operationId: postApiV2PrivilegedAccessDatabasesByIdArchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.update
+  /api/v2/privileged-access/databases/{id}/clones:
+    post:
+      summary: Duplicate Privileged Database
+      description: Create a copy of a privileged database.
+      operationId: postApiV2PrivilegedAccessDatabasesByIdClones
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.DuplicateDatabaseReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_DuplicateBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.create
+  /api/v2/privileged-access/databases/{id}/edit:
+    get:
+      summary: List Privileged Database Fields for Edit
+      description: Get the editable values of a privileged database, in the same shape as the Update or Create Privileged Database request body. Read them before an update so that fields you do not change are sent back unchanged. Remove duplicate `rules` entries, and entries whose rule no longer exists, before sending them back.
+      operationId: getApiV2PrivilegedAccessDatabasesByIdEdit
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetDatabaseForEditReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.update
+  /api/v2/privileged-access/databases/{id}/unarchive:
+    post:
+      summary: Unarchive Privileged Database
+      description: Restore an archived privileged database.
+      operationId: postApiV2PrivilegedAccessDatabasesByIdUnarchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.update
+  /api/v2/privileged-access/databases/bulk-archive:
+    post:
+      summary: Archive Privileged Databases in Bulk
+      description: Archive the selected privileged databases.
+      operationId: postApiV2PrivilegedAccessDatabasesBulkArchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.DatabaseBulkIdsRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.update
+  /api/v2/privileged-access/databases/bulk-unarchive:
+    post:
+      summary: Unarchive Privileged Databases in Bulk
+      description: Restore the selected archived privileged databases.
+      operationId: postApiV2PrivilegedAccessDatabasesBulkUnarchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.DatabaseBulkIdsRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.update
+  /api/v2/privileged-access/databases/excel/columns:
+    get:
+      summary: List Privileged Database Export Columns
+      description: List the columns that can be included when exporting privileged databases to Excel.
+      operationId: getApiV2PrivilegedAccessDatabasesExcelColumns
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetExcelColumnsReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.readonly
+  /api/v2/privileged-access/databases/excel/exports:
+    post:
+      summary: Export Privileged Databases to Excel
+      description: Start a background job that exports the filtered privileged databases to an Excel file and emails the caller a download link.
+      operationId: postApiV2PrivilegedAccessDatabasesExcelExports
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ExportDatabasesExcelReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.ExportDatabasesExcelRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-databases.readonly
   /api/v2/privileged-access/servers:
     get:
-      summary: List Servers
-      description: List password vault servers.
+      summary: List Privileged Servers
+      description: List the privileged servers in your organization.
       operationId: getApiV2PrivilegedAccessServers
       responses:
         "200":
@@ -43022,8 +43995,8 @@ paths:
         - pam
         - pam.privileged-servers.readonly
     put:
-      summary: Update Server
-      description: Create or update a password vault server.
+      summary: Update or Create Privileged Server
+      description: Create a privileged server, or update it when `server.id` is set. An update replaces every editable field, so start from List Privileged Server Fields for Edit and change only what you need.
       operationId: putApiV2PrivilegedAccessServers
       responses:
         "200":
@@ -43049,8 +44022,8 @@ paths:
         - pam.privileged-servers.update
   /api/v2/privileged-access/servers/{id}:
     get:
-      summary: Get Server
-      description: Get password vault server metadata for viewing.
+      summary: Get Privileged Server
+      description: Get a privileged server by ID.
       operationId: getApiV2PrivilegedAccessServersById
       responses:
         "200":
@@ -43075,8 +44048,8 @@ paths:
         - pam
         - pam.privileged-servers.readonly
     delete:
-      summary: Delete Server
-      description: Delete a password vault server.
+      summary: Delete Privileged Server
+      description: Delete a privileged server. Its linked credentials are unlinked, not deleted.
       operationId: deleteApiV2PrivilegedAccessServersById
       responses:
         "200":
@@ -43094,6 +44067,7 @@ paths:
             type: string
             format: byte
         - name: deleteCredentialsLinked
+          description: Ignored. Linked credentials are always unlinked, never deleted.
           in: query
           required: false
           schema:
@@ -43106,11 +44080,127 @@ paths:
       x-scopes:
         - pam
         - pam.privileged-servers.delete
-  /api/v2/privileged-access/pam/activation/finalize:
+  /api/v2/privileged-access/servers/{id}/archive:
     post:
-      summary: Finalize Privileged Access Activation
-      description: Finalize PAM activation by activating the tenant in VaultOne
-      operationId: postApiV2PrivilegedAccessPamActivationFinalize
+      summary: Archive Privileged Server
+      description: Archive a privileged server.
+      operationId: postApiV2PrivilegedAccessServersByIdArchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.update
+  /api/v2/privileged-access/servers/{id}/clones:
+    post:
+      summary: Duplicate Privileged Server
+      description: Create a copy of a privileged server.
+      operationId: postApiV2PrivilegedAccessServersByIdClones
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.DuplicateServerReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_DuplicateBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.create
+  /api/v2/privileged-access/servers/{id}/edit:
+    get:
+      summary: List Privileged Server Fields for Edit
+      description: Get the editable values of a privileged server, in the same shape as the Update or Create Privileged Server request body. Read them before an update so that fields you do not change are sent back unchanged.
+      operationId: getApiV2PrivilegedAccessServersByIdEdit
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetServerForEditReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.readonly
+  /api/v2/privileged-access/servers/{id}/unarchive:
+    post:
+      summary: Unarchive Privileged Server
+      description: Restore an archived privileged server.
+      operationId: postApiV2PrivilegedAccessServersByIdUnarchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.update
+  /api/v2/privileged-access/servers/bulk-archive:
+    post:
+      summary: Archive Privileged Servers in Bulk
+      description: Archive the selected privileged servers.
+      operationId: postApiV2PrivilegedAccessServersBulkArchive
       responses:
         "200":
           description: A successful response.
@@ -43120,10 +44210,75 @@ paths:
                 type: object
                 properties: {}
       requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ServerBulkIdsRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.update
+  /api/v2/privileged-access/servers/bulk-unarchive:
+    post:
+      summary: Unarchive Privileged Servers in Bulk
+      description: Restore the selected archived privileged servers.
+      operationId: postApiV2PrivilegedAccessServersBulkUnarchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ServerBulkIdsRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.update
+  /api/v2/privileged-access/servers/excel/columns:
+    get:
+      summary: List Privileged Server Export Columns
+      description: List the columns that can be included when exporting privileged servers to Excel.
+      operationId: getApiV2PrivilegedAccessServersExcelColumns
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetExcelColumnsReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-servers.readonly
+  /api/v2/privileged-access/servers/excel/exports:
+    post:
+      summary: Export Privileged Servers to Excel
+      description: Start a background job that exports the filtered privileged servers to an Excel file and emails the caller a download link.
+      operationId: postApiV2PrivilegedAccessServersExcelExports
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ExportServersExcelReply"
+      requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/jumpcloud.privileged_access.FinalizeActivationRequest"
+              $ref: "#/components/schemas/jumpcloud.privileged_access.ExportServersExcelRequest"
         required: true
       tags:
         - Privileged Access
@@ -43132,6 +44287,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
+        - pam.privileged-servers.readonly
   /api/v2/gcep/configuration:
     get:
       description: Returns the GCEP integration configuration for an organization
@@ -43374,7 +44530,7 @@ paths:
   /api/v2/privileged-access/tags:
     get:
       summary: List Privileged Access Tags
-      description: "List privileged access tags. Privileged Access counterpart of List, exposed under the privileged-access namespace and PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team. Use `source` to choose the tag store: RESOURCES (default) reads resource tags, BLOCKING_RULES aggregates tags used on blocking rules, ALL merges both. Omitting `source` keeps the original resource-tags behaviour. There is no search or pagination, so the full de-duplicated list is returned and callers filter client-side."
+      description: "List Privileged Access tags. Use `source` to choose the tag store: RESOURCES (default) returns resource tags, BLOCKING_RULES returns the tags used on blocking rules, and ALL merges both. There is no search or pagination, so the full de-duplicated list is returned."
       operationId: getApiV2PrivilegedAccessTags
       responses:
         "200":
@@ -43395,7 +44551,7 @@ paths:
           allowReserved: true
         - name: source
           description: |2-
-             - PRIVILEGED_ACCESS_TAG_SOURCE_UNSPECIFIED: Defaults to RESOURCES, preserving the behaviour of callers that omit it.
+             - PRIVILEGED_ACCESS_TAG_SOURCE_UNSPECIFIED: Same as RESOURCES.
              - PRIVILEGED_ACCESS_TAG_SOURCE_RESOURCES: Tags on privileged resources (databases, servers, websites).
              - PRIVILEGED_ACCESS_TAG_SOURCE_BLOCKING_RULES: Tags used on blocking rules.
              - PRIVILEGED_ACCESS_TAG_SOURCE_ALL: Both of the above, merged and de-duplicated.
@@ -43423,7 +44579,7 @@ paths:
   /api/v2/privileged-access/users/self:
     get:
       summary: List Current Privileged Access User
-      description: "Returns the tenant user identified by request actor metadata (user_id / eventContext). Privileged Access counterpart of GetUser: the same tenant user, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team."
+      description: Get the Privileged Access user making the request.
       operationId: getApiV2PrivilegedAccessUsersSelf
       responses:
         "200":
@@ -43530,7 +44686,7 @@ paths:
   /api/v2/privileged-access/groups/{idGroup}/assignable-resources:
     get:
       summary: List Assignable Privileged Access Group Resources
-      description: List resources that can be assigned to a privileged access group. Privileged Access counterpart of ListAssignableResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
+      description: List the privileged resources that can be assigned to a Privileged Access user group.
       operationId: getApiV2PrivilegedAccessGroupsByIdgroupAssignableResources
       responses:
         "200":
@@ -43590,7 +44746,7 @@ paths:
   /api/v2/privileged-access/groups/{idGroup}/members:
     get:
       summary: List Privileged Access Group Members
-      description: List members of a privileged access group. Privileged Access counterpart of ListMembers, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
+      description: List the members of a Privileged Access user group.
       operationId: getApiV2PrivilegedAccessGroupsByIdgroupMembers
       responses:
         "200":
@@ -43641,7 +44797,7 @@ paths:
   /api/v2/privileged-access/groups/{idGroup}/resources:
     get:
       summary: List Privileged Access Group Resources
-      description: List resources assigned to a privileged access group. Privileged Access counterpart of ListResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
+      description: List the privileged resources assigned to a Privileged Access user group.
       operationId: getApiV2PrivilegedAccessGroupsByIdgroupResources
       responses:
         "200":
@@ -43700,7 +44856,7 @@ paths:
         - pam.user-groups.readonly
     put:
       summary: Update Privileged Access Group Resources
-      description: Assign or remove resources on a privileged access group. Privileged Access counterpart of ManageResources, exposed under the PAM feature flag so PAM clients do not depend on a Password Vault route owned by another team.
+      description: Assign privileged resources to a Privileged Access user group, or remove them from it.
       operationId: putApiV2PrivilegedAccessGroupsByIdgroupResources
       responses:
         "200":
@@ -43746,7 +44902,7 @@ paths:
   /api/v2/privileged-access/groups/all:
     get:
       summary: List Privileged Access Groups in Full
-      description: "List all privileged access groups (non-paged). Privileged Access counterpart of List: the same groups, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team."
+      description: List all Privileged Access user groups, without pagination.
       operationId: getApiV2PrivilegedAccessGroupsAll
       responses:
         "200":
@@ -43758,9 +44914,8 @@ paths:
       parameters:
         - name: productFilter
           description: |-
-            Which product's enrolled groups to return. UNSPECIFIED keeps the original
-            PAM-only behaviour, so existing callers are unaffected; Password Manager
-            can reuse this route by sending GROUP_PRODUCT_PWM, with no change here.
+            Which product's enrolled user groups to return. When omitted, only groups
+            enrolled in Privileged Access are returned.
           in: query
           required: false
           schema:
@@ -43895,8 +45050,8 @@ paths:
       parameters:
         - name: editionType
           description: |-
-            Deprecated: ignored by the password vault backend. Product activation is reported via
-            is_pam / is_pwm on the reply. Retained for wire compatibility (bound from `editionType`).
+            Deprecated and ignored. Product activation is reported by isPam and isPwm on the reply.
+            Kept for compatibility.
           in: query
           required: false
           schema:
@@ -43912,7 +45067,7 @@ paths:
   /api/v2/privileged-access/backup-key:
     get:
       summary: List Jump Server Backup Key State
-      description: "Get the Jump Server backup key state for the tenant. Returns `keyId` only: an empty `keyId` means no key has been generated yet and encrypted Jump Server backups are not being produced. The key itself and its version are returned exactly once, by GeneratePrivilegedAccessBackupKey, and are never readable afterwards. Requires the PAM Backup permission."
+      description: "Get the Jump Server backup key state for your organization. Returns `keyId` only: an empty `keyId` means no key has been generated yet and encrypted Jump Server backups are not being produced. The key itself and its version are returned only once, by Generate Jump Server Backup Key, and cannot be read afterwards. Requires the PAM Backup permission."
       operationId: getApiV2PrivilegedAccessBackupKey
       responses:
         "200":
@@ -43956,8 +45111,8 @@ paths:
         - pam.backup
   /api/v2/privileged-access/credentials:
     get:
-      summary: List Privileged Access Credentials
-      description: List password vault credentials.
+      summary: List Privileged Credentials
+      description: List the privileged credentials in your organization. Secret values are not returned.
       operationId: getApiV2PrivilegedAccessCredentials
       responses:
         "200":
@@ -44009,8 +45164,8 @@ paths:
         - pam
         - pam.privileged-credentials.readonly
     put:
-      summary: Update Privileged Access Credential
-      description: Create or update a password vault credential.
+      summary: Update or Create Privileged Credential
+      description: Create a privileged credential, or update it when `id` is set. Secret fields you leave empty keep their stored values; the other fields are replaced.
       operationId: putApiV2PrivilegedAccessCredentials
       responses:
         "200":
@@ -44032,8 +45187,8 @@ paths:
         - pam.privileged-credentials.update
   /api/v2/privileged-access/credentials/{id}:
     get:
-      summary: Get Privileged Access Credential
-      description: Get password vault credential metadata.
+      summary: Get Privileged Credential
+      description: Get a privileged credential's metadata. Secret values are not returned; to read them, use List Privileged Credential General Data.
       operationId: getApiV2PrivilegedAccessCredentialsById
       responses:
         "200":
@@ -44058,8 +45213,8 @@ paths:
         - pam
         - pam.privileged-credentials.readonly
     delete:
-      summary: Delete Privileged Access Credential
-      description: Delete a password vault credential.
+      summary: Delete Privileged Credential
+      description: Delete a privileged credential.
       operationId: deleteApiV2PrivilegedAccessCredentialsById
       responses:
         "200":
@@ -44084,10 +45239,268 @@ paths:
       x-scopes:
         - pam
         - pam.privileged-credentials.delete
+  /api/v2/privileged-access/credentials/{id}/clones:
+    post:
+      summary: Duplicate Privileged Credential
+      description: Create a copy of a privileged credential.
+      operationId: postApiV2PrivilegedAccessCredentialsByIdClones
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.DuplicateCredentialReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_DuplicateBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.create
+  /api/v2/privileged-access/credentials/{id}/history:
+    get:
+      summary: List Privileged Credential History
+      description: List the stored versions of a privileged credential, with their creation dates.
+      operationId: getApiV2PrivilegedAccessCredentialsByIdHistory
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialHistoryReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: continuationToken
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+  /api/v2/privileged-access/credentials/{id}/managers:
+    get:
+      summary: List Privileged Credential Managers
+      description: List the users who manage a privileged credential.
+      operationId: getApiV2PrivilegedAccessCredentialsByIdManagers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialManagersReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+  /api/v2/privileged-access/credentials/{id}/mfa-code:
+    get:
+      summary: List Privileged Credential MFA Code
+      description: Get the current MFA code of a privileged credential.
+      operationId: getApiV2PrivilegedAccessCredentialsByIdMfaCode
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetMfaCodeReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: domain
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+  /api/v2/privileged-access/credentials/{id}/secret/v2:
+    get:
+      summary: List Privileged Credential Secret
+      description: "Get a credential's secret values. When the View Secret policy or a required approval does not allow it, no secret is returned: `canView` is false, or `accessRequest` gives the approval state. Allowed reads are recorded as secret views."
+      operationId: getApiV2PrivilegedAccessCredentialsByIdSecretV2
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialSecretV2Reply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: resourceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: credentialVersion
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: domain
+          in: query
+          required: false
+          schema:
+            type: string
+          allowReserved: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+  /api/v2/privileged-access/credentials/archive:
+    post:
+      summary: Archive Privileged Credentials
+      description: Archive the selected privileged credentials.
+      operationId: postApiV2PrivilegedAccessCredentialsArchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ArchiveCredentialsRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.update
+  /api/v2/privileged-access/credentials/bulk-delete:
+    delete:
+      summary: Delete Privileged Credentials in Bulk
+      description: Delete the selected privileged credentials.
+      operationId: deleteApiV2PrivilegedAccessCredentialsBulkDelete
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.DeleteSelectedCredentialsRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.delete
+  /api/v2/privileged-access/credentials/unarchive:
+    post:
+      summary: Unarchive Privileged Credentials
+      description: Restore the selected archived privileged credentials.
+      operationId: postApiV2PrivilegedAccessCredentialsUnarchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ArchiveCredentialsRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.update
   /api/v2/privileged-access/websites:
     get:
-      summary: List Privileged Access Websites
-      description: List password vault websites.
+      summary: List Privileged Websites
+      description: List the privileged websites in your organization.
       operationId: getApiV2PrivilegedAccessWebsites
       responses:
         "200":
@@ -44139,8 +45552,8 @@ paths:
         - pam
         - pam.privileged-websites.readonly
     post:
-      summary: Update Privileged Access Website
-      description: Create or update a password vault website.
+      summary: Create or Update Privileged Website
+      description: Create a privileged website, or update it when `website.id` is set. An update replaces every editable field, so start from List Privileged Website Fields for Edit and change only what you need.
       operationId: postApiV2PrivilegedAccessWebsites
       responses:
         "200":
@@ -44162,8 +45575,8 @@ paths:
         - pam.privileged-websites.update
   /api/v2/privileged-access/websites/{id}:
     get:
-      summary: Get Privileged Access Website
-      description: Get password vault website metadata for viewing.
+      summary: Get Privileged Website
+      description: Get a privileged website by ID.
       operationId: getApiV2PrivilegedAccessWebsitesById
       responses:
         "200":
@@ -44188,8 +45601,8 @@ paths:
         - pam
         - pam.privileged-websites.readonly
     delete:
-      summary: Delete Privileged Access Website
-      description: Delete a password vault website.
+      summary: Delete Privileged Website
+      description: Delete a privileged website. Its linked credentials are unlinked, not deleted.
       operationId: deleteApiV2PrivilegedAccessWebsitesById
       responses:
         "200":
@@ -44219,6 +45632,164 @@ paths:
       x-scopes:
         - pam
         - pam.privileged-websites.delete
+  /api/v2/privileged-access/websites/{id}/archive:
+    post:
+      summary: Archive Privileged Website
+      description: Archive a privileged website.
+      operationId: postApiV2PrivilegedAccessWebsitesByIdArchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.update
+  /api/v2/privileged-access/websites/{id}/clones:
+    post:
+      summary: Duplicate Privileged Website
+      description: Create a copy of a privileged website.
+      operationId: postApiV2PrivilegedAccessWebsitesByIdClones
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.DuplicateWebsiteReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_DuplicateBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.create
+  /api/v2/privileged-access/websites/{id}/edit:
+    get:
+      summary: List Privileged Website Fields for Edit
+      description: Get the editable values of a privileged website, in the same shape as the Create or Update Privileged Website request body. Read them before an update so that fields you do not change are sent back unchanged.
+      operationId: getApiV2PrivilegedAccessWebsitesByIdEdit
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetWebsiteForEditReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.readonly
+  /api/v2/privileged-access/websites/{id}/unarchive:
+    post:
+      summary: Unarchive Privileged Website
+      description: Restore an archived privileged website.
+      operationId: postApiV2PrivilegedAccessWebsitesByIdUnarchive
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.update
+  /api/v2/privileged-access/websites/excel/columns:
+    get:
+      summary: List Privileged Website Export Columns
+      description: List the columns that can be included when exporting privileged websites to Excel.
+      operationId: getApiV2PrivilegedAccessWebsitesExcelColumns
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetExcelColumnsReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.readonly
+  /api/v2/privileged-access/websites/excel/exports:
+    post:
+      summary: Export Privileged Websites to Excel
+      description: Start a background job that exports the filtered privileged websites to an Excel file and emails the caller a download link.
+      operationId: postApiV2PrivilegedAccessWebsitesExcelExports
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ExportExcelReply"
+      requestBody:
+        $ref: "#/components/requestBodies/jumpcloud.privileged_access.ExportExcelRequest"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-websites.readonly
   /api/v2/privileged-access/resource-managers:
     get:
       summary: List Resource Managers
@@ -44265,8 +45836,8 @@ paths:
         - pam
         - pam.resource-managers.readonly
     put:
-      summary: Update Resource Manager
-      description: Create or update a resource manager and sync members.
+      summary: Update or Create Resource Manager
+      description: Create a resource manager, or update it when its ID is set, and sync its members.
       operationId: putApiV2PrivilegedAccessResourceManagers
       responses:
         "200":
@@ -44577,7 +46148,7 @@ paths:
   /api/v2/privileged-access/users:
     get:
       summary: List Privileged Access Users
-      description: "Lists tenant users, optionally filtered by role. Privileged Access counterpart of Find: the same VaultOne lookup, exposed under the privileged-access namespace and PAM feature flag, so PAM clients do not depend on a Password Vault route owned by another team. Filtering on role_filter ADMIN returns the administrators that resource manager membership accepts, and each result carries the VaultOne integer user id those writes require."
+      description: List Privileged Access users, optionally filtered by role. Filter by ADMIN to get the administrators that can be added to a resource manager.
       operationId: getApiV2PrivilegedAccessUsers
       responses:
         "200":
@@ -44616,9 +46187,9 @@ paths:
           allowReserved: true
         - name: roleFilter
           description: |2-
-             - FIND_USERS_ROLE_FILTER_UNSPECIFIED: no role filter (backward compatible)
-             - FIND_USERS_ROLE_FILTER_USER: has static User role
-             - FIND_USERS_ROLE_FILTER_ADMIN: has any direct non-User role
+             - FIND_USERS_ROLE_FILTER_UNSPECIFIED: No role filter.
+             - FIND_USERS_ROLE_FILTER_USER: Users with the User role.
+             - FIND_USERS_ROLE_FILTER_ADMIN: Users with any role other than User (administrators).
           in: query
           required: false
           schema:
@@ -44644,6 +46215,248 @@ paths:
         - pam.blocking-rules.readonly
         - pam.jump-servers.readonly
         - pam.user-groups.readonly
+  /api/v2/privileged-access/credentials/{id}/rotation-keys:
+    post:
+      summary: Generate Privileged Credential Rotation Key
+      description: Generate the key the password rotation script authenticates with. Replaces any existing key.
+      operationId: postApiV2PrivilegedAccessCredentialsByIdRotationKeys
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GenerateRotationKeyReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: "#/components/requestBodies/CredentialsService_TakeoverByAdminBody"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.update
+  /api/v2/privileged-access/credentials/{id}/rotation-script:
+    get:
+      summary: List Privileged Credential Rotation Script
+      description: Get the installer script that enables automated password rotation for a credential on a linked server.
+      operationId: getApiV2PrivilegedAccessCredentialsByIdRotationScript
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetPasswordRotationInstallScriptReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: type
+          description: |-
+            "powershell" for the Windows (.ps1) script; any other value returns the
+            shell (.sh) script. The value is matched exactly.
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+  /api/v2/privileged-access/credentials/{id}/value:
+    put:
+      summary: Update Privileged Credential Value
+      description: Set a password credential's password to `value` as a new version and clear its rotation validation flag. If `value` equals the current password, nothing changes unless `forceUpdate` is true.
+      operationId: putApiV2PrivilegedAccessCredentialsByIdValue
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                forceUpdate:
+                  type: boolean
+                  description: |-
+                    Set to true when the chosen version is the one already stored, to clear the
+                    rotation validation warning anyway.
+                value:
+                  type: string
+              description: |-
+                Sync Password: set the credential to the stored version that matches the
+                account on the server. Password credentials only.
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.update
+  /api/v2/privileged-access/credentials/excel/columns:
+    get:
+      summary: List Privileged Credential Export Columns
+      description: List the columns that can be included when exporting privileged credentials to Excel.
+      operationId: getApiV2PrivilegedAccessCredentialsExcelColumns
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetCredentialExcelColumnsReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+  /api/v2/privileged-access/credentials/excel/exports:
+    post:
+      summary: Export Privileged Credentials to Excel
+      description: Start a background job that exports the filtered privileged credentials to an Excel file and emails the caller a download link.
+      operationId: postApiV2PrivilegedAccessCredentialsExcelExports
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.ExportCredentialsExcelRequest"
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+  /api/v2/privileged-access/credentials/excel/extract-columns:
+    post:
+      summary: Extract Privileged Access Credential Import Columns
+      description: |-
+        Extract column headers from an uploaded Excel file for credential import mapping.
+        Send `Content-Type: application/octet-stream` with a JSON init line
+        (`ImportCredentialsExtractExcelColumnsInit`) terminated
+        by newline, followed by the raw Excel file bytes streamed as chunk payloads.
+      operationId: postApiV2PrivilegedAccessCredentialsExcelExtractColumns
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ImportCredentialsExtractExcelColumnsReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-scopes:
+        - pam
+  /api/v2/privileged-access/credentials/excel/import-custom:
+    post:
+      summary: Import Privileged Access Credentials from a Custom File
+      description: |-
+        Import credentials from a custom-mapped Excel file.
+        For inline uploads send `Content-Type: application/octet-stream` with a JSON init line
+        (`ImportCredentialsCustomExcelInit`) terminated by
+        newline, followed by raw Excel bytes. For previously uploaded files send
+        `Content-Type: application/json` with an `ImportCredentialsCustomExcelInit` body and no
+        chunks.
+      operationId: postApiV2PrivilegedAccessCredentialsExcelImportCustom
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.ImportCredentialsCustomExcelInit"
+          application/octet-stream: {}
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-scopes:
+        - pam
+  /api/v2/privileged-access/credentials/{id}/linked-servers:
+    get:
+      summary: List Privileged Credential Linked Servers
+      description: List the servers linked to a credential that can run its automated password rotation. Send the chosen server's `resourceId` as `credentialRotationId` when updating the credential.
+      operationId: getApiV2PrivilegedAccessCredentialsByIdLinkedServers
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListCredentialLinkedServersReply"
+      parameters:
+        - name: id
+          description: Credential whose linked servers to list.
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: continuationToken
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
   /api/v2/gcep/systems/{systemObjectId}/device-state:
     get:
       summary: Returns GCEP device trust state from the partners sync mirror for a system.
@@ -45216,6 +47029,26 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/privileged-access/dashboard-overview:
+    get:
+      summary: List Privileged Access Overview
+      description: "Get the Privileged Access overview: summary counts, Jump Server health and the most and least connected resources."
+      operationId: getApiV2PrivilegedAccessDashboardOverview
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetPamDashboardOverviewReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.overview
   /api/v2/notifications/channels/slack/{slackTeamId}:
     delete:
       summary: This endpoint is used to delete slack channels.
@@ -45715,6 +47548,69 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/privileged-access/files/temp-download:
+    get:
+      summary: Download Temporary File
+      description: Download a temporary file, such as a Jump Server install file, using the token returned when the file was created.
+      operationId: getApiV2PrivilegedAccessFilesTempDownload
+      responses:
+        "200":
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      parameters:
+        - name: fileToken
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.readonly
+        - pam.privileged-websites.create
+        - pam.privileged-websites.update
+        - pam.privileged-websites.delete
+        - pam.privileged-websites.readonly
+        - pam.privileged-servers.create
+        - pam.privileged-servers.update
+        - pam.privileged-servers.delete
+        - pam.privileged-servers.readonly
+        - pam.privileged-databases.create
+        - pam.privileged-databases.update
+        - pam.privileged-databases.delete
+        - pam.privileged-databases.readonly
+        - pam.privileged-credentials.create
+        - pam.privileged-credentials.update
+        - pam.privileged-credentials.delete
+        - pam.privileged-credentials.readonly
+        - pam.resource-managers.create
+        - pam.resource-managers.update
+        - pam.resource-managers.delete
+        - pam.resource-managers.readonly
+        - pam.blocking-rules.create
+        - pam.blocking-rules.update
+        - pam.blocking-rules.delete
+        - pam.blocking-rules.readonly
+        - pam.jump-servers.create
+        - pam.jump-servers.update
+        - pam.jump-servers.delete
+        - pam.jump-servers.readonly
+        - pam.user-groups.create
+        - pam.user-groups.update
+        - pam.user-groups.delete
+        - pam.user-groups.readonly
+        - pam.overview
+        - pam.session-history
+        - pam.manage-all-privileged-resources
+        - pam.backup
   /api/v2/devices/settings/azureadusermanagement:
     get:
       summary: Get the Azure AD User Management Setting
@@ -45951,6 +47847,80 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - directories
+  /api/v2/privileged-access/connectors/options:
+    get:
+      summary: List Jump Server Options
+      description: List Jump Servers as ID, name and online status, for choosing the Jump Server of a privileged resource. Requires access to Jump Servers, or create/update access to Privileged Servers, Databases or Websites.
+      operationId: getApiV2PrivilegedAccessConnectorsOptions
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListConnectorOptionsReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.jump-servers.readonly
+        - pam.privileged-servers.create
+        - pam.privileged-servers.update
+        - pam.privileged-databases.create
+        - pam.privileged-databases.update
+        - pam.privileged-websites.create
+        - pam.privileged-websites.update
+  /api/v2/privileged-access/websites/session-recordings/{sessionId}/segments:
+    get:
+      summary: List Website Session Recording Segments
+      description: List the recording segments of a privileged website session.
+      operationId: getApiV2PrivilegedAccessWebsitesSessionRecordingsBySessionidSegments
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListWebsiteRecordingSegmentsReply"
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.readonly
+  /api/v2/privileged-access/blocking-rules/options:
+    get:
+      summary: List Blocking Rule Options
+      description: List blocking rules as ID, name, priority and severity, for choosing the rules to apply to a privileged database. Requires access to Blocking Rules, or create/update access to Privileged Databases.
+      operationId: getApiV2PrivilegedAccessBlockingRulesOptions
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.ListBlockingRuleOptionsReply"
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.blocking-rules.readonly
+        - pam.privileged-databases.create
+        - pam.privileged-databases.update
   /api/v2/applemdms/ade_tokens_stats:
     get:
       summary: List ADE Tokens Stats
@@ -45996,6 +47966,44 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - mdm
+  /api/v2/privileged-access/websites/session-recordings/{sessionId}/segments/{segmentSeq}:
+    get:
+      summary: Download Privileged Access Website Session Recording Segment
+      description: |-
+        Download one segment of a privileged website session recording as a binary stream.
+        List the segments of a session with List Website Session Recording Segments.
+      operationId: getApiV2PrivilegedAccessWebsitesSessionRecordingsBySessionidSegmentsBySegmentseq
+      responses:
+        "200":
+          description: Segment bytes (concatenated parts, streamed).
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: segmentSeq
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-scopes:
+        - pam
+        - pam.readonly
   /api/v2/approvalflowrequest/max-approved-end-time:
     post:
       summary: Get Max Approved End Time
@@ -46022,6 +48030,144 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement.readonly
+  /api/v2/privileged-access/credentials/{id}/edit-shell:
+    get:
+      summary: List Privileged Credential Edit Settings
+      description: Get a credential's name, type, access policies and rotation settings, without its general data or secret values. Use it with Update Privileged Credential Settings.
+      operationId: getApiV2PrivilegedAccessCredentialsByIdEditShell
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.PamCredentialEditShellReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+  /api/v2/privileged-access/credentials/{id}/general:
+    get:
+      summary: List Privileged Credential General Data
+      description: Get a credential's general data and secret values. Each call is recorded as a secret view and must pass the credential's View Secret policy, including any required approval.
+      operationId: getApiV2PrivilegedAccessCredentialsByIdGeneral
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.PamCredentialGeneralReply"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+  /api/v2/privileged-access/credentials/scoped:
+    put:
+      summary: Update Privileged Credential Settings
+      description: Update a credential. With `generalModified` set to `false`, only the access policies, the folder and, when `credentialRotationId` is sent, the rotation change; general data, secret values and linked websites are kept. With `true`, the general data is replaced by the values in `upsert`, and secret fields left empty keep their stored values.
+      operationId: putApiV2PrivilegedAccessCredentialsScoped
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertCredentialReply"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/jumpcloud.privileged_access.PamUpsertCredentialScopedRequest"
+        description: |-
+          Updates a credential and states whether its general data was modified. When generalModified is false,
+          the stored general data and secret values are kept and only the access policies and rotation are applied;
+          upsert.id is then required.
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.create
+        - pam.privileged-credentials.update
+  /api/v2/privileged-access/connections/{connectionId}/detail:
+    get:
+      summary: List Session Details
+      description: Get a session together with the connection details of its resource.
+      operationId: getApiV2PrivilegedAccessConnectionsByConnectionidDetail
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetConnectionDetailReply"
+      parameters:
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.session-history
+  /api/v2/privileged-access/websites/session-recordings/{sessionId}/keylogs:
+    get:
+      summary: List Website Session Recording Keylogs
+      description: Get the keystroke logs of a privileged website session recording.
+      operationId: getApiV2PrivilegedAccessWebsitesSessionRecordingsBySessionidKeylogs
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jumpcloud.privileged_access.GetWebsiteRecordingKeylogsReply"
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.readonly
 components:
   schemas:
     attribute:
@@ -67756,10 +69902,10 @@ components:
           type: boolean
         isPam:
           type: boolean
-          description: True when the tenant has PAM activated.
+          description: True when the organization has Privileged Access activated.
         isPwm:
           type: boolean
-          description: True when the tenant has PWM (password vault) activated.
+          description: True when the organization has Password Vault activated.
         jumpcloudSsoApplicationId:
           type: string
         vaultoneConsoleUrl:
@@ -68825,7 +70971,7 @@ components:
           type: boolean
         cardholderName:
           type: string
-          description: "Payment Card: cardholder name shown as the list subtitle / description column."
+          description: "Payment cards only: the cardholder name."
         credentialType:
           $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
         domain:
@@ -68834,9 +70980,7 @@ components:
           type: string
         firstName:
           type: string
-          description: |-
-            Identity: first name shown as the list subtitle / description column.
-            Secure Note and 2FA have no subtitle field (name only).
+          description: "Identities only: the first name."
         folderId:
           type: string
           format: byte
@@ -68847,7 +70991,7 @@ components:
           format: byte
         idType:
           type: string
-          description: "ID Card: id type shown as the list subtitle / description column."
+          description: "ID cards only: the ID type."
         isFavorite:
           type: boolean
         last4Digits:
@@ -68858,7 +71002,7 @@ components:
           type: array
           items:
             type: string
-          description: Populated only when the request sets include_linked_website_uris. Distinct website URIs linked to the credential.
+          description: Distinct URIs of the websites linked to the credential, when the request asks for them.
         mfaRegistered:
           type: boolean
         name:
@@ -68869,8 +71013,8 @@ components:
           type: integer
           format: int64
           description: |-
-            zxcvbn score 0–4 for Password credentials (stored as Credential.PasswordStrenght).
-            Clients treat values < 3 as weak (same threshold as dashboard WeakCredentials).
+            Password strength from 0 (weakest) to 4 (strongest), for password credentials.
+            Values below 3 are considered weak.
         permissions:
           type: array
           items:
@@ -69356,7 +71500,7 @@ components:
           format: int32
         isResourceManager:
           type: boolean
-          description: Reply enrichment only — not persisted on upsert.
+          description: Returned on reads only; ignored on create and update.
         name:
           type: string
         permissions:
@@ -69882,14 +72026,11 @@ components:
         credentialRotationId:
           type: string
           description: |-
-            Resource id of the linked server that performs automated password rotation
-            for this credential, or empty to disable rotation.
+            ID of the linked server that runs automated password rotation for this
+            credential. Leave empty to turn rotation off; there is no separate flag.
 
-            This is the *resource* id (LinkedServer.resource_id), not the link id --
-            VaultOne compares it against Link.ResourceMetaId. RotationEnabled is derived
-            from whether this is set, so there is no separate enable flag: clearing it
-            is what turns rotation off. Only servers already linked to the credential
-            are valid; list them with ListLinkedServers.
+            Use the resourceId of a server linked to the credential, not its linkId. If
+            that server is unlinked later, rotation turns off.
         credentialType:
           $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
         creditCard:
@@ -70032,7 +72173,7 @@ components:
           type: boolean
         isUser:
           type: boolean
-          description: Reply enrichment only — not persisted on upsert.
+          description: Returned on reads only; ignored on create and update.
         name:
           type: string
         permissions:
@@ -70219,7 +72360,7 @@ components:
           type: boolean
         isPwmActivated:
           type: boolean
-          description: True when the user is enrolled for PWM (AbpUsers.PwmActivated).
+          description: True when the user is enrolled in Password Vault.
         isScim:
           type: boolean
         name:
@@ -70236,7 +72377,7 @@ components:
         credentialId:
           type: string
           format: byte
-      description: Repeated (not map) so dynamic gateway Swagger validation and grpc-node serialization agree.
+      description: Access policy of a credential linked to a resource.
     jumpcloud.privileged_access.ListGroupsPagedReply:
       type: object
       properties:
@@ -70373,7 +72514,7 @@ components:
           type: string
         cardholderName:
           type: string
-          description: CreditCard display fields.
+          description: Payment card fields.
         city:
           type: string
         connectionExpireDate:
@@ -70405,7 +72546,7 @@ components:
           type: string
         idType:
           type: string
-          description: IdCard fields.
+          description: ID card fields.
         identityCountry:
           type: string
         issuanceDate:
@@ -70557,6 +72698,13 @@ components:
           items:
             type: integer
             format: int32
+    jumpcloud.privileged_access.BlockingRuleCriteriaType:
+      type: string
+      enum:
+        - BLOCKING_RULE_CRITERIA_TYPE_DATABASE
+        - BLOCKING_RULE_CRITERIA_TYPE_SERVER
+        - BLOCKING_RULE_CRITERIA_TYPE_WEBSITE
+      default: BLOCKING_RULE_CRITERIA_TYPE_DATABASE
     jumpcloud.privileged_access.BlockingRuleExceptions:
       type:
         - object
@@ -70608,6 +72756,27 @@ components:
           format: int32
         tags:
           type: string
+    jumpcloud.privileged_access.BlockingRuleListItem:
+      type: object
+      properties:
+        criteriaType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleCriteriaType"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        priority:
+          type: integer
+          format: int32
+        severity:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.SiemSeverity"
+        tags:
+          type: string
     jumpcloud.privileged_access.BlockingRuleTimeFrame:
       type:
         - object
@@ -70620,6 +72789,104 @@ components:
           type: string
         to:
           type: string
+    jumpcloud.privileged_access.CloseConnectionAction:
+      type: string
+      enum:
+        - CLOSE_CONNECTION_ACTION_UNSPECIFIED
+        - CLOSE_CONNECTION_ACTION_DISCONNECT_ONLY
+        - CLOSE_CONNECTION_ACTION_LOCK_RESOURCE
+        - CLOSE_CONNECTION_ACTION_DEACTIVATE_USER
+      default: CLOSE_CONNECTION_ACTION_UNSPECIFIED
+    jumpcloud.privileged_access.ConnectedUser:
+      type: object
+      properties:
+        connectionDate:
+          type: string
+        connectionId:
+          type: string
+          format: byte
+        credentialName:
+          type: string
+        endConnectionDate:
+          type: string
+        hasGuacamoleId:
+          type: boolean
+        isDirectAccess:
+          type: boolean
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        userEmail:
+          type: string
+        userName:
+          type: string
+    jumpcloud.privileged_access.ConnectionFile:
+      type: object
+      properties:
+        fileStatus:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectionFileStatus"
+        length:
+          type: integer
+          format: int32
+        name:
+          type: string
+    jumpcloud.privileged_access.ConnectionFileStatus:
+      type: string
+      enum:
+        - CONNECTION_FILE_STATUS_UNDEFINED
+        - CONNECTION_FILE_STATUS_FILE_NOT_FOUND
+        - CONNECTION_FILE_STATUS_PARTS_UPLOADED
+        - CONNECTION_FILE_STATUS_UPLOADING
+        - CONNECTION_FILE_STATUS_UNIFYING
+        - CONNECTION_FILE_STATUS_READY
+      default: CONNECTION_FILE_STATUS_UNDEFINED
+    jumpcloud.privileged_access.ConnectionListItem:
+      type: object
+      properties:
+        connectionDate:
+          type: string
+        connector:
+          type: string
+        connectorName:
+          type: string
+        connectorSupportUpload:
+          type: boolean
+        credentialId:
+          type: string
+          format: byte
+        credentialName:
+          type: string
+        emailAddress:
+          type: string
+        endConnectionDate:
+          type: string
+        hasRecording:
+          type: boolean
+        id:
+          type: string
+          format: byte
+        isFileInStorage:
+          type: boolean
+        recordedWithJcGo:
+          type: boolean
+          description: True when the session was recorded with JumpCloud Go; false when it was recorded through Web Shield or a Jump Server.
+        resourceCategory:
+          type: string
+        resourceId:
+          type: string
+          format: byte
+        resourceName:
+          type: string
+        userId:
+          type: integer
+          format: int32
+        userName:
+          type: string
+        videoRequestedToUpload:
+          type: boolean
+        videoUploadStatus:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.VideoUploadStatus"
     jumpcloud.privileged_access.ConnectorCertificate:
       type: object
       properties:
@@ -70718,6 +72985,40 @@ components:
           format: int32
         version:
           type: string
+    jumpcloud.privileged_access.ConnectorResourcePageItem:
+      type: object
+      properties:
+        category:
+          type: string
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+    jumpcloud.privileged_access.ConnectorVersion:
+      type: object
+      properties:
+        active:
+          type: boolean
+        beta:
+          type: boolean
+        changelog:
+          type: string
+        codename:
+          type: string
+        isDefault:
+          type: boolean
+        url:
+          type: string
+        version:
+          type: string
+    jumpcloud.privileged_access.ContainerStatus:
+      type: object
+      properties:
+        reason:
+          type: string
+        status:
+          type: string
     jumpcloud.privileged_access.CreateServerProtocolInput:
       type: object
       properties:
@@ -70746,6 +73047,14 @@ components:
           type: string
         standard:
           type: boolean
+    jumpcloud.privileged_access.DatabaseBulkIdsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            format: byte
     jumpcloud.privileged_access.DatabaseCriteriaRule:
       type: object
       properties:
@@ -70850,11 +73159,232 @@ components:
           type: string
         uri:
           type: string
+    jumpcloud.privileged_access.DiskUsage:
+      type: object
+      properties:
+        total:
+          type: number
+          format: float
+        unit:
+          type: string
+        used:
+          type: number
+          format: float
+    jumpcloud.privileged_access.DuplicateDatabaseReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.DuplicateServerReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.ExportDatabasesExcelReply:
+      type: object
+      properties:
+        jobId:
+          type: string
+    jumpcloud.privileged_access.ExportDatabasesExcelRequest:
+      type: object
+      properties:
+        archivedFilter:
+          type: boolean
+        connectorFilter:
+          type: string
+        databaseName:
+          type: string
+        excludeIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        filter:
+          type: string
+        isInUse:
+          type: boolean
+        maxLastConnect:
+          type: string
+        minLastConnect:
+          type: string
+        nameFilter:
+          type: string
+        onlyWithAccessPolicies:
+          type: boolean
+        permissions:
+          type: array
+          items:
+            type: string
+        provider:
+          type: string
+        recordEnabled:
+          type: boolean
+        selectedColumns:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        uriFilter:
+          type: string
+    jumpcloud.privileged_access.ExportServersExcelReply:
+      type: object
+      properties:
+        jobId:
+          type: string
+    jumpcloud.privileged_access.ExportServersExcelRequest:
+      type: object
+      properties:
+        archivedFilter:
+          type: boolean
+        clipboardEnabled:
+          type: boolean
+        connectorDescriptionFilter:
+          type: string
+        connectorFilter:
+          type: string
+        excludeIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        fileTransferEnabled:
+          type: boolean
+        filter:
+          type: string
+        ipFilter:
+          type: string
+        isInUse:
+          type: boolean
+        maxLastConnect:
+          type: string
+          format: date-time
+        minLastConnect:
+          type: string
+          format: date-time
+        nameFilter:
+          type: string
+        onlyWithAccessPolicies:
+          type: boolean
+        protocol:
+          type: string
+        recordEnabled:
+          type: boolean
+        selectedColumns:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.GetBlockingRuleForEditReply:
+      type: object
+      properties:
+        blockingRule:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertBlockingRuleInput"
+        resources:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedBlockingRuleResource"
+    jumpcloud.privileged_access.GetConnectionStatusReply:
+      type: object
+      properties:
+        connectedUsers:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectedUser"
+        isBusy:
+          type: boolean
+        latestConnectedUsers:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectedUser"
+        numberConnectedUsers:
+          type: integer
+          format: int32
+        statusDescription:
+          type: string
+    jumpcloud.privileged_access.GetConnectionsOnlineReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectedUser"
+    jumpcloud.privileged_access.GetConnectionsToExcelRequest:
+      type: object
+      properties:
+        connectionDate:
+          type: string
+        connector:
+          type: string
+        endConnectionDate:
+          type: string
+        maxExecutionDuration:
+          type: integer
+          format: int32
+        minExecutionDuration:
+          type: integer
+          format: int32
+        resourceCategory:
+          type: string
+        resourceId:
+          type: string
+          format: byte
+        resourceName:
+          type: string
+        selectedColumns:
+          type: array
+          items:
+            type: string
+        sessionHasRecording:
+          type: string
+        sessionId:
+          type: string
+        userEmail:
+          type: string
+        userIds:
+          type: array
+          items:
+            type: integer
+            format: int32
     jumpcloud.privileged_access.GetConnectorByIdReply:
       type: object
       properties:
         connector:
           $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectorDetail"
+    jumpcloud.privileged_access.GetConnectorForEditReply:
+      type: object
+      properties:
+        connector:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertConnectorInput"
+    jumpcloud.privileged_access.GetConnectorVersionsReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectorVersion"
+    jumpcloud.privileged_access.GetDatabaseForEditReply:
+      type: object
+      properties:
+        connectorDescription:
+          type: string
+        credentials:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedCredentialSummary"
+        database:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertDatabaseInput"
+        rules:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedBlockingRuleSummary"
     jumpcloud.privileged_access.GetDatabaseForViewReply:
       type: object
       properties:
@@ -70862,6 +73392,80 @@ components:
           type: string
         database:
           $ref: "#/components/schemas/jumpcloud.privileged_access.DatabaseForView"
+    jumpcloud.privileged_access.GetDownloadVideoInformationsReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.VideoInformation"
+    jumpcloud.privileged_access.GetDownloadVideoInformationsRequest:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.GetFileInformationInput"
+    jumpcloud.privileged_access.GetFileInformationInput:
+      type: object
+      properties:
+        connectionId:
+          type: string
+          format: byte
+        fileName:
+          type: string
+        resourceId:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.GetFilesReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectionFile"
+    jumpcloud.privileged_access.GetHealthCheckConnectorReply:
+      type: object
+      properties:
+        healthCheck:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.HealthCheck"
+    jumpcloud.privileged_access.GetHealthCheckDatesAvailableReply:
+      type: object
+      properties:
+        dates:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.GetInstallFileReply:
+      type: object
+      properties:
+        fileName:
+          type: string
+        fileToken:
+          type: string
+        fileType:
+          type: string
+    jumpcloud.privileged_access.GetResourcesReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectorResourcePageItem"
+        total:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.GetServerForEditReply:
+      type: object
+      properties:
+        connectorDescription:
+          type: string
+        credentials:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ServerLinkedCredentialSummary"
+        server:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertServerInput"
     jumpcloud.privileged_access.GetServerForViewReply:
       type: object
       properties:
@@ -70869,6 +73473,121 @@ components:
           type: string
         server:
           $ref: "#/components/schemas/jumpcloud.privileged_access.ServerForView"
+    jumpcloud.privileged_access.GetTypingsUrlReply:
+      type: object
+      properties:
+        encodedSas:
+          type: string
+        url:
+          type: string
+    jumpcloud.privileged_access.GetVideoUrlReply:
+      type: object
+      properties:
+        video:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.VideoInformation"
+    jumpcloud.privileged_access.HealthCheck:
+      type: object
+      properties:
+        connectorId:
+          type: string
+          format: byte
+        connectorName:
+          type: string
+        date:
+          type: string
+        records:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.HealthCheckRecord"
+        version:
+          type: string
+    jumpcloud.privileged_access.HealthCheckRecord:
+      type: object
+      properties:
+        bastionStatus:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ContainerStatus"
+        coreStatus:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ContainerStatus"
+        cpuUsage:
+          type: integer
+          format: int32
+        databaseStatus:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ContainerStatus"
+        diskUsage:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.DiskUsage"
+        jitterMs:
+          type: integer
+          format: int32
+        latencyMs:
+          type: integer
+          format: int32
+        memoryUsage:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.MemoryUsage"
+        openConnectionsBastion:
+          type: integer
+          format: int32
+        openConnectionsDatabase:
+          type: integer
+          format: int32
+        openConnectionsWeb:
+          type: integer
+          format: int32
+        syncStatus:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ContainerStatus"
+        timestamp:
+          type: string
+        webStatus:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ContainerStatus"
+    jumpcloud.privileged_access.LinkedBlockingRuleResource:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        type:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.LinkedBlockingRuleSummary:
+      type: object
+      properties:
+        exclusiveToResource:
+          type: boolean
+        formData:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleFormData"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int64
+        severity:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListBlockingRulesReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleListItem"
+        totalCount:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.ListConnectionsReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectionListItem"
+        totalCount:
+          type: integer
+          format: int32
     jumpcloud.privileged_access.ListConnectorsReply:
       type: object
       properties:
@@ -70899,6 +73618,36 @@ components:
         totalCount:
           type: integer
           format: int32
+    jumpcloud.privileged_access.MemoryUsage:
+      type: object
+      properties:
+        total:
+          type: number
+          format: float
+        unit:
+          type: string
+        used:
+          type: number
+          format: float
+    jumpcloud.privileged_access.MigrateResourcesRequest:
+      type: object
+      properties:
+        connectorTargetId:
+          type: string
+          format: byte
+        resourceIds:
+          type: array
+          items:
+            type: string
+            format: byte
+    jumpcloud.privileged_access.ServerBulkIdsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            format: byte
     jumpcloud.privileged_access.ServerForView:
       type: object
       properties:
@@ -70937,6 +73686,20 @@ components:
           type: string
         useSslTls:
           type: boolean
+    jumpcloud.privileged_access.ServerLinkedCredentialSummary:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        username:
+          type: string
     jumpcloud.privileged_access.ServerListItem:
       type: object
       properties:
@@ -70993,6 +73756,59 @@ components:
           type: string
         standard:
           type: boolean
+    jumpcloud.privileged_access.SiemSeverity:
+      type: string
+      enum:
+        - SIEM_SEVERITY_UNSPECIFIED
+        - SIEM_SEVERITY_EMERGENCY
+        - SIEM_SEVERITY_CRITICAL
+        - SIEM_SEVERITY_ALERT
+        - SIEM_SEVERITY_WARNING
+        - SIEM_SEVERITY_NOTICE
+      default: SIEM_SEVERITY_UNSPECIFIED
+    jumpcloud.privileged_access.UpsertBlockingRuleInput:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        criteria:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.DatabaseCriteriaRule"
+        criteriaType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleCriteriaType"
+        exceptions:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleExceptions"
+        exclusiveToResource:
+          type: boolean
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        notes:
+          type: string
+        priority:
+          type: integer
+          format: int32
+        resourceIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        severity:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.SiemSeverity"
+        tags:
+          type: string
+    jumpcloud.privileged_access.UpsertBlockingRuleReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    jumpcloud.privileged_access.UpsertBlockingRuleRequest:
+      type: object
+      properties:
+        blockingRule:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertBlockingRuleInput"
     jumpcloud.privileged_access.UpsertConnectorInput:
       type: object
       properties:
@@ -71156,6 +73972,37 @@ components:
       properties:
         server:
           $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertServerInput"
+    jumpcloud.privileged_access.VideoInformation:
+      type: object
+      properties:
+        credentialName:
+          type: string
+        encodedSas:
+          type: string
+        fileName:
+          type: string
+        folder:
+          type: string
+        ip:
+          type: string
+        resourceId:
+          type: string
+          format: byte
+        resourceName:
+          type: string
+        sessionId:
+          type: string
+        tenantId:
+          type: string
+        url:
+          type: string
+        userName:
+          type: string
+    jumpcloud.privileged_access.WatchSessionReply:
+      type: object
+      properties:
+        sessionUrl:
+          type: string
     jumpcloud.healthmonitoring.AlertFrequencySettings:
       type: object
       properties:
@@ -71186,8 +74033,6 @@ components:
       description: |-
         MonitoringWindow is the rolling window duration for N-in-T alert frequency.
         Required when event_threshold_count > 1. Normalized to seconds server-side; min 300s; max configurable.
-    jumpcloud.privileged_access.FinalizeActivationRequest:
-      type: object
     jumpcloud.partners.CommandResponse:
       type: object
     jumpcloud.partners.GetConfigurationResponse:
@@ -71264,7 +74109,7 @@ components:
           type: boolean
         isPwmActivated:
           type: boolean
-          description: True when the user is enrolled for PWM (AbpUsers.PwmActivated).
+          description: True when the user is enrolled in Password Vault.
         isScim:
           type: boolean
         name:
@@ -71273,9 +74118,7 @@ components:
           type: string
         userName:
           type: string
-      description: |-
-        GetSelfUserReply mirrors GetUserReply. Kept as a distinct message so the two
-        surfaces can diverge without one team's change breaking the other.
+      description: The Privileged Access user making the request.
     jumpcloud.privileged_access.ListPrivilegedAccessTagsReply:
       type: object
       properties:
@@ -71283,10 +74126,7 @@ components:
           type: array
           items:
             type: string
-      description: |-
-        ListPrivilegedAccessTagsReply mirrors ListTagsReply. Kept as a distinct
-        message so the two surfaces can diverge without one team's change breaking
-        the other.
+      description: The Privileged Access tags.
     jumpcloud.privileged_access.CredentialManagerListItem:
       type: object
       properties:
@@ -71372,7 +74212,7 @@ components:
           type: string
         websiteUrl:
           type: string
-      description: Mirrors AssignableResource.
+      description: A privileged resource that can be assigned to a Privileged Access user group.
     jumpcloud.privileged_access.PrivilegedAccessGroup:
       type: object
       properties:
@@ -71404,9 +74244,8 @@ components:
         pamActivated:
           type: boolean
           description: |-
-            Product enrollment flags. A group may be enrolled in either product
-            independently, so both are reported; ListPrivilegedAccessGroups returns only
-            groups with pam_activated set.
+            Whether the group is enrolled in Privileged Access. A group can be enrolled in
+            Privileged Access and Password Vault independently.
         parentId:
           type: integer
           format: int32
@@ -71422,8 +74261,8 @@ components:
           type: integer
           format: int32
       description: |-
-        Mirrors Group, plus the product enrollment flags and per-kind resource counts
-        that VaultOne exposes but the Password Vault surface does not map.
+        A Privileged Access user group, with its product enrollment flags and its
+        resource counts per kind.
     jumpcloud.privileged_access.PrivilegedAccessGroupMember:
       type: object
       properties:
@@ -71442,7 +74281,7 @@ components:
           type: string
         userName:
           type: string
-      description: Mirrors GroupMember.
+      description: A member of a Privileged Access user group.
     jumpcloud.privileged_access.PrivilegedAccessGroupResource:
       type: object
       properties:
@@ -71461,7 +74300,7 @@ components:
             type: string
         websiteUrl:
           type: string
-      description: Mirrors GroupResource.
+      description: A privileged resource assigned to a Privileged Access user group.
     jumpcloud.privileged_access.PrivilegedAccessGroupResourceAccess:
       type: object
       properties:
@@ -71474,7 +74313,7 @@ components:
           type: array
           items:
             type: string
-      description: Mirrors GroupResourceAccess.
+      description: The access a Privileged Access user group has to an assigned resource.
     jumpcloud.privileged_access.GetWebsiteManagersReply:
       type: object
       properties:
@@ -71613,7 +74452,6 @@ components:
         totalCount:
           type: integer
           format: int32
-      description: FindPrivilegedAccessUsersReply mirrors FindUsersReply.
     jumpcloud.privileged_access.PrivilegedAccessUserListItem:
       type: object
       properties:
@@ -71637,8 +74475,101 @@ components:
         userName:
           type: string
       description: |-
-        PrivilegedAccessUserListItem mirrors UserListItem. `id` is the VaultOne
-        integer user id, which is what resource manager membership writes expect.
+        A Privileged Access user. `id` is the numeric user ID that resource manager
+        membership requests expect.
+    jumpcloud.privileged_access.ExportCredentialsExcelRequest:
+      type: object
+      properties:
+        filter:
+          type: array
+          items:
+            type: string
+          description: |-
+            `field:op:value` clauses, the same ones the list endpoint accepts, so the
+            export matches the filtered list.
+        search:
+          type: string
+          description: Free-text search, the same as the list endpoint's `search`.
+        selectedColumns:
+          type: array
+          items:
+            type: string
+          description: Keys of the columns to include, from the export columns endpoint. Leave empty to export the default columns.
+    jumpcloud.privileged_access.GenerateRotationKeyReply:
+      type: object
+      properties:
+        secretKey:
+          type: string
+    jumpcloud.privileged_access.GetCredentialExcelColumnsReply:
+      type: object
+      properties:
+        columns:
+          type: object
+    jumpcloud.privileged_access.GetPasswordRotationInstallScriptReply:
+      type: object
+      properties:
+        content:
+          type: string
+        fileName:
+          type: string
+      description: "The install script: its file name and its content."
+    jumpcloud.privileged_access.ImportCredentialsCustomExcelInit:
+      type: object
+      properties:
+        columnMapping:
+          type: object
+        createSingleWebsitePerUrl:
+          type: boolean
+        credentialTypeOverride:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        defaultAccessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        fileName:
+          type: string
+        fileToken:
+          type: string
+        folderId:
+          type: string
+          format: byte
+        websiteAccessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+    jumpcloud.privileged_access.ImportCredentialsExtractExcelColumnsReply:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            type: string
+        fileToken:
+          type: string
+    jumpcloud.privileged_access.LinkedServer:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Resource category. Always "Computer" for linked servers.
+        linkId:
+          type: string
+          description: |-
+            ID of the link between the credential and the server. Rotation does not
+            use it; use resourceId.
+        resourceId:
+          type: string
+          description: |-
+            ID of the server. Send it as credentialRotationId when updating the
+            credential to enable rotation on this server.
+        resourceName:
+          type: string
+      description: A server linked to a credential that can run its automated password rotation.
+    jumpcloud.privileged_access.ListCredentialLinkedServersReply:
+      type: object
+      properties:
+        continuationToken:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.LinkedServer"
     jumpcloud.partners.ConnectedState:
       type: string
       enum:
@@ -71710,6 +74641,90 @@ components:
         organizationObjectId:
           type: string
           format: byte
+    jumpcloud.privileged_access.GetPamDashboardOverviewReply:
+      type: object
+      properties:
+        blockingRules:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.PamResourceCountStats"
+        databases:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.PamResourceCountStats"
+        jumpServers:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.PamResourceCountStats"
+        jumpServersHealth:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.JumpServerHealthItem"
+        leastConnectedPrivilegedResources:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedResourceConnectionItem"
+        mostConnectedPrivilegedResources:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedResourceConnectionItem"
+        privilegedWebsites:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.PamResourceCountStats"
+        servers:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.PamResourceCountStats"
+        users:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.PamResourceCountStats"
+    jumpcloud.privileged_access.JumpServerHealthItem:
+      type: object
+      properties:
+        associatedResources:
+          type: integer
+          format: int32
+        jumpServerId:
+          type: string
+          format: byte
+        name:
+          type: string
+        status:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.JumpServerHealthStatus"
+    jumpcloud.privileged_access.JumpServerHealthStatus:
+      type: string
+      enum:
+        - JUMP_SERVER_HEALTH_STATUS_UNSPECIFIED
+        - JUMP_SERVER_HEALTH_STATUS_ONLINE
+        - JUMP_SERVER_HEALTH_STATUS_OFFLINE
+        - JUMP_SERVER_HEALTH_STATUS_NOT_INSTALLED
+      default: JUMP_SERVER_HEALTH_STATUS_UNSPECIFIED
+    jumpcloud.privileged_access.PamResourceCountStats:
+      type: object
+      properties:
+        differenceRate:
+          type: number
+          format: double
+        total:
+          type: integer
+          format: int32
+        totalLastMonth:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.PrivilegedResourceConnectionItem:
+      type: object
+      properties:
+        lastSession:
+          type: string
+          format: date-time
+        name:
+          type: string
+        resourceId:
+          type: string
+          format: byte
+        totalConnections:
+          type: integer
+          format: int32
+        type:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.PrivilegedResourceType"
+    jumpcloud.privileged_access.PrivilegedResourceType:
+      type: string
+      enum:
+        - PRIVILEGED_RESOURCE_TYPE_UNSPECIFIED
+        - PRIVILEGED_RESOURCE_TYPE_WEB_SHIELD
+        - PRIVILEGED_RESOURCE_TYPE_SERVER
+        - PRIVILEGED_RESOURCE_TYPE_DATABASE
+      default: PRIVILEGED_RESOURCE_TYPE_UNSPECIFIED
     jumpcloud.notifications.EmailSubscription:
       type: object
       properties:
@@ -71838,6 +74853,16 @@ components:
         ADESettingPatchMask selects which PatchADESettingRequest fields to apply.
         Required on PatchADESettingRequest. Only fields listed in fields are updated
         (include setup_options or default_device_group_object_ids in fields to clear them).
+    jumpcloud.privileged_access.RecordingStatus:
+      type: string
+      enum:
+        - RECORDING_STATUS_UNSPECIFIED
+        - RECORDING_STATUS_OPEN
+        - RECORDING_STATUS_FAILED
+        - RECORDING_STATUS_ENDED
+        - RECORDING_STATUS_ENDED_MAX_DURATION
+        - RECORDING_STATUS_ENDED_ABANDONED
+      default: RECORDING_STATUS_UNSPECIFIED
     devices.GetAzureAdUserManagementSettingsResponse:
       type: object
       properties:
@@ -71895,6 +74920,77 @@ components:
       description: |-
         UpdateExternalIDResponse is intentionally empty, matching the Active
         Directory update contract (adbridge UpdateInternalUserResponse).
+    jumpcloud.privileged_access.ConnectorOptionItem:
+      type: object
+      properties:
+        description:
+          type: string
+        id:
+          type: string
+          format: byte
+        online:
+          type: boolean
+    jumpcloud.privileged_access.ListConnectorOptionsReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectorOptionItem"
+    jumpcloud.privileged_access.ListWebsiteRecordingSegmentsReply:
+      type: object
+      properties:
+        failureReason:
+          type: string
+        playable:
+          type: boolean
+        segments:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.WebsiteRecordingSegmentInfo"
+        status:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.RecordingStatus"
+    jumpcloud.privileged_access.WebsiteRecordingSegmentInfo:
+      type: object
+      properties:
+        complete:
+          type: boolean
+        segmentFirstEventAt:
+          type: string
+        segmentLastEventAt:
+          type: string
+        segmentSeq:
+          type: integer
+          format: int32
+        storedParts:
+          type: integer
+          format: int32
+        totalBytes:
+          type: integer
+          format: int32
+        totalParts:
+          type: integer
+          format: int32
+    jumpcloud.privileged_access.BlockingRuleOptionItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+        severity:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.SiemSeverity"
+    jumpcloud.privileged_access.ListBlockingRuleOptionsReply:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.BlockingRuleOptionItem"
     jumpcloud.ingresso.GetMaxApprovedEndTimeRequest:
       type: object
       properties:
@@ -71922,6 +75018,70 @@ components:
         found:
           type: boolean
       description: GetMaxApprovedEndTimeResponse returns found=false when no matching active approved AR exists.
+    jumpcloud.privileged_access.PamCredentialEditShellReply:
+      type: object
+      properties:
+        accessPolicies:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.AccessPolicies"
+        canViewSecret:
+          type: boolean
+          description: |-
+            Whether the caller has the View Secret permission on this credential. Reading the secret can still
+            require approval.
+        credentialRotationId:
+          type: string
+        credentialType:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialType"
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+    jumpcloud.privileged_access.PamCredentialGeneralReply:
+      type: object
+      properties:
+        credential:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.CredentialMetadata"
+        secret:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.SecretValuePayload"
+    jumpcloud.privileged_access.PamUpsertCredentialScopedRequest:
+      type: object
+      properties:
+        generalModified:
+          type: boolean
+        upsert:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.UpsertCredentialRequest"
+      description: |-
+        Updates a credential and states whether its general data was modified. When generalModified is false,
+        the stored general data and secret values are kept and only the access policies and rotation are applied;
+        upsert.id is then required.
+    jumpcloud.privileged_access.ConnectionResource:
+      type: object
+      properties:
+        category:
+          type: string
+        databaseName:
+          type: string
+          description: Databases only.
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        port:
+          type: integer
+          format: int64
+          description: Databases only.
+        uri:
+          type: string
+      description: Connection details of the resource a session was opened against.
+    jumpcloud.privileged_access.GetConnectionDetailReply:
+      type: object
+      properties:
+        connection:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectionListItem"
+        resource:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.ConnectionResource"
     jumpcloud.google_emm.ESIMActivationState:
       type: string
       enum:
@@ -71938,6 +75098,45 @@ components:
         - USER_CONFIGURED
       default: CONFIG_MODE_UNSPECIFIED
       description: Who configured the SIM. Maps to AMAPI TelephonyInfo.configMode.
+    jumpcloud.privileged_access.VideoUploadStatus:
+      type: string
+      enum:
+        - VIDEO_UPLOAD_STATUS_UNSPECIFIED
+        - VIDEO_UPLOAD_STATUS_NOT_UPLOADED
+        - VIDEO_UPLOAD_STATUS_UPLOADING
+        - VIDEO_UPLOAD_STATUS_UPLOADED
+      default: VIDEO_UPLOAD_STATUS_UNSPECIFIED
+    jumpcloud.privileged_access.GetWebsiteRecordingKeylogsReply:
+      type: object
+      properties:
+        keylogs:
+          type: array
+          items:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.WebsiteRecordingKeylogEntry"
+          description: The keystroke logs of the whole session. Empty when none were recorded.
+    jumpcloud.privileged_access.WebsiteRecordingKeylogEntry:
+      type: object
+      properties:
+        payload:
+          $ref: "#/components/schemas/jumpcloud.privileged_access.WebsiteRecordingKeylogPayload"
+        timestamp:
+          type: string
+          description: Unix epoch milliseconds as a string.
+    jumpcloud.privileged_access.WebsiteRecordingKeylogPayload:
+      type: object
+      properties:
+        altKey:
+          type: boolean
+        code:
+          type: string
+        ctrlKey:
+          type: boolean
+        key:
+          type: string
+        metaKey:
+          type: boolean
+        shiftKey:
+          type: boolean
     jumpcloud.identity_risk.ActorType:
       type: string
       enum:
@@ -73220,6 +76419,12 @@ components:
           schema:
             $ref: "#/components/schemas/ManageAssociations-Group"
       required: true
+    jumpcloud.privileged_access.DatabaseBulkIdsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.DatabaseBulkIdsRequest"
+      required: true
     AuthnPolicy:
       content:
         application/json:
@@ -73330,6 +76535,12 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/jumpcloud.privileged_access.ExportExcelRequest"
+      required: true
+    jumpcloud.privileged_access.ServerBulkIdsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/jumpcloud.privileged_access.ServerBulkIdsRequest"
       required: true
     ADETokens_CreateADETokenBody:
       content:

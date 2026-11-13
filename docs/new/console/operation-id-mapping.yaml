@@ -3781,11 +3781,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: PrivilegedAccessService_GetPasswordVaultStatus
     standardized_operation_id: getApiV2PrivilegedAccessStatus
-  - method: put
-    host_root_path: /api/v2/privileged-access/tenant-settings
-    base_path: /api/v2
-    legacy_operation_id: PrivilegedAccessService_UpdateTenantSettings
-    standardized_operation_id: putApiV2PrivilegedAccessTenantSettings
   - method: get
     host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/devices/{deviceObjectId}/getrecoverylockconfig
     base_path: /api/v2
@@ -4322,6 +4317,71 @@ operations:
     legacy_operation_id: Devices_GetDeviceLockState
     standardized_operation_id: getApiV2ApplemdmsByDevicemanagerobjectidDevicesByDeviceobjectidLockstate
   - method: get
+    host_root_path: /api/v2/privileged-access/blocking-rules
+    base_path: /api/v2
+    legacy_operation_id: BlockingRulesService_List
+    standardized_operation_id: getApiV2PrivilegedAccessBlockingRules
+  - method: put
+    host_root_path: /api/v2/privileged-access/blocking-rules
+    base_path: /api/v2
+    legacy_operation_id: BlockingRulesService_Upsert
+    standardized_operation_id: putApiV2PrivilegedAccessBlockingRules
+  - method: delete
+    host_root_path: /api/v2/privileged-access/blocking-rules/{id}
+    base_path: /api/v2
+    legacy_operation_id: BlockingRulesService_Delete
+    standardized_operation_id: deleteApiV2PrivilegedAccessBlockingRulesById
+  - method: get
+    host_root_path: /api/v2/privileged-access/blocking-rules/{id}/edit
+    base_path: /api/v2
+    legacy_operation_id: BlockingRulesService_GetForEdit
+    standardized_operation_id: getApiV2PrivilegedAccessBlockingRulesByIdEdit
+  - method: get
+    host_root_path: /api/v2/privileged-access/connections
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_List
+    standardized_operation_id: getApiV2PrivilegedAccessConnections
+  - method: post
+    host_root_path: /api/v2/privileged-access/connections/{connectionId}/force-closes
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_ForceCloseConnection
+    standardized_operation_id: postApiV2PrivilegedAccessConnectionsByConnectionidForceCloses
+  - method: get
+    host_root_path: /api/v2/privileged-access/connections/{connectionId}/watch-session
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_WatchSession
+    standardized_operation_id: getApiV2PrivilegedAccessConnectionsByConnectionidWatchSession
+  - method: post
+    host_root_path: /api/v2/privileged-access/connections/excel/exports
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_GetConnectionsToExcel
+    standardized_operation_id: postApiV2PrivilegedAccessConnectionsExcelExports
+  - method: get
+    host_root_path: /api/v2/privileged-access/connections/files
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_GetFiles
+    standardized_operation_id: getApiV2PrivilegedAccessConnectionsFiles
+  - method: post
+    host_root_path: /api/v2/privileged-access/connections/files/download-video-informations
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_GetDownloadVideoInformations
+    standardized_operation_id: postApiV2PrivilegedAccessConnectionsFilesDownloadVideoInformations
+  - method: get
+    host_root_path: /api/v2/privileged-access/connections/files/typings-url
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_GetTypingsURL
+    standardized_operation_id: getApiV2PrivilegedAccessConnectionsFilesTypingsUrl
+  - method: get
+    host_root_path: /api/v2/privileged-access/connections/files/video-url
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_GetVideoURL
+    standardized_operation_id: getApiV2PrivilegedAccessConnectionsFilesVideoUrl
+  - method: get
+    host_root_path: /api/v2/privileged-access/connections/status/by-resource/{resourceId}
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_GetConnectionStatus
+    standardized_operation_id: getApiV2PrivilegedAccessConnectionsStatusByResourceByResourceid
+  - method: get
     host_root_path: /api/v2/privileged-access/connectors
     base_path: /api/v2
     legacy_operation_id: ConnectorsService_List
@@ -4332,6 +4392,31 @@ operations:
     legacy_operation_id: ConnectorsService_Upsert
     standardized_operation_id: putApiV2PrivilegedAccessConnectors
   - method: get
+    host_root_path: /api/v2/privileged-access/connectors/{connectorId}/connections/online
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_GetConnectionsOnline
+    standardized_operation_id: getApiV2PrivilegedAccessConnectorsByConnectoridConnectionsOnline
+  - method: get
+    host_root_path: /api/v2/privileged-access/connectors/{connectorId}/health-checks
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_GetHealthCheckConnector
+    standardized_operation_id: getApiV2PrivilegedAccessConnectorsByConnectoridHealthChecks
+  - method: get
+    host_root_path: /api/v2/privileged-access/connectors/{connectorId}/health-checks/available-dates
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_GetHealthCheckDatesAvailable
+    standardized_operation_id: getApiV2PrivilegedAccessConnectorsByConnectoridHealthChecksAvailableDates
+  - method: get
+    host_root_path: /api/v2/privileged-access/connectors/{connectorId}/install-files
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_GetInstallFile
+    standardized_operation_id: getApiV2PrivilegedAccessConnectorsByConnectoridInstallFiles
+  - method: get
+    host_root_path: /api/v2/privileged-access/connectors/{connectorId}/resources
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_GetResources
+    standardized_operation_id: getApiV2PrivilegedAccessConnectorsByConnectoridResources
+  - method: get
     host_root_path: /api/v2/privileged-access/connectors/{id}
     base_path: /api/v2
     legacy_operation_id: ConnectorsService_GetByID
@@ -4341,6 +4426,21 @@ operations:
     base_path: /api/v2
     legacy_operation_id: ConnectorsService_Delete
     standardized_operation_id: deleteApiV2PrivilegedAccessConnectorsById
+  - method: get
+    host_root_path: /api/v2/privileged-access/connectors/{id}/edit
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_GetForEdit
+    standardized_operation_id: getApiV2PrivilegedAccessConnectorsByIdEdit
+  - method: post
+    host_root_path: /api/v2/privileged-access/connectors/resource-migrations
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_MigrateResources
+    standardized_operation_id: postApiV2PrivilegedAccessConnectorsResourceMigrations
+  - method: get
+    host_root_path: /api/v2/privileged-access/connectors/versions
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_GetConnectorVersions
+    standardized_operation_id: getApiV2PrivilegedAccessConnectorsVersions
   - method: get
     host_root_path: /api/v2/privileged-access/databases
     base_path: /api/v2
@@ -4361,6 +4461,46 @@ operations:
     base_path: /api/v2
     legacy_operation_id: DatabasesService_Delete
     standardized_operation_id: deleteApiV2PrivilegedAccessDatabasesById
+  - method: post
+    host_root_path: /api/v2/privileged-access/databases/{id}/archive
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_Archive
+    standardized_operation_id: postApiV2PrivilegedAccessDatabasesByIdArchive
+  - method: post
+    host_root_path: /api/v2/privileged-access/databases/{id}/clones
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_Duplicate
+    standardized_operation_id: postApiV2PrivilegedAccessDatabasesByIdClones
+  - method: get
+    host_root_path: /api/v2/privileged-access/databases/{id}/edit
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_GetForEdit
+    standardized_operation_id: getApiV2PrivilegedAccessDatabasesByIdEdit
+  - method: post
+    host_root_path: /api/v2/privileged-access/databases/{id}/unarchive
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_Unarchive
+    standardized_operation_id: postApiV2PrivilegedAccessDatabasesByIdUnarchive
+  - method: post
+    host_root_path: /api/v2/privileged-access/databases/bulk-archive
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_BulkArchive
+    standardized_operation_id: postApiV2PrivilegedAccessDatabasesBulkArchive
+  - method: post
+    host_root_path: /api/v2/privileged-access/databases/bulk-unarchive
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_BulkUnarchive
+    standardized_operation_id: postApiV2PrivilegedAccessDatabasesBulkUnarchive
+  - method: get
+    host_root_path: /api/v2/privileged-access/databases/excel/columns
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_GetExcelColumns
+    standardized_operation_id: getApiV2PrivilegedAccessDatabasesExcelColumns
+  - method: post
+    host_root_path: /api/v2/privileged-access/databases/excel/exports
+    base_path: /api/v2
+    legacy_operation_id: DatabasesService_ExportExcel
+    standardized_operation_id: postApiV2PrivilegedAccessDatabasesExcelExports
   - method: get
     host_root_path: /api/v2/privileged-access/servers
     base_path: /api/v2
@@ -4382,10 +4522,45 @@ operations:
     legacy_operation_id: ServersService_Delete
     standardized_operation_id: deleteApiV2PrivilegedAccessServersById
   - method: post
-    host_root_path: /api/v2/privileged-access/pam/activation/finalize
+    host_root_path: /api/v2/privileged-access/servers/{id}/archive
     base_path: /api/v2
-    legacy_operation_id: PrivilegedAccessService_FinalizeActivation
-    standardized_operation_id: postApiV2PrivilegedAccessPamActivationFinalize
+    legacy_operation_id: ServersService_Archive
+    standardized_operation_id: postApiV2PrivilegedAccessServersByIdArchive
+  - method: post
+    host_root_path: /api/v2/privileged-access/servers/{id}/clones
+    base_path: /api/v2
+    legacy_operation_id: ServersService_Duplicate
+    standardized_operation_id: postApiV2PrivilegedAccessServersByIdClones
+  - method: get
+    host_root_path: /api/v2/privileged-access/servers/{id}/edit
+    base_path: /api/v2
+    legacy_operation_id: ServersService_GetForEdit
+    standardized_operation_id: getApiV2PrivilegedAccessServersByIdEdit
+  - method: post
+    host_root_path: /api/v2/privileged-access/servers/{id}/unarchive
+    base_path: /api/v2
+    legacy_operation_id: ServersService_Unarchive
+    standardized_operation_id: postApiV2PrivilegedAccessServersByIdUnarchive
+  - method: post
+    host_root_path: /api/v2/privileged-access/servers/bulk-archive
+    base_path: /api/v2
+    legacy_operation_id: ServersService_BulkArchive
+    standardized_operation_id: postApiV2PrivilegedAccessServersBulkArchive
+  - method: post
+    host_root_path: /api/v2/privileged-access/servers/bulk-unarchive
+    base_path: /api/v2
+    legacy_operation_id: ServersService_BulkUnarchive
+    standardized_operation_id: postApiV2PrivilegedAccessServersBulkUnarchive
+  - method: get
+    host_root_path: /api/v2/privileged-access/servers/excel/columns
+    base_path: /api/v2
+    legacy_operation_id: ServersService_GetExcelColumns
+    standardized_operation_id: getApiV2PrivilegedAccessServersExcelColumns
+  - method: post
+    host_root_path: /api/v2/privileged-access/servers/excel/exports
+    base_path: /api/v2
+    legacy_operation_id: ServersService_ExportExcel
+    standardized_operation_id: postApiV2PrivilegedAccessServersExcelExports
   - method: get
     host_root_path: /api/v2/gcep/configuration
     base_path: /api/v2
@@ -4501,6 +4676,46 @@ operations:
     base_path: /api/v2
     legacy_operation_id: PamCredentialsService_Delete
     standardized_operation_id: deleteApiV2PrivilegedAccessCredentialsById
+  - method: post
+    host_root_path: /api/v2/privileged-access/credentials/{id}/clones
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_Duplicate
+    standardized_operation_id: postApiV2PrivilegedAccessCredentialsByIdClones
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}/history
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_GetHistory
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsByIdHistory
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}/managers
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_GetCredentialManagers
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsByIdManagers
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}/mfa-code
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_GetMfaCode
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsByIdMfaCode
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}/secret/v2
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_GetSecretV2
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsByIdSecretV2
+  - method: post
+    host_root_path: /api/v2/privileged-access/credentials/archive
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_Archive
+    standardized_operation_id: postApiV2PrivilegedAccessCredentialsArchive
+  - method: delete
+    host_root_path: /api/v2/privileged-access/credentials/bulk-delete
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_DeleteSelected
+    standardized_operation_id: deleteApiV2PrivilegedAccessCredentialsBulkDelete
+  - method: post
+    host_root_path: /api/v2/privileged-access/credentials/unarchive
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_Unarchive
+    standardized_operation_id: postApiV2PrivilegedAccessCredentialsUnarchive
   - method: get
     host_root_path: /api/v2/privileged-access/websites
     base_path: /api/v2
@@ -4521,6 +4736,36 @@ operations:
     base_path: /api/v2
     legacy_operation_id: PamWebsitesService_Delete
     standardized_operation_id: deleteApiV2PrivilegedAccessWebsitesById
+  - method: post
+    host_root_path: /api/v2/privileged-access/websites/{id}/archive
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_Archive
+    standardized_operation_id: postApiV2PrivilegedAccessWebsitesByIdArchive
+  - method: post
+    host_root_path: /api/v2/privileged-access/websites/{id}/clones
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_Duplicate
+    standardized_operation_id: postApiV2PrivilegedAccessWebsitesByIdClones
+  - method: get
+    host_root_path: /api/v2/privileged-access/websites/{id}/edit
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_GetForEdit
+    standardized_operation_id: getApiV2PrivilegedAccessWebsitesByIdEdit
+  - method: post
+    host_root_path: /api/v2/privileged-access/websites/{id}/unarchive
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_Unarchive
+    standardized_operation_id: postApiV2PrivilegedAccessWebsitesByIdUnarchive
+  - method: get
+    host_root_path: /api/v2/privileged-access/websites/excel/columns
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_GetExcelColumns
+    standardized_operation_id: getApiV2PrivilegedAccessWebsitesExcelColumns
+  - method: post
+    host_root_path: /api/v2/privileged-access/websites/excel/exports
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_ExportExcel
+    standardized_operation_id: postApiV2PrivilegedAccessWebsitesExcelExports
   - method: get
     host_root_path: /api/v2/privileged-access/resource-managers
     base_path: /api/v2
@@ -4566,6 +4811,46 @@ operations:
     base_path: /api/v2
     legacy_operation_id: UsersService_FindPrivilegedAccessUsers
     standardized_operation_id: getApiV2PrivilegedAccessUsers
+  - method: post
+    host_root_path: /api/v2/privileged-access/credentials/{id}/rotation-keys
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_GenerateRotationKey
+    standardized_operation_id: postApiV2PrivilegedAccessCredentialsByIdRotationKeys
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}/rotation-script
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_GetPasswordRotationInstallScript
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsByIdRotationScript
+  - method: put
+    host_root_path: /api/v2/privileged-access/credentials/{id}/value
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_UpdateCredentialValue
+    standardized_operation_id: putApiV2PrivilegedAccessCredentialsByIdValue
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/excel/columns
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_GetExcelColumns
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsExcelColumns
+  - method: post
+    host_root_path: /api/v2/privileged-access/credentials/excel/exports
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_ExportExcel
+    standardized_operation_id: postApiV2PrivilegedAccessCredentialsExcelExports
+  - method: post
+    host_root_path: /api/v2/privileged-access/credentials/excel/extract-columns
+    base_path: /api/v2
+    legacy_operation_id: credentialImports_pamExtractExcelColumns
+    standardized_operation_id: postApiV2PrivilegedAccessCredentialsExcelExtractColumns
+  - method: post
+    host_root_path: /api/v2/privileged-access/credentials/excel/import-custom
+    base_path: /api/v2
+    legacy_operation_id: credentialImports_pamImportCustomExcel
+    standardized_operation_id: postApiV2PrivilegedAccessCredentialsExcelImportCustom
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}/linked-servers
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_ListLinkedServers
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsByIdLinkedServers
   - method: get
     host_root_path: /api/v2/gcep/systems/{systemObjectId}/device-state
     base_path: /api/v2
@@ -4611,6 +4896,11 @@ operations:
     base_path: /api/v2
     legacy_operation_id: ADETokens_UpdateADEToken
     standardized_operation_id: patchApiV2ApplemdmsAdeTokensByObjectid
+  - method: get
+    host_root_path: /api/v2/privileged-access/dashboard-overview
+    base_path: /api/v2
+    legacy_operation_id: PamOverviewService_GetPamDashboardOverview
+    standardized_operation_id: getApiV2PrivilegedAccessDashboardOverview
   - method: delete
     host_root_path: /api/v2/notifications/channels/slack/{slackTeamId}
     base_path: /api/v2
@@ -4657,6 +4947,11 @@ operations:
     legacy_operation_id: ADETokens_RefreshABMDevices
     standardized_operation_id: postApiV2ApplemdmsAdeTokensByObjectidRefreshAbmDevices
   - method: get
+    host_root_path: /api/v2/privileged-access/files/temp-download
+    base_path: /api/v2
+    legacy_operation_id: file_temp_download
+    standardized_operation_id: getApiV2PrivilegedAccessFilesTempDownload
+  - method: get
     host_root_path: /api/v2/devices/settings/azureadusermanagement
     base_path: /api/v2
     legacy_operation_id: SystemsOrgSettings_GetAzureAdUserManagementSettings
@@ -4677,12 +4972,57 @@ operations:
     legacy_operation_id: office365s_users_update_external_id_correlations
     standardized_operation_id: putApiV2Office365sByOffice365IdUsersExternalId
   - method: get
+    host_root_path: /api/v2/privileged-access/connectors/options
+    base_path: /api/v2
+    legacy_operation_id: ConnectorsService_ListOptions
+    standardized_operation_id: getApiV2PrivilegedAccessConnectorsOptions
+  - method: get
+    host_root_path: /api/v2/privileged-access/websites/session-recordings/{sessionId}/segments
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_ListWebsiteRecordingSegments
+    standardized_operation_id: getApiV2PrivilegedAccessWebsitesSessionRecordingsBySessionidSegments
+  - method: get
+    host_root_path: /api/v2/privileged-access/blocking-rules/options
+    base_path: /api/v2
+    legacy_operation_id: BlockingRulesService_ListOptions
+    standardized_operation_id: getApiV2PrivilegedAccessBlockingRulesOptions
+  - method: get
     host_root_path: /api/v2/applemdms/ade_tokens_stats
     base_path: /api/v2
     legacy_operation_id: ADETokens_GetADETokensStats
     standardized_operation_id: getApiV2ApplemdmsAdeTokensStats
+  - method: get
+    host_root_path: /api/v2/privileged-access/websites/session-recordings/{sessionId}/segments/{segmentSeq}
+    base_path: /api/v2
+    legacy_operation_id: pamWebsiteSessionRecordings_getSegment
+    standardized_operation_id: getApiV2PrivilegedAccessWebsitesSessionRecordingsBySessionidSegmentsBySegmentseq
   - method: post
     host_root_path: /api/v2/approvalflowrequest/max-approved-end-time
     base_path: /api/v2
     legacy_operation_id: WorkflowAccessRequestApi_GetMaxApprovedEndTime
     standardized_operation_id: postApiV2ApprovalflowrequestMaxApprovedEndTime
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}/edit-shell
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_GetEditShell
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsByIdEditShell
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}/general
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_GetGeneral
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsByIdGeneral
+  - method: put
+    host_root_path: /api/v2/privileged-access/credentials/scoped
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_UpsertScoped
+    standardized_operation_id: putApiV2PrivilegedAccessCredentialsScoped
+  - method: get
+    host_root_path: /api/v2/privileged-access/connections/{connectionId}/detail
+    base_path: /api/v2
+    legacy_operation_id: ConnectionsService_GetDetail
+    standardized_operation_id: getApiV2PrivilegedAccessConnectionsByConnectionidDetail
+  - method: get
+    host_root_path: /api/v2/privileged-access/websites/session-recordings/{sessionId}/keylogs
+    base_path: /api/v2
+    legacy_operation_id: PamWebsitesService_GetWebsiteRecordingKeylogs
+    standardized_operation_id: getApiV2PrivilegedAccessWebsitesSessionRecordingsBySessionidKeylogs
