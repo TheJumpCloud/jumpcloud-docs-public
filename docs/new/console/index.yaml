@@ -7959,7 +7959,6 @@ paths:
         - saas.readonly
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: limit
           in: query
@@ -8049,7 +8048,6 @@ paths:
         - saas.readonly
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: catalog_application_id
           in: path
@@ -8112,7 +8110,6 @@ paths:
         - saas.readonly
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: limit
           in: query
@@ -8196,7 +8193,6 @@ paths:
         - saas
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       requestBody:
         content:
           application/json:
@@ -8259,7 +8255,6 @@ paths:
         - saas.readonly
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: application_id
           in: path
@@ -8332,7 +8327,6 @@ paths:
         - saas
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: application_id
           in: path
@@ -8400,7 +8394,6 @@ paths:
         - saas
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: application_id
           in: path
@@ -8459,7 +8452,6 @@ paths:
         - saas.readonly
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: application_id
           in: path
@@ -8528,7 +8520,6 @@ paths:
         - saas.readonly
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: limit
           in: query
@@ -8602,7 +8593,6 @@ paths:
         - saas.readonly
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: application_id
           in: path
@@ -8665,7 +8655,6 @@ paths:
         - saas.readonly
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: application_id
           in: path
@@ -8739,7 +8728,6 @@ paths:
         - saas.readonly
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: application_id
           in: path
@@ -8806,7 +8794,6 @@ paths:
         - saas
       security:
         - x-api-key: []
-      x-dynamic-gateway: true
       parameters:
         - name: application_id
           in: path
