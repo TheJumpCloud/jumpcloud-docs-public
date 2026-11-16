@@ -73822,24 +73822,6 @@ components:
         - generating
         - exports_ready
         - failed
-    jumpcloud.http.accesscertification.GroupResourceCounts:
-      type: object
-      description: Resource counts for one scoped user group (ids in `counts` are Directory graph types).
-      required:
-        - userGroupId
-        - counts
-      properties:
-        userGroupId:
-          type: string
-          description: User group object id these counts belong to
-        counts:
-          type: object
-          description: |-
-            Map of directory type key to count (e.g. user, application, ldap_server).
-            Keys omitted when the graph edge is unsupported or the count call failed.
-          additionalProperties:
-            type: integer
-            format: int64
     jumpcloud.http.accesscertification.UserGroup:
       type: object
       description: In-scope user group with optional display name
@@ -73854,9 +73836,7 @@ components:
           description: Display name when known; omit when unresolved
     jumpcloud.http.accesscertification.CampaignRunScope:
       type: object
-      description: |-
-        Review scope for a campaign run, including the target application or user groups and
-        optional resource counts from Directory.
+      description: Review scope for a campaign run, including the target application or user groups.
       required:
         - type
       properties:
@@ -73873,11 +73853,6 @@ components:
           description: In-scope user groups (ID and optional name). Group-scoped campaigns currently support one user group.
           items:
             $ref: '#/components/schemas/jumpcloud.http.accesscertification.UserGroup'
-        resourceCounts:
-          type: array
-          description: Per user-group resource counts from the Directory (each user group is counted independently).
-          items:
-            $ref: '#/components/schemas/jumpcloud.http.accesscertification.GroupResourceCounts'
     jumpcloud.http.accesscertification.CampaignRunListResponse:
       type: object
       description: Paginated list response for campaign runs (`totalCount` + `results`)
@@ -74050,7 +74025,7 @@ components:
           description: Review items materialized so far for this run
         scope:
           $ref: '#/components/schemas/jumpcloud.http.accesscertification.CampaignRunScope'
-          description: Run scope including Directory resourceCounts for group-scoped campaigns
+          description: Run scope for group- or application-scoped campaigns
     jumpcloud.http.accesscertification.CampaignMaterializationStatus:
       type: string
       description: Cohort materialization progress while review items are created at activate
