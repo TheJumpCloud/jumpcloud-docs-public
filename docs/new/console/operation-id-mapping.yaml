@@ -1551,6 +1551,16 @@ operations:
     base_path: /api/v2
     legacy_operation_id: providers_gSuitesManageAssociations
     standardized_operation_id: postApiV2ProvidersByProviderIdGSuitesByGsuiteIdAssociations
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/office365s/{office365_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providers_office365sListAssociations
+    standardized_operation_id: getApiV2ProvidersByProviderIdOffice365sByOffice365IdAssociations
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/office365s/{office365_id}/associations
+    base_path: /api/v2
+    legacy_operation_id: providers_office365sManageAssociations
+    standardized_operation_id: postApiV2ProvidersByProviderIdOffice365sByOffice365IdAssociations
   - method: post
     host_root_path: /api/v2/providers/{provider_id}/usergroups/{group_id}/associations
     base_path: /api/v2
@@ -1896,6 +1906,11 @@ operations:
     base_path: /api/v2
     legacy_operation_id: providerOrganizations_createOrg
     standardized_operation_id: postApiV2ProvidersByProviderIdOrganizations
+  - method: get
+    host_root_path: /api/v2/providers/{provider_id}/organizations/{id}
+    base_path: /api/v2
+    legacy_operation_id: providerOrganizations_getOrg
+    standardized_operation_id: getApiV2ProvidersByProviderIdOrganizationsById
   - method: put
     host_root_path: /api/v2/providers/{provider_id}/organizations/{id}
     base_path: /api/v2

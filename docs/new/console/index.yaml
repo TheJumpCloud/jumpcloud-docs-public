@@ -17118,6 +17118,123 @@ paths:
     x-functionalities-tags:
       - gsuites
       - mtp-account-overview
+  /api/v2/providers/{provider_id}/office365s/{office365_id}/associations:
+    parameters:
+      - name: provider_id
+        in: path
+        required: true
+        description: The ID of the provider
+        schema:
+          type: string
+      - name: office365_id
+        in: path
+        required: true
+        description: The ID of the Office 365 directory integration
+        schema:
+          type: string
+    get:
+      description: |-
+        List associations for an Office 365 directory integration.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/providers/{provider_id}/office365s/{office365_id}/associations \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-org-id: -' \
+          -H 'x-api-key: {API_KEY}'
+        ```
+      operationId: getApiV2ProvidersByProviderIdOffice365sByOffice365IdAssociations
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/GraphConnection"
+                type: array
+      security:
+        - x-api-key: []
+      summary: List Associations for an Office 365 integration
+      tags:
+        - Providers
+        - Office 365
+      x-scopes:
+        - providers.readonly
+        - directories.readonly
+    post:
+      description: |-
+        Creates or deletes an association between an Office 365 integration and a secondary organization.
+
+        The caller must belong to the owner organization (the provider's primary organization).
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/providers/{provider_id}/office365s/{office365_id}/associations \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'x-org-id: -' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "op": "add",
+            "type": "organization",
+            "id": "org-secondary-12345"
+          }'
+        ```
+      operationId: postApiV2ProvidersByProviderIdOffice365sByOffice365IdAssociations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ManageAssociations-Office365Account"
+        required: true
+      responses:
+        "204":
+          description: Association successfully created or deleted
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.ErrorDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "403":
+          description: Forbidden - caller does not belong to the owner organization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "404":
+          description: Not Found - provider, Office 365 integration or organization not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api_v2.Error"
+      security:
+        - x-api-key: []
+      summary: Manage Office 365 integration associations for Provider
+      tags:
+        - Providers
+        - Graph
+        - Office 365
+      x-scopes:
+        - providers
+        - directories
+    x-functionalities-tags:
+      - office365
+      - mtp-account-overview
   /api/v2/providers/{provider_id}/usergroups/{group_id}/associations:
     parameters:
       - name: provider_id
@@ -20225,6 +20342,8 @@ paths:
                     type: array
                   totalCount:
                     type: integer
+                  trialLimits:
+                    $ref: "#/components/schemas/ProviderOrganizationTrialLimits"
                 type: object
         "400":
           $ref: "#/components/responses/api_v2.trait_standardErrors_400"
@@ -20308,6 +20427,37 @@ paths:
         schema:
           type: string
   /api/v2/providers/{provider_id}/organizations/{id}:
+    get:
+      description: |-
+        Returns a provider child organization by id. Includes the read-only trial block for MSP trial
+        children. Trial fields are ignored on PUT (GET to PUT round trip is 200).
+      operationId: getApiV2ProvidersByProviderIdOrganizationsById
+      security:
+        - x-api-key: []
+      summary: Get Provider Organization
+      tags:
+        - Providers
+        - Managed Service Provider
+      x-scopes:
+        - providers
+        - providers.readonly
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+        "400":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_400"
+        "401":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_401"
+        "404":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_404"
+        "500":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_500"
+      x-functionalities-tags:
+        - mtp-read-org
     put:
       description: This endpoint updates a provider's organization
       operationId: putApiV2ProvidersByProviderIdOrganizationsById
@@ -57571,6 +57721,21 @@ components:
             - type
       title: ManageAssociations (GSuites)
       type: object
+    ManageAssociations-Office365Account:
+      allOf:
+        - $ref: "#/components/schemas/GraphOperation"
+        - properties:
+            attributes:
+              $ref: "#/components/schemas/GraphAttributes"
+            type:
+              description: Targets which a "organization" can be associated to.
+              enum:
+                - organization
+              type: string
+          required:
+            - type
+      title: ManageAssociations (Office365)
+      type: object
     ManageAssociations-Group:
       allOf:
         - $ref: "#/components/schemas/GraphOperation"
@@ -58363,6 +58528,62 @@ components:
           description: |-
             Present on create when trial was true: calendar end date (YYYY-MM-DD) computed at create time.
             Also included on organization_create for downstream billing.
+        trial:
+          $ref: "#/components/schemas/ProviderOrganizationTrialInfo"
+    ProviderOrganizationTrialPendingRequest:
+      title: ProviderOrganizationTrialPendingRequest
+      description: In-flight cancel or convert request metadata (M1 exposes requestedAt only).
+      properties:
+        requestedAt:
+          type: string
+          format: date-time
+      type:
+        - object
+        - "null"
+    ProviderOrganizationTrialInfo:
+      title: ProviderOrganizationTrialInfo
+      type: object
+      description: |-
+        Read-only trial metadata for MSP trial child organizations on provider GET/list responses.
+        Field names and status values must not be renamed or removed; new fields may only be added.
+        pendingCancel and pendingConvert are derived from org.mspTrialRequest. Present on provider
+        organization GET responses for MSP trial children, and on list responses when requested via
+        the trial fields parameter.
+      properties:
+        trialStartDate:
+          type: string
+          description: Calendar date (YYYY-MM-DD)
+        trialEndDate:
+          type: string
+          description: Calendar date (YYYY-MM-DD)
+        pendingConvert:
+          $ref: "#/components/schemas/ProviderOrganizationTrialPendingRequest"
+        pendingCancel:
+          $ref: "#/components/schemas/ProviderOrganizationTrialPendingRequest"
+        status:
+          type: string
+          enum:
+            - trial
+            - converted
+            - cancel_pending
+            - convert_pending
+    ProviderOrganizationTrialLimits:
+      title: ProviderOrganizationTrialLimits
+      type: object
+      description: |-
+        Present when MSP self-serve trial child orgs are enabled for the provider and limits were
+        loaded successfully. Omitted when the feature flag is off or limits could not be loaded
+        (organization list results are still returned).
+      properties:
+        allowedDurations:
+          type: array
+          items:
+            type: integer
+        maxConcurrentTrials:
+          type: integer
+        activeTrials:
+          type: integer
+          description: Active MSP trial children toward the concurrent cap; excludes cancel-pending orgs.
     CreateOrganization:
       examples:
         - name: Acme Inc
