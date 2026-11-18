@@ -97772,6 +97772,8 @@ tags:
     description: |-
       Create and manage access certification campaigns, review user access, remediate revoked access,
       and download compliance audit reports.
+  - name: Access Posture Connectors
+    description: Connect third-party sources, such as GitHub, to Access Posture.
   - name: Access Posture Findings
     description: List, retrieve, summary, and update Access Posture findings.
   - name: Access Posture Settings
