@@ -37515,6 +37515,7 @@ paths:
         - serviceaccounts.readonly
     delete:
       summary: Delete a service account
+      description: Deletes the requested service account along with all of its authentication configurations.
       operationId: deleteApiV2ServiceAccountsByServiceAccountId
       responses:
         "200":

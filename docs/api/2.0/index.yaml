@@ -54395,6 +54395,7 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/service-accounts/{service_account_id}' -Method GET -Headers $headers
     delete:
       summary: Delete a service account
+      description: Deletes the requested service account along with all of its authentication configurations.
       operationId: ServiceAccounts_DeleteServiceAccount
       responses:
         '200':
