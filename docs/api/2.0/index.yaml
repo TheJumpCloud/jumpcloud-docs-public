@@ -51300,7 +51300,7 @@ paths:
   /notifications/channels:
     get:
       summary: This endpoint is used for listing the notification channels.
-      description: This endpoint allows you to list notification channels.
+      description: 'This endpoint allows you to list notification channels. With x-org-id: -, optional filter organizationObjectId:eq or organizationObjectId:in narrows the authorized organization set and cannot widen it. An omitted filter returns every organization the caller can access.'
       operationId: NotificationsChannelsService_ListChannels
       responses:
         '200':
@@ -51323,6 +51323,8 @@ paths:
               **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
 
               **Example** `GET /api/v2/groups?filter=name:eq:Test+Group`
+
+              With `x-org-id: -`, `organizationObjectId:eq:<24-hex>` or `organizationObjectId:in:<24-hex>|<24-hex>` narrows the authorized organization set and cannot widen it. An omitted organizationObjectId filter returns every organization the caller can access. Ids the caller cannot access are ignored and an empty overlap returns no channels. Other filters are still applied.
           in: query
           required: false
           explode: true
@@ -52803,7 +52805,7 @@ paths:
   /notifications/webhook/channels:
     get:
       summary: This endpoint is used for listing the webhook notification channels.
-      description: This endpoint allows you to list webhook notification channels.
+      description: 'This endpoint allows you to list webhook notification channels. With x-org-id: -, optional filter organizationObjectId:eq or organizationObjectId:in narrows the authorized organization set and cannot widen it. An omitted filter returns every organization the caller can access.'
       operationId: NotificationsChannelsService_ListWebhookChannels
       responses:
         '200':
@@ -52826,6 +52828,8 @@ paths:
               **value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
 
               **Example** `GET /api/v2/groups?filter=name:eq:Test+Group`
+
+              With `x-org-id: -`, `organizationObjectId:eq:<24-hex>` or `organizationObjectId:in:<24-hex>|<24-hex>` narrows the authorized organization set and cannot widen it. An omitted organizationObjectId filter returns every organization the caller can access. Ids the caller cannot access are ignored and an empty overlap returns no channels. Other filters are still applied.
           in: query
           required: false
           explode: true
