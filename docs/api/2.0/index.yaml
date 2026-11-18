@@ -62478,7 +62478,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/password-vault/websites \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+              --data '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"jcGoSessionSettings":{"excludedUrls":["string"],"recordingDomains":["string"]},"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
         - lang: Python
           source: |-
             import requests
@@ -62512,6 +62512,10 @@ paths:
                     "folderId": "string",
                     "id": "string",
                     "jcGoSessionRecordingEnabled": True,
+                    "jcGoSessionSettings": {
+                        "excludedUrls": ["string"],
+                        "recordingDomains": ["string"]
+                    },
                     "linkedCredentialsAccessPolicies": [
                         {
                             "accessPolicies": {
@@ -62592,7 +62596,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"jcGoSessionSettings":{"excludedUrls":["string"],"recordingDomains":["string"]},"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
   /password-vault/websites/{id}:
     get:
       summary: Get Website
@@ -69336,7 +69340,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/privileged-access/websites \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+              --data '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"jcGoSessionSettings":{"excludedUrls":["string"],"recordingDomains":["string"]},"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
         - lang: Python
           source: |-
             import requests
@@ -69370,6 +69374,10 @@ paths:
                     "folderId": "string",
                     "id": "string",
                     "jcGoSessionRecordingEnabled": True,
+                    "jcGoSessionSettings": {
+                        "excludedUrls": ["string"],
+                        "recordingDomains": ["string"]
+                    },
                     "linkedCredentialsAccessPolicies": [
                         {
                             "accessPolicies": {
@@ -69450,7 +69458,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/websites' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"website":{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"connector":"string","credentialIds":["string"],"folderId":"string","id":"string","jcGoSessionRecordingEnabled":true,"jcGoSessionSettings":{"excludedUrls":["string"],"recordingDomains":["string"]},"linkedCredentialsAccessPolicies":[{"accessPolicies":{"groups":[{"id":0,"isResourceManager":true,"name":"string","permissions":["string"]}],"isPrivate":true,"users":[{"email":"string","id":0,"isAdmin":true,"isUser":true,"name":"string","permissions":["string"]}]},"credentialId":"string"}],"name":"string","notes":"string","parametersExtension":{"enablePasswordCapture":true,"fillMoreOne":true,"makeAutoSubmit":true,"selectorNextButton":"string","selectorPassword":"string","selectorSubmitButton":"string","selectorUsername":"string","selectorsToHide":"string","timeWaitAfterNextClick":0,"waitBeforeFill":0},"rbiSettings":{"allowInsecureWebsites":true,"blacklistUri":["string"],"blockAllUri":true,"chromiumPolicy":"string","disableBrowserHeader":true,"disableClipboard":true,"disableFileTransfer":true,"enableDevTools":true,"recordVideo":true,"vncSettings":{"colorDepth":0,"compressionLevel":0,"disableScreenResize":true,"disableServerInput":true,"forceLossless":true,"qualityLevel":0,"swapRedBlue":true,"viewOnly":true},"whitelistUri":["string"]},"reverseProxy":true,"tags":"string","uri":"string","useRemoteBrowserIsolation":true}}'
   /privileged-access/websites/{id}:
     get:
       summary: Get Privileged Website
@@ -73486,6 +73494,117 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/websites/session-recordings/{sessionId}/keylogs' -Method GET -Headers $headers
+  /password-vault/credentials/{id}/edit-shell:
+    get:
+      summary: List Credential Edit Shell V2
+      description: Get password vault credential metadata for edit without vault secret values (reveal via GetSecretV2).
+      operationId: CredentialsService_GetEditShellV2
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetCredentialWithSecretReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/edit-shell \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/edit-shell"
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/credentials/{id}/edit-shell' -Method GET -Headers $headers
+  /password-vault/folder-link-closure/preview:
+    post:
+      summary: Preview folder link co-move closure
+      description: Returns credentials and websites that would co-move with a folder change (ids, names, URIs, folder ids — same plan as save). When group_websites_with_linked_credentials is true, returns websites with nested linked credentials only.
+      operationId: LinksService_GetFolderLinkClosure
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.GetFolderLinkClosureReply'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.privileged_access.GetFolderLinkClosureRequest'
+        description: Preview folder transition co-move (mirrors VaultOne LinksService.GetFolderLinkClosure).
+        required: true
+      tags:
+        - Password Vault
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - passwordmanager
+        - passwordmanager.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/password-vault/folder-link-closure/preview \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"credentialId":"string","groupWebsitesWithLinkedCredentials":true,"linkedWebsiteIds":["string"],"linkedWebsiteScopeSpecified":true,"websiteId":"string"}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/password-vault/folder-link-closure/preview"
+
+            payload = {
+                "credentialId": "string",
+                "groupWebsitesWithLinkedCredentials": True,
+                "linkedWebsiteIds": ["string"],
+                "linkedWebsiteScopeSpecified": True,
+                "websiteId": "string"
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folder-link-closure/preview' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"credentialId":"string","groupWebsitesWithLinkedCredentials":true,"linkedWebsiteIds":["string"],"linkedWebsiteScopeSpecified":true,"websiteId":"string"}'
 components:
   schemas:
     jumpcloud.http.accesscertification.SignOffAuditReportRequest:
@@ -93612,6 +93731,8 @@ components:
           format: byte
         jcGoSessionRecordingEnabled:
           type: boolean
+        jcGoSessionSettings:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.JcGoSessionSettings'
         linkedCredentialsAccessPolicies:
           type: array
           items:
@@ -93761,6 +93882,8 @@ components:
           format: byte
         jcGoSessionRecordingEnabled:
           type: boolean
+        jcGoSessionSettings:
+          $ref: '#/components/schemas/jumpcloud.privileged_access.JcGoSessionSettings'
         name:
           type: string
         notes:
@@ -94039,6 +94162,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/jumpcloud.privileged_access.LinkedWebsite'
+        mfaKey:
+          type: string
+          description: Login MFA on password/key credentials (vault SecretValue.MfaKey); distinct from two_fa_secret.
         middleName:
           type: string
         nameOnId:
@@ -96629,6 +96755,104 @@ components:
         - ACTOR_TYPE_MCP_AGENT
       default: ACTOR_TYPE_UNSPECIFIED
       description: ActorType classifies the credential or principal class behind a risk event (human vs NHI).
+    jumpcloud.privileged_access.FolderLinkClosureCredentialItem:
+      type: object
+      properties:
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        username:
+          type: string
+    jumpcloud.privileged_access.FolderLinkClosureWebsiteItem:
+      type: object
+      properties:
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        name:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.FolderLinkClosureWebsiteWithCredentialsItem:
+      type: object
+      properties:
+        folderId:
+          type: string
+          format: byte
+        id:
+          type: string
+          format: byte
+        linkedCredentials:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.FolderLinkClosureCredentialItem'
+        name:
+          type: string
+        uri:
+          type: string
+    jumpcloud.privileged_access.GetFolderLinkClosureReply:
+      type: object
+      properties:
+        allExclusive:
+          type: boolean
+        credentials:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.FolderLinkClosureCredentialItem'
+        websites:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.FolderLinkClosureWebsiteItem'
+        websitesWithLinkedCredentials:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.FolderLinkClosureWebsiteWithCredentialsItem'
+    jumpcloud.privileged_access.GetFolderLinkClosureRequest:
+      type: object
+      properties:
+        credentialId:
+          type: string
+          format: byte
+        groupWebsitesWithLinkedCredentials:
+          type: boolean
+          description: When true, reply uses websites_with_linked_credentials (remove-from-folder table). When false, flat credentials and websites lists.
+        linkedWebsiteIds:
+          type: array
+          items:
+            type: string
+            format: byte
+        linkedWebsiteScopeSpecified:
+          type: boolean
+        websiteId:
+          type: string
+          format: byte
+      description: Preview folder transition co-move (mirrors VaultOne LinksService.GetFolderLinkClosure).
+    jumpcloud.privileged_access.JcGoSessionSettings:
+      type: object
+      properties:
+        excludedUrls:
+          type: array
+          items:
+            type: string
+          description: Full URLs JC Go must not block during a recorded session.
+        recordingDomains:
+          type: array
+          items:
+            type: string
+          description: Additional domains JC Go must also record (login redirects, etc.).
+      description: |-
+        JumpCloud Go session-control domain lists for privileged websites (PPB-1673 / PPB-1839 / PPB-1873).
+        Dynamic gateway JSON: recordingDomains / excludedUrls. On website upsert/view, omit when unset or when JC Go
+        recording is off; on start-recording replies, carries the website's saved settings for the recording client.
+        Do not put comments on jc_go_session_settings message-typed fields (Spectral no-$ref-siblings on OpenAPI).
   parameters:
     jumpcloud.http.accesscertification.limit:
       name: limit

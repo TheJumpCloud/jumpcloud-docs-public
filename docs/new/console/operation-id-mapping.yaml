@@ -5041,3 +5041,13 @@ operations:
     base_path: /api/v2
     legacy_operation_id: PamWebsitesService_GetWebsiteRecordingKeylogs
     standardized_operation_id: getApiV2PrivilegedAccessWebsitesSessionRecordingsBySessionidKeylogs
+  - method: get
+    host_root_path: /api/v2/password-vault/credentials/{id}/edit-shell
+    base_path: /api/v2
+    legacy_operation_id: CredentialsService_GetEditShellV2
+    standardized_operation_id: getApiV2PasswordVaultCredentialsByIdEditShell
+  - method: post
+    host_root_path: /api/v2/password-vault/folder-link-closure/preview
+    base_path: /api/v2
+    legacy_operation_id: LinksService_GetFolderLinkClosure
+    standardized_operation_id: postApiV2PasswordVaultFolderLinkClosurePreview
