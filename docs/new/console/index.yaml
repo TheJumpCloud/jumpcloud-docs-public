@@ -7406,6 +7406,622 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/jumpcloud.http.assets.error"
+  /api/v2/access-risk-settings:
+    get:
+      description: |-
+        Get Access Risk Detection organization settings for the current organization. Returns all settings from the `identity_risk_detection` feature, including the master `enabled` toggle. Optional filters can narrow results to a subset of settings.
+
+        #### Sample Request
+        ```
+        curl -X GET '{baseUrl}/access-risk-settings' \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+
+        #### Sample Request (filtered)
+        ```
+        curl -X GET '{baseUrl}/access-risk-settings?filter=setting.name:eq:trusted_ip_lists' \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+
+        #### Sample Response
+        ```json
+        {
+          "features": [
+            {
+              "name": "identity_risk_detection",
+              "settings": [
+                {
+                  "name": "enabled",
+                  "value": true
+                },
+                {
+                  "name": "trusted_ip_lists",
+                  "value": ["203.0.113.0/24"]
+                }
+              ],
+              "category": "itdr"
+            }
+          ]
+        }
+        ```
+      operationId: getApiV2AccessRiskSettings
+      parameters:
+        - allowReserved: true
+          description: |
+            A filter to apply to the query.
+
+            	**Filter structure**: `<field>:<operator>:<value>`.
+
+            	**field** = Populate with a valid field from an endpoint response.
+
+            	**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.
+
+            	**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+            	**Example** `GET /api/v2/access-risk-settings?filter=setting.name:eq:trusted_ip_lists`
+          explode: true
+          in: query
+          name: filter
+          schema:
+            items:
+              type: string
+            type: array
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.organization_settings.ListFeatureSettingsResponse'
+          description: Success retrieving Access Risk settings.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.ErrorDetails'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+      summary: List Access Risk Settings
+      tags:
+        - Access Risk Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - identityrisk.readonly
+        - organizations
+        - organizations.readonly
+  /api/v2/access-risk-settings/{setting_name}:
+    put:
+      description: |-
+        Updates an Access Risk Detection organization setting, including the master `enabled` toggle.
+
+        #### Sample Request
+        ```
+        curl -X PUT {baseUrl}/access-risk-settings/trusted_ip_lists \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{"value": ["203.0.113.0/24"]}'
+        ```
+
+        #### Sample Request (`enabled`)
+        ```
+        curl -X PUT {baseUrl}/access-risk-settings/enabled \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{"value": true}'
+        ```
+      operationId: putApiV2AccessRiskSettingsBySettingName
+      parameters:
+        - in: path
+          name: setting_name
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                value: {}
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.organization_settings.Setting'
+          description: Success updating Access Risk settings.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Conflict
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+      summary: Update Access Risk Setting
+      tags:
+        - Access Risk Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - identityrisk
+        - organizations
+  /api/v2/feature-settings:
+    get:
+      description: |-
+        Get organization feature settings using filters. Returns a list of features with their settings grouped by feature name.
+
+        #### Sample Request
+        ```
+        curl -X GET '{baseUrl}/feature-settings?filter=feature.name:eq:mcp&filter=setting.name:eq:enabled' \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+
+        #### Sample Response
+        ```json
+        {
+          "features": [
+            {
+              "name": "mcp",
+              "settings": [
+                {
+                  "name": "enabled",
+                  "value": true
+                },
+                {
+                  "name": "threshold",
+                  "value": 10
+                }
+              ],
+              "category": "ai"
+            }
+          ]
+        }
+        ```
+      operationId: getApiV2FeatureSettings
+      parameters:
+        - allowReserved: true
+          description: |
+            A filter to apply to the query.
+
+            	**Filter structure**: `<field>:<operator>:<value>`.
+
+            	**field** = Populate with a valid field from an endpoint response.
+
+            	**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.
+
+            	**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+            	**Example** `GET /api/v2/feature-settings?filter=feature.name:eq:mcp&filter=setting.name:eq:enabled`
+          explode: true
+          in: query
+          name: filter
+          schema:
+            items:
+              type: string
+            type: array
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.organization_settings.ListFeatureSettingsResponse'
+          description: Success retrieving Organization Feature Settings.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.ErrorDetails'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+      summary: List Organization Feature Settings
+      tags:
+        - Organization Feature Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+        - organizations.readonly
+  /api/v2/feature-settings/{feature_name}/{setting_name}:
+    put:
+      description: |-
+        Updates organization feature settings by category, feature name, and setting name.
+
+        #### Sample Request
+        ```
+        curl -X PUT {baseUrl}/feature-settings/{feature_name}/{setting_name} \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{"value": "true"}'
+        ```
+      operationId: putApiV2FeatureSettingsByFeatureNameBySettingName
+      parameters:
+        - in: path
+          name: feature_name
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: setting_name
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                value: {}
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.organization_settings.Setting'
+          description: Success updating Organization Feature Settings.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Conflict
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+      summary: Update Organization Feature Settings
+      tags:
+        - Organization Feature Settings
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+  /api/v2/saved-views:
+    get:
+      description: |-
+        List the shared saved views for an Organization having specific source.
+
+        #### Sample Request
+        ```
+        curl -X GET {baseUrl}/saved-views \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key:{API_KEY}'
+        ```
+
+        	Note: The `limit` maximum is 100 Saved Views in a single response.
+      operationId: getApiV2SavedViews
+      parameters:
+        - allowReserved: true
+          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
+          in: query
+          name: sort
+          schema:
+            type: string
+        - allowReserved: true
+          description: |
+            A filter to apply to the query.
+
+            	**Filter structure**: `<field>:<operator>:<value>`.
+
+            	**field** = Populate with a valid field from an endpoint response.
+
+            	**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.
+
+            	**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
+
+            	**Example** `GET /api/v2/saved-views?filter=source:eq:users`
+          explode: true
+          in: query
+          name: filter
+          schema:
+            items:
+              type: string
+            type: array
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.organization_settings.SavedViewsResponse'
+          description: Success listing Saved Views.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.ErrorDetails'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+      summary: List the Items stored in SavedViews
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+        - organizations.readonly
+    post:
+      description: |-
+        Creates the saved view for an organization.
+
+        #### Sample Request
+        ```
+        curl -X POST {baseUrl}/views \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+        ```
+      operationId: postApiV2SavedViews
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.organization_settings.SavedViewCreateRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.organization_settings.SavedView'
+          description: A successful response.
+      security:
+        - x-api-key: []
+      summary: Creates a saved view for an organization belonging to a specific source
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+  /api/v2/saved-views/{id}:
+    delete:
+      description: Delete a saved view
+      operationId: deleteApiV2SavedViewsById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: byte
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Success deleting Saved Views.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Conflict
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+      summary: Delete Saved View
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
+    put:
+      description: Updates a saved view
+      operationId: putApiV2SavedViewsById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: byte
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                savedView:
+                  $ref: '#/components/schemas/jumpcloud.organization_settings.SavedView'
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.organization_settings.SavedView'
+          description: Success updating Saved Views.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Conflict
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_v2.Error'
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+      summary: Update Saved View
+      tags:
+        - Saved Views
+      x-dynamic-gateway: true
+      x-scopes:
+        - organizations
   /api/v2/workflows:
     get:
       tags:
@@ -35887,250 +36503,6 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - passwordmanager
-  /api/v2/saved-views:
-    get:
-      summary: List the Items stored in SavedViews
-      description: |-
-        List the shared saved views for an Organization having specific source.
-
-        #### Sample Request
-        ```
-        curl -X GET {baseUrl}/saved-views \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key:{API_KEY}'
-        ```
-
-        	Note: The `limit` maximum is 100 Saved Views in a single response.
-      operationId: getApiV2SavedViews
-      responses:
-        "200":
-          description: Success listing Saved Views.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.organization_settings.SavedViewsResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.ErrorDetails"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-      parameters:
-        - name: sort
-          description: Use space separated sort parameters to sort the collection. Default sort is ascending. Prefix with - to sort descending.
-          in: query
-          required: false
-          schema:
-            type: string
-          allowReserved: true
-        - name: filter
-          description: |
-            A filter to apply to the query.
-
-            	**Filter structure**: `<field>:<operator>:<value>`.
-
-            	**field** = Populate with a valid field from an endpoint response.
-
-            	**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.
-
-            	**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
-
-            	**Example** `GET /api/v2/saved-views?filter=source:eq:users`
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Saved Views
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - organizations
-        - organizations.readonly
-    post:
-      summary: Creates a saved view for an organization belonging to a specific source
-      description: |-
-        Creates the saved view for an organization.
-
-        #### Sample Request
-        ```
-        curl -X POST {baseUrl}/views \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-        ```
-      operationId: postApiV2SavedViews
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.organization_settings.SavedView"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/jumpcloud.organization_settings.SavedViewCreateRequest"
-        required: true
-      tags:
-        - Saved Views
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - organizations
-  /api/v2/saved-views/{id}:
-    put:
-      summary: Update Saved View
-      description: Updates a saved view
-      operationId: putApiV2SavedViewsById
-      responses:
-        "200":
-          description: Success updating Saved Views.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.organization_settings.SavedView"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: byte
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                savedView:
-                  $ref: "#/components/schemas/jumpcloud.organization_settings.SavedView"
-        required: true
-      tags:
-        - Saved Views
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - organizations
-    delete:
-      summary: Delete Saved View
-      description: Delete a saved view
-      operationId: deleteApiV2SavedViewsById
-      responses:
-        "200":
-          description: Success deleting Saved Views.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: byte
-      tags:
-        - Saved Views
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - organizations
   /api/v2/passwordpolicies:
     post:
       summary: Create Password Policy
@@ -37461,181 +37833,6 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - accessmanagement
-  /api/v2/feature-settings:
-    get:
-      summary: List Organization Feature Settings
-      description: |-
-        Get organization feature settings using filters. Returns a list of features with their settings grouped by feature name.
-
-        #### Sample Request
-        ```
-        curl -X GET '{baseUrl}/feature-settings?filter=feature.name:eq:mcp&filter=setting.name:eq:enabled' \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key:{API_KEY}'
-        ```
-
-        #### Sample Response
-        ```json
-        {
-          "features": [
-            {
-              "name": "mcp",
-              "settings": [
-                {
-                  "name": "enabled",
-                  "value": true
-                },
-                {
-                  "name": "threshold",
-                  "value": 10
-                }
-              ],
-              "category": "ai"
-            }
-          ]
-        }
-        ```
-      operationId: getApiV2FeatureSettings
-      responses:
-        "200":
-          description: Success retrieving Organization Feature Settings.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.organization_settings.ListFeatureSettingsResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.ErrorDetails"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-      parameters:
-        - name: filter
-          description: |
-            A filter to apply to the query.
-
-            	**Filter structure**: `<field>:<operator>:<value>`.
-
-            	**field** = Populate with a valid field from an endpoint response.
-
-            	**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.
-
-            	**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
-
-            	**Example** `GET /api/v2/feature-settings?filter=feature.name:eq:mcp&filter=setting.name:eq:enabled`
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Organization Feature Settings
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - organizations
-        - organizations.readonly
-  /api/v2/feature-settings/{feature_name}/{setting_name}:
-    put:
-      summary: Update Organization Feature Settings
-      description: |-
-        Updates organization feature settings by category, feature name, and setting name.
-
-        #### Sample Request
-        ```
-        curl -X PUT {baseUrl}/feature-settings/{feature_name}/{setting_name} \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{"value": "true"}'
-        ```
-      operationId: putApiV2FeatureSettingsByFeatureNameBySettingName
-      responses:
-        "200":
-          description: Success updating Organization Feature Settings.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.organization_settings.Setting"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-      parameters:
-        - name: feature_name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: setting_name
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        $ref: "#/components/requestBodies/AccessRiskSettingsService_UpdateBody"
-      tags:
-        - Organization Feature Settings
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - organizations
   /api/v2/approversprogress/{id}:
     get:
       summary: Get Approval flow progress by id for admin portal
@@ -46705,196 +46902,6 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - groups
-  /api/v2/access-risk-settings:
-    get:
-      summary: List Access Risk Settings
-      description: |-
-        Get Access Risk Detection organization settings for the current organization. Returns all settings from the `identity_risk_detection` feature, including the master `enabled` toggle. Optional filters can narrow results to a subset of settings.
-
-        #### Sample Request
-        ```
-        curl -X GET '{baseUrl}/access-risk-settings' \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key:{API_KEY}'
-        ```
-
-        #### Sample Request (filtered)
-        ```
-        curl -X GET '{baseUrl}/access-risk-settings?filter=setting.name:eq:trusted_ip_lists' \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key:{API_KEY}'
-        ```
-
-        #### Sample Response
-        ```json
-        {
-          "features": [
-            {
-              "name": "identity_risk_detection",
-              "settings": [
-                {
-                  "name": "enabled",
-                  "value": true
-                },
-                {
-                  "name": "trusted_ip_lists",
-                  "value": ["203.0.113.0/24"]
-                }
-              ],
-              "category": "itdr"
-            }
-          ]
-        }
-        ```
-      operationId: getApiV2AccessRiskSettings
-      responses:
-        "200":
-          description: Success retrieving Access Risk settings.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.organization_settings.ListFeatureSettingsResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.ErrorDetails"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-      parameters:
-        - name: filter
-          description: |
-            A filter to apply to the query.
-
-            	**Filter structure**: `<field>:<operator>:<value>`.
-
-            	**field** = Populate with a valid field from an endpoint response.
-
-            	**operator** =  Supported operators are: eq, ne, gt, ge, lt, le, search, in.
-
-            	**value** = Populate with the value you want to search for. Is case sensitive. Supports wild cards.
-
-            	**Example** `GET /api/v2/access-risk-settings?filter=setting.name:eq:trusted_ip_lists`
-          in: query
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-          allowReserved: true
-      tags:
-        - Access Risk Settings
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - identityrisk
-        - identityrisk.readonly
-        - organizations
-        - organizations.readonly
-  /api/v2/access-risk-settings/{setting_name}:
-    put:
-      summary: Update Access Risk Setting
-      description: |-
-        Updates an Access Risk Detection organization setting, including the master `enabled` toggle.
-
-        #### Sample Request
-        ```
-        curl -X PUT {baseUrl}/access-risk-settings/trusted_ip_lists \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{"value": ["203.0.113.0/24"]}'
-        ```
-
-        #### Sample Request (`enabled`)
-        ```
-        curl -X PUT {baseUrl}/access-risk-settings/enabled \
-          -H 'Accept: application/json' \
-          -H 'Content-Type: application/json' \
-          -H 'x-api-key: {API_KEY}' \
-          -d '{"value": true}'
-        ```
-      operationId: putApiV2AccessRiskSettingsBySettingName
-      responses:
-        "200":
-          description: Success updating Access Risk settings.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/jumpcloud.organization_settings.Setting"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/api_v2.Error"
-      parameters:
-        - name: setting_name
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        $ref: "#/components/requestBodies/AccessRiskSettingsService_UpdateBody"
-      tags:
-        - Access Risk Settings
-      security:
-        - x-api-key: []
-      x-dynamic-gateway: true
-      x-scopes:
-        - identityrisk
-        - organizations
   /api/v2/applemdms/{deviceManagerObjectId}/ade_tokens:
     post:
       summary: Create ADE Token
@@ -54792,6 +54799,139 @@ components:
               "@type": "type.googleapis.com/google.protobuf.Duration",
               "value": "1.212s"
             }
+    jumpcloud.organization_settings.Configuration:
+      properties:
+        filters:
+          items:
+            $ref: '#/components/schemas/jumpcloud.organization_settings.Filters'
+          type: array
+        sort:
+          type: string
+      type: object
+    jumpcloud.organization_settings.Feature:
+      properties:
+        category:
+          type: string
+        name:
+          type: string
+        settings:
+          items:
+            $ref: '#/components/schemas/jumpcloud.organization_settings.Setting'
+          type: array
+      type: object
+    jumpcloud.organization_settings.Filters:
+      properties:
+        field:
+          type: string
+        operation:
+          $ref: '#/components/schemas/jumpcloud.organization_settings.Filters.Operation'
+        value:
+          description: |-
+            Static value to be compared against. For values that will need to be compared as a datetime object, this should be
+            provided as an ISO8601 format string with no offset (UTC). This is made optional so that
+            the client can omit this field on AND/OR filters.
+      type: object
+    jumpcloud.organization_settings.Filters.Operation:
+      default: OPERATION_UNKNOWN
+      description: |-
+        Filter operation to be applied:
+        and - Provides logical 'and' groupings of all elements provided in the `filters` array (all sub-filter criteria
+           must be satisfied).
+        or - Provides logical 'or' groupings of all elements provided in the `filters` array (any sub-filter criteria can
+           be satisfied).
+        equals - Compares `field` with `value` for a // match.  Case insensitive.
+        not_equals - Compares `field` with `value` for an exact non-match.  Case insensitive.
+        greater_than - Checks if `field` is greater numerically than static `value` (non-inclusive).  Works for numbers and
+           datetime types.
+        less_than - Checks if `field` is less than static `value` (non-inclusive).  Works for numbers and datetime types.
+        starts_with - Checks if `field` starts with static `value`.  Case insensitive.  Only works for string types.
+        ends_with - Checks if `field` ends with static `value`.  Case insensitive.  Only works for string types.
+      enum:
+        - OPERATION_UNKNOWN
+        - AND
+        - OR
+        - EQUALS
+        - NOT_EQUALS
+        - GREATER_THAN
+        - LESS_THAN
+        - STARTS_WITH
+        - ENDS_WITH
+        - IN
+        - CONTAINS
+        - NOT_CONTAINS
+        - BOOL
+        - GREATER_THAN_EQUAL
+        - LESS_THAN_EQUAL
+        - NOT_IN
+        - SEARCH
+      type: string
+    jumpcloud.organization_settings.ListFeatureSettingsResponse:
+      properties:
+        features:
+          items:
+            $ref: '#/components/schemas/jumpcloud.organization_settings.Feature'
+          type: array
+      type: object
+    jumpcloud.organization_settings.SavedView:
+      properties:
+        adminId:
+          format: byte
+          readOnly: true
+          type: string
+        columns:
+          items:
+            type: string
+          type: array
+        configuration:
+          $ref: '#/components/schemas/jumpcloud.organization_settings.Configuration'
+        id:
+          format: byte
+          type: string
+        isDefault:
+          type: boolean
+        name:
+          type: string
+        shared:
+          type: boolean
+        source:
+          type: string
+      type: object
+    jumpcloud.organization_settings.SavedViewCreateRequest:
+      properties:
+        columns:
+          items:
+            type: string
+          type: array
+        configuration:
+          $ref: '#/components/schemas/jumpcloud.organization_settings.Configuration'
+        id:
+          format: byte
+          type: string
+        isDefault:
+          type: boolean
+        name:
+          type: string
+        shared:
+          type: boolean
+        source:
+          type: string
+      type: object
+    jumpcloud.organization_settings.SavedViewsResponse:
+      properties:
+        totalCount:
+          format: int64
+          type: integer
+        views:
+          items:
+            $ref: '#/components/schemas/jumpcloud.organization_settings.SavedView'
+          type: array
+      type: object
+    jumpcloud.organization_settings.Setting:
+      properties:
+        name:
+          type: string
+        value: {}
+      type: object
     jumpcloud.http.workflows.error:
       type: object
       description: Error response containing details about what went wrong
@@ -68638,107 +68778,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/jumpcloud.pwm.PermissionAccess"
-    jumpcloud.organization_settings.Configuration:
-      type: object
-      properties:
-        filters:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.organization_settings.Filters"
-        sort:
-          type: string
-    jumpcloud.organization_settings.Filters:
-      type: object
-      properties:
-        field:
-          type:
-            - string
-            - "null"
-        operation:
-          $ref: "#/components/schemas/jumpcloud.organization_settings.Filters.Operation"
-        value:
-          description: |-
-            Static value to be compared against. For values that will need to be compared as a datetime object, this should be
-            provided as an ISO8601 format string with no offset (UTC). This is made optional so that
-            the client can omit this field on AND/OR filters.
-    jumpcloud.organization_settings.Filters.Operation:
-      type: string
-      enum:
-        - OPERATION_UNKNOWN
-        - AND
-        - OR
-        - EQUALS
-        - NOT_EQUALS
-        - GREATER_THAN
-        - LESS_THAN
-        - STARTS_WITH
-        - ENDS_WITH
-        - IN
-        - CONTAINS
-        - NOT_CONTAINS
-        - BOOL
-        - GREATER_THAN_EQUAL
-        - LESS_THAN_EQUAL
-        - NOT_IN
-        - SEARCH
-      default: OPERATION_UNKNOWN
-      description: |-
-        Filter operation to be applied:
-        and - Provides logical 'and' groupings of all elements provided in the `filters` array (all sub-filter criteria
-           must be satisfied).
-        or - Provides logical 'or' groupings of all elements provided in the `filters` array (any sub-filter criteria can
-           be satisfied).
-        equals - Compares `field` with `value` for a // match.  Case insensitive.
-        not_equals - Compares `field` with `value` for an exact non-match.  Case insensitive.
-        greater_than - Checks if `field` is greater numerically than static `value` (non-inclusive).  Works for numbers and
-           datetime types.
-        less_than - Checks if `field` is less than static `value` (non-inclusive).  Works for numbers and datetime types.
-        starts_with - Checks if `field` starts with static `value`.  Case insensitive.  Only works for string types.
-        ends_with - Checks if `field` ends with static `value`.  Case insensitive.  Only works for string types.
-    jumpcloud.organization_settings.SavedView:
-      type: object
-      properties:
-        adminId:
-          type: string
-          format: byte
-          readOnly: true
-        columns:
-          type: array
-          items:
-            type: string
-        configuration:
-          $ref: "#/components/schemas/jumpcloud.organization_settings.Configuration"
-        id:
-          type: string
-          format: byte
-        isDefault:
-          type: boolean
-        name:
-          type: string
-        shared:
-          type: boolean
-        source:
-          type: string
-    jumpcloud.organization_settings.SavedViewCreateRequest:
-      type: object
-      properties:
-        columns:
-          type: array
-          items:
-            type: string
-        configuration:
-          $ref: "#/components/schemas/jumpcloud.organization_settings.Configuration"
-        id:
-          type: string
-          format: byte
-        isDefault:
-          type: boolean
-        name:
-          type: string
-        shared:
-          type: boolean
-        source:
-          type: string
     jumpcloud.pwm.BatchDeleteSharedFoldersRequest:
       type: object
       properties:
@@ -68746,16 +68785,6 @@ components:
           type: array
           items:
             type: string
-    jumpcloud.organization_settings.SavedViewsResponse:
-      type: object
-      properties:
-        totalCount:
-          type: integer
-          format: int64
-        views:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.organization_settings.SavedView"
     jumpcloud.password.PasswordPolicy:
       type: object
       properties:
@@ -69826,30 +69855,6 @@ components:
           type: string
     jumpcloud.ingresso.UserApprovalRequestResponse:
       type: object
-    jumpcloud.organization_settings.Feature:
-      type: object
-      properties:
-        category:
-          type: string
-        name:
-          type: string
-        settings:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.organization_settings.Setting"
-    jumpcloud.organization_settings.ListFeatureSettingsResponse:
-      type: object
-      properties:
-        features:
-          type: array
-          items:
-            $ref: "#/components/schemas/jumpcloud.organization_settings.Feature"
-    jumpcloud.organization_settings.Setting:
-      type: object
-      properties:
-        name:
-          type: string
-        value: {}
     ActiveDirectoriesTranslationRulesListResponse:
       type: object
       properties:
@@ -76749,14 +76754,6 @@ components:
           schema:
             type: object
       required: true
-    AccessRiskSettingsService_UpdateBody:
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              value: {}
-      required: true
     CredentialsService_TakeoverByAdminBody:
       content:
         application/json:
@@ -76797,11 +76794,13 @@ tags:
     description: Organization posture monitoring, detection settings, and finding notifications.
   - name: Access Requests
   - name: Access Risk Settings
+  - name: AccessRiskSettingsService
   - name: AccessorySync
   - name: AccountManagerCalendar
   - name: Active Directory
   - name: AddOn
   - name: Admin Settings
+  - name: AdminSettingsService
   - name: Administrators
   - name: Agent Groups
     description: |-
@@ -76846,6 +76845,7 @@ tags:
   - name: Connector
   - name: Countries
   - name: Custom Emails
+  - name: CustomMessagesService
   - name: DataContractRegistry
   - name: DeleteOrganization
   - name: DeviceSync
@@ -76869,6 +76869,7 @@ tags:
   - name: Groups
   - name: Healthcheck
   - name: Home Widgets
+  - name: HomeWidgetsService
   - name: IP Lists
   - name: Identity Providers
   - name: Identity Risk
@@ -76894,6 +76895,8 @@ tags:
   - name: Organization Certificate
   - name: Organization Feature Settings
   - name: Organization Internal Settings
+  - name: OrganizationFeatureSettingsService
+  - name: OrganizationInternalSettingsService
   - name: Organizations
   - name: Partners
   - name: Password Manager

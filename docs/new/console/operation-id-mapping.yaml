@@ -602,6 +602,46 @@ operations:
     legacy_operation_id: createLocationAssetHistoryNote
     standardized_operation_id: postApiV2AssetsLocationsByIdHistory
   - method: get
+    host_root_path: /api/v2/access-risk-settings
+    base_path: /api/v2
+    legacy_operation_id: AccessRiskSettingsService_List
+    standardized_operation_id: getApiV2AccessRiskSettings
+  - method: put
+    host_root_path: /api/v2/access-risk-settings/{setting_name}
+    base_path: /api/v2
+    legacy_operation_id: AccessRiskSettingsService_Update
+    standardized_operation_id: putApiV2AccessRiskSettingsBySettingName
+  - method: get
+    host_root_path: /api/v2/feature-settings
+    base_path: /api/v2
+    legacy_operation_id: OrganizationFeatureSettingsService_List
+    standardized_operation_id: getApiV2FeatureSettings
+  - method: put
+    host_root_path: /api/v2/feature-settings/{feature_name}/{setting_name}
+    base_path: /api/v2
+    legacy_operation_id: OrganizationFeatureSettingsService_Update
+    standardized_operation_id: putApiV2FeatureSettingsByFeatureNameBySettingName
+  - method: get
+    host_root_path: /api/v2/saved-views
+    base_path: /api/v2
+    legacy_operation_id: SavedViewsService_List
+    standardized_operation_id: getApiV2SavedViews
+  - method: post
+    host_root_path: /api/v2/saved-views
+    base_path: /api/v2
+    legacy_operation_id: SavedViewsService_Create
+    standardized_operation_id: postApiV2SavedViews
+  - method: put
+    host_root_path: /api/v2/saved-views/{id}
+    base_path: /api/v2
+    legacy_operation_id: SavedViewsService_Update
+    standardized_operation_id: putApiV2SavedViewsById
+  - method: delete
+    host_root_path: /api/v2/saved-views/{id}
+    base_path: /api/v2
+    legacy_operation_id: SavedViewsService_Delete
+    standardized_operation_id: deleteApiV2SavedViewsById
+  - method: get
     host_root_path: /api/v2/workflows
     base_path: /api/v2
     legacy_operation_id: listWorkflows
@@ -3536,26 +3576,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: SharedFolderService_ManageSharedFolderPermission
     standardized_operation_id: postApiV2PasswordmanagerSharedfoldersByFolderidManage
-  - method: get
-    host_root_path: /api/v2/saved-views
-    base_path: /api/v2
-    legacy_operation_id: SavedViewsService_List
-    standardized_operation_id: getApiV2SavedViews
-  - method: post
-    host_root_path: /api/v2/saved-views
-    base_path: /api/v2
-    legacy_operation_id: SavedViewsService_Create
-    standardized_operation_id: postApiV2SavedViews
-  - method: put
-    host_root_path: /api/v2/saved-views/{id}
-    base_path: /api/v2
-    legacy_operation_id: SavedViewsService_Update
-    standardized_operation_id: putApiV2SavedViewsById
-  - method: delete
-    host_root_path: /api/v2/saved-views/{id}
-    base_path: /api/v2
-    legacy_operation_id: SavedViewsService_Delete
-    standardized_operation_id: deleteApiV2SavedViewsById
   - method: post
     host_root_path: /api/v2/passwordpolicies
     base_path: /api/v2
@@ -3686,16 +3706,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: WorkflowAccessRequestApi_UserApprovalRequest
     standardized_operation_id: postApiV2Userapprovalrequest
-  - method: get
-    host_root_path: /api/v2/feature-settings
-    base_path: /api/v2
-    legacy_operation_id: OrganizationFeatureSettingsService_List
-    standardized_operation_id: getApiV2FeatureSettings
-  - method: put
-    host_root_path: /api/v2/feature-settings/{feature_name}/{setting_name}
-    base_path: /api/v2
-    legacy_operation_id: OrganizationFeatureSettingsService_Update
-    standardized_operation_id: putApiV2FeatureSettingsByFeatureNameBySettingName
   - method: get
     host_root_path: /api/v2/approversprogress/{id}
     base_path: /api/v2
@@ -4881,16 +4891,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: Policy_PutCustomBannedKeywords
     standardized_operation_id: putApiV2PasswordpoliciesCustombanned
-  - method: get
-    host_root_path: /api/v2/access-risk-settings
-    base_path: /api/v2
-    legacy_operation_id: AccessRiskSettingsService_List
-    standardized_operation_id: getApiV2AccessRiskSettings
-  - method: put
-    host_root_path: /api/v2/access-risk-settings/{setting_name}
-    base_path: /api/v2
-    legacy_operation_id: AccessRiskSettingsService_Update
-    standardized_operation_id: putApiV2AccessRiskSettingsBySettingName
   - method: post
     host_root_path: /api/v2/applemdms/{deviceManagerObjectId}/ade_tokens
     base_path: /api/v2
