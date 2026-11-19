@@ -339,6 +339,12 @@ paths:
   /changepassword/mfa-init:
     x-functionalities-tags:
       - user-password-reset
+  /changepassword/pin-verify:
+    x-functionalities-tags:
+      - user-password-reset
+  /changepassword/prefill:
+    x-functionalities-tags:
+      - user-password-reset
   /changepassword/{key}:
     parameters:
       - name: key
