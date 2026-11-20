@@ -7742,9 +7742,11 @@ components:
               type: boolean
             disallowBreachedPasswords:
               type: boolean
+              description: When true, rejects new passwords that appear in Have I Been Pwned's known compromised-password database. That database may be incomplete or temporarily unavailable. Lookups send only a five-character password hash prefix from JumpCloud servers to a third party (Have I Been Pwned / Cloudflare).
             breachedPasswordMinCount:
               minimum: 1
               type: integer
+              description: Minimum Have I Been Pwned occurrence count required to reject a password when disallowBreachedPasswords is true. Enabling this check looks up new passwords in Have I Been Pwned's known compromised-password database (may be incomplete or temporarily unavailable). Lookups send only a five-character password hash prefix from JumpCloud servers to a third party (Have I Been Pwned / Cloudflare).
             disallowSequentialOrRepetitiveChars:
               type: boolean
             displayComplexityOnResetScreen:
@@ -7959,9 +7961,11 @@ components:
               type: boolean
             disallowBreachedPasswords:
               type: boolean
+              description: When true, rejects new passwords that appear in Have I Been Pwned's known compromised-password database. That database may be incomplete or temporarily unavailable. Lookups send only a five-character password hash prefix from JumpCloud servers to a third party (Have I Been Pwned / Cloudflare).
             breachedPasswordMinCount:
               minimum: 1
               type: integer
+              description: Minimum Have I Been Pwned occurrence count required to reject a password when disallowBreachedPasswords is true. Enabling this check looks up new passwords in Have I Been Pwned's known compromised-password database (may be incomplete or temporarily unavailable). Lookups send only a five-character password hash prefix from JumpCloud servers to a third party (Have I Been Pwned / Cloudflare).
             disallowSequentialOrRepetitiveChars:
               type: boolean
             displayComplexityOnResetScreen:

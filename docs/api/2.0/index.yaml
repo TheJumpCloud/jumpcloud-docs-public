@@ -12165,6 +12165,119 @@ paths:
           type: string
     x-functionalities-tags:
       - user-portal-applications
+  /device-trust-readiness/users/batch:
+    post:
+      summary: Batch get Device Trust Readiness user counts
+      description: Batch get Device Trust Readiness user counts for systems
+      operationId: DeviceTrustReadiness_BatchGetDeviceUserReadiness
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.durt.BatchGetDeviceUserReadinessResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.durt.BatchGetDeviceUserReadinessRequest'
+        required: true
+      tags:
+        - Durt
+        - Go
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/device-trust-readiness/users/batch \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"systemIds":["string"]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/device-trust-readiness/users/batch"
+
+            payload = {"systemIds": ["string"]}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/device-trust-readiness/users/batch' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"systemIds":["string"]}'
+  /device-trust-readiness/users/query:
+    post:
+      summary: Query Device Trust Readiness for users
+      description: Query Device Trust Readiness for bound users on a system
+      operationId: DeviceTrustReadiness_QueryUserReadiness
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.durt.QueryUserReadinessResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jumpcloud.durt.QueryUserReadinessRequest'
+        required: true
+      tags:
+        - Durt
+        - Go
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/device-trust-readiness/users/query \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"systemId":"string","userIds":["string"]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/device-trust-readiness/users/query"
+
+            payload = {
+                "systemId": "string",
+                "userIds": ["string"]
+            }
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/device-trust-readiness/users/query' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"systemId":"string","userIds":["string"]}'
   /devices/os_aggregation:
     x-functionalities-tags:
       - reports-devices
@@ -18241,6 +18354,138 @@ paths:
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/cases/metadata' -Method GET -Headers $headers
     x-functionalities-tags:
       - cases
+  /systems/{systemId}/device-trust-readiness:
+    get:
+      summary: Query Device Trust Readiness
+      description: 'Query Device Trust Readiness for a system and optional user_ids (max 100). Read-only: does not persist evaluations. Empty user_ids returns all bound users.'
+      operationId: DeviceTrustReadiness_Get2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.durt.QueryDeviceTrustReadinessResponse'
+      parameters:
+        - name: systemId
+          description: System ObjectId as 24-char hex (path param).
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userIds
+          description: |-
+            Bound SystemUser ObjectIds as 24-char hex. Max 100, deduped. Empty = all bound users.
+            Unbound IDs are omitted from the response. No UNKNOWN sentinel.
+          in: query
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      tags:
+        - Durt
+        - Go
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/systems/{systemId}/device-trust-readiness?userIds=SOME_ARRAY_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/systems/{systemId}/device-trust-readiness"
+
+            querystring = {"userIds":"SOME_ARRAY_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/{systemId}/device-trust-readiness?userIds=SOME_ARRAY_VALUE' -Method GET -Headers $headers
+  /systems/{systemId}/device-trust-readiness/query:
+    post:
+      summary: Query Device Trust Readiness
+      description: 'Query Device Trust Readiness for a system and optional user_ids (max 100). Read-only: does not persist evaluations. Empty user_ids returns all bound users.'
+      operationId: DeviceTrustReadiness_Get
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.durt.QueryDeviceTrustReadinessResponse'
+      parameters:
+        - name: systemId
+          description: System ObjectId as 24-char hex (path param).
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userIds:
+                  type: array
+                  items:
+                    type: string
+                  description: |-
+                    Bound SystemUser ObjectIds as 24-char hex. Max 100, deduped. Empty = all bound users.
+                    Unbound IDs are omitted from the response. No UNKNOWN sentinel.
+        required: true
+      tags:
+        - Durt
+        - Go
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - systems.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/systems/{systemId}/device-trust-readiness/query \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"userIds":["string"]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/systems/{systemId}/device-trust-readiness/query"
+
+            payload = {"userIds": ["string"]}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/systems/{systemId}/device-trust-readiness/query' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"userIds":["string"]}'
   /partners:
     x-functionalities-tags:
       - partners-cs-discover-page
@@ -52688,7 +52933,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/passwordpolicies \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowBreachedPasswords":false,"breachedPasswordMinCount":1,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"breachedPasswordMinCount":0,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowBreachedPasswords":true,"disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
         - lang: Python
           source: |-
             import requests
@@ -52701,15 +52946,15 @@ paths:
                 "policy": {
                     "allowUnenrolledMFAPasswordReset": True,
                     "allowUsernameSubstring": True,
+                    "breachedPasswordMinCount": 0,
                     "daysAfterExpirationToSelfRecover": 0,
                     "daysBeforeExpirationToForceReset": 0,
                     "default": True,
                     "description": "string",
+                    "disallowBreachedPasswords": True,
                     "disallowCommonlyUsedPasswords": True,
                     "disallowCustomBannedPasswords": True,
                     "disallowNameSubstring": True,
-                    "disallowBreachedPasswords": False,
-                    "breachedPasswordMinCount": 1,
                     "disallowSequentialOrRepetitiveChars": True,
                     "displayComplexityOnResetScreen": True,
                     "effectiveDate": "2019-08-24T14:15:22Z",
@@ -52753,7 +52998,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowBreachedPasswords":false,"breachedPasswordMinCount":1,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"breachedPasswordMinCount":0,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowBreachedPasswords":true,"disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
     delete:
       summary: Delete Password Policies
       description: Delete password policies for an organization.
@@ -52917,7 +53162,7 @@ paths:
               --url https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId} \
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
-              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowBreachedPasswords":false,"breachedPasswordMinCount":1,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+              --data '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"breachedPasswordMinCount":0,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowBreachedPasswords":true,"disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
         - lang: Python
           source: |-
             import requests
@@ -52930,15 +53175,15 @@ paths:
                 "policy": {
                     "allowUnenrolledMFAPasswordReset": True,
                     "allowUsernameSubstring": True,
+                    "breachedPasswordMinCount": 0,
                     "daysAfterExpirationToSelfRecover": 0,
                     "daysBeforeExpirationToForceReset": 0,
                     "default": True,
                     "description": "string",
+                    "disallowBreachedPasswords": True,
                     "disallowCommonlyUsedPasswords": True,
                     "disallowCustomBannedPasswords": True,
                     "disallowNameSubstring": True,
-                    "disallowBreachedPasswords": False,
-                    "breachedPasswordMinCount": 1,
                     "disallowSequentialOrRepetitiveChars": True,
                     "displayComplexityOnResetScreen": True,
                     "effectiveDate": "2019-08-24T14:15:22Z",
@@ -52982,7 +53227,7 @@ paths:
             $headers=@{}
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowBreachedPasswords":false,"breachedPasswordMinCount":1,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/passwordpolicies/{objectId}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"groupIds":["string"],"organizationObjectId":"string","policy":{"allowUnenrolledMFAPasswordReset":true,"allowUsernameSubstring":true,"breachedPasswordMinCount":0,"daysAfterExpirationToSelfRecover":0,"daysBeforeExpirationToForceReset":0,"default":true,"description":"string","disallowBreachedPasswords":true,"disallowCommonlyUsedPasswords":true,"disallowCustomBannedPasswords":true,"disallowNameSubstring":true,"disallowSequentialOrRepetitiveChars":true,"displayComplexityOnResetScreen":true,"effectiveDate":"2019-08-24T14:15:22Z","enableDaysAfterExpirationToSelfRecover":true,"enableDaysBeforeExpirationToForceReset":true,"enableLockoutTimeInSeconds":true,"enableMaxHistory":true,"enableMaxLoginAttempts":true,"enableMinChangePeriodInDays":true,"enableMinLength":true,"enableNameConsecutiveChars":true,"enablePasswordExpirationInDays":true,"enableRecoveryEmail":true,"enableResetLockoutCounter":true,"lockoutTimeInSeconds":0,"maxHistory":0,"maxLoginAttempts":0,"minChangePeriodInDays":0,"minLength":0,"name":"string","nameConsecutiveChars":0,"needsLowercase":true,"needsNumeric":true,"needsSymbolic":true,"needsUppercase":true,"passwordExpirationInDays":0,"precedence":0,"resetLockoutCounterMinutes":0}}'
     delete:
       summary: Delete Password Policy
       description: Delete a password policy for an organization.
@@ -81733,6 +81978,191 @@ components:
             - 'null'
       title: Job WorkResult
       type: object
+    jumpcloud.durt.BatchGetDeviceUserReadinessItem:
+      type: object
+      properties:
+        applicable:
+          type: boolean
+          description: False when the device is out of scope for JC Go readiness (see not_applicable_reason).
+        notApplicableReason:
+          $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustNotApplicableReason'
+        osFamily:
+          type: string
+        systemId:
+          type: string
+        usersNeedsAttention:
+          type: integer
+          format: int32
+        usersNotEvaluated:
+          type: integer
+          format: int32
+          description: Bound users with no readiness row yet.
+        usersNotReady:
+          type: integer
+          format: int32
+        usersReady:
+          type: integer
+          format: int32
+          description: |-
+            Invariant: users_ready + users_needs_attention + users_not_ready + users_not_evaluated == users_total.
+            When applicable is false, all count fields are zero.
+        usersTotal:
+          type: integer
+          format: int32
+          description: Bound SystemUser count for this device (Directory Graph + primary). Not "rows with readiness".
+        worstStatus:
+          $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustReadinessStatus'
+    jumpcloud.durt.BatchGetDeviceUserReadinessRequest:
+      type: object
+      properties:
+        systemIds:
+          type: array
+          items:
+            type: string
+          description: System ObjectIds as 24-char hex. Max 100.
+    jumpcloud.durt.BatchGetDeviceUserReadinessResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.durt.BatchGetDeviceUserReadinessItem'
+    jumpcloud.durt.DeviceTrustReadinessCheck:
+      type: object
+      properties:
+        bucket:
+          $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustReadinessStatus'
+        category:
+          type: string
+        id:
+          type: string
+        kind:
+          type: string
+          title: blocking | optional
+        remediation:
+          $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustReadinessCheckRemediation'
+        state:
+          type: string
+    jumpcloud.durt.DeviceTrustReadinessCheckRemediation:
+      type:
+        - object
+        - 'null'
+      properties:
+        label:
+          type: string
+        route:
+          type: string
+    jumpcloud.durt.DeviceTrustReadinessResponse:
+      type: object
+      properties:
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustReadinessCheck'
+        checksPassed:
+          type: integer
+          format: int32
+        checksTotal:
+          type: integer
+          format: int32
+        credentialPresent:
+          type: boolean
+          description: |-
+            True when a JC Go credential exists for this system+user.
+            Use the jcgo_credential_on_device check.
+        lastEvaluatedAt:
+          type: string
+          format: date-time
+        osFamily:
+          type: string
+        status:
+          $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustReadinessStatus'
+        systemId:
+          type: string
+        systemuserId:
+          type: string
+          description: Bound SystemUser ObjectId as 24-char hex when evaluation has resolved one; empty otherwise.
+    jumpcloud.durt.DeviceTrustReadinessStatus:
+      type: string
+      enum:
+        - device_trust_readiness_status_unspecified
+        - device_trust_readiness_status_ready
+        - device_trust_readiness_status_needs_attention
+        - device_trust_readiness_status_not_ready
+        - device_trust_readiness_status_not_applicable
+      default: device_trust_readiness_status_unspecified
+    jumpcloud.durt.QueryDeviceTrustReadinessResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustReadinessResponse'
+    jumpcloud.durt.QueryUserReadinessRequest:
+      type: object
+      properties:
+        systemId:
+          type: string
+        userIds:
+          type: array
+          items:
+            type: string
+          description: |-
+            SystemUser ObjectIds as 24-char hex. Max 100. Unbound users are omitted.
+            Empty / omitted = all bound users (capped at 100).
+    jumpcloud.durt.DeviceTrustNotApplicableReason:
+      type: string
+      enum:
+        - device_trust_not_applicable_reason_unspecified
+        - device_trust_not_applicable_reason_os_unsupported
+        - device_trust_not_applicable_reason_not_enabled
+      default: device_trust_not_applicable_reason_unspecified
+      description: |-
+        Why BatchGetDeviceUserReadinessItem.applicable / QueryUserReadinessResponse.applicable is false.
+
+         - device_trust_not_applicable_reason_os_unsupported: OS family is outside the supported set (not android/ios/darwin/windows/linux).
+         - device_trust_not_applicable_reason_not_enabled: Platform is supported but its readiness feature flag is off (e.g. desktop not enabled).
+    jumpcloud.durt.DeviceTrustUserReadiness:
+      type: object
+      properties:
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustReadinessCheck'
+        checksPassed:
+          type: integer
+          format: int32
+        checksTotal:
+          type: integer
+          format: int32
+        lastEvaluatedAt:
+          type: string
+          format: date-time
+        osFamily:
+          type: string
+        status:
+          $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustReadinessStatus'
+        systemId:
+          type: string
+        systemuserId:
+          type: string
+          description: Bound SystemUser ObjectId as 24-char hex.
+      description: Per-user readiness for QueryUserReadiness (no deprecated credential_present).
+    jumpcloud.durt.QueryUserReadinessResponse:
+      type: object
+      properties:
+        applicable:
+          type: boolean
+        notApplicableReason:
+          $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustNotApplicableReason'
+        osFamily:
+          type: string
+        systemId:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.durt.DeviceTrustUserReadiness'
     ldap-server:
       properties:
         id:
@@ -90222,6 +90652,16 @@ components:
           type: boolean
         allowUsernameSubstring:
           type: boolean
+        breachedPasswordMinCount:
+          type: integer
+          format: int32
+          description: |-
+            Minimum Have I Been Pwned occurrence count required to reject a password when
+            disallowBreachedPasswords is true (default 1: reject on any HIBP match; 0 is
+            treated as 1). Enabling this check looks up new passwords in Have I Been
+            Pwned's known compromised-password database (may be incomplete or temporarily
+            unavailable). Lookups send only a five-character password hash prefix from
+            JumpCloud servers to a third party (Have I Been Pwned / Cloudflare).
         daysAfterExpirationToSelfRecover:
           type: integer
           format: int32
@@ -90232,20 +90672,20 @@ components:
           type: boolean
         description:
           type: string
+        disallowBreachedPasswords:
+          type: boolean
+          description: |-
+            When true, rejects new passwords that appear in Have I Been Pwned's known
+            compromised-password database (default false: HIBP checks are opt-in). That
+            database may be incomplete or temporarily unavailable. Lookups send only a
+            five-character password hash prefix from JumpCloud servers to a third party
+            (Have I Been Pwned / Cloudflare).
         disallowCommonlyUsedPasswords:
           type: boolean
         disallowCustomBannedPasswords:
           type: boolean
         disallowNameSubstring:
           type: boolean
-        disallowBreachedPasswords:
-          type: boolean
-          default: false
-        breachedPasswordMinCount:
-          type: integer
-          format: int32
-          minimum: 1
-          default: 1
         disallowSequentialOrRepetitiveChars:
           type: boolean
         displayComplexityOnResetScreen:
@@ -98217,11 +98657,13 @@ x-tagGroups:
       - Directories
       - Directory Insights
       - Duo
+      - Durt
       - Email Subscriptions
       - FeatureTrials
       - G Suite
       - G Suite Import
       - GCEP
+      - Go
       - Google EMM
       - Graph
       - Groups

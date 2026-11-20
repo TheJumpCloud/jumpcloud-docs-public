@@ -967,6 +967,16 @@ operations:
     legacy_operation_id: import_create
     standardized_operation_id: postApiV2ApplicationsByApplicationIdImportJobs
   - method: post
+    host_root_path: /api/v2/device-trust-readiness/users/batch
+    base_path: /api/v2
+    legacy_operation_id: DeviceTrustReadiness_BatchGetDeviceUserReadiness
+    standardized_operation_id: postApiV2DeviceTrustReadinessUsersBatch
+  - method: post
+    host_root_path: /api/v2/device-trust-readiness/users/query
+    base_path: /api/v2
+    legacy_operation_id: DeviceTrustReadiness_QueryUserReadiness
+    standardized_operation_id: postApiV2DeviceTrustReadinessUsersQuery
+  - method: post
     host_root_path: /api/v2/applications/{application_id}/logo
     base_path: /api/v2
     legacy_operation_id: applications_postLogo
@@ -1341,6 +1351,16 @@ operations:
     base_path: /api/v2
     legacy_operation_id: organizations_casesMetadata
     standardized_operation_id: getApiV2CasesMetadata
+  - method: get
+    host_root_path: /api/v2/systems/{systemId}/device-trust-readiness
+    base_path: /api/v2
+    legacy_operation_id: DeviceTrustReadiness_Get2
+    standardized_operation_id: getApiV2SystemsBySystemidDeviceTrustReadiness
+  - method: post
+    host_root_path: /api/v2/systems/{systemId}/device-trust-readiness/query
+    base_path: /api/v2
+    legacy_operation_id: DeviceTrustReadiness_Get
+    standardized_operation_id: postApiV2SystemsBySystemidDeviceTrustReadinessQuery
   - method: get
     host_root_path: /api/v2/subscriptions
     base_path: /api/v2
