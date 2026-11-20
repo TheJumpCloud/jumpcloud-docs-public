@@ -57346,6 +57346,9 @@ components:
         button:
           type: string
           minLength: 0
+        buttonEnabled:
+          description: Whether the Reset Password button is shown. Only supported by templates with a buttonToggle; treated as true when not set.
+          type: boolean
         nextStepContactInfo:
           type: string
           minLength: 0
@@ -64660,6 +64663,18 @@ components:
           type: string
         multiline:
           type: boolean
+    CustomEmailTemplateButtonToggle:
+      title: CustomEmailTemplateButtonToggle
+      type: object
+      description: Present only on templates that let admins hide the Reset Password button.
+      properties:
+        displayName:
+          type: string
+        defaultValue:
+          type: boolean
+        ctaSentence:
+          description: Default message sentence that refers to the button, if the template has one.
+          type: string
     CustomEmailTemplate:
       title: CustomEmailTemplate
       type: object
@@ -64676,6 +64691,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/CustomEmailTemplateField"
+        buttonToggle:
+          $ref: "#/components/schemas/CustomEmailTemplateButtonToggle"
     scheduled-userstate-result:
       title: Scheduled Userstate Result
       type: object

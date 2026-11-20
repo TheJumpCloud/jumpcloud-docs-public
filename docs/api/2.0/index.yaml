@@ -41682,7 +41682,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"type":"activate_gapps_user","subject":"string","title":"string","header":"string","body":"string","button":"string","nextStepContactInfo":"string"}'
+              --data '{"type":"activate_gapps_user","subject":"string","title":"string","header":"string","body":"string","button":"string","buttonEnabled":true,"nextStepContactInfo":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -41696,6 +41696,7 @@ paths:
                 "header": "string",
                 "body": "string",
                 "button": "string",
+                "buttonEnabled": True,
                 "nextStepContactInfo": "string"
             }
             headers = {
@@ -41713,7 +41714,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/customemails' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"type":"activate_gapps_user","subject":"string","title":"string","header":"string","body":"string","button":"string","nextStepContactInfo":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/customemails' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"type":"activate_gapps_user","subject":"string","title":"string","header":"string","body":"string","button":"string","buttonEnabled":true,"nextStepContactInfo":"string"}'
   /customemails/{custom_email_type}:
     parameters:
       - name: custom_email_type
@@ -41765,7 +41766,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-api-key: REPLACE_KEY_VALUE' \
               --header 'x-org-id: SOME_STRING_VALUE' \
-              --data '{"type":"activate_gapps_user","subject":"string","title":"string","header":"string","body":"string","button":"string","nextStepContactInfo":"string"}'
+              --data '{"type":"activate_gapps_user","subject":"string","title":"string","header":"string","body":"string","button":"string","buttonEnabled":true,"nextStepContactInfo":"string"}'
         - lang: Python
           source: |-
             import requests
@@ -41779,6 +41780,7 @@ paths:
                 "header": "string",
                 "body": "string",
                 "button": "string",
+                "buttonEnabled": True,
                 "nextStepContactInfo": "string"
             }
             headers = {
@@ -41796,7 +41798,7 @@ paths:
             $headers.Add("x-org-id", "SOME_STRING_VALUE")
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/customemails/{custom_email_type}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"type":"activate_gapps_user","subject":"string","title":"string","header":"string","body":"string","button":"string","nextStepContactInfo":"string"}'
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/customemails/{custom_email_type}' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{"type":"activate_gapps_user","subject":"string","title":"string","header":"string","body":"string","button":"string","buttonEnabled":true,"nextStepContactInfo":"string"}'
     get:
       summary: Get custom email configuration
       tags:
@@ -78655,6 +78657,9 @@ components:
         button:
           type: string
           minLength: 0
+        buttonEnabled:
+          description: Whether the Reset Password button is shown. Only supported by templates with a buttonToggle; treated as true when not set.
+          type: boolean
         nextStepContactInfo:
           type: string
           minLength: 0
@@ -86010,6 +86015,18 @@ components:
           type: string
         multiline:
           type: boolean
+    CustomEmailTemplateButtonToggle:
+      title: CustomEmailTemplateButtonToggle
+      type: object
+      description: Present only on templates that let admins hide the Reset Password button.
+      properties:
+        displayName:
+          type: string
+        defaultValue:
+          type: boolean
+        ctaSentence:
+          description: Default message sentence that refers to the button, if the template has one.
+          type: string
     CustomEmailTemplate:
       title: CustomEmailTemplate
       type: object
@@ -86026,6 +86043,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomEmailTemplateField'
+        buttonToggle:
+          $ref: '#/components/schemas/CustomEmailTemplateButtonToggle'
     scheduled-userstate-result:
       title: Scheduled Userstate Result
       type: object
