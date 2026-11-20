@@ -58603,6 +58603,7 @@ components:
     GroupType:
       description: The group type.
       enum:
+        - agent_group
         - policy_group
         - system_group
         - user_group
