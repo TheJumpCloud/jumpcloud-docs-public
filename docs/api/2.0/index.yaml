@@ -2996,7 +2996,9 @@ paths:
         '409':
           description: |
             The request conflicts with the agent's current state. The agent
-            already has an active credential, or the agent is suspended.
+            already has a credential -- of any status, expired included --
+            or the agent is suspended. Delete an existing credential (an
+            expired one included) before creating a new one.
           content:
             application/json:
               schema:
