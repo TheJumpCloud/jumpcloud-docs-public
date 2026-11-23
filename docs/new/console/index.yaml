@@ -26534,6 +26534,85 @@ paths:
           type: string
     x-functionalities-tags:
       - groups
+  /api/v2/usergroups/{group_id}/owners:
+    get:
+      description: |-
+        This endpoint returns the user owners of a User Group.
+
+        #### Sample Request
+        ```
+        curl -X GET https://console.jumpcloud.com/api/v2/usergroups/{GroupID}/owners \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}'
+        ```
+      operationId: getApiV2UsergroupsByGroupIdOwners
+      parameters:
+        - $ref: "#/components/parameters/trait_limit_limit"
+        - $ref: "#/components/parameters/api_v2.trait_skip_skip"
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/GraphObject"
+                type: array
+      security:
+        - x-api-key: []
+      summary: List the owners of a User Group
+      tags:
+        - Graph
+        - User Groups
+      x-scopes:
+        - groups
+        - groups.readonly
+    parameters:
+      - description: ObjectID of the User Group.
+        in: path
+        name: group_id
+        required: true
+        schema:
+          type: string
+    post:
+      description: |-
+        This endpoint allows you to manage the user owners of a User Group.
+
+        #### Sample Request
+        ```
+        curl -X POST https://console.jumpcloud.com/api/v2/usergroups/{GroupID}/owners \
+          -H 'Accept: application/json' \
+          -H 'Content-Type: application/json' \
+          -H 'x-api-key: {API_KEY}' \
+          -d '{
+            "op": "add",
+            "type": "user",
+            "id": "{User_ID}"
+          }'
+        ```
+      operationId: postApiV2UsergroupsByGroupIdOwners
+      parameters:
+        - $ref: "#/components/parameters/api_v2.trait_multiTenantRequestHeaders_x-org-id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GraphOperation-UserGroup-Owner"
+      responses:
+        "204":
+          description: OK
+      security:
+        - x-api-key: []
+      summary: Manage the owners of a User Group
+      tags:
+        - Graph
+        - User Groups
+      x-scopes:
+        - groups
+    x-functionalities-tags:
+      - groups
   /api/v2/usergroups/{group_id}/members:
     get:
       description: |-
@@ -58522,6 +58601,28 @@ components:
           required:
             - type
       title: GraphOperation (UserGroup-Member)
+      type: object
+    GraphOperation-UserGroup-Owner:
+      properties:
+        id:
+          description: The ObjectID of the user being added or removed as an owner.
+          type: string
+        op:
+          description: How to modify the User Group owner connection.
+          enum:
+            - add
+            - remove
+          type: string
+        type:
+          description: The owner principal type.
+          enum:
+            - user
+          type: string
+      required:
+        - id
+        - op
+        - type
+      title: GraphOperation (UserGroup-Owner)
       type: object
     GraphConnection:
       description: Represents an edge between two graph objects. From can be omitted if it is clear from context.

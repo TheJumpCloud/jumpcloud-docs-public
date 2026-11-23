@@ -2587,6 +2587,16 @@ operations:
     legacy_operation_id: graph_userGroupTraverseLdapServer
     standardized_operation_id: getApiV2UsergroupsByGroupIdLdapservers
   - method: get
+    host_root_path: /api/v2/usergroups/{group_id}/owners
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupOwnersList
+    standardized_operation_id: getApiV2UsergroupsByGroupIdOwners
+  - method: post
+    host_root_path: /api/v2/usergroups/{group_id}/owners
+    base_path: /api/v2
+    legacy_operation_id: graph_userGroupOwnersPost
+    standardized_operation_id: postApiV2UsergroupsByGroupIdOwners
+  - method: get
     host_root_path: /api/v2/usergroups/{group_id}/members
     base_path: /api/v2
     legacy_operation_id: graph_userGroupMembersList
