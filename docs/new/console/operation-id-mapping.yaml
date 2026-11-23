@@ -1976,6 +1976,11 @@ operations:
     base_path: /api/v2
     legacy_operation_id: providerOrganizations_updateOrg
     standardized_operation_id: putApiV2ProvidersByProviderIdOrganizationsById
+  - method: post
+    host_root_path: /api/v2/providers/{provider_id}/organizations/{id}/trial/convert
+    base_path: /api/v2
+    legacy_operation_id: providerOrganizations_convertTrial
+    standardized_operation_id: postApiV2ProvidersByProviderIdOrganizationsByIdTrialConvert
   - method: get
     host_root_path: /api/v2/providers/{provider_id}/directoryinsights/organizations
     base_path: /api/v2

@@ -21250,6 +21250,67 @@ paths:
           type: string
     x-functionalities-tags:
       - mtp-update-org
+  /api/v2/providers/{provider_id}/organizations/{id}/trial/convert:
+    post:
+      description: |-
+        Requests conversion of an MSP trial child organization to paid. Opens a Salesforce Case
+        via MuleSoft and records an in-flight ``mspTrialRequest`` with type ``convert`` on the
+        organization. Does not change trial entitlement; SF fulfills conversion later via BSS.
+      operationId: postApiV2ProvidersByProviderIdOrganizationsByIdTrialConvert
+      security:
+        - x-api-key: []
+      summary: Request MSP Trial Convert
+      tags:
+        - Providers
+        - Managed Service Provider
+      x-scopes:
+        - providers
+      responses:
+        "200":
+          description: Convert request accepted; trial block shows convert_pending.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+        "400":
+          description: Organization is not an eligible MSP trial child (errorCode TRIAL_CONVERT_NOT_ELIGIBLE).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorWithErrorCode"
+        "401":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_401"
+        "403":
+          description: |-
+            Convert is not permitted (errorCode TRIAL_PERMISSION_DENIED) or MSP trial is not
+            enabled for this provider (errorCode TRIAL_NOT_ENABLED).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorWithErrorCode"
+        "404":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_404"
+        "409":
+          description: A cancel or convert request is already pending (errorCode TRIAL_REQUEST_PENDING).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorWithErrorCode"
+        "500":
+          $ref: "#/components/responses/api_v2.trait_standardErrors_500"
+      x-functionalities-tags:
+        - mtp-trial-convert
+    parameters:
+      - in: path
+        name: provider_id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
   /api/v2/providers/{provider_id}/directoryinsights/organizations:
     get:
       description: |-
@@ -60796,6 +60857,10 @@ components:
           type: boolean
         defaultDomain:
           $ref: "#/components/schemas/defaultDomain"
+        organizationId:
+          description: ObjectID of the organization that owns this Office 365 instance.
+          readOnly: true
+          type: string
     subscription:
       properties:
         annualPrice:
@@ -65765,6 +65830,10 @@ components:
         name:
           type: string
           description: Name of the Office 365 instance.
+        organizationObjectId:
+          type: string
+          format: byte
+          description: Identifier of the organization that owns the Office 365 instance.
         tenantId:
           type: string
           description: TenantID of the Office 365 instance.
