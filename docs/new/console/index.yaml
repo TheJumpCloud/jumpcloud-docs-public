@@ -68598,6 +68598,7 @@ components:
         - not_in_case_sensitive_with_null
         - not_starts_with
         - not_ends_with
+        - attribute_exists
       default: operation_unknown
       description: |-
         Filter operation to be applied:
@@ -68636,6 +68637,13 @@ components:
         not_in_case_sensitive_with_null - Like not_in_case_sensitive but also matches rows where `field` IS NULL (v1 search API compatibility).
         member_of - Array column overlaps with the given list. Only for array-typed fields. Value must be list_value.
         not_member_of - Array column does not overlap with the given list. Only for array-typed fields. Value must be list_value.
+        attribute_exists - True when a matching EAV attribute row exists (EXISTS semi-join). Safe to AND
+           multiple attribute_exists filters for Match-all multi-attribute rules.
+           Supported fields:
+             user.id   → system_user_attribute (FK systemusers_id), CTE system_user_attribute_filtered
+             device.id → system_attribute (FK id), CTE system_attribute_filtered
+           Value must be a struct: { "name"|"key": "<attr name>", "value": "<string>"|["v1","v2"],
+           "operation": optional compare op (default EQUALS_CASE_SENSITIVE; also CONTAINS*, STARTS_WITH*, ENDS_WITH*, IN*) }.
     jumpcloud.search.SearchRequestSort:
       type: object
       properties:
