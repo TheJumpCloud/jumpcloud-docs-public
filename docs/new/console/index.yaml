@@ -50980,6 +50980,17 @@ components:
             macAddress:
               type: string
               description: PII data; do not log.
+            meid:
+              type: string
+              description: PII data; do not log.
+            eids:
+              type: array
+              items:
+                type: object
+                properties:
+                  eid:
+                    type: string
+                    description: PII data; do not log.
             simInfo:
               type: array
               items:
@@ -50989,6 +51000,9 @@ components:
                     type: string
                     description: PII data; do not log.
                   iccid:
+                    type: string
+                    description: PII data; do not log.
+                  carrierName:
                     type: string
                     description: PII data; do not log.
         organization:
@@ -51295,6 +51309,17 @@ components:
             macAddress:
               type: string
               description: PII data; do not log.
+            meid:
+              type: string
+              description: PII data; do not log.
+            eids:
+              type: array
+              items:
+                type: object
+                properties:
+                  eid:
+                    type: string
+                    description: PII data; do not log.
             simInfo:
               type: array
               items:
@@ -51304,6 +51329,9 @@ components:
                     type: string
                     description: PII data; do not log.
                   iccid:
+                    type: string
+                    description: PII data; do not log.
+                  carrierName:
                     type: string
                     description: PII data; do not log.
         organization:
