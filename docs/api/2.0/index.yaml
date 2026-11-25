@@ -98701,6 +98701,8 @@ tags:
   - name: DeviceSync
   - name: Devices
   - name: Directories
+  - name: Directory
+    description: Directory console API
   - name: Directory Insights
   - name: Duo
   - name: Durt
