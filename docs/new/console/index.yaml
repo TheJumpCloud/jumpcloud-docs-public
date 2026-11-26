@@ -64956,6 +64956,8 @@ components:
           $ref: "#/components/schemas/AuthnPolicyObligations"
         custom_error_message:
           $ref: "#/components/schemas/AuthnPolicyCustomErrorMessage"
+        self_service:
+          $ref: "#/components/schemas/AuthnPolicySelfService"
       required:
         - action
       x-examples:
@@ -65016,6 +65018,14 @@ components:
           type: array
           items:
             type: string
+    AuthnPolicySelfService:
+      title: AuthnPolicySelfService
+      type: object
+      properties:
+        email:
+          type: boolean
+        mfa:
+          type: boolean
     AuthnPolicyResourceTarget:
       title: AuthnPolicyResourceTarget
       type: object
@@ -65027,6 +65037,15 @@ components:
             - user_portal
             - application
             - ldap
+            - password_operations
+        groups:
+          description: Password operation groups when type is password_operations.
+          type: array
+          items:
+            type: string
+            enum:
+              - password_reset
+              - account_unlock
         id:
           description: Object ID of the resource target. If undefined, then all resources of the given type are targeted.
           type: string
@@ -65059,6 +65078,7 @@ components:
         - application
         - ldap
         - admin_portal
+        - password_operations
       default: user_portal
     IPList:
       title: IPList
