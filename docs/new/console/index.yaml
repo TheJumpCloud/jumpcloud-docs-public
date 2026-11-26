@@ -51115,6 +51115,9 @@ components:
           readOnly: true
         osFamily:
           type: string
+        platform:
+          type: string
+          description: Device platform identifier (for example, igel).
         domainInfo:
           type: object
           properties:
@@ -51444,6 +51447,9 @@ components:
           readOnly: true
         osFamily:
           type: string
+        platform:
+          type: string
+          description: Device platform identifier (for example, igel).
         domainInfo:
           type: object
           properties:
