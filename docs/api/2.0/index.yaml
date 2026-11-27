@@ -27482,59 +27482,6 @@ paths:
         schema:
           type: string
   /providers/{provider_id}/organizations/{id}:
-    get:
-      description: |-
-        Returns a provider child organization by id. Includes the read-only trial block for MSP trial
-        children. Trial fields are ignored on PUT (GET to PUT round trip is 200).
-      operationId: providerOrganizations_getOrg
-      security:
-        - x-api-key: []
-      summary: Get Provider Organization
-      tags:
-        - Providers
-        - Managed Service Provider
-      x-scopes:
-        - providers
-        - providers.readonly
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Organization'
-        '400':
-          $ref: '#/components/responses/trait_standardErrors_400'
-        '401':
-          $ref: '#/components/responses/trait_standardErrors_401'
-        '404':
-          $ref: '#/components/responses/trait_standardErrors_404'
-        '500':
-          $ref: '#/components/responses/trait_standardErrors_500'
-      x-functionalities-tags:
-        - mtp-read-org
-      x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl --request GET \
-              --url https://console.jumpcloud.com/api/v2/providers/{provider_id}/organizations/{id} \
-              --header 'x-api-key: REPLACE_KEY_VALUE'
-        - lang: Python
-          source: |-
-            import requests
-
-            url = "https://console.jumpcloud.com/api/v2/providers/{provider_id}/organizations/{id}"
-
-            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
-
-            response = requests.request("GET", url, headers=headers)
-
-            print(response.text)
-        - lang: Powershell
-          source: |-
-            $headers=@{}
-            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
-            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/providers/{provider_id}/organizations/{id}' -Method GET -Headers $headers
     put:
       description: This endpoint updates a provider's organization
       operationId: providerOrganizations_updateOrg
@@ -65714,7 +65661,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.jump-servers.readonly
+        - pam.jump-servers.update
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -70734,17 +70681,7 @@ paths:
           schema:
             type: string
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                resourceIds:
-                  type: array
-                  items:
-                    type: string
-                    format: byte
-        required: true
+        $ref: '#/components/requestBodies/PamCredentialsService_LinkResourcesBody'
       tags:
         - Privileged Access
       security:
@@ -73294,7 +73231,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.session-history
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -73465,7 +73402,7 @@ paths:
         - x-api-key: []
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.session-history
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -73875,7 +73812,7 @@ paths:
       x-dynamic-gateway: true
       x-scopes:
         - pam
-        - pam.readonly
+        - pam.session-history
       x-codeSamples:
         - lang: Shell
           source: |-
@@ -74009,6 +73946,187 @@ paths:
             $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
             $headers.Add("content-type", "application/json")
             $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/password-vault/folder-link-closure/preview' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"credentialId":"string","groupWebsitesWithLinkedCredentials":true,"linkedWebsiteIds":["string"],"linkedWebsiteScopeSpecified":true,"websiteId":"string"}'
+  /privileged-access/credentials/{id}/linked-resources:
+    get:
+      summary: List Privileged Credential Linked Resources
+      description: List every website, server and database linked to a credential. Each entry carries the link id used to unlink it.
+      operationId: PamCredentialsService_ListLinkedResources
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.ListCredentialLinkedResourcesReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: continuationToken
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.readonly
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request GET \
+              --url 'https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}/linked-resources?continuationToken=SOME_STRING_VALUE' \
+              --header 'x-api-key: REPLACE_KEY_VALUE'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}/linked-resources"
+
+            querystring = {"continuationToken":"SOME_STRING_VALUE"}
+
+            headers = {"x-api-key": "REPLACE_KEY_VALUE"}
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}/linked-resources?continuationToken=SOME_STRING_VALUE' -Method GET -Headers $headers
+    post:
+      summary: Link Resources To Privileged Credential
+      description: Link resources to a credential. Resources that cannot be linked are returned in `failedResourceIds`; the rest are still linked.
+      operationId: PamCredentialsService_LinkResources
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jumpcloud.privileged_access.LinkCredentialResourcesReply'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        $ref: '#/components/requestBodies/PamCredentialsService_LinkResourcesBody'
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.update
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}/linked-resources \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"resourceIds":["string"]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}/linked-resources"
+
+            payload = {"resourceIds": ["string"]}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}/linked-resources' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"resourceIds":["string"]}'
+  /privileged-access/credentials/{id}/linked-resources/unlink:
+    post:
+      summary: Unlink Resources From Privileged Credential
+      description: Remove the links with the given ids from a credential. Only the association is removed; the resources and the credential are kept.
+      operationId: PamCredentialsService_UnlinkResources
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: byte
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                linkIds:
+                  type: array
+                  items:
+                    type: string
+        required: true
+      tags:
+        - Privileged Access
+      security:
+        - x-api-key: []
+      x-dynamic-gateway: true
+      x-scopes:
+        - pam
+        - pam.privileged-credentials.update
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --request POST \
+              --url https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}/linked-resources/unlink \
+              --header 'content-type: application/json' \
+              --header 'x-api-key: REPLACE_KEY_VALUE' \
+              --data '{"linkIds":["string"]}'
+        - lang: Python
+          source: |-
+            import requests
+
+            url = "https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}/linked-resources/unlink"
+
+            payload = {"linkIds": ["string"]}
+            headers = {
+                "x-api-key": "REPLACE_KEY_VALUE",
+                "content-type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: Powershell
+          source: |-
+            $headers=@{}
+            $headers.Add("x-api-key", "REPLACE_KEY_VALUE")
+            $headers.Add("content-type", "application/json")
+            $response = Invoke-RestMethod -Uri 'https://console.jumpcloud.com/api/v2/privileged-access/credentials/{id}/linked-resources/unlink' -Method POST -Headers $headers -ContentType 'application/json' -Body '{"linkIds":["string"]}'
 components:
   schemas:
     jumpcloud.http.accesscertification.SignOffAuditReportRequest:
@@ -97528,6 +97646,46 @@ components:
         Dynamic gateway JSON: recordingDomains / excludedUrls. On website upsert/view, omit when unset or when JC Go
         recording is off; on start-recording replies, carries the website's saved settings for the recording client.
         Do not put comments on jc_go_session_settings message-typed fields (Spectral no-$ref-siblings on OpenAPI).
+    jumpcloud.privileged_access.CreatedCredentialLink:
+      type: object
+      properties:
+        linkId:
+          type: string
+        resourceId:
+          type: string
+    jumpcloud.privileged_access.CredentialLinkedResource:
+      type: object
+      properties:
+        category:
+          type: string
+        isPrivileged:
+          type: boolean
+        linkId:
+          type: string
+        resourceId:
+          type: string
+        resourceName:
+          type: string
+    jumpcloud.privileged_access.LinkCredentialResourcesReply:
+      type: object
+      properties:
+        created:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.CreatedCredentialLink'
+        failedResourceIds:
+          type: array
+          items:
+            type: string
+    jumpcloud.privileged_access.ListCredentialLinkedResourcesReply:
+      type: object
+      properties:
+        continuationToken:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/jumpcloud.privileged_access.CredentialLinkedResource'
   parameters:
     jumpcloud.http.accesscertification.limit:
       name: limit
@@ -98654,6 +98812,18 @@ components:
                 items:
                   type: string
                   format: byte
+              resourceIds:
+                type: array
+                items:
+                  type: string
+                  format: byte
+      required: true
+    PamCredentialsService_LinkResourcesBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
               resourceIds:
                 type: array
                 items:

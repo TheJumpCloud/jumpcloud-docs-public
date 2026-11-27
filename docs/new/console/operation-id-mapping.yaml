@@ -1966,11 +1966,6 @@ operations:
     base_path: /api/v2
     legacy_operation_id: providerOrganizations_createOrg
     standardized_operation_id: postApiV2ProvidersByProviderIdOrganizations
-  - method: get
-    host_root_path: /api/v2/providers/{provider_id}/organizations/{id}
-    base_path: /api/v2
-    legacy_operation_id: providerOrganizations_getOrg
-    standardized_operation_id: getApiV2ProvidersByProviderIdOrganizationsById
   - method: put
     host_root_path: /api/v2/providers/{provider_id}/organizations/{id}
     base_path: /api/v2
@@ -5081,3 +5076,18 @@ operations:
     base_path: /api/v2
     legacy_operation_id: LinksService_GetFolderLinkClosure
     standardized_operation_id: postApiV2PasswordVaultFolderLinkClosurePreview
+  - method: get
+    host_root_path: /api/v2/privileged-access/credentials/{id}/linked-resources
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_ListLinkedResources
+    standardized_operation_id: getApiV2PrivilegedAccessCredentialsByIdLinkedResources
+  - method: post
+    host_root_path: /api/v2/privileged-access/credentials/{id}/linked-resources
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_LinkResources
+    standardized_operation_id: postApiV2PrivilegedAccessCredentialsByIdLinkedResources
+  - method: post
+    host_root_path: /api/v2/privileged-access/credentials/{id}/linked-resources/unlink
+    base_path: /api/v2
+    legacy_operation_id: PamCredentialsService_UnlinkResources
+    standardized_operation_id: postApiV2PrivilegedAccessCredentialsByIdLinkedResourcesUnlink
