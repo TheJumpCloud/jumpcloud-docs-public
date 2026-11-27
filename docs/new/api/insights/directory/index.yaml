@@ -97,7 +97,7 @@ info:
     __Note__: There is no limit to the number of org ID's that can be passed in the request.
 
     ```bash
-    curl -X POST -H 'x-api-key: REPLACE_KEY_VALUE' -H 'x-org-id: ADMINISTERED_ORG_ID_A' -H 'x-org-id: ADMINISTERED_ORG_ID_B' -H 'x-org-id: ADMINISTERED_ORG_ID_C' -H 'Content-Type: application/json' --data '{"service": ["all"], "start_time": "2020-03-03T14:00:00Z"}' https://api.jumpcloud.com/insights/directory/v1/events
+    curl -X POST -H 'x-api-key: REPLACE_KEY_VALUE' -H 'x-org-id: ADMINISTERED_ORG_ID_A,ADMINISTERED_ORG_ID_B,ADMINISTERED_ORG_ID_C' -H 'Content-Type: application/json' --data '{"service": ["all"], "start_time": "2020-03-03T14:00:00Z"}' https://api.jumpcloud.com/insights/directory/v1/events
     ```
 
     ### Example to Request Multi-Tenant Portal Events Only
@@ -2009,7 +2009,6 @@ paths:
     post:
       security:
         - x-api-key: []
-          x-org-id: []
       description: |-
         Query the API for Directory Insights events
         #### Sample Request
@@ -2020,6 +2019,8 @@ paths:
         - EventQuery
       summary: Query Events
       operationId: postInsightsDirectoryV1Events
+      parameters:
+        - $ref: "#/components/parameters/OrgIdHeader"
       requestBody:
         $ref: "#/components/requestBodies/EventQuery"
       responses:
@@ -2062,7 +2063,6 @@ paths:
     post:
       security:
         - x-api-key: []
-          x-org-id: []
       description: |-
         Query the API for a count of matching events
         #### Sample Request
@@ -2073,6 +2073,8 @@ paths:
         - EventQuery
       summary: Count Events
       operationId: postInsightsDirectoryV1EventsCount
+      parameters:
+        - $ref: "#/components/parameters/OrgIdHeader"
       requestBody:
         $ref: "#/components/requestBodies/EventQuery"
       responses:
@@ -2112,7 +2114,6 @@ paths:
     post:
       security:
         - x-api-key: []
-          x-org-id: []
       description: |-
         Query the API for a list of distinct values for a field
         #### Sample Request
@@ -2123,6 +2124,8 @@ paths:
         - EventDistinctQuery
       summary: Query event distinct field values
       operationId: postInsightsDirectoryV1EventsDistinct
+      parameters:
+        - $ref: "#/components/parameters/OrgIdHeader"
       requestBody:
         content:
           application/json:
@@ -2181,7 +2184,6 @@ paths:
     post:
       security:
         - x-api-key: []
-          x-org-id: []
       description: |-
         Query the API for a list of counts by time interval
         #### Sample Request
@@ -2192,6 +2194,8 @@ paths:
         - EventIntervalQuery
       summary: Query event counts by bucketed by a time interval
       operationId: postInsightsDirectoryV1EventsInterval
+      parameters:
+        - $ref: "#/components/parameters/OrgIdHeader"
       requestBody:
         content:
           application/json:
@@ -2248,13 +2252,13 @@ paths:
     get:
       security:
         - x-api-key: []
-          x-org-id: []
       description: Ordered list of report metadata
       tags:
         - Reports
       summary: Get a list of report metadata
       operationId: getInsightsDirectoryV1Reports
       parameters:
+        - $ref: "#/components/parameters/OrgIdHeader"
         - description: Sort type and direction. Default sort is descending, prefix with - to sort ascending.
           name: sort
           in: query
@@ -2366,13 +2370,13 @@ paths:
     get:
       security:
         - x-api-key: []
-          x-org-id: []
       description: Download a report by report ID and artifact ID
       tags:
         - Reports
       summary: Download a report
       operationId: getInsightsDirectoryV1ReportsByReportIdArtifactsByArtifactIdContent
       parameters:
+        - $ref: "#/components/parameters/OrgIdHeader"
         - description: Report ID
           name: report_id
           in: path
@@ -2437,13 +2441,13 @@ paths:
     post:
       security:
         - x-api-key: []
-          x-org-id: []
       description: Request a JumpCloud report to be generated asynchronously
       tags:
         - Reports
       summary: Request a report
       operationId: postInsightsDirectoryV1ReportsByReportType
       parameters:
+        - $ref: "#/components/parameters/OrgIdHeader"
         - description: Report Type
           name: report_type
           in: path
@@ -2920,7 +2924,14 @@ components:
           example:
             - application/json
             - application/ocsf+json
-  parameters: {}
+  parameters:
+    OrgIdHeader:
+      name: x-org-id
+      in: header
+      required: false
+      description: Organization ID to query. Optional for standard admins (the org is taken from the API key). MSP/provider admins must send this or x-provider-id on /events endpoints. Provider admins may send multiple organization IDs as a comma-separated list in a single x-org-id header (for example, idA,idB,idC).
+      schema:
+        type: string
   responses:
     BadRequest:
       description: Invalid request
@@ -2981,10 +2992,6 @@ components:
     x-api-key:
       type: apiKey
       name: x-api-key
-      in: header
-    x-org-id:
-      type: apiKey
-      name: x-org-id
       in: header
     ApiKeyAuth:
       type: apiKey
